@@ -9,4 +9,12 @@ class SalesManService {
 		return SalesMan::all();
 	}
 
+	public function showSalesMan($id) {
+		return SalesMan::find($id);
+	}
+
+	public function destroy($id) {
+		return SalesMan::destroy($id);
+	}
+
 }

@@ -26,7 +26,12 @@ class SalesManController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'phone_number' => 'required',
+            'address' => 'required'
+        ]);
+        return SalesMan::create($request->all());
     }
 
     /**
@@ -34,7 +39,7 @@ class SalesManController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return $this->salesman_service->showSalesMan($id);
     }
 
     /**
@@ -42,7 +47,9 @@ class SalesManController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $salesman = SalesMan::find($id);
+        $salesman->update($request->all());
+        return $salesman;
     }
 
     /**
@@ -50,6 +57,6 @@ class SalesManController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return $this->salesman_service->destroy($id);
     }
 }

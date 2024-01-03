@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SalesManController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,8 @@ Route::post("/register", [AuthController::class, 'register']);
 Route::post("/login", [AuthController::class, 'login']);
 
 
+
+
 // protected routes
 Route::group(['middleware' => ['auth:sanctum']], function() {
 	Route::get('/products/search/{name}', [ProductController::class, 'search']);
@@ -33,7 +36,12 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 	Route::post("/logout", [AuthController::class, 'logout']);
 
 	// salesman management
-	Route::post("/salesman-list", [SalesManController::class, 'store']);
+	Route::get("/salesman-list", [SalesManController::class, 'index']);
+	Route::post("/salesman-create", [SalesManController::class, 'store']);
+	Route::put("/salesman-update/{id}", [SalesManController::class, 'update']);
+	Route::get("/salesman/{id}", [SalesManController::class, 'show']);
+	Route::delete("/salesman/{id}", [SalesManController::class, 'destroy']);
+
 });
 
 

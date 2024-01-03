@@ -14,7 +14,8 @@ class SalesMan extends Model
     	'phone_number',
     	'description',
     	'address',
-    	'profile_image'
+    	'profile_image',
     	'status',
     ];
+    protected $table = 'salesman';
 }
