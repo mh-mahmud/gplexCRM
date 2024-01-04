@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalesManController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,31 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 	Route::put("/salesman-update/{id}", [SalesManController::class, 'update']);
 	Route::get("/salesman/{id}", [SalesManController::class, 'show']);
 	Route::delete("/salesman/{id}", [SalesManController::class, 'destroy']);
+
+	// SETTINGS MODULE
+	Route::get("/country-list", [SettingsController::class, 'country_index']);
+	Route::post("/country-create", [SettingsController::class, 'country_store']);
+	Route::put("/country-update/{id}", [SettingsController::class, 'country_update']);
+	Route::get("/country/{id}", [SettingsController::class, 'country_show']);
+	Route::delete("/country/{id}", [SettingsController::class, 'country_destroy']);
+
+	Route::get("/city-list", [SettingsController::class, 'city_index']);
+	Route::post("/city-create", [SettingsController::class, 'city_store']);
+	Route::put("/city-update/{id}", [SettingsController::class, 'city_update']);
+	Route::get("/city/{id}", [SettingsController::class, 'city_show']);
+	Route::delete("/city/{id}", [SettingsController::class, 'city_destroy']);
+
+	Route::get("/state-list", [SettingsController::class, 'state_index']);
+	Route::post("/state-create", [SettingsController::class, 'state_store']);
+	Route::put("/state-update/{id}", [SettingsController::class, 'state_update']);
+	Route::get("/state/{id}", [SettingsController::class, 'state_show']);
+	Route::delete("/state/{id}", [SettingsController::class, 'state_destroy']);
+
+	Route::get("/branch-list", [SettingsController::class, 'state_index']);
+	Route::post("/branch-create", [SettingsController::class, 'state_store']);
+	Route::put("/branch-update/{id}", [SettingsController::class, 'state_update']);
+	Route::get("/branch/{id}", [SettingsController::class, 'state_show']);
+	Route::delete("/branch/{id}", [SettingsController::class, 'state_destroy']);
 
 });
 
