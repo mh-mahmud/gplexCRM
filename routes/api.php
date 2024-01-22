@@ -58,9 +58,9 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
 	Route::get("/state-list", [SettingsController::class, 'state_index']);
 	Route::post("/state-create", [SettingsController::class, 'state_store']);
-	Route::put("/state-update/{id}", [SettingsController::class, 'state_update']);
+	Route::post("/state-update", [SettingsController::class, 'state_update']);
 	Route::get("/state/{id}", [SettingsController::class, 'state_show']);
-	Route::delete("/state/{id}", [SettingsController::class, 'state_destroy']);
+	Route::post("/state-delete", [SettingsController::class, 'state_destroy']);
 
 	Route::get("/branch-list", [SettingsController::class, 'state_index']);
 	Route::post("/branch-create", [SettingsController::class, 'state_store']);

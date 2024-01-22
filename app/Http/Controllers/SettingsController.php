@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\SettingsService;
+use App\Models\Country;
+use App\Models\State;
 
 class SettingsController extends Controller
 {
@@ -27,7 +29,7 @@ class SettingsController extends Controller
     public function country_store(Request $request)
     {
         $request->validate([
-            'name' => 'required'
+            'country_name' => 'required|unique:country'
         ]);
         return Country::create($request->all());
     }
@@ -53,7 +55,7 @@ class SettingsController extends Controller
     /*
         State Settings
     */
-    public function state_index()
+    /*public function state_index()
     {
         return State::all();
     }
@@ -82,6 +84,84 @@ class SettingsController extends Controller
     public function state_destroy(string $id)
     {
         return State::destroy($id);
+    }*/
+
+    public function state_index()
+    {
+        return State::all();
+    }
+
+    public function state_store(Request $request)
+    {
+        $request->validate([
+            'state_name' => 'required',
+            'country_id' => 'required'
+        ]);
+
+        $ckh_dub = State::where('state_name', $request->state_name)->where('country_id', $request->country_id)->first();
+        if(!empty($ckh_dub)) {
+            $status = "dublicate";
+            $msg=["this state already created"];
+            $data=[];
+            return response()->json(compact('status', 'msg', 'data'))->setStatusCode(200);
+        }
+
+
+        $data = State::create($request->all());
+        $status = "success";
+        $msg=["State saved successfully"];
+        return response()->json(compact('status', 'msg', 'data'))->setStatusCode(200);
+    }
+
+    public function state_show(string $id)
+    {
+        $data = State::find($id);
+        if(!empty($data)) {
+            $status = "success";
+            $msg=["data found"];
+            return response()->json(compact('status', 'msg', 'data'))->setStatusCode(200);
+        }
+        $status = "failed";
+        $msg=["no data found"];
+        return response()->json(compact('status', 'msg', 'data'))->setStatusCode(401);
+    }
+
+    public function state_update(Request $request)
+    {
+        $request->validate([
+            'id' => 'required'
+        ]);
+
+        $ticket_data = State::find($request->id);
+        if(!empty($ticket_data)) {
+            $ticket_data->update($request->all());
+            $status = "success";
+            $msg=["State updated successfully"];
+            return response()->json(compact('status', 'msg', 'ticket_data'))->setStatusCode(200);
+        }
+
+        $status = "failed";
+        $msg=["no data found"];
+        return response()->json(compact('status', 'msg', 'data'))->setStatusCode(401);
+    }
+
+    public function state_destroy(Request $request)
+    {
+        $data = [];
+        $request->validate([
+            'id' => 'required'
+        ]);
+
+        $check = State::find($request->id);
+        if(!empty($check)) {
+            $data['data'] = State::destroy($request->id);
+            $data['status'] = "success";
+            $data['msg'] = ["State deleted successfully"];
+            return response()->json(compact('data'))->setStatusCode(200);
+        }
+        $data['status'] = "failed";
+        $data['msg']= ["no data found"];
+        return response()->json(compact('data'))->setStatusCode(401);
     }
 
 
