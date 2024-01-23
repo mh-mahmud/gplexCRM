@@ -68,6 +68,26 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 	Route::get("/branch/{id}", [SettingsController::class, 'branch_show']);
 	Route::post("/branch-delete", [SettingsController::class, 'branch_destroy']);
 
+
+	/*
+		---------------- SMS MODULE ----------------
+	*/
+	Route::get("/sms-template-list", [SmsController::class, 'sms_template_list']);
+	Route::post("/sms-template-create", [SmsController::class, 'sms_template_create']);
+	Route::post("/sms-template-update", [SmsController::class, 'sms_template_update']);
+	Route::get("/sms-template/{id}", [SmsController::class, 'sms_template_show']);
+	Route::post("/sms-template-delete", [SmsController::class, 'sms_template_destroy']);
+
+
+	/*
+		---------------- EMAIL MODULE ----------------
+	*/
+	Route::get("/email-template-list", [EmailController::class, 'email_template_list']);
+	Route::post("/email-template-create", [EmailController::class, 'email_template_create']);
+	Route::post("/email-template-update", [EmailController::class, 'email_template_update']);
+	Route::get("/email-template/{id}", [EmailController::class, 'email_template_show']);
+	Route::post("/email-template-delete", [EmailController::class, 'email_template_destroy']);
+
 });
 
 
