@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 	Route::post("/city-create", [SettingsController::class, 'city_store']);
 	Route::put("/city-update/{id}", [SettingsController::class, 'city_update']);
 	Route::get("/city/{id}", [SettingsController::class, 'city_show']);
-	Route::delete("/city/{id}", [SettingsController::class, 'city_destroy']);
+	Route::delete("/city", [SettingsController::class, 'city_destroy']);
 
 	Route::get("/state-list", [SettingsController::class, 'state_index']);
 	Route::post("/state-create", [SettingsController::class, 'state_store']);
@@ -62,11 +62,11 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 	Route::get("/state/{id}", [SettingsController::class, 'state_show']);
 	Route::post("/state-delete", [SettingsController::class, 'state_destroy']);
 
-	Route::get("/branch-list", [SettingsController::class, 'state_index']);
-	Route::post("/branch-create", [SettingsController::class, 'state_store']);
-	Route::put("/branch-update/{id}", [SettingsController::class, 'state_update']);
-	Route::get("/branch/{id}", [SettingsController::class, 'state_show']);
-	Route::delete("/branch/{id}", [SettingsController::class, 'state_destroy']);
+	Route::get("/branch-list", [SettingsController::class, 'branch_index']);
+	Route::post("/branch-create", [SettingsController::class, 'branch_store']);
+	Route::post("/branch-update", [SettingsController::class, 'branch_update']);
+	Route::get("/branch/{id}", [SettingsController::class, 'branch_show']);
+	Route::post("/branch-delete", [SettingsController::class, 'branch_destroy']);
 
 });
 

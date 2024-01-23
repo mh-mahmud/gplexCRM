@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\SettingsService;
 use App\Models\Country;
 use App\Models\State;
+use App\Models\Branch;
 
 class SettingsController extends Controller
 {
@@ -55,36 +56,6 @@ class SettingsController extends Controller
     /*
         State Settings
     */
-    /*public function state_index()
-    {
-        return State::all();
-    }
-
-    public function state_store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'country_id' => 'required'
-        ]);
-        return State::create($request->all());
-    }
-
-    public function state_show(string $id)
-    {
-        return State::find($id);
-    }
-
-    public function state_update(Request $request, string $id)
-    {
-        $state = State::find($id);
-        $state->update($request->all());
-        return $state;
-    }
-
-    public function state_destroy(string $id)
-    {
-        return State::destroy($id);
-    }*/
 
     public function state_index()
     {
@@ -204,6 +175,39 @@ class SettingsController extends Controller
     /*
         Branch Settings
     */
+    // public function branch_index()
+    // {
+    //     return Branch::all();
+    // }
+
+    // public function branch_store(Request $request)
+    // {
+    //     $request->validate([
+    //         'branch_name' => 'required',
+    //         'branch_code' => 'required',
+    //         'status' => 'required'
+    //     ]);
+    //     return Branch::create($request->all());
+    // }
+
+    // public function branch_show(string $id)
+    // {
+    //     return Branch::find($id);
+    // }
+
+    // public function branch_update(Request $request, string $id)
+    // {
+    //     $branch = Branch::find($id);
+    //     $branch->update($request->all());
+    //     return $branch;
+    // }
+
+    // public function branch_destroy(string $id)
+    // {
+    //     return Branch::destroy($id);
+    // }
+
+    // -- new code
     public function branch_index()
     {
         return Branch::all();
@@ -211,28 +215,80 @@ class SettingsController extends Controller
 
     public function branch_store(Request $request)
     {
+        $data = [];
         $request->validate([
             'branch_name' => 'required',
             'branch_code' => 'required',
             'status' => 'required'
         ]);
-        return Branch::create($request->all());
+
+        $ckh_dub = Branch::where('branch_name', $request->branch_name)->where('branch_code', $request->branch_code)->first();
+        if(!empty($ckh_dub)) {
+            $data['status'] = "dublicate";
+            $data['msg']=["this branch already created"];
+            return response()->json(compact('data'))->setStatusCode(200);
+        }
+
+        $data['data'] = Branch::create($request->all());
+        $data['status'] = "success";
+        $data['msg']=["Branch saved successfully"];
+        return response()->json(compact('data'))->setStatusCode(200);
     }
 
     public function branch_show(string $id)
     {
-        return Branch::find($id);
+        $data = [];
+        $chk_data = Branch::find($id);
+        if(!empty($chk_data)) {
+            $status = "success";
+            $msg=["data found"];
+            $data['data'] = $chk_data;
+            return response()->json(compact('data'))->setStatusCode(200);
+        }
+        $data['status'] = "failed";
+        $data['msg']=["no data found"];
+        return response()->json(compact('data'))->setStatusCode(401);
     }
 
-    public function branch_update(Request $request, string $id)
+    public function branch_update(Request $request)
     {
-        $branch = Branch::find($id);
-        $branch->update($request->all());
-        return $branch;
+        $data = [];
+        $request->validate([
+            'id' => 'required'
+        ]);
+
+        $branch_data = Branch::find($request->id);
+        if(!empty($branch_data)) {
+            $branch_data->update($request->all());
+            $data['status'] = "success";
+            $data['msg']=["Branch updated successfully"];
+            $data['data'] = $branch_data;
+            return response()->json(compact('data'))->setStatusCode(200);
+        }
+
+        $data['status'] = "failed";
+        $data['msg']=["no data found"];
+        return response()->json(compact('data'))->setStatusCode(401);
     }
 
-    public function branch_destroy(string $id)
+    public function branch_destroy(Request $request)
     {
-        return Branch::destroy($id);
+        $data = [];
+        $request->validate([
+            'id' => 'required'
+        ]);
+
+        $check = Branch::find($request->id);
+        if(!empty($check)) {
+            $data['data'] = Branch::destroy($request->id);
+            $data['status'] = "success";
+            $data['msg'] = ["Branch deleted successfully"];
+            return response()->json(compact('data'))->setStatusCode(200);
+        }
+        $data['status'] = "failed";
+        $data['msg']= ["no data found"];
+        return response()->json(compact('data'))->setStatusCode(401);
     }
+
+
 }
