@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalesManController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\SmsController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;

@@ -1,5 +1,5 @@
 <?php
-namespace App\Service;
+namespace App\Services;
 use App\Models\EmailTemplates;
 
 class EmailService {
