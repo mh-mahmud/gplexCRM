@@ -175,39 +175,7 @@ class SettingsController extends Controller
     /*
         Branch Settings
     */
-    // public function branch_index()
-    // {
-    //     return Branch::all();
-    // }
-
-    // public function branch_store(Request $request)
-    // {
-    //     $request->validate([
-    //         'branch_name' => 'required',
-    //         'branch_code' => 'required',
-    //         'status' => 'required'
-    //     ]);
-    //     return Branch::create($request->all());
-    // }
-
-    // public function branch_show(string $id)
-    // {
-    //     return Branch::find($id);
-    // }
-
-    // public function branch_update(Request $request, string $id)
-    // {
-    //     $branch = Branch::find($id);
-    //     $branch->update($request->all());
-    //     return $branch;
-    // }
-
-    // public function branch_destroy(string $id)
-    // {
-    //     return Branch::destroy($id);
-    // }
-
-    // -- new code
+        
     public function branch_index()
     {
         return Branch::all();
