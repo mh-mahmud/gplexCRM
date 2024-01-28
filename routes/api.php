@@ -80,6 +80,15 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 	Route::get("/sms-template/{id}", [SmsController::class, 'sms_template_show']);
 	Route::post("/sms-template-delete", [SmsController::class, 'sms_template_destroy']);
 
+	Route::post("/send-sms", [SmsController::class, 'send_sms']);
+	Route::get("/sms-queue-list", [SmsController::class, 'sms_queue_list']);
+	Route::get("/sms-log-list", [SmsController::class, 'sms_log_list']);
+	Route::get("/sms-queue-details/{id}", [SmsController::class, 'sms_queue_details']);
+	Route::get("/sms-log-details/{id}", [SmsController::class, 'sms_log_details']);
+	Route::post("/single-sms-queue-delete/{id}", [SmsController::class, 'single_sms_queue_delete']);
+	Route::post("/all-sms-queue-delete", [SmsController::class, 'all_sms_queue_delete']);
+
+
 
 	/*
 		---------------- EMAIL MODULE ----------------
