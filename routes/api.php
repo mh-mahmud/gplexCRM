@@ -6,6 +6,12 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\AuthController;
+
+use App\Http\Controllers\UserController ;
+use App\Http\Controllers\RoleController ;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\MenuController ;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -98,6 +104,36 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 	Route::post("/email-template-update", [EmailController::class, 'email_template_update']);
 	Route::get("/email-template/{id}", [EmailController::class, 'email_template_show']);
 	Route::post("/email-template-delete", [EmailController::class, 'email_template_destroy']);
+
+	/*
+		---------------- USER MANAGEMENT MODULE ----------------
+	*/
+    Route::get('user-list',        [UserController::class, 'index']);
+    Route::get('user-show/{id}',        [UserController::class, 'show']);
+    Route::post('user-store',      [UserController::class, 'store']);
+    Route::put('user-update/{id}',      [UserController::class, 'update']);
+    Route::get('user-details/{id}',     [UserController::class, 'show']);
+    Route::delete('user-delete/{id}',   [UserController::class, 'destroy']);
+    Route::put('user-change-status/{id}', [UserController::class, 'userStatusChange']);
+    Route::put('change-password',    [UserController::class, 'changePassword']);
+    
+    Route::get('role-list', [RoleController::class, 'index']);
+    Route::post('role-store', [RoleController::class, 'store']);
+    Route::put('role-update/{id}', [RoleController::class, 'update']);
+    Route::get('role-details/{id}', [RoleController::class, 'show']);
+    Route::delete('role-delete/{id}', [RoleController::class, 'destroy']);
+    
+    Route::get('menu-list', [MenuController::class, 'index']);
+    Route::post('menu-store', [MenuController::class, 'store']);
+    Route::put('menu-update/{id}', [MenuController::class, 'update']);
+    Route::get('menu-details/{id}', [MenuController::class, 'show']);
+    Route::delete('menu-delete/{id}', [MenuController::class, 'destroy']); 
+
+    Route::get('sub-menu-list', [PermissionController::class, 'index']);
+    Route::post('sub-menu-store', [PermissionController::class, 'store']);
+    Route::put('sub-menu-update/{id}', [PermissionController::class, 'update']);
+    Route::get('sub-menu-details/{id}', [PermissionController::class, 'show']);
+    Route::delete('sub-menu-delete/{id}', [PermissionController::class, 'destroy']); 
 
 });
 
