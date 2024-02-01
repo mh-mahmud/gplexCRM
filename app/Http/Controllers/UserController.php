@@ -27,7 +27,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if(Auth::user()->can('user-list')) {
-
+                
              return $this->userService->listItems($request);
 
         }

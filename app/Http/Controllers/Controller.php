@@ -9,4 +9,8 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
+
+    public function noPermissionResponse(){
+        return response()->json(['status_code' => 403, 'messages'=>'User does not have the right permissions']);
+    }
 }
