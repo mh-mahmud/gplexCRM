@@ -25,13 +25,13 @@ class UserRepository
         $user->first_name     = $data['first_name'];
         $user->middle_name    = $data['middle_name'] ?? null;
         $user->last_name      = $data['last_name'] ?? null;
-        $user->phone          = $data['phone'];
+        $user->phone          = $data['phone'] ?? null;
         $user->address        = $data['address'] ?? null;
-        $user->user_name      = $data['user_name'];
+        $user->user_name      = $data['user_name'] ?? null;
         $user->email          = $data['email'] ?? null;
         $user->password       = bcrypt($data['password']);
         $user->role_id        = $data['role_id'] ?? null;
-        $user->gender         = $data['gender'];
+        $user->gender         = $data['gender'] ?? null;
         $user->status         = config('constants.ACTIVE');
         $user->save();
 

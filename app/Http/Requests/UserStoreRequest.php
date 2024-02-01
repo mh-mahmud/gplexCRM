@@ -27,9 +27,9 @@ class UserStoreRequest extends FormRequest
             'first_name'            => 'required|string|max:50|min:2',
             'middle_name'           => 'nullable|string|max:50|min:2',
             'last_name'             => 'nullable|string|max:50|min:2',
-            'email'                 => 'nullable|email|string|max:60|unique:users',
+            'email'                 => 'required|email|string|max:60|unique:users',
             'phone'                 => 'nullable|numeric|digits_between:10,15|unique:users',
-            'user_name'             => 'required|string|max:50|min:3',
+            // 'user_name'             => 'required|string|max:50|min:3',
             'password'              => 'required|confirmed|min:6'
         ];
     }
