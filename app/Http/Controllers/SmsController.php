@@ -48,4 +48,28 @@ class SmsController extends Controller
     {
         return $this->service->send_sms_service($request);
     }
+
+    public function sms_queue_list() {
+        return $this->service->get_queue_list();
+    }
+
+    public function sms_log_list() {
+        return $this->service->get_log_list();
+    }
+
+    public function sms_queue_details($id) {
+        return $this->service->queue_details($id);
+    }
+    
+    public function sms_log_details($id) {
+        return $this->service->log_details($id);
+    }
+
+    public function single_sms_queue_delete(Request $request, $id) {
+        return $this->service->single_queue_delete($request, $id);
+    }
+
+    public function all_sms_queue_delete(Request $request) {
+        return $this->service->all_queue_delete($request);
+    }
 }

@@ -114,4 +114,74 @@ class SmsService {
         $data['msg']=["SmsTemplate saved successfully"];
         return response()->json(compact('data'))->setStatusCode(200);
 	}
+
+	public function get_queue_list() {
+		return SmsQueue::paginate(20);
+	}
+
+	public function get_log_list() {
+		return SmsLog::paginate(20);
+	}
+
+	public function queue_details($id) {
+        $data = [];
+        $chk_data = SmsQueue::find($id);
+
+        if(!empty($chk_data)) {
+            $data[] = ['status' => 'success', 'msg' => 'data found', 'data' => $chk_data];
+            return response()->json(compact('data'))->setStatusCode(200);
+        }
+        $data[] = ['status' => 'failed', 'msg' => 'no data found'];
+        return response()->json(compact('data'))->setStatusCode(401);
+	}
+
+	public function log_details($id) {
+        $data = [];
+        $chk_data = SmsLog::find($id);
+
+        if(!empty($chk_data)) {
+            $data[] = ['status' => 'success', 'msg' => 'data found', 'data' => $chk_data];
+            return response()->json(compact('data'))->setStatusCode(200);
+        }
+        $data[] = ['status' => 'failed', 'msg' => 'no data found'];
+        return response()->json(compact('data'))->setStatusCode(401);
+	}
+
+    public function single_queue_delete($request, $id)
+    {
+        $data = [];
+        $request->validate([
+            'delete_code' => 'required'
+        ]);
+
+        $check = SmsQueue::find($id);
+        if(!empty($check)) {
+            $data['data'] = SmsQueue::destroy($id);
+            $data['status'] = "success";
+            $data['msg'] = ["Single Queue deleted successfully"];
+            return response()->json(compact('data'))->setStatusCode(200);
+        }
+        $data['status'] = "failed";
+        $data['msg']= ["no data found"];
+        return response()->json(compact('data'))->setStatusCode(401);
+    }
+
+    public function all_queue_delete($request)
+    {
+        $data = [];
+        $request->validate([
+            'delete_code' => 'required'
+        ]);
+
+        $deleted = SmsQueue::truncate();
+        if(!empty($deleted)) {
+        	$data['data'] = $deleted;
+            $data['status'] = "success";
+            $data['msg'] = ["All Queue deleted successfully"];
+            return response()->json(compact('data'))->setStatusCode(200);
+        }
+        $data['status'] = "failed";
+        $data['msg']= ["no data found"];
+        return response()->json(compact('data'))->setStatusCode(401);
+    }
 }
