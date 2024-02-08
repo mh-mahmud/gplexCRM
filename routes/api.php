@@ -106,6 +106,14 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 	Route::get("/email-template/{id}", [EmailController::class, 'email_template_show']);
 	Route::post("/email-template-delete", [EmailController::class, 'email_template_destroy']);
 
+	Route::post("/send-email", [EmailController::class, 'send_email']);
+	Route::get("/email-queue-list", [EmailController::class, 'email_queue_list']);
+	Route::get("/email-log-list", [EmailController::class, 'email_log_list']);
+	Route::get("/email-queue-details/{id}", [EmailController::class, 'email_queue_details']);
+	Route::get("/email-log-details/{id}", [EmailController::class, 'email_log_details']);
+	Route::delete("/single-email-queue-delete/{id}", [EmailController::class, 'single_email_queue_delete']);
+	Route::delete("/all-email-queue-delete", [EmailController::class, 'all_email_queue_delete']);
+
 	/*
 		---------------- USER MANAGEMENT MODULE ----------------
 	*/
