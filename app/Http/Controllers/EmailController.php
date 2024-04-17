@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\EmailService;
 use App\Models\EmailTemplate;
+use Mail;
+use App\Mail\SingleMail;
 
 class EmailController extends Controller
 {
@@ -96,5 +98,31 @@ class EmailController extends Controller
         $data['status'] = "failed";
         $data['msg']= ["no data found"];
         return response()->json(compact('data'))->setStatusCode(401);
+    }
+
+    public function send_email(Request $request) {
+        $data = [];
+        $request->validate([
+            'subject' => 'required',
+            'body' => 'required',
+            'to_email' => 'required'
+        ]);
+
+        $subject = $request->subject;
+        $body = $request->body;
+        $to_email = $request->to_email;
+
+        
+        try {
+            Mail::to($to_email)->send(new SingleMail($subject, $body));
+            $data['status'] = "success";
+            $data['message'] = "Email sent successfully";
+            return response()->json(compact('data'))->setStatusCode(200);
+        } catch (Exception $e) {
+            $data['status'] = "failed";
+            $data['message'] = $e->getMessage();
+            return response()->json(compact('data'))->setStatusCode(401);
+        }
+
     }
 }
