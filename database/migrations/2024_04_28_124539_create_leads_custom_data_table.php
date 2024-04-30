@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('leads_forms', function (Blueprint $table) {
+        Schema::create('leads_custom_data', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('form_id')->nullable();
-            $table->string('form_name');
-            $table->text('form_description')->nullable();
-            $table->tinyInteger('form_status');
+            $table->unsignedBigInteger('form_id');
+            $table->unsignedBigInteger('lead_id');
+            $table->json('custom_data');
+            $table->timestamp('lead_created_date')->useCurrent();
             $table->timestamps();
+            $table->foreign('lead_id')->references('id')->on('leads')->onDelete('cascade');
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('leads_forms');
+        Schema::dropIfExists('leads_custom_data');
     }
 };

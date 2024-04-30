@@ -10,6 +10,7 @@ use App\Models\User;
 class AuthController extends Controller
 {
     public function register(Request $request) {
+		//var_dump($request);die();
     	$inputs = $request->validate([
     		'name' => 'required|string',
     		'email' => 'required|string|unique:users,email',

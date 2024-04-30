@@ -13,17 +13,14 @@ return new class extends Migration
     {
         Schema::create('lead_form_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('form_id');
-            $table->string('field_name');
-            $table->string('field_value');
-            $table->integer('character_length');
-            $table->boolean('is_index');
-            $table->boolean('is_null');
-            $table->boolean('is_unique');
+            $table->char('form_id', 10)->nullable(false);
+            $table->string('field_name', 191)->nullable();
+            $table->string('field_value', 191)->nullable();
+            $table->integer('character_length')->nullable();
+            $table->tinyInteger('is_index')->nullable();
+            $table->tinyInteger('is_null')->nullable();
+            $table->tinyInteger('is_unique')->nullable();
             $table->timestamps();
-
-            // Foreign key constraint
-            $table->foreign('form_id')->references('id')->on('leads_forms')->onDelete('cascade');
         });
     }
 
