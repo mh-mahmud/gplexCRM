@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController ;
 use App\Http\Controllers\RoleController ;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\MenuController ;
+use App\Http\Controllers\LeadsController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -150,7 +151,17 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('sub-menu-store', [PermissionController::class, 'store']);
     Route::put('sub-menu-update/{id}', [PermissionController::class, 'update']);
     Route::get('sub-menu-details/{id}', [PermissionController::class, 'show']);
-    Route::delete('sub-menu-delete/{id}', [PermissionController::class, 'destroy']); 
+    Route::delete('sub-menu-delete/{id}', [PermissionController::class, 'destroy']);
+
+	/*
+		---------------- Leads Management MODULE ----------------
+	*/
+	Route::get('leads-form-list', [LeadsController::class, 'index']);
+	Route::post('create-leads-form', [LeadsController::class, 'store']);
+    Route::put('update-leads-form/{id}', [LeadsController::class, 'update']);
+    Route::get('show-leads-form/{id}', [LeadsController::class, 'show']);
+    Route::delete('delete-leads-form/{id}', [LeadsController::class, 'destroy']);
+
 
 });
 
