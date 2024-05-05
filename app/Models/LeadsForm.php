@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class LeadsForm extends Model
 {
     use HasFactory;
+
+    protected $table = 'leads_form';
 }

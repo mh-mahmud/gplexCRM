@@ -3,15 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\LeadsService;
+use App\Models\LeadsForm;
+use App\Models\LeadFormDetail;
+use App\Models\Leads;
 
 class LeadsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    protected $lead_service;
+    public function __construct(LeadsService $lead_service) {
+        $this->lead_service = $lead_service;
+    }
+
     public function index()
     {
-        return "Hi, I am index";
+        $result = $this->lead_service->getAllLeadsForm();
+        if($result->isNotEmpty()) {
+            $data['status'] = "success";
+            $data['msg'] = "leads data found";
+            $data['data'] = $result;
+            return response()->json(compact('data'))->setStatusCode(200);
+        }
+
+        $data['status'] = "failed";
+        $data['msg'] = "no data found";
+        $data['data'] = !empty($result) ? $result : null;
+        return response()->json(compact('data'))->setStatusCode(401);
     }
 
     /**
@@ -27,7 +45,19 @@ class LeadsController extends Controller
      */
     public function show(string $id)
     {
-        return "Single form show details";
+        $result = $this->lead_service->getLeadsFormById($id);
+
+        if(!empty($result)) {
+            $data['status'] = "success";
+            $data['msg'] = "leads data found";
+            $data['data'] = $result;
+            return response()->json(compact('data'))->setStatusCode(200);
+        }
+
+        $data['status'] = "failed";
+        $data['msg'] = "no data found";
+        $data['data'] = !empty($result) ? $result : null;
+        return response()->json(compact('data'))->setStatusCode(401);
     }
 
     /**

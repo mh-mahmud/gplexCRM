@@ -10,7 +10,11 @@ use App\Models\LeadsForm;
 class LeadsService {
 
 	public function getAllLeadsForm() {
-		return LeadsForm::all();
+		return LeadsForm::where('id', '=', 3)->get();
+	}
+
+	public function getLeadsFormById($id) {
+		return LeadsForm::where('id', '=', $id)->first();
 	}
 
 }
