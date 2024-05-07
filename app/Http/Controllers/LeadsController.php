@@ -37,7 +37,13 @@ class LeadsController extends Controller
      */
     public function store(Request $request)
     {
-        return "This is store request";
+
+        $request->validate([
+            'form_name' => 'required',
+            'form_description' => 'required',
+        ]);
+
+        return $this->lead_service->storeFormData($request);
     }
 
     /**
@@ -63,9 +69,15 @@ class LeadsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        return "This is update data";
+        $data = [];
+        $request->validate([
+            'id' => 'required'
+        ]);
+
+        return $this->lead_service->updateLeadsFormById($request);
+
     }
 
     /**

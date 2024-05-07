@@ -150,7 +150,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 	*/
 	Route::get('leads-form-list', [LeadsController::class, 'index']);
 	Route::post('create-leads-form', [LeadsController::class, 'store']);
-    Route::put('update-leads-form/{id}', [LeadsController::class, 'update']);
+    Route::put('update-leads-form', [LeadsController::class, 'update']);
     Route::get('show-leads-form/{id}', [LeadsController::class, 'show']);
     Route::delete('delete-leads-form/{id}', [LeadsController::class, 'destroy']);
 

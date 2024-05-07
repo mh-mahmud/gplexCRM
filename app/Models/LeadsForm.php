@@ -10,4 +10,5 @@ class LeadsForm extends Model
     use HasFactory;
 
     protected $table = 'leads_form';
+    protected $guarded = [];
 }
