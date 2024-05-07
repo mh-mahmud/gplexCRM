@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalesManController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\EmailController;
@@ -77,6 +78,13 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 	Route::post("/branch-update", [SettingsController::class, 'branch_update']);
 	Route::get("/branch/{id}", [SettingsController::class, 'branch_show']);
 	Route::post("/branch-delete", [SettingsController::class, 'branch_destroy']);
+
+	//Promotion
+	Route::get("/promotion-list", [PromotionController::class, 'index']);
+	Route::post("/promotion-create", [PromotionController::class, 'store']);
+	Route::put("/promotion-update/{id}", [PromotionController::class, 'update']);
+	Route::get("/promotion/{id}", [PromotionController::class, 'show']);
+	Route::delete("/promotion/{id}", [PromotionController::class, 'destroy']);
 
 
 	/*
