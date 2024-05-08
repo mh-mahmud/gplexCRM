@@ -79,7 +79,21 @@ class PromotionController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'promotion_title' => 'required',
+            'file_location' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048',
+        ]);
+    
         $promotion = Promotion::find($id);
+    
+        // Handle File Upload
+        if ($request->hasFile('file_location')) {
+            $file = $request->file('file_location');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('uploads', $fileName);
+            $promotion->file_location = $filePath;
+        }
+    
         $promotion->update($request->all());
         return $promotion;
     }

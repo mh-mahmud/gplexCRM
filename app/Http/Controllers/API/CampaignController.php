@@ -61,10 +61,15 @@ class CampaignController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        $promotion = Campaign::find($id);
-        $promotion->update($request->all());
-        return $promotion;
+    {   
+        $request->validate([
+            'campaign_title' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+        $campaign = Campaign::find($id);
+        $campaign->update($request->all());
+        return $campaign;
     }
 
     /**
