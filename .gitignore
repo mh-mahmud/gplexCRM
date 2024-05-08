@@ -26,6 +26,10 @@ Homestead.json
 /.vagrant
 .phpunit.result.cache
 
+
+# ui themes folder #
+ui/theme
+
 ### Node ###
 # Logs
 logs
