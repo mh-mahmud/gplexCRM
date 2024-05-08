@@ -63,6 +63,7 @@ class PromotionController extends Controller
         $promotion->save();
 
         return $promotion;
+        //return redirect()->route('promotion.index')->with('success', 'Promotion created successfully');
     }
 
     /**

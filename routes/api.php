@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalesManController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\EmailController;
@@ -85,6 +86,14 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 	Route::put("/promotion-update/{id}", [PromotionController::class, 'update']);
 	Route::get("/promotion/{id}", [PromotionController::class, 'show']);
 	Route::delete("/promotion/{id}", [PromotionController::class, 'destroy']);
+
+
+	//Campaign
+	Route::get("/campaign-list", [CampaignController::class, 'index']);
+	Route::post("/campaign-create", [CampaignController::class, 'store']);
+	Route::put("/campaign-update/{id}", [CampaignController::class, 'update']);
+	Route::get("/campaign/{id}", [CampaignController::class, 'show']);
+	Route::delete("/campaign/{id}", [CampaignController::class, 'destroy']);
 
 
 	/*
