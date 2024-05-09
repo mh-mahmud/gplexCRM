@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // public routes
+
 Route::get("/products", [ProductController::class, 'index']);
 Route::get("/products/{id}", [ProductController::class, 'show']);
 Route::post("/register", [AuthController::class, 'register']);
