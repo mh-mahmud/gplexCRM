@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use App\Services\EmailService;
+use App\Services\API\EmailService;
 use App\Models\EmailTemplate;
 use Mail;
 use App\Mail\SingleMail;

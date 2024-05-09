@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use App\Services\SmsService;
+use App\Services\API\SmsService;
 use App\Models\SmsTemplate;
 use App\Models\SmsQueue;
 use App\Models\SmsLog;

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use App\Services\LeadsService;
+use App\Services\API\LeadsService;
 use App\Models\LeadsForm;
 use App\Models\LeadFormDetail;
 use App\Models\Leads;

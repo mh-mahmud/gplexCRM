@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use App\Services\SettingsService;
+use App\Services\API\SettingsService;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\Branch;

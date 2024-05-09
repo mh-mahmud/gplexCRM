@@ -1,5 +1,5 @@
 <?php
-namespace App\Services;
+namespace App\Services\API;
 use App\Models\SmsTemplate;
 use App\Models\SmsQueue;
 use App\Models\SmsLog;
