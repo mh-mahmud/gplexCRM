@@ -59,22 +59,18 @@ class AuthController extends Controller
     }
  
     public function login(Request $request) {
-    	$inputs = $request->validate([
-    		'email' => 'required|string',
-    		'password' => 'required|string'
-    	]);
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-    	$user = User::where('email', $inputs['email'])->first();
-    	// check password
-    	if(!$user || !Hash::check($inputs['password'], $user->password)) {
-    		return response(['message' => 'Bad credetials'], 401);
-    	}
-    	$token = $user->createToken('gpleCRMToken')->plainTextToken;
+        // Attempt to log in with the provided credentials
+        if (Auth::attempt($request->only('email', 'password'), $request->has('remember'))) {
+            // Redirect to a specific route or homepage on successful login
+            return redirect()->intended('/dashboard');
+        }
 
-    	$response = [
-    		'user' => $user,
-    		'token' => $token
-    	];
-    	return response($response, 201);
+        // If authentication fails, redirect back with errors
+        return redirect()->back()->withErrors(['email' => 'The provided credentials do not match our records.']);
     }
 }

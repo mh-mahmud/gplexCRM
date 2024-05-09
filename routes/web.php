@@ -20,4 +20,9 @@ use App\Http\Controllers\AuthController;
 
 Route::get('/', [AuthController::class, 'index']);
 Route::get('/login', [AuthController::class, 'index']);
+Route::get('/login', [AuthController::class, 'index']);
 Route::get('/dashboard', [AuthController::class, 'dashboard']);
+
+Route::get('/admin/login',[HomeController::class,'admin_login'])->name('admin_login');
+Route::post('admin_login_post',[HomeController::class,'admin_login_post'])->name('admin_login_post');
+Route::post('logout', [HomeController::class, 'logout'])->name('logout')->middleware('auth');
