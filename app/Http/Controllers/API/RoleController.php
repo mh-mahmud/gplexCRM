@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Services\RoleService;
+use App\Services\API\RoleService;
 use Illuminate\Http\Request;
 use Auth;
 

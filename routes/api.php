@@ -1,19 +1,19 @@
 <?php
 
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\SalesManController;
-use App\Http\Controllers\PromotionController;
-use App\Http\Controllers\CampaignController;
-use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\SmsController;
-use App\Http\Controllers\EmailController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\SalesManController;
+use App\Http\Controllers\API\PromotionController;
+use App\Http\Controllers\API\CampaignController;
+use App\Http\Controllers\API\SettingsController;
+use App\Http\Controllers\API\SmsController;
+use App\Http\Controllers\API\EmailController;
+use App\Http\Controllers\API\AuthController;
 
-use App\Http\Controllers\UserController ;
-use App\Http\Controllers\RoleController ;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\MenuController ;
-use App\Http\Controllers\LeadsController;
+use App\Http\Controllers\API\UserController ;
+use App\Http\Controllers\API\RoleController ;
+use App\Http\Controllers\API\PermissionController;
+use App\Http\Controllers\API\MenuController ;
+use App\Http\Controllers\API\LeadsController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
