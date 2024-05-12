@@ -39,11 +39,29 @@
 					<!--begin::Wrapper-->
 					<div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
 						<!--begin::Form-->
-						<form class="form w-100" novalidate="novalidate" id="" action="#">
+						<form class="form w-100" novalidate="novalidate" method="POST" action="{{ route('login.post') }}">
+							<!-- @csrf -->
+                   
+							<input type="hidden" name="_token" value="{{ csrf_token() }}">
+
 							<!--begin::Heading-->
 							<div class="text-center mb-10">
 								<!--begin::Title-->
 								<h1 class="text-dark mb-3">Sign In to gPlex CRM</h1>
+								<!--Alert Message-->
+								@if (session('success'))
+								<div class="alert alert-success alert-dismissible fade show" role="alert">
+									<strong> {{ session('success') }}</strong> 
+									<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+								</div>
+								@endif
+                                @if (session('error'))
+								<div class="alert alert-danger alert-dismissible fade show" role="alert">
+									<strong>{{ session('error') }}</strong>
+									<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+								</div>
+								@endif
+								<!--End Alert Message-->
 								<!--end::Title-->
 								<!--begin::Link-->
 
@@ -57,6 +75,10 @@
 								<!--end::Label-->
 								<!--begin::Input-->
 								<input class="form-control form-control-lg form-control-solid" type="text" name="email" autocomplete="off" />
+							
+								@if ($errors->has('email'))
+                                <span class="text-danger">{{ $errors->first('email') }}</span>
+                                @endif
 								<!--end::Input-->
 							</div>
 							<!--end::Input group-->
@@ -66,11 +88,16 @@
 								<div class="d-flex flex-stack mb-2">
 									<!--begin::Label-->
 									<label class="form-label fw-bolder text-dark fs-6 mb-0">Password</label>
+								
+										
 									<!--end::Label-->
 								</div>
 								<!--end::Wrapper-->
 								<!--begin::Input-->
 								<input class="form-control form-control-lg form-control-solid" type="password" name="password" autocomplete="off" />
+								@if ($errors->has('password'))
+                                 <span class="text-danger">{{ $errors->first('password') }}</span>
+                                @endif
 								<!--end::Input-->
 							</div>
 							<!--end::Input group-->
