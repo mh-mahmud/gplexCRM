@@ -21,11 +21,14 @@ use App\Http\Controllers\DashboardController;
 
 Route::get('/', [AuthController::class, 'index'])->name('login_index');
 Route::get('/login', [AuthController::class, 'index'])->name('login');
-//Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
 Route::post('/post_login', [AuthController::class, 'postLogin'])->name('login.post');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+/*Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');*/
 
-Route::get('/admin/login',[HomeController::class,'admin_login'])->name('admin_login');
-Route::post('admin_login_post',[HomeController::class,'admin_login_post'])->name('admin_login_post');
-//Route::post('logout', [HomeController::class, 'logout'])->name('logout1')->middleware('auth');
+
+Route::group(['middleware' => 'auth'], function () {
+	Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+	Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+	Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
+});

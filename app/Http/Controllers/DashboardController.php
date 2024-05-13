@@ -12,22 +12,25 @@ use Carbon\Carbon;
 class DashboardController extends Controller {
 
     public function __construct() {
-		if( !(Session::has('users')) ) {
+		/*if( !(Session::has('users')) ) {
             return Redirect('login');
-        }
+        }*/
 
     }
 
 	public function dashboard() 
 	{
 		//dd(Session::has('users'));die();
-	   if( !(Session::has('users')) ) {
-              return Redirect('login');
-           }
-		   //dd('sdsds');die();
+		/*if( !(Session::has('users')) ) {
+			return Redirect('login');
+		}*/
 
-		   return view('dashboard');
+		return view('dashboard');
 	  
+	}
+
+	function profile() {
+		dd("hi kaka");
 	}
 
 }

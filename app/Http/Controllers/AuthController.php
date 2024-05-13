@@ -14,12 +14,13 @@ class AuthController extends Controller
 
 	public function index()
 	{   
-		if(!Session::has('users')) {
+		/*if(!Session::has('users')) {
 			return view('auth.login');
 		} else {
-			//dd('dsds');die();
 			return redirect()->intended('dashboard'); // Redirect to the dashboard if the user is already logged in
-		}
+		}*/
+
+        return view('auth.login');
 	}
 
 	
@@ -47,7 +48,8 @@ class AuthController extends Controller
 
 	public function postLogin(Request $request)
 	{   
-		// Check user is already logged in
+
+		/*// Check user is already logged in
 		if(Session::has('users')) {
 			return redirect('dashboard')->with('success', 'You are already logged in.');
 		}
@@ -69,7 +71,22 @@ class AuthController extends Controller
 			return redirect()->intended('dashboard')->with('success', 'You have successfully logged in.');
 		}
 
-		return redirect("login")->with('error', 'Invalid password.');
+		return redirect("login")->with('error', 'Invalid password.');*/
+
+        // Validate the login form data
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        // Attempt to log in with the provided credentials
+        if (Auth::attempt($request->only('email', 'password'), $request->has('remember'))) {
+            // Redirect to a specific route or homepage on successful login
+            return redirect()->intended('/dashboard');
+        }
+
+        // If authentication fails, redirect back with errors
+        return redirect()->back()->withErrors(['email' => 'The provided credentials do not match our records.']);
 	}
 
     public function logoutAPI(Request $request) {
