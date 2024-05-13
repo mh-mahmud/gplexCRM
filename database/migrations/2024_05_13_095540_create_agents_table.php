@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('phone_number', 191)->nullable();
             $table->date('birth_day')->nullable();
             $table->string('profile_image', 191)->nullable();
-            $table->tinyInteger('status')->default(0); // Change default status if necessary
+            $table->tinyInteger('status');
             $table->char('role_id', 10)->nullable();
             $table->char('did', 10)->nullable();
             $table->char('seat_id', 3)->nullable();
