@@ -23,6 +23,7 @@
 		<!--begin::Global Stylesheets Bundle(used by all pages)-->
 		<link href="{{url('/')}}/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="{{url('/')}}/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="{{url('/')}}/assets/css/custom.css" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
 	</head>
 	<!--end::Head-->
@@ -5043,7 +5044,9 @@
 
 
 					<!--begin::Content-->
+					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 						@yield('content')
+					</div>
 					<!--end::Content-->
 
 

@@ -15,7 +15,7 @@ class AuthController extends Controller
 	public function index()
     {
         if (Auth::check()) {
-            return redirect()->route('dashboard'); 
+            return redirect()->route('dashboard');
         } else {
             return view('auth.login');
         }
@@ -89,13 +89,6 @@ class AuthController extends Controller
         return redirect("login")->with('error', 'Invalid password.');
     }
 
-    public function logoutAPI(Request $request) {
-    	auth()->user()->tokens()->delete();
-    	return [
-    		'message' => 'Logged Out'
-    	];
-    }
-
 	public function logout(Request $request)
 	{
 	   Auth::logout();
@@ -103,21 +96,4 @@ class AuthController extends Controller
        $request->session()->regenerateToken();
        return redirect('login')->with('success', 'You have successfully logged out.');
 	}
-
- 
-    public function login(Request $request) {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        // Attempt to log in with the provided credentials
-        if (Auth::attempt($request->only('email', 'password'), $request->has('remember'))) {
-            // Redirect to a specific route or homepage on successful login
-            return redirect()->intended('/dashboard');
-        }
-
-        // If authentication fails, redirect back with errors
-        return redirect()->back()->withErrors(['email' => 'The provided credentials do not match our records.']);
-    }
 }

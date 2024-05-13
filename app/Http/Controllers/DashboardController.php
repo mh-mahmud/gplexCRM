@@ -22,7 +22,7 @@ class DashboardController extends Controller {
     }
 
 	function profile() {
-		dd("hi kaka");
+		return view('single_form');
 	}
 
 }
