@@ -13,15 +13,13 @@ class AuthController extends Controller
 {
 
 	public function index()
-	{   
-		/*if(!Session::has('users')) {
-			return view('auth.login');
-		} else {
-			return redirect()->intended('dashboard'); // Redirect to the dashboard if the user is already logged in
-		}*/
-
-        return view('auth.login');
-	}
+    {
+        if (Auth::check()) {
+            return redirect()->route('dashboard'); 
+        } else {
+            return view('auth.login');
+        }
+    }
 
 	
     public function register(Request $request) {
@@ -46,34 +44,8 @@ class AuthController extends Controller
     	return response($response, 201);
     }
 
-	public function postLogin(Request $request)
+	public function postLogin_backup(Request $request)
 	{   
-
-		/*// Check user is already logged in
-		if(Session::has('users')) {
-			return redirect('dashboard')->with('success', 'You are already logged in.');
-		}
-
-		$this->validate($request,[
-			'email' => 'required',
-			'password' => 'required',
-		]);
-
-		$user = User::where('email', $request->email)->first();
-
-		if(empty($user)) {
-			return redirect("login")->with('error', 'Invalid email address.');
-		}
-
-		// Check if the password
-		 if(Hash::check($request->password, $user->password)) {
-			Session::put('users', $user);
-			return redirect()->intended('dashboard')->with('success', 'You have successfully logged in.');
-		}
-
-		return redirect("login")->with('error', 'Invalid password.');*/
-
-        // Validate the login form data
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -88,6 +60,34 @@ class AuthController extends Controller
         // If authentication fails, redirect back with errors
         return redirect()->back()->withErrors(['email' => 'The provided credentials do not match our records.']);
 	}
+
+	public function postLogin(Request $request)
+    {   
+        // Check user is already logged in
+        if(session()->has('users')) {
+            return redirect('dashboard')->with('success', 'You are already logged in.');
+        }
+
+        $this->validate($request,[
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if(Auth::attempt($credentials)) {
+            session()->regenerate();
+            session()->put('users', Auth::user());
+            return redirect()->intended('dashboard')->with('success', 'You have successfully logged in.');
+        }
+		// If the email address is correct but password is wrong
+		$user = User::where('email', $request->email)->first();
+		if(empty($user)) {
+			return redirect("login")->with('error', 'Invalid email address.');
+		}
+
+        return redirect("login")->with('error', 'Invalid password.');
+    }
 
     public function logoutAPI(Request $request) {
     	auth()->user()->tokens()->delete();
