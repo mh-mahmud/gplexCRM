@@ -63,7 +63,7 @@ class AuthController extends Controller
 
 	public function postLogin(Request $request)
     {   
-        // Check user is already logged in
+        //Check user is already logged in
         if(session()->has('users')) {
             return redirect('dashboard')->with('success', 'You are already logged in.');
         }
@@ -80,7 +80,7 @@ class AuthController extends Controller
             session()->put('users', Auth::user());
             return redirect()->intended('dashboard')->with('success', 'You have successfully logged in.');
         }
-		// If the email address is correct but password is wrong
+		//If the email address is correct but password is wrong
 		$user = User::where('email', $request->email)->first();
 		if(empty($user)) {
 			return redirect("login")->with('error', 'Invalid email address.');
