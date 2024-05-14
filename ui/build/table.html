@@ -6059,74 +6059,50 @@
                         <div class="col-xxl-12">
                             <div class="card mb-5">
                                 <!--begin::Header-->
-                                <div class="d-flex justify-content-between card-header border-0 pt-5">
+                                <div class="d-flex justify-content-between align-items-start card-header border-0 pt-5">
                                     <h3 class="card-title align-items-start flex-column">
                                         <span class="card-label fw-bolder fs-3 mb-1">Table Name</span>
                                         <span class="text-muted mt-1 fw-bold fs-7">Table data here</span>
                                     </h3>
 
                                     <div class="d-flex flex-wrap gap-2">
-                                        <!-- Select Dropdown-->
-                                        <div class="me-4" data-select2-id="select2-data-71-1yk3">
-                                            <!--begin::Select-->
-                                            <select
-                                                class="form-select mw-500px form-select-solid select2-hidden-accessible py-3"
-                                                data-control="select2" data-placeholder="Seller Annual Fee"
-                                                data-hide-search="true" data-select2-id="select2-data-10-muxm"
-                                                tabindex="-1" aria-hidden="true">
-                                                <option value="" data-select2-id="select2-data-12-ka6g"></option>
-                                                <option value="1" data-select2-id="select2-data-77-7hyn">Individual
-                                                    Seller Account
-                                                </option>
-                                                <option value="2" data-select2-id="select2-data-78-5ory">Variable
-                                                    Closing Fee
-                                                </option>
-                                                <option value="3" data-select2-id="select2-data-79-8qim">Minimum
-                                                    Referral Fee
-                                                </option>
-                                            </select>
-                                            <!--end::Select-->
-                                        </div>
-                                        <!-- End Select Dropdown-->
-
-                                        <!--begin::Input group-->
+                                        <!--begin::Input group start date-->
                                         <div class="position-relative">
-                                            <input type="date"
-                                                   class="form-control form-control-solid  fs-4 ps-14 text-gray-700 placeholder-gray-400 mw-500px date-picker"
-                                                   name="Feature" value="" placeholder="Filter Data"/>
+                                            <input type="text" class="form-control form-control-solid flatpickr"
+                                                   placeholder="Start date" name="date-table">
                                         </div>
                                         <!--end::Input group-->
 
-                                        <!--begin::Input group-->
+                                        <!--begin::Input group end date-->
                                         <div class="position-relative">
-                                            <input type="date"
-                                                   class="form-control form-control-solid form-select-solid fs-4  ps-14 text-gray-700 placeholder-gray-400 mw-500px"
-                                                   name="Feature" value="" placeholder="Filter Data"/>
+                                            <input type="text" class="form-control form-control-solid"
+                                                   placeholder="End date" name="date-table"/>
                                         </div>
+
                                         <!--end::Input group-->
 
                                         <!--begin::Input group-->
-                                        <div class="position-relative">
+                                        <div class="d-flex align-items-center position-relative">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                                            <span
-                                                class="svg-icon svg-icon-1 svg-icon-primary position-absolute top-50 translate-middle ms-9">
-																<svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                     height="24" viewBox="0 0 24 24" fill="none">
-																	<rect opacity="0.5" x="17.0365" y="15.1223"
-                                                                          width="8.15546" height="2" rx="1"
-                                                                          transform="rotate(45 17.0365 15.1223)"
-                                                                          fill="black"></rect>
-																	<path
-                                                                        d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                                                                        fill="black"></path>
-																</svg>
-															</span>
+                                            <span class="svg-icon svg-icon-1 position-absolute ms-6">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                         viewBox="0 0 24 24" fill="none">
+														<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546"
+                                                              height="2" rx="1" transform="rotate(45 17.0365 15.1223)"
+                                                              fill="black"></rect>
+														<path
+                                                            d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+                                                            fill="black"></path>
+													</svg>
+												</span>
                                             <!--end::Svg Icon-->
-                                            <input type="text"
-                                                   class="form-control form-control-lg form-control-solid ps-14"
-                                                   name="search" value="" placeholder="Search">
+                                            <input type="text" data-kt-customer-table-filter="search"
+                                                   class="form-control form-control-solid w-250px ps-15"
+                                                   placeholder="Search Customers">
                                         </div>
                                         <!--end::Input group-->
+
+                                        <button type="button" class="btn btn-primary">Search</button>
 
 
                                     </div>
@@ -6188,15 +6164,18 @@
                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                                                         <span class="svg-icon svg-icon-3">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                         height="24" viewBox="0 0 24 24" fill="none">
-																		<path
-                                                                            d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
-                                                                            fill="black"/>
-																		<path opacity="0.3"
-                                                                              d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
-                                                                              fill="black"/>
-																	</svg>
+																	<svg xmlns="http://www.w3.org/2000/svg"
+                                                                         width="24px" height="24px" viewBox="0 0 24 24">
+                                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                                <rect x="0" y="0" width="24" height="24"/>
+                                                                                <path
+                                                                                    d="M3,12 C3,12 5.45454545,6 12,6 C16.9090909,6 21,12 21,12 C21,12 16.9090909,18 12,18 C5.45454545,18 3,12 3,12 Z"
+                                                                                    fill="black" fill-rule="nonzero" opacity="0.7"/>
+                                                                                <path
+                                                                                    d="M12,15 C10.3431458,15 9,13.6568542 9,12 C9,10.3431458 10.3431458,9 12,9 C13.6568542,9 15,10.3431458 15,12 C15,13.6568542 13.6568542,15 12,15 Z"
+                                                                                    fill="black" opacity="0.7"/>
+                                                                            </g>
+                                                                        </svg>
 																</span>
                                                         <!--end::Svg Icon-->
                                                     </a>
@@ -6268,15 +6247,18 @@
                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                                                         <span class="svg-icon svg-icon-3">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                         height="24" viewBox="0 0 24 24" fill="none">
-																		<path
-                                                                            d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
-                                                                            fill="black"/>
-																		<path opacity="0.3"
-                                                                              d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
-                                                                              fill="black"/>
-																	</svg>
+																	<svg xmlns="http://www.w3.org/2000/svg"
+                                                                         width="24px" height="24px" viewBox="0 0 24 24">
+                                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                                <rect x="0" y="0" width="24" height="24"/>
+                                                                                <path
+                                                                                    d="M3,12 C3,12 5.45454545,6 12,6 C16.9090909,6 21,12 21,12 C21,12 16.9090909,18 12,18 C5.45454545,18 3,12 3,12 Z"
+                                                                                    fill="black" fill-rule="nonzero" opacity="0.7"/>
+                                                                                <path
+                                                                                    d="M12,15 C10.3431458,15 9,13.6568542 9,12 C9,10.3431458 10.3431458,9 12,9 C13.6568542,9 15,10.3431458 15,12 C15,13.6568542 13.6568542,15 12,15 Z"
+                                                                                    fill="black" opacity="0.7"/>
+                                                                            </g>
+                                                                        </svg>
 																</span>
                                                         <!--end::Svg Icon-->
                                                     </a>
@@ -6346,19 +6328,20 @@
                                                 <td class="text-end">
                                                     <a href="#"
                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                                        <span class="svg-icon svg-icon-3">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                         height="24" viewBox="0 0 24 24" fill="none">
-																		<path
-                                                                            d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
-                                                                            fill="black"/>
-																		<path opacity="0.3"
-                                                                              d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
-                                                                              fill="black"/>
-																	</svg>
+                                                         <span class="svg-icon svg-icon-3">
+																	<svg xmlns="http://www.w3.org/2000/svg"
+                                                                         width="24px" height="24px" viewBox="0 0 24 24">
+                                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                                <rect x="0" y="0" width="24" height="24"/>
+                                                                                <path
+                                                                                    d="M3,12 C3,12 5.45454545,6 12,6 C16.9090909,6 21,12 21,12 C21,12 16.9090909,18 12,18 C5.45454545,18 3,12 3,12 Z"
+                                                                                    fill="black" fill-rule="nonzero" opacity="0.7"/>
+                                                                                <path
+                                                                                    d="M12,15 C10.3431458,15 9,13.6568542 9,12 C9,10.3431458 10.3431458,9 12,9 C13.6568542,9 15,10.3431458 15,12 C15,13.6568542 13.6568542,15 12,15 Z"
+                                                                                    fill="black" opacity="0.7"/>
+                                                                            </g>
+                                                                        </svg>
 																</span>
-                                                        <!--end::Svg Icon-->
                                                     </a>
                                                     <a href="#"
                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
@@ -6428,19 +6411,20 @@
                                                 <td class="text-end">
                                                     <a href="#"
                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                                        <span class="svg-icon svg-icon-3">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                         height="24" viewBox="0 0 24 24" fill="none">
-																		<path
-                                                                            d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
-                                                                            fill="black"/>
-																		<path opacity="0.3"
-                                                                              d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
-                                                                              fill="black"/>
-																	</svg>
+                                                       <span class="svg-icon svg-icon-3">
+																	<svg xmlns="http://www.w3.org/2000/svg"
+                                                                         width="24px" height="24px" viewBox="0 0 24 24">
+                                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                                <rect x="0" y="0" width="24" height="24"/>
+                                                                                <path
+                                                                                    d="M3,12 C3,12 5.45454545,6 12,6 C16.9090909,6 21,12 21,12 C21,12 16.9090909,18 12,18 C5.45454545,18 3,12 3,12 Z"
+                                                                                    fill="black" fill-rule="nonzero" opacity="0.7"/>
+                                                                                <path
+                                                                                    d="M12,15 C10.3431458,15 9,13.6568542 9,12 C9,10.3431458 10.3431458,9 12,9 C13.6568542,9 15,10.3431458 15,12 C15,13.6568542 13.6568542,15 12,15 Z"
+                                                                                    fill="black" opacity="0.7"/>
+                                                                            </g>
+                                                                        </svg>
 																</span>
-                                                        <!--end::Svg Icon-->
                                                     </a>
                                                     <a href="#"
                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
@@ -6508,19 +6492,20 @@
                                                 <td class="text-end">
                                                     <a href="#"
                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                                        <span class="svg-icon svg-icon-3">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                         height="24" viewBox="0 0 24 24" fill="none">
-																		<path
-                                                                            d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
-                                                                            fill="black"/>
-																		<path opacity="0.3"
-                                                                              d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
-                                                                              fill="black"/>
-																	</svg>
+                                                       <span class="svg-icon svg-icon-3">
+																	<svg xmlns="http://www.w3.org/2000/svg"
+                                                                         width="24px" height="24px" viewBox="0 0 24 24">
+                                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                                <rect x="0" y="0" width="24" height="24"/>
+                                                                                <path
+                                                                                    d="M3,12 C3,12 5.45454545,6 12,6 C16.9090909,6 21,12 21,12 C21,12 16.9090909,18 12,18 C5.45454545,18 3,12 3,12 Z"
+                                                                                    fill="black" fill-rule="nonzero" opacity="0.7"/>
+                                                                                <path
+                                                                                    d="M12,15 C10.3431458,15 9,13.6568542 9,12 C9,10.3431458 10.3431458,9 12,9 C13.6568542,9 15,10.3431458 15,12 C15,13.6568542 13.6568542,15 12,15 Z"
+                                                                                    fill="black" opacity="0.7"/>
+                                                                            </g>
+                                                                        </svg>
 																</span>
-                                                        <!--end::Svg Icon-->
                                                     </a>
                                                     <a href="#"
                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
@@ -9779,13 +9764,19 @@
 <script src="assets/js/scripts.bundle.js"></script>
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Vendors Javascript(used by this page)-->
-<script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
 <!--end::Page Vendors Javascript-->
 <!--begin::Page Custom Javascript(used by this page)-->
+<script src="assets/js/custom/apps/customers/list/export.js"></script>
+<script src="assets/js/custom/apps/customers/list/list.js"></script>
+<script src="assets/js/custom/apps/customers/add.js"></script>
 <script src="assets/js/custom/widgets.js"></script>
 <script src="assets/js/custom/apps/chat/chat.js"></script>
 <script src="assets/js/custom/modals/create-app.js"></script>
 <script src="assets/js/custom/modals/upgrade-plan.js"></script>
+<script>
+    $('[name="date-table"]').flatpickr();
+</script>
 <!--end::Page Custom Javascript-->
 <!--end::Javascript-->
 </body>
