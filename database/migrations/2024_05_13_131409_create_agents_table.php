@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('agents', function (Blueprint $table) {
-            $table->char('agent_id', 4)->primary();
+            $table->char('agent_id', 4)->nullable()->primary();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name', 191);
             $table->string('phone_number', 191)->nullable();
             $table->date('birth_day')->nullable();
