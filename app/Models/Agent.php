@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Agent extends Model
+{
+    use HasFactory;
+	protected $fillable = [
+        'agent_id',
+        'name',
+        'phone_number',
+        'gender',
+        'birth_day',
+        'status',
+        'profile_image',
+        'role_id',
+        'did',
+        'seat_id',
+        'skill_id',
+        'user_id',
+        'performance',
+        'address',
+        'description',
+    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    protected $table = 'agents';
+}

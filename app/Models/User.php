@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'user_type',
+        'role_id'
     ];
 
     /**
@@ -49,5 +51,10 @@ class User extends Authenticatable
 
         return $this->hasMany(UsersRole::class);
 
+    }
+
+    public function agent()
+    {
+        return $this->hasOne(Agent::class);
     }
 }
