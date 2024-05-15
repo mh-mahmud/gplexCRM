@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Agent extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'agent_id';
 	protected $fillable = [
         'agent_id',
         'name',

@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
@@ -19,7 +20,8 @@ class AgentController extends Controller {
 
 	public function index()
     {
-        return view('index');
+        $agents = Agent::all();
+        return view('agents.index', compact('agents'));
     }
 
 	function create() {
@@ -50,7 +52,7 @@ class AgentController extends Controller {
         $user = User::create([
             'email' => $request->email,
             'name' => $request->name,
-            'user_type' => $request->user_type,
+            'user_type' =>'agent',
             'password' => bcrypt($request->password),
         ]);
         $agent_id = str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
@@ -66,7 +68,7 @@ class AgentController extends Controller {
             'description' => $request->description,
         ]);
         $user->agent()->save($agent);
-        return redirect()->route('agents.create')->with('success', 'Agent created successfully.');
+        return redirect()->route('agents.index')->with('success', 'Agent created successfully.');
     }
 
     public function show($id)
@@ -78,7 +80,8 @@ class AgentController extends Controller {
     public function edit($id)
     {
         $agent = Agent::findOrFail($id);
-        return view('agents.edit', compact('agent'));
+        $user = User::findOrFail($agent->user_id);
+        return view('agents.edit', compact('agent', 'user'));
     }
 
 
@@ -87,15 +90,17 @@ class AgentController extends Controller {
         
         $request->validate([
             'name' => 'required|string',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'required|string',
+            //'email' => 'required|email|unique:users,email,'.$id,
+            //'password' => 'required|string',
             'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Find the user by ID
-        $user = User::findOrFail($id);
+        $agent = Agent::findOrFail($id);
+        $user = User::findOrFail($agent->user_id);
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->user_type ='agent';
         $user->password = bcrypt($request->password);
         $user->save();
         $agent = $user->agent;

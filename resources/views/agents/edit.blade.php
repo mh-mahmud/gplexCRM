@@ -13,12 +13,12 @@
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                             <!--begin::Title-->
-                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Agent Forms
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Agent Edit Forms
                                 <!--begin::Separator-->
                                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Fill up the Agent form</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Fill up the Agent Edit form</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -163,8 +163,9 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('agents.store') }}"  enctype="multipart/form-data" method="POST">
-                                         @csrf
+                                    <form class="g-form w-100" action="{{ route('agents.update', $agent->agent_id) }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('PUT')
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-10">
@@ -173,7 +174,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-lg form-control-solid"
-                                                           type="email" name="email" autocomplete="off"/>
+                                                           type="email" name="email" value="{{ old('email', $user->email) }}"  autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('email'))
                                                         <span class="text-danger">{{ $errors->first('email') }}</span>
@@ -189,7 +190,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-lg form-control-solid"
-                                                           type="text" name="name" autocomplete="off"/>
+                                                           type="text" name="name" value="{{ $agent->name }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('name'))
                                                         <span class="text-danger">{{ $errors->first('name') }}</span>
@@ -206,7 +207,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-lg form-control-solid"
-                                                           type="text" name="phone_number" autocomplete="off"/>
+                                                           type="text" name="phone_number" value="{{ $agent->phone_number }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                 </div>
                                             </div>
@@ -228,21 +229,18 @@
                                                 </div>
                                             </div>
 
-                                      
-
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-10">
                                                     <label class="form-label fw-bolder text-dark">Gender</label>
-                                                    <select class=" form-control form-control-lg form-control-solid" name="gender"
-                                                            aria-label="Default select example">
-                                                            <option value="">Select Gender</option>
-                                                            <option value="male">Male</option>
-                                                            <option value="female">Female</option>
-                                                            <option value="other">Other</option>
-                                                        
+                                                    <select class="form-control form-control-lg form-control-solid" name="gender" aria-label="Default select example">
+                                                        <option value="">Select Gender</option>
+                                                        <option value="male" {{ $agent->gender === 'male' ? 'selected' : '' }}>Male</option>
+                                                        <option value="female" {{ $agent->gender === 'female' ? 'selected' : '' }}>Female</option>
+                                                        <option value="other" {{ $agent->gender === 'other' ? 'selected' : '' }}>Other</option>
                                                     </select>
                                                 </div>
                                             </div>
+
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-10">
@@ -252,7 +250,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-lg form-control-solid"
-                                                           type="date" name="birth_day" autocomplete="off"/>
+                                                           type="date" name="birth_day" value="{{ $agent->birth_day }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                 </div>
                                             </div>
@@ -276,12 +274,9 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-10">
                                                     <label class="form-label fw-bolder text-dark">Status</label>
-                                                    <select class=" form-control form-control-lg form-control-solid" name="status"
-                                                            aria-label="Default select example">
-                                                        
-                                                        <option value="1" selected>Active</option>
-                                                        <option value="0">Inactive</option>
-                                                        
+                                                    <select class="form-control form-control-lg form-control-solid" name="status" aria-label="Default select example">
+                                                        <option value="1" {{ $agent->status == 1 ? 'selected' : '' }}>Active</option>
+                                                        <option value="0" {{ $agent->status == 0 ? 'selected' : '' }}>Inactive</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -289,14 +284,14 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Address</label>
-                                                    <textarea class="form-control form-control-lg  form-control-solid" name="address" rows="3"></textarea>
+                                                    <textarea class="form-control form-control-lg  form-control-solid" name="address" rows="3">{{ $agent->address }}</textarea>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Note</label>
-                                                    <textarea class="form-control form-control-lg  form-control-solid" name="description" rows="3"></textarea>
+                                                    <textarea class="form-control form-control-lg  form-control-solid" name="description" rows="3">{{ $agent->description }}</textarea>
                                                 </div>
                                             </div>
 
