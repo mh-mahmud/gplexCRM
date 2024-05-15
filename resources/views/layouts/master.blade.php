@@ -6753,7 +6753,7 @@
 		<!--end::Global Javascript Bundle-->
 		<!--begin::Page Vendors Javascript(used by this page)-->
 		<script src="{{url('/')}}/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
-		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<script src="{{url('/')}}/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 		<!--end::Page Vendors Javascript-->
 		<!--begin::Page Custom Javascript(used by this page)-->
 		<script src="{{url('/')}}/assets/js/custom/widgets.js"></script>

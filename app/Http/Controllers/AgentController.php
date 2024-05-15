@@ -20,7 +20,8 @@ class AgentController extends Controller {
 
 	public function index()
     {
-        $agents = Agent::all();
+        //$agents = Agent::all();
+        $agents = Agent::paginate(10);
         return view('agents.index', compact('agents'));
     }
 
@@ -74,7 +75,8 @@ class AgentController extends Controller {
     public function show($id)
     {
         $agent = Agent::findOrFail($id);
-        return view('agents.show', compact('agent'));
+        $user = User::findOrFail($agent->user_id);
+        return view('agents.show', compact('agent', 'user'));
     }
 
     public function edit($id)
