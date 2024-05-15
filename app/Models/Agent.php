@@ -13,7 +13,8 @@ class Agent extends Model
     protected $keyType = 'string';
 	protected $fillable = [
         'agent_id',
-        'name',
+        'first_name',
+        'last_name',
         'phone_number',
         'gender',
         'birth_day',

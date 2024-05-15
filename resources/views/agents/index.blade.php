@@ -14,12 +14,12 @@
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                             <!--begin::Title-->
-                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Agent Grid List
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Agent
                                 <!--begin::Separator-->
                                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Agent Grid List</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Agent List</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -29,18 +29,7 @@
                             <!--begin::Wrapper-->
                             <div class="me-4">
                                 <!--begin::Menu-->
-                                <a href="#" class="btn btn-sm btn-flex btn-light btn-active-primary fw-bolder"
-                                   data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
-                                    <span class="svg-icon svg-icon-5 svg-icon-gray-500 me-1">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                 viewBox="0 0 24 24" fill="none">
-												<path
-                                                    d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z"
-                                                    fill="black"/>
-											</svg>
-										</span>
-                                    <!--end::Svg Icon-->Filter</a>
+                               
                                 <!--begin::Menu 1-->
                                 <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
                                      id="kt_menu_61484bf44d957">
@@ -147,7 +136,7 @@
                  <!--**********************************
                                 Tables
                   ***********************************-->
-				  <div class="container-fluid">
+<div class="container-fluid">
 
 <!--Table Alert Message-->
 <div class="text-center">
@@ -183,7 +172,7 @@
 			<div class="d-flex justify-content-between align-items-start card-header border-0 pt-5">
 				<h3 class="card-title align-items-start flex-column">
 					<span class="card-label fw-bolder fs-3 mb-1">Agent List</span>
-					<span class="text-muted mt-1 fw-bold fs-7">Table data here</span>
+					<span class="text-muted mt-1 fw-bold fs-7">Agent data here</span>
 				</h3>
 
 				<div class="d-flex flex-wrap gap-2">
@@ -240,10 +229,11 @@
 						class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
 						<!--begin::Table head-->
 						<thead>
-						<tr class="fw-bolder text-muted">
+						<tr class="fw-bolder">
 						    <th class="min-w-150px">SL</th>
 							<th class="min-w-150px">Agent ID</th>
-							<th class="min-w-140px">Name</th>
+							<th class="min-w-140px">First Name</th>
+							<th class="min-w-140px">Last Name</th>
 							<th class="min-w-120px">Email</th>
 							<th class="min-w-120px">Phone Number</th>
 							<th class="min-w-120px">Date Of Birth</th>
@@ -259,7 +249,8 @@
 
 						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
 							<td class="text-dark fs-6">{{$agent->agent_id}}</td>
-							<td class="text-dark fs-6">{{$agent->name }}</td>
+							<td class="text-dark fs-6">{{$agent->first_name }}</td>
+							<td class="text-dark fs-6">{{$agent->last_name }}</td>
 							<td class="text-dark fs-6">{{$agent->user->email}}</td>
 							<td class="text-dark fs-6">{{$agent->phone_number}}</td>
 							<td class="text-dark fs-6">{{ \Carbon\Carbon::parse($agent->birth_day)->format('d-m-Y') }}</td>
@@ -341,7 +332,7 @@
 		</div>
 
 		<!--Table Pagination-->
-		<ul class="pagination">
+		<!-- <ul class="pagination">
 			<li class="page-item previous disabled"><span class="page-link">Previous</span></span>
 			</li>
 			<li class="page-item "><a href="#" class="page-link">1</a></li>
@@ -351,7 +342,33 @@
 			<li class="page-item "><a href="#" class="page-link">5</a></li>
 			<li class="page-item "><a href="#" class="page-link">6</a></li>
 			<li class="page-item next"><a class="page-link" href="#">Next</span></a></li>
+		</ul> -->
+
+		<ul class="pagination">
+			<!-- Previous Page Link -->
+			@if ($agents->onFirstPage())
+				<li class="page-item previous disabled"><span class="page-link">Previous</span></li>
+			@else
+				<li class="page-item previous"><a href="{{ $agents->previousPageUrl() }}" class="page-link">Previous</a></li>
+			@endif
+
+			<!-- Pagination Elements -->
+			@for ($page = 1; $page <= $agents->lastPage(); $page++)
+				@if ($page == $agents->currentPage())
+					<li class="page-item active"><span class="page-link">{{ $page }}</span></li>
+				@else
+					<li class="page-item"><a href="{{ $agents->url($page) }}" class="page-link">{{ $page }}</a></li>
+				@endif
+			@endfor
+
+			<!-- Next Page Link -->
+			@if ($agents->hasMorePages())
+				<li class="page-item next"><a href="{{ $agents->nextPageUrl() }}" class="page-link">Next</a></li>
+			@else
+				<li class="page-item next disabled"><span class="page-link">Next</span></li>
+			@endif
 		</ul>
+
 		<!--End Table Pagination-->
 
 	</div>

@@ -20,7 +20,8 @@ class AgentController extends Controller {
 
 	public function index()
     {
-        $agents = Agent::all();
+        //$agents = Agent::all();
+        $agents = Agent::paginate(10);
         return view('agents.index', compact('agents'));
     }
 
@@ -33,7 +34,8 @@ class AgentController extends Controller {
         
         $request->validate([
             'email' => 'required|email|unique:users,email',
-            'name' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
             'password' => 'required|string',
             'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -51,14 +53,16 @@ class AgentController extends Controller {
         }
         $user = User::create([
             'email' => $request->email,
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'user_type' =>'agent',
             'password' => bcrypt($request->password),
         ]);
         $agent_id = str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
         $agent = new Agent([
             'agent_id' => $agent_id,
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'gender' => $request->gender,
             'birth_day' => $request->birth_day,
             'phone_number' => $request->phone_number,
@@ -74,7 +78,8 @@ class AgentController extends Controller {
     public function show($id)
     {
         $agent = Agent::findOrFail($id);
-        return view('agents.show', compact('agent'));
+        $user = User::findOrFail($agent->user_id);
+        return view('agents.show', compact('agent', 'user'));
     }
 
     public function edit($id)
@@ -89,7 +94,8 @@ class AgentController extends Controller {
     {
         
         $request->validate([
-            'name' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
             //'email' => 'required|email|unique:users,email,'.$id,
             //'password' => 'required|string',
             'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -98,13 +104,15 @@ class AgentController extends Controller {
         // Find the user by ID
         $agent = Agent::findOrFail($id);
         $user = User::findOrFail($agent->user_id);
-        $user->name = $request->name;
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->user_type ='agent';
         $user->password = bcrypt($request->password);
         $user->save();
         $agent = $user->agent;
-        $agent->name = $request->name;
+        $agent->first_name = $request->first_name;
+        $agent->last_name = $request->last_name;
         $agent->gender = $request->gender;
         $agent->birth_day = $request->birth_day;
         $agent->phone_number = $request->phone_number;
