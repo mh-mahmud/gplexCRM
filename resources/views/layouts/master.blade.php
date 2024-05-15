@@ -6762,6 +6762,7 @@
 		<script src="{{url('/')}}/assets/js/custom/modals/upgrade-plan.js"></script>
 		<script>
 			$('[name="date-table"]').flatpickr();
+			$('[name="birth_day"]').flatpickr();
 		</script>
 		 @yield('endScript')
 		<!--end::Page Custom Javascript-->

@@ -249,10 +249,15 @@
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">
                                                     Date Of Birth</label>
+                                                    
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
-                                                           type="date" name="birth_day" autocomplete="off"/>
+                                                    <div class="position-relative">
+                                                        <input type="text" class="form-control form-control-solid flatpickr"
+                                                            placeholder="Date Of Birth" name="birth_day">
+                                                    </div>
+                                                    <!-- <input class="form-control form-control-lg form-control-solid"
+                                                           type="date" name="birth_day" autocomplete="off"/> -->
                                                     <!--end::Input-->
                                                 </div>
                                             </div>
@@ -329,5 +334,6 @@
 
             <!-- </div> -->
             <!--end::Content-->
+           
 
 @endsection

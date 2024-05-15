@@ -112,6 +112,13 @@ class AgentController extends Controller {
         $agent->address = $request->address;
         $agent->description = $request->description;
         if ($request->hasFile('profile_image')) {
+        // Delete the previous profile image
+        if ($agent->profile_image) {
+            $previousImagePath = public_path().'/uploads/agents/'.$agent->profile_image;
+            if (file_exists($previousImagePath)) {
+                unlink($previousImagePath);
+            }
+        }
             $fileNameWithExt = $request->file('profile_image')->getClientOriginalName();
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('profile_image')->getClientOriginalExtension();
@@ -133,6 +140,13 @@ class AgentController extends Controller {
             // Find the agent by ID
             $agent = Agent::findOrFail($id);
             $user = $agent->user;
+            // Delete the profile image file if it exists
+            if ($agent->profile_image) {
+                $imagePath = public_path().'/uploads/agents/'.$agent->profile_image;
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
             $agent->delete();
             $user->delete();
 

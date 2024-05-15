@@ -188,17 +188,17 @@
 
 				<div class="d-flex flex-wrap gap-2">
 					<!--begin::Input group start date-->
-					<!-- <div class="position-relative">
+					<div class="position-relative">
 						<input type="text" class="form-control form-control-solid flatpickr"
 							   placeholder="Start date" name="date-table">
-					</div> -->
+					</div>
 					<!--end::Input group-->
 
 					<!--begin::Input group end date-->
-					<!-- <div class="position-relative">
+					<div class="position-relative">
 						<input type="text" class="form-control form-control-solid"
 							   placeholder="End date" name="date-table"/>
-					</div> -->
+					</div>
 
 					<!--end::Input group-->
 
