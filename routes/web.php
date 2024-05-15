@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AgentController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,4 +40,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/agents/{id}/edit', [AgentController::class, 'edit'])->name('agents.edit');
 	Route::put('/agents/{id}', [AgentController::class, 'update'])->name('agents.update');
 	Route::delete('/agents/{id}', [AgentController::class, 'destroy'])->name('agents.destroy');
+
+	// users route
+    Route::get('user-list',        [UserController::class, 'index']);
+    Route::get('user-show/{id}',        [UserController::class, 'show'])->name('user.show');
+    Route::get('create-user',      [UserController::class, 'create']);
+    Route::post('create-user',      [UserController::class, 'store']);
+    Route::post('edit-user/{id}',      [UserController::class, 'update'])->name('user.edit');
+    Route::post('user-update/{id}',      [UserController::class, 'update']);
+    Route::get('user-details/{id}',     [UserController::class, 'show']);
+    Route::delete('user-delete/{id}',   [UserController::class, 'destroy'])->name('user.destroy');
 });
