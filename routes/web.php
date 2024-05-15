@@ -44,7 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
 	// users route
     Route::get('user-list',        [UserController::class, 'index']);
     Route::get('user-show/{id}',        [UserController::class, 'show'])->name('user.show');
-    Route::get('create-user',      [UserController::class, 'create']);
+    Route::get('create-user',      [UserController::class, 'create'])->name('create-user');
     Route::post('create-user',      [UserController::class, 'store']);
     Route::post('edit-user/{id}',      [UserController::class, 'update'])->name('user.edit');
     Route::post('user-update/{id}',      [UserController::class, 'update']);

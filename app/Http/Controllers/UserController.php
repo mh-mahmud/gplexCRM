@@ -17,4 +17,8 @@ class UserController extends Controller
     	$data['users'] = $this->service->get_all_user();
     	return view('users.user_list', $data);
     }
+
+    public function create() {
+    	return view('users.create_user');
+    }
 }

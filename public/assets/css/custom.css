@@ -2,3 +2,6 @@
 	background-color: #FFF;
 	border-color: #bbb;
 }
+.card .card-header {
+    background-color: #DDD;
+}
