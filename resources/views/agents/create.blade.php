@@ -174,14 +174,31 @@
                                                 <div class="fv-row mb-10">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">
-                                                        Name</label>
+                                                        First Name</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-lg form-control-solid"
-                                                           type="text" name="name" autocomplete="off"/>
+                                                           type="text" name="first_name" autocomplete="off"/>
                                                     <!--end::Input-->
-                                                    @if ($errors->has('name'))
-                                                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                                                    @if ($errors->has('first_name'))
+                                                        <span class="text-danger">{{ $errors->first('first_name') }}</span>
+                                                    @endif
+                                                   
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-10">
+                                                    <!--begin::Label-->
+                                                    <label class="form-label fw-bolder text-dark">
+                                                    Last Name</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input class="form-control form-control-lg form-control-solid"
+                                                           type="text" name="last_name" autocomplete="off"/>
+                                                    <!--end::Input-->
+                                                    @if ($errors->has('last_name'))
+                                                        <span class="text-danger">{{ $errors->first('last_name') }}</span>
                                                     @endif
                                                    
                                                 </div>

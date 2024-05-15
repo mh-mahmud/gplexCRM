@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('agents', function (Blueprint $table) {
             $table->char('agent_id', 4)->nullable()->primary();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('name', 191);
+            $table->string('first_name', 191);
+            $table->string('last_name', 191);
             $table->string('phone_number', 191)->nullable();
             $table->date('birth_day')->nullable();
             $table->string('profile_image', 191)->nullable();

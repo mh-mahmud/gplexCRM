@@ -150,23 +150,33 @@
                 <!--begin::Body-->
                 <div class="card-body py-3">
 
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Image</span>
-                        <div class="me-7 mb-4">
-                            <div class="symbol symbol-100px symbol-lg-140px symbol-fixed position-relative">
-                                <img src="{{ asset($user->image_path) }}" alt="{{ $user->name }}">
-                            </div>
+                <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                    <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Image</span>
+                    <div class="me-7 mb-4">
+                        <div class="symbol symbol-100px symbol-lg-140px symbol-fixed position-relative">
+                            <img src="{{ asset('uploads/agents/' . $agent->profile_image) }}" alt="{{ $user->name }}">
                         </div>
+                    </div>
+                </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">First Name</span>
+                        <span>{{ $user->first_name }}</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Name</span>
-                        <span>{{ $user->name }}</span>
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Last Name</span>
+                        <span>{{ $user->last_name }}</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Email</span>
                         <span>{{ $user->email }}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">User Type</span>
+                        <span>{{ $user->user_type }}</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
@@ -191,12 +201,22 @@
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Phone Number</span>
-                        <span>{{ $agent->address }}</span>
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Status</span>
+                        @if ($agent->status === 1)
+                            <span>Active</span>
+                        @elseif ($agent->status === 0)
+                            <span>Inactive</span>
+                        @endif
                     </div>
 
+
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Phone Number</span>
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Address</span>
+                        <span>{{ $agent->address }}</span>
+                    </div>
+                    
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Note</span>
                         <span>{{ $agent->description }}</span>
                     </div>
 

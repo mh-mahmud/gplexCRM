@@ -232,7 +232,8 @@
 						<tr class="fw-bolder">
 						    <th class="min-w-150px">SL</th>
 							<th class="min-w-150px">Agent ID</th>
-							<th class="min-w-140px">Name</th>
+							<th class="min-w-140px">First Name</th>
+							<th class="min-w-140px">Last Name</th>
 							<th class="min-w-120px">Email</th>
 							<th class="min-w-120px">Phone Number</th>
 							<th class="min-w-120px">Date Of Birth</th>
@@ -248,7 +249,8 @@
 
 						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
 							<td class="text-dark fs-6">{{$agent->agent_id}}</td>
-							<td class="text-dark fs-6">{{$agent->name }}</td>
+							<td class="text-dark fs-6">{{$agent->first_name }}</td>
+							<td class="text-dark fs-6">{{$agent->last_name }}</td>
 							<td class="text-dark fs-6">{{$agent->user->email}}</td>
 							<td class="text-dark fs-6">{{$agent->phone_number}}</td>
 							<td class="text-dark fs-6">{{ \Carbon\Carbon::parse($agent->birth_day)->format('d-m-Y') }}</td>
