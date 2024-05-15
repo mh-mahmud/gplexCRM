@@ -16,3 +16,11 @@ B
 ui/build/form.html,9\b\9bddc8fd575c40d715aafcabf995db057bc58e06
 C
 ui/build/table.html,b\d\bdc7659d33d6ef7887b8f5ebba01ef4824cd543a
+f
+6ui/theme/demo1/dist/documentation/base/pagination.html,5\b\5b8a8ef64673989e67700ab4b245f287685548d7
+\
+,ui/theme/demo1/dist/apps/customers/list.html,d\b\dbebd43404c80d8c790bea62463667afd1491821
+N
+ui/theme/demo1/dist/index.html,f\f\ff4a2e955ab118ac71935a2fea08b219d066f96a
+H
+ui/build/table-view.html,f\0\f057ef8ac6ea41c8473d2cb1a256d82f8eb822b3
