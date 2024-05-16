@@ -21,4 +21,21 @@ class UserController extends Controller
     public function create() {
     	return view('users.create_user');
     }
+
+    public function store(Request $request)
+    {
+        
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'password' => 'required|string'
+        ]);
+       
+        $user = $this->service->create_user($request);
+        if(!empty($user->id)) {
+        	return redirect()->to('user-list')->with('success', 'User created successfully.');
+        }
+        return redirect()->route('create-user')->with('error', 'Failed request');
+    }
 }

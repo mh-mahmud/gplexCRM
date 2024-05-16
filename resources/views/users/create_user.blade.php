@@ -123,7 +123,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('agents.index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Agent List</a>
+                            <a href="{{ URL::to('user-list') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">User List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
@@ -152,23 +152,9 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('agents.store') }}"  enctype="multipart/form-data" method="POST">
+                                    <form class="g-form w-100" action="{{ route('store-user') }}"  enctype="multipart/form-data" method="POST">
                                          @csrf
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-10">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Email</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
-                                                           type="email" name="email" autocomplete="off"/>
-                                                    <!--end::Input-->
-                                                    @if ($errors->has('email'))
-                                                        <span class="text-danger">{{ $errors->first('email') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-10">
@@ -201,6 +187,21 @@
                                                         <span class="text-danger">{{ $errors->first('last_name') }}</span>
                                                     @endif
                                                    
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-10">
+                                                    <!--begin::Label-->
+                                                    <label class="form-label fw-bolder text-dark">Email</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input class="form-control form-control-lg form-control-solid"
+                                                           type="email" name="email" autocomplete="off"/>
+                                                    <!--end::Input-->
+                                                    @if ($errors->has('email'))
+                                                        <span class="text-danger">{{ $errors->first('email') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -245,41 +246,7 @@
                                                             <option value="male">Male</option>
                                                             <option value="female">Female</option>
                                                             <option value="other">Other</option>
-                                                        
                                                     </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-10">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">
-                                                    Date Of Birth</label>
-                                                    
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <div class="position-relative">
-                                                        <input type="text" class="form-control form-control-solid flatpickr"
-                                                            placeholder="Date Of Birth" name="birth_day">
-                                                    </div>
-                                                    <!-- <input class="form-control form-control-lg form-control-solid"
-                                                           type="date" name="birth_day" autocomplete="off"/> -->
-                                                    <!--end::Input-->
-                                                </div>
-                                            </div>
-
-    
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-10">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label  fw-bolder text-dark">Image
-                                                        Upload</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
-                                                           type="file" name="profile_image" autocomplete="off"/>
-                                                    <!--end::Input-->
                                                 </div>
                                             </div>
 
@@ -289,7 +256,6 @@
                                                     <label class="form-label fw-bolder text-dark">Status</label>
                                                     <select class=" form-control form-control-lg form-control-solid" name="status"
                                                             aria-label="Default select example">
-                                                        
                                                         <option value="1" selected>Active</option>
                                                         <option value="0">Inactive</option>
                                                         
@@ -304,20 +270,13 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Note</label>
-                                                    <textarea class="form-control form-control-lg  form-control-solid" name="description" rows="3"></textarea>
-                                                </div>
-                                            </div>
-
 
                                         </div>
                                         <!--End Row-->
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
                                         <a href="{{ route('agents.create') }}" class="btn btn-light btn-active-light-primary me-2">Reset</a>
                                             <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Save Changes
+                                                    id="kt_account_profile_details_submit">Submit
                                             </button>
                                         </div>
 
