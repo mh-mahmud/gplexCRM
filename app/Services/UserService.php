@@ -29,6 +29,10 @@ class UserService {
         return $user;
     }
 
+    public function show_user($id) {
+        return User::findOrFail($id);
+    }
+
 	public function sms_template_destroy_service() {
         $data = [];
         $request->validate([

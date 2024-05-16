@@ -38,4 +38,10 @@ class UserController extends Controller
         }
         return redirect()->route('create-user')->with('error', 'Failed request');
     }
+
+    public function show($id) {
+    	$res = [];
+    	$res['user'] = $this->service->show_user($id);
+    	return view('users.show', $res);
+    }
 }
