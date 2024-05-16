@@ -144,7 +144,7 @@
             <div class="card mb-5">
                 <div class="card-header">
                     <div class="card-title">
-                        <h2>Agent Details</h2>
+                        <h2>User Details</h2>
                     </div>
                 </div>
                 <!--begin::Body-->
