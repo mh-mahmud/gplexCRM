@@ -240,7 +240,7 @@
 						class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
 						<!--begin::Table head-->
 						<thead>
-						<tr class="fw-bolder text-muted">
+						<tr class="fw-bolder">
 						    <th class="min-w-25px">SL</th>
 							<th class="min-w-150px">First name</th>
 							<th class="min-w-140px">Last name</th>

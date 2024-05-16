@@ -9,8 +9,25 @@ use Exception;
 class UserService {
 
 	public function get_all_user() {
-		return User::paginate(2);
+		return User::paginate(10);
 	}
+
+    public function create_user($request) {
+
+        $user = User::create([
+            'user_id' => str_pad(mt_rand(1, 9999999999999), 20),
+            'email' => $request->email,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'user_type' =>'user',
+            'phone_number' => $request->phone_number,
+            'gender' => $request->gender,
+            'password' => bcrypt($request->password),
+            'status' => $request->status,
+        ]);
+        $user->save();
+        return $user;
+    }
 
 	public function sms_template_destroy_service() {
         $data = [];
