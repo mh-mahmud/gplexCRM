@@ -55,6 +55,7 @@ class AgentController extends Controller {
             'email' => $request->email,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
+            'profile_image' => $fileNameToStore,
             'user_type' =>'agent',
             'password' => bcrypt($request->password),
         ]);
@@ -67,7 +68,6 @@ class AgentController extends Controller {
             'birth_day' => $request->birth_day,
             'phone_number' => $request->phone_number,
             'status' => $request->status,
-            'profile_image' => $fileNameToStore,
             'address' => $request->address,
             'description' => $request->description,
         ]);
@@ -109,6 +109,21 @@ class AgentController extends Controller {
         $user->email = $request->email;
         $user->user_type ='agent';
         $user->password = bcrypt($request->password);
+        if ($request->hasFile('profile_image')) {
+            // Delete the previous profile image
+            if ($user->profile_image) {
+                $previousImagePath = public_path().'/uploads/agents/'.$user->profile_image;
+                if (file_exists($previousImagePath)) {
+                    unlink($previousImagePath);
+                }
+            }
+                $fileNameWithExt = $request->file('profile_image')->getClientOriginalName();
+                $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('profile_image')->getClientOriginalExtension();
+                $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+                $path = $request->file('profile_image')->move(public_path().'/uploads/agents', $fileNameToStore);
+                $user->profile_image = $fileNameToStore;
+        }
         $user->save();
         $agent = $user->agent;
         $agent->first_name = $request->first_name;
@@ -119,21 +134,7 @@ class AgentController extends Controller {
         $agent->status = $request->status;
         $agent->address = $request->address;
         $agent->description = $request->description;
-        if ($request->hasFile('profile_image')) {
-        // Delete the previous profile image
-        if ($agent->profile_image) {
-            $previousImagePath = public_path().'/uploads/agents/'.$agent->profile_image;
-            if (file_exists($previousImagePath)) {
-                unlink($previousImagePath);
-            }
-        }
-            $fileNameWithExt = $request->file('profile_image')->getClientOriginalName();
-            $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('profile_image')->getClientOriginalExtension();
-            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
-            $path = $request->file('profile_image')->move(public_path().'/uploads/agents', $fileNameToStore);
-            $agent->profile_image = $fileNameToStore;
-        }
+        
 
         // Save the updated agent
         $agent->save();
@@ -193,8 +194,8 @@ class AgentController extends Controller {
             $agent = Agent::findOrFail($id);
             $user = $agent->user;
             // Delete the profile image file if it exists
-            if ($agent->profile_image) {
-                $imagePath = public_path().'/uploads/agents/'.$agent->profile_image;
+            if ($user->profile_image) {
+                $imagePath = public_path().'/uploads/agents/'.$user->profile_image;
                 if (file_exists($imagePath)) {
                     unlink($imagePath);
                 }

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('last_name', 191);
             $table->string('phone_number', 191)->nullable();
             $table->date('birth_day')->nullable();
-            $table->string('profile_image', 191)->nullable();
             $table->tinyInteger('status');
             $table->char('role_id', 10)->nullable();
             $table->char('did', 10)->nullable();

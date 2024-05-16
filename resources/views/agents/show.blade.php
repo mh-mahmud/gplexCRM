@@ -154,7 +154,11 @@
                     <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Image</span>
                     <div class="me-7 mb-4">
                         <div class="symbol symbol-100px symbol-lg-140px symbol-fixed position-relative">
-                            <img src="{{ asset('uploads/agents/' . $agent->profile_image) }}" alt="{{ $user->last_name }}">
+                            @if($user->profile_image != '')
+                              <img src="{{ asset('uploads/agents/' . $user->profile_image) }}" alt="{{ $user->last_name }}">
+								 @else
+							  <img alt="Logo" src="{{ asset('uploads/noimage.jpg') }}" />
+							@endif
                         </div>
                     </div>
                 </div>

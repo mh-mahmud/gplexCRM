@@ -1915,7 +1915,7 @@
 														<div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg py-lg-4 w-lg-225px">
 															
 															<div class="menu-item">
-																<a class="menu-link py-3" href="{{ URL::to('agent-list') }}">
+																<a class="menu-link py-3" href="{{ route('agents.index') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
@@ -1923,7 +1923,7 @@
 																</a>
 															</div>
 															<div class="menu-item">
-																<a class="menu-link py-3" href="{{ URL::to('create-agent') }}">
+																<a class="menu-link py-3" href="{{ route('agents.create') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
@@ -3721,10 +3721,11 @@
 										$email=\Session::get('users')->email;
 										$first_name=\Session::get('users')->first_name;
 										$last_name=\Session::get('users')->last_name;
+										$profile_image=\Session::get('users')->profile_image;
 										$id=\Session::get('users')->id;
 										// Get agent data
 										$agent = \App\Models\Agent::where('user_id', $id)->first();
-										$profile_image = $agent ? $agent->profile_image : null;
+										$profile_image = $profile_image ? $profile_image : null;
 										?>
 										<div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 											<!--begin::Menu wrapper-->

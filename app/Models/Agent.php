@@ -19,7 +19,6 @@ class Agent extends Model
         'gender',
         'birth_day',
         'status',
-        'profile_image',
         'role_id',
         'did',
         'seat_id',
