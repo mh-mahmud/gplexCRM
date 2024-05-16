@@ -309,7 +309,7 @@
                                         </div>
                                         <!--End Row-->
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <a href="{{ route('agents.create') }}" class="btn btn-light btn-active-light-primary me-2">Reset</a>
+                                        <a href="{{ route('agents.edit', $agent->agent_id) }}" class="btn btn-light btn-active-light-primary me-2">Reset</a>
                                             <button type="submit" class="btn btn-primary"
                                                     id="kt_account_profile_details_submit">Save Changes
                                             </button>

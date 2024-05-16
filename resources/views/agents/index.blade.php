@@ -304,7 +304,7 @@
 								<form action="{{ route('agents.destroy', $agent->agent_id) }}" method="POST" style="display: inline;">
 									@csrf
 									@method('DELETE')
-									<button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+									<button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">
 										<!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
 										<span class="svg-icon svg-icon-3">
 											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -374,6 +374,15 @@
 	</div>
 </div>
 </div>
+
+<script>
+    function confirmDelete() {
+        if (confirm("Are you sure you want to delete Agent?")) {
+            document.getElementById('deleteForm').submit();
+        }
+        return false;
+    }
+</script>
 
 <!-- End Tables-->
 
