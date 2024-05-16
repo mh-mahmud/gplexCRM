@@ -1915,7 +1915,7 @@
 														<div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg py-lg-4 w-lg-225px">
 															
 															<div class="menu-item">
-																<a class="menu-link py-3" href="{{ URL::to('agent-list') }}">
+																<a class="menu-link py-3" href="{{ route('agents.index') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
@@ -1923,7 +1923,7 @@
 																</a>
 															</div>
 															<div class="menu-item">
-																<a class="menu-link py-3" href="{{ URL::to('create-agent') }}">
+																<a class="menu-link py-3" href="{{ route('agents.create') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
@@ -3721,15 +3721,20 @@
 										$email=\Session::get('users')->email;
 										$first_name=\Session::get('users')->first_name;
 										$last_name=\Session::get('users')->last_name;
+										$profile_image=\Session::get('users')->profile_image;
 										$id=\Session::get('users')->id;
 										// Get agent data
 										$agent = \App\Models\Agent::where('user_id', $id)->first();
-										$profile_image = $agent ? $agent->profile_image : null;
+										$profile_image = $profile_image ? $profile_image : null;
 										?>
 										<div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 											<!--begin::Menu wrapper-->
 											<div class="cursor-pointer symbol symbol-30px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-												<img src="{{ asset('uploads/agents/' . $agent->profile_image) }}" alt="user" />
+											@if($profile_image != '')
+											   <img alt="Logo" src="{{ asset('uploads/agents/' . $profile_image) }}" />
+												@else
+													<img alt="Logo" src="{{ asset('uploads/noimage.jpg') }}" />
+											@endif
 												
 											</div>
 											<!--begin::Menu-->
@@ -3739,7 +3744,12 @@
 													<div class="menu-content d-flex align-items-center px-3">
 														<!--begin::Avatar-->
 														<div class="symbol symbol-50px me-5">
-														<img alt="Logo" src="{{ asset('uploads/agents/' . $profile_image) }}" />
+														@if($profile_image != '')
+															<img alt="Logo" src="{{ asset('uploads/agents/' . $profile_image) }}" />
+														@else
+															<img alt="Logo" src="{{ asset('uploads/noimage.jpg') }}" />
+														@endif
+
 														</div>
 														
 														

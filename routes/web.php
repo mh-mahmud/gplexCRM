@@ -39,6 +39,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/agents/{id}', [AgentController::class, 'show'])->name('agents.show');
 	Route::get('/agents/{id}/edit', [AgentController::class, 'edit'])->name('agents.edit');
 	Route::put('/agents/{id}', [AgentController::class, 'update'])->name('agents.update');
+	Route::get('/agents/search', [AgentController::class, 'search'])->name('agents.search');
+
+
 	Route::delete('/agents/{id}', [AgentController::class, 'destroy'])->name('agents.destroy');
 
 	// users route
