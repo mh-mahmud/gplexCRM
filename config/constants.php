@@ -2,5 +2,6 @@
 return [
     'ROW_PER_PAGE'      => 30,
     'ACTIVE'            => 'y',
-    'INACTIVE'          => 'n'
+    'INACTIVE'          => 'n',
+    'ROW_PER_PAGE' => 10,
 ];

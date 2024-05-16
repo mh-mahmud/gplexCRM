@@ -1696,7 +1696,7 @@
 							<!--begin::Mobile logo-->
 							<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
 								<a href="../dist/index.html" class="d-lg-none">
-									<img alt="Logo" src="assets/media/logos/logo-2.svg" class="h-30px" />
+									<img alt="Logo" src="{{ asset('assets/media/logos/logo-2.svg') }}" class="h-30px" />
 								</a>
 							</div>
 							<!--end::Mobile logo-->
@@ -2389,7 +2389,7 @@
 																<a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
 																	<!--begin::Symbol-->
 																	<div class="symbol symbol-40px me-4">
-																		<img src="assets/media/avatars/150-1.jpg" alt="" />
+																		<img src="{{ asset('assets/media/avatars/150-1.jpg') }}" alt="" />
 																	</div>
 																	<!--end::Symbol-->
 																	<!--begin::Title-->
@@ -2404,7 +2404,7 @@
 																<a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
 																	<!--begin::Symbol-->
 																	<div class="symbol symbol-40px me-4">
-																		<img src="assets/media/avatars/150-3.jpg" alt="" />
+																		<img src="{{ asset('assets/media/avatars/150-3.jpg') }}" alt="" />
 																	</div>
 																	<!--end::Symbol-->
 																	<!--begin::Title-->
@@ -2419,7 +2419,7 @@
 																<a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
 																	<!--begin::Symbol-->
 																	<div class="symbol symbol-40px me-4">
-																		<img src="assets/media/avatars/150-8.jpg" alt="" />
+																		<img src="{{ asset('assets/media/avatars/150-8.jpg') }}" alt="" />
 																	</div>
 																	<!--end::Symbol-->
 																	<!--begin::Title-->
@@ -2434,7 +2434,7 @@
 																<a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
 																	<!--begin::Symbol-->
 																	<div class="symbol symbol-40px me-4">
-																		<img src="assets/media/avatars/150-11.jpg" alt="" />
+																		<img src="{{ asset('assets/media/avatars/150-11.jpg') }}" alt="" />
 																	</div>
 																	<!--end::Symbol-->
 																	<!--begin::Title-->
@@ -2449,7 +2449,7 @@
 																<a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
 																	<!--begin::Symbol-->
 																	<div class="symbol symbol-40px me-4">
-																		<img src="assets/media/avatars/150-12.jpg" alt="" />
+																		<img src="{{ asset('assets/media/avatars/150-12.jpg') }}" alt="" />
 																	</div>
 																	<!--end::Symbol-->
 																	<!--begin::Title-->
@@ -2468,7 +2468,7 @@
 																	<!--begin::Symbol-->
 																	<div class="symbol symbol-40px me-4">
 																		<span class="symbol-label bg-light">
-																			<img class="w-20px h-20px" src="assets/media/svg/brand-logos/volicity-9.svg" alt="" />
+																			<img class="w-20px h-20px" src="{{ asset('assets/media/svg/brand-logos/volicity-9.svg') }}" alt="" />
 																		</span>
 																	</div>
 																	<!--end::Symbol-->
@@ -2485,7 +2485,7 @@
 																	<!--begin::Symbol-->
 																	<div class="symbol symbol-40px me-4">
 																		<span class="symbol-label bg-light">
-																			<img class="w-20px h-20px" src="assets/media/svg/brand-logos/tvit.svg" alt="" />
+																			<img class="w-20px h-20px" src="{{ asset('assets/media/svg/brand-logos/tvit.svg') }}" alt="" />
 																		</span>
 																	</div>
 																	<!--end::Symbol-->
@@ -2502,7 +2502,7 @@
 																	<!--begin::Symbol-->
 																	<div class="symbol symbol-40px me-4">
 																		<span class="symbol-label bg-light">
-																			<img class="w-20px h-20px" src="assets/media/svg/misc/infography.svg" alt="" />
+																			<img class="w-20px h-20px" src="{{ asset('assets/media/svg/misc/infography.svg') }}" alt="" />
 																		</span>
 																	</div>
 																	<!--end::Symbol-->
@@ -2519,7 +2519,7 @@
 																	<!--begin::Symbol-->
 																	<div class="symbol symbol-40px me-4">
 																		<span class="symbol-label bg-light">
-																			<img class="w-20px h-20px" src="assets/media/svg/brand-logos/leaf.svg" alt="" />
+																			<img class="w-20px h-20px" src="{{ asset('assets/media/svg/brand-logos/leaf.svg') }}" alt="" />
 																		</span>
 																	</div>
 																	<!--end::Symbol-->
@@ -2536,7 +2536,7 @@
 																	<!--begin::Symbol-->
 																	<div class="symbol symbol-40px me-4">
 																		<span class="symbol-label bg-light">
-																			<img class="w-20px h-20px" src="assets/media/svg/brand-logos/tower.svg" alt="" />
+																			<img class="w-20px h-20px" src="{{ asset('assets/media/svg/brand-logos/tower.svg') }}" alt="" />
 																		</span>
 																	</div>
 																	<!--end::Symbol-->
@@ -3346,7 +3346,7 @@
 															<!--end::Section-->
 															<!--begin::Illustration-->
 															<div class="text-center px-4">
-																<img class="mw-100 mh-200px" alt="image" src="assets/media/illustrations/sketchy-1/1.png" />
+																<img class="mw-100 mh-200px" alt="image" src="{{ asset('assets/media/illustrations/sketchy-1/1.png') }}" />
 															</div>
 															<!--end::Illustration-->
 														</div>
@@ -3717,10 +3717,20 @@
 										</div>
 										<!--end::Quick links-->
 										<!--begin::User-->
+										<?php
+										$email=\Session::get('users')->email;
+										$first_name=\Session::get('users')->first_name;
+										$last_name=\Session::get('users')->last_name;
+										$id=\Session::get('users')->id;
+										// Get agent data
+										$agent = \App\Models\Agent::where('user_id', $id)->first();
+										$profile_image = $agent ? $agent->profile_image : null;
+										?>
 										<div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 											<!--begin::Menu wrapper-->
 											<div class="cursor-pointer symbol symbol-30px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-												<img src="assets/media/avatars/150-26.jpg" alt="user" />
+												<img src="{{ asset('uploads/agents/' . $agent->profile_image) }}" alt="user" />
+												
 											</div>
 											<!--begin::Menu-->
 											<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px" data-kt-menu="true">
@@ -3729,14 +3739,16 @@
 													<div class="menu-content d-flex align-items-center px-3">
 														<!--begin::Avatar-->
 														<div class="symbol symbol-50px me-5">
-															<img alt="Logo" src="assets/media/avatars/150-26.jpg" />
+														<img alt="Logo" src="{{ asset('uploads/agents/' . $profile_image) }}" />
 														</div>
+														
+														
 														<!--end::Avatar-->
 														<!--begin::Username-->
 														<div class="d-flex flex-column">
-															<div class="fw-bolder d-flex align-items-center fs-5">Momin Riyadh
-															<span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Pro</span></div>
-															<a href="#" class="fw-bold text-muted text-hover-primary fs-7">mominriyadh@gmail.com</a>
+															<div class="fw-bolder d-flex align-items-center fs-5">{{ $first_name ?? '' }} {{ $last_name ?? '' }}
+															<span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2"></span></div>
+															<a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{$email}}</a>
 														</div>
 														<!--end::Username-->
 													</div>
@@ -3819,7 +3831,7 @@
 													<a href="#" class="menu-link px-5">
 														<span class="menu-title position-relative">Language
 														<span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
-														<img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/united-states.svg" alt="" /></span></span>
+														<img class="w-15px h-15px rounded-1 ms-2" src="{{ asset('assets/media/flags/united-states.svg') }}" alt="" /></span></span>
 													</a>
 													<!--begin::Menu sub-->
 													<div class="menu-sub menu-sub-dropdown w-175px py-4">
@@ -3827,7 +3839,7 @@
 														<div class="menu-item px-3">
 															<a href="../dist/account/settings.html" class="menu-link d-flex px-5 active">
 															<span class="symbol symbol-20px me-4">
-																<img class="rounded-1" src="assets/media/flags/united-states.svg" alt="" />
+																<img class="rounded-1" src="{{ asset('assets/media/flags/united-states.svg') }}" alt="" />
 															</span>English</a>
 														</div>
 														<!--end::Menu item-->
@@ -3835,7 +3847,7 @@
 														<div class="menu-item px-3">
 															<a href="../dist/account/settings.html" class="menu-link d-flex px-5">
 															<span class="symbol symbol-20px me-4">
-																<img class="rounded-1" src="assets/media/flags/spain.svg" alt="" />
+																<img class="rounded-1" src="{{ asset('assets/media/flags/spain.svg') }}" alt="" />
 															</span>Spanish</a>
 														</div>
 														<!--end::Menu item-->
@@ -3843,7 +3855,7 @@
 														<div class="menu-item px-3">
 															<a href="../dist/account/settings.html" class="menu-link d-flex px-5">
 															<span class="symbol symbol-20px me-4">
-																<img class="rounded-1" src="assets/media/flags/germany.svg" alt="" />
+																<img class="rounded-1" src="{{ asset('assets/media/flags/germany.svg') }}" alt="" />
 															</span>German</a>
 														</div>
 														<!--end::Menu item-->
@@ -3851,7 +3863,7 @@
 														<div class="menu-item px-3">
 															<a href="../dist/account/settings.html" class="menu-link d-flex px-5">
 															<span class="symbol symbol-20px me-4">
-																<img class="rounded-1" src="assets/media/flags/japan.svg" alt="" />
+																<img class="rounded-1" src="{{ asset('assets/media/flags/japan.svg') }}" alt="" />
 															</span>Japanese</a>
 														</div>
 														<!--end::Menu item-->
@@ -3859,7 +3871,7 @@
 														<div class="menu-item px-3">
 															<a href="../dist/account/settings.html" class="menu-link d-flex px-5">
 															<span class="symbol symbol-20px me-4">
-																<img class="rounded-1" src="assets/media/flags/france.svg" alt="" />
+																<img class="rounded-1" src="{{ asset('assets/media/flags/france.svg') }}" alt="" />
 															</span>French</a>
 														</div>
 														<!--end::Menu item-->
@@ -4035,7 +4047,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Nina Nilson">
-												<img src="assets/media/avatars/150-11.jpg" alt="img" />
+												<img src="{{ asset('assets/media/avatars/150-11.jpg') }}" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -4058,12 +4070,12 @@
 											<div class="symbol-group symbol-hover flex-nowrap flex-grow-1 min-w-100px pe-2">
 												<!--begin::User-->
 												<div class="symbol symbol-circle symbol-25px">
-													<img src="assets/media/avatars/150-3.jpg" alt="img" />
+													<img src="{{ asset('assets/media/avatars/150-3.jpg') }}" alt="img" />
 												</div>
 												<!--end::User-->
 												<!--begin::User-->
 												<div class="symbol symbol-circle symbol-25px">
-													<img src="assets/media/avatars/150-11.jpg" alt="img" />
+													<img src="{{ asset('assets/media/avatars/150-11.jpg') }}" alt="img" />
 												</div>
 												<!--end::User-->
 												<!--begin::User-->
@@ -4097,7 +4109,7 @@
 											<div class="symbol-group symbol-hover flex-nowrap flex-grow-1 min-w-100px">
 												<!--begin::User-->
 												<div class="symbol symbol-circle symbol-25px">
-													<img src="assets/media/avatars/150-5.jpg" alt="img" />
+													<img src="{{ asset('assets/media/avatars/150-5.jpg') }}" alt="img" />
 												</div>
 												<!--end::User-->
 												<!--begin::User-->
@@ -4156,7 +4168,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Alan Nilson">
-												<img src="assets/media/avatars/150-2.jpg" alt="img" />
+												<img src="{{ asset('assets/media/avatars/150-2.jpg') }}" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -4200,7 +4212,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Jan Hummer">
-												<img src="assets/media/avatars/150-6.jpg" alt="img" />
+												<img src="{{ asset('assets/media/avatars/150-6.jpg') }}" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -4213,7 +4225,7 @@
 											<!--begin::Item-->
 											<div class="d-flex flex-aligns-center pe-10 pe-lg-20">
 												<!--begin::Icon-->
-												<img alt="" class="w-30px me-3" src="assets/media/svg/files/pdf.svg" />
+												<img alt="" class="w-30px me-3" src="{{ asset('assets/media/svg/files/pdf.svg') }}" />
 												<!--end::Icon-->
 												<!--begin::Info-->
 												<div class="ms-1 fw-bold">
@@ -4230,7 +4242,7 @@
 											<!--begin::Item-->
 											<div class="d-flex flex-aligns-center pe-10 pe-lg-20">
 												<!--begin::Icon-->
-												<img alt="" class="w-30px me-3" src="assets/media/svg/files/doc.svg" />
+												<img alt="" class="w-30px me-3" src="{{ asset('assets/media/svg/files/doc.svg') }}" />
 												<!--end::Icon-->
 												<!--begin::Info-->
 												<div class="ms-1 fw-bold">
@@ -4247,7 +4259,7 @@
 											<!--begin::Item-->
 											<div class="d-flex flex-aligns-center">
 												<!--begin::Icon-->
-												<img alt="" class="w-30px me-3" src="assets/media/svg/files/css.svg" />
+												<img alt="" class="w-30px me-3" src="{{ asset('assets/media/svg/files/css.svg') }}" />
 												<!--end::Icon-->
 												<!--begin::Info-->
 												<div class="ms-1 fw-bold">
@@ -4303,7 +4315,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Nina Nilson">
-												<img src="assets/media/avatars/150-11.jpg" alt="img" />
+												<img src="{{ asset('assets/media/avatars/150-11.jpg') }}" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -4347,7 +4359,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Marcus Dotson">
-												<img src="assets/media/avatars/150-3.jpg" alt="img" />
+												<img src="{{ asset('assets/media/avatars/150-3.jpg') }}" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -4361,7 +4373,7 @@
 											<div class="overlay me-10">
 												<!--begin::Image-->
 												<div class="overlay-wrapper">
-													<img alt="img" class="rounded w-200px" src="assets/media/demos/demo1.png" />
+													<img alt="img" class="rounded w-200px" src="{{ asset('assets/media/demos/demo1.png') }}" />
 												</div>
 												<!--end::Image-->
 												<!--begin::Link-->
@@ -4375,7 +4387,7 @@
 											<div class="overlay me-10">
 												<!--begin::Image-->
 												<div class="overlay-wrapper">
-													<img alt="img" class="rounded w-200px" src="assets/media/demos/demo2.png" />
+													<img alt="img" class="rounded w-200px" src="{{ asset('assets/media/demos/demo2.png') }}" />
 												</div>
 												<!--end::Image-->
 												<!--begin::Link-->
@@ -4389,7 +4401,7 @@
 											<div class="overlay">
 												<!--begin::Image-->
 												<div class="overlay-wrapper">
-													<img alt="img" class="rounded w-200px" src="assets/media/demos/demo3.png" />
+													<img alt="img" class="rounded w-200px" src="{{ asset('assets/media/demos/demo3.png') }}" />
 												</div>
 												<!--end::Image-->
 												<!--begin::Link-->
@@ -4486,7 +4498,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Robert Rich">
-												<img src="assets/media/avatars/150-14.jpg" alt="img" />
+												<img src="{{ asset('assets/media/avatars/150-14.jpg') }}" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -4704,7 +4716,7 @@
 								<div class="d-flex align-items-center mb-2">
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/150-15.jpg" />
+										<img alt="Pic" src="{{ asset('assets/media/avatars/150-15.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Details-->
@@ -4736,7 +4748,7 @@
 									<!--end::Details-->
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/150-26.jpg" />
+										<img alt="Pic" src="{{ asset('assets/media/avatars/150-26.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 								</div>
@@ -4756,7 +4768,7 @@
 								<div class="d-flex align-items-center mb-2">
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/150-15.jpg" />
+										<img alt="Pic" src="{{ asset('assets/media/avatars/150-15.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Details-->
@@ -4788,7 +4800,7 @@
 									<!--end::Details-->
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/150-26.jpg" />
+										<img alt="Pic" src="{{ asset('assets/media/avatars/150-26.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 								</div>
@@ -4808,7 +4820,7 @@
 								<div class="d-flex align-items-center mb-2">
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/150-15.jpg" />
+										<img alt="Pic" src="{{ asset('assets/media/avatars/150-15.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Details-->
@@ -4841,7 +4853,7 @@
 									<!--end::Details-->
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/150-26.jpg" />
+										<img alt="Pic" src="{{ asset('assets/media/avatars/150-26.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 								</div>
@@ -4861,7 +4873,7 @@
 								<div class="d-flex align-items-center mb-2">
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/150-15.jpg" />
+										<img alt="Pic" src="{{ asset('assets/media/avatars/150-15.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Details-->
@@ -4893,7 +4905,7 @@
 									<!--end::Details-->
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/150-26.jpg" />
+										<img alt="Pic" src="{{ asset('assets/media/avatars/150-26.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 								</div>
@@ -4913,7 +4925,7 @@
 								<div class="d-flex align-items-center mb-2">
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="assets/media/avatars/150-15.jpg" />
+										<img alt="Pic" src="{{ asset('assets/media/avatars/150-15.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Details-->
@@ -5003,7 +5015,7 @@
 						<!--end::Heading-->
 						<!--begin::Google Contacts Invite-->
 						<div class="btn btn-light-primary fw-bolder w-100 mb-8">
-						<img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg" class="h-20px me-3" />Invite Gmail Contacts</div>
+						<img alt="Logo" src="{{ asset('assets/media/svg/brand-logos/google-icon.svg') }}" class="h-20px me-3" />Invite Gmail Contacts</div>
 						<!--end::Google Contacts Invite-->
 						<!--begin::Separator-->
 						<div class="separator d-flex flex-center mb-8">
@@ -5026,7 +5038,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/150-1.jpg" />
+											<img alt="Pic" src="{{ asset('assets/media/avatars/150-1.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5082,7 +5094,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/150-26.jpg" />
+											<img alt="Pic" src="{{ asset('assets/media/avatars/150-26.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5110,7 +5122,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/150-4.jpg" />
+											<img alt="Pic" src="{{ asset('assets/media/avatars/150-4.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5138,7 +5150,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/150-15.jpg" />
+											<img alt="Pic" src="{{ asset('assets/media/avatars/150-15.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5194,7 +5206,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/150-8.jpg" />
+											<img alt="Pic" src="{{ asset('assets/media/avatars/150-8.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5278,7 +5290,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/150-6.jpg" />
+											<img alt="Pic" src="{{ asset('assets/media/avatars/150-6.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5334,7 +5346,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/150-7.jpg" />
+											<img alt="Pic" src="{{ asset('assets/media/avatars/150-7.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5390,7 +5402,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/150-17.jpg" />
+											<img alt="Pic" src="{{ asset('assets/media/avatars/150-17.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5446,7 +5458,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/150-10.jpg" />
+											<img alt="Pic" src="{{ asset('assets/media/avatars/150-10.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -5474,7 +5486,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="assets/media/avatars/150-17.jpg" />
+											<img alt="Pic" src="{{ asset('assets/media/avatars/150-17.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -6046,9 +6058,9 @@
 													<!--end::Input-->
 													<!--begin::Card logos-->
 													<div class="position-absolute translate-middle-y top-50 end-0 me-5">
-														<img src="assets/media/svg/card-logos/visa.svg" alt="" class="h-25px" />
-														<img src="assets/media/svg/card-logos/mastercard.svg" alt="" class="h-25px" />
-														<img src="assets/media/svg/card-logos/american-express.svg" alt="" class="h-25px" />
+														<img src="{{ asset('assets/media/svg/card-logos/visa.svg') }}" alt="" class="h-25px" />
+														<img src="{{ asset('assets/media/svg/card-logos/mastercard.svg') }}" alt="" class="h-25px" />
+														<img src="{{ asset('assets/media/svg/card-logos/american-express.svg') }}" alt="" class="h-25px" />
 													</div>
 													<!--end::Card logos-->
 												</div>
@@ -6166,7 +6178,7 @@
 											<!--end::Description-->
 											<!--begin::Illustration-->
 											<div class="text-center px-4 py-15">
-												<img src="assets/media/illustrations/sketchy-1/9.png" alt="" class="w-100 mh-300px" />
+												<img src="{{ asset('assets/media/illustrations/sketchy-1/9.png') }}" alt="" class="w-100 mh-300px" />
 											</div>
 											<!--end::Illustration-->
 										</div>

@@ -21,7 +21,7 @@ class AgentController extends Controller {
 	public function index()
     {
         //$agents = Agent::all();
-        $agents = Agent::paginate(10);
+        $agents = Agent::paginate(config('constants.ROW_PER_PAGE'));
         return view('agents.index', compact('agents'));
     }
 

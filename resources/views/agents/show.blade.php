@@ -154,7 +154,7 @@
                     <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Image</span>
                     <div class="me-7 mb-4">
                         <div class="symbol symbol-100px symbol-lg-140px symbol-fixed position-relative">
-                            <img src="{{ asset('uploads/agents/' . $agent->profile_image) }}" alt="{{ $user->name }}">
+                            <img src="{{ asset('uploads/agents/' . $agent->profile_image) }}" alt="{{ $user->last_name }}">
                         </div>
                     </div>
                 </div>
