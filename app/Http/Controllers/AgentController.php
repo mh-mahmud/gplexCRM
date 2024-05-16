@@ -49,7 +49,7 @@ class AgentController extends Controller {
             
         } else {
             
-            $fileNameToStore = 'noimage.jpg';
+            $fileNameToStore = '';
         }
         $user = User::create([
             'email' => $request->email,
@@ -140,6 +140,50 @@ class AgentController extends Controller {
 
         return redirect()->route('agents.index')->with('success', 'Agent updated successfully.');
     }
+
+    public function search_backup(Request $request)
+    {
+        $query = Agent::query();
+
+        // Check if agent_id is provided and filter by it
+        if ($request->filled('agent_id')) {
+            $query->where('agent_id', $request->input('agent_id'));
+        }
+
+        // Check if first_name is provided and filter by it
+        if ($request->filled('first_name')) {
+            $query->where('first_name', 'like', '%' . $request->input('first_name') . '%');
+        }
+
+        // Check if last_name is provided and filter by it
+        if ($request->filled('last_name')) {
+            $query->where('last_name', 'like', '%' . $request->input('last_name') . '%');
+        }
+
+        $agents = $query->paginate(config('constants.ROW_PER_PAGE'));
+
+        return view('agents.index', compact('agents'));
+    }
+
+    public function search(Request $request)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'agent_id' => 'required|string', // Modify validation rules as needed
+        ]);
+
+        // Extract the search term from the request
+        $searchTerm = $request->input('agent_id');
+
+        // Perform the search query
+        $agents = Agent::where('agent_id', 'LIKE', "%{$searchTerm}%")->paginate(config('constants.ROW_PER_PAGE'));
+    
+
+        // Return the view with the search results
+        return view('agents.index', compact('agents'));
+    }
+
+
 
 
     public function destroy($id)

@@ -3729,7 +3729,11 @@
 										<div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 											<!--begin::Menu wrapper-->
 											<div class="cursor-pointer symbol symbol-30px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-												<img src="{{ asset('uploads/agents/' . $agent->profile_image) }}" alt="user" />
+											@if($profile_image != '')
+											   <img alt="Logo" src="{{ asset('uploads/agents/' . $profile_image) }}" />
+												@else
+													<img alt="Logo" src="{{ asset('uploads/noimage.jpg') }}" />
+											@endif
 												
 											</div>
 											<!--begin::Menu-->
@@ -3739,7 +3743,12 @@
 													<div class="menu-content d-flex align-items-center px-3">
 														<!--begin::Avatar-->
 														<div class="symbol symbol-50px me-5">
-														<img alt="Logo" src="{{ asset('uploads/agents/' . $profile_image) }}" />
+														@if($profile_image != '')
+															<img alt="Logo" src="{{ asset('uploads/agents/' . $profile_image) }}" />
+														@else
+															<img alt="Logo" src="{{ asset('uploads/noimage.jpg') }}" />
+														@endif
+
 														</div>
 														
 														
