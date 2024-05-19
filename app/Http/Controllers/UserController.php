@@ -54,4 +54,51 @@ class UserController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    // permission
+    public function permission_index() {
+    	$data = [];
+    	$data['users'] = $this->service->get_all_permission();
+    	return view('users.permission_list', $data);
+    }
+
+    public function permission_create() {
+    	$data = [];
+    	$data['list'] = $this->service->get_parent_list();
+    	return view('users.create_permission', $data);
+    }
+
+    public function permission_store(Request $request)
+    {
+        
+        $request->validate([
+            'name' => 'required|unique:permissions',
+            'slug' => 'required|unique:permissions',
+            'show_in_menu' => 'required'
+        ]);
+
+        // dd($request->all());
+
+        $user = $this->service->create_permission($request);
+        if(!empty($user->id)) {
+        	return redirect()->to('permission-list')->with('success', 'Permission created successfully.');
+        }
+        return redirect()->route('permission-user')->with('error', 'Failed request');
+    }
+
+    public function permission_show($id) {
+    	$res = [];
+    	$res['user'] = $this->service->show_permission($id);
+    	return view('permission.show', $res);
+    }
+
+    public function permission_destroy($id)
+    {
+        try {
+            $this->service->delete_permission($id);
+            return redirect()->route('permission.index')->with('success', 'Permission deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
 }

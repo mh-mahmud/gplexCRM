@@ -53,4 +53,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('user-update/{id}',      [UserController::class, 'update']);
     Route::get('user-details/{id}',     [UserController::class, 'show']);
     Route::delete('user-delete/{id}',   [UserController::class, 'destroy'])->name('user.destroy');
+
+    Route::get('permission-list',        [UserController::class, 'permission_index'])->name('permission.index');
+    Route::get('permission-show/{id}',        [UserController::class, 'permission_show'])->name('permission.show');
+    Route::get('create-permission',      [UserController::class, 'permission_create'])->name('create-permission');
+    Route::post('create-permission',      [UserController::class, 'permission_store'])->name('store-permission');
+    Route::post('edit-permission/{id}',      [UserController::class, 'permission_edit'])->name('permission.edit');
+    Route::post('permission-update/{id}',      [UserController::class, 'permission_update']);
+    Route::get('permission-details/{id}',     [UserController::class, 'permission_show']);
+    Route::delete('permission-delete/{id}',   [UserController::class, 'permission_destroy'])->name('permission.destroy');
 });
