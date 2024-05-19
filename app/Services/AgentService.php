@@ -115,6 +115,20 @@ class AgentService
         $agent->save();
     }
 
+    public function searchAgents($request)
+    {
+        $searchTerm = $request->input('search');
+        $query = Agent::query();
+
+        $query->where(function($q) use ($searchTerm) {
+            $q->where('agent_id', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('first_name', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('last_name', 'LIKE', '%' . $searchTerm . '%');
+        });
+
+        return $query->paginate(config('constants.ROW_PER_PAGE'));
+    }
+
     public function deleteAgentAndUser($id)
     {
         $agent = Agent::findOrFail($id);

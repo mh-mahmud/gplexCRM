@@ -88,39 +88,15 @@ class AgentController extends Controller {
         return redirect()->route('agents.index')->with('success', 'Agent updated successfully.');
     }
 
-    public function search_backup(Request $request)
-    {
-        $query = Agent::query();
-
-        
-        if ($request->filled('agent_id')) {
-            $query->where('agent_id', $request->input('agent_id'));
-        }
-
-        
-        if ($request->filled('first_name')) {
-            $query->where('first_name', 'like', '%' . $request->input('first_name') . '%');
-        }
-
-        
-        if ($request->filled('last_name')) {
-            $query->where('last_name', 'like', '%' . $request->input('last_name') . '%');
-        }
-
-        $agents = $query->paginate(config('constants.ROW_PER_PAGE'));
-
-        return view('agents.index', compact('agents'));
-    }
+  
 
     public function search(Request $request)
     {
-        
         $request->validate([
-            'agent_id' => 'required|string', 
+            'search' => 'required|string',
         ]);
 
-        $searchTerm = $request->input('agent_id');
-        $agents = Agent::where('agent_id', 'LIKE', "%{$searchTerm}%")->paginate(config('constants.ROW_PER_PAGE'));
+        $agents = $this->agentService->searchAgents($request);
         return view('agents.index', compact('agents'));
     }
 
