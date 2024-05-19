@@ -207,4 +207,12 @@ class UserService {
         $data['msg']= ["no data found"];
         return response()->json(compact('data'))->setStatusCode(401);
     }
+
+    public function deleteUser($id) {
+        $user = User::findOrFail($id);
+        if($user->delete()) {
+            return true;
+        }
+        return false;
+    }
 }

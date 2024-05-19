@@ -44,4 +44,14 @@ class UserController extends Controller
     	$res['user'] = $this->service->show_user($id);
     	return view('users.show', $res);
     }
+
+    public function destroy($id)
+    {
+        try {
+            $this->service->deleteUser($id);
+            return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
 }

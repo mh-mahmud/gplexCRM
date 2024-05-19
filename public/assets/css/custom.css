@@ -6,3 +6,6 @@
     background-color: #DDD;
     min-height: 60px;
 }
+.table.table-row-gray-100 tr {
+    border-bottom-color: #ddd;
+}
