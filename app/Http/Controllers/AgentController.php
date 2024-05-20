@@ -92,10 +92,17 @@ class AgentController extends Controller {
 
     public function search(Request $request)
     {
+
+        $searchTerm = trim($request->input('search'));
+
+        if (empty($searchTerm)) {
+            return redirect()->route('agents.index')->with('error', 'Search Field cannot be blank.');
+        }
+
         $request->validate([
             'search' => 'required|string',
         ]);
-
+       
         $agents = $this->agentService->searchAgents($request);
         return view('agents.index', compact('agents'));
     }

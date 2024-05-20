@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LeadsFormController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 	Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 	Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
+	// agents route
 	Route::get('/agents', [AgentController::class, 'index'])->name('agents.index');
     Route::get('/agents/create', [AgentController::class, 'create'])->name('agents.create');
 	Route::post('/agents', [AgentController::class, 'store'])->name('agents.store');
@@ -40,11 +42,18 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/agents/{id}/edit', [AgentController::class, 'edit'])->name('agents.edit');
 	Route::put('/agents/{id}', [AgentController::class, 'update'])->name('agents.update');
 	Route::post('/agents/search', [AgentController::class, 'search'])->name('agents.search');
-
-
 	Route::delete('/agents/{id}', [AgentController::class, 'destroy'])->name('agents.destroy');
+    //Lead Form route
+	Route::get('/leads_forms', [LeadsFormController::class, 'index'])->name('leads_forms.index');
+	Route::get('/leads_forms/create', [LeadsFormController::class, 'create'])->name('leads_forms.create');
+	Route::post('/leads_forms', [LeadsFormController::class, 'store'])->name('leads_forms.store');
+	Route::get('/leads_forms/{id}', [LeadsFormController::class, 'show'])->name('leads_forms.show');
+	Route::get('/leads_forms/{id}/edit', [LeadsFormController::class, 'edit'])->name('leads_forms.edit');
+	Route::put('/leads_forms/{id}', [LeadsFormController::class, 'update'])->name('leads_forms.update');
+	Route::delete('/leads_forms/{id}', [LeadsFormController::class, 'destroy'])->name('leads_forms.destroy');
+	Route::post('/leads_forms/search', [LeadsFormController::class, 'search'])->name('leads_forms.search');
 
-	// users route
+   // users route
     Route::get('user-list',        [UserController::class, 'index']);
     Route::get('user-show/{id}',        [UserController::class, 'show'])->name('user.show');
     Route::get('create-user',      [UserController::class, 'create'])->name('create-user');

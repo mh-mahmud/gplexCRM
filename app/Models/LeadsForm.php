@@ -10,5 +10,9 @@ class LeadsForm extends Model
     use HasFactory;
 
     protected $table = 'leads_form';
-    protected $guarded = [];
+
+    protected $fillable = [
+        'form_id', 'parent_id', 'form_name', 'form_description', 'form_status'
+    ];
 }
+

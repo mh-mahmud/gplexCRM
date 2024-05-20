@@ -14,12 +14,12 @@
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                             <!--begin::Title-->
-                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Agent
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Leads Form
                                 <!--begin::Separator-->
                                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Agent List</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Leads Form List</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -124,7 +124,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('agents.create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
+                            <a href="{{ route('leads_forms.create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
 
                             <!--end::Button-->
                         </div>
@@ -171,12 +171,12 @@
 			<!--begin::Header-->
 			<div class="d-flex justify-content-between align-items-start card-header border-0 pt-5">
 				<h3 class="card-title align-items-start flex-column">
-					<span class="card-label fw-bolder fs-3 mb-1">Agent List</span>
-					<span class="text-muted mt-1 fw-bold fs-7">Agent data here</span>
+					<span class="card-label fw-bolder fs-3 mb-1">Leads Form List</span>
+					<span class="text-muted mt-1 fw-bold fs-7">Leads Form data here</span>
 				</h3>
 
 				<div class="d-flex flex-wrap gap-2">
-				<form action="{{ route('agents.search') }}" method="POST" class="d-flex">
+				<form action="{{ route('leads_forms.search') }}" method="POST" class="d-flex">
 				@csrf
 					<!--begin::Input group-->
 					<div class="d-flex align-items-center position-relative">
@@ -193,7 +193,7 @@
 							</svg>
 						</span>
 						<!--end::Svg Icon-->
-						<input type="text" name="search" class="form-control form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by Agent ID or Name">
+						<input type="text" name="search" class="form-control form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by Lead Form Name">
 					</div>
 					<!--end::Input group-->
 					<button type="submit" class="btn btn-primary ms-2">Search</button>
@@ -208,7 +208,7 @@
 			<div class="card-body py-3">
 				<!--begin::Table container-->
 				<div class="table-responsive">
-				@if($agents->isNotEmpty())
+				@if($leadsForms->isNotEmpty())
 					<!--begin::Table-->
 					<table
 						class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
@@ -216,12 +216,9 @@
 						<thead>
 						<tr class="fw-bolder">
 						    <th class="min-w-150px">SL</th>
-							<th class="min-w-150px">Agent ID</th>
-							<th class="min-w-140px">First Name</th>
-							<th class="min-w-140px">Last Name</th>
-							<th class="min-w-120px">Email</th>
-							<th class="min-w-120px">Phone Number</th>
-							<th class="min-w-120px">Date Of Birth</th>
+							<!-- <th class="min-w-150px">Form ID</th> -->
+							<th class="min-w-150px">Form Name</th>
+							<th class="min-w-140px">Parent Name</th>
 							<th class="min-w-120px">Status</th>
 							<th class="min-w-100px text-end">Actions</th>
 						</tr>
@@ -229,26 +226,22 @@
 						<!--end::Table head-->
 						<!--begin::Table body-->
 						<tbody>
-						@foreach ($agents as $agent)
+						@foreach ($leadsForms as $leadsForm)
 						<tr>
 
 						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
-							<td class="text-dark fs-6">{{$agent->agent_id}}</td>
-							<td class="text-dark fs-6">{{$agent->first_name }}</td>
-							<td class="text-dark fs-6">{{$agent->last_name }}</td>
-							<td class="text-dark fs-6">{{$agent->user->email}}</td>
-							<td class="text-dark fs-6">{{$agent->phone_number}}</td>
-							<td class="text-dark fs-6">{{ \Carbon\Carbon::parse($agent->birth_day)->format('d-m-Y') }}</td>
-
-							<td>
-								@if ($agent->status == 1)
+							<!-- <td class="text-dark fs-6">{{$leadsForm->form_id}}</td> -->
+							<td class="text-dark fs-6">{{$leadsForm->form_name }}</td>
+							<td class="text-dark fs-6">{{$leadsForm->parent_name}}</td>
+		                   <td>
+								@if ($leadsForm->form_status == 1)
 									<span class="badge badge-light-success">Active</span>
-								@elseif ($agent->status == 0)
+								@elseif ($leadsForm->form_status == 0)
 									<span class="badge badge-light-danger">Inactive</span>
 								@endif
                             </td>
 							<td class="text-end">
-								<a href="{{ route('agents.show', $agent->agent_id) }}"
+								<a href="{{ route('leads_forms.show', $leadsForm->id) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
 									<span class="svg-icon svg-icon-3">
@@ -270,7 +263,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<a href="{{ route('agents.edit', $agent->agent_id) }}"
+								<a href="{{ route('leads_forms.edit', $leadsForm->id) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
 									<span class="svg-icon svg-icon-3">
@@ -286,7 +279,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<form action="{{ route('agents.destroy', $agent->agent_id) }}" method="POST" style="display: inline;">
+								<form action="{{ route('leads_forms.destroy', $leadsForm->id) }}" method="POST" style="display: inline;">
 									@csrf
 									@method('DELETE')
 									<button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">
@@ -334,24 +327,24 @@
 
 		<ul class="pagination">
 			<!-- Previous Page Link -->
-			@if ($agents->onFirstPage())
+			@if ($leadsForms->onFirstPage())
 				<li class="page-item previous disabled"><span class="page-link">Previous</span></li>
 			@else
-				<li class="page-item previous"><a href="{{ $agents->previousPageUrl() }}" class="page-link">Previous</a></li>
+				<li class="page-item previous"><a href="{{ $leadsForms->previousPageUrl() }}" class="page-link">Previous</a></li>
 			@endif
 
 			<!-- Pagination Elements -->
-			@for ($page = 1; $page <= $agents->lastPage(); $page++)
-				@if ($page == $agents->currentPage())
+			@for ($page = 1; $page <= $leadsForms->lastPage(); $page++)
+				@if ($page == $leadsForms->currentPage())
 					<li class="page-item active"><span class="page-link">{{ $page }}</span></li>
 				@else
-					<li class="page-item"><a href="{{ $agents->url($page) }}" class="page-link">{{ $page }}</a></li>
+					<li class="page-item"><a href="{{ $leadsForms->url($page) }}" class="page-link">{{ $page }}</a></li>
 				@endif
 			@endfor
 
 			<!-- Next Page Link -->
-			@if ($agents->hasMorePages())
-				<li class="page-item next"><a href="{{ $agents->nextPageUrl() }}" class="page-link">Next</a></li>
+			@if ($leadsForms->hasMorePages())
+				<li class="page-item next"><a href="{{ $leadsForms->nextPageUrl() }}" class="page-link">Next</a></li>
 			@else
 				<li class="page-item next disabled"><span class="page-link">Next</span></li>
 			@endif
@@ -365,7 +358,7 @@
 
 <script>
     function confirmDelete() {
-        if (confirm("Are you sure you want to delete Agent?")) {
+        if (confirm("Are you sure you want to delete Lead Form?")) {
             document.getElementById('deleteForm').submit();
         }
         return false;

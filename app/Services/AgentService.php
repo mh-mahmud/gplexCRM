@@ -117,7 +117,7 @@ class AgentService
 
     public function searchAgents($request)
     {
-        $searchTerm = $request->input('search');
+        $searchTerm = trim($request->input('search'));
         $query = Agent::query();
 
         $query->where(function($q) use ($searchTerm) {
