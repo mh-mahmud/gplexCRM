@@ -244,8 +244,8 @@
 						    <th class="min-w-25px">SL</th>
 							<th class="min-w-150px">First name</th>
 							<th class="min-w-140px">Last name</th>
-							<th class="min-w-140px">User Type</th>
 							<th class="min-w-120px">Email</th>
+							<th class="min-w-140px">User Type</th>
 							<th class="min-w-120px">Phone Number</th>
 							<th class="min-w-120px">Gender</th>
 							<th class="min-w-120px">Address</th>

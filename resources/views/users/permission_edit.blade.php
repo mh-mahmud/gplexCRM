@@ -18,7 +18,7 @@
                                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Permission Form</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">User Permission Form</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -46,7 +46,7 @@
                                 <div class="card-header">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
-                                        <h3 class="fw-bolder m-0">Create Permission</h3>
+                                        <h3 class="fw-bolder m-0">Edit Permission</h3>
                                     </div>
                                     <!--end::Card title-->
                                 </div>
@@ -56,9 +56,10 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('store-permission') }}"  enctype="multipart/form-data" method="POST">
+                                    <form class="g-form w-100" action="{{ route('permission.update') }}"  enctype="multipart/form-data" method="POST">
                                          @csrf
                                         <div class="row">
+                                            <input type="hidden" name="id" value="{{ $data->id }}">
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-10">
@@ -67,7 +68,7 @@
                                                             aria-label="Default select example">
                                                             <option value="">Select option</option>
                                                             @foreach($list as $key=>$val)
-                                                                <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                                                <option @if($data->parent_id==$val->id) selected  @endif value="{{ $val->id }}">{{ $val->name }}</option>
                                                             @endforeach
                                                     </select>
                                                 </div>
@@ -77,7 +78,7 @@
                                                 <div class="fv-row mb-10">
                                                     <label class="form-label fw-bolder text-dark">
                                                         Permision Name</label>
-                                                    <input class="form-control form-control-lg form-control-solid" type="text" name="name" autocomplete="off"/>
+                                                    <input class="form-control form-control-lg form-control-solid" type="text" value="{{ $data->name }}" name="name" autocomplete="off"/>
                                                     @if ($errors->has('name'))
                                                         <span class="text-danger">{{ $errors->first('name') }}</span>
                                                     @endif
@@ -86,14 +87,9 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-10">
-                                                    <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">
                                                         Permision Slug</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
-                                                           type="text" name="slug" autocomplete="off"/>
-                                                    <!--end::Input-->
+                                                    <input class="form-control form-control-lg form-control-solid" value="{{ $data->slug }}" type="text" name="slug" autocomplete="off"/>
                                                     @if ($errors->has('slug'))
                                                         <span class="text-danger">{{ $errors->first('slug') }}</span>
                                                     @endif
@@ -106,24 +102,19 @@
                                                     <select class=" form-control form-control-lg form-control-solid" name="show_in_menu"
                                                             aria-label="Default select example">
                                                             <option value="">Select option</option>
-                                                            <option value="1">Yes</option>
-                                                            <option value="0">No</option>
+                                                            <option @if($data->show_in_menu=='1') selected  @endif value="1">Yes</option>
+                                                            <option @if($data->show_in_menu=='0') selected  @endif value="0">No</option>
                                                     </select>
                                                 </div>
                                             </div>
 
-                                            <!-- <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Details</label>
-                                                    <textarea class="form-control form-control-lg  form-control-solid" name="address" rows="3"></textarea>
-                                                </div>
-                                            </div> -->
+                                            <!-- /// -->
 
 
                                         </div>
                                         <!--End Row-->
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <a href="{{ route('create-permission') }}" class="btn btn-light btn-active-light-primary me-2">Reset</a>
+                                        <a href="{{ route('create-user') }}" class="btn btn-light btn-active-light-primary me-2">Reset</a>
                                             <button type="submit" class="btn btn-primary"
                                                     id="kt_account_profile_details_submit">Submit
                                             </button>
