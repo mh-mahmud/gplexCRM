@@ -30,6 +30,7 @@ class AgentService
             $fileNameToStore = '';
         }
         $user = User::create([
+            'user_id' => str_pad(mt_rand(1, 9999999999999), 20),
             'email' => $request->email,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,

@@ -193,7 +193,7 @@
 							</svg>
 						</span>
 						<!--end::Svg Icon-->
-						<input type="text" name="search" class="form-control form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by Lead Form Name">
+						<input type="text" name="search" class="form-control form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by Form Name">
 					</div>
 					<!--end::Input group-->
 					<button type="submit" class="btn btn-primary ms-2">Search</button>
