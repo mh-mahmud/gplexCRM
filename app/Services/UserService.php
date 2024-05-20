@@ -34,6 +34,23 @@ class UserService {
         return User::findOrFail($id);
     }
 
+    public function edit_user($request) {
+        $user = User::findOrFail($request->id);
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->phone_number = $request->phone_number;
+        $user->gender = $request->gender;
+        if(!empty($request->password)) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->status = $request->status;
+        $user->address = $request->address;
+        if($user->save()) {
+                return true;
+        }
+        return false;
+    }
+
     public function deleteUser($id) {
         $user = User::findOrFail($id);
         if($user->delete()) {
@@ -60,6 +77,19 @@ class UserService {
         ]);
         $data->save();
         return $data;
+    }
+
+    public function edit_permission($request) {
+
+        $user = Permission::findOrFail($request->id);
+        $user->name = $request->name;
+        $user->slug = $request->slug;
+        $user->show_in_menu = $request->show_in_menu;
+        $user->parent_id = !empty($request->parent_id) ? $request->parent_id : null;
+        if($user->save()) {
+                return true;
+        }
+        return false;
     }
 
     public function show_permission($id) {

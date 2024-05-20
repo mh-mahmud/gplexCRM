@@ -39,6 +39,27 @@ class UserController extends Controller
         return redirect()->route('create-user')->with('error', 'Failed request');
     }
 
+    public function edit_form($id) {
+    	$data = [];
+    	$data['user_data'] = $this->service->show_user($id);
+    	return view('users.edit', $data);
+    }
+
+    public function update(Request $request) {
+    	// dd($request->all());
+        $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'gender' => 'required',
+        ]);
+       
+        $user = $this->service->edit_user($request);
+        if($user) {
+        	return redirect()->to('user-list')->with('success', 'User edited successfully.');
+        }
+        return redirect()->back()->with('error', 'Failed request');
+    }
+
     public function show($id) {
     	$res = [];
     	$res['user'] = $this->service->show_user($id);
@@ -55,7 +76,7 @@ class UserController extends Controller
         }
     }
 
-    // permission
+    // permission data
     public function permission_index() {
     	$data = [];
     	$data['users'] = $this->service->get_all_permission();
@@ -84,6 +105,25 @@ class UserController extends Controller
         	return redirect()->to('permission-list')->with('success', 'Permission created successfully.');
         }
         return redirect()->route('permission-user')->with('error', 'Failed request');
+    }
+
+    public function permission_update(Request $request) {
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required'
+        ]);
+        $data = $this->service->edit_permission($request);
+        if($data) {
+        	return redirect()->to('permission-list')->with('success', 'Permission edited successfully.');
+        }
+        return redirect()->back()->with('error', 'Failed request');
+    }
+
+    public function permission_edit($id) {
+    	$res = [];
+    	$res['list'] = $this->service->get_parent_list();
+    	$res['data'] = $this->service->show_permission($id);
+    	return view('users.permission_edit', $res);
     }
 
     public function permission_show($id) {
