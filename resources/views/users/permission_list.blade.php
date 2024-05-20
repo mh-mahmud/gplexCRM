@@ -14,12 +14,12 @@
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                             <!--begin::Title-->
-                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">User List
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Permission List
                                 <!--begin::Separator-->
                                 <span class="h-20px border-gray-200 ms-3 mx-2" style="border-left:1px solid #000!important"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show all users</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show all permission</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -135,7 +135,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('create-user') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
+                            <a href="{{ route('create-permission') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
 
                             <!--end::Button-->
                         </div>
@@ -242,14 +242,11 @@
 						<thead>
 						<tr class="fw-bolder">
 						    <th class="min-w-25px">SL</th>
-							<th class="min-w-150px">First name</th>
-							<th class="min-w-140px">Last name</th>
-							<th class="min-w-140px">User Type</th>
-							<th class="min-w-120px">Email</th>
-							<th class="min-w-120px">Phone Number</th>
-							<th class="min-w-120px">Gender</th>
-							<th class="min-w-120px">Address</th>
-							<th class="min-w-120px">Status</th>
+							<th class="min-w-140px">Parent Id</th>
+							<th class="min-w-150px">Permission name</th>
+							<th class="min-w-140px">Slug</th>
+							<!-- <th class="min-w-120px">Details</th> -->
+							<th class="min-w-120px">Show in Menu</th>
 							<th class="min-w-100px text-end">Actions</th>
 						</tr>
 						</thead>
@@ -260,45 +257,20 @@
 						<tr>
 
 						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
-							<td class="text-dark fs-6">{{$user->first_name}}</td>
-							<td class="text-dark fs-6">{{$user->last_name}}</td>
-							<td class="text-dark fs-6">{{$user->email }}</td>
-							<td class="text-dark fs-6">{{$user->user_type}}</td>
-							<td class="text-dark fs-6">{{$user->phone_number}}</td>
-							<td class="text-dark fs-6">{{$user->gender}}</td>
-							<td class="text-dark fs-6">{{$user->address}}</td>
+							<td class="text-dark fs-6">{{$user->parent_id}}</td>
+							<td class="text-dark fs-6">{{$user->name}}</td>
+							<td class="text-dark fs-6">{{$user->slug }}</td>
+							<!-- <td class="text-dark fs-6">{{$user->details}}</td> -->
 
 							<td>
-								@if ($user->status == 1)
-									<span class="badge badge-light-success">Active</span>
-								@elseif ($user->status == 0)
-									<span class="badge badge-light-danger">Inactive</span>
+								@if ($user->show_in_menu == 1)
+									<span class="badge badge-light-success">Yes</span>
+								@else
+									<span class="badge badge-light-danger">No</span>
 								@endif
                             </td>
 							<td class="text-end">
-								<a href="{{ route('user.show', $user->id) }}"
-								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-									<!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-									<span class="svg-icon svg-icon-3">
-												<svg xmlns="http://www.w3.org/2000/svg"
-													 width="24px" height="24px" viewBox="0 0 24 24">
-														<g stroke="none" stroke-width="1"
-														   fill="none" fill-rule="evenodd">
-															<rect x="0" y="0" width="24"
-																  height="24"/>
-															<path
-																d="M3,12 C3,12 5.45454545,6 12,6 C16.9090909,6 21,12 21,12 C21,12 16.9090909,18 12,18 C5.45454545,18 3,12 3,12 Z"
-																fill="black" fill-rule="nonzero"
-																opacity="0.7"/>
-															<path
-																d="M12,15 C10.3431458,15 9,13.6568542 9,12 C9,10.3431458 10.3431458,9 12,9 C13.6568542,9 15,10.3431458 15,12 C15,13.6568542 13.6568542,15 12,15 Z"
-																fill="black" opacity="0.7"/>
-														</g>
-													</svg>
-											</span>
-									<!--end::Svg Icon-->
-								</a>
-								<a href="{{ route('user.edit', $user->id) }}"
+								<a href="{{ route('permission.edit', $user->id) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
 									<span class="svg-icon svg-icon-3">
@@ -314,7 +286,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display: inline;">
+								<form action="{{ route('permission.destroy', $user->id) }}" method="POST" style="display: inline;">
 									@csrf
 									@method('DELETE')
 									<button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">
@@ -364,7 +336,7 @@
 
 <script>
     function confirmDelete() {
-        if (confirm("Are you sure you want to delete user?")) {
+        if (confirm("Are you sure you want to delete this item?")) {
             document.getElementById('deleteForm').submit();
         }
         return false;
