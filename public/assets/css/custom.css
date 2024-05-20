@@ -4,7 +4,8 @@
 }
 .card .card-header {
     background-color: #DDD;
-    min-height: 60px;
+    /* min-height: 60px; */
+    min-height: 40px;
 }
 .table.table-row-gray-100 tr {
     border-bottom-color: #ddd;

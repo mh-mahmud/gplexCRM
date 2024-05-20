@@ -16,7 +16,7 @@ class LeadsFormService
 
     public function createLeadsForm($data)
     {
-        $data['form_id'] = str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
+        $data['form_id'] = str_pad(mt_rand(1, 9999999999), 10);
         return LeadsForm::create($data);
     }
 

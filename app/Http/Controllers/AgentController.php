@@ -116,7 +116,7 @@ class AgentController extends Controller {
             $this->agentService->deleteAgentAndUser($id);
             return redirect()->route('agents.index')->with('success', 'Agent deleted successfully.');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to delete agent.');
+           return redirect()->back()->with('error', $e->getMessage());
         }
     }
 

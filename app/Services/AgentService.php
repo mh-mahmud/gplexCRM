@@ -38,7 +38,7 @@ class AgentService
             'user_type' =>'agent',
             'password' => bcrypt($request->password),
         ]);
-        $agent_id = str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
+        $agent_id = str_pad(mt_rand(1, 9999), 4);
         $agent = new Agent([
             'agent_id' => $agent_id,
             'first_name' => $request->first_name,
@@ -142,5 +142,9 @@ class AgentService
         }
         $agent->delete();
         $user->delete();
+        if($user->delete()) {
+            return true;
+        }
+        return false;
     }
 }

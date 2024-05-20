@@ -156,12 +156,12 @@
                                          @csrf
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Email</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="email" name="email" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('email'))
@@ -171,13 +171,13 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">
                                                         First Name</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="first_name" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('first_name'))
@@ -188,13 +188,13 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">
                                                     Last Name</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="last_name" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('last_name'))
@@ -205,13 +205,13 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">
                                                     Phone Number</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="phone_number" autocomplete="off"/>
                                                     <!--end::Input-->
                                                 </div>
@@ -220,12 +220,12 @@
                         
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Password</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="password" name="password" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('password'))
@@ -237,9 +237,9 @@
                                       
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Gender</label>
-                                                    <select class=" form-control form-control-lg form-control-solid" name="gender"
+                                                    <select class=" form-control form-control-sm form-control-solid" name="gender"
                                                             aria-label="Default select example">
                                                             <option value="">Select Gender</option>
                                                             <option value="male">Male</option>
@@ -251,7 +251,7 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">
                                                     Date Of Birth</label>
@@ -259,10 +259,10 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <div class="position-relative">
-                                                        <input type="text" class="form-control form-control-solid flatpickr"
+                                                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr"
                                                             placeholder="Date Of Birth" name="birth_day">
                                                     </div>
-                                                    <!-- <input class="form-control form-control-lg form-control-solid"
+                                                    <!-- <input class="form-control form-control-sm form-control-solid"
                                                            type="date" name="birth_day" autocomplete="off"/> -->
                                                     <!--end::Input-->
                                                 </div>
@@ -271,13 +271,13 @@
     
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label  fw-bolder text-dark">Image
                                                         Upload</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="file" name="profile_image" autocomplete="off"/>
                                                     <!--end::Input-->
                                                 </div>
@@ -285,9 +285,9 @@
 
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Status</label>
-                                                    <select class=" form-control form-control-lg form-control-solid" name="status"
+                                                    <select class=" form-control form-control-sm form-control-solid" name="status"
                                                             aria-label="Default select example">
                                                         
                                                         <option value="1" selected>Active</option>
@@ -298,16 +298,16 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="form-group">
+                                                <div class="fv-row">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Address</label>
-                                                    <textarea class="form-control form-control-lg  form-control-solid" name="address" rows="3"></textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="address" rows="3"></textarea>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Note</label>
-                                                    <textarea class="form-control form-control-lg  form-control-solid" name="description" rows="3"></textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3"></textarea>
                                                 </div>
                                             </div>
 
@@ -315,7 +315,7 @@
                                         </div>
                                         <!--End Row-->
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <a href="{{ route('agents.create') }}" class="btn btn-light btn-active-light-primary me-2">Reset</a>
+                                        <a href="{{ route('agents.create') }}" class="btn btn-light me-2">Reset</a>
                                             <button type="submit" class="btn btn-primary"
                                                     id="kt_account_profile_details_submit">Save Changes
                                             </button>

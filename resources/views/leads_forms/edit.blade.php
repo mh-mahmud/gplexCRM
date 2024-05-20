@@ -157,12 +157,12 @@
                                             @method('PUT')
                                             <div class="row">
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Form Name</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="form_name" name="form_name" value="{{ $leadsForm->form_name }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('form_name'))
@@ -172,9 +172,9 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Parent Name</label>
-                                                    <select class=" form-control form-control-lg form-control-solid" name="parent_id"
+                                                    <select class=" form-control form-control-sm form-control-solid" name="parent_id"
                                                             aria-label="Default select example">
                                                             <option value="">Select Parent</option>
                                                                 @foreach($parents as $id => $name)
@@ -188,14 +188,14 @@
                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Form Description</label>
-                                                    <textarea class="form-control form-control-lg  form-control-solid" name="form_description" rows="3">{{$leadsForm->form_description}}</textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="form_description" rows="3">{{$leadsForm->form_description}}</textarea>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Status</label>
-                                                    <select class="form-control form-control-lg form-control-solid" name="form_status" aria-label="Default select example">
+                                                    <select class="form-control form-control-sm form-control-solid" name="form_status" aria-label="Default select example">
                                                         <option value="1" {{ $leadsForm->form_status == 1 ? 'selected' : '' }}>Active</option>
                                                         <option value="0" {{ $leadsForm->form_status == 0 ? 'selected' : '' }}>Inactive</option>
                                                     </select>
@@ -206,7 +206,7 @@
                                         <!--End Row-->
                                        
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <a href="{{ route('leads_forms.edit', $leadsForm->id) }}" class="btn btn-light btn-active-light-primary me-2">Reset</a>
+                                        <a href="{{ route('leads_forms.edit', $leadsForm->id) }}" class="btn btn-light me-2">Reset</a>
                                             <button type="submit" class="btn btn-primary"
                                                     id="kt_account_profile_details_submit">Save Changes
                                             </button>

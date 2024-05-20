@@ -169,10 +169,10 @@
 	<div class="col-xxl-12">
 		<div class="card mb-5">
 			<!--begin::Header-->
-			<div class="d-flex justify-content-between align-items-start card-header border-0 pt-5">
+			<div class="d-flex justify-content-between align-items-start card-header border-0 pt-1">
 				<h3 class="card-title align-items-start flex-column">
 					<span class="card-label fw-bolder fs-3 mb-1">Agent List</span>
-					<span class="text-muted mt-1 fw-bold fs-7">Agent data here</span>
+					<!-- <span class="text-muted mt-1 fw-bold fs-7">Agent data here</span> -->
 				</h3>
 
 				<div class="d-flex flex-wrap gap-2">
@@ -193,10 +193,10 @@
 							</svg>
 						</span>
 						<!--end::Svg Icon-->
-						<input type="text" name="search" class="form-control form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by Agent ID or Name">
+						<input type="text" name="search" class="form-control form-control-sm form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by Agent ID or Name">
 					</div>
 					<!--end::Input group-->
-					<button type="submit" class="btn btn-primary ms-2">Search</button>
+					<button type="submit" class="btn btn-primary btn-sm ms-2">Search</button>
 				</form>
 			</div>
 
