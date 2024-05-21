@@ -42,7 +42,7 @@
                 <div class="container-xxl">
                     <div class="row">
                         <div class="col-xxl-12">
-                            <div class="card card-xxl-stretch">
+                            <div class="card card-xxl-stretch mt-8">
                                 <div class="card-header">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
@@ -62,9 +62,9 @@
                                             <input type="hidden" name="id" value="{{ $data->id }}">
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Parent ID</label>
-                                                    <select class=" form-control form-control-lg form-control-solid" name="parent_id"
+                                                    <select class=" form-control form-control-sm form-control-solid" name="parent_id"
                                                             aria-label="Default select example">
                                                             <option value="">Select option</option>
                                                             @foreach($list as $key=>$val)
@@ -75,10 +75,10 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">
                                                         Permision Name</label>
-                                                    <input class="form-control form-control-lg form-control-solid" type="text" value="{{ $data->name }}" name="name" autocomplete="off"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $data->name }}" name="name" autocomplete="off"/>
                                                     @if ($errors->has('name'))
                                                         <span class="text-danger">{{ $errors->first('name') }}</span>
                                                     @endif
@@ -86,10 +86,10 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">
                                                         Permision Slug</label>
-                                                    <input class="form-control form-control-lg form-control-solid" value="{{ $data->slug }}" type="text" name="slug" autocomplete="off"/>
+                                                    <input class="form-control form-control-sm form-control-solid" value="{{ $data->slug }}" type="text" name="slug" autocomplete="off"/>
                                                     @if ($errors->has('slug'))
                                                         <span class="text-danger">{{ $errors->first('slug') }}</span>
                                                     @endif
@@ -97,9 +97,9 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Show in Menu</label>
-                                                    <select class=" form-control form-control-lg form-control-solid" name="show_in_menu"
+                                                    <select class=" form-control form-control-sm form-control-solid" name="show_in_menu"
                                                             aria-label="Default select example">
                                                             <option value="">Select option</option>
                                                             <option @if($data->show_in_menu=='1') selected  @endif value="1">Yes</option>

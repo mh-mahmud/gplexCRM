@@ -11,7 +11,7 @@
                         <!--begin::Page title-->
                         <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
-                             class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                             class="page-title d-flex align-items-center flex-wrap me-3 mb-3 mb-lg-0">
                             <!--begin::Title-->
                             <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">User
                                 <!--begin::Separator-->
@@ -42,7 +42,7 @@
                 <div class="container-xxl">
                     <div class="row">
                         <div class="col-xxl-12">
-                            <div class="card card-xxl-stretch">
+                            <div class="card card-xxl-stretch mt-8">
                                 <div class="card-header">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
@@ -62,13 +62,13 @@
                                             <input type="hidden" name="id" value="{{ $user_data->id }}">
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">
                                                         First Name</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="first_name"  value="{{ $user_data->first_name }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('first_name'))
@@ -79,13 +79,13 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">
                                                     Last Name</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="last_name"  value="{{ $user_data->last_name }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('last_name'))
@@ -96,12 +96,12 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Email</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="email" readonly name="email"  value="{{ $user_data->email }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('email'))
@@ -111,21 +111,21 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Phone Number</label>
-                                                    <input class="form-control form-control-lg form-control-solid" type="text"  value="{{ $user_data->phone_number }}" name="phone_number" autocomplete="off"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text"  value="{{ $user_data->phone_number }}" name="phone_number" autocomplete="off"/>
                                                 </div>
                                             </div>
 
                         
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Password</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="password" name="password" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('password'))
@@ -135,9 +135,9 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Gender</label>
-                                                    <select class=" form-control form-control-lg form-control-solid" name="gender"
+                                                    <select class=" form-control form-control-sm form-control-solid" name="gender"
                                                             aria-label="Default select example">
                                                             <option value="">Select Gender</option>
                                                             <option @if($user_data->gender=='Male') selected  @endif value="Male">Male</option>
@@ -149,9 +149,9 @@
 
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Status</label>
-                                                    <select class=" form-control form-control-lg form-control-solid" name="status" aria-label="Default select example">
+                                                    <select class=" form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
                                                         <option value="">Select status</option>
                                                         <option @if($user_data->status=='1') selected  @endif value="1">Active</option>
                                                         <option @if($user_data->status=='0') selected  @endif value="1" value="0">Inactive</option>
@@ -163,7 +163,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Address</label>
-                                                    <textarea class="form-control form-control-lg  form-control-solid" name="address" rows="3">{{ $user_data->address }}</textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="address" rows="3">{{ $user_data->address }}</textarea>
                                                 </div>
                                             </div>
 
