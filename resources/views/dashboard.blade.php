@@ -119,10 +119,39 @@
 					<a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app" id="kt_toolbar_primary_button">Create</a>
 					<!--end::Button-->
 				</div>
+				
 				<!--end::Actions-->
 			</div>
 			<!--end::Container-->
 		</div>
+
+		<div class="container-fluid">
+
+	`	<!--Table Alert Message-->
+		<div class="text-center">
+			<div class="row">
+				<div class="col-md-5 mx-auto">
+				@if (session('success'))
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
+						<strong>{{ session('success') }}</strong>
+						<button type="button" class="btn-close" data-bs-dismiss="alert"
+								aria-label="Close"></button>
+					</div>
+					@endif
+					@if (session('error'))
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						<strong> {{ session('error') }}</strong>
+						<button type="button" class="btn-close" data-bs-dismiss="alert"
+								aria-label="Close"></button>
+					</div>
+					@endif
+
+					
+				</div>
+			</div>
+		</div>
+
+		<!--End Table Alert Message-->`
 		<!--end::Toolbar-->
 
 		<!--begin::Post-->
