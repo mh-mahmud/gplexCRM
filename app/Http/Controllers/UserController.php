@@ -141,4 +141,10 @@ class UserController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    public function role_index() {
+    	$data = [];
+    	$data['roles'] = $this->service->get_all_role();
+    	return view('users.role_list', $data);
+    }
 }
