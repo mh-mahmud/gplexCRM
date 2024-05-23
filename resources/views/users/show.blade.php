@@ -141,7 +141,7 @@
                   <div class="container-fluid">
     <div class="row">
         <div class="col-xxl-8 mx-auto">
-            <div class="card mb-5">
+            <div class="card mt-8">
                 <div class="card-header">
                     <div class="card-title">
                         <h2>User Details</h2>

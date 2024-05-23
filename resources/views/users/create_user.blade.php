@@ -43,7 +43,7 @@
                                     <!--begin::Form-->
                                     <div class="px-7 py-5">
                                         <!--begin::Input group-->
-                                        <div class="mb-10">
+                                        <div class="mb-3">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bold">Status:</label>
                                             <!--end::Label-->
@@ -64,7 +64,7 @@
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
-                                        <div class="mb-10">
+                                        <div class="mb-3">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bold">Member Type:</label>
                                             <!--end::Label-->
@@ -90,7 +90,7 @@
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
-                                        <div class="mb-10">
+                                        <div class="mb-3">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bold">Notifications:</label>
                                             <!--end::Label-->
@@ -138,7 +138,7 @@
                 <div class="container-xxl">
                     <div class="row">
                         <div class="col-xxl-12">
-                            <div class="card card-xxl-stretch">
+                            <div class="card card-xxl-stretch mt-8">
                                 <div class="card-header">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
@@ -157,13 +157,13 @@
                                         <div class="row">
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">
                                                         First Name</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="first_name" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('first_name'))
@@ -174,13 +174,13 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">
                                                     Last Name</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="last_name" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('last_name'))
@@ -191,12 +191,12 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Email</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="email" name="email" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('email'))
@@ -206,13 +206,13 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">
                                                     Phone Number</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="phone_number" autocomplete="off"/>
                                                     <!--end::Input-->
                                                 </div>
@@ -221,12 +221,12 @@
                         
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Password</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-lg form-control-solid"
+                                                    <input class="form-control form-control-sm form-control-solid"
                                                            type="password" name="password" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('password'))
@@ -238,9 +238,9 @@
                                       
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Gender</label>
-                                                    <select class=" form-control form-control-lg form-control-solid" name="gender"
+                                                    <select class=" form-control form-control-sm form-control-solid" name="gender"
                                                             aria-label="Default select example">
                                                             <option value="">Select Gender</option>
                                                             <option value="male">Male</option>
@@ -252,9 +252,9 @@
 
 
                                             <div class="col-md-6">
-                                                <div class="fv-row mb-10">
+                                                <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Status</label>
-                                                    <select class=" form-control form-control-lg form-control-solid" name="status"
+                                                    <select class=" form-control form-control-sm form-control-solid" name="status"
                                                             aria-label="Default select example">
                                                         <option value="1" selected>Active</option>
                                                         <option value="0">Inactive</option>
@@ -266,7 +266,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Address</label>
-                                                    <textarea class="form-control form-control-lg  form-control-solid" name="address" rows="3"></textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="address" rows="3"></textarea>
                                                 </div>
                                             </div>
 

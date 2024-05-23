@@ -1738,7 +1738,7 @@
 														</span>
 														<div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg py-lg-4 w-lg-225px">
 															<div class="menu-item">
-																<a class="menu-link py-3" href="../dist/account/overview.html">
+																<a class="menu-link py-3" href="{{ route('users.index') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
@@ -1746,7 +1746,7 @@
 																</a>
 															</div>
 															<div class="menu-item">
-																<a class="menu-link py-3" href="../dist/account/settings.html">
+																<a class="menu-link py-3" href="{{ route('create-user') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
@@ -1754,7 +1754,7 @@
 																</a>
 															</div>
 															<div class="menu-item">
-																<a class="menu-link py-3" href="../dist/account/security.html">
+																<a class="menu-link py-3" href="{{ route('role-list') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
@@ -1762,7 +1762,7 @@
 																</a>
 															</div>
 															<div class="menu-item">
-																<a class="menu-link py-3" href="../dist/account/billing.html">
+																<a class="menu-link py-3" href="{{ route('role-create') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
@@ -1770,7 +1770,7 @@
 																</a>
 															</div>
 															<div class="menu-item">
-																<a class="menu-link py-3" href="../dist/account/statements.html">
+																<a class="menu-link py-3" href="{{ route('permission.index') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
@@ -1778,7 +1778,7 @@
 																</a>
 															</div>
 															<div class="menu-item">
-																<a class="menu-link py-3" href="../dist/account/referrals.html">
+																<a class="menu-link py-3" href="{{ route('create-permission') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
