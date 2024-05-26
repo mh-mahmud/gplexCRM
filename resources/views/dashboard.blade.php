@@ -130,7 +130,7 @@
 	`	<!--Table Alert Message-->
 		<div class="text-center">
 			<div class="row">
-				<div class="col-md-5 mx-auto">
+			<div class="col-md-5 mx-auto">
 				@if (session('success'))
 					<div class="alert alert-success alert-dismissible fade show" role="alert">
 						<strong>{{ session('success') }}</strong>
