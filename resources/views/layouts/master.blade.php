@@ -2048,11 +2048,20 @@
 																</a>
 															</div>
 															<div class="menu-item">
-																<a class="menu-link py-3" href="{{ URL::to('create-agent') }}">
+																<a class="menu-link py-3" href="{{ route('promotion.index') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
-																	<span class="menu-title">Manage Promotions</span>
+																	<span class="menu-title">Promotion List</span>
+																</a>
+															</div>
+
+															<div class="menu-item">
+																<a class="menu-link py-3" href="{{ route('promotion.create') }}">
+																	<span class="menu-bullet">
+																		<span class="bullet bullet-dot"></span>
+																	</span>
+																	<span class="menu-title">Create Promotion</span>
 																</a>
 															</div>
 														</div>
@@ -6785,6 +6794,8 @@
 		<script>
 			$('[name="date-table"]').flatpickr();
 			$('[name="birth_day"]').flatpickr();
+			$('[name="start_date"]').flatpickr();
+			$('[name="end_date"]').flatpickr();
 		</script>
 		 @yield('endScript')
 		<!--end::Page Custom Javascript-->

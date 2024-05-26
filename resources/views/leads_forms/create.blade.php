@@ -162,7 +162,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="form_name" name="form_name" autocomplete="off"/>
+                                                           type="text" name="form_name" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('form_name'))
                                                         <span class="text-danger">{{ $errors->first('form_name') }}</span>

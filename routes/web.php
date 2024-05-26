@@ -6,6 +6,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LeadsFormController;
+use App\Http\Controllers\PromotionController;
+use App\Models\Promotion;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +54,16 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('/leads_forms/{id}', [LeadsFormController::class, 'update'])->name('leads_forms.update');
 	Route::delete('/leads_forms/{id}', [LeadsFormController::class, 'destroy'])->name('leads_forms.destroy');
 	Route::post('/leads_forms/search', [LeadsFormController::class, 'search'])->name('leads_forms.search');
+
+       //Lead Form route
+	Route::get('/promotion', [PromotionController::class, 'index'])->name('promotion.index');
+	Route::get('/promotion/create', [PromotionController::class, 'create'])->name('promotion.create');
+	Route::post('/promotion', [PromotionController::class, 'store'])->name('promotion.store');
+	Route::get('/promotion/{id}', [PromotionController::class, 'show'])->name('promotion.show');
+	Route::get('/promotion/{id}/edit', [PromotionController::class, 'edit'])->name('promotion.edit');
+	Route::put('/promotion/{id}', [PromotionController::class, 'update'])->name('promotion.update');
+	Route::delete('/promotion/{id}', [PromotionController::class, 'destroy'])->name('promotion.destroy');
+	Route::post('/promotion/search', [PromotionController::class, 'search'])->name('promotion.search');
 
 	// users route
     Route::get('user-list',        [UserController::class, 'index'])->name('users.index');
