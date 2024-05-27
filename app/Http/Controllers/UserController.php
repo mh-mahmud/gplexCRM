@@ -156,4 +156,8 @@ class UserController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    public function role_create() {
+    	return view('users.create_role');
+    }
 }
