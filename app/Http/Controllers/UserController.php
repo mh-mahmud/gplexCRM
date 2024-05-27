@@ -147,4 +147,13 @@ class UserController extends Controller
     	$data['roles'] = $this->service->get_all_role();
     	return view('users.role_list', $data);
     }
+
+    public function role_destroy($id) {
+        try {
+            $this->service->delete_role($id);
+            return redirect()->route('role-list')->with('success', 'Role deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
 }
