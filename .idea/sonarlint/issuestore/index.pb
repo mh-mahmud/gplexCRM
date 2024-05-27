@@ -24,3 +24,5 @@ N
 ui/theme/demo1/dist/index.html,f\f\ff4a2e955ab118ac71935a2fea08b219d066f96a
 H
 ui/build/table-view.html,f\0\f057ef8ac6ea41c8473d2cb1a256d82f8eb822b3
+F
+ui/build/add-form.html,7\5\752169bde39e0bea7430051fa70c8c03f38a2f84
