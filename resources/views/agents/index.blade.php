@@ -139,28 +139,30 @@
 <div class="container-fluid">
 
 <!--Table Alert Message-->
-<div class="text-center">
-	<div class="row">
-		<div class="col-md-5 mx-auto">
-		   @if (session('success'))
-		    <div class="alert alert-success alert-dismissible fade show" role="alert">
-				<strong>{{ session('success') }}</strong>
-				<button type="button" class="btn-close" data-bs-dismiss="alert"
-						aria-label="Close"></button>
-			</div>
-			@endif
-			@if (session('error'))
-			<div class="alert alert-danger alert-dismissible fade show" role="alert">
-				<strong> {{ session('error') }}</strong>
-				<button type="button" class="btn-close" data-bs-dismiss="alert"
-						aria-label="Close"></button>
-			</div>
-			@endif
+<!-- Display Success and Error Messages using SweetAlert2 -->
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success')}}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
 
-			
-		</div>
-	</div>
-</div>
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error')}}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
 
 <!--End Table Alert Message-->
 
@@ -239,7 +241,11 @@
 							<td class="text-dark fs-6">{{$agent->last_name }}</td>
 							<td class="text-dark fs-6">{{$agent->user->email}}</td>
 							<td class="text-dark fs-6">{{$agent->phone_number}}</td>
-							<td class="text-dark fs-6">{{ \Carbon\Carbon::parse($agent->birth_day)->format('d-m-Y') }}</td>
+							<td class="text-dark fs-6">
+							@if($agent->birth_day)
+                            {{ \Carbon\Carbon::parse($agent->birth_day)->format('d-m-Y') }}
+                            @endif
+							</td>
 
 							<td>
 								@if ($agent->status == 1)

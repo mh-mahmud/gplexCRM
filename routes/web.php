@@ -7,6 +7,7 @@ use App\Http\Controllers\AgentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LeadsFormController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\DynamicTableController;
 use App\Models\Promotion;
 
 /*
@@ -55,7 +56,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::delete('/leads_forms/{id}', [LeadsFormController::class, 'destroy'])->name('leads_forms.destroy');
 	Route::post('/leads_forms/search', [LeadsFormController::class, 'search'])->name('leads_forms.search');
 
-       //Lead Form route
+	 //Lead Form route
+	Route::get('/dynamic_table', [DynamicTableController::class, 'index'])->name('dynamic_table.index');
+	Route::get('/dynamic_table/create', [DynamicTableController::class, 'create'])->name('dynamic_table.create');
+	Route::post('dynamic-table/create', [DynamicTableController::class, 'createTable'])->name('dynamic_table.store');
+
+       //promotion route
 	Route::get('/promotion', [PromotionController::class, 'index'])->name('promotion.index');
 	Route::get('/promotion/create', [PromotionController::class, 'create'])->name('promotion.create');
 	Route::post('/promotion', [PromotionController::class, 'store'])->name('promotion.store');

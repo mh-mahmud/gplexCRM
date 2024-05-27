@@ -20,6 +20,8 @@
 		<!--begin::Global Stylesheets Bundle(used by all pages)-->
 		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="{{url('/')}}/assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+        <script src="{{url('/')}}/assets/js/sweetalert2.min.js"></script>
 		<!--end::Global Stylesheets Bundle-->
 	</head>
 	<!--end::Head-->
@@ -49,17 +51,29 @@
 								<!--begin::Title-->
 								<h1 class="text-dark mb-3">Sign In to gPlex CRM</h1>
 								<!--Alert Message-->
+								<!-- Display Success and Error Messages using SweetAlert2 -->
 								@if (session('success'))
-								<div class="alert alert-success alert-dismissible fade show" role="alert">
-									<strong> {{ session('success') }}</strong> 
-									<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-								</div>
+									<script>
+										Swal.fire({
+											icon: 'success',
+											title: 'Success',
+											text: '{{ session('success')}}',
+											showConfirmButton: false,
+											timer: 1500
+										});
+									</script>
 								@endif
-                                @if (session('error'))
-								<div class="alert alert-danger alert-dismissible fade show" role="alert">
-									<strong>{{ session('error') }}</strong>
-									<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-								</div>
+
+								@if (session('error'))
+									<script>
+										Swal.fire({
+											icon: 'error',
+											title: 'Error',
+											text: '{{ session('error')}}',
+											showConfirmButton: false,
+											timer: 1500
+										});
+									</script>
 								@endif
 								<!--End Alert Message-->
 								<!--end::Title-->

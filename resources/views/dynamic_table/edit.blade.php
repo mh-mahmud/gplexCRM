@@ -1,7 +1,4 @@
 @extends('layouts.master')
-@php
-    use Carbon\Carbon;
-@endphp
 
 @section('content')
 
@@ -16,12 +13,12 @@
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                             <!--begin::Title-->
-                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Promotion Details
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Agent Lead Forms
                                 <!--begin::Separator-->
                                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Promotion Details</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Fill up the Lead Edit form</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -126,7 +123,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('promotion.index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Promotion List</a>
+                            <a href="{{ route('leads_forms.index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Lead Form List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
@@ -135,82 +132,101 @@
                 </div>
                 <!--end::Toolbar-->
 
-       <!--**********************************
-                                Tables View
+                <!--**********************************
+                                Forms
                   ***********************************-->
-                  <div class="container-fluid">
-    <div class="row">
-        <div class="col-xxl-8 mx-auto">
-            <div class="card mt-5">
-                <div class="card-header">
-                    <div class="card-title">
-                        <h2>Promotion Details</h2>
+                <div class="container-xxl">
+                    <div class="row">
+                        <div class="col-xxl-12">
+                            <div class="card card-xxl-stretch mt-5">
+                                <div class="card-header">
+                                    <!--begin::Card title-->
+                                    <div class="card-title m-0">
+                                        <h3 class="fw-bolder m-0">Agent Edit</h3>
+                                    </div>
+                                    <!--end::Card title-->
+                                </div>
+
+                                <!-- Card Body-->
+                                <div class="card-body">
+
+                                    <!-- Start Form-->
+
+                                    <form class="g-form w-100" action="{{ route('leads_forms.update', $leadsForm->id) }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <!--begin::Label-->
+                                                    <label class="form-label fw-bolder text-dark">Form Name</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input class="form-control form-control-sm form-control-solid"
+                                                           type="text" name="form_name" value="{{ $leadsForm->form_name }}" autocomplete="off"/>
+                                                    <!--end::Input-->
+                                                    @if ($errors->has('form_name'))
+                                                        <span class="text-danger">{{ $errors->first('form_name') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Parent Name</label>
+                                                    <select class=" form-control form-control-sm form-control-solid" name="parent_id"
+                                                            aria-label="Default select example">
+                                                            <option value="">Select Parent</option>
+                                                                @foreach($parents as $id => $name)
+                                                                    <option value="{{ $id }}" {{ $leadsForm->parent_id == $id ? 'selected' : '' }}>{{$name}}</option>
+                                                                @endforeach
+                                                        
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                           <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label fw-bolder text-dark" for="textarea">Form Description</label>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="form_description" rows="3">{{$leadsForm->form_description}}</textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Status</label>
+                                                    <select class="form-control form-control-sm form-control-solid" name="form_status" aria-label="Default select example">
+                                                        <option value="1" {{ $leadsForm->form_status == 1 ? 'selected' : '' }}>Active</option>
+                                                        <option value="0" {{ $leadsForm->form_status == 0 ? 'selected' : '' }}>Inactive</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                     </div>
+                                        <!--End Row-->
+                                       
+                                      <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                        <a href="{{ route('leads_forms.edit', $leadsForm->id) }}" class="btn btn-light me-2">Reset</a>
+                                            <button type="submit" class="btn btn-primary"
+                                                    id="kt_account_profile_details_submit">Save Changes
+                                            </button>
+                                        </div>
+
+                                    </form>
+
+                                    <!-- End Form-->
+
+                                </div>
+                                <!--End Card body-->
+
+                                <!--begin::Actions-->
+                                
+                                <!--end::Actions-->
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!--begin::Body-->
-                <div class="card-body py-3">
-
-                
-
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Promotion Name</span>
-                        <span>{{ $promotion->promotion_title }}</span>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Start Date</span>
-                        <span>
-                        @if($promotion->start_date)
-                        {{ \Carbon\Carbon::parse($promotion->start_date)->format('d-m-Y') }}
-                        @endif
-                        </span>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">End Date</span>
-                        <span>
-                        @if($promotion->end_date)
-                        {{ \Carbon\Carbon::parse($promotion->end_date)->format('d-m-Y') }}
-                        @endif</span>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Promotion Type</span>
-                        <span>{{ $promotion->promo_type }}</span>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Promotion Type</span>
-                        <span>{{ $promotion->description }}</span>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Status</span>
-                        @if ($promotion->status === 1)
-                            <span>Active</span>
-                        @elseif ($promotion->status === 0)
-                            <span>Inactive</span>
-                        @endif
-                    </div>
-
-
-                    
-                
-
-
-                   
-
-                </div>
-            
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-                <!-- End Tables View-->
+                <!-- End Forms-->
 
 
             <!-- </div> -->
