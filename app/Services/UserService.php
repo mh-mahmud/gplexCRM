@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\Role;
 use App\Models\Permission;
 use App\Models\SmsQueue;
 use App\Models\SmsLog;
@@ -12,6 +13,10 @@ class UserService {
 	public function get_all_user() {
 		return User::paginate(10);
 	}
+
+    public function get_all_role() {
+        return Role::paginate(10);
+    }
 
     public function create_user($request) {
 
@@ -98,6 +103,14 @@ class UserService {
 
     public function delete_permission($id) {
         $user = Permission::findOrFail($id);
+        if($user->delete()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function delete_role($id) {
+        $user = Role::findOrFail($id);
         if($user->delete()) {
             return true;
         }

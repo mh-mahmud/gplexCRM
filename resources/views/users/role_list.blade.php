@@ -241,29 +241,19 @@
 						<tr class="fw-bolder">
 						    <th class="min-w-25px">SL</th>
 							<th class="min-w-150px">Role Name</th>
-							<th class="min-w-140px">Last name</th>
-							<th class="min-w-120px">Email</th>
-							<th class="min-w-140px">User Type</th>
-							<th class="min-w-120px">Phone Number</th>
-							<th class="min-w-120px">Gender</th>
-							<th class="min-w-120px">Address</th>
+							<th class="min-w-140px">Permission Details</th>
 							<th class="min-w-120px">Status</th>
 							<th class="min-w-100px text-end">Actions</th>
 						</tr>
 						</thead>
 
 						<tbody>
-						@foreach ($users as $user)
+						@foreach ($roles as $user)
 						<tr>
 
 						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
-							<td class="text-dark fs-6">{{$user->first_name}}</td>
-							<td class="text-dark fs-6">{{$user->last_name}}</td>
-							<td class="text-dark fs-6">{{$user->email }}</td>
-							<td class="text-dark fs-6">{{$user->user_type}}</td>
-							<td class="text-dark fs-6">{{$user->phone_number}}</td>
-							<td class="text-dark fs-6">{{$user->gender}}</td>
-							<td class="text-dark fs-6">{{$user->address}}</td>
+							<td class="text-dark fs-6">{{$user->name}}</td>
+							<td class="text-dark fs-6">{{$user->permission_details }}</td>
 
 							<td>
 								@if ($user->status == 1)
@@ -311,7 +301,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display: inline;">
+								<form action="{{ route('role-destroy', $user->id) }}" method="POST" style="display: inline;">
 									@csrf
 									@method('DELETE')
 									<button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">

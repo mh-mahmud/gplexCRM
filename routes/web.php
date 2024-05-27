@@ -47,14 +47,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/agents/search', [AgentController::class, 'search'])->name('agents.search');
 	Route::delete('/agents/{id}', [AgentController::class, 'destroy'])->name('agents.destroy');
     //Lead Form route
-	Route::get('/leads_forms', [LeadsFormController::class, 'index'])->name('leads_forms.index');
-	Route::get('/leads_forms/create', [LeadsFormController::class, 'create'])->name('leads_forms.create');
-	Route::post('/leads_forms', [LeadsFormController::class, 'store'])->name('leads_forms.store');
-	Route::get('/leads_forms/{id}', [LeadsFormController::class, 'show'])->name('leads_forms.show');
-	Route::get('/leads_forms/{id}/edit', [LeadsFormController::class, 'edit'])->name('leads_forms.edit');
-	Route::put('/leads_forms/{id}', [LeadsFormController::class, 'update'])->name('leads_forms.update');
-	Route::delete('/leads_forms/{id}', [LeadsFormController::class, 'destroy'])->name('leads_forms.destroy');
-	Route::post('/leads_forms/search', [LeadsFormController::class, 'search'])->name('leads_forms.search');
+	Route::get('/leads-forms', [LeadsFormController::class, 'index'])->name('leads_forms.index');
+	Route::get('/leads-forms/create', [LeadsFormController::class, 'create'])->name('leads_forms.create');
+	Route::post('/leads-forms', [LeadsFormController::class, 'store'])->name('leads_forms.store');
+	Route::get('/leads-forms/{id}', [LeadsFormController::class, 'show'])->name('leads_forms.show');
+	Route::get('/leads-forms/{id}/edit', [LeadsFormController::class, 'edit'])->name('leads_forms.edit');
+	Route::put('/leads-forms/{id}', [LeadsFormController::class, 'update'])->name('leads_forms.update');
+	Route::delete('/leads-forms/{id}', [LeadsFormController::class, 'destroy'])->name('leads_forms.destroy');
+	Route::post('/leads-forms/search', [LeadsFormController::class, 'search'])->name('leads_forms.search');
 
 	 //Lead Form route
 	Route::get('/dynamic_table', [DynamicTableController::class, 'index'])->name('dynamic_table.index');
