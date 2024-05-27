@@ -58,7 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	 //Lead Form route
 	Route::get('/dynamic_table', [DynamicTableController::class, 'index'])->name('dynamic_table.index');
-	Route::get('/dynamic_table/create', [DynamicTableController::class, 'create'])->name('dynamic_table.create');
+	Route::get('/dynamic-table/create', [DynamicTableController::class, 'create'])->name('dynamic_table.create');
 	Route::post('dynamic-table/create', [DynamicTableController::class, 'createTable'])->name('dynamic_table.store');
 
        //promotion route
