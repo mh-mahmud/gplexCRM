@@ -8,6 +8,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LeadsFormController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\DynamicTableController;
+use App\Http\Controllers\EmailController;
+
 use App\Models\Promotion;
 
 /*
@@ -97,4 +99,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('role-edit/{id}',      [UserController::class, 'role_edit'])->name('role-edit');
     Route::post('role-update',      [UserController::class, 'role_update'])->name('role-update');
     Route::delete('role-delete/{id}',   [UserController::class, 'role_destroy'])->name('role-destroy');
+
+	// Email template routes start
+	Route::get('email-template', [EmailController::class, 'emailTemplateList'])->name('email-template');
+	Route::get('email-template/create', [EmailController::class, 'templateCreate'])->name('email-template.create');
+	Route::post('email-template/store', [EmailController::class, 'templateStore'])->name('email-template.store');
+	Route::get('email-template/edit/{id}', [EmailController::class, 'templateEdit'])->name('email-template.edit');
+	Route::get('email-template/show/{id}', [EmailController::class, 'templateShow'])->name('email-template.show');
+
+
+	// Email template routes end
+
+
 });
