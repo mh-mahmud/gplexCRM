@@ -11,7 +11,7 @@ class Role extends Model
     // protected $primaryKey = 'role_id';
     public $incrementing = false;
 
-    protected $fillable = ['name','slug','details','status'];
+    protected $fillable = ['name','slug','details','status', 'permission_details'];
 
     public function getCreatedAtAttribute($date)
     {

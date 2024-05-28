@@ -152,123 +152,37 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('store-user') }}"  enctype="multipart/form-data" method="POST">
+                                    <form class="g-form w-100" action="{{ route('role-store') }}"  enctype="multipart/form-data" method="POST">
                                          @csrf
                                         <div class="row">
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">
-                                                        First Name</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="first_name" autocomplete="off"/>
-                                                    <!--end::Input-->
-                                                    @if ($errors->has('first_name'))
-                                                        <span class="text-danger">{{ $errors->first('first_name') }}</span>
+
+                                                    <label class="form-label fw-bolder text-dark">Role Name</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="role_name" autocomplete="off"/>
+                                                    @if ($errors->has('role_name'))
+                                                        <span class="text-danger">{{ $errors->first('role_name') }}</span>
                                                     @endif
                                                    
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">
-                                                    Last Name</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="last_name" autocomplete="off"/>
-                                                    <!--end::Input-->
-                                                    @if ($errors->has('last_name'))
-                                                        <span class="text-danger">{{ $errors->first('last_name') }}</span>
-                                                    @endif
-                                                   
+                                            @foreach($menus as $key=>$value)
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">{{ str_replace("_", " ", $key) }}</label>
+
+                                                        @foreach($value as $k=>$v)
+                                                        <div class="form-check mt-3" style="margin-left: 20px;">
+                                                            <input class="form-check-input" type="checkbox" name="{{$key}}[]" value="{{ $v->sub_name }}">
+                                                            <label class="form-check-label">{{$v->name}}</label>
+                                                        </div>
+                                                        @endforeach
+
+                                                    </div>
                                                 </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Email</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="email" name="email" autocomplete="off"/>
-                                                    <!--end::Input-->
-                                                    @if ($errors->has('email'))
-                                                        <span class="text-danger">{{ $errors->first('email') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">
-                                                    Phone Number</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="phone_number" autocomplete="off"/>
-                                                    <!--end::Input-->
-                                                </div>
-                                            </div>
-
-                        
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Password</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="password" name="password" autocomplete="off"/>
-                                                    <!--end::Input-->
-                                                    @if ($errors->has('password'))
-                                                        <span class="text-danger">{{ $errors->first('password') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-
-                                      
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Gender</label>
-                                                    <select class=" form-control form-control-sm form-control-solid" name="gender"
-                                                            aria-label="Default select example">
-                                                            <option value="">Select Gender</option>
-                                                            <option value="male">Male</option>
-                                                            <option value="female">Female</option>
-                                                            <option value="other">Other</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Status</label>
-                                                    <select class=" form-control form-control-sm form-control-solid" name="status"
-                                                            aria-label="Default select example">
-                                                        <option value="1" selected>Active</option>
-                                                        <option value="0">Inactive</option>
-                                                        
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Address</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="address" rows="3"></textarea>
-                                                </div>
-                                            </div>
+                                            @endforeach
 
 
                                         </div>
