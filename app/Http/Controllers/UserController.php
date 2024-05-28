@@ -19,7 +19,7 @@ class UserController extends Controller
     }
 
     public function create() {
-    	return view('users.create_user');
+    	return view('users.create_user', $data);
     }
 
     public function store(Request $request)
@@ -41,6 +41,7 @@ class UserController extends Controller
 
     public function edit_form($id) {
     	$data = [];
+    	$data['role_list'] = $this->service->get_all_role();
     	$data['user_data'] = $this->service->show_user($id);
     	return view('users.edit', $data);
     }
