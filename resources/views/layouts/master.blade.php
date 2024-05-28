@@ -1971,6 +1971,24 @@
 																	<span class="menu-title">Create Form</span>
 																</a>
 															</div>
+
+															<div class="menu-item">
+																<a class="menu-link py-3" href="{{ route('dynamic_table.create') }}">
+																	<span class="menu-bullet">
+																		<span class="bullet bullet-dot"></span>
+																	</span>
+																	<span class="menu-title">Create Dynamic Tables</span>
+																</a>
+															</div>
+
+															<div class="menu-item">
+																<a class="menu-link py-3" href="{{ route('dynamic_table.index') }}">
+																	<span class="menu-bullet">
+																		<span class="bullet bullet-dot"></span>
+																	</span>
+																	<span class="menu-title">Dynamic Tables List</span>
+																</a>
+															</div>
 														</div>
 													</div>
 													<!-- end forms -->

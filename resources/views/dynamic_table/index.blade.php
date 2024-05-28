@@ -14,12 +14,12 @@
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                             <!--begin::Title-->
-                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Leads Form
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Dynamic Table
                                 <!--begin::Separator-->
                                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Leads Form List</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Dynamic Table List</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -124,7 +124,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('leads_forms.create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
+                            <a href="{{ route('dynamic_table.create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
 
                             <!--end::Button-->
                         </div>
@@ -173,12 +173,12 @@
 			<!--begin::Header-->
 			<div class="d-flex justify-content-between align-items-start card-header border-0 pt-1">
 				<h3 class="card-title align-items-start flex-column">
-					<span class="card-label fw-bolder fs-3 mb-1">Leads Form List</span>
+					<span class="card-label fw-bolder fs-3 mb-1">Dynamic Table List</span>
 					<!-- <span class="text-muted mt-1 fw-bold fs-7">Leads Form data here</span> -->
 				</h3>
 
 				<div class="d-flex flex-wrap gap-2">
-				<form action="{{ route('leads_forms.search') }}" method="POST" class="d-flex">
+				<form action="{{ route('dynamic_table.search') }}" method="POST" class="d-flex">
 				@csrf
 					<!--begin::Input group-->
 					<div class="d-flex align-items-center position-relative">
@@ -210,7 +210,7 @@
 			<div class="card-body py-3">
 				<!--begin::Table container-->
 				<div class="table-responsive">
-				@if($leadsForms->isNotEmpty())
+				@if($dynamicTables->isNotEmpty())
 					<!--begin::Table-->
 					<table
 						class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
@@ -220,30 +220,23 @@
 						    <th class="min-w-150px">SL</th>
 							<!-- <th class="min-w-150px">Form ID</th> -->
 							<th class="min-w-150px">Form Name</th>
-							<th class="min-w-140px">Parent Name</th>
-							<th class="min-w-120px">Status</th>
+							<th class="min-w-140px">Table Name</th>
 							<th class="min-w-100px text-end">Actions</th>
 						</tr>
 						</thead>
 						<!--end::Table head-->
 						<!--begin::Table body-->
 						<tbody>
-						@foreach ($leadsForms as $leadsForm)
+						@foreach ($dynamicTables as $dynamicTable)
 						<tr>
 
 						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
-							<!-- <td class="text-dark fs-6">{{$leadsForm->form_id}}</td> -->
-							<td class="text-dark fs-6">{{$leadsForm->form_name }}</td>
-							<td class="text-dark fs-6">{{$leadsForm->parent_name}}</td>
-		                    <td>
-								@if ($leadsForm->form_status == 1)
-									<span class="badge badge-light-success">Active</span>
-								@elseif ($leadsForm->form_status == 0)
-									<span class="badge badge-light-danger">Inactive</span>
-								@endif
-                            </td>
+							
+							<td class="text-dark fs-6">{{$dynamicTable->leadsForm->form_name }}</td>
+							<td class="text-dark fs-6">{{$dynamicTable->table_name}}</td>
+		                    
 							<td class="text-end">
-								<a href="{{ route('leads_forms.show', $leadsForm->id) }}"
+								<a href="{{ route('dynamic_table.show', $dynamicTable->table_name) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
 									<span class="svg-icon svg-icon-3">
@@ -265,7 +258,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<a href="{{ route('leads_forms.edit', $leadsForm->id) }}"
+								<a href=""
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
 									<span class="svg-icon svg-icon-3">
@@ -281,7 +274,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<form action="{{ route('leads_forms.destroy', $leadsForm->id) }}" method="POST" style="display: inline;">
+								<form action="{{ route('dynamic_table.destroy', $dynamicTable->table_name) }}" method="POST" style="display: inline;">
 									@csrf
 									@method('DELETE')
 									<button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">
@@ -329,24 +322,24 @@
 
 		<ul class="pagination">
 			<!-- Previous Page Link -->
-			@if ($leadsForms->onFirstPage())
+			@if ($dynamicTables->onFirstPage())
 				<li class="page-item previous disabled"><span class="page-link">Previous</span></li>
 			@else
-				<li class="page-item previous"><a href="{{ $leadsForms->previousPageUrl() }}" class="page-link">Previous</a></li>
+				<li class="page-item previous"><a href="{{ $dynamicTables->previousPageUrl() }}" class="page-link">Previous</a></li>
 			@endif
 
 			<!-- Pagination Elements -->
-			@for ($page = 1; $page <= $leadsForms->lastPage(); $page++)
-				@if ($page == $leadsForms->currentPage())
+			@for ($page = 1; $page <= $dynamicTables->lastPage(); $page++)
+				@if ($page == $dynamicTables->currentPage())
 					<li class="page-item active"><span class="page-link">{{ $page }}</span></li>
 				@else
-					<li class="page-item"><a href="{{ $leadsForms->url($page) }}" class="page-link">{{ $page }}</a></li>
+					<li class="page-item"><a href="{{ $dynamicTables->url($page) }}" class="page-link">{{ $page }}</a></li>
 				@endif
 			@endfor
 
 			<!-- Next Page Link -->
-			@if ($leadsForms->hasMorePages())
-				<li class="page-item next"><a href="{{ $leadsForms->nextPageUrl() }}" class="page-link">Next</a></li>
+			@if ($dynamicTables->hasMorePages())
+				<li class="page-item next"><a href="{{ $dynamicTables->nextPageUrl() }}" class="page-link">Next</a></li>
 			@else
 				<li class="page-item next disabled"><span class="page-link">Next</span></li>
 			@endif

@@ -16,12 +16,12 @@
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                             <!--begin::Title-->
-                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Lead Form Details
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Dynamic Table Details
                                 <!--begin::Separator-->
                                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Lead Form Details</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Dynamic Table Details</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -126,7 +126,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('leads_forms.index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Lead Form List</a>
+                            <a href="{{ route('dynamic_table.index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Dynamic Table List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
@@ -144,7 +144,7 @@
             <div class="card mt-5">
                 <div class="card-header">
                     <div class="card-title">
-                        <h2>Lead Form Details</h2>
+                        <h2>Dynamic Table Details</h2>
                     </div>
                 </div>
                 <!--begin::Body-->
@@ -152,29 +152,53 @@
 
                 
 
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Form Name</span>
-                        <span>{{ $leadsForm->form_name }}</span>
-                    </div>
+                <div class="table-responsive">
+				@if($dynamicTableDetails->isNotEmpty())
+                <h4>Table Name: {{ $tableName }}</h4>
+					<!--begin::Table-->
+					<table
+						class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+						<!--begin::Table head-->
+						<thead>
+						<tr class="fw-bolder">
+						    <th class="min-w-150px">SL</th>
+							<!-- <th class="min-w-150px">Form ID</th> -->
+							<th class="min-w-150px">Field Name</th>
+							<th class="min-w-140px">Field Value</th>
+							<th  class="min-w-140px">Is Index</th>
+                            <th  class="min-w-140px">Is Null</th>
+                            <th  class="min-w-140px">Is Unique</th>
+							
+						</tr>
+						</thead>
+						<!--end::Table head-->
+						<!--begin::Table body-->
+						<tbody>
+						@foreach ($dynamicTableDetails  as $detail)
+						<tr>
 
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Parent Name</span>
-                        <span>{{ $leadsForm->parent_name }}</span>
-                    </div>
+						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
+							
+							<td class="text-dark fs-6">{{ $detail->field_name }}</td>
+                            <td class="text-dark fs-6">{{ $detail->field_value }}</td>
+                            <td class="text-dark fs-6">{{ $detail->is_index ? 'Yes' : 'No' }}</td>
+                            <td class="text-dark fs-6">{{ $detail->is_null ? 'Yes' : 'No' }}</td>
+                            <td class="text-dark fs-6">{{ $detail->is_unique ? 'Yes' : 'No' }}</td>
+		                    
+				
+						</tr>
+						@endforeach
+					
+						</tbody>
+						<!--end::Table body-->
+					</table>
+					@else
+						<p>No results found.</p>
+					@endif
+					<!--end::Table-->
+				</div>
 
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Description</span>
-                        <span>{{ $leadsForm->form_description }}</span>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Status</span>
-                        @if ($leadsForm->form_status === 1)
-                            <span>Active</span>
-                        @elseif ($leadsForm->form_status === 0)
-                            <span>Inactive</span>
-                        @endif
-                    </div>
+                    
 
 
                     

@@ -123,7 +123,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('leads_forms.index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Lead Form List</a>
+                            <a href="{{ route('dynamic_table.index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Dynamic Table List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
@@ -338,8 +338,10 @@ function addField() {
                 <label class="form-label fw-bolder text-dark">Field Value</label>
                 <select class="form-control form-control-sm form-control-solid" name="fields[${fieldCount}][type]" aria-label="Default select example" required>
                     <option value="">Select Field Value</option>
-                    <option value="string">String</option>
-                    <option value="integer">Integer</option>
+                    <option value="varchar">String</option>
+                    <option value="char">Character</option>
+                    <option value="int">Integer</option>
+                    <option value="date">Date</option>
                     <option value="text">Text</option>
                     <option value="boolean">Boolean</option>
                 </select>
@@ -384,7 +386,7 @@ function addField() {
         </div>
 
         <div class="col-md-2">
-            <div class="fv-row mt-8 text-center">
+            <div class="fv-row mt-8 text-center" style="padding-left:34px">
                 <button type="button" class="btn btn-sm btn-danger" onclick="removeField(this)"><i class="bi bi-x-lg"></i></button>
             </div>
         </div>

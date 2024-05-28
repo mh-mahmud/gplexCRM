@@ -17,17 +17,17 @@ use Illuminate\Support\Facades\DB;
 
 class DynamicTableController extends Controller
 {
-    protected $dynamicTableServiceService;
+    protected $dynamicTableService;
 
-    public function __construct(DynamicTableService $dynamicTableServiceService)
+    public function __construct(DynamicTableService $dynamicTableService)
     {
-        $this->dynamicTableServiceService = $dynamicTableServiceService;
+        $this->dynamicTableService = $dynamicTableService;
     }
 
     public function index()
     {
-        $leadsForms = $this->dynamicTableServiceService->getAllLeadsForms();
-        return view('leads_forms.index', compact('leadsForms'));
+        $dynamicTables = $this->dynamicTableService->getAllDynamicTables();
+        return view('dynamic_table.index', compact('dynamicTables'));
     }
 
     public function create()
@@ -37,106 +37,39 @@ class DynamicTableController extends Controller
         return view('dynamic_table.create', compact('formName'));
     }
 
-  public function createTable(Request $request)
-  {
-      // Validate the request inputs
-      $request->validate([
-          'table_name' => 'required|string|max:255',
-          'form_id' => 'required|string|max:10',
-          'fields' => 'required|array',
-          'fields.*.name' => 'required|string|max:255',
-          'fields.*.type' => 'required|string|max:255',
-          'fields.*.character_length' => 'nullable|integer',
-          'fields.*.is_index' => 'nullable|boolean',
-          'fields.*.is_null' => 'nullable|boolean',
-          'fields.*.is_unique' => 'nullable|boolean',
-      ]);
-  
-      $tableName = $request->input('table_name');
-      $formId = $request->input('form_id');
-      $fields = $request->input('fields');
-      // Check table already exists in the schema
-      if (Schema::hasTable($tableName)) {
-        return redirect()->back()->with('error', 'Table already exists.');
-      }
-  
-      // Create the table if it doesn't exist
-      if (!Schema::hasTable($tableName)) {
-          Schema::create($tableName, function (Blueprint $table) use ($fields) {
-              $table->id();
-              $table->unsignedBigInteger('lead_id');
-              $table->char('form_id', 10)->nullable(false);
-              //$table->lead_id();
-              foreach ($fields as $field) {
-                  $type = $field['type'];
-                  $name = $field['name'];
-                  $length = $field['character_length'] ?? null;
-  
-                  if ($type === 'string' && $length) {
-                      $column = $table->$type($name, $length)->nullable();
-                  } else {
-                      $column = $table->$type($name)->nullable();
-                  }
-  
-                  if (isset($field['is_index']) && $field['is_index']) {
-                      $table->index($name);
-                  }
-                  if (isset($field['is_unique']) && $field['is_unique']) {
-                      $table->unique($name);
-                  }
-                  if (!isset($field['is_null']) || !$field['is_null']) {
-                      $column->nullable(false);
-                  }
-              }
-              $table->timestamps();
-          });
-      }
-  
-      // Prepare data for insertion
-    $data = [];
-    foreach ($fields as $field) {
-        $data[] = [
-            'form_id' => $formId,
-            'field_name' => $field['name'],
-            'field_value' => $field['type'],
-            'character_length' => $field['character_length'] ?? null,
-            'is_index' => $field['is_index'] ?? 0,
-            'is_null' => $field['is_null'] ?? 0,
-            'is_unique' => $field['is_unique'] ?? 0,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ];
-    }
-
-    // Insert data into the lead_form_details table
-    DB::table('lead_form_details')->insert($data);
-  
-      return redirect()->back()->with('success', 'Data inserted successfully.');
-  }
-
-
-    
-
-    public function store(Request $request)
+    public function createTable(Request $request)
     {
+        // Validate the request inputs
         $request->validate([
-            'form_id' => 'nullable|string|max:10',
-            'parent_id' => 'nullable|string|max:10',
-            'form_name' => 'required|string|max:191',
-            'form_description' => 'nullable|string',
-           
+            'table_name' => 'required|string|max:255',
+            'form_id' => 'required|string|max:10',
+            'fields' => 'required|array',
+            'fields.*.name' => 'required|string|max:255',
+            'fields.*.type' => 'required|string|max:255',
+            'fields.*.character_length' => 'nullable|integer',
+            'fields.*.is_index' => 'nullable|boolean',
+            'fields.*.is_null' => 'nullable|boolean',
+            'fields.*.is_unique' => 'nullable|boolean',
         ]);
-        //dd($request);die();
 
-        $this->leadsFormService->createLeadsForm($request->all());
+        $tableName = $request->input('table_name');
+        $formId = $request->input('form_id');
+        $fields = $request->input('fields');
 
-        return redirect()->route('leads_forms.index')->with('success', 'Leads Form created successfully.');
+        // service to create the table and insert data
+        $result = $this->dynamicTableService->createTable($tableName, $formId, $fields);
+
+        if ($result === 'Table already exists.') {
+            return redirect()->route('dynamic_table.index')->with('error', $result);
+        }
+
+        return redirect()->route('dynamic_table.index')->with('success','Dynamic Table created successfully.');
     }
 
-    public function show($id)
+    public function show($tableName)
     {
-        $leadsForm = $this->leadsFormService->getLeadsFormParentName($id);
-        return view('leads_forms.show', compact('leadsForm'));
+        $dynamicTableDetails = $this->dynamicTableService->getDetailsByTableName($tableName);
+        return view('dynamic_table.show', compact('dynamicTableDetails', 'tableName'));
     }
 
     public function edit($id)
@@ -166,15 +99,15 @@ class DynamicTableController extends Controller
         $searchTerm = trim($request->input('search'));
 
         if (empty($searchTerm)) {
-            return redirect()->route('leads_forms.index')->with('error', 'Search Field cannot be blank.');
+            return redirect()->route('dynamic_table.index')->with('error', 'Search Field cannot be blank.');
         }
 
         $request->validate([
             'search' => 'required|string',
         ]);
 
-        $leadsForms = $this->leadsFormService->searchLeadForm($request);
-        return view('leads_forms.index', compact('leadsForms'));
+        $dynamicTables = $this->dynamicTableService->searchDynamicTable($request);
+        return view('dynamic_table.index', compact('dynamicTables'));
     }
 
 
