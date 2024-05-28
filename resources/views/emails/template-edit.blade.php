@@ -13,12 +13,12 @@
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                             <!--begin::Title-->
-                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">User
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Email Template
                                 <!--begin::Separator-->
                                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Role Form</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Fill up the Email Template</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -43,7 +43,7 @@
                                     <!--begin::Form-->
                                     <div class="px-7 py-5">
                                         <!--begin::Input group-->
-                                        <div class="mb-3">
+                                        <div class="mb-10">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bold">Status:</label>
                                             <!--end::Label-->
@@ -64,7 +64,7 @@
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
-                                        <div class="mb-3">
+                                        <div class="mb-10">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bold">Member Type:</label>
                                             <!--end::Label-->
@@ -90,7 +90,7 @@
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
-                                        <div class="mb-3">
+                                        <div class="mb-10">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bold">Notifications:</label>
                                             <!--end::Label-->
@@ -123,7 +123,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ URL::to('role-list') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Role List</a>
+                            <a href="{{ route('promotion.index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Email Template List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
@@ -138,11 +138,11 @@
                 <div class="container-xxl">
                     <div class="row">
                         <div class="col-xxl-12">
-                            <div class="card card-xxl-stretch mt-8">
+                            <div class="card card-xxl-stretch mt-5">
                                 <div class="card-header">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
-                                        <h3 class="fw-bolder m-0">Create Role</h3>
+                                        <h3 class="fw-bolder m-0">Email Template Edit</h3>
                                     </div>
                                     <!--end::Card title-->
                                 </div>
@@ -152,45 +152,53 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('role-store') }}"  enctype="multipart/form-data" method="POST">
-                                         @csrf
-                                        <div class="row">
-
-                                            <div class="col-md-12">
+                                    <form class="g-form w-100" action="{{ route('promotion.update', $template->id) }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="row">
+                                            <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-
-                                                    <label class="form-label fw-bolder text-dark">Role Name</label>
-                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="role_name" autocomplete="off"/>
-                                                    @if ($errors->has('role_name'))
-                                                        <span class="text-danger">{{ $errors->first('role_name') }}</span>
+                                                    <!--begin::Label-->
+                                                    <label class="form-label fw-bolder text-dark">Subject</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input class="form-control form-control-sm form-control-solid"
+                                                           type="text" name="email_subject" value="{{ $template->email_subject }}" autocomplete="off"/>
+                                                    <!--end::Input-->
+                                                    @if ($errors->has('email_subject'))
+                                                        <span class="text-danger">{{ $errors->first('email_subject') }}</span>
                                                     @endif
-                                                   
                                                 </div>
                                             </div>
 
-                                            @foreach($menus as $key=>$value)
-                                                <div class="col-md-6">
-                                                    <div class="fv-row mb-3">
-                                                        <label class="form-label fw-bolder text-dark">{{ str_replace("_", " ", $key) }}</label>
-
-                                                        @foreach($value as $k=>$v)
-                                                        <div class="form-check mt-3" style="margin-left: 20px;">
-                                                            <input class="form-check-input" type="checkbox" name="{{$key}}[]" value="{{ $v->sub_name }}">
-                                                            <label class="form-check-label">{{$v->name}}</label>
-                                                        </div>
-                                                        @endforeach
-
-                                                    </div>
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Status</label>
+                                                    <select class="form-control form-control-sm form-control-solid" name="form_status" aria-label="Default select example">
+                                                        <option value="1" {{ $template->status == 1 ? 'selected' : '' }}>Active</option>
+                                                        <option value="0" {{ $template->status == 0 ? 'selected' : '' }}>Inactive</option>
+                                                    </select>
                                                 </div>
-                                            @endforeach
+                                            </div>
 
+                                          
 
-                                        </div>
+                                           <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label fw-bolder text-dark" for="textarea">Content</label>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="email_content" rows="3">{{$template->email_content}}</textarea>
+                                                </div>
+                                            </div>
+
+                                           
+
+                                     </div>
                                         <!--End Row-->
+                                       
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <a href="{{ route('create-user') }}" class="btn btn-light btn-active-light-primary me-2">Reset</a>
+                                            <input type="reset" value="Reset" class="btn btn-light me-2">
                                             <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Submit
+                                                    id="kt_account_profile_details_submit">Save Changes
                                             </button>
                                         </div>
 
@@ -213,6 +221,5 @@
 
             <!-- </div> -->
             <!--end::Content-->
-           
 
 @endsection

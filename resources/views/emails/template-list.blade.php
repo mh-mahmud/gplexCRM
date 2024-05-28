@@ -14,12 +14,12 @@
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                             <!--begin::Title-->
-                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">User List
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Email Template
                                 <!--begin::Separator-->
-                                <span class="h-20px border-gray-200 ms-3 mx-2" style="border-left:1px solid #000!important"></span>
+                                <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show all users</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Email Template List</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -29,18 +29,7 @@
                             <!--begin::Wrapper-->
                             <div class="me-4">
                                 <!--begin::Menu-->
-                                <a href="#" class="btn btn-sm btn-flex btn-light btn-active-primary fw-bolder"
-                                   data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
-                                    <span class="svg-icon svg-icon-5 svg-icon-gray-500 me-1">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                 viewBox="0 0 24 24" fill="none">
-												<path
-                                                    d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z"
-                                                    fill="black"/>
-											</svg>
-										</span>
-                                    <!--end::Svg Icon-->Filter</a>
+                               
                                 <!--begin::Menu 1-->
                                 <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
                                      id="kt_menu_61484bf44d957">
@@ -135,7 +124,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('create-user') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
+                            <a href="{{ route('email-template.create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
 
                             <!--end::Button-->
                         </div>
@@ -147,31 +136,33 @@
                  <!--**********************************
                                 Tables
                   ***********************************-->
-				  <div class="container-fluid">
+<div class="container-fluid">
 
 <!--Table Alert Message-->
-<div class="text-center">
-	<div class="row">
-		<div class="col-md-5 mx-auto">
-		   @if (session('success'))
-		    <div class="alert alert-success alert-dismissible fade show" role="alert">
-				<strong>{{ session('success') }}</strong>
-				<button type="button" class="btn-close" data-bs-dismiss="alert"
-						aria-label="Close"></button>
-			</div>
-			@endif
-			@if (session('error'))
-			<div class="alert alert-danger alert-dismissible fade show" role="alert">
-				<strong> {{ session('error') }}</strong>
-				<button type="button" class="btn-close" data-bs-dismiss="alert"
-						aria-label="Close"></button>
-			</div>
-			@endif
+<!-- Display Success and Error Messages using SweetAlert2 -->
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success')}}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
 
-			
-		</div>
-	</div>
-</div>
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error')}}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
 
 <!--End Table Alert Message-->
 
@@ -182,51 +173,35 @@
 			<!--begin::Header-->
 			<div class="d-flex justify-content-between align-items-start card-header border-0 pt-1">
 				<h3 class="card-title align-items-start flex-column">
-					<!-- <span class="card-label fw-bolder fs-3 mb-1">Agent List</span>
-					<span class="text-muted mt-1 fw-bold fs-7">Table data here</span> -->
+					<span class="card-label fw-bolder fs-3 mb-1">Email Template List</span>
+					<!-- <span class="text-muted mt-1 fw-bold fs-7">Leads Form data here</span> -->
 				</h3>
 
 				<div class="d-flex flex-wrap gap-2">
-					<!--begin::Input group start date-->
-					<!-- <div class="position-relative">
-						<input type="text" class="form-control form-control-solid flatpickr"
-							   placeholder="Start date" name="date-table">
-					</div> -->
-					<!--end::Input group-->
-
-					<!--begin::Input group end date-->
-					<!-- <div class="position-relative">
-						<input type="text" class="form-control form-control-solid"
-							   placeholder="End date" name="date-table"/>
-					</div> -->
-
-					<!--end::Input group-->
-
+				<form action="#" method="POST" class="d-flex">
+				@csrf
 					<!--begin::Input group-->
 					<div class="d-flex align-items-center position-relative">
 						<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
 						<span class="svg-icon svg-icon-1 position-absolute ms-6">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-									 viewBox="0 0 24 24" fill="none">
-									<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546"
-										  height="2" rx="1" transform="rotate(45 17.0365 15.1223)"
-										  fill="black"></rect>
-									<path
-										d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-										fill="black"></path>
-								</svg>
-							</span>
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+								viewBox="0 0 24 24" fill="none">
+								<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546"
+									height="2" rx="1" transform="rotate(45 17.0365 15.1223)"
+									fill="black"></rect>
+								<path
+									d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+									fill="black"></path>
+							</svg>
+						</span>
 						<!--end::Svg Icon-->
-						<input type="text" data-kt-customer-table-filter="search"
-							   class="form-control form-control-solid w-250px ps-15"
-							   placeholder="Search Customers">
+						<input type="text" name="search" class="form-control form-control-sm form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by Email Template Name">
 					</div>
 					<!--end::Input group-->
+					<button type="submit" class="btn btn-primary btn-sm ms-2">Search</button>
+				</form>
+			</div>
 
-					<button type="button" class="btn btn-primary">Search</button>
-
-
-				</div>
 
 
 			</div>
@@ -235,20 +210,16 @@
 			<div class="card-body py-3">
 				<!--begin::Table container-->
 				<div class="table-responsive">
+				@if($templates->isNotEmpty())
 					<!--begin::Table-->
 					<table
 						class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
 						<!--begin::Table head-->
 						<thead>
 						<tr class="fw-bolder">
-						    <th class="min-w-25px">SL</th>
-							<th class="min-w-150px">Name</th>
-							<th class="min-w-140px">User Role</th>
-							<th class="min-w-120px">Email</th>
-							<th class="min-w-140px">User Type</th>
-							<th class="min-w-120px">Phone Number</th>
-							<th class="min-w-120px">Gender</th>
-							<th class="min-w-120px">Address</th>
+						    <th class="min-w-150px">SL</th>
+							<th class="min-w-150px">Email Subject</th>
+							<th class="min-w-140px">Email Content</th>
 							<th class="min-w-120px">Status</th>
 							<th class="min-w-100px text-end">Actions</th>
 						</tr>
@@ -256,27 +227,21 @@
 						<!--end::Table head-->
 						<!--begin::Table body-->
 						<tbody>
-						@foreach ($users as $user)
+						@foreach ($templates as $template)
 						<tr>
 
-						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
-							<td class="text-dark fs-6">{{$user->first_name . ' ' . $user->last_name}}</td>
-							<td class="text-dark fs-6">{{$user->role_id}}</td>
-							<td class="text-dark fs-6">{{$user->email }}</td>
-							<td class="text-dark fs-6">{{$user->user_type}}</td>
-							<td class="text-dark fs-6">{{$user->phone_number}}</td>
-							<td class="text-dark fs-6">{{$user->gender}}</td>
-							<td class="text-dark fs-6">{{$user->address}}</td>
-
-							<td>
-								@if ($user->status == 1)
+						    <td class="text-dark fs-6">{{ $loop->iteration}}</td>
+							<td class="text-dark fs-6">{{ $template->email_subject }}</td>
+							<td class="text-dark fs-6">{{ $template->email_content }}</td>
+		                    <td>
+								@if ($template->status == 1)
 									<span class="badge badge-light-success">Active</span>
-								@elseif ($user->status == 0)
+								@elseif ($template->status == 0)
 									<span class="badge badge-light-danger">Inactive</span>
 								@endif
                             </td>
 							<td class="text-end">
-								<a href="{{ route('user.show', $user->id) }}"
+								<a href="{{ route('email-template.show', $template->id) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
 									<span class="svg-icon svg-icon-3">
@@ -298,7 +263,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<a href="{{ route('user.edit', $user->id) }}"
+								<a href="{{ route('email-template.edit', $template->id) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
 									<span class="svg-icon svg-icon-3">
@@ -314,7 +279,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display: inline;">
+								<form action="#" method="POST" style="display: inline;">
 									@csrf
 									@method('DELETE')
 									<button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">
@@ -332,10 +297,13 @@
 							</td>
 						</tr>
 						@endforeach
-
+					
 						</tbody>
 						<!--end::Table body-->
 					</table>
+					@else
+						<p>No results found.</p>
+					@endif
 					<!--end::Table-->
 				</div>
 				<!--end::Table container-->
@@ -345,7 +313,7 @@
 		</div>
 
 		<!--Table Pagination-->
-		<ul class="pagination">
+		<!-- <ul class="pagination">
 			<li class="page-item previous disabled"><span class="page-link">Previous</span></span>
 			</li>
 			<li class="page-item "><a href="#" class="page-link">1</a></li>
@@ -355,7 +323,33 @@
 			<li class="page-item "><a href="#" class="page-link">5</a></li>
 			<li class="page-item "><a href="#" class="page-link">6</a></li>
 			<li class="page-item next"><a class="page-link" href="#">Next</span></a></li>
+		</ul> -->
+
+		<ul class="pagination">
+			<!-- Previous Page Link -->
+			@if ($templates->onFirstPage())
+				<li class="page-item previous disabled"><span class="page-link">Previous</span></li>
+			@else
+				<li class="page-item previous"><a href="{{ $templates->previousPageUrl() }}" class="page-link">Previous</a></li>
+			@endif
+
+			<!-- Pagination Elements -->
+			@for ($page = 1; $page <= $templates->lastPage(); $page++)
+				@if ($page == $templates->currentPage())
+					<li class="page-item active"><span class="page-link">{{ $page }}</span></li>
+				@else
+					<li class="page-item"><a href="{{ $templates->url($page) }}" class="page-link">{{ $page }}</a></li>
+				@endif
+			@endfor
+
+			<!-- Next Page Link -->
+			@if ($templates->hasMorePages())
+				<li class="page-item next"><a href="{{ $templates->nextPageUrl() }}" class="page-link">Next</a></li>
+			@else
+				<li class="page-item next disabled"><span class="page-link">Next</span></li>
+			@endif
 		</ul>
+
 		<!--End Table Pagination-->
 
 	</div>
@@ -364,7 +358,7 @@
 
 <script>
     function confirmDelete() {
-        if (confirm("Are you sure you want to delete user?")) {
+        if (confirm("Are you sure you want to delete Email Template?")) {
             document.getElementById('deleteForm').submit();
         }
         return false;
