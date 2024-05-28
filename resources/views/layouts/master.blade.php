@@ -2090,7 +2090,7 @@
 														<div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg py-lg-4 w-lg-225px">
 															
 															<div class="menu-item">
-																<a class="menu-link py-3" href="{{ URL::to('agent-list') }}">
+																<a class="menu-link py-3" href="{{ URL::to('email-template-list') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
@@ -2106,7 +2106,7 @@
 																</a>
 															</div>
 															<div class="menu-item">
-																<a class="menu-link py-3" href="{{ URL::to('create-agent') }}">
+																<a class="menu-link py-3" href="{{ URL::to('email-template') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
