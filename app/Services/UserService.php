@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Menu;
 use App\Models\Permission;
 use App\Models\SmsQueue;
 use App\Models\SmsLog;
@@ -115,5 +116,37 @@ class UserService {
             return true;
         }
         return false;
+    }
+
+    public function menu_list() {
+        $data = [];
+        $menus = Menu::where('parent_id', '=', null)->get(['id', 'name', 'show_in_menu', 'status']);
+        foreach($menus as $key=>$val) {
+            $name = str_replace(" ", "_", $val->name);
+            $data[$name] = Menu::where('parent_id', $val->id)->get(['id', 'parent_id', 'name', 'sub_name', 'show_in_menu', 'status']);
+        }
+        return $data;
+    }
+
+    public function create_role_data($request) {
+        // dd($request->all());
+
+        $name = $request->role_name;
+        $all_req = $request->all();
+
+        unset($all_req['role_name']);
+        unset($all_req['_token']);
+
+        $json_data = json_encode($all_req);
+
+        $role = Role::create([
+            'name' => $name,
+            'permission_details' => $json_data,
+            'slug' => strtolower(str_replace(" ", "_", $name)),
+            'status' => 1
+        ]);
+        //dd($json_data);
+        $role->save();
+        return $role;
     }
 }

@@ -158,6 +158,22 @@ class UserController extends Controller
     }
 
     public function role_create() {
-    	return view('users.create_role');
+    	$data = [];
+    	$data['menus'] = $this->service->menu_list();
+    	return view('users.create_role', $data);
+    }
+
+    public function role_store(Request $request) {
+        $request->validate([
+            'role_name' => 'required'
+        ]);
+    	// dd($request->all());
+
+        $role_data = $this->service->create_role_data($request);
+        // dd($role_data);
+        if(!empty($role_data)) {
+        	return redirect()->to('role-list')->with('success', 'Role created successfully.');
+        }
+        return redirect()->back()->with('error', 'Failed request');
     }
 }
