@@ -16,6 +16,7 @@ return new class extends Migration
             $table->char('form_id', 10)->nullable(false);
             $table->string('field_name', 191)->nullable();
             $table->string('field_value', 191)->nullable();
+            $table->string('table_name', 191)->nullable(false);
             $table->integer('character_length')->nullable();
             $table->tinyInteger('is_index')->nullable();
             $table->tinyInteger('is_null')->nullable();
