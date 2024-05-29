@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\UserService;
+use Auth;
 
 class UserController extends Controller
 {
@@ -14,6 +15,7 @@ class UserController extends Controller
 
     public function index() {
     	$data = [];
+    	// dd(Auth::user()->get_menu_data());
     	$data['users'] = $this->service->get_all_user();
     	$data['role_names'] = $this->service->get_all_role_name();
     	return view('users.user_list', $data);

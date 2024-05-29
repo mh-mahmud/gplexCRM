@@ -132,18 +132,28 @@ class UserService {
     public function create_role_data($request) {
         // dd($request->all());
 
-        $name = $request->role_name;
+        $role_name = $request->role_name;
         $all_req = $request->all();
 
         unset($all_req['role_name']);
         unset($all_req['_token']);
+        $data_set = [];
 
-        $json_data = json_encode($all_req);
+        foreach($all_req as $key=>$val) {
+            for($i=0; $i<count($val); $i++) {
+                $menu_details = Menu::where('id', $val[$i])->first(['name','sub_name']);
+                $data_set[$key][$menu_details->sub_name] = $menu_details->name;
+            }
+        }
+
+        $json_data = json_encode($data_set);
+        /*dd($json_data);
+        $json_data = json_encode($all_req);*/
 
         $role = Role::create([
-            'name' => $name,
+            'name' => $role_name,
             'permission_details' => $json_data,
-            'slug' => strtolower(str_replace(" ", "_", $name)),
+            'slug' => strtolower(str_replace(" ", "_", $role_name)),
             'status' => 1
         ]);
         //dd($json_data);
