@@ -242,8 +242,8 @@
 						<thead>
 						<tr class="fw-bolder">
 						    <th class="min-w-25px">SL</th>
-							<th class="min-w-150px">First name</th>
-							<th class="min-w-140px">Last name</th>
+							<th class="min-w-150px">Name</th>
+							<th class="min-w-140px">User Role</th>
 							<th class="min-w-120px">Email</th>
 							<th class="min-w-140px">User Type</th>
 							<th class="min-w-120px">Phone Number</th>
@@ -260,8 +260,8 @@
 						<tr>
 
 						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
-							<td class="text-dark fs-6">{{$user->first_name}}</td>
-							<td class="text-dark fs-6">{{$user->last_name}}</td>
+							<td class="text-dark fs-6">{{$user->first_name . ' ' . $user->last_name}}</td>
+							<td class="text-dark fs-6">{{$user->role_id}}</td>
 							<td class="text-dark fs-6">{{$user->email }}</td>
 							<td class="text-dark fs-6">{{$user->user_type}}</td>
 							<td class="text-dark fs-6">{{$user->phone_number}}</td>

@@ -46,6 +46,7 @@ class UserService {
         $user->last_name = $request->last_name;
         $user->phone_number = $request->phone_number;
         $user->gender = $request->gender;
+        $user->role_id = $request->role_id;
         if(!empty($request->password)) {
             $user->password = bcrypt($request->password);
         }

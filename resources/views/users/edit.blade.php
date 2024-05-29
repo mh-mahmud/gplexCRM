@@ -39,6 +39,31 @@
                 <!--**********************************
                                 Forms
                   ***********************************-->
+
+<!--Table Alert Message-->
+<div class="text-center">
+    <div class="row">
+        <div class="col-md-5 mx-auto">
+           @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ session('success') }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+            @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> {{ session('error') }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+
+            
+        </div>
+    </div>
+</div>
+
+<!--End Table Alert Message-->
+
                 <div class="container-xxl">
                     <div class="row">
                         <div class="col-xxl-12">
@@ -97,13 +122,8 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Email</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="email" readonly name="email"  value="{{ $user_data->email }}" autocomplete="off"/>
-                                                    <!--end::Input-->
+                                                    <input class="form-control form-control-sm form-control-solid" type="email" readonly name="email"  value="{{ $user_data->email }}" autocomplete="off"/>
                                                     @if ($errors->has('email'))
                                                         <span class="text-danger">{{ $errors->first('email') }}</span>
                                                     @endif
@@ -114,20 +134,18 @@
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Phone Number</label>
                                                     <input class="form-control form-control-sm form-control-solid" type="text"  value="{{ $user_data->phone_number }}" name="phone_number" autocomplete="off"/>
+                                                    @if ($errors->has('phone_number'))
+                                                        <span class="text-danger">{{ $errors->first('phone_number') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 
-                        
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
+
                                                     <label class="form-label fw-bolder text-dark">Password</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="password" name="password" autocomplete="off"/>
-                                                    <!--end::Input-->
+                                                    <input class="form-control form-control-sm form-control-solid" type="password" name="password" autocomplete="off"/>
                                                     @if ($errors->has('password'))
                                                         <span class="text-danger">{{ $errors->first('password') }}</span>
                                                     @endif
@@ -144,8 +162,26 @@
                                                             <option @if($user_data->gender=='Female') selected  @endif value="Female">Female</option>
                                                             <option @if($user_data->gender=='Others') selected  @endif value="Others">Others</option>
                                                     </select>
+                                                    @if ($errors->has('gender'))
+                                                        <span class="text-danger">{{ $errors->first('gender') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
+
+
+                                            @if($user_data->user_type!='admin')
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Set Role</label>
+                                                    <select class="form-control form-control-sm form-control-solid" name="role_id" aria-label="Default select example">
+                                                            <option value="">Select Role</option>
+                                                            @foreach($role_list as $role)
+                                                            <option @if($user_data->role_id==$role->id) selected  @endif value="{{$role->id}}">{{$role->name}}</option>
+                                                            @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            @endif
 
 
                                             <div class="col-md-6">
