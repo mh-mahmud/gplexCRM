@@ -57,7 +57,7 @@ Forms
                 <div class="card-body">
 
                     <!-- Start Form-->
-                    <form class="g-form w-100" action="{{ route('dynamic_table.update', $tableDetails[0]->form_id) }}" enctype="multipart/form-data" method="POST">
+                    <form class="g-form w-100" action="{{ route('dynamic_table.update', $tableDetails[0]->table_name) }}" enctype="multipart/form-data" method="POST">
                         @csrf
                         @method('PUT')
                         <!-- <div class="row mb-3">
@@ -183,7 +183,7 @@ Forms
                         </div> -->
 
                         <div class="card-footer d-flex justify-content-end py-6 px-9">
-                            <a href="{{ route('dynamic_table.index') }}" class="btn btn-light me-2">Cancel</a>
+                            <a href="{{ route('dynamic_table.edit', $tableDetails[0]->table_name) }}" class="btn btn-light me-2">Reset</a>
                             <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Update Changes</button>
                         </div>
                     </form>
