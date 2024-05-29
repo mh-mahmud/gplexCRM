@@ -9,27 +9,24 @@ use Illuminate\Support\Facades\Validator;
 
 class EmailService
 {
-    public function emailTemplateList()
+    public function emailTemplateList($request)
     {
-        return EmailTemplate::paginate(config('constants.ROW_PER_PAGE'));
+        $sql = EmailTemplate::query();
+        $data = $request->all();
+        if(!empty($data["search"])) {
+            $sql->where('email_subject','like', '%' . $data["search"] . '%');
+
+        }
+        return  $sql->paginate(config('constants.ROW_PER_PAGE'));
     }
 
     public function templateStore($request)
     {
-        $rules = [
-            'email_content'         => 'required',
-            'email_subject'         => 'required|unique:email_templates',
-        ];
-        // return Validator::make($request->all(), $rules)->validate();
-        // if($validator->fails()) {
-
-        //     return (object)[
-        //         'status_code' => 400,
-        //         'messages'    => config('status.status_code.400'),
-        //         'errors'      => $validator->errors()->all()
-        //     ];
-
-        // }
+        $request->validate([
+            'email_subject' => 'required',
+            'email_content' => 'required',
+           
+        ]);
         $data = $request->all();
 
         try {
@@ -43,14 +40,12 @@ class EmailService
         } catch (Exception $e) {
             return (object)[
                 'status'             => 424,
-                'messages'           => config('status.status_code.424'),
                 'error'              => $e->getMessage()
             ];
         }
 
         return (object)[
             'status'                 => 201,
-            'messages'               => config('status.status_code.201'),
             'info'                   => $dataObj->id
         ];
 
@@ -60,4 +55,42 @@ class EmailService
     {
         return EmailTemplate::findOrFail($id);
     }
+
+    public function templateDelete($id)
+    {
+        $promotion = EmailTemplate::findOrFail($id);
+        $promotion->delete();
+    }
+
+    public function templateUpdate($request, $id)
+    {
+        $request->validate([
+            'email_subject' => 'required',
+            'email_content' => 'required',
+           
+        ]);
+        $data = $request->all();
+
+        try {
+            $dataObj                        = EmailTemplate::findOrFail($id);
+            $dataObj->email_subject         = $data['email_subject'];
+            $dataObj->email_content         = $data['email_content'];
+            $dataObj->status                = $data['status'];
+
+            $dataObj->save();
+
+        } catch (Exception $e) {
+            return (object)[
+                'status'             => 424,
+                'error'              => $e->getMessage()
+            ];
+        }
+
+        return (object)[
+            'status'                 => 208,
+            'info'                   => $dataObj->id
+        ];
+
+    }
+
 }

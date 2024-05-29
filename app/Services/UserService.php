@@ -150,4 +150,13 @@ class UserService {
         $role->save();
         return $role;
     }
+
+    public function get_all_role_name() {
+        $send = [];
+        $data = Role::all(['id', 'name']);
+        foreach($data as $key=>$value) {
+            $send[$value->id] = $value->name;
+        }
+        return $send;
+    }
 }

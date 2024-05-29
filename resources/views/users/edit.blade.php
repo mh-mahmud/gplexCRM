@@ -169,6 +169,7 @@
                                             </div>
 
 
+                                            @if($user_data->user_type!='admin')
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Set Role</label>
@@ -180,6 +181,7 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            @endif
 
 
                                             <div class="col-md-6">
