@@ -152,7 +152,7 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('promotion.update', $template->id) }}" method="POST" enctype="multipart/form-data">
+                                    <form class="g-form w-100" action="{{ route('email-template.update', $template->id) }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
                                             <div class="row">
@@ -174,7 +174,7 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Status</label>
-                                                    <select class="form-control form-control-sm form-control-solid" name="form_status" aria-label="Default select example">
+                                                    <select class="form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
                                                         <option value="1" {{ $template->status == 1 ? 'selected' : '' }}>Active</option>
                                                         <option value="0" {{ $template->status == 0 ? 'selected' : '' }}>Inactive</option>
                                                     </select>
@@ -187,6 +187,9 @@
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Content</label>
                                                     <textarea class="form-control form-control-sm  form-control-solid" name="email_content" rows="3">{{$template->email_content}}</textarea>
+                                                    @if ($errors->has('email_content'))
+                                                        <span class="text-danger">{{ $errors->first('email_content') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 

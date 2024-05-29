@@ -19,7 +19,7 @@
                                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Email Template List</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Email Template List</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -178,8 +178,7 @@
 				</h3>
 
 				<div class="d-flex flex-wrap gap-2">
-				<form action="#" method="POST" class="d-flex">
-				@csrf
+				<form action="{{ route('email-template') }}" method="GET" class="d-flex">
 					<!--begin::Input group-->
 					<div class="d-flex align-items-center position-relative">
 						<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
@@ -195,7 +194,7 @@
 							</svg>
 						</span>
 						<!--end::Svg Icon-->
-						<input type="text" name="search" class="form-control form-control-sm form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by Email Template Name">
+						<input type="text" name="search" class="form-control form-control-sm form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by Email Template Subject">
 					</div>
 					<!--end::Input group-->
 					<button type="submit" class="btn btn-primary btn-sm ms-2">Search</button>
@@ -279,7 +278,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<form action="#" method="POST" style="display: inline;">
+								<form action="{{ route('email-template.delete', $template->id) }}" method="POST" style="display: inline;">
 									@csrf
 									@method('DELETE')
 									<button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">

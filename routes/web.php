@@ -106,7 +106,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('email-template/store', [EmailController::class, 'templateStore'])->name('email-template.store');
 	Route::get('email-template/edit/{id}', [EmailController::class, 'templateEdit'])->name('email-template.edit');
 	Route::get('email-template/show/{id}', [EmailController::class, 'templateShow'])->name('email-template.show');
-
+	Route::put('email-template/update/{id}', [EmailController::class, 'templateUpdate'])->name('email-template.update');
+	Route::delete('email-template/delete/{id}', [EmailController::class, 'templateDelete'])->name('email-template.delete');
 
 	// Email template routes end
 
