@@ -15,6 +15,7 @@ class UserController extends Controller
     public function index() {
     	$data = [];
     	$data['users'] = $this->service->get_all_user();
+    	$data['role_names'] = $this->service->get_all_role_name();
     	return view('users.user_list', $data);
     }
 
