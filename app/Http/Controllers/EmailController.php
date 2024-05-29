@@ -22,9 +22,9 @@ class EmailController extends Controller {
         $this->middleware('auth');
     }
 
-	public function emailTemplateList()
+	public function emailTemplateList(Request $request)
     {      
-        $templates = $this->emailService->emailTemplateList();
+        $templates = $this->emailService->emailTemplateList($request);
         return view('emails.template-list', compact('templates'));
     }
 
@@ -55,6 +55,25 @@ class EmailController extends Controller {
     {
         $template = $this->emailService->getEmailTemplateById($id);
         return view('emails.template-edit', compact('template'));
+    }
+
+    public function templateDelete($id)
+    {
+        $this->emailService->templateDelete($id);
+        return redirect()->route('email-template')->with('success', 'Email template deleted successfully.');
+    }
+
+    public function templateUpdate(Request $request, $id)
+    { 
+        $result = $this->emailService->templateUpdate($request, $id);
+        
+        if($result->status == 208){
+            return redirect()->route('email-template')->with('success', 'Email template updated successfully.');
+
+        }else{
+            session()->flash('error', 'Can not Update !');
+        }
+
     }
 
 
