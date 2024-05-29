@@ -94,7 +94,7 @@ Forms
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col-md-12 text-center">
+                            <div class="col-md-12" style="text-align: right;">
                                 <button type="button" class="btn btn-sm btn-success" onclick="addField()"><i class="bi bi-plus-lg"></i> Add Field</button>
                             </div>
                         </div>
