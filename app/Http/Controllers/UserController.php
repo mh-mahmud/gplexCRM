@@ -19,6 +19,8 @@ class UserController extends Controller
     }
 
     public function create() {
+    	$data = [];
+    	$data['role_list'] = $this->service->get_all_role();
     	return view('users.create_user', $data);
     }
 
