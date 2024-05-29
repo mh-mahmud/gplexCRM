@@ -258,7 +258,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<a href=""
+								<a href="{{ route('dynamic_table.edit', $dynamicTable->table_name) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
 									<span class="svg-icon svg-icon-3">
