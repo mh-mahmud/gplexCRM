@@ -175,7 +175,7 @@
 
                                                         @foreach($value as $k=>$v)
                                                         <div class="form-check mt-3" style="margin-left: 20px;">
-                                                            <input class="form-check-input" type="checkbox" name="{{$key}}[]" value="{{ $v->sub_name }}">
+                                                            <input class="form-check-input" type="checkbox" name="{{$key}}[]" value="{{ $v->id }}">
                                                             <label class="form-check-label">{{$v->name}}</label>
                                                         </div>
                                                         @endforeach
