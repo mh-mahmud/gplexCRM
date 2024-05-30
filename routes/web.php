@@ -111,8 +111,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('email-template/show/{id}', [EmailController::class, 'templateShow'])->name('email-template.show');
 	Route::put('email-template/update/{id}', [EmailController::class, 'templateUpdate'])->name('email-template.update');
 	Route::delete('email-template/delete/{id}', [EmailController::class, 'templateDelete'])->name('email-template.delete');
-
 	// Email template routes end
+
+	// Send email routes start
+	Route::get('send-email', [EmailController::class, 'sendEmail'])->name('send-email');
+	Route::post('send-email-process', [EmailController::class, 'sendEmailPro'])->name('send-email.process');
+
+	// Send email routes end
 
 
 });

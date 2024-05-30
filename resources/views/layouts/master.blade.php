@@ -2116,7 +2116,7 @@
 																</a>
 															</div>
 															<div class="menu-item">
-																<a class="menu-link py-3" href="{{ URL::to('create-agent') }}">
+																<a class="menu-link py-3" href="{{ URL::to('send-email') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
