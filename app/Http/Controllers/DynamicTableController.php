@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use App\Models\LeadsForm;
 use App\Services\DynamicTableService;
+use App\Models\LeadFormDetail;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -74,25 +75,45 @@ class DynamicTableController extends Controller
 
     public function edit($id)
     {
-        $leadsForm = $this->leadsFormService->getLeadsFormById($id);
-        $parents = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
-        return view('leads_forms.edit', compact('leadsForm','parents'));
+        $tableDetails = LeadFormDetail::where('table_name', $id)->get();
+        if (!$tableDetails) {
+            return redirect()->route('dynamic_table.index')->with('error', 'Table not found.');
+        }
+    
+        $formName = LeadsForm::pluck('form_name', 'form_id');
+    
+        return view('dynamic_table.edit', compact('tableDetails', 'formName'));
     }
-
+    
     public function update(Request $request, $id)
     {
+        // Validate the request inputs
         $request->validate([
-            'form_id' => 'nullable|string|max:10',
-            'parent_id' => 'nullable|string|max:10',
-            'form_name' => 'required|string|max:191',
-            'form_description' => 'nullable|string',
-            'form_status' => 'required|integer',
+            'table_name' => 'required|string|max:255',
+            'form_id' => 'required|string|max:10',
+            'fields' => 'required|array',
+            'fields.*.name' => 'required|string|max:255',
+            'fields.*.type' => 'required|string|max:255',
+            'fields.*.character_length' => 'nullable|integer',
+            'fields.*.is_index' => 'nullable|boolean',
+            'fields.*.is_null' => 'nullable|boolean',
+            'fields.*.is_unique' => 'nullable|boolean',
         ]);
-
-        $this->leadsFormService->updateLeadsForm($id, $request->all());
-
-        return redirect()->route('leads_forms.index')->with('success', 'Leads Form updated successfully.');
+    
+        $tableName = $request->input('table_name');
+        $formId = $request->input('form_id');
+        $fields = $request->input('fields');
+    
+        // service to update the table and insert data
+        $result = $this->dynamicTableService->updateTable($tableName, $formId, $fields, $id);
+    
+        if ($result === 'Table not found.') {
+            return redirect()->route('dynamic_table.index')->with('error', $result);
+        }
+    
+        return redirect()->route('dynamic_table.index')->with('success', 'Dynamic Table updated successfully.');
     }
+    
 
     public function search(Request $request)
     {
@@ -112,8 +133,10 @@ class DynamicTableController extends Controller
 
 
     public function destroy($id)
-    {
-        $this->leadsFormService->deleteLeadsForm($id);
-        return redirect()->route('leads_forms.index')->with('success', 'Leads Form deleted successfully.');
+    {   
+        //dd($id);
+        $this->dynamicTableService->deleteDynamicTable($id);
+        return redirect()->route('dynamic_table.index')->with('success', 'Dynamic Table deleted successfully.');
     }
+
 }

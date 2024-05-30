@@ -156,8 +156,7 @@
 		   @if (session('success'))
 		    <div class="alert alert-success alert-dismissible fade show" role="alert">
 				<strong>{{ session('success') }}</strong>
-				<button type="button" class="btn-close" data-bs-dismiss="alert"
-						aria-label="Close"></button>
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 			</div>
 			@endif
 			@if (session('error'))
@@ -261,7 +260,7 @@
 
 						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
 							<td class="text-dark fs-6">{{$user->first_name . ' ' . $user->last_name}}</td>
-							<td class="text-dark fs-6">{{$user->role_id}}</td>
+							<td class="text-dark fs-6">{{@$role_names[$user->role_id]}}</td>
 							<td class="text-dark fs-6">{{$user->email }}</td>
 							<td class="text-dark fs-6">{{$user->user_type}}</td>
 							<td class="text-dark fs-6">{{$user->phone_number}}</td>

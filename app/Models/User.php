@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Permissions\HasPermissionsTrait;
+use App\Models\Role;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -62,5 +64,12 @@ class User extends Authenticatable
     public function agent()
     {
         return $this->hasOne(Agent::class);
+    }
+
+    public function get_menu_data() {
+        if(Auth::user()->user_type=='admin') {
+            return;
+        }
+        return Role::where('id', Auth::user()->role_id)->first(['name', 'permission_details'])->permission_details;
     }
 }

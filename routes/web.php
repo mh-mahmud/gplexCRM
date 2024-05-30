@@ -61,9 +61,11 @@ Route::group(['middleware' => 'auth'], function () {
 	 //Lead Form route
 	Route::get('/dynamic-table', [DynamicTableController::class, 'index'])->name('dynamic_table.index');
 	Route::get('/dynamic-table/create', [DynamicTableController::class, 'create'])->name('dynamic_table.create');
+	Route::get('/dynamic-table/{id}/edit', [DynamicTableController::class, 'edit'])->name('dynamic_table.edit');
+    Route::put('/dynamic-table/{id}', [DynamicTableController::class, 'update'])->name('dynamic_table.update');
 	Route::post('dynamic-table/create', [DynamicTableController::class, 'createTable'])->name('dynamic_table.store');
 	Route::get('/dynamic-table/{tableName}', [DynamicTableController::class, 'show'])->name('dynamic_table.show');
-	Route::delete('/dynamic-table/{id}', [LeadsFormController::class, 'destroy'])->name('dynamic_table.destroy');
+	Route::delete('/dynamic-table/{id}', [DynamicTableController::class, 'destroy'])->name('dynamic_table.destroy');
 	Route::post('/dynamic-table/search', [DynamicTableController::class, 'search'])->name('dynamic_table.search');
 
        //promotion route

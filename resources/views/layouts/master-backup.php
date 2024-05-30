@@ -1797,10 +1797,12 @@
 
 
 
-											@if(Auth::user()->user_type!='admin')
 											@php
 												$links = Auth::user()->get_menu_data();
 												$links = json_decode($links);
+												foreach($links as $key=>$val) {
+													dd($key);
+												}
 											@endphp
 											<div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-lg-1">
 												<span class="menu-link py-3">
@@ -1920,36 +1922,32 @@
 																</span>
 																<!--end::Svg Icon-->
 															</span>
-															<span class="menu-title">{{ str_replace("_", " ", $menu) }}</span>
+															<span class="menu-title">Agents</span>
 															<span class="menu-arrow"></span>
 														</span>
 														<div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg py-lg-4 w-lg-225px">
 															
-															@for($i=0; $i<@count($submenu); $i++)
 															<div class="menu-item">
-																<a class="menu-link py-3" href='{{ URL::to($submenu[$i]) }}'>
+																<a class="menu-link py-3" href="{{ route('agents.index') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
-																	<span class="menu-title">{{str_replace("-", " ", ucfirst($submenu[$i]))}}</span>
+																	<span class="menu-title">Agent List</span>
 																</a>
 															</div>
-															@endfor
-															<!-- <div class="menu-item">
+															<div class="menu-item">
 																<a class="menu-link py-3" href="{{ route('agents.create') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
 																	<span class="menu-title">Create Agent</span>
 																</a>
-															</div> -->
+															</div>
 														</div>
 													</div>
 													<!-- end agents -->
-													@endforeach
 
 
-<<<<<<< HEAD
 													<!-- Form Management -->
 													<div data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item menu-lg-down-accordion">
 														<span class="menu-link py-3">
@@ -2129,7 +2127,7 @@
 																</a>
 															</div>
 															<div class="menu-item">
-																<a class="menu-link py-3" href="{{ URL::to('send-email') }}">
+																<a class="menu-link py-3" href="{{ URL::to('create-agent') }}">
 																	<span class="menu-bullet">
 																		<span class="bullet bullet-dot"></span>
 																	</span>
@@ -2211,11 +2209,8 @@
 													</div>
 													<!-- end sms -->
 
-=======
->>>>>>> 0d81dc0e502165780e0cb3c2aea6602f14235706
 												</div>
 											</div>
-											@endif
 
 
 											<div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-lg-1">

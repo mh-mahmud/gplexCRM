@@ -98,36 +98,75 @@ class DynamicTableService
         return LeadFormDetail::where('table_name', $tableName)->get();
     }
 
-    public function updatePromotion($id, $data)
+    public function updateTable($tableName, $formId, $fields, $id)
     {
-        $promotion = Promotion::findOrFail($id);
-
-        if (isset($data['file_location'])) {
-            //handle the file upload
-            $file = $data['file_location'];
-            $fileNameWithExt = $file->getClientOriginalName();
-            $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            $extension = $file->getClientOriginalExtension();
-            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
-            $filePath = $file->move(public_path('uploads/files'), $fileNameToStore);
-            $data['file_location'] = $fileNameToStore;
-
-            // delete the old file
-            if ($promotion->file_location) {
-                $oldFilePath =public_path().'/uploads/files/'.$promotion->file_location;
-                if (file_exists($oldFilePath)) {
-                    unlink($oldFilePath);
-                }
-            }
-        } else {
-            // if no new file is uploaded
-            $data['file_location'] = $promotion->file_location;
+        $tableDetails = LeadFormDetail::where('table_name', $id)->get();
+        if (!$tableDetails) {
+            return 'Table not found.';
         }
 
-        $promotion->update($data);
+        Schema::table($tableName, function (Blueprint $table) use ($fields) {
+            foreach ($fields as $field) {
+                $type = $field['type'];
+                $name = $field['name'];
+                $length = $field['character_length'] ?? null;
 
-        return $promotion;
+                if (Schema::hasColumn($table->getTable(), $name)) {
+                    continue;
+                }
+
+                if ($type === 'varchar' && $length) {
+                    $table->string($name, $length)->nullable();
+                } elseif ($type === 'int') {
+                    $table->integer($name)->nullable();
+                } elseif ($type === 'char' && $length) {
+                    $table->char($name, $length)->nullable();
+                } elseif ($type === 'date') {
+                    $table->date($name)->nullable();
+                } elseif ($type === 'text') {
+                    $table->text($name)->nullable();
+                } elseif ($type === 'boolean') {
+                    $table->boolean($name)->nullable();
+                } else {
+                    $table->$type($name)->nullable();
+                }
+
+                if (isset($field['is_index']) && $field['is_index']) {
+                    $table->index($name);
+                }
+                if (isset($field['is_unique']) && $field['is_unique']) {
+                    $table->unique($name);
+                }
+                if (!isset($field['is_null']) || !$field['is_null']) {
+                    $table->nullable(false);
+                }
+            }
+        });
+
+        //process insert data in table
+        $data = [];
+        foreach ($fields as $field) {
+            $data[] = [
+                'form_id' => $formId,
+                'field_name' => $field['name'],
+                'field_value' => $field['type'],
+                'table_name' => $tableName,
+                'character_length' => $field['character_length'] ?? null,
+                'is_index' => $field['is_index'] ?? 0,
+                'is_null' => $field['is_null'] ?? 0,
+                'is_unique' => $field['is_unique'] ?? 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        // Insert data into the lead_form_details table
+        DB::table('lead_form_details')->where('table_name', $tableName)->delete();
+        DB::table('lead_form_details')->insert($data);
+
+        return 'Data updated successfully.';
     }
+
 
     public function searchDynamicTable($request)
     {
@@ -149,19 +188,16 @@ class DynamicTableService
         return $query->paginate(config('constants.ROW_PER_PAGE'));
     }
 
-    
-
-
-    public function deletePromotion($id)
+    public function deleteDynamicTable($id)
     {
-        $promotion = Promotion::findOrFail($id);
-        if ($promotion->file_location) {
-            $imagePath = public_path().'/uploads/files/'.$promotion->file_location;
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
-            }
+        $dynamicTables = LeadFormDetail::where('table_name', $id)->get();
+        if ($dynamicTables->isEmpty()) {
+            return redirect()->route('dynamic_table.index')->with('error', 'Table not found.');
         }
-        $promotion->delete();
+        $tableName = $id;
+        LeadFormDetail::where('table_name', $tableName)->delete();
+        Schema::dropIfExists($tableName);
     }
+
 }
 
