@@ -9,6 +9,7 @@ use App\Http\Controllers\LeadsFormController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\DynamicTableController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\LeadController;
 
 use App\Models\Promotion;
 
@@ -40,43 +41,53 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 	Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
 	// agents route
-	Route::get('/agents', [AgentController::class, 'index'])->name('agents.index');
-    Route::get('/agents/create', [AgentController::class, 'create'])->name('agents.create');
-	Route::post('/agents', [AgentController::class, 'store'])->name('agents.store');
-	Route::get('/agents/{id}', [AgentController::class, 'show'])->name('agents.show');
-	Route::get('/agents/{id}/edit', [AgentController::class, 'edit'])->name('agents.edit');
-	Route::put('/agents/{id}', [AgentController::class, 'update'])->name('agents.update');
-	Route::post('/agents/search', [AgentController::class, 'search'])->name('agents.search');
-	Route::delete('/agents/{id}', [AgentController::class, 'destroy'])->name('agents.destroy');
+	Route::get('/agents', [AgentController::class, 'index'])->name('agents-index');
+    Route::get('/agents/create', [AgentController::class, 'create'])->name('agents-create');
+	Route::post('/agents', [AgentController::class, 'store'])->name('agents-store');
+	Route::get('/agents/{id}', [AgentController::class, 'show'])->name('agents-show');
+	Route::get('/agents/{id}/edit', [AgentController::class, 'edit'])->name('agents-edit');
+	Route::put('/agents/{id}', [AgentController::class, 'update'])->name('agents-update');
+	Route::post('/agents/search', [AgentController::class, 'search'])->name('agents-search');
+	Route::delete('/agents/{id}', [AgentController::class, 'destroy'])->name('agents-destroy');
+
+	// Lead routes
+	Route::get('/lead', [LeadController::class, 'index'])->name('lead-index');
+	Route::get('/lead/create', [LeadController::class, 'create'])->name('lead-create');
+	Route::post('/lead', [LeadController::class, 'store'])->name('lead-store');
+	Route::get('/lead/{id}', [LeadController::class, 'show'])->name('lead-show');
+	Route::get('/lead/{id}/edit', [LeadController::class, 'edit'])->name('lead-edit');
+	Route::put('/lead/{id}', [LeadController::class, 'update'])->name('lead-update');
+	Route::delete('/lead/{id}', [LeadController::class, 'destroy'])->name('lead-destroy');
+	Route::post('/lead/search', [LeadController::class, 'search'])->name('lead-search');
     //Lead Form route
-	Route::get('/leads-forms', [LeadsFormController::class, 'index'])->name('leads_forms.index');
-	Route::get('/leads-forms/create', [LeadsFormController::class, 'create'])->name('leads_forms.create');
-	Route::post('/leads-forms', [LeadsFormController::class, 'store'])->name('leads_forms.store');
-	Route::get('/leads-forms/{id}', [LeadsFormController::class, 'show'])->name('leads_forms.show');
-	Route::get('/leads-forms/{id}/edit', [LeadsFormController::class, 'edit'])->name('leads_forms.edit');
-	Route::put('/leads-forms/{id}', [LeadsFormController::class, 'update'])->name('leads_forms.update');
-	Route::delete('/leads-forms/{id}', [LeadsFormController::class, 'destroy'])->name('leads_forms.destroy');
-	Route::post('/leads-forms/search', [LeadsFormController::class, 'search'])->name('leads_forms.search');
+	Route::get('/leads-forms', [LeadsFormController::class, 'index'])->name('leadsform-index');
+	Route::get('/leads-forms/create', [LeadsFormController::class, 'create'])->name('leadsform-create');
+	Route::post('/leads-forms', [LeadsFormController::class, 'store'])->name('leadsform-store');
+	Route::get('/leads-forms/{id}', [LeadsFormController::class, 'show'])->name('leadsform-show');
+	Route::get('/leads-forms/{id}/edit', [LeadsFormController::class, 'edit'])->name('leadsform-edit');
+	Route::put('/leads-forms/{id}', [LeadsFormController::class, 'update'])->name('leadsform-update');
+	Route::delete('/leads-forms/{id}', [LeadsFormController::class, 'destroy'])->name('leadsform-destroy');
+	Route::post('/leads-forms/search', [LeadsFormController::class, 'search'])->name('leadsform-search');
 
 	 //Lead Form route
-	Route::get('/dynamic-table', [DynamicTableController::class, 'index'])->name('dynamic_table.index');
-	Route::get('/dynamic-table/create', [DynamicTableController::class, 'create'])->name('dynamic_table.create');
-	Route::get('/dynamic-table/{id}/edit', [DynamicTableController::class, 'edit'])->name('dynamic_table.edit');
-    Route::put('/dynamic-table/{id}', [DynamicTableController::class, 'update'])->name('dynamic_table.update');
-	Route::post('dynamic-table/create', [DynamicTableController::class, 'createTable'])->name('dynamic_table.store');
-	Route::get('/dynamic-table/{tableName}', [DynamicTableController::class, 'show'])->name('dynamic_table.show');
-	Route::delete('/dynamic-table/{id}', [DynamicTableController::class, 'destroy'])->name('dynamic_table.destroy');
-	Route::post('/dynamic-table/search', [DynamicTableController::class, 'search'])->name('dynamic_table.search');
+	Route::get('/dynamic-table', [DynamicTableController::class, 'index'])->name('dynamictable-index');
+	Route::get('/dynamic-table/create', [DynamicTableController::class, 'create'])->name('dynamictable-create');
+	Route::get('/dynamic-table/{id}/edit', [DynamicTableController::class, 'edit'])->name('dynamictable-edit');
+    Route::put('/dynamic-table/{id}', [DynamicTableController::class, 'update'])->name('dynamictable-update');
+	Route::post('dynamic-table/create', [DynamicTableController::class, 'createTable'])->name('dynamictable-store');
+	Route::get('/dynamic-table/{tableName}', [DynamicTableController::class, 'show'])->name('dynamictable-show');
+	Route::delete('/dynamic-table/{id}', [DynamicTableController::class, 'destroy'])->name('dynamictable-destroy');
+	Route::post('/dynamic-table/search', [DynamicTableController::class, 'search'])->name('dynamictable-search');
 
-       //promotion route
-	Route::get('/promotion', [PromotionController::class, 'index'])->name('promotion.index');
-	Route::get('/promotion/create', [PromotionController::class, 'create'])->name('promotion.create');
-	Route::post('/promotion', [PromotionController::class, 'store'])->name('promotion.store');
-	Route::get('/promotion/{id}', [PromotionController::class, 'show'])->name('promotion.show');
-	Route::get('/promotion/{id}/edit', [PromotionController::class, 'edit'])->name('promotion.edit');
-	Route::put('/promotion/{id}', [PromotionController::class, 'update'])->name('promotion.update');
-	Route::delete('/promotion/{id}', [PromotionController::class, 'destroy'])->name('promotion.destroy');
-	Route::post('/promotion/search', [PromotionController::class, 'search'])->name('promotion.search');
+    //promotion route
+	Route::get('/promotion', [PromotionController::class, 'index'])->name('promotion-index');
+	Route::get('/promotion/create', [PromotionController::class, 'create'])->name('promotion-create');
+	Route::post('/promotion', [PromotionController::class, 'store'])->name('promotion-store');
+	Route::get('/promotion/{id}', [PromotionController::class, 'show'])->name('promotion-show');
+	Route::get('/promotion/{id}/edit', [PromotionController::class, 'edit'])->name('promotion-edit');
+	Route::put('/promotion/{id}', [PromotionController::class, 'update'])->name('promotion-update');
+	Route::delete('/promotion/{id}', [PromotionController::class, 'destroy'])->name('promotion-destroy');
+	Route::post('/promotion/search', [PromotionController::class, 'search'])->name('promotion-search');
 
 	// users route
     Route::get('user-list',        [UserController::class, 'index'])->name('users.index');

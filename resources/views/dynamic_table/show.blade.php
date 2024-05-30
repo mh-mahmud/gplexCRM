@@ -126,7 +126,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('dynamic_table.index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Dynamic Table List</a>
+                            <a href="{{ route('dynamictable-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Dynamic Table List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->

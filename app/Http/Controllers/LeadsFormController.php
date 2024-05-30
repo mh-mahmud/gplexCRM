@@ -47,7 +47,7 @@ class LeadsFormController extends Controller
 
         $this->leadsFormService->createLeadsForm($request->all());
 
-        return redirect()->route('leads_forms.index')->with('success', 'Leads Form created successfully.');
+        return redirect()->route('leadsform-index')->with('success', 'Leads Form created successfully.');
     }
 
     public function show($id)
@@ -75,7 +75,7 @@ class LeadsFormController extends Controller
 
         $this->leadsFormService->updateLeadsForm($id, $request->all());
 
-        return redirect()->route('leads_forms.index')->with('success', 'Leads Form updated successfully.');
+        return redirect()->route('leadsform-index')->with('success', 'Leads Form updated successfully.');
     }
 
     public function search(Request $request)
@@ -83,7 +83,7 @@ class LeadsFormController extends Controller
         $searchTerm = trim($request->input('search'));
 
         if (empty($searchTerm)) {
-            return redirect()->route('leads_forms.index')->with('error', 'Search Field cannot be blank.');
+            return redirect()->route('leadsform-index')->with('error', 'Search Field cannot be blank.');
         }
 
         $request->validate([
@@ -98,6 +98,6 @@ class LeadsFormController extends Controller
     public function destroy($id)
     {
         $this->leadsFormService->deleteLeadsForm($id);
-        return redirect()->route('leads_forms.index')->with('success', 'Leads Form deleted successfully.');
+        return redirect()->route('leadsform-index')->with('success', 'Leads Form deleted successfully.');
     }
 }

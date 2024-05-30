@@ -16,12 +16,12 @@
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                             <!--begin::Title-->
-                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Promotion Details
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Lead Details
                                 <!--begin::Separator-->
                                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Promotion Details</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Lead Details</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -126,7 +126,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('promotion-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Promotion List</a>
+                            <a href="{{ route('lead-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Lead List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
@@ -144,71 +144,56 @@
             <div class="card mt-5">
                 <div class="card-header">
                     <div class="card-title">
-                        <h2>Promotion Details</h2>
+                        <h2>Lead Details</h2>
                     </div>
                 </div>
                 <!--begin::Body-->
                 <div class="card-body py-3">
 
-                
-
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Promotion Name</span>
-                        <span>{{ $promotion->promotion_title }}</span>
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Lead Name</span>
+                        <span>{{ $lead->name }}</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Start Date</span>
-                        <span>
-                        @if($promotion->start_date)
-                        {{ \Carbon\Carbon::parse($promotion->start_date)->format('d-m-Y') }}
-                        @endif
-                        </span>
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Email</span>
+                        <span>{{ $lead->email }}</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">End Date</span>
-                        <span>
-                        @if($promotion->end_date)
-                        {{ \Carbon\Carbon::parse($promotion->end_date)->format('d-m-Y') }}
-                        @endif</span>
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Phone</span>
+                        <span>{{ $lead->phone }}</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Promotion Type</span>
-                        <span>{{ $promotion->promo_type }}</span>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Promotion Type</span>
-                        <span>{{ $promotion->description }}</span>
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Lead Source</span>
+                        <span>{{ $lead->source }}</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Status</span>
-                        @if ($promotion->status === 1)
+                        @if ($lead->status === 1)
                             <span>Active</span>
-                        @elseif ($promotion->status === 0)
+                        @elseif ($lead->status === 0)
                             <span>Inactive</span>
                         @endif
                     </div>
 
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Created At</span>
+                        <span>{{ \Carbon\Carbon::parse($lead->created_at)->format('d-m-Y') }}</span>
+                    </div>
 
-                    
-                
-
-
-                   
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Updated At</span>
+                        <span>{{ \Carbon\Carbon::parse($lead->updated_at)->format('d-m-Y') }}</span>
+                    </div>
 
                 </div>
-            
-
             </div>
-
         </div>
     </div>
 </div>
-
 
                 <!-- End Tables View-->
 

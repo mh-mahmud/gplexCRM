@@ -56,7 +56,7 @@ class AgentController extends Controller {
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $user = $this->agentService->create_agent($request);
-        return redirect()->route('agents.index')->with('success', 'Agent created successfully.');
+        return redirect()->route('agents-index')->with('success', 'Agent created successfully.');
     }
 
    
@@ -85,7 +85,7 @@ class AgentController extends Controller {
 
        
         $this->agentService->updateAgent($request, $id);
-        return redirect()->route('agents.index')->with('success', 'Agent updated successfully.');
+        return redirect()->route('agents-index')->with('success', 'Agent updated successfully.');
     }
 
   
@@ -96,7 +96,7 @@ class AgentController extends Controller {
         $searchTerm = trim($request->input('search'));
 
         if (empty($searchTerm)) {
-            return redirect()->route('agents.index')->with('error', 'Search Field cannot be blank.');
+            return redirect()->route('agents-index')->with('error', 'Search Field cannot be blank.');
         }
 
         $request->validate([
@@ -114,7 +114,7 @@ class AgentController extends Controller {
     {
         try {
             $this->agentService->deleteAgentAndUser($id);
-            return redirect()->route('agents.index')->with('success', 'Agent deleted successfully.');
+            return redirect()->route('agents-index')->with('success', 'Agent deleted successfully.');
         } catch (\Exception $e) {
            return redirect()->back()->with('error', $e->getMessage());
         }

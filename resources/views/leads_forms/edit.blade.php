@@ -123,7 +123,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('leads_forms.index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Lead Form List</a>
+                            <a href="{{ route('leadsform-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Lead Form List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
@@ -152,7 +152,7 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('leads_forms.update', $leadsForm->id) }}" method="POST" enctype="multipart/form-data">
+                                    <form class="g-form w-100" action="{{ route('leadsform-update', $leadsForm->id) }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
                                             <div class="row">
@@ -206,7 +206,7 @@
                                         <!--End Row-->
                                        
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <a href="{{ route('leads_forms.edit', $leadsForm->id) }}" class="btn btn-light me-2">Reset</a>
+                                        <a href="{{ route('leadsform-edit', $leadsForm->id) }}" class="btn btn-light me-2">Reset</a>
                                             <button type="submit" class="btn btn-primary"
                                                     id="kt_account_profile_details_submit">Save Changes
                                             </button>

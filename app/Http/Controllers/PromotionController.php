@@ -52,7 +52,7 @@ class PromotionController extends Controller
 
         $this->promotionService->createPromotion($request->all());
 
-        return redirect()->route('promotion.index')->with('success', 'Promotion created successfully.');
+        return redirect()->route('promotion-index')->with('success', 'Promotion created successfully.');
     }
 
     public function show($id)
@@ -84,7 +84,7 @@ class PromotionController extends Controller
 
         $this->promotionService->updatePromotion($id, $request->all());
 
-        return redirect()->route('promotion.index')->with('success', 'Promotion updated successfully.');
+        return redirect()->route('promotion-index')->with('success', 'Promotion updated successfully.');
     }
 
     public function search(Request $request)
@@ -92,7 +92,7 @@ class PromotionController extends Controller
         $searchTerm = trim($request->input('search'));
 
         if (empty($searchTerm)) {
-            return redirect()->route('promotion.index')->with('error', 'Search Field cannot be blank.');
+            return redirect()->route('promotion-index')->with('error', 'Search Field cannot be blank.');
         }
 
         $request->validate([
@@ -107,6 +107,6 @@ class PromotionController extends Controller
     public function destroy($id)
     {
         $this->promotionService->deletePromotion($id);
-        return redirect()->route('promotion.index')->with('success', 'Promotion deleted successfully.');
+        return redirect()->route('promotion-index')->with('success', 'Promotion deleted successfully.');
     }
 }

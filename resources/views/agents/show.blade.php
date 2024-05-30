@@ -126,7 +126,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('agents.index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Agent List</a>
+                            <a href="{{ route('agents-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Agent List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
