@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use App\Models\EmailTemplate;
-use App\Models\Agent;
+use App\Models\EmailLog;
 use Exception;
-use Illuminate\Support\Facades\Validator;
+use Mail;
+use App\Mail\SingleMail;
+use Carbon\Carbon;
 
 class EmailService
 {
@@ -17,7 +19,13 @@ class EmailService
             $sql->where('email_subject','like', '%' . $data["search"] . '%');
 
         }
-        return  $sql->paginate(config('constants.ROW_PER_PAGE'));
+        if (isset($data['paginate']) && $data['paginate'] == false) {
+            return  $sql->get();
+
+        } else {
+            return  $sql->paginate(config('constants.ROW_PER_PAGE'));
+
+        }
     }
 
     public function templateStore($request)
@@ -89,6 +97,51 @@ class EmailService
         return (object)[
             'status'                 => 208,
             'info'                   => $dataObj->id
+        ];
+
+    }
+
+    public function sendEmailPro($request) {
+        $data = [];
+        // $request->validate([
+        //     'subject' => 'required',
+        //     'body' => 'required',
+        //     'to_email' => 'required'
+        // ]);
+       
+        $data = $request->all();
+
+        $subject = $data["email_subject"];
+        $body = $data["email_content"];
+        $to_email = $data["to_email"];
+
+        try {
+            Mail::to($to_email)->send(new SingleMail($subject, $body));
+            $send_status = 1;
+            
+
+        } catch (Exception $e) {
+            $send_status = 0;
+            return (object)[
+                'status'                 => 401,
+                'message'                => $e->getMessage()
+            ];
+
+        }
+
+        $dataObj                        = new EmailLog();
+        $dataObj->email_from            = "Genuity";
+        $dataObj->email_to              = $data['to_email'];
+        $dataObj->email_subject         = $data['email_subject'];
+        $dataObj->email_content         = $data['email_content'];
+        $dataObj->log_time              = Carbon::now();
+        $dataObj->delivery_time         = Carbon::now();
+        $dataObj->send_status           = $send_status;
+        $dataObj->save();
+
+        return (object)[
+            'status'                 => 200,
+            'message'                => "Email sent successfully"
         ];
 
     }

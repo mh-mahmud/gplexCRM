@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\EmailService;
 use App\Models\EmailTemplate;
-use Mail;
-use App\Mail\SingleMail;
+
 
 class EmailController extends Controller {
 
@@ -76,5 +75,28 @@ class EmailController extends Controller {
 
     }
 
+    public function sendEmail(Request $request)
+    {   
+        $request->merge(['paginate' => false]);   
+        $templates = $this->emailService->emailTemplateList($request);
+        return view('emails.send-email', compact('templates'));
+    }
 
+    public function sendEmailPro(Request $request)
+    { 
+         $result = $this->emailService->sendEmailPro($request);
+         if($result->status == 200){
+            return redirect()->route('send-email')->with('success', 'Email send successfully.');
+
+        }else{
+            session()->flash('error', 'Email can not send !');
+        }
+
+    }
+
+    public function sendEmailList(Request $request)
+    {      
+        $templates = $this->emailService->emailTemplateList($request);
+        return view('emails.template-list', compact('templates'));
+    }
 }
