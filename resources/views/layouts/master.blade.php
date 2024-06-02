@@ -1797,12 +1797,14 @@
 
 
 
-											@if(Auth::user()->user_type!='admin')
+
 											@php
 												$links = Auth::user()->get_menu_data();
 												$links = json_decode($links);
 
 											@endphp
+
+											@if(!empty($links))
 											<div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-lg-1">
 												<span class="menu-link py-3">
 													<span class="menu-title">Apps <span class="menu-arrow"></span></span>
@@ -1855,6 +1857,7 @@
 												</div>
 											</div>
 											@endif
+											<!-- end of apps menu -->
 
 
 											<div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-lg-1">
