@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('first_name', 191);
             $table->string('last_name', 191);
-            $table->string('phone_number', 191)->nullable();
+            $table->string('phone_number', 20)->nullable();
             $table->date('birth_day')->nullable();
             $table->tinyInteger('status');
             $table->char('role_id', 10)->nullable();

@@ -16,9 +16,12 @@ return new class extends Migration
             $table->char('user_id', 20)->nullable();
             $table->string('first_name', 191);
             $table->string('last_name', 191);
+            $table->string('phone_number', 20)->nullable();
             $table->string('email')->unique();
             $table->char('user_type', 16)->nullable();
+            $table->char('gender', 1)->nullable();
             $table->string('profile_image', 191)->nullable();
+            $table->text('address')->nullable();
             $table->char('role_id', 16)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

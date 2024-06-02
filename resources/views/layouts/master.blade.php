@@ -6472,6 +6472,7 @@
 			$('[name="birth_day"]').flatpickr();
 			$('[name="start_date"]').flatpickr();
 			$('[name="end_date"]').flatpickr();
+			$('[name="dob"]').flatpickr();
 		</script>
 		 @yield('endScript')
 		<!--end::Page Custom Javascript-->

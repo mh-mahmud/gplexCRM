@@ -202,6 +202,7 @@ use Carbon\Carbon;
 									<!-- <th class="min-w-150px">Form ID</th> -->
 									<th class="min-w-150px">First Name</th>
 									<th class="min-w-150px">Last Name</th>
+									<th class="min-w-150px">Title</th>
 									<th class="min-w-150px">Email</th>
 									<th class="min-w-150px">Phone</th>
 									<th class="min-w-150px">Lead Status</th>
@@ -217,6 +218,7 @@ use Carbon\Carbon;
 									<td class="text-dark fs-6">{{$loop->iteration}}</td>
 									<td class="text-dark fs-6">{{ $lead->first_name }}</td>
                                     <td class="text-dark fs-6">{{ $lead->last_name }}</td>
+                                    <td class="text-dark fs-6">{{ $lead->title }}</td>
                                     <td class="text-dark fs-6">{{ $lead->email }}</td>
                                     <td class="text-dark fs-6">{{ $lead->phone }}</td>
 
