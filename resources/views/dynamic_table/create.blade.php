@@ -123,7 +123,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('dynamic_table.index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Dynamic Table List</a>
+                            <a href="{{ route('dynamictable-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Dynamic Table List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
@@ -152,7 +152,7 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('dynamic_table.store') }}"  enctype="multipart/form-data" method="POST">
+                                    <form class="g-form w-100" action="{{ route('dynamictable-store') }}"  enctype="multipart/form-data" method="POST">
                                          @csrf
                                         <div class="row">
                                             
@@ -296,7 +296,7 @@
                                      </div>
                                         <!--End Row-->
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <a href="{{ route('dynamic_table.create') }}" class="btn btn-light me-2">Reset</a>
+                                        <a href="{{ route('dynamictable-create') }}" class="btn btn-light me-2">Reset</a>
                                             <button type="submit" class="btn btn-primary"
                                                     id="kt_account_profile_details_submit">Save Changes
                                             </button>
@@ -351,7 +351,7 @@ function addField() {
         <div class="col-md-2">
             <div class="fv-row">
                 <label class="form-label fw-bolder text-dark">Character Length</label>
-                <input class="form-control form-control-sm form-control-solid" type="text" name="fields[${fieldCount}][character_length]" autocomplete="off" />
+                <input class="form-control form-control-sm form-control-solid" type="number" name="fields[${fieldCount}][character_length]" autocomplete="off" />
             </div>
         </div>
 

@@ -124,7 +124,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('promotion.create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
+                            <a href="{{ route('promotion-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
 
                             <!--end::Button-->
                         </div>
@@ -178,7 +178,7 @@
 				</h3>
 
 				<div class="d-flex flex-wrap gap-2">
-				<form action="{{ route('promotion.search') }}" method="POST" class="d-flex">
+				<form action="{{ route('promotion-search') }}" method="POST" class="d-flex">
 				@csrf
 					<!--begin::Input group-->
 					<div class="d-flex align-items-center position-relative">
@@ -255,7 +255,7 @@
 								@endif
                             </td>
 							<td class="text-end">
-								<a href="{{ route('promotion.show', $promotion->id) }}"
+								<a href="{{ route('promotion-show', $promotion->id) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
 									<span class="svg-icon svg-icon-3">
@@ -277,7 +277,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<a href="{{ route('promotion.edit', $promotion->id) }}"
+								<a href="{{ route('promotion-edit', $promotion->id) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
 									<span class="svg-icon svg-icon-3">
@@ -293,7 +293,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<form action="{{ route('promotion.destroy', $promotion->id) }}" method="POST" style="display: inline;">
+								<form action="{{ route('promotion-destroy', $promotion->id) }}" method="POST" style="display: inline;">
 									@csrf
 									@method('DELETE')
 									<button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">

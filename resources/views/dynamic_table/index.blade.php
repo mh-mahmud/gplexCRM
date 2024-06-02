@@ -124,7 +124,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('dynamic_table.create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
+                            <a href="{{ route('dynamictable-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
 
                             <!--end::Button-->
                         </div>
@@ -178,7 +178,7 @@
 				</h3>
 
 				<div class="d-flex flex-wrap gap-2">
-				<form action="{{ route('dynamic_table.search') }}" method="POST" class="d-flex">
+				<form action="{{ route('dynamictable-search') }}" method="POST" class="d-flex">
 				@csrf
 					<!--begin::Input group-->
 					<div class="d-flex align-items-center position-relative">
@@ -236,7 +236,7 @@
 							<td class="text-dark fs-6">{{$dynamicTable->table_name}}</td>
 		                    
 							<td class="text-end">
-								<a href="{{ route('dynamic_table.show', $dynamicTable->table_name) }}"
+								<a href="{{ route('dynamictable-show', $dynamicTable->table_name) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
 									<span class="svg-icon svg-icon-3">
@@ -258,7 +258,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<a href="{{ route('dynamic_table.edit', $dynamicTable->table_name) }}"
+								<a href="{{ route('dynamictable-edit', $dynamicTable->table_name) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
 									<span class="svg-icon svg-icon-3">
@@ -274,7 +274,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<form action="{{ route('dynamic_table.destroy', $dynamicTable->table_name) }}" method="POST" style="display: inline;">
+								<form action="{{ route('dynamictable-destroy', $dynamicTable->table_name) }}" method="POST" style="display: inline;">
 									@csrf
 									@method('DELETE')
 									<button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">

@@ -10,7 +10,7 @@ class AgentService
 
     public function getAllAgents()
     {
-        return Agent::paginate(config('constants.ROW_PER_PAGE'));
+        return Agent::orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
     }
     
 

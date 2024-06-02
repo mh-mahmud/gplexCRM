@@ -61,10 +61,10 @@ class DynamicTableController extends Controller
         $result = $this->dynamicTableService->createTable($tableName, $formId, $fields);
 
         if ($result === 'Table already exists.') {
-            return redirect()->route('dynamic_table.index')->with('error', $result);
+            return redirect()->route('dynamictable-index')->with('error', $result);
         }
 
-        return redirect()->route('dynamic_table.index')->with('success','Dynamic Table created successfully.');
+        return redirect()->route('dynamictable-index')->with('success','Dynamic Table created successfully.');
     }
 
     public function show($tableName)
@@ -77,7 +77,7 @@ class DynamicTableController extends Controller
     {
         $tableDetails = LeadFormDetail::where('table_name', $id)->get();
         if (!$tableDetails) {
-            return redirect()->route('dynamic_table.index')->with('error', 'Table not found.');
+            return redirect()->route('dynamictable-index')->with('error', 'Table not found.');
         }
     
         $formName = LeadsForm::pluck('form_name', 'form_id');
@@ -108,10 +108,10 @@ class DynamicTableController extends Controller
         $result = $this->dynamicTableService->updateTable($tableName, $formId, $fields, $id);
     
         if ($result === 'Table not found.') {
-            return redirect()->route('dynamic_table.index')->with('error', $result);
+            return redirect()->route('dynamictable-index')->with('error', $result);
         }
     
-        return redirect()->route('dynamic_table.index')->with('success', 'Dynamic Table updated successfully.');
+        return redirect()->route('dynamictable-index')->with('success', 'Dynamic Table updated successfully.');
     }
     
 
@@ -120,7 +120,7 @@ class DynamicTableController extends Controller
         $searchTerm = trim($request->input('search'));
 
         if (empty($searchTerm)) {
-            return redirect()->route('dynamic_table.index')->with('error', 'Search Field cannot be blank.');
+            return redirect()->route('dynamictable-index')->with('error', 'Search Field cannot be blank.');
         }
 
         $request->validate([
@@ -136,7 +136,7 @@ class DynamicTableController extends Controller
     {   
         //dd($id);
         $this->dynamicTableService->deleteDynamicTable($id);
-        return redirect()->route('dynamic_table.index')->with('success', 'Dynamic Table deleted successfully.');
+        return redirect()->route('dynamictable-index')->with('success', 'Dynamic Table deleted successfully.');
     }
 
 }

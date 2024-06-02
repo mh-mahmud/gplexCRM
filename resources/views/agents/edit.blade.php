@@ -123,7 +123,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('agents.index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Agent List</a>
+                            <a href="{{ route('agents-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Agent List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
@@ -153,7 +153,7 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('agents.update', $agent->agent_id) }}" method="POST" enctype="multipart/form-data">
+                                    <form class="g-form w-100" action="{{ route('agents-update', $agent->agent_id) }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
                                         <div class="row">
@@ -310,7 +310,7 @@
                                         </div>
                                         <!--End Row-->
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <a href="{{ route('agents.edit', $agent->agent_id) }}" class="btn btn-light me-2">Reset</a>
+                                        <a href="{{ route('agents-edit', $agent->agent_id) }}" class="btn btn-light me-2">Reset</a>
                                             <button type="submit" class="btn btn-primary"
                                                     id="kt_account_profile_details_submit">Save Changes
                                             </button>
