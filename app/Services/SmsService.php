@@ -2,21 +2,21 @@
 
 namespace App\Services;
 
-use App\Models\EmailTemplate;
-use App\Models\EmailLog;
+use App\Models\SmsTemplate;
+use App\Models\SmsLog;
 use Exception;
 use Mail;
 use App\Mail\SingleMail;
 use Carbon\Carbon;
 
-class EmailService
+class SmsService
 {
-    public function emailTemplateList($request)
+    public function smsTemplateList($request)
     {
-        $sql = EmailTemplate::query();
+        $sql = SmsTemplate::query();
         $data = $request->all();
         if(!empty($data["search"])) {
-            $sql->where('email_subject','like', '%' . $data["search"] . '%');
+            $sql->where('title','like', '%' . $data["search"] . '%');
 
         }
         if (isset($data['paginate']) && $data['paginate'] == false) {
@@ -31,16 +31,16 @@ class EmailService
     public function templateStore($request)
     {
         $request->validate([
-            'email_subject' => 'required',
-            'email_content' => 'required',
+            'title' => 'required|unique:sms_templates',
+            'description' => 'required',
            
         ]);
         $data = $request->all();
 
         try {
-            $dataObj                        = new EmailTemplate();
-            $dataObj->email_subject         = $data['email_subject'];
-            $dataObj->email_content         = $data['email_content'];
+            $dataObj                        = new SmsTemplate();
+            $dataObj->title                 = $data['title'];
+            $dataObj->description           = $data['description'];
             $dataObj->status                = $data['status'];
 
             $dataObj->save();
@@ -59,30 +59,30 @@ class EmailService
 
     }
 
-    public function getEmailTemplateById($id)
+    public function getSmsTemplateById($id)
     {
-        return EmailTemplate::findOrFail($id);
+        return SmsTemplate::findOrFail($id);
     }
 
     public function templateDelete($id)
     {
-        $promotion = EmailTemplate::findOrFail($id);
+        $promotion = SmsTemplate::findOrFail($id);
         $promotion->delete();
     }
 
     public function templateUpdate($request, $id)
     {
         $request->validate([
-            'email_subject' => 'required',
-            'email_content' => 'required',
+            'title' => 'required|unique:sms_templates,title,'.$id,
+            'description' => 'required',
            
         ]);
         $data = $request->all();
 
         try {
-            $dataObj                        = EmailTemplate::findOrFail($id);
-            $dataObj->email_subject         = $data['email_subject'];
-            $dataObj->email_content         = $data['email_content'];
+            $dataObj                        = SmsTemplate::findOrFail($id);
+            $dataObj->title                 = $data['title'];
+            $dataObj->description           = $data['description'];
             $dataObj->status                = $data['status'];
 
             $dataObj->save();
@@ -101,7 +101,7 @@ class EmailService
 
     }
 
-    public function sendEmailPro($request) {
+    public function sendSmsPro($request) {
         $data = [];
         // $request->validate([
         //     'subject' => 'required',
@@ -111,17 +111,16 @@ class EmailService
        
         $data = $request->all();
 
-        $subject = $data["email_subject"];
-        $body = $data["email_content"];
+        $subject = $data["title"];
+        $body = $data["description"];
         $to_email = $data["to_email"];
 
         try {
-            Mail::to($to_email)->send(new SingleMail($subject, $body));
-            $dataObj                        = new EmailLog();
-            $dataObj->email_from            = "Genuity";
-            $dataObj->email_to              = $data['to_email'];
-            $dataObj->email_subject         = $data['email_subject'];
-            $dataObj->email_content         = $data['email_content'];
+            $dataObj                        = new SmsLog();
+            $dataObj->sms_from              = "Genuity";
+            $dataObj->sms_to                = $data['to_sms'];
+            $dataObj->title                 = $data['title'];
+            $dataObj->description           = $data['description'];
             $dataObj->log_time              = Carbon::now();
             $dataObj->delivery_time         = Carbon::now();
             $dataObj->send_status           = 1;
@@ -129,11 +128,11 @@ class EmailService
             
 
         } catch (Exception $e) {
-            $dataObj                        = new EmailLog();
+            $dataObj                        = new SmsLog();
             $dataObj->email_from            = "Genuity";
             $dataObj->email_to              = $data['to_email'];
-            $dataObj->email_subject         = $data['email_subject'];
-            $dataObj->email_content         = $data['email_content'];
+            $dataObj->title                 = $data['title'];
+            $dataObj->description         = $data['description'];
             $dataObj->log_time              = Carbon::now();
             $dataObj->delivery_time         = Carbon::now();
             $dataObj->send_status           = 0;
@@ -155,9 +154,9 @@ class EmailService
 
     }
 
-    public function sendEmailList($request)
+    public function sendSmsList($request)
     {
-        $sql = EmailLog::query();
+        $sql = SmsLog::query();
         $data = $request->all();
         if(!empty($data["search"])) {
             $sql->where('email_to','like', '%' . $data["search"] . '%');
