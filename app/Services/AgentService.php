@@ -34,7 +34,11 @@ class AgentService
             'email' => $request->email,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
+            'phone_number' => $request->phone_number,
+            'gender' => $request->gender,
+            'address' => $request->address,
             'profile_image' => $fileNameToStore,
+            'status' => $request->status,
             'user_type' =>'agent',
             'password' => bcrypt($request->password),
         ]);
@@ -82,6 +86,10 @@ class AgentService
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
+        $user->gender = $request->gender;
+        $user->phone_number = $request->phone_number;
+        $user->address = $request->address;
+        $user->status = $request->status;
         $user->user_type ='agent';
         $user->password = bcrypt($request->password);
         if ($request->hasFile('profile_image')) {

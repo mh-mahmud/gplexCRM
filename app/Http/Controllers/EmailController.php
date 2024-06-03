@@ -36,7 +36,7 @@ class EmailController extends Controller {
     { 
         $result = $this->emailService->templateStore($request);
         if($result->status == 201){
-            return redirect()->route('email-template')->with('success', 'Email template '.$result->messages. ' created successfully.');
+            return redirect()->route('email-template')->with('success', 'Email template created successfully.');
 
         }else{
             session()->flash('error', 'Can not Create !');
@@ -96,7 +96,7 @@ class EmailController extends Controller {
 
     public function sendEmailList(Request $request)
     {      
-        $templates = $this->emailService->emailTemplateList($request);
-        return view('emails.template-list', compact('templates'));
+        $emails = $this->emailService->sendEmailList($request);
+        return view('emails.send-email-list', compact('emails'));
     }
 }

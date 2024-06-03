@@ -28,6 +28,18 @@ class LeadService
         $lead->update($data);
         return $lead;
     }
+    public function searchLeadForm($request)
+    {
+        $searchTerm = trim($request->input('search'));
+
+        $query = Lead::query();
+        //dd($query);die();
+        $query->where(function($q) use ($searchTerm) {
+            $q->where('title', 'LIKE', '%' . $searchTerm . '%');
+        });
+
+        return $query->paginate(config('constants.ROW_PER_PAGE'));
+    }
 
     public function deleteLead($id)
     {

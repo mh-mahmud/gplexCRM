@@ -39,6 +39,7 @@ class LeadController  extends Controller
         $request->validate([
             'first_name' => 'required|string|max:191',
             'last_name' => 'required|string|max:191',
+            'title' => 'required|string|max:191',
             'email' => 'nullable|string|email|max:191|unique:leads,email',
             'phone' => 'required|string|max:191',
             
@@ -67,6 +68,7 @@ class LeadController  extends Controller
         $request->validate([
             'first_name' => 'required|string|max:191',
             'last_name' => 'required|string|max:191',
+            'title' => 'required|string|max:191',
             'email' => 'nullable|string|email|max:191|unique:leads,email,' . $id,
             'phone' => 'required|string|max:191',
            
@@ -76,6 +78,22 @@ class LeadController  extends Controller
         $this->leadService->updateLead($id, $data);
 
         return redirect()->route('lead-index')->with('success', 'Lead updated successfully.');
+    }
+
+    public function search(Request $request)
+    {
+        $searchTerm = trim($request->input('search'));
+
+        if (empty($searchTerm)) {
+            return redirect()->route('lead-index')->with('error', 'Search Field cannot be blank.');
+        }
+
+        $request->validate([
+            'search' => 'required|string',
+        ]);
+
+        $leads = $this->leadService->searchLeadForm($request);
+        return view('leads.index', compact('leads'));
     }
 
     public function destroy($id)

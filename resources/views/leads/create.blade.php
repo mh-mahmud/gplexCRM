@@ -233,9 +233,9 @@
                                     <!--begin::Input-->
                                     <select class="form-control form-control-sm form-control-solid" name="gender">
                                         <option value="" disabled selected>Select Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
                                     </select>
                                     <!--end::Input-->
                                     @if ($errors->has('gender'))
@@ -250,7 +250,10 @@
                                     <label class="form-label fw-bolder text-dark">Date of Birth</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid flatpickr" type="text" name="dob" placeholder="Select Date"/>
+                                    <div class="position-relative">
+                                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr"
+                                                            placeholder="Date Of Birth" name="dob">
+                                    </div>
                                     <!--end::Input-->
                                     @if ($errors->has('dob'))
                                         <span class="text-danger">{{ $errors->first('dob') }}</span>
@@ -265,11 +268,10 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <select class="form-control form-control-sm form-control-solid" name="marital_status">
-                                        <option value="" disabled selected>Select Marital Status</option>
-                                        <option value="Single">Single</option>
-                                        <option value="Married">Married</option>
-                                        <option value="Divorced">Divorced</option>
-                                        <option value="Widowed">Widowed</option>
+                                            <option value="" disabled selected>Select Marital Status</option>
+                                            @foreach(config('constants.marital_status') as $status)
+                                                <option value="{{ $status }}">{{ $status }}</option>
+                                            @endforeach
                                     </select>
                                     <!--end::Input-->
                                     @if ($errors->has('marital_status'))
@@ -404,18 +406,19 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Lead Source</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="lead_source" autocomplete="off"/>
-                                    <!--end::Input-->
-                                    @if ($errors->has('lead_source'))
-                                        <span class="text-danger">{{ $errors->first('lead_source') }}</span>
-                                    @endif
+                                    <div class="fv-row mb-3">
+                                        <label class="form-label fw-bolder text-dark">Lead Source</label>
+                                        <select class="form-control form-control-sm form-control-solid" name="lead_source">
+                                            <option value="" disabled selected>Select Lead Source</option>
+                                            @foreach(config('constants.lead_source') as $source)
+                                                <option value="{{ $source }}">{{ $source }}</option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('lead_source'))
+                                            <span class="text-danger">{{ $errors->first('lead_source') }}</span>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
 
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
@@ -487,7 +490,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Lead Notes</label>
