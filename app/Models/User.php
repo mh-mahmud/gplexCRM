@@ -70,6 +70,10 @@ class User extends Authenticatable
         /*if(Auth::user()->user_type=='admin') {
             return;
         }*/
-        return Role::where('id', Auth::user()->role_id)->first(['name', 'permission_details'])->permission_details;
+        $role_data = Role::where('id', Auth::user()->role_id)->first(['name', 'permission_details']);
+        if(!empty($role_data)) {
+            return $role_data->permission_details;
+        }
+        return null;
     }
 }
