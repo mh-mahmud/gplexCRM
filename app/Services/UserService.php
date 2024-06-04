@@ -67,18 +67,18 @@ class UserService {
     }
 
     public function get_all_permission() {
-        return Permission::paginate(100);
+        return Menu::paginate(100);
     }
 
     public function get_parent_list() {
-        return Permission::whereNull('parent_id')->get(['id', 'name']);
+        return Menu::whereNull('parent_id')->get(['id', 'name']);
     }
 
     public function create_permission($request) {
 
-        $data = Permission::create([
+        $data = Menu::create([
             'name' => $request->name,
-            'slug' => $request->slug,
+            'sub_name' => $request->slug,
             'show_in_menu' => $request->show_in_menu,
             'parent_id' => !empty($request->parent_id) ? $request->parent_id : null
         ]);
@@ -88,23 +88,23 @@ class UserService {
 
     public function edit_permission($request) {
 
-        $user = Permission::findOrFail($request->id);
+        $user = Menu::findOrFail($request->id);
         $user->name = $request->name;
-        $user->slug = $request->slug;
+        $user->sub_name = $request->slug;
         $user->show_in_menu = $request->show_in_menu;
         $user->parent_id = !empty($request->parent_id) ? $request->parent_id : null;
         if($user->save()) {
-                return true;
+            return true;
         }
         return false;
     }
 
     public function show_permission($id) {
-        return Permission::findOrFail($id);
+        return Menu::findOrFail($id);
     }
 
     public function delete_permission($id) {
-        $user = Permission::findOrFail($id);
+        $user = Menu::findOrFail($id);
         if($user->delete()) {
             return true;
         }
