@@ -9,7 +9,7 @@ class LeadService
     public function getAllLeads()
     {
         
-        return Lead::paginate(config('constants.ROW_PER_PAGE'));
+        return Lead::with('leadsForm:form_id,form_name')->paginate(config('constants.ROW_PER_PAGE'));
     }
 
     public function getLeadById($id)

@@ -136,10 +136,18 @@ use Carbon\Carbon;
                 </div>
                 <!--begin::Body-->
                 <div class="card-body py-3">
+                <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Form Name</span>
+                        <span>{{ $lead->leadsForm?->form_name ?? '' }}</span>
+                    </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Lead Name</span>
-                        <span>{{ $lead->name }}</span>
+                        <span>{{ $lead->first_name }}</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Lead Name</span>
+                        <span>{{ $lead->last_name }}</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
@@ -177,6 +185,10 @@ use Carbon\Carbon;
                             {{ \Carbon\Carbon::parse($lead->dob)->format('d-m-Y') }}
                             @endif
                         </span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Alternative Number</span>
+                        <span>{{ $lead->age }}</span>
                     </div>
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Marital Status</span>
@@ -230,10 +242,7 @@ use Carbon\Carbon;
                         <span>{{ $lead->industry }}</span>
                     </div>
 
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Number of Employees</span>
-                        <span>{{ $lead->no_of_employee }}</span>
-                    </div>
+                    
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Lead Source</span>
                         <span>

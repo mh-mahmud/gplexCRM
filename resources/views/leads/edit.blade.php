@@ -143,6 +143,20 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
+                        <div class="col-md-6">
+                                <div class="fv-row mb-3">
+                                    <label class="form-label fw-bolder text-dark">Form Name</label>
+                                    <select class="form-control form-control-sm form-control-solid" name="form_id" aria-label="Default select example">
+                                        <option value="">Select Form Name</option>
+                                        @foreach($formName as $id => $name)
+                                            <option value="{{ $id }}" {{ $id == $lead->form_id ? 'selected' : '' }}>{{ $name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('form_id'))
+                                        <span class="text-danger">{{ $errors->first('form_id') }}</span>
+                                    @endif
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
@@ -225,6 +239,9 @@
                                 </div>
                             </div>
 
+
+                            
+
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
@@ -237,6 +254,22 @@
                                     <!--end::Input-->
                                     @if ($errors->has('dob'))
                                     <span class="text-danger">{{ $errors->first('dob') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="fv-row mb-3">
+                                    <!--begin::Label-->
+                                    <label class="form-label fw-bolder text-dark">Age</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <div class="position-relative">
+                                        <input type="number" class="form-control form-control-sm form-control-solid flatpickr" placeholder="Age" name="age" value="{{ old('age', $lead->age) }}">
+                                    </div>
+                                    <!--end::Input-->
+                                    @if ($errors->has('age'))
+                                    <span class="text-danger">{{ $errors->first('age') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -350,16 +383,6 @@
                                 </div>
                             </div>
 
-                            <!-- Number of Employees -->
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <label class="form-label fw-bolder text-dark">Number of Employees</label>
-                                    <input class="form-control form-control-sm form-control-solid" type="number" name="no_of_employee" value="{{ old('no_of_employee', $lead->no_of_employee) }}" autocomplete="off" />
-                                    @if ($errors->has('no_of_employee'))
-                                    <span class="text-danger">{{ $errors->first('no_of_employee') }}</span>
-                                    @endif
-                                </div>
-                            </div>
 
                             <!-- Lead Source -->
                             <div class="col-md-6">
