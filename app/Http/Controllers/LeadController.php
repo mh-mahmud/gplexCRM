@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\LeadsForm;
 use App\Models\Lead;
 use App\Services\LeadService;
 
@@ -30,8 +31,9 @@ class LeadController  extends Controller
     }
 
     public function create()
-    {
-        return view('leads.create');
+    {   
+        $formName = LeadsForm::pluck('form_name', 'form_id');
+        return view('leads.create', compact('formName'));
     }
 
     public function store(Request $request)
@@ -39,6 +41,7 @@ class LeadController  extends Controller
         $request->validate([
             'first_name' => 'required|string|max:191',
             'last_name' => 'required|string|max:191',
+            'title' => 'required|string|max:191',
             'email' => 'nullable|string|email|max:191|unique:leads,email',
             'phone' => 'required|string|max:191',
             
@@ -57,9 +60,10 @@ class LeadController  extends Controller
     }
 
     public function edit($id)
-    {
+    {   
+        $formName = LeadsForm::pluck('form_name', 'form_id');
         $lead = $this->leadService->getLeadById($id);
-        return view('leads.edit', compact('lead'));
+        return view('leads.edit', compact('lead','formName'));
     }
 
     public function update(Request $request, $id)
@@ -67,6 +71,7 @@ class LeadController  extends Controller
         $request->validate([
             'first_name' => 'required|string|max:191',
             'last_name' => 'required|string|max:191',
+            'title' => 'required|string|max:191',
             'email' => 'nullable|string|email|max:191|unique:leads,email,' . $id,
             'phone' => 'required|string|max:191',
            
@@ -76,6 +81,22 @@ class LeadController  extends Controller
         $this->leadService->updateLead($id, $data);
 
         return redirect()->route('lead-index')->with('success', 'Lead updated successfully.');
+    }
+
+    public function search(Request $request)
+    {
+        $searchTerm = trim($request->input('search'));
+
+        if (empty($searchTerm)) {
+            return redirect()->route('lead-index')->with('error', 'Search Field cannot be blank.');
+        }
+
+        $request->validate([
+            'search' => 'required|string',
+        ]);
+
+        $leads = $this->leadService->searchLeadForm($request);
+        return view('leads.index', compact('leads'));
     }
 
     public function destroy($id)

@@ -67,9 +67,13 @@ class User extends Authenticatable
     }
 
     public function get_menu_data() {
-        if(Auth::user()->user_type=='admin') {
+        /*if(Auth::user()->user_type=='admin') {
             return;
+        }*/
+        $role_data = Role::where('id', Auth::user()->role_id)->first(['name', 'permission_details']);
+        if(!empty($role_data)) {
+            return $role_data->permission_details;
         }
-        return Role::where('id', Auth::user()->role_id)->first(['name', 'permission_details'])->permission_details;
+        return null;
     }
 }

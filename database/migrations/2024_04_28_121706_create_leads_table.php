@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
+            $table->char('form_id', 10)->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->nullable()->unique();
