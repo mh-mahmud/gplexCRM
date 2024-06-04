@@ -75,28 +75,32 @@ class smsController extends Controller {
 
     }
 
-    public function sendsms(Request $request)
-    {   
-        $request->merge(['paginate' => false]);   
-        $templates = $this->smsService->smsTemplateList($request);
-        return view('sms.send-sms', compact('templates'));
+    public function send_sms(Request $request)
+    {
+        return $this->smsService->send_sms_service($request);
     }
 
-    public function sendsmsPro(Request $request)
-    { 
-         $result = $this->smsService->sendsmsPro($request);
-         if($result->status == 200){
-            return redirect()->route('send-sms')->with('success', 'sms send successfully.');
-
-        }else{
-            session()->flash('error', 'sms can not send !');
-        }
-
+    public function sms_queue_list() {
+        return $this->smsService->get_queue_list();
     }
 
-    public function sendsmsList(Request $request)
-    {      
-        $sms = $this->smsService->sendsmsList($request);
-        return view('sms.send-sms-list', compact('sms'));
+    public function sms_log_list() {
+        return $this->smsService->get_log_list();
+    }
+
+    public function sms_queue_details($id) {
+        return $this->smsService->queue_details($id);
+    }
+    
+    public function sms_log_details($id) {
+        return $this->smsService->log_details($id);
+    }
+
+    public function single_sms_queue_delete(Request $request, $id) {
+        return $this->smsService->single_queue_delete($request, $id);
+    }
+
+    public function all_sms_queue_delete(Request $request) {
+        return $this->smsService->all_queue_delete($request);
     }
 }

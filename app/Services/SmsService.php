@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\SmsTemplate;
 use App\Models\SmsLog;
+use App\Models\SmsQueue;
 use Exception;
 use Mail;
 use App\Mail\SingleMail;
@@ -101,68 +102,106 @@ class SmsService
 
     }
 
-    public function sendSmsPro($request) {
+    public function send_sms_service($request) {
         $data = [];
-        // $request->validate([
-        //     'subject' => 'required',
-        //     'body' => 'required',
-        //     'to_email' => 'required'
-        // ]);
-       
-        $data = $request->all();
+        $request->validate([
+            'user_id' => 'required',
+            'sms_from' => 'required',
+            'sms_to' => 'required',
+            'sms_text' => 'required'
+        ]);
 
-        $subject = $data["title"];
-        $body = $data["description"];
-        $to_email = $data["to_email"];
+        if(empty($request->send_status)) {
+            $request['send_status'] = 0;
+        }
+
+        if(empty($request->priority_level)) {
+            $request['priority_level'] = 5;
+        }
+        $request['log_time'] = date("Y-m-d h:i:s", time());
 
         try {
-            $dataObj                        = new SmsLog();
-            $dataObj->sms_from              = "Genuity";
-            $dataObj->sms_to                = $data['to_sms'];
-            $dataObj->title                 = $data['title'];
-            $dataObj->description           = $data['description'];
-            $dataObj->log_time              = Carbon::now();
-            $dataObj->delivery_time         = Carbon::now();
-            $dataObj->send_status           = 1;
-            $dataObj->save();
-            
+            $data['data'] = SmsQueue::create($request->all());
+            $data['status'] = "success";
+            $data['msg']=["Sms sending is on process successfully"];
+            return response()->json(compact('data'))->setStatusCode(200);
 
-        } catch (Exception $e) {
-            $dataObj                        = new SmsLog();
-            $dataObj->email_from            = "Genuity";
-            $dataObj->email_to              = $data['to_email'];
-            $dataObj->title                 = $data['title'];
-            $dataObj->description         = $data['description'];
-            $dataObj->log_time              = Carbon::now();
-            $dataObj->delivery_time         = Carbon::now();
-            $dataObj->send_status           = 0;
-            $dataObj->save();
-
-            return (object)[
-                'status'                 => 401,
-                'message'                => $e->getMessage()
-            ];
-
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json(['error' => 'User not found'], 404);
+        } catch (\Exception $e) {
+            // Handle other types of exceptions
+            return response()->json(['error' => $e->getMessage()], 500);
         }
+	}
+   
+    public function get_queue_list() {
+		return SmsQueue::paginate(20);
+	}
 
-        
+	public function get_log_list() {
+		return SmsLog::paginate(20);
+	}
 
-        return (object)[
-            'status'                 => 200,
-            'message'                => "Email sent successfully"
-        ];
+	public function queue_details($id) {
+        $data = [];
+        $chk_data = SmsQueue::find($id);
 
+        if(!empty($chk_data)) {
+            $data[] = ['status' => 'success', 'msg' => 'data found', 'data' => $chk_data];
+            return response()->json(compact('data'))->setStatusCode(200);
+        }
+        $data[] = ['status' => 'failed', 'msg' => 'no data found'];
+        return response()->json(compact('data'))->setStatusCode(401);
+	}
+
+	public function log_details($id) {
+        $data = [];
+        $chk_data = SmsLog::find($id);
+
+        if(!empty($chk_data)) {
+            $data[] = ['status' => 'success', 'msg' => 'data found', 'data' => $chk_data];
+            return response()->json(compact('data'))->setStatusCode(200);
+        }
+        $data[] = ['status' => 'failed', 'msg' => 'no data found'];
+        return response()->json(compact('data'))->setStatusCode(401);
+	}
+
+    public function single_queue_delete($request, $id)
+    {
+        $data = [];
+        $request->validate([
+            'delete_code' => 'required'
+        ]);
+
+        $check = SmsQueue::find($id);
+        if(!empty($check)) {
+            $data['data'] = SmsQueue::destroy($id);
+            $data['status'] = "success";
+            $data['msg'] = ["Single Queue deleted successfully"];
+            return response()->json(compact('data'))->setStatusCode(200);
+        }
+        $data['status'] = "failed";
+        $data['msg']= ["no data found"];
+        return response()->json(compact('data'))->setStatusCode(401);
     }
 
-    public function sendSmsList($request)
+    public function all_queue_delete($request)
     {
-        $sql = SmsLog::query();
-        $data = $request->all();
-        if(!empty($data["search"])) {
-            $sql->where('email_to','like', '%' . $data["search"] . '%');
+        $data = [];
+        $request->validate([
+            'delete_code' => 'required'
+        ]);
 
+        $deleted = SmsQueue::truncate();
+        if(!empty($deleted)) {
+        	$data['data'] = $deleted;
+            $data['status'] = "success";
+            $data['msg'] = ["All Queue deleted successfully"];
+            return response()->json(compact('data'))->setStatusCode(200);
         }
-        return $sql->paginate();
+        $data['status'] = "failed";
+        $data['msg']= ["no data found"];
+        return response()->json(compact('data'))->setStatusCode(401);
     }
 
 }
