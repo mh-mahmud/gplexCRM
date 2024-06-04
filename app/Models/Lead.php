@@ -11,6 +11,7 @@ class Lead extends Model
        
        protected $table = 'leads';
        protected $fillable = [
+           'form_id',
            'first_name',
            'last_name',
            'email',
@@ -37,4 +38,9 @@ class Lead extends Model
            'country',
            'lead_notes',
        ];
+
+       public function leadsForm()
+    {
+        return $this->belongsTo(LeadsForm::class, 'form_id', 'form_id');
+    }
 }

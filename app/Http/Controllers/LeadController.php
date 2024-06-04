@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\LeadsForm;
 use App\Models\Lead;
 use App\Services\LeadService;
 
@@ -30,8 +31,9 @@ class LeadController  extends Controller
     }
 
     public function create()
-    {
-        return view('leads.create');
+    {   
+        $formName = LeadsForm::pluck('form_name', 'form_id');
+        return view('leads.create', compact('formName'));
     }
 
     public function store(Request $request)
@@ -58,9 +60,10 @@ class LeadController  extends Controller
     }
 
     public function edit($id)
-    {
+    {   
+        $formName = LeadsForm::pluck('form_name', 'form_id');
         $lead = $this->leadService->getLeadById($id);
-        return view('leads.edit', compact('lead'));
+        return view('leads.edit', compact('lead','formName'));
     }
 
     public function update(Request $request, $id)

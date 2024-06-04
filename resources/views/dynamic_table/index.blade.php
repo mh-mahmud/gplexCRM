@@ -232,7 +232,8 @@
 
 						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
 							
-							<td class="text-dark fs-6">{{$dynamicTable->leadsForm->form_name }}</td>
+						
+							<td class="text-dark fs-6">{{ $dynamicTable->leadsForm?->form_name ?? '' }}</td>
 							<td class="text-dark fs-6">{{$dynamicTable->table_name}}</td>
 		                    
 							<td class="text-end">
