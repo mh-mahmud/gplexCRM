@@ -55,8 +55,7 @@
                 			@if (session('error'))
                 			<div class="alert alert-danger alert-dismissible fade show" role="alert">
                 				<strong> {{ session('error') }}</strong>
-                				<button type="button" class="btn-close" data-bs-dismiss="alert"
-                						aria-label="Close"></button>
+                				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 			</div>
                 			@endif
 
@@ -109,11 +108,11 @@
 								</svg>
 							</span>
 						<!--end::Svg Icon-->
-						<input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Customers">
+						<input type="text" data-kt-customer-table-filter="search" class="form-control-sm form-control w-250px ps-15" placeholder="Search Customers">
 					</div>
 					<!--end::Input group-->
 
-					<button type="button" class="btn btn-primary">Search</button>
+					<button type="button" class="btn btn-sm btn-primary">Search</button>
 
 
 				</div>
