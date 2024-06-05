@@ -91,7 +91,7 @@
 							</svg>
 						</span>
 						<!--end::Svg Icon-->
-						<input type="text" name="search" class="form-control form-control-sm form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by sms Address">
+						<input type="text" name="search" class="form-control form-control-sm form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by mobile no">
 					</div>
 					<!--end::Input group-->
 					<button type="submit" class="btn btn-primary btn-sm ms-2">Search</button>

@@ -123,7 +123,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('promotion.index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Email Template List</a>
+                            <a href="{{ route('email-template') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Email Template List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
@@ -152,10 +152,9 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('email-template.update', $template->id) }}" method="POST" enctype="multipart/form-data">
+                                    <form class="g-form w-100" action="{{ route('email-template-update', $template->id) }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
-                                            <div class="row">
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
@@ -191,7 +190,6 @@
                                                         <span class="text-danger">{{ $errors->first('email_content') }}</span>
                                                     @endif
                                                 </div>
-                                            </div>
 
                                            
 

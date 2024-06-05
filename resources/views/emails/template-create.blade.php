@@ -152,9 +152,8 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('email-template.store') }}"  method="POST">
+                                    <form class="g-form w-100" action="{{ route('email-template-store') }}"  method="POST">
                                          @csrf
-                                        <div class="row">
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
@@ -195,7 +194,6 @@
 
                                             
 
-                                     </div>
                                         <!--End Row-->
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
                                             <input type="reset" value="Reset" class="btn btn-light me-2">

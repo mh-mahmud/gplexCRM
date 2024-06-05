@@ -13,12 +13,12 @@
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                             <!--begin::Title-->
-                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Email Template
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Send Email
                                 <!--begin::Separator-->
                                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Fill up the Email Template</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Fill up the Send Email Form</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -49,7 +49,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('email-template') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Email Template List</a>
+                            {{-- <a href="{{ route('email-template') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Email Template List</a> --}}
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
@@ -78,7 +78,7 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('send-email.process') }}"  method="POST">
+                                    <form class="g-form w-100" action="{{ route('send-email-process') }}"  method="POST">
                                          @csrf
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
@@ -191,7 +191,7 @@
 
             } else {
                 document.getElementById('email_content').innerText = '';
-                document.getElementById('email_subject').innerText = '';
+                document.getElementById('email_subject').value = '';
 
             }
         });

@@ -22,10 +22,10 @@ class SmsService
 
         }
         if (isset($data['paginate']) && $data['paginate'] == false) {
-            return  $sql->get();
+            return  $sql->orderBy('id', 'DESC')->get();
 
         } else {
-            return  $sql->paginate(config('constants.ROW_PER_PAGE'));
+            return  $sql->orderBy('id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
 
         }
     }
@@ -108,8 +108,14 @@ class SmsService
         $request->validate([
         //     'user_id' => 'required',
         //     'sms_from' => 'required',
-            'sms_to' => 'required',
+            'sms_to' => ['required', 'digits:11'],
             'sms_text' => 'required'
+        ],[
+            'sms_to.required' => 'Mobile NO is required',
+            'sms_to.digits' => 'Mobile NO have to be 11 digits',
+            'sms_text.required' => 'Content is required',
+
+            
         ]);
 
         // if(empty($request->send_status)) {
@@ -157,7 +163,7 @@ class SmsService
             $sql->where('sms_to','like', '%' . $data["search"] . '%');
 
         }
-        return $sql->paginate();
+        return $sql->orderBy('id', 'DESC')->paginate();
     }
    
     public function get_queue_list() {

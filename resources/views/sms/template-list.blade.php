@@ -124,7 +124,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('sms-template.create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
+                            <a href="{{ route('sms-template-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
 
                             <!--end::Button-->
                         </div>
@@ -240,7 +240,7 @@
 								@endif
                             </td>
 							<td class="text-end">
-								<a href="{{ route('sms-template.show', $template->id) }}"
+								<a href="{{ route('sms-template-show', $template->id) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
 									<span class="svg-icon svg-icon-3">
@@ -262,7 +262,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<a href="{{ route('sms-template.edit', $template->id) }}"
+								<a href="{{ route('sms-template-edit', $template->id) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
 									<span class="svg-icon svg-icon-3">
@@ -278,7 +278,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<form action="{{ route('sms-template.delete', $template->id) }}" method="POST" style="display: inline;">
+								<form action="{{ route('sms-template-delete', $template->id) }}" method="POST" style="display: inline;">
 									@csrf
 									@method('DELETE')
 									<button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">
