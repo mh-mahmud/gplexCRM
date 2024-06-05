@@ -152,7 +152,7 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('sms-template.store') }}"  method="POST">
+                                    <form class="g-form w-100" action="{{ route('sms-template-store') }}"  method="POST">
                                          @csrf
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">

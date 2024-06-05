@@ -152,7 +152,7 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('sms-template.update', $template->id) }}" method="POST" enctype="multipart/form-data">
+                                    <form class="g-form w-100" action="{{ route('sms-template-update', $template->id) }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
                                             <div class="col-md-6">

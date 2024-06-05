@@ -124,7 +124,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            {{-- <a href="{{ route('email-template.create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a> --}}
+                            {{-- <a href="{{ route('email-template-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a> --}}
 
                             <!--end::Button-->
                         </div>
@@ -178,7 +178,7 @@
 				</h3>
 
 				<div class="d-flex flex-wrap gap-2">
-				<form action="{{ route('send-email.list') }}" method="GET" class="d-flex">
+				<form action="{{ route('send-email-list') }}" method="GET" class="d-flex">
 					<!--begin::Input group-->
 					<div class="d-flex align-items-center position-relative">
 						<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
@@ -220,6 +220,7 @@
 						    <th class="min-w-150px">To</th>
 							<th class="min-w-150px">Email Subject</th>
 							<th class="min-w-140px">Email Content</th>
+							<th class="min-w-140px">Time</th>
 							<th class="min-w-120px">Status</th>
 						</tr>
 						</thead>
@@ -233,6 +234,7 @@
 							<td class="text-dark fs-6">{{ $email->email_to }}</td>
 							<td class="text-dark fs-6">{{ $email->email_subject }}</td>
 							<td class="text-dark fs-6">{{ $email->email_content }}</td>
+							<td class="text-dark fs-6">{{ Carbon::parse($email->log_time)->format('d-m-Y h:i A') }}</td>
 		                    <td>
 								@if ($email->send_status == 1)
 									<span class="badge badge-light-success">Success</span>
