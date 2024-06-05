@@ -41,81 +41,7 @@
                                     <div class="separator border-gray-200"></div>
                                     <!--end::Menu separator-->
                                     <!--begin::Form-->
-                                    <div class="px-7 py-5">
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-bold">Status:</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <div>
-                                                <select class="form-select form-select-solid" data-kt-select2="true"
-                                                        data-placeholder="Select option"
-                                                        data-dropdown-parent="#kt_menu_61484bf44d957"
-                                                        data-allow-clear="true">
-                                                    <option></option>
-                                                    <option value="1">Approved</option>
-                                                    <option value="2">Pending</option>
-                                                    <option value="2">In Process</option>
-                                                    <option value="2">Rejected</option>
-                                                </select>
-                                            </div>
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-bold">Member Type:</label>
-                                            <!--end::Label-->
-                                            <!--begin::Options-->
-                                            <div class="d-flex">
-                                                <!--begin::Options-->
-                                                <label
-                                                    class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                                    <input class="form-check-input" type="checkbox" value="1"/>
-                                                    <span class="form-check-label">Author</span>
-                                                </label>
-                                                <!--end::Options-->
-                                                <!--begin::Options-->
-                                                <label
-                                                    class="form-check form-check-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="2"
-                                                           checked="checked"/>
-                                                    <span class="form-check-label">Customer</span>
-                                                </label>
-                                                <!--end::Options-->
-                                            </div>
-                                            <!--end::Options-->
-                                        </div>
-                                        <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-bold">Notifications:</label>
-                                            <!--end::Label-->
-                                            <!--begin::Switch-->
-                                            <div
-                                                class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                       name="notifications" checked="checked"/>
-                                                <label class="form-check-label">Enabled</label>
-                                            </div>
-                                            <!--end::Switch-->
-                                        </div>
-                                        <!--end::Input group-->
-                                        <!--begin::Actions-->
-                                        <div class="d-flex justify-content-end">
-                                            <button type="reset"
-                                                    class="btn btn-sm btn-light btn-active-light-primary me-2"
-                                                    data-kt-menu-dismiss="true">Reset
-                                            </button>
-                                            <button type="submit" class="btn btn-sm btn-primary"
-                                                    data-kt-menu-dismiss="true">Apply
-                                            </button>
-                                        </div>
-                                        <!--end::Actions-->
-                                    </div>
+                                   
                                     <!--end::Form-->
                                 </div>
                                 <!--end::Menu 1-->
@@ -158,16 +84,16 @@
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">To</label>
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="to_email" autocomplete="off"/>
-                                                    {{-- @if ($errors->has('to_email'))
+                                                           type="text" id="to_email" name="to_email" autocomplete="off"/>
+                                                    @if ($errors->has('to_email'))
                                                         <span class="text-danger">{{ $errors->first('to_email') }}</span>
-                                                    @endif --}}
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Email Template</label>
-                                                    <select class=" form-control form-control-sm form-control-solid" name="status"
+                                                    <select class=" form-control form-control-sm form-control-solid" id="template_id" name="template_id"
                                                             aria-label="Default select example">
                                                         <option value=''>Select</option>
                                                         @foreach($templates as $template)
@@ -180,19 +106,19 @@
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Email Subject</label>
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="email_subject" autocomplete="off"/>
-                                                    {{-- @if ($errors->has('email_subject'))
+                                                           type="text" id="email_subject" name="email_subject" autocomplete="off"/>
+                                                    @if ($errors->has('email_subject'))
                                                         <span class="text-danger">{{ $errors->first('email_subject') }}</span>
-                                                    @endif --}}
+                                                    @endif
                                                 </div>
                                             </div>
                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Content</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="email_content" rows="3"></textarea>
-                                                    {{-- @if ($errors->has('email_content'))
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="email_content" id="email_content" rows="3"></textarea>
+                                                    @if ($errors->has('email_content'))
                                                         <span class="text-danger">{{ $errors->first('email_content') }}</span>
-                                                    @endif --}}
+                                                    @endif
                                                 </div>
                                             </div>
                                         <!--End Row-->
@@ -249,4 +175,26 @@
 
 <!--End Table Alert Message-->  
 
+@endsection
+@section('endScript')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const templates = @json($templates);
+
+        document.getElementById('template_id').addEventListener('change', function() {
+            const selectedId = this.value;
+            const selectedTemplate = templates.find(template => template.id == selectedId);
+         
+            if (selectedTemplate) {
+                document.getElementById('email_content').innerText = selectedTemplate.email_content;
+                document.getElementById('email_subject').value = selectedTemplate.email_subject;
+
+            } else {
+                document.getElementById('email_content').innerText = '';
+                document.getElementById('email_subject').innerText = '';
+
+            }
+        });
+    });
+</script>
 @endsection

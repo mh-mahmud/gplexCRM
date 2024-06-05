@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
             <!-- <div class="content d-flex flex-column flex-column-fluid" id="kt_content"> -->
 
             						     <!--begin::Toolbar-->
@@ -49,23 +48,31 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('send-sms.process') }}"  method="POST">
+                                    <form class="g-form w-100" action="{{ route('send-sms-pro') }}"  method="POST">
                                          @csrf
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">To</label>
+                                                    <label class="form-label fw-bolder text-dark">Select Lead</label>
+                                                    <select class=" form-control form-control-sm form-control-solid" name="status"
+                                                            aria-label="Default select example">
+                                                        <option value=''>Select</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Mobile No.</label>
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="to_sms" autocomplete="off"/>
-                                                    {{-- @if ($errors->has('to_sms'))
-                                                        <span class="text-danger">{{ $errors->first('to_sms') }}</span>
-                                                    @endif --}}
+                                                           type="text" name="sms_to" autocomplete="off"/>
+                                                    @if ($errors->has('sms_to'))
+                                                        <span class="text-danger">{{ $errors->first('sms_to') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">SMS Template</label>
-                                                    <select class=" form-control form-control-sm form-control-solid" name="status"
-                                                            aria-label="Default select example">
+                                                    <select class=" form-control form-control-sm form-control-solid" name="template_id" id="template_id" aria-label="Default select example">
                                                         <option value=''>Select</option>
                                                         @foreach($templates as $template)
                                                         <option value="{{$template->id}}">{{ $template->title }}</option>
@@ -73,23 +80,13 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Title</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="title" autocomplete="off"/>
-                                                    {{-- @if ($errors->has('title'))
-                                                        <span class="text-danger">{{ $errors->first('title') }}</span>
-                                                    @endif --}}
-                                                </div>
-                                            </div>
                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Description</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3"></textarea>
-                                                    {{-- @if ($errors->has('description'))
-                                                        <span class="text-danger">{{ $errors->first('description') }}</span>
-                                                    @endif --}}
+                                                    <label class="form-label fw-bolder text-dark" for="textarea">Content</label>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="sms_text" id="sms_text" rows="3"></textarea>
+                                                    @if ($errors->has('sms_text'))
+                                                        <span class="text-danger">{{ $errors->first('sms_text') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         <!--End Row-->
@@ -146,4 +143,22 @@
 
 <!--End Table Alert Message-->  
 
+@endsection
+
+@section('endScript')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const templates = @json($templates);
+
+        document.getElementById('template_id').addEventListener('change', function() {
+            const selectedId = this.value;
+            const selectedTemplate = templates.find(template => template.id == selectedId);
+            if (selectedTemplate) {
+                document.getElementById('sms_text').innerText = selectedTemplate.description;
+            } else {
+                document.getElementById('sms_text').innerText = '';
+            }
+        });
+    });
+</script>
 @endsection

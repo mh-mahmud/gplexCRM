@@ -75,9 +75,29 @@ class smsController extends Controller {
 
     }
 
-    public function send_sms(Request $request)
+    public function sendSMSList(Request $request)
+    {      
+        $sms = $this->smsService->sendSMSList($request);
+        return view('sms.send-sms-list', compact('sms'));
+    }
+
+    public function sendSms(Request $request)
+    {   
+        $request->merge(['paginate' => false]);   
+        $templates = $this->smsService->smsTemplateList($request);
+        return view('sms.send-sms', compact('templates'));
+    }
+
+
+    public function sendSmsPro(Request $request)
     {
-        return $this->smsService->send_sms_service($request);
+        $result = $this->smsService->sendSmsPro($request);
+        if($result->status == 201){
+            return redirect()->route('send-sms')->with('success', 'SMS send successfully.');
+
+        }else{
+            session()->flash('error', 'Can not Send !');
+        }
     }
 
     public function sms_queue_list() {

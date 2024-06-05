@@ -103,11 +103,11 @@ class EmailService
 
     public function sendEmailPro($request) {
         $data = [];
-        // $request->validate([
-        //     'subject' => 'required',
-        //     'body' => 'required',
-        //     'to_email' => 'required'
-        // ]);
+        $request->validate([
+            'email_subject' => 'required',
+            'email_content' => 'required',
+            'to_email' => 'required'
+        ]);
        
         $data = $request->all();
 

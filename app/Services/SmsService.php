@@ -9,6 +9,7 @@ use Exception;
 use Mail;
 use App\Mail\SingleMail;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class SmsService
 {
@@ -102,37 +103,62 @@ class SmsService
 
     }
 
-    public function send_sms_service($request) {
+    public function sendSmsPro($request) {
         $data = [];
         $request->validate([
-            'user_id' => 'required',
-            'sms_from' => 'required',
+        //     'user_id' => 'required',
+        //     'sms_from' => 'required',
             'sms_to' => 'required',
             'sms_text' => 'required'
         ]);
 
-        if(empty($request->send_status)) {
-            $request['send_status'] = 0;
-        }
+        // if(empty($request->send_status)) {
+        //     $request['send_status'] = 0;
+        // }
 
-        if(empty($request->priority_level)) {
-            $request['priority_level'] = 5;
-        }
-        $request['log_time'] = date("Y-m-d h:i:s", time());
+        // if(empty($request->priority_level)) {
+        //     $request['priority_level'] = 5;
+        // }
+        // $request['log_time'] = date("Y-m-d h:i:s", time());
+        $data = $request->all();
+
+        $dataObj                        = new SmsQueue();
+        $dataObj->sms_from              = config('constants.SMS_SEND_MOBILE_NO');
+        $dataObj->sms_to                = $data['sms_to'];
+        $dataObj->sms_text              = $data['sms_text'];
+        $dataObj->log_time              = Carbon::now();
+        $dataObj->user_id               = Auth::id();  
 
         try {
-            $data['data'] = SmsQueue::create($request->all());
-            $data['status'] = "success";
-            $data['msg']=["Sms sending is on process successfully"];
-            return response()->json(compact('data'))->setStatusCode(200);
-
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json(['error' => 'User not found'], 404);
+            $dataObj->send_status       = 1;
+            $dataObj->save();
+            
+            
         } catch (\Exception $e) {
-            // Handle other types of exceptions
-            return response()->json(['error' => $e->getMessage()], 500);
+            $dataObj->send_status       = 0;
+            $dataObj->save();
+            return (object)[
+                'status'                 => 401,
+                'message'                => $e->getMessage()
+            ];
+
         }
+        return (object)[
+            'status'                 => 201,
+            'info'                   => $dataObj->id
+        ];
 	}
+
+    public function sendSMSList($request)
+    {
+        $sql = SmsQueue::query();
+        $data = $request->all();
+        if(!empty($data["search"])) {
+            $sql->where('sms_to','like', '%' . $data["search"] . '%');
+
+        }
+        return $sql->paginate();
+    }
    
     public function get_queue_list() {
 		return SmsQueue::paginate(20);
