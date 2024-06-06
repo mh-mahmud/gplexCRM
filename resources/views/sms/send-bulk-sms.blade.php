@@ -48,7 +48,7 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('send-sms-pro') }}"  method="POST">
+                                    <form class="g-form w-100" action="{{ route('send-bulk-sms-pro') }}"  method="POST" enctype="multipart/form-data">
                                          @csrf
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
@@ -62,10 +62,9 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Mobile No.</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="sms_to" autocomplete="off"/>
-                                                    @if ($errors->has('sms_to'))
-                                                        <span class="text-danger">{{ $errors->first('sms_to') }}</span>
+                                                    <input type="file" name="file" class="form-control form-control-sm form-control-solid">
+                                                    @if ($errors->has('file'))
+                                                        <span class="text-danger">{{ $errors->first('file') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -75,7 +74,7 @@
                                                     <select class=" form-control form-control-sm form-control-solid" name="template_id" id="template_id" aria-label="Default select example">
                                                         <option value=''>Select</option>
                                                         @foreach($templates as $template)
-                                                        <option value="{{$template->id}}">{{ $template->title }}</option>
+                                                        <option value="{{$template->id}}" {{ old('template_id') == $template->id ? 'selected' : '' }}>{{ $template->title }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -83,7 +82,7 @@
                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Content</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="sms_text" id="sms_text" rows="3"></textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="sms_text" id="sms_text" rows="3">{{ old('sms_text') }}</textarea>
                                                     @if ($errors->has('sms_text'))
                                                         <span class="text-danger">{{ $errors->first('sms_text') }}</span>
                                                     @endif

@@ -89,7 +89,7 @@
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">
                                                         Permision Slug</label>
-                                                    <input class="form-control form-control-sm form-control-solid" value="{{ $data->slug }}" type="text" name="slug" autocomplete="off"/>
+                                                    <input class="form-control form-control-sm form-control-solid" value="{{ $data->sub_name }}" type="text" name="slug" autocomplete="off"/>
                                                     @if ($errors->has('slug'))
                                                         <span class="text-danger">{{ $errors->first('slug') }}</span>
                                                     @endif
@@ -113,12 +113,11 @@
 
                                         </div>
                                         <!--End Row-->
-                                      <div class="card-footer d-flex justify-content-end py-6 px-9">
+
+                                    <div class="card-footer d-flex justify-content-end py-6 px-9">
                                         <a href="{{ route('create-user') }}" class="btn btn-light btn-active-light-primary me-2">Reset</a>
-                                            <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Submit
-                                            </button>
-                                        </div>
+                                        <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Submit</button>
+                                    </div>
 
                                     </form>
 

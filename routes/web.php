@@ -119,34 +119,37 @@ Route::group(['middleware' => 'auth'], function () {
 
 	// Email template routes start
 	Route::get('email-template', [EmailController::class, 'emailTemplateList'])->name('email-template');
-	Route::get('email-template/create', [EmailController::class, 'templateCreate'])->name('email-template.create');
-	Route::post('email-template/store', [EmailController::class, 'templateStore'])->name('email-template.store');
-	Route::get('email-template/edit/{id}', [EmailController::class, 'templateEdit'])->name('email-template.edit');
-	Route::get('email-template/show/{id}', [EmailController::class, 'templateShow'])->name('email-template.show');
-	Route::put('email-template/update/{id}', [EmailController::class, 'templateUpdate'])->name('email-template.update');
-	Route::delete('email-template/delete/{id}', [EmailController::class, 'templateDelete'])->name('email-template.delete');
+	Route::get('email-template/create', [EmailController::class, 'templateCreate'])->name('email-template-create');
+	Route::post('email-template/store', [EmailController::class, 'templateStore'])->name('email-template-store');
+	Route::get('email-template/edit/{id}', [EmailController::class, 'templateEdit'])->name('email-template-edit');
+	Route::get('email-template/show/{id}', [EmailController::class, 'templateShow'])->name('email-template-show');
+	Route::put('email-template/update/{id}', [EmailController::class, 'templateUpdate'])->name('email-template-update');
+	Route::delete('email-template/delete/{id}', [EmailController::class, 'templateDelete'])->name('email-template-delete');
 	// Email template routes end
 
 	// Send email routes start
 	Route::get('send-email', [EmailController::class, 'sendEmail'])->name('send-email');
-	Route::post('send-email-process', [EmailController::class, 'sendEmailPro'])->name('send-email.process');
-	Route::get('send-email-list', [EmailController::class, 'sendEmailList'])->name('send-email.list');
+	Route::post('send-email-process', [EmailController::class, 'sendEmailPro'])->name('send-email-process');
+	Route::get('send-email-list', [EmailController::class, 'sendEmailList'])->name('send-email-list');
 	// Send email routes end
 
 	// Sms template routes start
 	Route::get('sms-template', [SmsController::class, 'smsTemplateList'])->name('sms-template');
-	Route::get('sms-template/create', [SmsController::class, 'templateCreate'])->name('sms-template.create');
-	Route::post('sms-template/store', [SmsController::class, 'templateStore'])->name('sms-template.store');
-	Route::get('sms-template/edit/{id}', [SmsController::class, 'templateEdit'])->name('sms-template.edit');
-	Route::get('sms-template/show/{id}', [SmsController::class, 'templateShow'])->name('sms-template.show');
-	Route::put('sms-template/update/{id}', [SmsController::class, 'templateUpdate'])->name('sms-template.update');
-	Route::delete('sms-template/delete/{id}', [SmsController::class, 'templateDelete'])->name('sms-template.delete');
+	Route::get('sms-template/create', [SmsController::class, 'templateCreate'])->name('sms-template-create');
+	Route::post('sms-template/store', [SmsController::class, 'templateStore'])->name('sms-template-store');
+	Route::get('sms-template/edit/{id}', [SmsController::class, 'templateEdit'])->name('sms-template-edit');
+	Route::get('sms-template/show/{id}', [SmsController::class, 'templateShow'])->name('sms-template-show');
+	Route::put('sms-template/update/{id}', [SmsController::class, 'templateUpdate'])->name('sms-template-update');
+	Route::delete('sms-template/delete/{id}', [SmsController::class, 'templateDelete'])->name('sms-template-delete');
 	// SMS template routes end
 
 	// Send SMS routes start
 	Route::get('send-sms', [smsController::class, 'sendSms'])->name('send-sms');
-	Route::post('send-sms-process', [smsController::class, 'sendSmsPro'])->name('send-sms.process');
-	Route::get('send-sms-list', [smsController::class, 'sendSmsList'])->name('sms-list');
+	Route::post('send-sms-process', [smsController::class, 'sendSmsPro'])->name('send-sms-pro');
+	Route::get('send-sms-list', [smsController::class, 'sendSmsList'])->name('send-sms-list');
+	Route::get('send-bulk-sms', [smsController::class, 'sendBulkSms'])->name('send-bulk-sms');
+	Route::post('send-bulk-sms-process', [smsController::class, 'sendBulkSmsPro'])->name('send-bulk-sms-pro');
+
 	// Send SMS routes end
 
 

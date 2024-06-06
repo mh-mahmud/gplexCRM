@@ -20,10 +20,10 @@ class EmailService
 
         }
         if (isset($data['paginate']) && $data['paginate'] == false) {
-            return  $sql->get();
+            return  $sql->orderBy('id', 'DESC')->get();
 
         } else {
-            return  $sql->paginate(config('constants.ROW_PER_PAGE'));
+            return  $sql->orderBy('id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
 
         }
     }
@@ -103,11 +103,11 @@ class EmailService
 
     public function sendEmailPro($request) {
         $data = [];
-        // $request->validate([
-        //     'subject' => 'required',
-        //     'body' => 'required',
-        //     'to_email' => 'required'
-        // ]);
+        $request->validate([
+            'email_subject' => 'required',
+            'email_content' => 'required',
+            'to_email' => 'required|email'
+        ]);
        
         $data = $request->all();
 
@@ -163,7 +163,7 @@ class EmailService
             $sql->where('email_to','like', '%' . $data["search"] . '%');
 
         }
-        return $sql->paginate();
+        return $sql->orderBy('id', 'DESC')->paginate();
     }
 
 }

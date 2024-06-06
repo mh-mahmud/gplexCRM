@@ -182,4 +182,40 @@ class UserController extends Controller
         }
         return redirect()->back()->with('error', 'Failed request');
     }
+
+    public function role_edit($id) {
+        $data = [];
+        $ids = [];
+        $data['menus'] = $this->service->menu_list();
+        $data['role_data'] = $this->service->get_role_data($id);
+        $permissions = json_decode($data['role_data']->permission_ids);
+        if(!empty($permissions)) {
+            foreach($permissions as $key=>$val) {
+                for($i=0; $i<count($val); $i++) {
+                    $ids[] = $val[$i];
+                }
+            }
+            $data['ids'] = $ids;
+        }
+        else {
+            $data['ids'] = [];
+        }
+
+        
+        return view('users.edit_role', $data);
+    }
+
+    public function role_update(Request $request) {
+        // dd($request->all());
+        $request->validate([
+            'role_name' => 'required'
+        ]);
+
+        $role_data = $this->service->edit_role_data($request);
+        // dd($role_data);
+        if(!empty($role_data)) {
+            return redirect()->to('role-list')->with('success', 'Role created successfully.');
+        }
+        return redirect()->back()->with('error', 'Failed request');
+    }
 }
