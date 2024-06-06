@@ -142,22 +142,7 @@
                     <form class="g-form w-100" action="{{ route('lead-store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <label class="form-label fw-bolder text-dark">Form Name</label>
-                                    <select class=" form-control form-control-sm form-control-solid" name="form_id" aria-label="Default select example">
-                                        <option value="">Select Form Name</option>
-                                        @foreach($formName as $id => $name)
-                                        <option value="{{ $id }}">{{$name}}</option>
-                                        @endforeach
-
-                                    </select>
-                                    @if ($errors->has('form_id'))
-                                    <span class="text-danger">{{ $errors->first('form_id') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">First Name</label>
@@ -171,7 +156,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Last Name</label>
@@ -185,7 +170,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Email</label>
@@ -199,7 +184,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Phone</label>
@@ -213,7 +198,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Alternative Number</label>
@@ -227,7 +212,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Gender</label>
@@ -246,16 +231,16 @@
                                 </div>
                             </div>
 
-                           
 
-                            <div class="col-md-6">
+
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Date of Birth</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <div class="position-relative">
-                                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr" placeholder="Date Of Birth" name="dob">
+                                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr" placeholder="" name="dob">
                                     </div>
                                     <!--end::Input-->
                                     @if ($errors->has('dob'))
@@ -264,14 +249,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Age</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <div class="position-relative">
-                                        <input type="number" class="form-control form-control-sm form-control-solid flatpickr" placeholder="Age" name="age">
+                                        <input type="number" class="form-control form-control-sm form-control-solid flatpickr" placeholder="" name="age">
                                     </div>
                                     <!--end::Input-->
                                     @if ($errors->has('age'))
@@ -280,7 +265,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Marital Status</label>
@@ -299,7 +284,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Address</label>
@@ -313,7 +298,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Company</label>
@@ -327,7 +312,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Lead Status</label>
                                     <select class="form-control form-control-sm form-control-solid" name="lead_status">
@@ -340,7 +325,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Title</label>
@@ -354,7 +339,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Lead Rating</label>
@@ -368,7 +353,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Website</label>
@@ -382,7 +367,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Lead Owner</label>
@@ -396,7 +381,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Industry</label>
@@ -410,9 +395,9 @@
                                 </div>
                             </div>
 
-                          
 
-                            <div class="col-md-6">
+
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Lead Source</label>
                                     <select class="form-control form-control-sm form-control-solid" name="lead_source">
@@ -427,7 +412,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Street</label>
@@ -441,7 +426,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">City</label>
@@ -455,7 +440,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Zip</label>
@@ -469,7 +454,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">State</label>
@@ -483,7 +468,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Country</label>
@@ -497,7 +482,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Lead Notes</label>
@@ -511,6 +496,34 @@
                                 </div>
                             </div>
 
+                            <!-- Dynamically Generated Fields -->
+
+
+                        </div>
+                        <div id="dynamic-fields" class="row">
+                        <input type="hidden" name="form_id" value="{{ request()->input('form_id') }}">
+                            @foreach($fieldsByTable as $tableName => $fields)
+                            <div class="col-md-12">
+                                <h5><u>{{ ucwords(str_replace('_', ' ', $tableName)) }}</u></h5>
+                            </div>
+
+                            @foreach($fields as $field)
+                            <div class="col-md-3">
+                                <div class="fv-row mb-3">
+                                    <label for="{{ $field->field_name }}" class="form-label fw-bolder text-dark">{{ ucwords(str_replace('_', ' ', $field->field_name)) }}</label>
+                                    @if(in_array($field->field_value, ['varchar', 'char']))
+                                    <input type="text" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}">
+                                    @elseif($field->field_value == 'int')
+                                    <input type="number" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}">
+                                    @elseif($field->field_value == 'date')
+                                    <input type="date" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $field->field_name }}">
+                                    @elseif($field->field_value == 'text')
+                                    <textarea class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}" rows="1"></textarea>
+                                    @endif
+                                </div>
+                            </div>
+                            @endforeach
+                            @endforeach
                         </div>
                         <!--End Row-->
                         <div class="card-footer d-flex justify-content-end py-6 px-9">

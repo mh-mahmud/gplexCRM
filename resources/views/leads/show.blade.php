@@ -284,6 +284,17 @@ use Carbon\Carbon;
                         <span>{{ $lead->lead_notes }}</span>
                     </div>
 
+                    @foreach ($tableData as $tableName => $data)
+                    <div class="mt-4">
+                        <h5>{{ ucwords(str_replace('_', ' ', $tableName)) }}</h5>
+                        <ul class="list-group">
+                            @foreach ($data as $key => $value)
+                            <li class="list-group-item">{{ ucwords(str_replace('_', ' ', $key)) }}: {{ $value }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endforeach
+
                 </div>
             </div>
         </div>

@@ -3754,6 +3754,7 @@
 			$('[name="start_date"]').flatpickr();
 			$('[name="end_date"]').flatpickr();
 			$('[name="dob"]').flatpickr();
+			$('[id="common_dob"]').flatpickr();
 		</script>
 		 @yield('endScript')
 		<!--end::Page Custom Javascript-->
