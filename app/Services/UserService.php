@@ -138,21 +138,23 @@ class UserService {
         unset($all_req['role_name']);
         unset($all_req['_token']);
         $data_set = [];
+        $id_set = [];
 
         foreach($all_req as $key=>$val) {
             for($i=0; $i<count($val); $i++) {
                 $menu_details = Menu::where('id', $val[$i])->first(['name','sub_name']);
                 $data_set[$key][$menu_details->sub_name] = $menu_details->name;
+                $id_set[$key][] = $val[$i];
             }
         }
 
         $json_data = json_encode($data_set);
-        /*dd($json_data);
-        $json_data = json_encode($all_req);*/
+        $id_data = json_encode($id_set);
 
         $role = Role::create([
             'name' => $role_name,
             'permission_details' => $json_data,
+            'permission_ids' => $id_data,
             'slug' => strtolower(str_replace(" ", "_", $role_name)),
             'status' => 1
         ]);
@@ -168,5 +170,43 @@ class UserService {
             $send[$value->id] = $value->name;
         }
         return $send;
+    }
+
+    public function get_role_data($id) {
+        return Role::where('id', $id)->first(['id', 'name', 'permission_ids']);
+    }
+
+    public function edit_role_data($request) {
+
+        $role_name = $request->role_name;
+        $id = $request->id;
+        $all_req = $request->all();
+
+        unset($all_req['role_name']);
+        unset($all_req['_token']);
+        unset($all_req['id']);
+        $data_set = [];
+        $id_set = [];
+
+        foreach($all_req as $key=>$val) {
+            for($i=0; $i<count($val); $i++) {
+                $menu_details = Menu::where('id', $val[$i])->first(['name','sub_name']);
+                $data_set[$key][$menu_details->sub_name] = $menu_details->name;
+                $id_set[$key][] = $val[$i];
+            }
+        }
+        $json_data = json_encode($data_set);
+        $id_data = json_encode($id_set);
+
+        $role = Role::findOrFail($id);
+        $role->name = $role_name;
+        $role->permission_details = $json_data;
+        $role->permission_ids = $id_data;
+        $role->slug = strtolower(str_replace(" ", "_", $role_name));
+        $role->status = 1;
+        if($role->save()) {
+            return $role;
+        }
+        return false;
     }
 }
