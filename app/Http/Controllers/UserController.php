@@ -189,12 +189,19 @@ class UserController extends Controller
         $data['menus'] = $this->service->menu_list();
         $data['role_data'] = $this->service->get_role_data($id);
         $permissions = json_decode($data['role_data']->permission_ids);
-        foreach($permissions as $key=>$val) {
-            for($i=0; $i<count($val); $i++) {
-                $ids[] = $val[$i];
+        if(!empty($permissions)) {
+            foreach($permissions as $key=>$val) {
+                for($i=0; $i<count($val); $i++) {
+                    $ids[] = $val[$i];
+                }
             }
+            $data['ids'] = $ids;
         }
-        $data['ids'] = $ids;
+        else {
+            $data['ids'] = [];
+        }
+
+        
         return view('users.edit_role', $data);
     }
 
