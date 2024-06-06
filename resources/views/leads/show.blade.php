@@ -287,11 +287,11 @@ use Carbon\Carbon;
                     @foreach ($tableData as $tableName => $data)
                     @if (!empty($data))
                     <div class="mt-4">
-                        <h5>{{ ucwords(str_replace('_', ' ', $tableName)) }}</h5>
+                        <h5><u>{{ ucwords(str_replace('_', ' ', $tableName)) }}</u></h5>
                         <ul class="list-group">
                             @foreach ($data as $key => $value)
                             @if (!in_array($key, ['id', 'lead_id', 'form_id']))
-                            <li class="list-group-item">{{ ucwords(str_replace('_', ' ', $key)) }}: {{ $value }}</li>
+                            <li class="list-group-item" style="background-color:#F5F8FA;">{{ ucwords(str_replace('_', ' ', $key)) }}: {{ $value }}</li>
                             @endif
                             @endforeach
                         </ul>
