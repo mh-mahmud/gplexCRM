@@ -6,11 +6,10 @@ use App\Models\SmsTemplate;
 use App\Models\SmsLog;
 use App\Models\SmsQueue;
 use Exception;
-use Mail;
-use App\Mail\SingleMail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-
+use DB;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 class SmsService
 {
     public function smsTemplateList($request)
@@ -164,6 +163,70 @@ class SmsService
 
         }
         return $sql->orderBy('id', 'DESC')->paginate();
+    }
+
+    public function  sendBulkSmsPro($request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:csv,xlsx,xls',
+            'sms_text' => 'required|string|max:255'
+        ], [
+            'file.required' => 'The file is required.',
+            'file.file' => 'The uploaded item must be a file.',
+            'file.mimes' => 'The file must be a type of: csv, xlsx, xls.',
+            'sms_text.required' => 'The Content is required.',
+            'sms_text.max' => 'The Content may not be greater than 255 characters.'
+        ]);
+        
+        $file = $request->file('file');
+        $data = $request->all();
+
+        try {
+        // Check if the file is an Excel file
+        if ($file->getClientOriginalExtension() == 'csv') {
+            // Process CSV file
+            $rows = array_map('str_getcsv', file($file));
+        } else {
+            // Process Excel file using PhpSpreadsheet
+            $spreadsheet = IOFactory::load($file->getPathname());
+            $worksheet = $spreadsheet->getActiveSheet();
+            $rows = $worksheet->toArray();
+        }
+
+        DB::beginTransaction();
+
+        foreach ($rows as $key => $row) {
+            if ($key == 0) {
+                continue;
+            }
+
+            if (!isset($row[0]) || empty($row[0])) {
+                continue;
+            }
+
+            $dataObj = new SmsQueue();
+            $dataObj->sms_from = config('constants.SMS_SEND_MOBILE_NO');
+            $dataObj->sms_to = $row[0]; // Assuming 'Mobile NO' is the first column
+            $dataObj->sms_text = $data['sms_text'];
+            $dataObj->log_time = Carbon::now();
+            $dataObj->user_id = Auth::id();
+            $dataObj->send_status = 1;
+            $dataObj->save();
+        }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return (object)[
+                'status'                 => 401,
+                'message'                => $e->getMessage()
+            ];
+        }
+
+        return (object)[
+            'status'                 => 201,
+            'info'                   => $dataObj->id
+        ];
     }
    
     public function get_queue_list() {

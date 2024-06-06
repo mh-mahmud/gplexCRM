@@ -147,6 +147,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('send-sms', [smsController::class, 'sendSms'])->name('send-sms');
 	Route::post('send-sms-process', [smsController::class, 'sendSmsPro'])->name('send-sms-pro');
 	Route::get('send-sms-list', [smsController::class, 'sendSmsList'])->name('send-sms-list');
+	Route::get('send-bulk-sms', [smsController::class, 'sendBulkSms'])->name('send-bulk-sms');
+	Route::post('send-bulk-sms-process', [smsController::class, 'sendBulkSmsPro'])->name('send-bulk-sms-pro');
+
 	// Send SMS routes end
 
 

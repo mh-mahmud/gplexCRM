@@ -100,6 +100,26 @@ class smsController extends Controller {
         }
     }
 
+    public function sendBulkSms(Request $request)
+    {   
+        $request->merge(['paginate' => false]);   
+        $templates = $this->smsService->smsTemplateList($request);
+        return view('sms.send-bulk-sms', compact('templates'));
+    }
+
+    // For export excel sheet, zip and gd extension have to install
+    public function sendBulkSmsPro(Request $request)
+    {
+        $result = $this->smsService->sendBulkSmsPro($request);
+        if($result->status == 201){
+            return redirect()->route('send-bulk-sms')->with('success', 'SMS send successfully.');
+
+        }else{
+            session()->flash('error', 'Can not Send !');
+        }
+    }
+
+
     public function sms_queue_list() {
         return $this->smsService->get_queue_list();
     }
