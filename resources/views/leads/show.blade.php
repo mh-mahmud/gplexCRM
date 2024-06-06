@@ -136,7 +136,7 @@ use Carbon\Carbon;
                 </div>
                 <!--begin::Body-->
                 <div class="card-body py-3">
-                <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Form Name</span>
                         <span>{{ $lead->leadsForm?->form_name ?? '' }}</span>
                     </div>
@@ -242,7 +242,7 @@ use Carbon\Carbon;
                         <span>{{ $lead->industry }}</span>
                     </div>
 
-                    
+
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Lead Source</span>
                         <span>
@@ -285,15 +285,20 @@ use Carbon\Carbon;
                     </div>
 
                     @foreach ($tableData as $tableName => $data)
+                    @if (!empty($data))
                     <div class="mt-4">
                         <h5>{{ ucwords(str_replace('_', ' ', $tableName)) }}</h5>
                         <ul class="list-group">
                             @foreach ($data as $key => $value)
+                            @if (!in_array($key, ['id', 'lead_id', 'form_id']))
                             <li class="list-group-item">{{ ucwords(str_replace('_', ' ', $key)) }}: {{ $value }}</li>
+                            @endif
                             @endforeach
                         </ul>
                     </div>
+                    @endif
                     @endforeach
+
 
                 </div>
             </div>
