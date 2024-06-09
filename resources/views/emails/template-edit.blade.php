@@ -185,7 +185,7 @@
                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Content</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="email_content" rows="3">{{$template->email_content}}</textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" id="email_content"  name="email_content" rows="3">{{$template->email_content}}</textarea>
                                                     @if ($errors->has('email_content'))
                                                         <span class="text-danger">{{ $errors->first('email_content') }}</span>
                                                     @endif
@@ -224,3 +224,26 @@
             <!--end::Content-->
 
 @endsection
+@section('endScript')
+<script>
+    tinymce.init({
+        selector: '#email_content',
+        width: 600,
+        height: 300,
+        api_key: '4svcnt4kjo6szxupqlr3bs4jtqvpo260pk2pba6njhd89l6b',
+        plugins: [
+        'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+        'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+        'media', 'table', 'emoticons', 'help'
+        ],
+        toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+        'forecolor backcolor emoticons | help',
+        menu: {
+        favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
+        },
+        menubar: 'favs file edit view insert format tools table help',
+        // content_css: 'css/content.css'
+    });
+  </script>
+  @endsection

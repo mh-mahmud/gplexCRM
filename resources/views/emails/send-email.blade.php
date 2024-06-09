@@ -115,7 +115,7 @@
                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Content</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="email_content" id="email_content" rows="3"></textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" id="email_content" name="email_content" rows="3"></textarea>
                                                     @if ($errors->has('email_content'))
                                                         <span class="text-danger">{{ $errors->first('email_content') }}</span>
                                                     @endif
@@ -125,7 +125,7 @@
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
                                             <input type="reset" value="Reset" class="btn btn-light me-2">
                                             <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Save Changes
+                                                    id="kt_account_profile_details_submit">Send
                                             </button>
                                         </div>
 
@@ -186,15 +186,34 @@
             const selectedTemplate = templates.find(template => template.id == selectedId);
          
             if (selectedTemplate) {
-                document.getElementById('email_content').innerText = selectedTemplate.email_content;
+                tinymce.get('email_content').setContent(selectedTemplate.email_content);
                 document.getElementById('email_subject').value = selectedTemplate.email_subject;
 
             } else {
-                document.getElementById('email_content').innerText = '';
+                tinymce.get('email_content').setContent('');
                 document.getElementById('email_subject').value = '';
 
             }
         });
+    });
+    tinymce.init({
+        selector: '#email_content',
+        width: 600,
+        height: 300,
+        api_key: '4svcnt4kjo6szxupqlr3bs4jtqvpo260pk2pba6njhd89l6b',
+        plugins: [
+        'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+        'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+        'media', 'table', 'emoticons', 'help'
+        ],
+        toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+        'forecolor backcolor emoticons | help',
+        menu: {
+        favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
+        },
+        menubar: 'favs file edit view insert format tools table help',
+        // content_css: 'css/content.css'
     });
 </script>
 @endsection

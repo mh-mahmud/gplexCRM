@@ -231,7 +231,7 @@
 
 						    <td class="text-dark fs-6">{{ $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{ $template->email_subject }}</td>
-							<td class="text-dark fs-6">{{ $template->email_content }}</td>
+							<td class="text-dark fs-6">{!! $template->email_content !!}</td>
 		                    <td>
 								@if ($template->status == 1)
 									<span class="badge badge-light-success">Active</span>
