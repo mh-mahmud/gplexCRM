@@ -111,7 +111,7 @@ use Carbon\Carbon;
 			</div>
 			<!--end::Wrapper-->
 			<!--begin::Button-->
-			<a href="{{ route('lead-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
+			<a href="{{ route('lead-create') }}" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#add_lead_modal">Create</a>
 
 			<!--end::Button-->
 		</div>
@@ -152,6 +152,66 @@ use Carbon\Carbon;
     @endif
 
 	<!--End Table Alert Message-->
+		<!--begin::Modals-->
+		<!--begin::Modal - Invite Friends-->
+<div class="modal fade" id="add_lead_modal" tabindex="-1" aria-hidden="true">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog mw-400px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </div>
+                <!--end::Close-->
+            </div>
+            <!--begin::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+                <!--begin::Heading-->
+                <!--begin::Textarea-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="fv-row mb-3">
+                            <label class="form-label fw-bolder text-dark">Form Name</label>
+                            <select class="form-control form-control-sm form-control-solid" id="form_id" name="form_id" aria-label="Default select example">
+                                <option value="">Select Form Name</option>
+                                @foreach($formName as $id => $name)
+                                <option value="{{ $id }}">{{ $name }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('form_id'))
+                            <span class="text-danger">{{ $errors->first('form_id') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer d-flex justify-content-end py-0 px-0">
+                    <a href="{{ route('lead-index') }}" class="btn btn-light me-2 btn-sm">Reset</a>
+                    <button type="button" class="btn btn-primary btn-sm" id="submit_button">Submit</button>
+                </div>
+                <!--end::Textarea-->
+            </div>
+            <!--end::Modal body-->
+        </div>
+        <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+</div>
+
+
+
+		<!--end::Modal - Invite Friend-->
 
 
 	<div class="row">
@@ -331,6 +391,16 @@ use Carbon\Carbon;
 		</div>
 	</div>
 </div>
+<script>
+    document.getElementById('submit_button').addEventListener('click', function() {
+        var formId = document.getElementById('form_id').value;
+        if (formId) {
+            window.location.href = 'http://localhost/gplexCRM/public/lead/create?form_id=' + formId;
+        } else {
+            alert('Please select a form.');
+        }
+    });
+</script>
 
 <script>
 	function confirmDelete() {

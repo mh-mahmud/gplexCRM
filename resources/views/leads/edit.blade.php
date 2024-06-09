@@ -143,21 +143,25 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
-                        <div class="col-md-6">
+
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Form Name</label>
-                                    <select class="form-control form-control-sm form-control-solid" name="form_id" aria-label="Default select example">
+                                    <select class="form-control form-control-sm form-control-solid" name="form_id" aria-label="Default select example" disabled>
                                         <option value="">Select Form Name</option>
                                         @foreach($formName as $id => $name)
-                                            <option value="{{ $id }}" {{ $id == $lead->form_id ? 'selected' : '' }}>{{ $name }}</option>
+                                        <option value="{{ $id }}" {{ $lead->form_id == $id ? 'selected' : '' }}>{{$name}}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('form_id'))
-                                        <span class="text-danger">{{ $errors->first('form_id') }}</span>
+                                    <span class="text-danger">{{ $errors->first('form_id') }}</span>
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+
+
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">First Name</label>
@@ -171,7 +175,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Last Name</label>
@@ -185,7 +189,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Email</label>
@@ -199,7 +203,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Phone</label>
@@ -213,7 +217,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Alternative Number</label>
@@ -227,7 +231,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Gender</label>
                                     <select class="form-control form-control-sm form-control-solid" name="gender" aria-label="Default select example">
@@ -240,9 +244,9 @@
                             </div>
 
 
-                            
 
-                            <div class="col-md-6">
+
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Date of Birth</label>
@@ -258,7 +262,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Age</label>
@@ -274,7 +278,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Marital Status</label>
@@ -294,7 +298,7 @@
                             </div>
 
                             <!-- Address -->
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Address</label>
                                     <input class="form-control form-control-sm form-control-solid" type="text" name="address" value="{{ old('address', $lead->address) }}" autocomplete="off" />
@@ -305,7 +309,7 @@
                             </div>
 
                             <!-- Company -->
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Company</label>
                                     <input class="form-control form-control-sm form-control-solid" type="text" name="company" value="{{ old('company', $lead->company) }}" autocomplete="off" />
@@ -316,7 +320,7 @@
                             </div>
 
                             <!-- Lead Status -->
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Lead Status</label>
                                     <select class="form-control form-control-sm form-control-solid" name="lead_status">
@@ -330,7 +334,7 @@
                             </div>
 
                             <!-- Title -->
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Title</label>
                                     <input class="form-control form-control-sm form-control-solid" type="text" name="title" value="{{ old('title', $lead->title) }}" autocomplete="off" />
@@ -341,7 +345,7 @@
                             </div>
 
                             <!-- Lead Rating -->
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Lead Rating</label>
                                     <input class="form-control form-control-sm form-control-solid" type="number" name="lead_rating" value="{{ old('lead_rating', $lead->lead_rating) }}" autocomplete="off" />
@@ -351,7 +355,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Website</label>
                                     <input class="form-control form-control-sm form-control-solid" type="text" name="website" value="{{ old('website', $lead->website) }}" autocomplete="off" />
@@ -362,7 +366,7 @@
                             </div>
 
                             <!-- Lead Owner -->
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Lead Owner</label>
                                     <input class="form-control form-control-sm form-control-solid" type="text" name="lead_owner" value="{{ old('lead_owner', $lead->lead_owner) }}" autocomplete="off" />
@@ -373,7 +377,7 @@
                             </div>
 
                             <!-- Industry -->
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Industry</label>
                                     <input class="form-control form-control-sm form-control-solid" type="text" name="industry" value="{{ old('industry', $lead->industry) }}" autocomplete="off" />
@@ -385,7 +389,7 @@
 
 
                             <!-- Lead Source -->
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Lead Source</label>
                                     <select class="form-control form-control-sm form-control-solid" name="lead_source">
@@ -401,7 +405,7 @@
                             </div>
 
                             <!-- Street -->
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Street</label>
                                     <input class="form-control form-control-sm form-control-solid" type="text" name="street" value="{{ old('street', $lead->street) }}" autocomplete="off" />
@@ -412,7 +416,7 @@
                             </div>
 
                             <!-- City -->
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">City</label>
                                     <input class="form-control form-control-sm form-control-solid" type="text" name="city" value="{{ old('city', $lead->city) }}" autocomplete="off" />
@@ -423,7 +427,7 @@
                             </div>
 
                             <!-- Zip -->
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Zip</label>
                                     <input class="form-control form-control-sm form-control-solid" type="text" name="zip" value="{{ old('zip', $lead->zip) }}" autocomplete="off" />
@@ -434,7 +438,7 @@
                             </div>
 
                             <!-- State -->
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">State</label>
@@ -449,7 +453,7 @@
                             </div>
 
                             <!-- Country -->
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Country</label>
@@ -464,7 +468,7 @@
                             </div>
 
                             <!-- Lead Notes -->
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Lead Notes</label>
@@ -479,6 +483,35 @@
                             </div>
 
                         </div>
+
+                        <div id="dynamic-fields" class="row">
+                            <input type="hidden" name="form_id" value="{{ $lead->form_id }}">
+                            @foreach($fieldsByTable as $tableName => $fields)
+                            <div class="col-md-12">
+                                <h5><u>{{ ucwords(str_replace('_', ' ', $tableName)) }}</u></h5>
+                            </div>
+                            @foreach($fields as $field)
+                            <div class="col-md-3">
+                                <div class="fv-row mb-3">
+                                    <label for="{{ $field->field_name }}" class="form-label fw-bolder text-dark">{{ ucwords(str_replace('_', ' ', $field->field_name)) }}</label>
+                                    @php
+                                    $value = isset($tableData[$tableName]) ? $tableData[$tableName]->{$field->field_name} : null;
+                                    @endphp
+                                    @if(in_array($field->field_value, ['varchar', 'char']))
+                                    <input type="text" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}" value="{{ old($field->field_name, $value) }}">
+                                    @elseif($field->field_value == 'int')
+                                    <input type="number" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}" value="{{ old($field->field_name, $value) }}">
+                                    @elseif($field->field_value == 'date')
+                                    <input type="date" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $field->field_name }}" value="{{ old($field->field_name, $value) }}">
+                                    @elseif($field->field_value == 'text')
+                                    <textarea class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}" rows="1">{{ old($field->field_name, $value) }}</textarea>
+                                    @endif
+                                </div>
+                            </div>
+                            @endforeach
+                            @endforeach
+                        </div>
+
 
                         <!--End Row-->
 
