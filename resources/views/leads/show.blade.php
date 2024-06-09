@@ -291,7 +291,7 @@ use Carbon\Carbon;
                         <ul class="list-group">
                             @foreach ($data as $key => $value)
                             @if (!in_array($key, ['id', 'lead_id', 'form_id']))
-                            <li class="list-group-item" style="background-color:#F5F8FA;">{{ ucwords(str_replace('_', ' ', $key)) }}: {{ $value }}</li>
+                            <li class="list-group-item" style="background-color:#F5F8FA;"><span class="fs-6 fw-bolder mb-1 text-gray-900 w-lg-100px w-xxl-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</span>: {{ $value }}</li>
                             @endif
                             @endforeach
                         </ul>
