@@ -50,7 +50,7 @@
 
                                     <form class="g-form w-100" action="{{ route('send-bulk-sms-pro') }}"  method="POST" enctype="multipart/form-data">
                                          @csrf
-                                            <div class="col-md-6">
+                                            {{-- <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Select Lead</label>
                                                     <select class=" form-control form-control-sm form-control-solid" name="status"
@@ -58,7 +58,7 @@
                                                         <option value=''>Select</option>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Mobile No.</label>
