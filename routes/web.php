@@ -7,6 +7,7 @@ use App\Http\Controllers\AgentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LeadsFormController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\DynamicTableController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\SmsController;
@@ -90,6 +91,16 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::delete('/promotion/{id}', [PromotionController::class, 'destroy'])->name('promotion-destroy');
 	Route::post('/promotion/search', [PromotionController::class, 'search'])->name('promotion-search');
 
+	//Campaign route
+	Route::get('/campaign', [CampaignController::class, 'index'])->name('campaign-index');
+	Route::get('/campaign/create', [CampaignController::class, 'create'])->name('campaign-create');
+	Route::post('/campaign', [CampaignController::class, 'store'])->name('campaign-store');
+	Route::get('/campaign/{id}', [CampaignController::class, 'show'])->name('campaign-show');
+	Route::get('/campaign/{id}/edit', [CampaignController::class, 'edit'])->name('campaign-edit');
+	Route::put('/campaign/{id}', [CampaignController::class, 'update'])->name('campaign-update');
+	Route::delete('/campaign/{id}', [CampaignController::class, 'destroy'])->name('campaign-destroy');
+	Route::post('/campaign/search', [CampaignController::class, 'search'])->name('campaign-search');
+
 	// users route
     Route::get('user-list',        [UserController::class, 'index'])->name('users.index');
     Route::get('user-show/{id}',        [UserController::class, 'show'])->name('user.show');
@@ -99,6 +110,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('user-update',      [UserController::class, 'update'])->name('user.update');
     Route::get('user-details/{id}',     [UserController::class, 'show']);
     Route::delete('user-delete/{id}',   [UserController::class, 'destroy'])->name('user.destroy');
+	Route::get('user-profile/{id}',        [UserController::class, 'user_profile'])->name('user-profile');
 
     Route::get('permission-list',        [UserController::class, 'permission_index'])->name('permission.index');
     Route::get('permission-show/{id}',        [UserController::class, 'permission_show'])->name('permission.show');

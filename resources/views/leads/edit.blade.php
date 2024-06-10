@@ -517,7 +517,7 @@
 
                         <div class="card-footer d-flex justify-content-end py-6 px-9">
                             <a href="{{ route('lead-edit', $lead->id) }}" class="btn btn-light me-2">Reset</a>
-                            <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes
+                            <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Update Changes
                             </button>
                         </div>
 

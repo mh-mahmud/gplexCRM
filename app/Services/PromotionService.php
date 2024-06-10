@@ -66,7 +66,7 @@ class PromotionService
         return $promotion;
     }
 
-    public function searchLeadForm($request)
+    public function searchPromotion($request)
     {
         $searchTerm = trim($request->input('search'));
 

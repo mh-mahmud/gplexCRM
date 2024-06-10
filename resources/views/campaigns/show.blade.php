@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@php
+    use Carbon\Carbon;
+@endphp
 
 @section('content')
 
@@ -13,12 +16,12 @@
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                             <!--begin::Title-->
-                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Agent Lead Forms
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Campaign Details
                                 <!--begin::Separator-->
                                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Fill up the Lead Edit form</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Campaign Details</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -123,7 +126,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            <a href="{{ route('leadsform-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Lead Form List</a>
+                            <a href="{{ route('campaign-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Campaign List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
@@ -132,101 +135,97 @@
                 </div>
                 <!--end::Toolbar-->
 
-                <!--**********************************
-                                Forms
+       <!--**********************************
+                                Tables View
                   ***********************************-->
-                <div class="container-xxl">
-                    <div class="row">
-                        <div class="col-xxl-12">
-                            <div class="card card-xxl-stretch mt-5">
-                                <div class="card-header">
-                                    <!--begin::Card title-->
-                                    <div class="card-title m-0">
-                                        <h3 class="fw-bolder m-0">Agent Edit</h3>
-                                    </div>
-                                    <!--end::Card title-->
-                                </div>
-
-                                <!-- Card Body-->
-                                <div class="card-body">
-
-                                    <!-- Start Form-->
-
-                                    <form class="g-form w-100" action="{{ route('leadsform-update', $leadsForm->id) }}" method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Form Name</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="form_name" value="{{ $leadsForm->form_name }}" autocomplete="off"/>
-                                                    <!--end::Input-->
-                                                    @if ($errors->has('form_name'))
-                                                        <span class="text-danger">{{ $errors->first('form_name') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Parent Name</label>
-                                                    <select class=" form-control form-control-sm form-control-solid" name="parent_id"
-                                                            aria-label="Default select example">
-                                                            <option value="">Select Parent</option>
-                                                                @foreach($parents as $id => $name)
-                                                                    <option value="{{ $id }}" {{ $leadsForm->parent_id == $id ? 'selected' : '' }}>{{$name}}</option>
-                                                                @endforeach
-                                                        
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                           <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Form Description</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="form_description" rows="3">{{$leadsForm->form_description}}</textarea>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Status</label>
-                                                    <select class="form-control form-control-sm form-control-solid" name="form_status" aria-label="Default select example">
-                                                        <option value="1" {{ $leadsForm->form_status == 1 ? 'selected' : '' }}>Active</option>
-                                                        <option value="0" {{ $leadsForm->form_status == 0 ? 'selected' : '' }}>Inactive</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                     </div>
-                                        <!--End Row-->
-                                       
-                                      <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <a href="{{ route('leadsform-edit', $leadsForm->id) }}" class="btn btn-light me-2">Reset</a>
-                                            <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Update Changes
-                                            </button>
-                                        </div>
-
-                                    </form>
-
-                                    <!-- End Form-->
-
-                                </div>
-                                <!--End Card body-->
-
-                                <!--begin::Actions-->
-                                
-                                <!--end::Actions-->
-                            </div>
-                        </div>
+                  <div class="container-fluid">
+    <div class="row">
+        <div class="col-xxl-8 mx-auto">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h2>Campaign Details</h2>
                     </div>
                 </div>
-                <!-- End Forms-->
+                <!--begin::Body-->
+                <div class="card-body py-3">
+
+                
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Campaign Name</span>
+                        <span>{{ $campaign->campaign_title }}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Promotion</span>
+                        <span>{{ $campaign->promotion_id }}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Start Date</span>
+                        <span>
+                        @if($campaign->start_date)
+                        {{ \Carbon\Carbon::parse($campaign->start_date)->format('d-m-Y') }}
+                        @endif
+                        </span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">End Date</span>
+                        <span>
+                        @if($campaign->end_date)
+                        {{ \Carbon\Carbon::parse($campaign->end_date)->format('d-m-Y') }}
+                        @endif</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Campaign Type</span>
+                        <span>{{ $campaign->campaign_type}}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Campaign Limit</span>
+                        <span>{{ $campaign->campaign_limit}}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Campaign Service</span>
+                        <span>{{ $campaign->campaign_service}}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Campaign Description</span>
+                        <span>{{ $campaign->description}}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Status</span>
+                        @if ($campaign->status === 1)
+                            <span>Active</span>
+                        @elseif ($campaign->status === 0)
+                            <span>Inactive</span>
+                        @endif
+                    </div>
+
+
+                    
+                
+
+
+                   
+
+                </div>
+            
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+                <!-- End Tables View-->
 
 
             <!-- </div> -->

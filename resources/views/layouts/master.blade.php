@@ -1164,7 +1164,7 @@
 												<!--end::Menu separator-->
 												<!--begin::Menu item-->
 												<div class="menu-item px-5">
-													<a href="../dist/account/overview.html" class="menu-link px-5">My Profile</a>
+													<a href="{{ route('user-profile', $id) }}" class="menu-link px-5">My Profile</a>
 												</div>
 												<!--end::Menu item-->
 												<!--begin::Menu item-->
