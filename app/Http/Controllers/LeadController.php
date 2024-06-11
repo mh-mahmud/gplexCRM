@@ -28,7 +28,8 @@ class LeadController  extends Controller
     public function index()
     {
         $leads = $this->leadService->getAllLeads();
-        $formName = LeadsForm::pluck('form_name', 'form_id');
+        //$formName = LeadsForm::pluck('form_name', 'form_id');
+        $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
         return view('leads.index', compact('leads','formName'));
     }
 
@@ -138,7 +139,8 @@ class LeadController  extends Controller
 
     public function edit($id)
     {
-        $formName = LeadsForm::pluck('form_name', 'form_id');
+        //$formName = LeadsForm::pluck('form_name', 'form_id');
+        $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
         $lead = $this->leadService->getLeadById($id);
         $fieldsByTable = [];
         $tableData = [];
@@ -184,6 +186,7 @@ class LeadController  extends Controller
     public function search(Request $request)
     {
         $searchTerm = trim($request->input('search'));
+        $formName = LeadsForm::pluck('form_name', 'form_id');
 
         if (empty($searchTerm)) {
             return redirect()->route('lead-index')->with('error', 'Search Field cannot be blank.');
@@ -194,7 +197,7 @@ class LeadController  extends Controller
         ]);
 
         $leads = $this->leadService->searchLeadForm($request);
-        return view('leads.index', compact('leads'));
+        return view('leads.index', compact('leads','formName'));
     }
 
     public function destroy($id)

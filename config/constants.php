@@ -21,4 +21,18 @@ return [
         'SEO',
         'LinkedIn',
     ],
+
+    'campaign_type' => [
+        'Content Marketing',
+        'Phone calls',
+        'Direct mail',
+        'E-mail',
+        'Social Media',
+        'Public relations',
+        'Online Marketing',
+        'Events',
+        'Website',
+        'Branding',
+        'Referrals',
+    ],
 ];

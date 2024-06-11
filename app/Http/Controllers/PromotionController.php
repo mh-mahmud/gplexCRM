@@ -99,7 +99,7 @@ class PromotionController extends Controller
             'search' => 'required|string',
         ]);
 
-        $promotions = $this->promotionService->searchLeadForm($request);
+        $promotions = $this->promotionService->searchPromotion($request);
         return view('promotion.index', compact('promotions'));
     }
 

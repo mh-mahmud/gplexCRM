@@ -218,4 +218,13 @@ class UserController extends Controller
         }
         return redirect()->back()->with('error', 'Failed request');
     }
+
+  
+
+    public function user_profile($id)
+    {
+        $user = $this->service->show_user_with_role($id);
+        return view('users.user_profile', compact('user'));
+    }
+    
 }

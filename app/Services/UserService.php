@@ -8,6 +8,7 @@ use App\Models\Permission;
 use App\Models\SmsQueue;
 use App\Models\SmsLog;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class UserService {
 
@@ -208,5 +209,16 @@ class UserService {
             return $role;
         }
         return false;
+    }
+
+    public function show_user_with_role($id)
+    {
+        $user = DB::table('users')
+        ->join('roles', 'users.role_id', '=', 'roles.id')
+        ->where('users.id', $id)
+            ->select('users.*', 'roles.name as role_name')
+            ->first();
+
+        return $user;
     }
 }
