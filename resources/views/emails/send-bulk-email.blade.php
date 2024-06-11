@@ -23,36 +23,6 @@
                             <!--end::Title-->
                         </div>
                         <!--end::Page title-->
-                        <!--begin::Actions-->
-                        <div class="d-flex align-items-center py-1">
-                            <!--begin::Wrapper-->
-                            <div class="me-4">
-                                <!--begin::Menu-->
-                               
-                                <!--begin::Menu 1-->
-                                <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
-                                     id="kt_menu_61484bf44d957">
-                                    <!--begin::Header-->
-                                    <div class="px-7 py-5">
-                                        <div class="fs-5 text-dark fw-bolder">Filter Options</div>
-                                    </div>
-                                    <!--end::Header-->
-                                    <!--begin::Menu separator-->
-                                    <div class="separator border-gray-200"></div>
-                                    <!--end::Menu separator-->
-                                    <!--begin::Form-->
-                                   
-                                    <!--end::Form-->
-                                </div>
-                                <!--end::Menu 1-->
-                                <!--end::Menu-->
-                            </div>
-                            <!--end::Wrapper-->
-                            <!--begin::Button-->
-                            {{-- <a href="{{ route('email-template') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Email Template List</a> --}}
-                            <!--end::Button-->
-                        </div>
-                        <!--end::Actions-->
                     </div>
                     <!--end::Container-->
                 </div>
@@ -68,7 +38,7 @@
                                 <div class="card-header">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
-                                        <h3 class="fw-bolder m-0">Send Email</h3>
+                                        <h3 class="fw-bolder m-0">Send Bulk Email</h3>
                                     </div>
                                     <!--end::Card title-->
                                 </div>
@@ -78,15 +48,14 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('send-email-process') }}"  method="POST">
+                                    <form class="g-form w-100" action="{{ route('send-bulk-email-process') }}"  method="POST" enctype="multipart/form-data">
                                          @csrf
-                                            <div class="col-md-6">
+                                         <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">To</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" id="to_email" name="to_email" autocomplete="off" value="{{ old('to_email') }}"/>
-                                                    @if ($errors->has('to_email'))
-                                                        <span class="text-danger">{{ $errors->first('to_email') }}</span>
+                                                    <label class="form-label fw-bolder text-dark">Email</label>
+                                                    <input type="file" name="file" class="form-control form-control-sm form-control-solid">
+                                                    @if ($errors->has('file'))
+                                                        <span class="text-danger">{{ $errors->first('file') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -97,7 +66,7 @@
                                                             aria-label="Default select example">
                                                         <option value=''>Select</option>
                                                         @foreach($templates as $template)
-                                                        <option value="{{$template->id}}" {{ old('template_id') == $template->id ? 'selected' : '' }}>{{ $template->email_subject }}</option>
+                                                        <option value="{{$template->id}}">{{ $template->email_subject }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

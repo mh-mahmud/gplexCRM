@@ -182,37 +182,34 @@ class SmsService
         $data = $request->all();
 
         try {
-        // Check if the file is an Excel file
-        if ($file->getClientOriginalExtension() == 'csv') {
-            // Process CSV file
-            $rows = array_map('str_getcsv', file($file));
-        } else {
-            // Process Excel file using PhpSpreadsheet
-            $spreadsheet = IOFactory::load($file->getPathname());
-            $worksheet = $spreadsheet->getActiveSheet();
-            $rows = $worksheet->toArray();
-        }
-
-        DB::beginTransaction();
-
-        foreach ($rows as $key => $row) {
-            if ($key == 0) {
-                continue;
+            if ($file->getClientOriginalExtension() == 'csv') {
+                $rows = array_map('str_getcsv', file($file));
+            } else {
+                $spreadsheet = IOFactory::load($file->getPathname());
+                $worksheet = $spreadsheet->getActiveSheet();
+                $rows = $worksheet->toArray();
             }
 
-            if (!isset($row[0]) || empty($row[0])) {
-                continue;
-            }
+            DB::beginTransaction();
 
-            $dataObj = new SmsQueue();
-            $dataObj->sms_from = config('constants.SMS_SEND_MOBILE_NO');
-            $dataObj->sms_to = $row[0]; // Assuming 'Mobile NO' is the first column
-            $dataObj->sms_text = $data['sms_text'];
-            $dataObj->log_time = Carbon::now();
-            $dataObj->user_id = Auth::id();
-            $dataObj->send_status = 1;
-            $dataObj->save();
-        }
+            foreach ($rows as $key => $row) {
+                if ($key == 0) {
+                    continue;
+                }
+
+                if (!isset($row[0]) || empty($row[0])) {
+                    continue;
+                }
+
+                $dataObj = new SmsQueue();
+                $dataObj->sms_from = config('constants.SMS_SEND_MOBILE_NO');
+                $dataObj->sms_to = "0".$row[0];
+                $dataObj->sms_text = $data['sms_text'];
+                $dataObj->log_time = Carbon::now();
+                $dataObj->user_id = Auth::id();
+                $dataObj->send_status = 1;
+                $dataObj->save();
+            }
 
             DB::commit();
         } catch (\Exception $e) {

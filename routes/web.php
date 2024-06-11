@@ -131,6 +131,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('send-email', [EmailController::class, 'sendEmail'])->name('send-email');
 	Route::post('send-email-process', [EmailController::class, 'sendEmailPro'])->name('send-email-process');
 	Route::get('send-email-list', [EmailController::class, 'sendEmailList'])->name('send-email-list');
+	Route::get('send-bulk-email', [EmailController::class, 'sendBulkEmail'])->name('send-bulk-email');
+	Route::post('send-bulk-email-process', [EmailController::class, 'sendBulkEmailPro'])->name('send-bulk-email-process');
+
+
 	// Send email routes end
 
 	// Sms template routes start

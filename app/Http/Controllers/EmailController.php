@@ -99,4 +99,23 @@ class EmailController extends Controller {
         $emails = $this->emailService->sendEmailList($request);
         return view('emails.send-email-list', compact('emails'));
     }
+
+    public function sendBulkEmail(Request $request)
+    {   
+        $request->merge(['paginate' => false]);   
+        $templates = $this->emailService->emailTemplateList($request);
+        return view('emails.send-bulk-email', compact('templates'));
+    }
+
+    public function sendBulkEmailPro(Request $request)
+    { 
+         $result = $this->emailService->sendBulkEmailPro($request);
+         if($result->status == 201){
+            return redirect()->route('send-email')->with('success', 'Email send successfully.');
+
+        }else{
+            session()->flash('error', 'Email can not send !');
+        }
+
+    }
 }

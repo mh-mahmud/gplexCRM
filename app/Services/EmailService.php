@@ -7,8 +7,10 @@ use App\Models\EmailLog;
 use Exception;
 use Mail;
 use App\Mail\SingleMail;
+use App\Mail\BulkEmail;
 use Carbon\Carbon;
-
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use DB;
 class EmailService
 {
     public function emailTemplateList($request)
@@ -165,5 +167,78 @@ class EmailService
         }
         return $sql->orderBy('id', 'DESC')->paginate();
     }
+
+    public function  sendBulkEmailPro($request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:csv,xlsx,xls',
+            'email_subject' => 'required|string|max:150',
+            'email_content' => 'required|string',
+
+        ], [
+            'file.required' => 'The file is required.',
+            'file.file' => 'The uploaded item must be a file.',
+            'file.mimes' => 'The file must be a type of: csv, xlsx, xls.',
+            'email_subject.required' => 'Email subject is required.',
+            'email_subject.max' => 'Email subject may not be greater than 150 characters.',
+            'email_content.required' => 'Email content is required.',
+
+        ]);
+        
+        $file = $request->file('file');
+        $data = $request->all();
+
+        try {
+        // Check if the file is an Excel file
+        if ($file->getClientOriginalExtension() == 'csv') {
+            // Process CSV file
+            $rows = array_map('str_getcsv', file($file));
+        } else {
+            // Process Excel file using PhpSpreadsheet
+            $spreadsheet = IOFactory::load($file->getPathname());
+            $worksheet = $spreadsheet->getActiveSheet();
+            $rows = $worksheet->toArray();
+        }
+
+        DB::beginTransaction();
+
+        foreach ($rows as $key => $row) {
+            if ($key == 0) {
+                continue;
+            }
+
+            if (!isset($row[0]) || empty($row[0])) {
+                continue;
+            }
+            
+            Mail::to($row[0])->queue(new BulkEmail($data['email_subject'], $data['email_content']));
+            // dd(23);
+
+            $dataObj                    = new EmailLog();
+            $dataObj->email_from        = "Genuity";
+            $dataObj->email_to          = $row[0]; 
+            $dataObj->email_subject     = $data['email_subject'];
+            $dataObj->email_content     = $data['email_content'];
+            $dataObj->log_time          = Carbon::now();
+            $dataObj->delivery_time     = Carbon::now();
+            $dataObj->send_status       = 1;
+            $dataObj->save();
+
+        }
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return (object)[
+                'status'                 => 401,
+                'message'                => $e->getMessage()
+            ];
+        }
+        return (object)[
+            'status'                 => 201,
+            'info'                   => $dataObj->id
+        ];
+    }
+   
 
 }
