@@ -26,13 +26,14 @@ class CampaignController extends Controller
     public function index()
     {
         $campaigns = $this->campaignService->getAllCampaign();
+        //dd($campaigns);die();
         return view('campaigns.index', compact('campaigns'));
     }
 
     public function create()
     {
 
-        $promotions = Promotion::pluck('promotion_name', 'id');
+        $promotions = Promotion::pluck('promotion_title', 'id');
         return view('campaigns.create', compact('promotions'));
     }
     
@@ -52,14 +53,15 @@ class CampaignController extends Controller
 
     public function show($id)
     {
-        $campaign = $this->campaignService->getCampaignById($id);
+        $campaign = $this->campaignService->getCampaignByPromotionName($id);
         return view('campaigns.show', compact('campaign'));
     }
 
     public function edit($id)
     {
         $campaign = $this->campaignService->getCampaignById($id);
-        return view('campaigns.edit', compact('campaign'));
+        $promotions = Promotion::pluck('promotion_title', 'id');
+        return view('campaigns.edit', compact('campaign','promotions'));
     }
 
     public function update(Request $request, $id)

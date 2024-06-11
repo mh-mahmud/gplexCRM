@@ -237,7 +237,7 @@
 
 						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
 							<td class="text-dark fs-6">{{$campaign->campaign_title }}</td>
-							<td class="text-dark fs-6">{{$campaign->promotion_name }}</td>
+							<td class="text-dark fs-6">{{$campaign->promotion_title }}</td>
 							<td class="text-dark fs-6"> 
 							@if($campaign->start_date)
 								{{ \Carbon\Carbon::parse($campaign->start_date)->format('d-m-Y') }}

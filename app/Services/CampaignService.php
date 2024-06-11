@@ -8,8 +8,8 @@ class CampaignService
 {
     public function getAllCampaign()
     {
-        return Campaign::join('promotions', 'campaigns.promotion_id', '=', 'promotions.id')
-            ->select('campaigns.*', 'promotions.promotion_name')
+        return Campaign::leftJoin('promotions', 'campaigns.promotion_id', '=', 'promotions.id')
+            ->select('campaigns.*', 'promotions.promotion_title')
             ->paginate(config('constants.ROW_PER_PAGE'));
     }
 
@@ -23,6 +23,14 @@ class CampaignService
     public function getCampaignById($id)
     {
         return Campaign::findOrFail($id);
+    }
+
+    public function getCampaignByPromotionName($id)
+    {
+        return  Campaign::leftJoin('promotions', 'campaigns.promotion_id', '=', 'promotions.id')
+        ->select('campaigns.*', 'promotions.promotion_title')
+        ->where('campaigns.id', $id)
+            ->first();
     }
 
     public function updateCampaign($id, $data)

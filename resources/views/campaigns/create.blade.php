@@ -161,13 +161,13 @@
                                     <label class="form-label fw-bolder text-dark">Promotion Name</label>
                                     <select class=" form-control form-control-sm form-control-solid" name="promotion_id" aria-label="Default select example">
                                         <option value="">Select Promotion Name</option>
-                                        @foreach($formName as $id => $name)
+                                        @foreach($promotions as $id => $name)
                                         <option value="{{ $id }}">{{$name}}</option>
                                         @endforeach
 
                                     </select>
-                                    @if ($errors->has('form_id'))
-                                    <span class="text-danger">{{ $errors->first('form_id') }}</span>
+                                    @if ($errors->has('promotion_id'))
+                                    <span class="text-danger">{{ $errors->first('promotion_id') }}</span>
                                     @endif
                                 </div>
                             </div>

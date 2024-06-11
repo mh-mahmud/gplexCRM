@@ -139,7 +139,7 @@
 
                     <!-- Start Form-->
 
-                    <form class="g-form w-100" action="{{ route('promotion-update', $promotion->id) }}" method="POST" enctype="multipart/form-data">
+                    <form class="g-form w-100" action="{{ route('campaign-update', $campaign->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="row">
@@ -149,7 +149,7 @@
                                     <label class="form-label fw-bolder text-dark">Campaign Name</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="campaign_title" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="campaign_title" value="{{ $campaign->campaign_title }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('campaign_title'))
                                     <span class="text-danger">{{ $errors->first('campaign_title') }}</span>
@@ -159,14 +159,16 @@
 
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
-                                    <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Promotion Name</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="campaign_title" autocomplete="off" />
-                                    <!--end::Input-->
-                                    @if ($errors->has('campaign_title'))
-                                    <span class="text-danger">{{ $errors->first('campaign_title') }}</span>
+                                    <select class=" form-control form-control-sm form-control-solid" name="promotion_id" aria-label="Default select example">
+                                        <option value="">Select Promotion Name</option>
+                                        @foreach($promotions as $id => $name)
+                                        <option value="{{ $id }}" {{ $campaign->promotion_id == $id ? 'selected' : '' }}>{{$name}}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @if ($errors->has('promotion_id'))
+                                    <span class="text-danger">{{ $errors->first('promotion_id') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -180,7 +182,7 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <div class="position-relative">
-                                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr" placeholder="Start Date" name="start_date">
+                                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr" placeholder="Start Date" name="start_date" value="{{ $campaign->start_date }}">
                                         @if ($errors->has('start_date'))
                                         <span class="text-danger">{{ $errors->first('start_date') }}</span>
                                         @endif
@@ -200,7 +202,7 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <div class="position-relative">
-                                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr" placeholder="End Date" name="end_date">
+                                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr" placeholder="End Date" name="end_date" value="{{ $campaign->end_date }}">
                                         @if ($errors->has('end_date'))
                                         <span class="text-danger">{{ $errors->first('end_date') }}</span>
                                         @endif
@@ -217,7 +219,7 @@
                                     <select class="form-control form-control-sm form-control-solid" name="campaign_type">
                                         <option value="" disabled selected>Select Campaign Type</option>
                                         @foreach(config('constants.campaign_type') as $campaign_type)
-                                        <option value="{{ $campaign_type }}">{{ $campaign_type }}</option>
+                                        <option value="{{ $campaign_type }}" {{ $campaign->campaign_type == $campaign_type ? 'selected' : '' }}>{{ $campaign_type }}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('campaign_type'))
@@ -232,7 +234,7 @@
                                     <label class="form-label fw-bolder text-dark">Campaign Limit</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="number" name="campaign_limit" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="number" name="campaign_limit" value="{{ $campaign->campaign_limit }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('campaign_limit'))
                                     <span class="text-danger">{{ $errors->first('campaign_limit') }}</span>
@@ -246,7 +248,7 @@
                                     <label class="form-label fw-bolder text-dark">Campaign Service</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="campaign_service" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="campaign_service" value="{{ $campaign->campaign_service }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('campaign_service'))
                                     <span class="text-danger">{{ $errors->first('campaign_service') }}</span>
@@ -257,11 +259,9 @@
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Status</label>
-                                    <select class=" form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
-
-                                        <option value="1" selected>Active</option>
-                                        <option value="0">Inactive</option>
-
+                                    <select class="form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
+                                        <option value="1" {{ $campaign->status == 1 ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ $campaign->status == 0 ? 'selected' : '' }}>Inactive</option>
                                     </select>
                                 </div>
                             </div>
@@ -272,7 +272,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label fw-bolder text-dark" for="textarea">Description</label>
-                                    <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3"></textarea>
+                                    <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{$campaign->description}}</textarea>
                                 </div>
                             </div>
 
