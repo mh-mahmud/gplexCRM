@@ -32,7 +32,6 @@ class CampaignController extends Controller
 
     public function create()
     {
-
         $promotions = Promotion::pluck('promotion_title', 'id');
         return view('campaigns.create', compact('promotions'));
     }
