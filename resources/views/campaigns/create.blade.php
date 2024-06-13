@@ -273,7 +273,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label fw-bolder text-dark" for="textarea">Description</label>
-                                    <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3"></textarea>
+                                    <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="2"></textarea>
                                 </div>
                             </div>
 
