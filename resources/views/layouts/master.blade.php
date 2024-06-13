@@ -3562,7 +3562,6 @@
 		<script src="{{url('/')}}/assets/js/custom/apps/chat/chat.js"></script>
 		<script src="{{url('/')}}/assets/js/custom/modals/create-app.js"></script>
 		<script src="{{url('/')}}/assets/js/custom/modals/upgrade-plan.js"></script>
-		<script src="https://cdn.tiny.cloud/1/4svcnt4kjo6szxupqlr3bs4jtqvpo260pk2pba6njhd89l6b/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 		
 		<script>
 			$('[name="date-table"]').flatpickr();

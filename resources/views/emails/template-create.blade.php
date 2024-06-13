@@ -227,24 +227,10 @@
 
 @section('endScript')
 <script>
-    tinymce.init({
-      selector: '#email_content',
-      width: 600,
-    height: 300,
-    api_key: '4svcnt4kjo6szxupqlr3bs4jtqvpo260pk2pba6njhd89l6b',
-    plugins: [
-      'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
-      'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
-      'media', 'table', 'emoticons', 'help'
-    ],
-    toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
-      'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
-      'forecolor backcolor emoticons | help',
-    menu: {
-      favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
-    },
-    menubar: 'favs file edit view insert format tools table help',
-    // content_css: 'css/content.css'
+
+    document.addEventListener('DOMContentLoaded', function() {
+        CKEDITOR.replace('email_content');
     });
-  </script>
-  @endsection
+
+</script>
+@endsection
