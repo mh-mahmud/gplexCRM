@@ -84,7 +84,7 @@
                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Content</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" id="email_content" name="email_content" rows="3">{{ old('email_content') }}</textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" id="editor" name="email_content" rows="3">{{ old('email_content') }}</textarea>
                                                     @if ($errors->has('email_content'))
                                                         <span class="text-danger">{{ $errors->first('email_content') }}</span>
                                                     @endif
@@ -148,7 +148,7 @@
 @section('endScript')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        CKEDITOR.replace('email_content');
+        // CKEDITOR.replace('editor');
         const templates = @json($templates);
 
         document.getElementById('template_id').addEventListener('change', function() {
@@ -156,14 +156,14 @@
             const selectedTemplate = templates.find(template => template.id == selectedId);
          
             if (selectedTemplate) {
-                // tinymce.get('email_content').setContent(selectedTemplate.email_content);
-                if (CKEDITOR.instances.email_content) {
-                    CKEDITOR.instances.email_content.setData(selectedTemplate.email_content);
+                // tinymce.get('editor').setContent(selectedTemplate.editor);
+                if (CKEDITOR.instances.editor) {
+                    CKEDITOR.instances.editor.setData(selectedTemplate.editor);
                 } else {
-                    CKEDITOR.replace('email_content', {
+                    CKEDITOR.replace('editor', {
                         on: {
                             instanceReady: function() {
-                                CKEDITOR.instances.email_content.setData(selectedTemplate.email_content);
+                                CKEDITOR.instances.editor.setData(selectedTemplate.editor);
                             }
                         }
                     });
@@ -171,8 +171,8 @@
                 document.getElementById('email_subject').value = selectedTemplate.email_subject;
 
             } else {
-                if (CKEDITOR.instances.email_content) {
-                    CKEDITOR.instances.email_content.setData('');
+                if (CKEDITOR.instances.editor) {
+                    CKEDITOR.instances.editor.setData('');
                 }
                 document.getElementById('email_subject').value = '';
 
