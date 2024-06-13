@@ -234,7 +234,7 @@
 		</div>
 
 		<!--Table Pagination-->
-		<ul class="pagination">
+		<ul class="pagination mt-2">
 			<li class="page-item previous disabled"><span class="page-link">Previous</span></span>
 			</li>
 			<li class="page-item "><a href="#" class="page-link">1</a></li>

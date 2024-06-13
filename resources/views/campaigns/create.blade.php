@@ -159,7 +159,7 @@
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Promotion Name</label>
-                                    <select class=" form-control form-control-sm form-control-solid" name="promotion_id" aria-label="Default select example">
+                                    <select class=" form-control form-control-sm form-control-solid" data-control="select2" name="promotion_id" aria-label="Default select example">
                                         <option value="">Select Promotion Name</option>
                                         @foreach($promotions as $id => $name)
                                         <option value="{{ $id }}">{{$name}}</option>

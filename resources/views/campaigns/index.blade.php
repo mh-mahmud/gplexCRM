@@ -343,12 +343,12 @@
 			<li class="page-item next"><a class="page-link" href="#">Next</span></a></li>
 		</ul> -->
 
-		<ul class="pagination">
+		<ul class="pagination mt-2">
 			<!-- Previous Page Link -->
 			@if ($campaigns->onFirstPage())
-				<li class="page-item previous disabled"><span class="page-link">Previous</span></li>
+				<li class="page-item previous disabled"><span class="page-link"><i class="previous"></i></span></li>
 			@else
-				<li class="page-item previous"><a href="{{ $campaigns->previousPageUrl() }}" class="page-link">Previous</a></li>
+				<li class="page-item previous"><a href="{{ $campaigns->previousPageUrl() }}" class="page-link"><i class="previous"></i></a></li>
 			@endif
 
 			<!-- Pagination Elements -->
@@ -362,9 +362,9 @@
 
 			<!-- Next Page Link -->
 			@if ($campaigns->hasMorePages())
-				<li class="page-item next"><a href="{{ $campaigns->nextPageUrl() }}" class="page-link">Next</a></li>
+				<li class="page-item next"><a href="{{ $campaigns->nextPageUrl() }}" class="page-link"><i class="next"></i></a></li>
 			@else
-				<li class="page-item next disabled"><span class="page-link">Next</span></li>
+				<li class="page-item next disabled"><span class="page-link"><i class="next"></i></span></li>
 			@endif
 		</ul>
 

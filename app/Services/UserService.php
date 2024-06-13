@@ -221,4 +221,9 @@ class UserService {
 
         return $user;
     }
+
+    public function getUserById($id)
+    {
+        return User::findOrFail($id);
+    }
 }

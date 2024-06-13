@@ -226,5 +226,33 @@ class UserController extends Controller
         $user = $this->service->show_user_with_role($id);
         return view('users.user_profile', compact('user'));
     }
+
+
+    public function profile_edit($id)
+    {
+        $user = $this->service->getUserById($id);
+        return view('users.account-settings', compact('user'));
+    }
+
+
+
+    public function profile_update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'first_name' => 'required|string|max:191',
+            'last_name' => 'required|string|max:191',
+            'email' => 'required|string|email|max:191|unique:users,email,' . $id,
+            'phone_number' => 'nullable|string|max:20',
+            'gender' => 'nullable|string|max:6',
+            'profile_image' => 'nullable|image|max:2048',
+            'address' => 'nullable|string',
+            'current_password' => 'nullable|string|min:8',
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        $this->service->updateUser($id, $request->all());
+        return redirect()->back()->with('success', 'Account settings updated successfully.');
+    }
+
     
 }
