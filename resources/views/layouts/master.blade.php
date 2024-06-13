@@ -3565,11 +3565,11 @@
 		<script src="{{url('/')}}/assets/vendor/ckeditor5/build/ckeditor.js"></script>
 		<script>
         ClassicEditor
-            .create( document.querySelector( '#editor' ) )
+            .create( document.querySelector( '.editor' ) )
             .catch( error => {
                 console.error( error );
             } );
-       </script>
+    </script>
 		
 		<script src="https://cdn.tiny.cloud/1/4svcnt4kjo6szxupqlr3bs4jtqvpo260pk2pba6njhd89l6b/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 		
