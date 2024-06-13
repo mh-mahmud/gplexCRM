@@ -26,3 +26,5 @@ H
 ui/build/table-view.html,f\0\f057ef8ac6ea41c8473d2cb1a256d82f8eb822b3
 F
 ui/build/add-form.html,7\5\752169bde39e0bea7430051fa70c8c03f38a2f84
+F
+ui/build/settings.html,c\4\c49ac9601fe263b1ac000f8898655c87b7a3da38
