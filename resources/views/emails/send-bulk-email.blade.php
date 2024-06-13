@@ -5,7 +5,7 @@
             <!-- <div class="content d-flex flex-column flex-column-fluid" id="kt_content"> -->
 
             						     <!--begin::Toolbar-->
-	  <div class="toolbar" id="kt_toolbar">
+	            <div class="toolbar" id="kt_toolbar">
                     <!--begin::Container-->
                     <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
                         <!--begin::Page title-->
@@ -148,6 +148,7 @@
 @section('endScript')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        CKEDITOR.replace('email_content');
         const templates = @json($templates);
 
         document.getElementById('template_id').addEventListener('change', function() {
@@ -155,34 +156,28 @@
             const selectedTemplate = templates.find(template => template.id == selectedId);
          
             if (selectedTemplate) {
-                tinymce.get('email_content').setContent(selectedTemplate.email_content);
+                // tinymce.get('email_content').setContent(selectedTemplate.email_content);
+                if (CKEDITOR.instances.email_content) {
+                    CKEDITOR.instances.email_content.setData(selectedTemplate.email_content);
+                } else {
+                    CKEDITOR.replace('email_content', {
+                        on: {
+                            instanceReady: function() {
+                                CKEDITOR.instances.email_content.setData(selectedTemplate.email_content);
+                            }
+                        }
+                    });
+                }
                 document.getElementById('email_subject').value = selectedTemplate.email_subject;
 
             } else {
-                tinymce.get('email_content').setContent('');
+                if (CKEDITOR.instances.email_content) {
+                    CKEDITOR.instances.email_content.setData('');
+                }
                 document.getElementById('email_subject').value = '';
 
             }
         });
-    });
-    tinymce.init({
-        selector: '#email_content',
-        width: 600,
-        height: 300,
-        api_key: '4svcnt4kjo6szxupqlr3bs4jtqvpo260pk2pba6njhd89l6b',
-        plugins: [
-        'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
-        'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
-        'media', 'table', 'emoticons', 'help'
-        ],
-        toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
-        'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
-        'forecolor backcolor emoticons | help',
-        menu: {
-        favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
-        },
-        menubar: 'favs file edit view insert format tools table help',
-        // content_css: 'css/content.css'
     });
 </script>
 @endsection
