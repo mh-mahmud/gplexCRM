@@ -71,7 +71,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::delete('/leads-forms/{id}', [LeadsFormController::class, 'destroy'])->name('leadsform-destroy');
 	Route::post('/leads-forms/search', [LeadsFormController::class, 'search'])->name('leadsform-search');
 
-	 //Lead Form route
+	//Lead dynamic table route
 	Route::get('/dynamic-table', [DynamicTableController::class, 'index'])->name('dynamictable-index');
 	Route::get('/dynamic-table/create', [DynamicTableController::class, 'create'])->name('dynamictable-create');
 	Route::get('/dynamic-table/{id}/edit', [DynamicTableController::class, 'edit'])->name('dynamictable-edit');
@@ -111,6 +111,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('user-details/{id}',     [UserController::class, 'show']);
     Route::delete('user-delete/{id}',   [UserController::class, 'destroy'])->name('user.destroy');
 	Route::get('user-profile/{id}',        [UserController::class, 'user_profile'])->name('user-profile');
+	Route::get('account-settings/{id}/edit', [UserController::class, 'profile_edit'])->name('profile-edit');
+    Route::put('account-settings/{id}', [UserController::class, 'update'])->name('profile-update');
 
     Route::get('permission-list',        [UserController::class, 'permission_index'])->name('permission.index');
     Route::get('permission-show/{id}',        [UserController::class, 'permission_show'])->name('permission.show');
