@@ -1169,7 +1169,7 @@
 											<!--end::Menu separator-->
 											<!--begin::Menu item-->
 											<div class="menu-item px-5">
-												<a href="{{ route('user-profile', $id) }}" class="menu-link px-5">My Profile</a>
+												{{-- <a href="{{ route('user-profile', $id) }}" class="menu-link px-5">My Profile</a> --}}
 											</div>
 											<!--end::Menu item-->
 											<!--begin::Menu item-->
@@ -3579,13 +3579,13 @@
 	<script>
 		ClassicEditor
 			.create(document.querySelector('.editor'))
+			.then(editor => {
+                document.querySelector('.editor').ckeditorInstance = editor;
+            })
 			.catch(error => {
 				console.error(error);
 			});
 	</script>
-
-	<script src="https://cdn.tiny.cloud/1/4svcnt4kjo6szxupqlr3bs4jtqvpo260pk2pba6njhd89l6b/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-
 	<script>
 		$('[name="date-table"]').flatpickr();
 		$('[name="birth_day"]').flatpickr();

@@ -185,7 +185,7 @@
                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Content</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" id="email_content"  name="email_content" rows="3"></textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid editor" id="email_content"  name="email_content" rows="3"></textarea>
                                                     @if ($errors->has('email_content'))
                                                         <span class="text-danger">{{ $errors->first('email_content') }}</span>
                                                     @endif
