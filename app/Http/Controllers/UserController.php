@@ -231,7 +231,7 @@ class UserController extends Controller
     public function profile_edit($id)
     {
         $user = $this->service->getUserById($id);
-        return view('users.account-settings', compact('user'));
+        return view('users.account_settings', compact('user'));
     }
 
 
