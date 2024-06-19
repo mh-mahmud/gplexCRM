@@ -145,7 +145,7 @@
 						@foreach ($users as $user)
 						<tr>
 
-						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
+						    <td class="text-dark fs-6">{{($users->currentPage() - 1) * $users->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{$user->parent_id}}</td>
 							<td class="text-dark fs-6">{{$user->name}}</td>
 							<td class="text-dark fs-6">{{$user->sub_name }}</td>
@@ -206,17 +206,7 @@
 		</div>
 
 		<!--Table Pagination-->
-		<ul class="pagination">
-			<li class="page-item previous disabled"><span class="page-link">Previous</span></span>
-			</li>
-			<li class="page-item "><a href="#" class="page-link">1</a></li>
-			<li class="page-item active"><a href="#" class="page-link">2</a></li>
-			<li class="page-item "><a href="#" class="page-link">3</a></li>
-			<li class="page-item "><a href="#" class="page-link">4</a></li>
-			<li class="page-item "><a href="#" class="page-link">5</a></li>
-			<li class="page-item "><a href="#" class="page-link">6</a></li>
-			<li class="page-item next"><a class="page-link" href="#">Next</span></a></li>
-		</ul>
+    	@include('components.pagination', ['paginator' => $users])
 		<!--End Table Pagination-->
 
 	</div>

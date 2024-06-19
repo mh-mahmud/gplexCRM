@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\DB;
 class UserService {
 
 	public function get_all_user() {
-		return User::paginate(10);
+		return User::paginate(config('constants.ROW_PER_PAGE'));
 	}
 
     public function get_all_role() {
-        return Role::paginate(10);
+        return Role::paginate(config('constants.ROW_PER_PAGE'));
     }
 
     public function create_user($request) {
@@ -68,7 +68,7 @@ class UserService {
     }
 
     public function get_all_permission() {
-        return Menu::paginate(100);
+        return Menu::paginate(config('constants.ROW_PER_PAGE'));
     }
 
     public function get_parent_list() {

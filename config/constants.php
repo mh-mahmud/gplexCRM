@@ -1,9 +1,8 @@
 <?php
 return [
-    'ROW_PER_PAGE'      => 30,
     'ACTIVE'            => 'y',
     'INACTIVE'          => 'n',
-    'ROW_PER_PAGE' => 10,
+    'ROW_PER_PAGE'      => 10,
     'SMS_SEND_MOBILE_NO' => '0111111111',
     'marital_status' => [
         'Single',
