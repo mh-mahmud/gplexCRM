@@ -9,6 +9,8 @@ use App\Models\SmsQueue;
 use App\Models\SmsLog;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserService {
 
@@ -226,4 +228,43 @@ class UserService {
     {
         return User::findOrFail($id);
     }
+
+    public function updateUser($id, $request)
+{
+    $user = User::findOrFail($id);
+    $data = $request->all();
+
+    // Validate current password if provided
+    if (!empty($data['current_password'])) {
+        if (!Hash::check($data['current_password'], $user->password)) {
+            throw new \Exception('Current password is incorrect.');
+        }
+
+        if (!empty($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        }
+    } else {
+        unset($data['password']);
+    }
+
+    // Handle profile image upload if provided
+    if ($request->hasFile('profile_image')) {
+        if ($user->profile_image) {
+            $previousImagePath = public_path().'/uploads/agents/'.$user->profile_image;
+            if (file_exists($previousImagePath)) {
+                unlink($previousImagePath);
+            }
+        }
+        $fileNameWithExt = $request->file('profile_image')->getClientOriginalName();
+        $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+        $extension = $request->file('profile_image')->getClientOriginalExtension();
+        $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+        $path = $request->file('profile_image')->move(public_path().'/uploads/agents', $fileNameToStore);
+        $data['profile_image'] = $fileNameToStore;
+    }
+
+    $user->update($data);
+
+    return $user;
+}
 }

@@ -111,8 +111,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('user-details/{id}',     [UserController::class, 'show']);
     Route::delete('user-delete/{id}',   [UserController::class, 'destroy'])->name('user.destroy');
 	Route::get('user-profile/{id}',        [UserController::class, 'user_profile'])->name('user-profile');
-	Route::get('account-settings/{id}/edit', [UserController::class, 'profile_edit'])->name('profile-edit');
-    Route::put('account-settings/{id}', [UserController::class, 'update'])->name('profile-update');
+	Route::get('/account-settings/{id}/edit', [UserController::class, 'profile_edit'])->name('profile-edit');
+	Route::put('/account-settings/{id}', [UserController::class, 'profile_update'])->name('profile-update');
 
     Route::get('permission-list',        [UserController::class, 'permission_index'])->name('permission.index');
     Route::get('permission-show/{id}',        [UserController::class, 'permission_show'])->name('permission.show');
