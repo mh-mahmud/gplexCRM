@@ -251,7 +251,7 @@
 						@foreach ($roles as $user)
 						<tr>
 
-						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
+							<td class="text-dark fs-6">{{($roles->currentPage() - 1) * $roles->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{$user->name}}</td>
 							<td class="text-dark fs-6">{{$user->permission_details }}</td>
 

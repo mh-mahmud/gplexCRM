@@ -229,8 +229,7 @@
 						<tbody>
 						@foreach ($emails as $email)
 						<tr>
-
-						    <td class="text-dark fs-6">{{ $loop->iteration}}</td>
+							<td class="text-dark fs-6">{{($emails->currentPage() - 1) * $emails->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{ $email->email_to }}</td>
 							<td class="text-dark fs-6">{{ $email->email_subject }}</td>
 							<td class="text-dark fs-6">{{ $email->email_content }}</td>
@@ -272,30 +271,8 @@
 			<li class="page-item next"><a class="page-link" href="#">Next</span></a></li>
 		</ul> -->
 
-		<ul class="pagination">
-			<!-- Previous Page Link -->
-			@if ($emails->onFirstPage())
-				<li class="page-item previous disabled"><span class="page-link">Previous</span></li>
-			@else
-				<li class="page-item previous"><a href="{{ $emails->previousPageUrl() }}" class="page-link">Previous</a></li>
-			@endif
-
-			<!-- Pagination Elements -->
-			@for ($page = 1; $page <= $emails->lastPage(); $page++)
-				@if ($page == $emails->currentPage())
-					<li class="page-item active"><span class="page-link">{{ $page }}</span></li>
-				@else
-					<li class="page-item"><a href="{{ $emails->url($page) }}" class="page-link">{{ $page }}</a></li>
-				@endif
-			@endfor
-
-			<!-- Next Page Link -->
-			@if ($emails->hasMorePages())
-				<li class="page-item next"><a href="{{ $emails->nextPageUrl() }}" class="page-link">Next</a></li>
-			@else
-				<li class="page-item next disabled"><span class="page-link">Next</span></li>
-			@endif
-		</ul>
+    	@include('components.pagination', ['paginator' => $emails])
+	
 
 		<!--End Table Pagination-->
 

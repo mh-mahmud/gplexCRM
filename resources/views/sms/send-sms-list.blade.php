@@ -125,7 +125,7 @@
 						<tbody>
 						@foreach ($sms as $value)
 						<tr>
-						    <td class="text-dark fs-6">{{ $loop->iteration}}</td>
+							<td class="text-dark fs-6">{{($sms->currentPage() - 1) * $sms->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{ $value->sms_to }}</td>
 							<td class="text-dark fs-6">{{ $value->sms_text }}</td>
 							<td class="text-dark fs-6">{{ Carbon::parse($value->log_time)->format('d-m-Y h:i A') }}</td>
@@ -166,30 +166,8 @@
 			<li class="page-item next"><a class="page-link" href="#">Next</span></a></li>
 		</ul> -->
 
-		<ul class="pagination">
-			<!-- Previous Page Link -->
-			@if ($sms->onFirstPage())
-				<li class="page-item previous disabled"><span class="page-link">Previous</span></li>
-			@else
-				<li class="page-item previous"><a href="{{ $sms->previousPageUrl() }}" class="page-link">Previous</a></li>
-			@endif
+		@include('components.pagination', ['paginator' => $sms])
 
-			<!-- Pagination Elements -->
-			@for ($page = 1; $page <= $sms->lastPage(); $page++)
-				@if ($page == $sms->currentPage())
-					<li class="page-item active"><span class="page-link">{{ $page }}</span></li>
-				@else
-					<li class="page-item"><a href="{{ $sms->url($page) }}" class="page-link">{{ $page }}</a></li>
-				@endif
-			@endfor
-
-			<!-- Next Page Link -->
-			@if ($sms->hasMorePages())
-				<li class="page-item next"><a href="{{ $sms->nextPageUrl() }}" class="page-link">Next</a></li>
-			@else
-				<li class="page-item next disabled"><span class="page-link">Next</span></li>
-			@endif
-		</ul>
 
 		<!--End Table Pagination-->
 
