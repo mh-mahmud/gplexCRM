@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('/lead/{id}', [LeadController::class, 'update'])->name('lead-update');
 	Route::delete('/lead/{id}', [LeadController::class, 'destroy'])->name('lead-destroy');
 	Route::post('/lead/search', [LeadController::class, 'search'])->name('lead-search');
+	Route::get('/leads-upload', [LeadController::class, 'leads_upload'])->name('leads-upload');
     //Lead Form route
 	Route::get('/leads-forms', [LeadsFormController::class, 'index'])->name('leadsform-index');
 	Route::get('/leads-forms/create', [LeadsFormController::class, 'create'])->name('leadsform-create');
@@ -70,6 +71,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('/leads-forms/{id}', [LeadsFormController::class, 'update'])->name('leadsform-update');
 	Route::delete('/leads-forms/{id}', [LeadsFormController::class, 'destroy'])->name('leadsform-destroy');
 	Route::post('/leads-forms/search', [LeadsFormController::class, 'search'])->name('leadsform-search');
+	
 
 	//Lead dynamic table route
 	Route::get('/dynamic-table', [DynamicTableController::class, 'index'])->name('dynamictable-index');
@@ -111,8 +113,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('user-details/{id}',     [UserController::class, 'show']);
     Route::delete('user-delete/{id}',   [UserController::class, 'destroy'])->name('user.destroy');
 	Route::get('user-profile/{id}',        [UserController::class, 'user_profile'])->name('user-profile');
-	Route::get('account-settings/{id}/edit', [UserController::class, 'profile_edit'])->name('profile-edit');
-    Route::put('account-settings/{id}', [UserController::class, 'update'])->name('profile-update');
+	Route::get('/account-settings/{id}/edit', [UserController::class, 'profile_edit'])->name('profile-edit');
+	Route::put('/account-settings/{id}', [UserController::class, 'profile_update'])->name('profile-update');
 
     Route::get('permission-list',        [UserController::class, 'permission_index'])->name('permission.index');
     Route::get('permission-show/{id}',        [UserController::class, 'permission_show'])->name('permission.show');

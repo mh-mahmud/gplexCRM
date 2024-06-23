@@ -75,10 +75,11 @@ class AgentController extends Controller {
 
 
     public function update(Request $request, $id)
-    {
+    {    //dd($request);die();
         
         $request->validate([
             'first_name' => 'required|string',
+            'email' => 'required|email|unique:users,email,' . $request->id,
             'last_name' => 'required|string',
             'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);

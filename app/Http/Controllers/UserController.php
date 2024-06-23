@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\UserService;
+use Illuminate\Support\Facades\Session;
 use Auth;
 
 class UserController extends Controller
@@ -246,12 +247,21 @@ class UserController extends Controller
             'gender' => 'nullable|string|max:6',
             'profile_image' => 'nullable|image|max:2048',
             'address' => 'nullable|string',
-            'current_password' => 'nullable|string|min:8',
-            'password' => 'nullable|string|min:8|confirmed',
+            'current_password' => 'nullable|string',
+            'password' => 'nullable|string|confirmed',
+            'password_confirmation' => 'required_with:password',
         ]);
 
-        $this->service->updateUser($id, $request->all());
-        return redirect()->back()->with('success', 'Account settings updated successfully.');
+        try {
+            //$this->service->updateUser($id, $request);
+            $user = $this->service->updateUser($id, $request);
+            // Update session data
+            Session::setId(session()->getId());
+            Session::put('users', $user);
+            return redirect()->back()->with('success', 'Account settings updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage())->withInput();
+        }
     }
 
     

@@ -1116,20 +1116,26 @@
 
 
 
+									
 									<?php
-									$email = \Session::get('users')->email;
-									$first_name = \Session::get('users')->first_name;
-									$last_name = \Session::get('users')->last_name;
-									$profile_image = \Session::get('users')->profile_image;
-									$id = \Session::get('users')->id;
-									// Get agent data
-									$agent = \App\Models\Agent::where('user_id', $id)->first();
-									$profile_image = $profile_image ? $profile_image : null;
+									$user = session('users');
+
+									$email = $user ? $user->email : '';
+									$first_name = $user ? $user->first_name : '';
+									$last_name = $user ? $user->last_name : '';
+									$profile_image = $user ? $user->profile_image : null;
+									$id = $user ? $user->id : '';
+
+									if ($id) {
+										// Get agent data
+										$agent = \App\Models\Agent::where('user_id', $id)->first();
+										$profile_image = $profile_image ? $profile_image : null;
+									}
 									?>
 									<div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 										<!--begin::Menu wrapper-->
 										<div class="cursor-pointer symbol symbol-30px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-											@if($profile_image != '')
+											@if($profile_image)
 											<img alt="Logo" src="{{ asset('uploads/agents/' . $profile_image) }}" />
 											@else
 											<img alt="Logo" src="{{ asset('uploads/noimage.jpg') }}" />

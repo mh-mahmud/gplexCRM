@@ -156,6 +156,7 @@
                                     <form class="g-form w-100" action="{{ route('agents-update', $agent->agent_id) }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
+                                        <input type="hidden" name="id" value="{{ $user->id }}">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
