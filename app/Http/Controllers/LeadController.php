@@ -205,5 +205,12 @@ class LeadController  extends Controller
         $this->leadService->deleteLead($id);
         return redirect()->route('lead-index')->with('success', 'Lead deleted successfully.');
     }
+
+
+    public function leads_upload()
+    {
+       
+        return view('leads.leads_upload');
+    }
     
 }
