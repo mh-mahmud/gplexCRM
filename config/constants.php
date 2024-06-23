@@ -2,7 +2,7 @@
 return [
     'ACTIVE'            => 'y',
     'INACTIVE'          => 'n',
-    'ROW_PER_PAGE'      => 1,
+    'ROW_PER_PAGE'      => 10,
     'SMS_SEND_MOBILE_NO' => '0111111111',
     'marital_status' => [
         'Single',
