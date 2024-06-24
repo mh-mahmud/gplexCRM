@@ -231,7 +231,8 @@
 						@foreach ($leadsForms as $leadsForm)
 						<tr>
 
-						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
+							<td class="text-dark fs-6">{{($leadsForms->currentPage() - 1) * $leadsForms->perPage() + $loop->iteration}}</td>
+
 							<!-- <td class="text-dark fs-6">{{$leadsForm->form_id}}</td> -->
 							<td class="text-dark fs-6">{{$leadsForm->form_name }}</td>
 							<td class="text-dark fs-6">{{$leadsForm->parent_name}}</td>
@@ -327,7 +328,9 @@
 			<li class="page-item next"><a class="page-link" href="#">Next</span></a></li>
 		</ul> -->
 
-		<ul class="pagination mt-2">
+    	@include('components.pagination', ['paginator' => $leadsForms])
+
+		{{-- <ul class="pagination mt-2">
 			<!-- Previous Page Link -->
 			@if ($leadsForms->onFirstPage())
 				<li class="page-item previous disabled"><span class="page-link"><i class="previous"></i></span></li>
@@ -350,7 +353,7 @@
 			@else
 				<li class="page-item next disabled"><span class="page-link"><i class="next"></i></span></li>
 			@endif
-		</ul>
+		</ul> --}}
 
 		<!--End Table Pagination-->
 

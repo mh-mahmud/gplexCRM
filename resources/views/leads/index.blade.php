@@ -276,7 +276,7 @@ use Carbon\Carbon;
 							@foreach($leads as $lead)
 								<tr>
 
-									<td class="text-dark fs-6">{{$loop->iteration}}</td>
+									<td class="text-dark fs-6">{{($leads->currentPage() - 1) * $leads->perPage() + $loop->iteration}}</td>
 									<td class="text-dark fs-6">{{ $lead->leadsForm?->form_name ?? '' }}</td>
 									<!-- <td class="text-dark fs-6">{{ $lead->first_name }}</td> -->
                                     <td class="text-dark fs-6">{{ $lead->last_name }}</td>
@@ -361,7 +361,10 @@ use Carbon\Carbon;
 			<li class="page-item next"><a class="page-link" href="#">Next</span></a></li>
 		</ul> -->
 
-			<ul class="pagination mt-2">
+    	@include('components.pagination', ['paginator' => $leads])
+
+
+			{{-- <ul class="pagination mt-2">
 				<!-- Previous Page Link -->
 				@if ($leads->onFirstPage())
 				<li class="page-item previous disabled"><span class="page-link"><i class="previous"></i></span></li>
@@ -384,7 +387,7 @@ use Carbon\Carbon;
 					@else
 					<li class="page-item next disabled"><span class="page-link"><i class="next"></i></span></li>
 					@endif
-			</ul>
+			</ul> --}}
 
 			<!--End Table Pagination-->
 

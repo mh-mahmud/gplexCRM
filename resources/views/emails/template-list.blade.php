@@ -229,7 +229,7 @@
 						@foreach ($templates as $template)
 						<tr>
 
-						    <td class="text-dark fs-6">{{ $loop->iteration}}</td>
+							<td class="text-dark fs-6">{{($templates->currentPage() - 1) * $templates->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{ $template->email_subject }}</td>
 							<td class="text-dark fs-6">{!! $template->email_content !!}</td>
 		                    <td>
@@ -324,30 +324,8 @@
 			<li class="page-item next"><a class="page-link" href="#">Next</span></a></li>
 		</ul> -->
 
-		<ul class="pagination">
-			<!-- Previous Page Link -->
-			@if ($templates->onFirstPage())
-				<li class="page-item previous disabled"><span class="page-link">Previous</span></li>
-			@else
-				<li class="page-item previous"><a href="{{ $templates->previousPageUrl() }}" class="page-link">Previous</a></li>
-			@endif
-
-			<!-- Pagination Elements -->
-			@for ($page = 1; $page <= $templates->lastPage(); $page++)
-				@if ($page == $templates->currentPage())
-					<li class="page-item active"><span class="page-link">{{ $page }}</span></li>
-				@else
-					<li class="page-item"><a href="{{ $templates->url($page) }}" class="page-link">{{ $page }}</a></li>
-				@endif
-			@endfor
-
-			<!-- Next Page Link -->
-			@if ($templates->hasMorePages())
-				<li class="page-item next"><a href="{{ $templates->nextPageUrl() }}" class="page-link">Next</a></li>
-			@else
-				<li class="page-item next disabled"><span class="page-link">Next</span></li>
-			@endif
-		</ul>
+    	@include('components.pagination', ['paginator' => $templates])
+		
 
 		<!--End Table Pagination-->
 

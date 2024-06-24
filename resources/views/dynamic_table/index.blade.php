@@ -230,8 +230,7 @@
 						@foreach ($dynamicTables as $dynamicTable)
 						<tr>
 
-						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
-							
+							<td class="text-dark fs-6">{{($dynamicTables->currentPage() - 1) * $dynamicTables->perPage() + $loop->iteration}}</td>
 						
 							<td class="text-dark fs-6">{{ $dynamicTable->leadsForm?->form_name ?? '' }}</td>
 							<td class="text-dark fs-6">{{$dynamicTable->table_name}}</td>
@@ -321,7 +320,9 @@
 			<li class="page-item next"><a class="page-link" href="#">Next</span></a></li>
 		</ul> -->
 
-		<ul class="pagination mt-2">
+    	@include('components.pagination', ['paginator' => $dynamicTables])
+
+		{{-- <ul class="pagination mt-2">
 			<!-- Previous Page Link -->
 			@if ($dynamicTables->onFirstPage())
 				<li class="page-item previous disabled"><span class="page-link"><i class="previous"></i></span></li>
@@ -344,7 +345,7 @@
 			@else
 				<li class="page-item next disabled"><span class="page-link"><i class="next"></i></span></li>
 			@endif
-		</ul>
+		</ul> --}}
 
 		<!--End Table Pagination-->
 

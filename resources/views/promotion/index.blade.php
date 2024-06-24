@@ -233,7 +233,7 @@
 						@foreach ($promotions as $promotion)
 						<tr>
 
-						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
+							<td class="text-dark fs-6">{{($promotions->currentPage() - 1) * $promotions->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{$promotion->promotion_title }}</td>
 							<td class="text-dark fs-6"> 
 							@if($promotion->start_date)
@@ -338,8 +338,9 @@
 			<li class="page-item "><a href="#" class="page-link">6</a></li>
 			<li class="page-item next"><a class="page-link" href="#">Next</span></a></li>
 		</ul> -->
+    	@include('components.pagination', ['paginator' => $promotions])
 
-		<ul class="pagination mt-2">
+		{{-- <ul class="pagination mt-2">
 			<!-- Previous Page Link -->
 			@if ($promotions->onFirstPage())
 				<li class="page-item previous disabled"><span class="page-link"><i class="previous"></i></span></li>
@@ -362,7 +363,7 @@
 			@else
 				<li class="page-item next disabled"><span class="page-link"><i class="next"></i></span></li>
 			@endif
-		</ul>
+		</ul> --}}
 
 		<!--End Table Pagination-->
 
