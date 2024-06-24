@@ -25,8 +25,8 @@
 	<!--begin::Global Stylesheets Bundle(used by all pages)-->
 	<link href="{{url('/')}}/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 	<link href="{{url('/')}}/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-	<link href="{{url('/')}}/assets/css/custom.css" rel="stylesheet" type="text/css" />
 	<link href="{{url('/')}}/assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+	<link href="{{url('/')}}/assets/css/custom.css" rel="stylesheet" type="text/css" />
 	<script src="{{url('/')}}/assets/js/sweetalert2.min.js"></script>
 	<!--end::Global Stylesheets Bundle-->
 </head>

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\LeadsForm;
@@ -41,10 +42,11 @@ class LeadController  extends Controller
 
     public function create(Request $request)
     {
+        //dd('sdsd');die();
         $formName = [
             1 => 'Form A',
             2 => 'Form B',
-            // Add more form names and IDs as needed
+           
         ];
 
         $fieldsByTable = [];
@@ -207,10 +209,80 @@ class LeadController  extends Controller
     }
 
 
-    public function leads_upload()
+  
+
+    public function leads_upload_backup(Request $request)
     {
-       
-        return view('leads.leads_upload');
+        //dd($request->form_id);die();
+        $formName = [
+            1 => 'Form A',
+            2 => 'Form B',
+           
+        ];
+
+        $fieldsByTable = [];
+        $formId = $request->input('form_id');
+
+        if ($request->has('form_id')) {
+            $formId = $request->input('form_id');
+            $fields = LeadFormDetail::where('form_id', $formId)->get();
+
+            foreach ($fields as $field) {
+                $fieldsByTable[$field->table_name][] = $field;
+            }
+        }
+
+        return view('leads.leads_upload', compact('formName', 'fieldsByTable','formId'));
     }
+
+
+    public function leads_upload(Request $request)
+    {
+        //dd($request->form_id);die();
+        $formName = [
+            1 => 'Form A',
+            2 => 'Form B',
+           
+        ];
+
+        
+        $formId = $request->input('form_id');
+
+
+        return view('leads.leads_upload', compact('formName','formId'));
+    }
+
+
+    public function downloadSampleFile(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'form_id' => 'required|exists:leads_form,form_id'
+        ]);
+        $leadFormDetailsColumns = LeadFormDetail::where('form_id', $request->form_id)->pluck('field_name')->toArray();
+        // Get columns from Lead table
+        $leadColumns = (new Lead)->getFillable();
+
+        //Merge columns ensuring no duplicates
+        $columns = array_unique(array_merge($leadColumns, $leadFormDetailsColumns));
+        $columns = array_filter($columns, function ($column) {
+            return $column !== 'form_id' && $column !== 'parent_id';
+        });
+        //dd($columns);die();
+        $callback = function () use ($columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+            fclose($file);
+        };
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="sample-file.csv"',
+        ];
+
+        return Response::stream($callback, 200, $headers);
+    }
+
+
     
 }
