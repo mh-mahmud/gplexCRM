@@ -12,12 +12,12 @@
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                             <!--begin::Title-->
-                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Tables
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Lead Upload
                                 <!--begin::Separator-->
                                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Here is the table data</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Here is Lead Upload</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -38,7 +38,7 @@
                                 <div class="card-header">
                                     <div class="card-title w-100">
                                         <div class="d-flex flex-wrap justify-content-between align-items-center w-100">
-                                            <h2>File Upload Here</h2>
+                                            <h2>Lead File Upload Here</h2>
                                             <a href="#" role="button" download class="btn btn-sm btn-success d-flex align-items-center">
                                                 <i class="bi bi-file-earmark-text-fill fs-2"></i>  Download File
                                             </a>

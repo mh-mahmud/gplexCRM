@@ -207,10 +207,33 @@ class LeadController  extends Controller
     }
 
 
-    public function leads_upload()
+    public function leads_upload_backup()
     {
        
         return view('leads.leads_upload');
+    }
+
+
+    public function leads_upload(Request $request)
+    {
+        $formName = [
+            1 => 'Form A',
+            2 => 'Form B',
+            // Add more form names and IDs as needed
+        ];
+
+        $fieldsByTable = [];
+
+        if ($request->has('form_id')) {
+            $formId = $request->input('form_id');
+            $fields = LeadFormDetail::where('form_id', $formId)->get();
+
+            foreach ($fields as $field) {
+                $fieldsByTable[$field->table_name][] = $field;
+            }
+        }
+
+        return view('leads.leads_upload', compact('formName', 'fieldsByTable'));
     }
     
 }
