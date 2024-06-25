@@ -10,7 +10,17 @@
 .table.table-row-gray-100 tr {
     border-bottom-color: #ddd;
 }
-
+.bd-cyan {
+    color: #111 !important;
+    background-color: #cff4fc !important;
+}
+.bd-cyan-color {
+    background-color: #cff4fc !important;
+}
+.text-dark {
+    color: #333 !important;
+    font-size: 12.5px !important;
+}
 /*============================
          For File Upload
   ============================*/
