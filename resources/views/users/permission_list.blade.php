@@ -126,17 +126,17 @@
 				<div class="table-responsive">
 					<!--begin::Table-->
 					<table
-						class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+						class="table table-sm table-condensed table-row-gray-100 align-middle gs-0 gy-3 table-row-bordered">
 						<!--begin::Table head-->
 						<thead>
-						<tr class="fw-bolder">
-						    <th class="min-w-25px">SL</th>
+						<tr class="fw-bolder text-muted bg-light bd-cyan">
+						    <th class="ps-4 min-w-25px">SL</th>
 							<th class="min-w-140px">Parent Id</th>
 							<th class="min-w-150px">Permission name</th>
 							<th class="min-w-140px">Slug</th>
 							<!-- <th class="min-w-120px">Details</th> -->
 							<th class="min-w-120px">Show in Menu</th>
-							<th class="min-w-100px text-end">Actions</th>
+							<th class="min-w-100px text-end-new">Actions</th>
 						</tr>
 						</thead>
 						<!--end::Table head-->
@@ -145,7 +145,7 @@
 						@foreach ($users as $user)
 						<tr>
 
-						    <td class="text-dark fs-6">{{($users->currentPage() - 1) * $users->perPage() + $loop->iteration}}</td>
+						    <td class="ps-5 text-dark fs-6">{{($users->currentPage() - 1) * $users->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{$user->parent_id}}</td>
 							<td class="text-dark fs-6">{{$user->name}}</td>
 							<td class="text-dark fs-6">{{$user->sub_name }}</td>

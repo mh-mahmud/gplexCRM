@@ -235,7 +235,7 @@
 
 				<div class="table-responsive">
 
-					<table class="table align-middle gs-0 gy-4">
+					<table class="table align-middle gs-0 gy-4 table-row-bordered">
 
 						<thead>
 						<tr class="fw-bolder text-muted bg-light bd-cyan">
