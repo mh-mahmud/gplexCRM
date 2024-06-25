@@ -218,12 +218,12 @@
 							</span>
 						<!--end::Svg Icon-->
 						<input type="text" data-kt-customer-table-filter="search"
-							   class="form-control form-control-solid w-250px ps-15"
+							   class="form-control form-control-sm w-250px ps-15"
 							   placeholder="Search Customers">
 					</div>
 					<!--end::Input group-->
 
-					<button type="button" class="btn btn-primary">Search</button>
+					<button type="button" class="btn btn-sm btn-primary ">Search</button>
 
 
 				</div>
@@ -235,15 +235,15 @@
 
 				<div class="table-responsive">
 
-					<table class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+					<table class="table align-middle gs-0 gy-4">
 
 						<thead>
-						<tr class="fw-bolder">
-						    <th class="min-w-25px">SL</th>
-							<th class="min-w-150px">Role Name</th>
-							<th class="min-w-140px">Permission Details</th>
+						<tr class="fw-bolder text-muted bg-light bd-cyan">
+						    <th class="ps-4 min-w-25px rounded-start">SL</th>
+							<th class="min-w-60px">Role Name</th>
+							<th class="min-w-180px">Permission Details</th>
 							<th class="min-w-120px">Status</th>
-							<th class="min-w-100px text-end">Actions</th>
+							<th class="min-w-100px text-end rounded-end" style="padding-right: 15px">Actions</th>
 						</tr>
 						</thead>
 
@@ -251,9 +251,9 @@
 						@foreach ($roles as $user)
 						<tr>
 
-							<td class="text-dark fs-6">{{($roles->currentPage() - 1) * $roles->perPage() + $loop->iteration}}</td>
+							<td class="ps-5 text-dark fs-6">{{($roles->currentPage() - 1) * $roles->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{$user->name}}</td>
-							<td class="text-dark fs-6">{{$user->permission_details }}</td>
+							<td class="text-dark fs-6" style="max-width: 200px">{{$user->permission_details }}</td>
 
 							<td>
 								@if ($user->status == 1)
@@ -334,6 +334,8 @@
 		<!--Table Pagination-->
     	@include('components.pagination', ['paginator' => $roles])
 		<!--End Table Pagination-->
+
+
 
 	</div>
 </div>

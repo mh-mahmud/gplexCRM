@@ -31,16 +31,39 @@
                                 Tables View
                   ***********************************-->
     <div class="container-fluid">
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+        @endif
+
+        @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{!! session('error') !!}',
+                showConfirmButton: false,
+                timer: 2500
+            });
+        </script>
+        @endif
         <div class="row">
             <div class="col-xxl-8 mx-auto">
                 <div class="card mb-5">
                     <div class="card-header">
                         <div class="card-title w-100">
                             <div class="d-flex flex-wrap justify-content-between align-items-center w-100">
-                           
+
 
                                 <h2>Lead File Upload Here</h2>
-                                
+
                                 <a href="{{ route('sample-file', ['form_id' => $formId]) }}" role="button" class="btn btn-sm btn-success d-flex align-items-center">
                                     <i class="bi bi-file-earmark-text-fill fs-2"></i> Download Sample File
                                 </a>
@@ -50,19 +73,22 @@
                     </div>
                     <!--begin::Body-->
                     <div class="card-body py-5">
-
                         <!-- Upload  -->
-                        <form id="file-upload-form" class="uploader">
-                            <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+                        <form id="file-upload-form" class="uploader" action="{{ route('lead-upload-file') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <input id="file-upload" type="file" name="fileUpload" accept=".csv" />
+                            <input type="hidden" name="form_id" value="{{ $formId }}" />
 
                             <label for="file-upload" id="file-drag">
                                 <img id="file-image" src="#" alt="Preview" class="hidden">
                                 <div id="start">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     <div>Select a file or drag here</div>
-                                    <div id="notimage" class="hidden">Please select an image</div>
+                                    <div id="notimage" class="hidden">Please select a CSV file</div>
                                     <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
+
                                 </div>
+                               
                                 <div id="response" class="hidden">
                                     <div id="messages"></div>
                                     <progress class="progress" id="file-progress" value="0">
@@ -70,10 +96,15 @@
                                     </progress>
                                 </div>
                             </label>
+                            <div class="text-center">
+                            <button type="submit" class="btn btn-success mt-3 ">Upload</button>
+                            </div>
+
                         </form>
 
 
                     </div>
+
                     <!--begin::Body-->
 
                 </div>

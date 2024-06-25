@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -25,18 +26,18 @@ class LeadController  extends Controller
         $this->leadService = $leadService;
     }
 
-    
+
     public function index()
     {
         $leads = $this->leadService->getAllLeads();
         //$formName = LeadsForm::pluck('form_name', 'form_id');
         $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
-        return view('leads.index', compact('leads','formName'));
+        return view('leads.index', compact('leads', 'formName'));
     }
 
     public function create_backup()
-    {   
-        
+    {
+
         return view('leads.create');
     }
 
@@ -46,7 +47,7 @@ class LeadController  extends Controller
         $formName = [
             1 => 'Form A',
             2 => 'Form B',
-           
+
         ];
 
         $fieldsByTable = [];
@@ -63,7 +64,7 @@ class LeadController  extends Controller
         return view('leads.create', compact('formName', 'fieldsByTable'));
     }
 
-    
+
 
     public function store_backup(Request $request)
     {
@@ -73,7 +74,7 @@ class LeadController  extends Controller
             'title' => 'required|string|max:191',
             'email' => 'nullable|string|email|max:191|unique:leads,email',
             'phone' => 'required|string|max:191',
-            
+
         ]);
 
         $data = $request->all();
@@ -83,8 +84,8 @@ class LeadController  extends Controller
     }
 
     public function store(Request $request)
-    {  
-       
+    {
+
         $request->validate([
             'first_name' => 'required|string|max:191',
             'last_name' => 'required|string|max:191',
@@ -97,11 +98,11 @@ class LeadController  extends Controller
 
         //$data = $request->only(['first_name', 'last_name', 'title', 'email', 'phone', 'lead_status','form_id']);
         $data = $request->all();
-        
+
         $dynamicFields = $request->except(['first_name', 'last_name', 'title', 'email', 'phone', 'form_id', '_token']);
         //dd($dynamicFields);die();
-        
-        
+
+
 
         $this->leadService->createLead($data, $request->input('form_id'), $dynamicFields);
 
@@ -130,13 +131,13 @@ class LeadController  extends Controller
         return view('leads.show', compact('lead', 'tableData'));
     }
 
-    
+
 
     public function edit_backup($id)
-    {   
+    {
         $formName = LeadsForm::pluck('form_name', 'form_id');
         $lead = $this->leadService->getLeadById($id);
-        return view('leads.edit', compact('lead','formName'));
+        return view('leads.edit', compact('lead', 'formName'));
     }
 
     public function edit($id)
@@ -146,24 +147,24 @@ class LeadController  extends Controller
         $lead = $this->leadService->getLeadById($id);
         $fieldsByTable = [];
         $tableData = [];
-    
+
         if ($lead->form_id) {
             $formId = $lead->form_id;
             $fields = LeadFormDetail::where('form_id', $formId)->get();
-    
+
             foreach ($fields as $field) {
                 $fieldsByTable[$field->table_name][] = $field;
-    
+
                 // specific table based on lead_id
                 if (!isset($tableData[$field->table_name])) {
                     $tableData[$field->table_name] = DB::table($field->table_name)->where('lead_id', $lead->id)->first();
                 }
             }
         }
-    
+
         return view('leads.edit', compact('lead', 'formName', 'fieldsByTable', 'tableData'));
     }
-    
+
 
     public function update(Request $request, $id)
     {
@@ -199,7 +200,7 @@ class LeadController  extends Controller
         ]);
 
         $leads = $this->leadService->searchLeadForm($request);
-        return view('leads.index', compact('leads','formName'));
+        return view('leads.index', compact('leads', 'formName'));
     }
 
     public function destroy($id)
@@ -209,7 +210,7 @@ class LeadController  extends Controller
     }
 
 
-  
+
 
     public function leads_upload_backup(Request $request)
     {
@@ -217,7 +218,7 @@ class LeadController  extends Controller
         $formName = [
             1 => 'Form A',
             2 => 'Form B',
-           
+
         ];
 
         $fieldsByTable = [];
@@ -232,24 +233,46 @@ class LeadController  extends Controller
             }
         }
 
-        return view('leads.leads_upload', compact('formName', 'fieldsByTable','formId'));
+        return view('leads.leads_upload', compact('formName', 'fieldsByTable', 'formId'));
     }
 
 
     public function leads_upload(Request $request)
     {
-        //dd($request->form_id);die();
-        $formName = [
-            1 => 'Form A',
-            2 => 'Form B',
-           
+        $formId = $request->input('form_id');
+        return view('leads.leads_upload', compact('formId'));
+    }
+
+
+    public function downloadSampleFile_backup(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'form_id' => 'required|exists:leads_form,form_id'
+        ]);
+        $leadFormDetailsColumns = LeadFormDetail::where('form_id', $request->form_id)->pluck('field_name')->toArray();
+        // Get columns from Lead table
+        $leadColumns = (new Lead)->getFillable();
+
+        //Merge columns ensuring no duplicates
+        $columns = array_unique(array_merge($leadColumns, $leadFormDetailsColumns));
+        $columns = array_filter($columns, function ($column) {
+            return $column !== 'form_id' && $column !== 'parent_id';
+        });
+
+        //dd($columns);die();
+        $callback = function () use ($columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+            fclose($file);
+        };
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="sample-file.csv"',
         ];
 
-        
-        $formId = $request->input('form_id');
-
-
-        return view('leads.leads_upload', compact('formName','formId'));
+        return Response::stream($callback, 200, $headers);
     }
 
 
@@ -268,10 +291,15 @@ class LeadController  extends Controller
         $columns = array_filter($columns, function ($column) {
             return $column !== 'form_id' && $column !== 'parent_id';
         });
-        //dd($columns);die();
-        $callback = function () use ($columns) {
+
+        // Map columns to user-friendly names
+        $formattedColumns = array_map(function ($column) {
+            return ucwords(str_replace('_', ' ', $column));
+        }, $columns);
+
+        $callback = function () use ($formattedColumns) {
             $file = fopen('php://output', 'w');
-            fputcsv($file, $columns);
+            fputcsv($file, $formattedColumns);
             fclose($file);
         };
 
@@ -283,6 +311,269 @@ class LeadController  extends Controller
         return Response::stream($callback, 200, $headers);
     }
 
+    public function upload_file_backup(Request $request)
+    {
+        // Custom validation messages
+        $messages = [
+            'fileUpload.required' => 'The file upload is required.',
+            'fileUpload.file' => 'The uploaded file must be a valid file.',
+            'fileUpload.mimes' => 'The uploaded file must be a file of type: csv, txt.',
+            'form_id.required' => 'The form ID is required.',
+            'form_id.exists' => 'The selected form ID is invalid.',
+        ];
 
-    
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'fileUpload' => 'required|file|mimes:csv,txt',
+            'form_id' => 'required|exists:leads_form,form_id'
+        ], $messages);
+
+        if ($validator->fails()) {
+            // Collect validation error messages
+            $errorMessages = implode(' ', $validator->errors()->all());
+            return redirect()->back()->with('error', $errorMessages)->withInput();
+        }
+
+        $formId = $request->input('form_id');
+        $parentId = DB::table('leads_form')->where('form_id', $formId)->value('parent_id');
+
+        //uploaded file code
+        if ($request->hasFile('fileUpload')) {
+            $file = $request->file('fileUpload');
+            $path = $file->getRealPath();
+
+            // Open and read the CSV file
+            $handle = fopen($path, 'r');
+            $header = fgetcsv($handle, 1000, ',');
+
+            // Check if the header matches the expected columns
+            if ($header && count($header) > 0) {
+                // Get fields configuration from LeadFormDetail
+                $fieldsConfig = LeadFormDetail::where('form_id', $formId)->get()->groupBy('table_name');
+
+                // Begin a database transaction
+                DB::beginTransaction();
+
+                try {
+                    $errors = []; // To collect validation errors
+
+                    while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                        $csvData = array_combine($header, $data);
+
+                        // Validate required fields and unique email
+                        $validator = Validator::make($csvData, [
+                            'first_name' => 'required|string|max:191',
+                            'last_name' => 'required|string|max:191',
+                            'title' => 'required|string|max:191',
+                            'email' => 'nullable|string|email|max:191|unique:leads,email',
+                            'phone' => 'required|string|max:191',
+                        ]);
+
+                        if ($validator->fails()) {
+                            $errors[] = $validator->errors()->all();
+                            continue; // Skip to next iteration if validation fails
+                        }
+
+                        // Insert data into the Lead table
+                        $leadData = [];
+                        foreach ((new Lead)->getFillable() as $field) {
+                            if (isset($csvData[$field])) {
+                                //empty strings and set to NULL if empty
+                                $leadData[$field] = $csvData[$field] === '' ? NULL : $csvData[$field];
+                            }
+                        }
+
+                        $leadData['form_id'] = $formId;
+                        $leadData['lead_status'] = '1';
+                        $leadId = DB::table('leads')->insertGetId($leadData);
+                        if (!$leadId) {
+                            throw new \Exception("Failed to insert lead data and retrieve lead ID.");
+                        }
+
+                        // Insert data into the respective tables based on the configuration
+                        foreach ($fieldsConfig as $tableName => $fields) {
+                            $insertData = [
+                                'lead_id' => $leadId,
+                                'form_id' => $formId,
+                            ];
+                            if ($parentId !== null) {
+                                $insertData['parent_id'] = $parentId;
+                            }
+
+                            foreach ($fields as $field) {
+                                if (isset($csvData[$field->field_name])) {
+                                    // Check for empty strings and set to NULL if empty
+                                    $insertData[$field->field_name] = $csvData[$field->field_name] === '' ? NULL : $csvData[$field->field_name];
+                                }
+                            }
+
+                            if (!empty($insertData)) {
+                                DB::table($tableName)->insert($insertData);
+                            }
+                        }
+                    }
+
+                    fclose($handle);
+
+                    // Commit the transaction
+                    DB::commit();
+
+                    if (!empty($errors)) {
+                        return redirect()->back()->with('error', 'Validation failed for some records. Errors:' . json_encode($errors));
+                    } else {
+                        return redirect()->back()->with('success', 'File uploaded and data inserted successfully.');
+                    }
+                } catch (\Exception $e) {
+                    // Rollback the transaction if something goes wrong
+                    DB::rollback();
+
+                    return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+                }
+            } else {
+                return redirect()->back()->with('error', 'Invalid CSV file format.');
+            }
+        } else {
+            return redirect()->back()->with('error', 'File not uploaded.');
+        }
+    }
+
+
+
+    public function upload_file(Request $request)
+    {
+        // Custom validation messages
+        $messages = [
+            'fileUpload.required' => 'The file upload is required.',
+            'fileUpload.file' => 'The uploaded file must be a valid file.',
+            'fileUpload.mimes' => 'The uploaded file must be a file of type: csv, txt.',
+            'form_id.required' => 'The form ID is required.',
+            'form_id.exists' => 'The selected form ID is invalid.',
+        ];
+
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'fileUpload' => 'required|file|mimes:csv,txt',
+            'form_id' => 'required|exists:leads_form,form_id'
+        ], $messages);
+
+        if ($validator->fails()) {
+            // Collect validation error messages
+            $errorMessages = implode(' ', $validator->errors()->all());
+            return redirect()->back()->with('error', $errorMessages)->withInput();
+        }
+
+        $formId = $request->input('form_id');
+        $parentId = DB::table('leads_form')->where('form_id', $formId)->value('parent_id');
+
+        //uploaded file code
+        if ($request->hasFile('fileUpload')) {
+            $file = $request->file('fileUpload');
+            $path = $file->getRealPath();
+
+            // Open and read the CSV file
+            $handle = fopen($path, 'r');
+            $header = fgetcsv($handle, 1000, ',');
+
+            // Modify header to convert spaces to underscores and uppercase to lowercase
+            $dbHeader = array_map(function ($column) {
+                $column = str_replace(' ', '_', $column); // Replace spaces with underscores
+                $column = strtolower($column); // Convert to lowercase
+                return $column;
+            }, $header);
+
+            // Check if the header matches the expected columns
+            if ($dbHeader && count($dbHeader) > 0) {
+                // Get fields configuration from LeadFormDetail
+                $fieldsConfig = LeadFormDetail::where('form_id', $formId)->get()->groupBy('table_name');
+
+                // Begin a database transaction
+                DB::beginTransaction();
+
+                try {
+                    $errors = []; // To collect validation errors
+
+                    while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                        $csvData = array_combine($dbHeader, $data);
+
+                        // Validate required fields and unique email
+                        $validator = Validator::make($csvData, [
+                            'first_name' => 'required|string|max:191',
+                            'last_name' => 'required|string|max:191',
+                            'title' => 'required|string|max:191',
+                            'email' => 'nullable|string|email|max:191|unique:leads,email',
+                            'phone' => 'required|string|max:191',
+                        ]);
+
+                        if ($validator->fails()) {
+                            $errors[] = $validator->errors()->all();
+                            continue; // Skip to next iteration if validation fails
+                        }
+
+                        // Insert data into the Lead table
+                        $leadData = [];
+                        foreach ((new Lead)->getFillable() as $field) {
+                            if (isset($csvData[$field])) {
+                                //empty strings and set to NULL if empty
+                                $leadData[$field] = $csvData[$field] === '' ? NULL : $csvData[$field];
+                            }
+                        }
+
+                        $leadData['form_id'] = $formId;
+                        $leadData['lead_status'] = '1';
+                        $leadId = DB::table('leads')->insertGetId($leadData);
+                        if (!$leadId) {
+                            throw new \Exception("Failed to insert lead data and retrieve lead ID.");
+                        }
+
+                        // Insert data into the respective tables based on the configuration
+                        foreach ($fieldsConfig as $tableName => $fields) {
+                            $insertData = [
+                                'lead_id' => $leadId,
+                                'form_id' => $formId,
+                            ];
+                            if ($parentId !== null) {
+                                $insertData['parent_id'] = $parentId;
+                            }
+
+                            foreach ($fields as $field) {
+                                if (isset($csvData[$field->field_name])) {
+                                    // Check for empty strings and set to NULL if empty
+                                    $insertData[$field->field_name] = $csvData[$field->field_name] === '' ? NULL : $csvData[$field->field_name];
+                                }
+                            }
+
+                            if (!empty($insertData)) {
+                                DB::table($tableName)->insert($insertData);
+                            }
+                        }
+                    }
+
+                    fclose($handle);
+
+                    // Commit the transaction
+                    DB::commit();
+
+                    if (!empty($errors)) {
+                        return redirect()->back()->with('error', 'Validation failed for some records. Errors:' . json_encode($errors));
+                    } else {
+                        return redirect()->back()->with('success', 'File uploaded and data inserted successfully.');
+                    }
+                } catch (\Exception $e) {
+                    // Rollback the transaction if something goes wrong
+                    DB::rollback();
+
+                    return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+                }
+            } else {
+                return redirect()->back()->with('error', 'Invalid CSV file format.');
+            }
+        } else {
+            return redirect()->back()->with('error', 'File not uploaded.');
+        }
+    }
+
+
+
+
+
 }
