@@ -61,8 +61,9 @@
                                             </div> --}}
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Mobile No.</label>
+                                                    <label class="form-label fw-bolder text-dark">Mobile No.<span class="text-danger">*</span></label>
                                                     <input type="file" name="file" class="form-control form-control-sm form-control-solid">
+                                                    <span class="text-danger">csv, xlsx, xls allowed.</span>
                                                     @if ($errors->has('file'))
                                                         <span class="text-danger">{{ $errors->first('file') }}</span>
                                                     @endif
@@ -81,7 +82,7 @@
                                             </div>
                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Content</label>
+                                                    <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
                                                     <textarea class="form-control form-control-sm  form-control-solid" name="sms_text" id="sms_text" rows="3">{{ old('sms_text') }}</textarea>
                                                     @if ($errors->has('sms_text'))
                                                         <span class="text-danger">{{ $errors->first('sms_text') }}</span>
