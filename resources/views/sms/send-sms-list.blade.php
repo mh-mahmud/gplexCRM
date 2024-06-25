@@ -26,6 +26,12 @@
                         <!--end::Page title-->
                         <!--begin::Actions-->
                         <!--end::Actions-->
+						<div data-kt-swapper="true" data-kt-swapper-mode="prepend"
+						data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
+						class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">	
+							<a href="{{ route('send-sms') }}" class="btn btn-sm btn-primary">Send SMS</a>
+							<a href="{{ route('send-bulk-sms') }}" class="btn btn-sm btn-primary ms-1">Send Bulk SMS</a>
+						</div>
                     </div>
                     <!--end::Container-->
                 </div>

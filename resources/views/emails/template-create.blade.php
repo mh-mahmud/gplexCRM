@@ -157,7 +157,7 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Email Subject</label>
+                                                    <label class="form-label fw-bolder text-dark">Email Subject<span class="text-danger">*</span></label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
@@ -184,7 +184,7 @@
 
                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Content</label>
+                                                    <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
                                                     <textarea class="form-control form-control-sm  form-control-solid editor" id="email_content"  name="email_content" rows="3"></textarea>
                                                     @if ($errors->has('email_content'))
                                                         <span class="text-danger">{{ $errors->first('email_content') }}</span>

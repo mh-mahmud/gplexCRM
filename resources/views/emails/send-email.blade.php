@@ -22,6 +22,7 @@
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
+
                         <!--end::Page title-->
                         <!--begin::Actions-->
                         <div class="d-flex align-items-center py-1">
@@ -49,7 +50,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Button-->
-                            {{-- <a href="{{ route('email-template') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Email Template List</a> --}}
+                            <a href="{{ route('send-email-list') }}" class="btn btn-sm btn-primary">Email List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
@@ -82,7 +83,7 @@
                                          @csrf
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">To</label>
+                                                    <label class="form-label fw-bolder text-dark">To<span class="text-danger">*</span></label>
                                                     <input class="form-control form-control-sm form-control-solid"
                                                            type="text" id="to_email" name="to_email" autocomplete="off" value="{{ old('to_email') }}"/>
                                                     @if ($errors->has('to_email'))
@@ -104,7 +105,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Email Subject</label>
+                                                    <label class="form-label fw-bolder text-dark">Email Subject<span class="text-danger">*</span></label>
                                                     <input class="form-control form-control-sm form-control-solid"
                                                            type="text" id="email_subject" name="email_subject" autocomplete="off" value="{{ old('email_subject') }}"/>
                                                     @if ($errors->has('email_subject'))
@@ -114,7 +115,7 @@
                                             </div>
                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Content</label>
+                                                    <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
                                                     <textarea class="form-control form-control-sm  form-control-solid editor" id="email_content" name="email_content" rows="3">{{ old('email_content') }}</textarea>
                                                     @if ($errors->has('email_content'))
                                                         <span class="text-danger">{{ $errors->first('email_content') }}</span>

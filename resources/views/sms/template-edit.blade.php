@@ -158,7 +158,7 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Title</label>
+                                                    <label class="form-label fw-bolder text-dark">Title<span class="text-danger">*</span></label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
@@ -172,7 +172,7 @@
 
                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Description</label>
+                                                    <label class="form-label fw-bolder text-dark" for="textarea">Description<span class="text-danger">*</span></label>
                                                     <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{$template->description}}</textarea>
                                                     @if ($errors->has('description'))
                                                         <span class="text-danger">{{ $errors->first('description') }}</span>
