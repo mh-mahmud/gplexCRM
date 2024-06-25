@@ -22,6 +22,7 @@
                             <!--end::Title-->
                         </div>
                         <!--end::Page title-->
+							<a href="{{ route('send-sms-list') }}" class="btn btn-sm btn-primary">SMS List</a>
                       
                     </div>
                     <!--end::Container-->
