@@ -171,7 +171,7 @@ class EmailService
     public function  sendBulkEmailPro($request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:csv,txt,text/comma-separated-values,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'file' => 'required|file|mimes:csv,xls,xlsx',
             'email_subject' => 'required|string|max:150',
             'email_content' => 'required|string',
         ], [

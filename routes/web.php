@@ -12,6 +12,8 @@ use App\Http\Controllers\DynamicTableController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\LeadController;
+use App\Http\Controllers\TaskController;
+
 
 use App\Models\Promotion;
 
@@ -176,6 +178,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('send-bulk-sms-process', [smsController::class, 'sendBulkSmsPro'])->name('send-bulk-sms-pro');
 
 	// Send SMS routes end
+
+	// Task routes start
+	Route::get('add-task', [TaskController::class, 'addTask'])->name('add-task');
+	Route::post('add-task-pro', [TaskController::class, 'addTaskPro'])->name('add-task-pro');
+
+	// Task routes end
 
 
 });

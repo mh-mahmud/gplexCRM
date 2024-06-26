@@ -4,6 +4,7 @@ return [
     'INACTIVE'          => 'n',
     'ROW_PER_PAGE'      => 5,
     'SMS_SEND_MOBILE_NO' => '0111111111',
+    'ADMIN_ROLE_ID' => '1',
     'marital_status' => [
         'Single',
         'Married',
