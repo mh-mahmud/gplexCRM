@@ -171,10 +171,9 @@ class EmailService
     public function  sendBulkEmailPro($request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:csv,txt,text/comma-separated-values,text/csv,application/vnd.ms-excel',
+            'file' => 'required|file|mimes:csv,txt,text/comma-separated-values,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             'email_subject' => 'required|string|max:150',
             'email_content' => 'required|string',
-
         ], [
             'file.required' => 'The file is required.',
             'file.file' => 'The uploaded item must be a file.',
@@ -182,7 +181,6 @@ class EmailService
             'email_subject.required' => 'Email subject is required.',
             'email_subject.max' => 'Email subject may not be greater than 150 characters.',
             'email_content.required' => 'Email content is required.',
-
         ]);
         
         $file = $request->file('file');
