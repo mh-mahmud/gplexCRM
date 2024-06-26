@@ -465,7 +465,7 @@ class LeadController  extends Controller
         $formId = $request->input('form_id');
         $parentId = DB::table('leads_form')->where('form_id', $formId)->value('parent_id');
 
-        //uploaded file code
+        // Uploaded file code
         if ($request->hasFile('fileUpload')) {
             $file = $request->file('fileUpload');
             $path = $file->getRealPath();
@@ -476,8 +476,8 @@ class LeadController  extends Controller
 
             // Modify header to convert spaces to underscores and uppercase to lowercase
             $dbHeader = array_map(function ($column) {
-                $column = str_replace(' ', '_', $column); // Replace spaces with underscores
-                $column = strtolower($column); // Convert to lowercase
+                $column = str_replace(' ', '_', $column);
+                $column = strtolower($column);
                 return $column;
             }, $header);
 
@@ -491,6 +491,7 @@ class LeadController  extends Controller
 
                 try {
                     $errors = []; // To collect validation errors
+                    $insertedCount = 0; // To count the number of successfully inserted records
 
                     while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
                         $csvData = array_combine($dbHeader, $data);
@@ -513,7 +514,7 @@ class LeadController  extends Controller
                         $leadData = [];
                         foreach ((new Lead)->getFillable() as $field) {
                             if (isset($csvData[$field])) {
-                                //empty strings and set to NULL if empty
+                                // Empty strings and set to NULL if empty
                                 $leadData[$field] = $csvData[$field] === '' ? NULL : $csvData[$field];
                             }
                         }
@@ -546,6 +547,9 @@ class LeadController  extends Controller
                                 DB::table($tableName)->insert($insertData);
                             }
                         }
+
+                        // Increment the count of successfully inserted records
+                        $insertedCount++;
                     }
 
                     fclose($handle);
@@ -556,7 +560,7 @@ class LeadController  extends Controller
                     if (!empty($errors)) {
                         return redirect()->back()->with('error', 'Validation failed for some records. Errors:' . json_encode($errors));
                     } else {
-                        return redirect()->back()->with('success', 'File uploaded and data inserted successfully.');
+                        return redirect()->back()->with('success', "File uploaded and data inserted successfully. Number of records inserted: $insertedCount.");
                     }
                 } catch (\Exception $e) {
                     // Rollback the transaction if something goes wrong

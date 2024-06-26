@@ -38,7 +38,7 @@
                 title: 'Success',
                 text: '{{ session('success') }}',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 2500
             });
         </script>
         @endif
