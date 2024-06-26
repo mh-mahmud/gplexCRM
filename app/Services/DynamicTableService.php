@@ -58,9 +58,10 @@ class DynamicTableService
                 if (isset($field['is_unique']) && $field['is_unique']) {
                     $table->unique($name);
                 }
-                if (!isset($field['is_null']) || !$field['is_null']) {
-                    $column->nullable(false);
-                }
+
+                //if (!isset($field['is_null']) || !$field['is_null']) {
+                    //$column->nullable(false);
+                //}
             }
             $table->timestamps();
         });
@@ -137,9 +138,10 @@ class DynamicTableService
                 if (isset($field['is_unique']) && $field['is_unique']) {
                     $table->unique($name);
                 }
-                if (!isset($field['is_null']) || !$field['is_null']) {
-                    $table->nullable(false);
-                }
+
+                //if (!isset($field['is_null']) || !$field['is_null']) {
+                   // $table->nullable(false);
+                //}
             }
         });
 
