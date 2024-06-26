@@ -470,11 +470,11 @@ class LeadController  extends Controller
             $file = $request->file('fileUpload');
             $path = $file->getRealPath();
 
-            // Open and read the CSV file
+            // Open and read CSV file
             $handle = fopen($path, 'r');
             $header = fgetcsv($handle, 1000, ',');
 
-            // Modify header to convert spaces to underscores and uppercase to lowercase
+            //header to convert spaces to underscores and uppercase to lowercase
             $dbHeader = array_map(function ($column) {
                 $column = str_replace(' ', '_', $column);
                 $column = strtolower($column);
@@ -483,34 +483,52 @@ class LeadController  extends Controller
 
             // Check if the header matches the expected columns
             if ($dbHeader && count($dbHeader) > 0) {
-                // Get fields configuration from LeadFormDetail
+                // Get fields from LeadFormDetail
                 $fieldsConfig = LeadFormDetail::where('form_id', $formId)->get()->groupBy('table_name');
+
+                // Collect all CSV data and validation errors
+                $allCsvData = [];
+                $errors = []; //collect validation errors
+                $rowNumber = 2; // Start from the second row because the first row is the header
+
+                while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                    $csvData = array_combine($dbHeader, $data);
+
+                    // Validate required fields and unique email
+                    $validator = Validator::make($csvData, [
+                        'first_name' => 'required|string|max:191',
+                        'last_name' => 'required|string|max:191',
+                        'title' => 'required|string|max:191',
+                        'email' => 'nullable|string|email|max:191|unique:leads,email',
+                        'phone' => 'required|string|max:191',
+                    ]);
+
+                    if ($validator->fails()) {
+                        $errors[] = ['row' => $rowNumber, 'messages' => $validator->errors()->all()];
+                    } else {
+                        $allCsvData[] = $csvData; // Only collect valid data
+                    }
+                    $rowNumber++;
+                }
+
+                fclose($handle);
+
+                if (!empty($errors)) {
+                    $errorMessages = [];
+                    foreach ($errors as $error) {
+                        $errorMessages[] = 'Row ' . $error['row'] . ': ' . implode(' ', $error['messages']);
+                    }
+                    return redirect()->back()->with('error', 'Validation failed for some records. Errors:' . json_encode($errorMessages));
+                }
 
                 // Begin a database transaction
                 DB::beginTransaction();
 
                 try {
-                    $errors = []; // To collect validation errors
-                    $insertedCount = 0; // To count the number of successfully inserted records
+                    $insertedCount = 0; // count the number of successfully inserted data
 
-                    while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
-                        $csvData = array_combine($dbHeader, $data);
-
-                        // Validate required fields and unique email
-                        $validator = Validator::make($csvData, [
-                            'first_name' => 'required|string|max:191',
-                            'last_name' => 'required|string|max:191',
-                            'title' => 'required|string|max:191',
-                            'email' => 'nullable|string|email|max:191|unique:leads,email',
-                            'phone' => 'required|string|max:191',
-                        ]);
-
-                        if ($validator->fails()) {
-                            $errors[] = $validator->errors()->all();
-                            continue; // Skip to next iteration if validation fails
-                        }
-
-                        // Insert data into the Lead table
+                    foreach ($allCsvData as $csvData) {
+                        // insert data into the Lead table
                         $leadData = [];
                         foreach ((new Lead)->getFillable() as $field) {
                             if (isset($csvData[$field])) {
@@ -526,7 +544,7 @@ class LeadController  extends Controller
                             throw new \Exception("Failed to insert lead data and retrieve lead ID.");
                         }
 
-                        // Insert data into the respective tables based on the configuration
+                        // Insert data into the tables based on the config
                         foreach ($fieldsConfig as $tableName => $fields) {
                             $insertData = [
                                 'lead_id' => $leadId,
@@ -552,18 +570,12 @@ class LeadController  extends Controller
                         $insertedCount++;
                     }
 
-                    fclose($handle);
-
                     // Commit the transaction
                     DB::commit();
 
-                    if (!empty($errors)) {
-                        return redirect()->back()->with('error', 'Validation failed for some records. Errors:' . json_encode($errors));
-                    } else {
-                        return redirect()->back()->with('success', "File uploaded and data inserted successfully. Number of records inserted: $insertedCount.");
-                    }
+                    return redirect()->back()->with('success', "File uploaded and data inserted successfully. Number of records inserted: $insertedCount.");
                 } catch (\Exception $e) {
-                    // Rollback the transaction if something goes wrong
+                    // Rollback the transaction if something goes wrong error
                     DB::rollback();
 
                     return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
@@ -575,6 +587,8 @@ class LeadController  extends Controller
             return redirect()->back()->with('error', 'File not uploaded.');
         }
     }
+    
+
 
 
 
