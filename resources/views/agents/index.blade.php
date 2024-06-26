@@ -213,12 +213,11 @@
 				<div class="table-responsive">
 				@if($agents->isNotEmpty())
 					<!--begin::Table-->
-					<table
-						class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+					<table class="table table-sm table-condensed table-row-gray-100 align-middle gs-0 gy-3 table-row-bordered">
 						<!--begin::Table head-->
 						<thead>
-						<tr class="fw-bolder">
-						    <th class="min-w-150px">SL</th>
+						<tr class="fw-bolder text-muted bg-light bd-cyan">
+						    <th class="ps-4 min-w-50px">SL</th>
 							<th class="min-w-150px">Agent ID</th>
 							<th class="min-w-140px">First Name</th>
 							<th class="min-w-140px">Last Name</th>
@@ -226,7 +225,7 @@
 							<th class="min-w-120px">Phone Number</th>
 							<th class="min-w-120px">Date Of Birth</th>
 							<th class="min-w-120px">Status</th>
-							<th class="min-w-100px text-end">Actions</th>
+							<th class="min-w-100px text-end text-end-new">Actions</th>
 						</tr>
 						</thead>
 						<!--end::Table head-->
@@ -235,7 +234,7 @@
 						@foreach ($agents as $agent)
 						<tr>
 
-						    <td class="text-dark fs-6">{{$loop->iteration}}</td>
+						    <td class="ps-5 text-dark fs-6">{{$loop->iteration}}</td>
 							<td class="text-dark fs-6">{{$agent->agent_id}}</td>
 							<td class="text-dark fs-6">{{$agent->first_name }}</td>
 							<td class="text-dark fs-6">{{$agent->last_name }}</td>
@@ -325,19 +324,6 @@
 			<!--begin::Body-->
 
 		</div>
-
-		<!--Table Pagination-->
-		<!-- <ul class="pagination">
-			<li class="page-item previous disabled"><span class="page-link">Previous</span></span>
-			</li>
-			<li class="page-item "><a href="#" class="page-link">1</a></li>
-			<li class="page-item active"><a href="#" class="page-link">2</a></li>
-			<li class="page-item "><a href="#" class="page-link">3</a></li>
-			<li class="page-item "><a href="#" class="page-link">4</a></li>
-			<li class="page-item "><a href="#" class="page-link">5</a></li>
-			<li class="page-item "><a href="#" class="page-link">6</a></li>
-			<li class="page-item next"><a class="page-link" href="#">Next</span></a></li>
-		</ul> -->
 
     	@include('components.pagination', ['paginator' => $agents])
 		
