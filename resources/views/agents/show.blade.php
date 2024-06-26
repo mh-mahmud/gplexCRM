@@ -143,7 +143,7 @@
         <div class="col-xxl-8 mx-auto">
             <!-- <div class="card mb-5"> -->
             <div class="card mt-5">
-                <div class="card-header">
+                <div class="card-header bg-light bd-cyan">
                     <div class="card-title">
                         <h2>Agent Details</h2>
                     </div>
