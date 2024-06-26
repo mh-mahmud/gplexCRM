@@ -212,12 +212,11 @@
 				<div class="table-responsive">
 				@if($campaigns->isNotEmpty())
 					<!--begin::Table-->
-					<table
-						class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+					<table class="table table-sm table-condensed table-row-gray-100 align-middle gs-0 gy-3 table-row-bordered">
 						<!--begin::Table head-->
 						<thead>
-						<tr class="fw-bolder">
-						    <th class="min-w-150px">SL</th>
+						<tr class="fw-bolder text-muted bg-light bd-cyan">
+						    <th class="min-w-150px ps-4">SL</th>
 							<!-- <th class="min-w-150px">Form ID</th> -->
 							<th class="min-w-150px">Campaign Name</th>
 							<th class="min-w-150px">Promotion</th>
@@ -226,7 +225,7 @@
 							<th class="min-w-140px">Campaign Type</th>
 							<th class="min-w-140px">Limit</th>
 							<th class="min-w-120px">Status</th>
-							<th class="min-w-100px text-end">Actions</th>
+							<th class="min-w-100px text-end text-end-new">Actions</th>
 						</tr>
 						</thead>
 						<!--end::Table head-->
@@ -234,7 +233,7 @@
 						<tbody>
 						@foreach ($campaigns as $campaign)
 						<tr>
-							<td class="text-dark fs-6">{{($campaigns->currentPage() - 1) * $campaigns->perPage() + $loop->iteration}}</td>
+							<td class="ps-5 text-dark fs-6">{{($campaigns->currentPage() - 1) * $campaigns->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{$campaign->campaign_title }}</td>
 							<td class="text-dark fs-6">{{$campaign->promotion_title }}</td>
 							<td class="text-dark fs-6"> 

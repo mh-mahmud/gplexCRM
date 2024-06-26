@@ -36,10 +36,10 @@
                     <div class="row">
                         <div class="col-xxl-12">
                             <div class="card card-xxl-stretch mt-5">
-                                <div class="card-header">
+                                <div class="card-header bg-light bd-cyan">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
-                                        <h3 class="fw-bolder m-0">Send SMS</h3>
+                                        <h3 class="fw-bolder m-0">Send Bulk SMS</h3>
                                     </div>
                                     <!--end::Card title-->
                                 </div>

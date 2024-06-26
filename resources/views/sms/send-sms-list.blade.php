@@ -114,16 +114,15 @@
 				<div class="table-responsive">
 				@if($sms->isNotEmpty())
 					<!--begin::Table-->
-					<table
-						class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+					<table class="table table-sm table-condensed table-row-gray-100 align-middle gs-0 gy-3 table-row-bordered">
 						<!--begin::Table head-->
 						<thead>
-						<tr class="fw-bolder">
-						    <th class="min-w-150px">SL</th>
+						<tr class="fw-bolder text-muted bg-light bd-cyan">
+						    <th class="ps-4 min-w-150px">SL</th>
 						    <th class="min-w-150px">To</th>
 							<th class="min-w-140px">Text</th>
 							<th class="min-w-140px">Send Time</th>
-							<th class="min-w-120px">Status</th>
+							<th class=" min-w-120px">Status</th>
 						</tr>
 						</thead>
 						<!--end::Table head-->
@@ -131,7 +130,7 @@
 						<tbody>
 						@foreach ($sms as $value)
 						<tr>
-							<td class="text-dark fs-6">{{($sms->currentPage() - 1) * $sms->perPage() + $loop->iteration}}</td>
+							<td class="ps-5 text-dark fs-6">{{($sms->currentPage() - 1) * $sms->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{ $value->sms_to }}</td>
 							<td class="text-dark fs-6">{{ $value->sms_text }}</td>
 							<td class="text-dark fs-6">{{ Carbon::parse($value->log_time)->format('d-m-Y h:i A') }}</td>
