@@ -168,8 +168,8 @@ class SmsService
     public function  sendBulkSmsPro($request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:csv,txt,text/comma-separated-values,text/csv,application/vnd.ms-excel',
-            'sms_text' => 'required|string|max:255'
+            'file' => 'required|file|mimes:csv,xls,xlsx',
+            'sms_text' => 'required|string|max:180'
         ], [
             'file.required' => 'The file is required.',
             'file.file' => 'The uploaded item must be a file.',
