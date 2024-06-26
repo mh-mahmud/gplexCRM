@@ -79,7 +79,7 @@
 			<!--begin::Header-->
 			<div class="d-flex justify-content-between align-items-start card-header border-0 pt-1">
 				<h3 class="card-title align-items-start flex-column">
-					<span class="card-label fw-bolder fs-3 mb-1">Email Template List</span>
+					<span class="card-label fw-bolder fs-3 mb-1">Send Email List</span>
 					<!-- <span class="text-muted mt-1 fw-bold fs-7">Leads Form data here</span> -->
 				</h3>
 
