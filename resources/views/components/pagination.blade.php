@@ -1,4 +1,4 @@
-<ul class="pagination mt-2">
+<ul class="pagination mt-2" style="margin-top: 20px !important">
     <!-- Previous Page Link -->
     @if ($paginator->onFirstPage())
         <li class="page-item previous disabled"><span class="page-link"><i class="previous"></i></span></li>

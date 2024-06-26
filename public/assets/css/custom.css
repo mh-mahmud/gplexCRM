@@ -25,6 +25,27 @@
     text-align: right !important;
     padding-right: 20px !important;
 }
+.page-item.active .page-link {
+    z-index: 3;
+    color: #000;
+    /*background-color: rgb(37 99 235);*/
+    background-color: #ccc;
+    border-color: transparent;
+    border: none;
+}
+.page-item .page-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.0rem !important;
+    height: 2.5rem;
+    min-width: 2.5rem;
+    font-weight: 500;
+    font-size: 1.075rem;
+}
+.page-item {
+    border: 1px solid #aaa;
+}
 /*============================
          For File Upload
   ============================*/
