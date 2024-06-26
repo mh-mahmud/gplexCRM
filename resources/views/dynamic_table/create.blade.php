@@ -232,7 +232,7 @@
                                                     <label class="form-label fw-bolder text-dark">Character Length</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="fields[0][character_length]" autocomplete="off" />
+                                                    <input class="form-control form-control-sm form-control-solid" type="number" name="fields[0][character_length]" autocomplete="off" />
                                                     <!--end::Input-->
                                                 </div>
                                             </div>
