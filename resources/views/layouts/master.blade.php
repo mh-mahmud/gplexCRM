@@ -210,7 +210,7 @@
 
 									@php
 										$key = empty($key) ? 'dashboard' : $key;
-										if (Route::has('route.name')) {
+										if (Route::has($key)) {
 										    $key = $key;
 										} else {
 										    $key = 'dashboard';
@@ -411,7 +411,7 @@
 
 														@php
 														$key = empty($key) ? 'dashboard' : $key;
-														if (Route::has('route.name')) {
+														if (Route::has($key)) {
 														    $key = $key;
 														} else {
 														    $key = 'dashboard';
