@@ -117,17 +117,16 @@
 				<div class="table-responsive">
 				@if($emails->isNotEmpty())
 					<!--begin::Table-->
-					<table
-						class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+					<table class="table table-sm table-condensed table-bordered table-row-gray-100 align-middle gs-0 gy-3">
 						<!--begin::Table head-->
 						<thead>
-						<tr class="fw-bolder">
-						    <th class="min-w-150px">SL</th>
+						<tr class="fw-bolder text-muted bg-light bd-cyan">
+						    <th class="ps-4 rounded-start min-w-50px">SL</th>
 						    <th class="min-w-150px">To</th>
 							<th class="min-w-150px">Email Subject</th>
 							<th class="min-w-140px">Email Content</th>
 							<th class="min-w-140px">Time</th>
-							<th class="min-w-120px">Status</th>
+							<th class="rounded-end min-w-50px">Status</th>
 						</tr>
 						</thead>
 						<!--end::Table head-->
@@ -135,12 +134,12 @@
 						<tbody>
 						@foreach ($emails as $email)
 						<tr>
-							<td class="text-dark fs-6">{{($emails->currentPage() - 1) * $emails->perPage() + $loop->iteration}}</td>
+							<td class="ps-5 text-dark fs-6">{{($emails->currentPage() - 1) * $emails->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{ $email->email_to }}</td>
 							<td class="text-dark fs-6">{{ $email->email_subject }}</td>
 							<td class="text-dark fs-6">{!! $email->email_content !!}</td>
 							<td class="text-dark fs-6">{{ Carbon::parse($email->log_time)->format('d-m-Y h:i A') }}</td>
-		                    <td>
+		                    <td class="text-dark fs-6">
 								@if ($email->send_status == 1)
 									<span class="badge badge-light-success">Success</span>
 								@elseif ($email->status == 0)

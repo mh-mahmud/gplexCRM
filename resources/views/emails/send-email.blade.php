@@ -26,30 +26,7 @@
                         <!--end::Page title-->
                         <!--begin::Actions-->
                         <div class="d-flex align-items-center py-1">
-                            <!--begin::Wrapper-->
-                            <div class="me-4">
-                                <!--begin::Menu-->
-                               
-                                <!--begin::Menu 1-->
-                                <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
-                                     id="kt_menu_61484bf44d957">
-                                    <!--begin::Header-->
-                                    <div class="px-7 py-5">
-                                        <div class="fs-5 text-dark fw-bolder">Filter Options</div>
-                                    </div>
-                                    <!--end::Header-->
-                                    <!--begin::Menu separator-->
-                                    <div class="separator border-gray-200"></div>
-                                    <!--end::Menu separator-->
-                                    <!--begin::Form-->
-                                   
-                                    <!--end::Form-->
-                                </div>
-                                <!--end::Menu 1-->
-                                <!--end::Menu-->
-                            </div>
-                            <!--end::Wrapper-->
-                            <!--begin::Button-->
+
                             <a href="{{ route('send-email-list') }}" class="btn btn-sm btn-primary">Email List</a>
                             <!--end::Button-->
                         </div>
@@ -66,7 +43,7 @@
                     <div class="row">
                         <div class="col-xxl-12">
                             <div class="card card-xxl-stretch mt-5">
-                                <div class="card-header">
+                                <div class="card-header bg-light bd-cyan">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
                                         <h3 class="fw-bolder m-0">Send Email</h3>

@@ -46,6 +46,15 @@
 .page-item {
     border: 1px solid #aaa;
 }
+.aside-dark .menu .menu-item .menu-link .menu-title {
+    color: #fff;
+}
+.aside-dark .menu .menu-item .menu-section {
+    color: #FFF !important;
+}
+.aside-menu {
+    background-color: #1e293b;
+}
 /*============================
          For File Upload
   ============================*/
