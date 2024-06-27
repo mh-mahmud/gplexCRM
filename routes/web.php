@@ -180,8 +180,10 @@ Route::group(['middleware' => 'auth'], function () {
 	// Send SMS routes end
 
 	// Task routes start
+	Route::get('task-list', [TaskController::class, 'getTaskList'])->name('task-list');
 	Route::get('add-task', [TaskController::class, 'addTask'])->name('add-task');
 	Route::post('add-task-pro', [TaskController::class, 'addTaskPro'])->name('add-task-pro');
+	Route::put('task-status-change/{id}', [TaskController::class, 'changeStatus'])->name('task-status-change');
 
 	// Task routes end
 
