@@ -5,6 +5,11 @@ return [
     'ROW_PER_PAGE'      => 5,
     'SMS_SEND_MOBILE_NO' => '0111111111',
     'ADMIN_ROLE_ID' => '1',
+    'TASK_STATUS' => [
+        'PENDING',
+        'In Progress',
+        'Testing'
+    ],  
     'marital_status' => [
         'Single',
         'Married',

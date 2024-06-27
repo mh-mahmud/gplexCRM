@@ -8,6 +8,19 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskService
 {
+    public function getTaskList()
+    {
+        $sql = Task::query();
+        if(Auth::user()->role_id != config('constants.ADMIN_ROLE_ID')) {
+            $sql->where('assigned_to', Auth::id());
+        } else {
+            $sql->join('users', 'users.id', '=', 'tasks.assigned_to')
+                ->select('tasks.*', 'users.first_name', 'users.last_name');
+        }
+        return $sql->paginate(config('constants.ROW_PER_PAGE'));
+    }
+
+
     public function getUsers()
     {
         return User::where('role_id', '!=', config('constants.ADMIN_ROLE_ID'))
@@ -17,20 +30,28 @@ class TaskService
 
     public function addTaskPro($request)
     {
-        $request->validate([
-            'task_name' => 'required',
-            'due_date' => 'required',
-            'assigned_to' => 'required',
-        ]);
+        if(Auth::user()->role_id == config('constants.ADMIN_ROLE_ID')) {
+            $request->validate([
+                'task_name' => 'required',
+                'due_date' => 'required',
+                'assigned_to' => 'required',
+            ]);
+        } else {
+            $request->validate([
+                'task_name' => 'required',
+                'due_date' => 'required',
+            ]);
+        }
+       
         $data = $request->all();
 
         try {
             $dataObj                        = new Task();
             $dataObj->task_name             = $data['task_name'];
-            $dataObj->assigned_to           = $data['assigned_to'];
+            $dataObj->assigned_to           = Auth::user()->role_id == config('constants.ADMIN_ROLE_ID') ? $data['assigned_to'] : Auth::id();
             $dataObj->description           = $data['description'];
             $dataObj->due_date              = $data['due_date'];
-            $dataObj->status                = 0;
+            $dataObj->status                = config('constants.TASK_TO_DO');
             $dataObj->created_by            = Auth::id();
 
             $dataObj->save();
@@ -46,5 +67,29 @@ class TaskService
             'status'                 => 201,
             'info'                   => $dataObj->id
         ];
+    }
+
+    public function changeStatus($request, $id)
+    {
+        $data = $request->all();
+
+        try {
+            $dataObj                        = Task::findOrFail($id);
+            $dataObj->status                = $data['status'];
+
+            $dataObj->save();
+
+        } catch (Exception $e) {
+            return (object)[
+                'status'             => 424,
+                'error'              => $e->getMessage()
+            ];
+        }
+
+        return (object)[
+            'status'                 => 208,
+            'info'                   => $dataObj->id
+        ];
+
     }
 }

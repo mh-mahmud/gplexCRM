@@ -21,6 +21,12 @@ class TaskController extends Controller {
         $this->middleware('auth');
     }
 
+    public function getTaskList(Request $request)
+    {      
+        $tasks = $this->taskService->getTaskList($request);
+        return view('tasks.task-list', compact('tasks'));
+    }
+
     public function addTask()
     {
         $users = $this->taskService->getUsers();     
@@ -30,12 +36,22 @@ class TaskController extends Controller {
     public function addTaskPro(Request $request)
     { 
         $result = $this->taskService->addTaskPro($request);
-        dd($result);
         if($result->status == 201){
-            return redirect()->route('add-task')->with('success', 'Email template created successfully.');
+            return redirect()->route('task-list')->with('success', 'Task created successfully.');
 
         }else{
             session()->flash('error', 'Can not Create !');
+        }
+
+    }
+
+    public function changeStatus(Request $request, $id)
+    { 
+        $result = $this->taskService->changeStatus($request, $id);
+        if($result->status == 208){
+            return redirect()->route('task-list')->with('success', 'Status updated successfully.');
+        }else{
+            session()->flash('error', 'Can not Update !');
         }
 
     }
