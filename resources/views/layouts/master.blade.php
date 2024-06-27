@@ -209,7 +209,12 @@
 									@foreach($submenu as $key=>$val)
 
 									@php
-									$key = empty($key) ? 'dashboard' : $key;
+										$key = empty($key) ? 'dashboard' : $key;
+										if (Route::has('route.name')) {
+										    $key = $key;
+										} else {
+										    $key = 'dashboard';
+										}
 									@endphp
 									<div class="menu-item">
 										<a class="menu-link" href="{{ route($key) }}">
@@ -406,7 +411,12 @@
 
 														@php
 														$key = empty($key) ? 'dashboard' : $key;
-														@endphp
+														if (Route::has('route.name')) {
+														    $key = $key;
+														} else {
+														    $key = 'dashboard';
+														}
+																		@endphp
 														<div class="menu-item">
 															<a class="menu-link py-3" href='{{ route($key) }}'>
 																<span class="menu-bullet">
