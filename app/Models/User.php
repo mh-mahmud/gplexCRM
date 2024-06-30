@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Permissions\HasPermissionsTrait;
 use App\Models\Role;
 use Auth;
+use Session;
 
 class User extends Authenticatable
 {
@@ -71,10 +72,20 @@ class User extends Authenticatable
         /*if(Auth::user()->user_type=='admin') {
             return;
         }*/
-        $role_data = Role::where('id', Auth::user()->role_id)->first(['name', 'permission_details']);
-        if(!empty($role_data)) {
-            return $role_data->permission_details;
+
+        $ses_name = 'user_menu_data_' . Auth::user()->role_id;
+
+        if(!empty(Session::get($ses_name))) {
+            return Session::get($ses_name);
         }
+        else {
+            $role_data = Role::where('id', Auth::user()->role_id)->first(['name', 'permission_details']);
+            if(!empty($role_data)) {
+                Session::put($ses_name, $role_data->permission_details);
+                return $role_data->permission_details;
+            }
+        }
+
         return null;
     }
 }
