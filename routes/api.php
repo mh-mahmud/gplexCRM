@@ -14,6 +14,8 @@ use App\Http\Controllers\API\RoleController ;
 use App\Http\Controllers\API\PermissionController;
 use App\Http\Controllers\API\MenuController ;
 use App\Http\Controllers\API\LeadsController;
+use App\Http\Controllers\API\LeadController;
+use App\Http\Middleware\ExampleMiddleware;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +38,7 @@ Route::get("/products", [ProductController::class, 'index']);
 Route::get("/products/{id}", [ProductController::class, 'show']);
 Route::post("/register", [AuthController::class, 'register']);
 Route::post("/login", [AuthController::class, 'login']);
+Route::post('/leads/request', [LeadController::class, 'uploadLeads']);
 
 
 
