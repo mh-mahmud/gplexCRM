@@ -2,7 +2,7 @@
 return [
     'ACTIVE'            => 'y',
     'INACTIVE'          => 'n',
-    'ROW_PER_PAGE'      => 5,
+    'ROW_PER_PAGE'      => 20,
     'SMS_SEND_MOBILE_NO' => '0111111111',
     'ADMIN_ROLE_ID' => '1',
     'TASK_STATUS' => [
