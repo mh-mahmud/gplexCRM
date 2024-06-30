@@ -62,7 +62,7 @@ class TaskController extends Controller {
         if($result->status == 200) {
             return redirect()->route('task-list')->with('success', 'Task deleted successfully.');
         } else{
-            session()->flash('error', 'Can not Update !');
+            session()->flash('error', 'Can not Delete !');
         }
     }
 }
