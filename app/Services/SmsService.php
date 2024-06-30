@@ -32,8 +32,8 @@ class SmsService
     public function templateStore($request)
     {
         $request->validate([
-            'title' => 'required|unique:sms_templates',
-            'description' => 'required',
+            'title' => 'required|unique:sms_templates|max:100',
+            'description' => 'required|max:191',
            
         ]);
         $data = $request->all();

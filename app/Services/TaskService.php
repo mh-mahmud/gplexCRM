@@ -11,7 +11,7 @@ class TaskService
     public function getTaskList()
     {
         $sql = Task::query();
-        if(Auth::user()->role_id != config('constants.ADMIN_ROLE_ID')) {
+        if(Auth::user()->user_type != 'admin') {
             $sql->where('assigned_to', Auth::id());
         } else {
             $sql->join('users', 'users.id', '=', 'tasks.assigned_to')
@@ -30,7 +30,7 @@ class TaskService
 
     public function addTaskPro($request)
     {
-        if(Auth::user()->role_id == config('constants.ADMIN_ROLE_ID')) {
+        if(Auth::user()->user_type == 'admin') {
             $request->validate([
                 'task_name' => 'required',
                 'due_date' => 'required',
@@ -48,7 +48,7 @@ class TaskService
         try {
             $dataObj                        = new Task();
             $dataObj->task_name             = $data['task_name'];
-            $dataObj->assigned_to           = Auth::user()->role_id == config('constants.ADMIN_ROLE_ID') ? $data['assigned_to'] : Auth::id();
+            $dataObj->assigned_to           = Auth::user()->user_type == 'admin' ? $data['assigned_to'] : Auth::id();
             $dataObj->description           = $data['description'];
             $dataObj->due_date              = $data['due_date'];
             $dataObj->status                = config('constants.TASK_TO_DO');

@@ -97,7 +97,7 @@
                                                     <textarea class="form-control form-control-sm  form-control-solid" id="description" name="description" rows="3">{{ old('description') }}</textarea>
                                                 </div>
                                             </div>
-                                            @if(Auth::user()->role_id == config('constants.ADMIN_ROLE_ID'))
+                                            @if(Auth::user()->user_type == 'admin')
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Assigned To<span class="text-danger">*</span></label>

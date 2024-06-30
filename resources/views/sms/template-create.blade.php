@@ -64,7 +64,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="title" autocomplete="off"/>
+                                                           type="text" name="title" autocomplete="off" value="{{ old('title') }}" />
                                                     <!--end::Input-->
                                                     @if ($errors->has('title'))
                                                         <span class="text-danger">{{ $errors->first('title') }}</span>
@@ -75,7 +75,7 @@
                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Description<span class="text-danger">*</span></label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3"></textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{ old('description') }}</textarea>
                                                     @if ($errors->has('description'))
                                                         <span class="text-danger">{{ $errors->first('description') }}</span>
                                                     @endif

@@ -123,10 +123,11 @@
                                         <tr class="fw-bolder text-muted bg-light bd-cyan">
                                             <th class="ps-4 min-w-120px">SL</th>
                                             <th class="min-w-150px">Task Name</th>
-                                            @if (Auth::user()->role_id == config('constants.ADMIN_ROLE_ID'))
+                                            @if (Auth::user()->user_type == 'admin')
                                                 <th class="min-w-120px">Assigned To</th>
                                             @endif
                                             <th class="min-w-150px">Description</th>
+                                            <th class="min-w-120px">Created Date</th>
                                             <th class="min-w-120px">Due Date</th>
                                             <th class="min-w-120px">Status</th>
                                             <th class="min-w-100px text-end-new">Actions</th>
@@ -145,11 +146,14 @@
                                                     {{ ($tasks->currentPage() - 1) * $tasks->perPage() + $loop->iteration }}
                                                 </td>
                                                 <td class="text-dark fs-6">{{ $task->task_name }}</td>
-                                                @if (Auth::user()->role_id == config('constants.ADMIN_ROLE_ID'))
+                                                @if (Auth::user()->user_type == 'admin')
                                                     <td class="text-dark fs-6">{{ $task->first_name }}
                                                         {{ $task->last_name }}</td>
                                                 @endif
                                                 <td class="text-dark fs-6">{{ $task->description }}</td>
+                                                <td class="text-dark fs-6">
+                                                    {{ Carbon::parse($task->created_at)->format('d-m-Y h:i:s A') }}
+                                                </td>
                                                 <td class="text-dark fs-6">
                                                     {{ Carbon::parse($task->due_date)->format('d-m-Y') }}</td>
                                                 <td>
