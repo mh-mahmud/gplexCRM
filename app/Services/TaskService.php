@@ -92,4 +92,23 @@ class TaskService
         ];
 
     }
+
+    public function taskDelete($id)
+    {
+        try {
+            $task = Task::findOrFail($id);
+            $task->delete();
+
+        } catch (Exception $e) {
+            return (object)[
+                'status'             => 424,
+                'error'              => $e->getMessage()
+            ];
+        }
+
+        return (object)[
+            'status'                 => 200,
+        ];
+
+    }
 }

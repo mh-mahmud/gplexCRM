@@ -55,4 +55,14 @@ class TaskController extends Controller {
         }
 
     }
+
+    public function delete($id)
+    {
+        $result = $this->taskService->taskDelete($id);
+        if($result->status == 200) {
+            return redirect()->route('task-list')->with('success', 'Task deleted successfully.');
+        } else{
+            session()->flash('error', 'Can not Update !');
+        }
+    }
 }

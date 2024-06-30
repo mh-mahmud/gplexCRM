@@ -184,6 +184,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('add-task', [TaskController::class, 'addTask'])->name('add-task');
 	Route::post('add-task-pro', [TaskController::class, 'addTaskPro'])->name('add-task-pro');
 	Route::put('task-status-change/{id}', [TaskController::class, 'changeStatus'])->name('task-status-change');
+	Route::delete('delete-task/{id}', [TaskController::class, 'delete'])->name('delete-task');
 
 	// Task routes end
 
