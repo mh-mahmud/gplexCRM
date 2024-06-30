@@ -8,7 +8,11 @@ return [
     'TASK_STATUS' => [
         'PENDING',
         'In Progress',
-        'Testing'
+        'Testing',
+        'Not Started',
+        'Awaiting Feedback',
+        'Completed',
+        'Done Before'
     ],  
     'marital_status' => [
         'Single',
