@@ -132,7 +132,7 @@
 						<tr>
 							<td class="ps-5 text-dark fs-6">{{($sms->currentPage() - 1) * $sms->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{ $value->sms_to }}</td>
-							<td class="text-dark fs-6">{{ $value->sms_text }}</td>
+							<td class="text-dark fs-6 w-400px">{{ $value->sms_text }}</td>
 							<td class="text-dark fs-6">{{ Carbon::parse($value->log_time)->format('d-m-Y h:i A') }}</td>
 		                    <td>
 								@if ($value->send_status == 1)

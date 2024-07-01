@@ -137,7 +137,7 @@
 							<td class="ps-5 text-dark fs-6">{{($emails->currentPage() - 1) * $emails->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{ $email->email_to }}</td>
 							<td class="text-dark fs-6">{{ $email->email_subject }}</td>
-							<td class="text-dark fs-6">{!! $email->email_content !!}</td>
+							<td class="text-dark fs-6 w-400px">{!! $email->email_content !!}</td>
 							<td class="text-dark fs-6">{{ Carbon::parse($email->log_time)->format('d-m-Y h:i A') }}</td>
 		                    <td class="text-dark fs-6">
 								@if ($email->send_status == 1)
