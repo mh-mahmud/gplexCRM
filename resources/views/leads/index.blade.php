@@ -234,14 +234,17 @@ use Carbon\Carbon;
 							<!--begin::Table head-->
 							<thead>
 								<tr class="fw-bolder text-muted bg-light bd-cyan">
-									<th class="ps-4 rounded-start min-w-150px">SL</th>
+									<th class="ps-4 rounded-start min-w-40px">SL</th>
 									<!-- <th class="min-w-150px">Form ID</th> -->
-									<th class="min-w-150px">Form Name</th>
+									<!-- <th class="min-w-150px">Form Name</th> -->
 									<!-- <th class="min-w-150px">First Name</th> -->
 									<th class="min-w-150px">Name</th>
+									<th class="min-w-150px">Gender</th>
+									<th class="min-w-150px">Age</th>
 									<th class="min-w-150px">Title</th>
 									<th class="min-w-150px">Email</th>
 									<th class="min-w-150px">Phone</th>
+									<th class="min-w-150px">Source</th>
 									<th class="min-w-150px">Lead Status</th>
 									<th class="min-w-150px rounded-end text-end-new">Actions</th>
 								</tr>
@@ -253,12 +256,15 @@ use Carbon\Carbon;
 								<tr>
 
 									<td class="ps-5 text-dark fs-6">{{($leads->currentPage() - 1) * $leads->perPage() + $loop->iteration}}</td>
-									<td class="text-dark fs-6">{{ $lead->leadsForm?->form_name ?? '' }}</td>
+									<!-- <td class="text-dark fs-6">{{ $lead->leadsForm?->form_name ?? '' }}</td> -->
 									<!-- <td class="text-dark fs-6">{{ $lead->first_name }}</td> -->
                                     <td class="text-dark fs-6">{{ $lead->last_name }}</td>
+                                    <td class="text-dark fs-6">{{ $lead->gender }}</td>
+                                    <td class="text-dark fs-6">{{ $lead->age }}</td>
                                     <td class="text-dark fs-6">{{ $lead->title }}</td>
                                     <td class="text-dark fs-6">{{ $lead->email }}</td>
                                     <td class="text-dark fs-6">{{ $lead->phone }}</td>
+                                    <td class="text-dark fs-6">{{ $lead->lead_source }}</td>
 
 									<td>
 										@if ($lead->lead_status == 1)
