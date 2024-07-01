@@ -105,16 +105,13 @@ class SmsService
     public function sendSmsPro($request) {
         $data = [];
         $request->validate([
-        //     'user_id' => 'required',
-        //     'sms_from' => 'required',
             'sms_to' => ['required', 'digits:11'],
-            'sms_text' => 'required'
+            'sms_text' => 'required|max:191'
         ],[
             'sms_to.required' => 'Mobile NO is required',
             'sms_to.digits' => 'Mobile NO have to be 11 digits',
             'sms_text.required' => 'Content is required',
-
-            
+            'sms_text.max' => 'Content may not be greater than 191 characters',
         ]);
 
         // if(empty($request->send_status)) {

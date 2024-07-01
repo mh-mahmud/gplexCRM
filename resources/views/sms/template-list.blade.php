@@ -133,7 +133,7 @@
 
 							<td class="ps-5 text-dark fs-6">{{($templates->currentPage() - 1) * $templates->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{ $template->title }}</td>
-							<td class="text-dark fs-6">{{ $template->description }}</td>
+							<td class="text-dark fs-6 w-400px">{{ $template->description }}</td>
 		                    <td>
 								@if ($template->status == 1)
 									<span class="badge badge-light-success">Active</span>

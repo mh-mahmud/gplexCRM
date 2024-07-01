@@ -126,8 +126,8 @@
                                             @if (Auth::user()->user_type == 'admin')
                                                 <th class="min-w-120px">Assigned To</th>
                                             @endif
-                                            <th class="min-w-150px">Description</th>
-                                            <th class="min-w-120px">Created Date</th>
+                                            <th class="min-w-150px w-400px">Description</th>
+                                            <th class="min-w-120px">Created At</th>
                                             <th class="min-w-120px">Due Date</th>
                                             <th class="min-w-120px">Status</th>
                                             <th class="min-w-100px text-end-new">Actions</th>
@@ -163,7 +163,8 @@
                                                         @foreach (config('constants.TASK_STATUS') as $key => $status)
                                                             <option value="{{ $key }}"
                                                                 {{ $task->status == $key ? 'selected' : '' }}>
-                                                                {{ $status }}</option>
+                                                                {{ $status }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </td>
