@@ -25,7 +25,8 @@ class LeadsFormController extends Controller
     public function index()
     {
         $leadsForms = $this->leadsFormService->getAllLeadsForms();
-        return view('leads_forms.index', compact('leadsForms'));
+        $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
+        return view('leads_forms.index', compact('leadsForms', 'formName'));
     }
 
     public function create()

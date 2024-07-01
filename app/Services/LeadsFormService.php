@@ -12,6 +12,13 @@ class LeadsFormService
                     ->select('leads_form.*', 'parents.form_name as parent_name')
                     ->orderBy('leads_form.id', 'asc')
                     ->paginate(config('constants.ROW_PER_PAGE'));
+
+        /*return LeadsForm::leftJoin('leads_form as parents', 'leads_form.parent_id', '=', 'parents.form_id')
+                    ->leftJoin('lead_form_details as lfd', 'leads_form.form_id', '=', 'lfd.form_id')
+                    ->select('leads_form.*', 'parents.form_name as parent_name', 'lfd.table_name')
+                    ->orderBy('leads_form.id', 'asc')
+                    ->groupBy('lfd.form_id')
+                    ->paginate(config('constants.ROW_PER_PAGE'));*/
     }
 
     public function createLeadsForm($data)

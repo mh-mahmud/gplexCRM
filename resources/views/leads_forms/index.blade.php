@@ -26,105 +26,13 @@
                         <!--end::Page title-->
                         <!--begin::Actions-->
                         <div class="d-flex align-items-center py-1">
-                            <!--begin::Wrapper-->
-                            <div class="me-4">
-                                <!--begin::Menu-->
-                               
-                                <!--begin::Menu 1-->
-                                <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
-                                     id="kt_menu_61484bf44d957">
-                                    <!--begin::Header-->
-                                    <div class="px-7 py-5">
-                                        <div class="fs-5 text-dark fw-bolder">Filter Options</div>
-                                    </div>
-                                    <!--end::Header-->
-                                    <!--begin::Menu separator-->
-                                    <div class="separator border-gray-200"></div>
-                                    <!--end::Menu separator-->
-                                    <!--begin::Form-->
-                                    <div class="px-7 py-5">
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-bold">Status:</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <div>
-                                                <select class="form-select form-select-solid" data-kt-select2="true"
-                                                        data-placeholder="Select option"
-                                                        data-dropdown-parent="#kt_menu_61484bf44d957"
-                                                        data-allow-clear="true">
-                                                    <option></option>
-                                                    <option value="1">Approved</option>
-                                                    <option value="2">Pending</option>
-                                                    <option value="2">In Process</option>
-                                                    <option value="2">Rejected</option>
-                                                </select>
-                                            </div>
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-bold">Member Type:</label>
-                                            <!--end::Label-->
-                                            <!--begin::Options-->
-                                            <div class="d-flex">
-                                                <!--begin::Options-->
-                                                <label
-                                                    class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                                    <input class="form-check-input" type="checkbox" value="1"/>
-                                                    <span class="form-check-label">Author</span>
-                                                </label>
-                                                <!--end::Options-->
-                                                <!--begin::Options-->
-                                                <label
-                                                    class="form-check form-check-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="2"
-                                                           checked="checked"/>
-                                                    <span class="form-check-label">Customer</span>
-                                                </label>
-                                                <!--end::Options-->
-                                            </div>
-                                            <!--end::Options-->
-                                        </div>
-                                        <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-bold">Notifications:</label>
-                                            <!--end::Label-->
-                                            <!--begin::Switch-->
-                                            <div
-                                                class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                       name="notifications" checked="checked"/>
-                                                <label class="form-check-label">Enabled</label>
-                                            </div>
-                                            <!--end::Switch-->
-                                        </div>
-                                        <!--end::Input group-->
-                                        <!--begin::Actions-->
-                                        <div class="d-flex justify-content-end">
-                                            <button type="reset"
-                                                    class="btn btn-sm btn-light btn-active-light-primary me-2"
-                                                    data-kt-menu-dismiss="true">Reset
-                                            </button>
-                                            <button type="submit" class="btn btn-sm btn-primary"
-                                                    data-kt-menu-dismiss="true">Apply
-                                            </button>
-                                        </div>
-                                        <!--end::Actions-->
-                                    </div>
-                                    <!--end::Form-->
-                                </div>
-                                <!--end::Menu 1-->
-                                <!--end::Menu-->
-                            </div>
-                            <!--end::Wrapper-->
+
                             <!--begin::Button-->
-                            <a href="{{ route('leadsform-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
+                            <a href="{{ route('lead-create') }}" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#add_lead_modal">Create a Lead</a>
+                            &nbsp;&nbsp;
+                            <a href="{{ route('dynamictable-create') }}" class="btn btn-sm btn-success" id="kt_toolbar_primary_button">Create Table</a>
+                            &nbsp;&nbsp;
+                            <a href="{{ route('leadsform-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create Form</a>
 
                             <!--end::Button-->
                         </div>
@@ -165,7 +73,60 @@
     @endif
 
 <!--End Table Alert Message-->
+<div class="modal fade" id="add_lead_modal" tabindex="-1" aria-hidden="true">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog mw-400px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </div>
+                <!--end::Close-->
+            </div>
+            <!--begin::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+                <!--begin::Heading-->
+                <!--begin::Textarea-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="fv-row mb-3">
+                            <label class="form-label fw-bolder text-dark">Form Name</label>
+                            <select class="form-control form-control-sm form-control-solid" id="form_id" name="form_id" aria-label="Default select example">
+                                <option value="">Select Form Name</option>
+                                @foreach($formName as $id => $name)
+                                <option value="{{ $id }}">{{ $name }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('form_id'))
+                            <span class="text-danger">{{ $errors->first('form_id') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
 
+                <div class="card-footer d-flex justify-content-end py-0 px-0">
+                    <a href="{{ route('lead-index') }}" class="btn btn-light me-2 btn-sm">Reset</a>
+                    <button type="button" class="btn btn-primary btn-sm" id="submit_button">Submit</button>
+                </div>
+                <!--end::Textarea-->
+            </div>
+            <!--end::Modal body-->
+        </div>
+        <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+</div>
 
 <div class="row">
 	<div class="col-xxl-12">
@@ -212,17 +173,18 @@
 				<div class="table-responsive">
 				@if($leadsForms->isNotEmpty())
 					<!--begin::Table-->
-					<table
-						class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+					<table class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
 						<!--begin::Table head-->
 						<thead>
-						<tr class="fw-bolder">
-						    <th class="min-w-150px">SL</th>
+						<tr class="fw-bolder text-muted bg-light bd-cyan">
+						    <th class="ps-4 rounded-start min-w-20px">SL</th>
 							<!-- <th class="min-w-150px">Form ID</th> -->
 							<th class="min-w-150px">Form Name</th>
+                            <th class="min-w-150px">Tables</th>
+                            <th class="min-w-150px">Total Leads</th>
 							<th class="min-w-140px">Parent Name</th>
 							<th class="min-w-120px">Status</th>
-							<th class="min-w-100px text-end">Actions</th>
+							<th class="min-w-100px text-end rounded-end text-end-new">Actions</th>
 						</tr>
 						</thead>
 						<!--end::Table head-->
@@ -231,10 +193,12 @@
 						@foreach ($leadsForms as $leadsForm)
 						<tr>
 
-							<td class="text-dark fs-6">{{($leadsForms->currentPage() - 1) * $leadsForms->perPage() + $loop->iteration}}</td>
+							<td class="ps-5 text-dark fs-6">{{($leadsForms->currentPage() - 1) * $leadsForms->perPage() + $loop->iteration}}</td>
 
 							<!-- <td class="text-dark fs-6">{{$leadsForm->form_id}}</td> -->
 							<td class="text-dark fs-6">{{$leadsForm->form_name }}</td>
+                            <td class="text-dark fs-6"></td>
+                            <td class="text-dark fs-6"></td>
 							<td class="text-dark fs-6">{{$leadsForm->parent_name}}</td>
 		                    <td>
 								@if ($leadsForm->form_status == 1)
@@ -362,6 +326,18 @@
 </div>
 
 <script>
+
+    document.getElementById('submit_button').addEventListener('click', function() {
+        var formId = document.getElementById('form_id').value;
+        if (formId) {
+            var baseUrl = '{{ url('/') }}';
+            //window.location.href = 'http://localhost/gplexCRM/public/lead/create?form_id=' + formId;
+            window.location.href = baseUrl + '/lead/create?form_id=' + formId;
+        } else {
+            alert('Please select a form.');
+        }
+    });
+
     function confirmDelete() {
         if (confirm("Are you sure you want to delete Lead Form?")) {
             document.getElementById('deleteForm').submit();
