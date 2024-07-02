@@ -284,9 +284,7 @@ class LeadController  extends Controller
         ]);
         $leadFormDetailsColumns = LeadFormDetail::where('form_id', $request->form_id)->pluck('field_name')->toArray();
         // Get columns from Lead table
-        //$leadColumns = (new Lead)->getFillable();
-		$lead = new Lead;
-        $leadColumns = array_diff($lead->getFillable(), ['lead_status', 'no_of_employee']);
+        $leadColumns = (new Lead)->getFillable();
 
         //Merge columns ensuring no duplicates
         $columns = array_unique(array_merge($leadColumns, $leadFormDetailsColumns));
@@ -475,7 +473,6 @@ class LeadController  extends Controller
             // Open and read CSV file
             $handle = fopen($path, 'r');
             $header = fgetcsv($handle, 1000, ',');
-			
 
             //header to convert spaces to underscores and uppercase to lowercase
             $dbHeader = array_map(function ($column) {
@@ -495,9 +492,7 @@ class LeadController  extends Controller
                 $rowNumber = 2; // Start from the second row because the first row is the header
 
                 while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
-					//dd($header);die();
                     $csvData = array_combine($dbHeader, $data);
-					
 
                     // Validate required fields and unique email
                     $validator = Validator::make($csvData, [
@@ -507,13 +502,10 @@ class LeadController  extends Controller
                         'email' => 'nullable|string|email|max:191|unique:leads,email',
                         'phone' => 'required|string|max:191',
                     ]);
-					
 
                     if ($validator->fails()) {
-						
                         $errors[] = ['row' => $rowNumber, 'messages' => $validator->errors()->all()];
                     } else {
-						
                         $allCsvData[] = $csvData; // Only collect valid data
                     }
                     $rowNumber++;
@@ -536,7 +528,6 @@ class LeadController  extends Controller
                     $insertedCount = 0; // count the number of successfully inserted data
 
                     foreach ($allCsvData as $csvData) {
-						//dd($header);die();
                         // insert data into the Lead table
                         $leadData = [];
                         foreach ((new Lead)->getFillable() as $field) {
@@ -549,24 +540,19 @@ class LeadController  extends Controller
                         $leadData['form_id'] = $formId;
                         $leadData['lead_status'] = '1';
                         $leadId = DB::table('leads')->insertGetId($leadData);
-						
                         if (!$leadId) {
                             throw new \Exception("Failed to insert lead data and retrieve lead ID.");
                         }
-						
 
                         // Insert data into the tables based on the config
                         foreach ($fieldsConfig as $tableName => $fields) {
-							
                             $insertData = [
                                 'lead_id' => $leadId,
                                 'form_id' => $formId,
                             ];
-							
                             if ($parentId !== null) {
                                 $insertData['parent_id'] = $parentId;
                             }
-							
 
                             foreach ($fields as $field) {
                                 if (isset($csvData[$field->field_name])) {
@@ -579,13 +565,10 @@ class LeadController  extends Controller
                                 DB::table($tableName)->insert($insertData);
                             }
                         }
-						
 
                         // Increment the count of successfully inserted records
                         $insertedCount++;
                     }
-					
-					
 
                     // Commit the transaction
                     DB::commit();

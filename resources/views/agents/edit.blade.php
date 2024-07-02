@@ -242,9 +242,9 @@
                                                     <label class="form-label fw-bolder text-dark">Gender</label>
                                                     <select class="form-control form-control-sm form-control-solid" name="gender" aria-label="Default select example">
                                                         <option value="">Select Gender</option>
-                                                        <option value="male" {{ $agent->gender === 'male' ? 'selected' : '' }}>Male</option>
-                                                        <option value="female" {{ $agent->gender === 'female' ? 'selected' : '' }}>Female</option>
-                                                        <option value="other" {{ $agent->gender === 'other' ? 'selected' : '' }}>Other</option>
+                                                        <option value="Male" {{ $agent->gender === 'Male' ? 'selected' : '' }}>Male</option>
+                                                        <option value="Female" {{ $agent->gender === 'Female' ? 'selected' : '' }}>Female</option>
+                                                        <option value="Other" {{ $agent->gender === 'Other' ? 'selected' : '' }}>Other</option>
                                                     </select>
                                                 </div>
                                             </div>
