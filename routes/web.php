@@ -108,6 +108,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('/campaign/{id}', [CampaignController::class, 'update'])->name('campaign-update');
 	Route::delete('/campaign/{id}', [CampaignController::class, 'destroy'])->name('campaign-destroy');
 	Route::post('/campaign/search', [CampaignController::class, 'search'])->name('campaign-search');
+	Route::post('/clear-session', [CampaignController::class, 'clearSession'])->name('clear.session');
+
 
 	// users route
     Route::get('user-list',        [UserController::class, 'index'])->name('users.index');

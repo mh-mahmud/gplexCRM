@@ -23,7 +23,7 @@ class AgentService
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('profile_image')->getClientOriginalExtension();
             $fileNameToStore = $fileName.'_'.time().'.'.$extension;
-            $path = $request->file('profile_image')->move(public_path().'/uploads/agents', $fileNameToStore);
+            $path = $request->file('profile_image')->move(getcwd().'/uploads/agents', $fileNameToStore);
             
         } else {
             
@@ -95,7 +95,7 @@ class AgentService
         if ($request->hasFile('profile_image')) {
            
             if ($user->profile_image) {
-                $previousImagePath = public_path().'/uploads/agents/'.$user->profile_image;
+                $previousImagePath = getcwd().'/uploads/agents/'.$user->profile_image;
                 if (file_exists($previousImagePath)) {
                     unlink($previousImagePath);
                 }
@@ -104,7 +104,7 @@ class AgentService
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('profile_image')->getClientOriginalExtension();
             $fileNameToStore = $fileName.'_'.time().'.'.$extension;
-            $path = $request->file('profile_image')->move(public_path().'/uploads/agents', $fileNameToStore);
+            $path = $request->file('profile_image')->move(getcwd().'/uploads/agents', $fileNameToStore);
             $user->profile_image = $fileNameToStore;
                
         }
@@ -143,7 +143,7 @@ class AgentService
         $agent = Agent::findOrFail($id);
         $user = $agent->user;
         if ($user->profile_image) {
-            $imagePath = public_path().'/uploads/agents/'.$user->profile_image;
+            $imagePath = getcwd().'/uploads/agents/'.$user->profile_image;
             if (file_exists($imagePath)) {
                 unlink($imagePath);
             }

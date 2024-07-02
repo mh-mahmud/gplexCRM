@@ -99,4 +99,13 @@ class CampaignController extends Controller
         $this->campaignService->deleteCampaign($id);
         return redirect()->route('campaign-index')->with('success', 'Campaign deleted successfully.');
     }
+
+    
+    public function clearSession(Request $request)
+    {
+        $request->session()->forget('success');
+        $request->session()->forget('error');
+        return response()->json(['status' => 'Session cleared']);
+    }
+
 }
