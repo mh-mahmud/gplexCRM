@@ -111,10 +111,12 @@ class smsController extends Controller {
     public function sendBulkSmsPro(Request $request)
     {
         $result = $this->smsService->sendBulkSmsPro($request);
-        if($result->status == 201){
+        if($result->status == 201) {
             return redirect()->route('send-bulk-sms')->with('success', 'SMS send successfully.');
 
-        }else{
+        } else if ($result->status == 400) {
+            return redirect()->route('send-bulk-sms')->withErrors(['file' => $result->message]);
+        } else {
             session()->flash('error', 'Can not Send !');
         }
     }

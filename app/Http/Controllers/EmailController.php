@@ -110,10 +110,12 @@ class EmailController extends Controller {
     public function sendBulkEmailPro(Request $request)
     { 
          $result = $this->emailService->sendBulkEmailPro($request);
-         if($result->status == 201){
-            return redirect()->route('send-email')->with('success', 'Email send successfully.');
+         if($result->status == 201) {
+            return redirect()->route('send-bulk-email')->with('success', 'Email send successfully.');
 
-        }else{
+        } else if ($result->status == 400) {
+            return redirect()->route('send-bulk-email')->withErrors(['file' => $result->message]);
+        } else{
             session()->flash('error', 'Email can not send !');
         }
 
