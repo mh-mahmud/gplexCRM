@@ -16,7 +16,6 @@ use App\Models\LeadsForm;
 use App\Models\LeadFormDetail;
 use App\Models\Lead;
 use App\Services\LeadService;
-use DateTime;
 
 class LeadController  extends Controller
 {
@@ -285,9 +284,7 @@ class LeadController  extends Controller
         ]);
         $leadFormDetailsColumns = LeadFormDetail::where('form_id', $request->form_id)->pluck('field_name')->toArray();
         // Get columns from Lead table
-        //$leadColumns = (new Lead)->getFillable();
-		$lead = new Lead;
-        $leadColumns = array_diff($lead->getFillable(), ['lead_status', 'no_of_employee']);
+        $leadColumns = (new Lead)->getFillable();
 
         //Merge columns ensuring no duplicates
         $columns = array_unique(array_merge($leadColumns, $leadFormDetailsColumns));
@@ -477,7 +474,6 @@ class LeadController  extends Controller
             $handle = fopen($path, 'r');
             $header = fgetcsv($handle, 1000, ',');
 
-
             //header to convert spaces to underscores and uppercase to lowercase
             $dbHeader = array_map(function ($column) {
                 $column = str_replace(' ', '_', $column);
@@ -496,49 +492,10 @@ class LeadController  extends Controller
                 $rowNumber = 2; // Start from the second row because the first row is the header
 
                 while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
-                    //dd($header);die();
                     $csvData = array_combine($dbHeader, $data);
-                    $csvData['dob'] = $this->convertDate($csvData['dob']);
-                    foreach ($fieldsConfig as $tableFields) {
-                        foreach ($tableFields as $field) {
-                            if ($field->field_value === 'date' && isset($csvData[$field->field_name])) {
-                                $csvData[$field->field_name] = $this->convertDate($csvData[$field->field_name]);
-                            }
-                        }
-                    }
-
-                   // dd($csvData);die();
-
-                    // Custom validation rules for each field based on their types
-                    $fieldValidations = [];
-                    foreach ($fieldsConfig as $tableFields) {
-                        foreach ($tableFields as $field) {
-                            $fieldName = $field->field_name;
-                            $fieldType = $field->field_value;
-
-                            switch ($fieldType) {
-                                case 'varchar':
-                                case 'char':
-                                case 'text':
-                                    $fieldValidations[$fieldName] = 'nullable|string';
-                                    break;
-                                case 'int':
-                                    $fieldValidations[$fieldName] = 'nullable|integer';
-                                    break;
-                                case 'date':
-                                    $fieldValidations[$fieldName] = 'nullable|date';
-                                    break;
-                                case 'boolean':
-                                    $fieldValidations[$fieldName] = 'nullable|boolean';
-                                    break;
-                                default:
-                                    $fieldValidations[$fieldName] = 'nullable';
-                            }
-                        }
-                    }
 
                     // Validate required fields and unique email
-                    $fieldValidations = array_merge($fieldValidations, [
+                    $validator = Validator::make($csvData, [
                         'first_name' => 'required|string|max:191',
                         'last_name' => 'required|string|max:191',
                         'title' => 'required|string|max:191',
@@ -546,15 +503,9 @@ class LeadController  extends Controller
                         'phone' => 'required|string|max:191',
                     ]);
 
-                    // Validate the CSV row
-                    $validator = Validator::make($csvData, $fieldValidations);
-
-
                     if ($validator->fails()) {
-
                         $errors[] = ['row' => $rowNumber, 'messages' => $validator->errors()->all()];
                     } else {
-
                         $allCsvData[] = $csvData; // Only collect valid data
                     }
                     $rowNumber++;
@@ -577,7 +528,6 @@ class LeadController  extends Controller
                     $insertedCount = 0; // count the number of successfully inserted data
 
                     foreach ($allCsvData as $csvData) {
-                        //dd($header);die();
                         // insert data into the Lead table
                         $leadData = [];
                         foreach ((new Lead)->getFillable() as $field) {
@@ -590,24 +540,19 @@ class LeadController  extends Controller
                         $leadData['form_id'] = $formId;
                         $leadData['lead_status'] = '1';
                         $leadId = DB::table('leads')->insertGetId($leadData);
-
                         if (!$leadId) {
                             throw new \Exception("Failed to insert lead data and retrieve lead ID.");
                         }
 
-
                         // Insert data into the tables based on the config
                         foreach ($fieldsConfig as $tableName => $fields) {
-
                             $insertData = [
                                 'lead_id' => $leadId,
                                 'form_id' => $formId,
                             ];
-
                             if ($parentId !== null) {
                                 $insertData['parent_id'] = $parentId;
                             }
-
 
                             foreach ($fields as $field) {
                                 if (isset($csvData[$field->field_name])) {
@@ -621,12 +566,9 @@ class LeadController  extends Controller
                             }
                         }
 
-
                         // Increment the count of successfully inserted records
                         $insertedCount++;
                     }
-
-
 
                     // Commit the transaction
                     DB::commit();
@@ -644,21 +586,6 @@ class LeadController  extends Controller
         } else {
             return redirect()->back()->with('error', 'File not uploaded.');
         }
-    }
-
-
-    private function convertDate($dateString)
-    {
-        if (empty($dateString)) {
-            return null;
-        }
-
-        $date = DateTime::createFromFormat('d/m/Y', $dateString);
-        if (!$date) {
-            $date = DateTime::createFromFormat('m/d/Y', $dateString);
-        }
-
-        return $date ? $date->format('Y-m-d') : null;
     }
     
 
