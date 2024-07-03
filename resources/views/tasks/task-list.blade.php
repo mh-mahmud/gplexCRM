@@ -150,7 +150,7 @@
                                                     <td class="text-dark fs-6">{{ $task->first_name }}
                                                         {{ $task->last_name }}</td>
                                                 @endif
-                                                <td class="text-dark fs-6">{{ $task->description }}</td>
+                                                <td class="text-dark fs-6 w-400px">{{ $task->description }}</td>
                                                 <td class="text-dark fs-6">
                                                     {{ Carbon::parse($task->created_at)->format('d-m-Y h:i:s A') }}
                                                 </td>
