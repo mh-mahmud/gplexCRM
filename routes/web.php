@@ -31,9 +31,7 @@ use App\Models\Promotion;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', function(){
-	return redirect()->route('login');
-});
+
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/post_login', [AuthController::class, 'postLogin'])->name('login.post');
 /*Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
