@@ -83,7 +83,7 @@
 						                <!--end::Currency-->
 
 						                <!--begin::Amount-->
-						                <span class="fs-2hx fw-bold text-gray-900 me-2 lh-1 ls-n2">700</span>
+						                <span class="fs-2hx fw-bold text-gray-900 me-2 lh-1 ls-n2">{{$count_lead}}</span>
 						                <!--end::Amount-->
 
 						                <!--begin::Badge-->
@@ -118,7 +118,7 @@
 						                <!--end::Currency-->
 
 						                <!--begin::Amount-->
-						                <span class="fs-2hx fw-bold text-gray-900 me-2 lh-1 ls-n2">17</span>
+						                <span class="fs-2hx fw-bold text-gray-900 me-2 lh-1 ls-n2">{{$active_agents}}</span>
 						                <!--end::Amount-->
 
 						                <!--begin::Badge-->
@@ -153,7 +153,7 @@
 						                <!--end::Currency-->
 
 						                <!--begin::Amount-->
-						                <span class="fs-2hx fw-bold text-gray-900 me-2 lh-1 ls-n2">60</span>
+						                <span class="fs-2hx fw-bold text-gray-900 me-2 lh-1 ls-n2">{{$active_products}}</span>
 						                <!--end::Amount-->
 
 						                <!--begin::Badge-->
