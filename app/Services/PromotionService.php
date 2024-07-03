@@ -19,9 +19,11 @@ class PromotionService
             $fileNameWithExt = $file->getClientOriginalName();
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $file->getClientOriginalExtension();
-            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
-           // $filePath = $file->storeAs('promotions', $fileNameToStore, 'public');
-            $filePath = $file->move(public_path('uploads/files'), $fileNameToStore);
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+            // $filePath = $file->storeAs('promotions', $fileNameToStore, 'public');
+            //$filePath = $file->move(public_path('uploads/files'), $fileNameToStore);
+            $uploadsDir = getcwd() . '/uploads/files';
+            $filePath = $file->move($uploadsDir, $fileNameToStore);
             $data['file_location'] = $fileNameToStore;
         } else {
             $data['file_location'] = '';
@@ -45,13 +47,16 @@ class PromotionService
             $fileNameWithExt = $file->getClientOriginalName();
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $file->getClientOriginalExtension();
-            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
-            $filePath = $file->move(public_path('uploads/files'), $fileNameToStore);
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+            //$filePath = $file->move(public_path('uploads/files'), $fileNameToStore);
+            // Create the uploads/files directory if it doesn't exist
+            $uploadsDir = getcwd() . '/uploads/files';
+            $filePath = $file->move($uploadsDir, $fileNameToStore);
             $data['file_location'] = $fileNameToStore;
 
             // delete the old file
             if ($promotion->file_location) {
-                $oldFilePath =public_path().'/uploads/files/'.$promotion->file_location;
+                $oldFilePath = getcwd() . '/uploads/files/' . $promotion->file_location;
                 if (file_exists($oldFilePath)) {
                     unlink($oldFilePath);
                 }
@@ -72,7 +77,7 @@ class PromotionService
 
         $query = Promotion::query();
         //dd($query);die();
-        $query->where(function($q) use ($searchTerm) {
+        $query->where(function ($q) use ($searchTerm) {
             $q->where('promotion_title', 'LIKE', '%' . $searchTerm . '%');
         });
 
@@ -84,7 +89,7 @@ class PromotionService
     {
         $promotion = Promotion::findOrFail($id);
         if ($promotion->file_location) {
-            $imagePath = public_path().'/uploads/files/'.$promotion->file_location;
+            $imagePath = getcwd() . '/uploads/files/' . $promotion->file_location;
             if (file_exists($imagePath)) {
                 unlink($imagePath);
             }
@@ -92,4 +97,3 @@ class PromotionService
         $promotion->delete();
     }
 }
-

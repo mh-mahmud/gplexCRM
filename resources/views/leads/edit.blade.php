@@ -151,9 +151,9 @@
                                     <label class="form-label fw-bolder text-dark">Gender</label>
                                     <select class="form-control form-control-sm form-control-solid" name="gender" aria-label="Default select example">
                                         <option value="" disabled selected>Select Gender</option>
-                                        <option value="male" {{ $lead->gender === 'male' ? 'selected' : '' }}>Male</option>
-                                        <option value="female" {{ $lead->gender === 'female' ? 'selected' : '' }}>Female</option>
-                                        <option value="other" {{ $lead->gender === 'other' ? 'selected' : '' }}>Other</option>
+                                        <option value="Male" {{ $lead->gender === 'Male' ? 'selected' : '' }}>Male</option>
+                                        <option value="Female" {{ $lead->gender === 'Female' ? 'selected' : '' }}>Female</option>
+                                        <option value="Other" {{ $lead->gender === 'Other' ? 'selected' : '' }}>Other</option>
                                     </select>
                                 </div>
                             </div>

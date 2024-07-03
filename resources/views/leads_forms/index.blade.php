@@ -197,8 +197,8 @@
 
 							<!-- <td class="text-dark fs-6">{{$leadsForm->form_id}}</td> -->
 							<td class="text-dark fs-6">{{$leadsForm->form_name }}</td>
-                            <td class="text-dark fs-6"></td>
-                            <td class="text-dark fs-6"></td>
+                            <td class="text-dark fs-6">{{ $leadsForm->table_names }}</td>
+                            <td class="text-dark fs-6">{{ $totalLeadsCounts[$leadsForm->form_id] ?? 0 }}</td>
 							<td class="text-dark fs-6">{{$leadsForm->parent_name}}</td>
 		                    <td>
 								@if ($leadsForm->form_status == 1)

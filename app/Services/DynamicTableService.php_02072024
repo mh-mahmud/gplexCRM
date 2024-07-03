@@ -20,12 +20,12 @@ class DynamicTableService
 
     public function createTable($tableName, $formId, $fields)
     {
-        // table already exists show this message
+        // the table already exists show this message
         if (Schema::hasTable($tableName)) {
             return 'Table already exists.';
         }
 
-        // create the new table if it doesn't exist
+        // Create the table if it doesn't exist
         Schema::create($tableName, function (Blueprint $table) use ($fields) {
             $table->id();
             $table->unsignedBigInteger('lead_id');
@@ -83,7 +83,7 @@ class DynamicTableService
             ];
         }
 
-        // Insert data into the details table
+        // Insert data into the lead_form_details table
         DB::table('lead_form_details')->insert($data);
 
         return 'Data inserted successfully.';
@@ -355,45 +355,30 @@ class DynamicTableService
 
     public function updateTable($tableName, $formId, $fields, $id)
     {
-        // chk table details exist based on the $id
-        $tableDetails = LeadFormDetail::where('table_name', $id)->first();
+        $tableDetails = LeadFormDetail::where('table_name', $id)->get();
         if (!$tableDetails) {
             return 'Table not found.';
         }
 
-        // get the exist column names of the table
         $existingColumns = Schema::getColumnListing($tableName);
 
-        // collect columns to be deleted
-        $columnsToDelete = array_diff($existingColumns, array_column($fields, 'name'));
-
-        Schema::table($tableName, function (Blueprint $table) use ($fields, $columnsToDelete, $existingColumns) {
-            // Delete columns that are not in the $fields array
-            foreach ($columnsToDelete as $column) {
-                $table->dropColumn($column);
-            }
-
-            // Add or modify columns based on the $fields array
+        Schema::table($tableName, function (Blueprint $table) use ($fields, $existingColumns, $tableName) {
             foreach ($fields as $field) {
+                $type = $field['type'];
                 $name = $field['name'];
+                $length = $field['character_length'] ?? null;
 
                 if (!in_array($name, $existingColumns)) {
-                    // column does not exist, add
                     $this->addColumn($table, $field);
                 } else {
-                    //column exists, modify it
-                    $this->modifyColumn($table, $field, $name);// Pass existing column name
+                    $this->modifyColumn($table, $field);
                 }
 
-                // update index and unique constraints
-                $this->updateConstraints($table, $field, $table->getTable());
+                $this->updateConstraints($table, $field, $tableName);
             }
         });
 
-        // prepare data for lead_form_details table custom function
         $data = $this->prepareLeadFormDetailsData($fields, $formId, $tableName);
-
-        // update lead_form_details table
         $this->updateLeadFormDetails($tableName, $data);
 
         return 'Table columns updated successfully.';
@@ -405,66 +390,77 @@ class DynamicTableService
         $name = $field['name'];
         $length = $field['character_length'] ?? null;
 
+        $column = null;
+
         switch ($type) {
             case 'varchar':
-                $column = $table->string($name, $length)->nullable();
+                $column = $table->string($name, $length);
                 break;
             case 'int':
-                $column = $table->integer($name)->nullable();
+                $column = $table->integer($name);
                 break;
             case 'char':
-                $column = $table->char($name, $length)->nullable();
+                $column = $table->char($name, $length);
                 break;
             case 'date':
-                $column = $table->date($name)->nullable();
+                $column = $table->date($name);
                 break;
             case 'text':
-                $column = $table->text($name)->nullable();
+                $column = $table->text($name);
                 break;
             case 'boolean':
-                $column = $table->boolean($name)->nullable();
+                $column = $table->boolean($name);
                 break;
             default:
                 throw new \Exception("Unsupported column type: {$type}");
         }
 
-        // set column as not nullable if specified
-        if (!isset($field['is_null']) || !$field['is_null']) {
-            $column->nullable(false);
+        if ($column) {
+            if (!isset($field['is_null']) || !$field['is_null']) {
+                $column->nullable(false);
+            } else {
+                $column->nullable();
+            }
         }
     }
 
-    private function modifyColumn(Blueprint $table, $field, $existingColumnName)
+    private function modifyColumn(Blueprint $table, $field)
     {
         $type = $field['type'];
+        $name = $field['name'];
         $length = $field['character_length'] ?? null;
+
+        $column = null;
 
         switch ($type) {
             case 'varchar':
-                $column = $table->string($existingColumnName, $length)->nullable()->change();
+                $column = $table->string($name, $length);
                 break;
             case 'int':
-                $column = $table->integer($existingColumnName)->nullable()->change();
+                $column = $table->integer($name);
                 break;
             case 'char':
-                $column = $table->char($existingColumnName, $length)->nullable()->change();
+                $column = $table->char($name, $length);
                 break;
             case 'date':
-                $column = $table->date($existingColumnName)->nullable()->change();
+                $column = $table->date($name);
                 break;
             case 'text':
-                $column = $table->text($existingColumnName)->nullable()->change();
+                $column = $table->text($name);
                 break;
             case 'boolean':
-                $column = $table->boolean($existingColumnName)->nullable()->change();
+                $column = $table->boolean($name);
                 break;
             default:
                 throw new \Exception("Unsupported column type: {$type}");
         }
 
-        // set column as not nullable if specified
-        if (!isset($field['is_null']) || !$field['is_null']) {
-            $column->nullable(false)->change();
+        if ($column) {
+            if (!isset($field['is_null']) || !$field['is_null']) {
+                $column->nullable(false)->change();
+            } else {
+                $column->nullable()->change();
+            }
         }
     }
 
@@ -474,15 +470,15 @@ class DynamicTableService
         $indexName = $tableName . '_' . $name . '_index';
         $uniqueName = $tableName . '_' . $name . '_unique';
 
-        // chk index exist
+        // Check if index should exist
         if (isset($field['is_index']) && $field['is_index']) {
-            // add index if it doesn't exist
-            if (!Schema::hasColumn($table->getTable(), $indexName)) {
+            // Add index if it doesn't exist
+            if (!$this->hasIndex($tableName, $indexName)) {
                 $table->index($name);
             }
         } else {
-            // drop index if exists
-            if (Schema::hasColumn($table->getTable(), $indexName)) {
+            // Drop index if it exists
+            if ($this->hasIndex($tableName, $indexName)) {
                 $table->dropIndex($indexName);
             }
         }
@@ -490,15 +486,20 @@ class DynamicTableService
         // Check if unique constraint should exist
         if (isset($field['is_unique']) && $field['is_unique']) {
             // Add unique constraint if it doesn't exist
-            if (!Schema::hasColumn($table->getTable(), $uniqueName)) {
+            if (!$this->hasIndex($tableName, $uniqueName)) {
                 $table->unique($name);
             }
         } else {
-            // drop unique constraint if exists
-            if (Schema::hasColumn($table->getTable(), $uniqueName)) {
+            // Drop unique constraint if it exists
+            if ($this->hasIndex($tableName, $uniqueName)) {
                 $table->dropUnique($uniqueName);
             }
         }
+    }
+
+    private function hasIndex($tableName, $indexName)
+    {
+        return Schema::hasTable($tableName) && Schema::hasIndex($tableName, $indexName);
     }
 
     private function prepareLeadFormDetailsData($fields, $formId, $tableName)
@@ -527,7 +528,10 @@ class DynamicTableService
         DB::table('lead_form_details')->insert($data);
     }
 
-  public function searchDynamicTable($request)
+
+
+
+    public function searchDynamicTable($request)
     {
         $searchTerm = trim($request->input('search'));
 
