@@ -108,14 +108,12 @@
 														<path opacity="0.3" d="M17.2929 8.70711C17.6834 8.31658 18.3166 8.31658 18.7071 8.70711L21.2929 11.2929C21.6834 11.6834 21.6834 12.3166 21.2929 12.7071L18.7071 15.2929C18.3166 15.6834 17.6834 15.6834 17.2929 15.2929L14.7071 12.7071C14.3166 12.3166 14.3166 11.6834 14.7071 11.2929L17.2929 8.70711Z" fill="black" />
 													</svg>
 												</span> -->
-										<span class="svg-icon svg-icon-2">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-												<rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-												<rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-												<rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-												<rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
-											</svg>
-										</span>
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="black"></path>
+													<path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="black"></path>
+												</svg>
+											</span>
 									</span>
 									<span class="menu-title">User Management</span>
 									<span class="menu-arrow"></span>
@@ -184,6 +182,7 @@
 							@php
 							$links = Auth::user()->get_menu_data();
 							$links = json_decode($links);
+							$icon = config('constants.svg_icons');
 							@endphp
 
 							@if(!empty($links))

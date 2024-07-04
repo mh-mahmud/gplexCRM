@@ -34,7 +34,6 @@ class DashboardController extends Controller {
         $data['active_agents'] = Agent::where('status', 1)->count();
         $data['active_products'] = Product::where('status', 1)->count();
         $data['const_task'] = config('constants.TASK_STATUS');
-        $data['icon'] = config('constants.svg_icons');
         // dd($data);
         return view('dashboard', $data);
     }
