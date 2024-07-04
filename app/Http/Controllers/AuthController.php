@@ -28,6 +28,7 @@ class AuthController extends Controller
     		'first_name' => 'required|string',
     		'last_name' => 'required|string',
     		'email' => 'required|string|unique:users,email',
+            'username' => 'required|string|unique:users,username',
     		'password' => 'required|string|confirmed'
     	]);
 
@@ -35,6 +36,7 @@ class AuthController extends Controller
     		'first_name' => $inputs['first_name'],
     		'last_name' => $inputs['first_name'],
     		'email' => $inputs['email'],
+            'username' => $inputs['username'],
     		'password' => bcrypt($inputs['password'])
     	]);
     	$token = $user->createToken('gpleCRMToken')->plainTextToken;
@@ -71,21 +73,21 @@ class AuthController extends Controller
         }
 
         $this->validate($request,[
-            'email' => 'required',
+            'username' => 'required',
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username', 'password');
 
         if(Auth::attempt($credentials)) {
             session()->regenerate();
             session()->put('users', Auth::user());
             return redirect()->intended('dashboard')->with('success', 'You have successfully logged in.');
         }
-		//If the email address is correct but password is wrong
-		$user = User::where('email', $request->email)->first();
+		//If the username is correct but password is wrong
+		$user = User::where('username', $request->username)->first();
 		if(empty($user)) {
-			return redirect("login")->with('error', 'Invalid email address.');
+			return redirect("login")->with('error', 'Invalid Username.');
 		}
 
         return redirect("login")->with('error', 'Invalid password.');

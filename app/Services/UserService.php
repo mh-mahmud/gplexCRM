@@ -29,6 +29,7 @@ class UserService {
             'email' => $request->email,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
+            'username' => $request->username,
             'user_type' =>'user',
             'phone_number' => $request->phone_number,
             'gender' => $request->gender,
@@ -47,6 +48,7 @@ class UserService {
         $user = User::findOrFail($request->id);
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
+        $user->username = $request->username;
         $user->phone_number = $request->phone_number;
         $user->gender = $request->gender;
         $user->role_id = $request->role_id;

@@ -189,6 +189,23 @@
                                                    
                                                 </div>
                                             </div>
+                                            
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <!--begin::Label-->
+                                                    <label class="form-label fw-bolder text-dark">
+                                                    Username</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input class="form-control form-control-sm form-control-solid"
+                                                           type="text" name="username" autocomplete="off"/>
+                                                    <!--end::Input-->
+                                                    @if ($errors->has('username'))
+                                                        <span class="text-danger">{{ $errors->first('username') }}</span>
+                                                    @endif
+                                                   
+                                                </div>
+                                            </div>
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
