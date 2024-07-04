@@ -188,3 +188,10 @@
 }
 
 /*End File Upload*/
+
+
+
+/*For Global Alerts*/
+body.swal2-height-auto {
+    height: 100% !important;
+}
