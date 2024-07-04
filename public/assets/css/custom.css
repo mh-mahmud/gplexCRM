@@ -1,3 +1,8 @@
+.aside-dark .menu .menu-item .menu-link .menu-icon .svg-icon svg [fill]:not(.permanent):not(g) {
+    transition: fill 0.3s ease;
+    /*fill: #494b74;*/
+    fill: #FFF;
+}
 .form-control.form-control-solid {
 	background-color: #FFF;
 	border-color: #bbb;

@@ -29,11 +29,13 @@ class AgentService
             
             $fileNameToStore = '';
         }
+        $agent_id = str_pad(mt_rand(1, 9999), 4);
         $user = User::create([
             'user_id' => str_pad(mt_rand(1, 9999999999999), 20),
             'email' => $request->email,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
+            'username' =>  $agent_id,
             'phone_number' => $request->phone_number,
             'gender' => $request->gender,
             'address' => $request->address,
@@ -42,7 +44,7 @@ class AgentService
             'user_type' =>'agent',
             'password' => bcrypt($request->password),
         ]);
-        $agent_id = str_pad(mt_rand(1, 9999), 4);
+        //$agent_id = str_pad(mt_rand(1, 9999), 4);
         $agent = new Agent([
             'agent_id' => $agent_id,
             'first_name' => $request->first_name,
@@ -81,10 +83,12 @@ class AgentService
     public function updateAgent($request, $id)
     {
         // Find the user by id
+        //dd($id);die();
         $agent = Agent::findOrFail($id);
         $user = User::findOrFail($agent->user_id);
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
+        $user->username = $id;
         $user->email = $request->email;
         $user->gender = $request->gender;
         $user->phone_number = $request->phone_number;
