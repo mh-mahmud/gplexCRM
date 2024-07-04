@@ -122,6 +122,23 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
+                                                    <!--begin::Label-->
+                                                    <label class="form-label fw-bolder text-dark">
+                                                    Username</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input class="form-control form-control-sm form-control-solid"
+                                                           type="text" name="username"  value="{{ $user_data->username }}" autocomplete="off"/>
+                                                    <!--end::Input-->
+                                                    @if ($errors->has('username'))
+                                                        <span class="text-danger">{{ $errors->first('username') }}</span>
+                                                    @endif
+                                                   
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Email</label>
                                                     <input class="form-control form-control-sm form-control-solid" type="email" readonly name="email"  value="{{ $user_data->email }}" autocomplete="off"/>
                                                     @if ($errors->has('email'))
@@ -169,7 +186,7 @@
                                             </div>
 
 
-                                            @if($user_data->user_type!='admin')
+                                           
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Set Role</label>
@@ -181,7 +198,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            @endif
+                                           
 
 
                                             <div class="col-md-6">

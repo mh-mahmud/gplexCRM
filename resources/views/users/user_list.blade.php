@@ -39,30 +39,30 @@
                  <!--**********************************
                                 Tables
                   ***********************************-->
-				  <div class="container-fluid">
+	<div class="container-fluid">
+	@if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success')}}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
 
-<!--Table Alert Message-->
-<div class="text-center">
-	<div class="row">
-		<div class="col-md-5 mx-auto">
-		   @if (session('success'))
-		    <div class="alert alert-success alert-dismissible fade show" role="alert">
-				<strong>{{ session('success') }}</strong>
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			</div>
-			@endif
-			@if (session('error'))
-			<div class="alert alert-danger alert-dismissible fade show" role="alert">
-				<strong> {{ session('error') }}</strong>
-				<button type="button" class="btn-close" data-bs-dismiss="alert"
-						aria-label="Close"></button>
-			</div>
-			@endif
-
-			
-		</div>
-	</div>
-</div>
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error')}}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
 
 <!--End Table Alert Message-->
 
@@ -131,12 +131,12 @@
 						<tr class="fw-bolder text-muted bg-light bd-cyan">
 						    <th class="ps-4 min-w-25px">SL</th>
 							<th class="min-w-150px">Name</th>
+							<th class="min-w-150px">Username</th>
 							<th class="min-w-140px">User Role</th>
 							<th class="min-w-120px">Email</th>
 							<th class="min-w-140px">User Type</th>
-							<th class="min-w-120px">Phone Number</th>
+							<th class="min-w-120px">Phone</th>
 							<th class="min-w-120px">Gender</th>
-							<th class="min-w-120px">Address</th>
 							<th class="min-w-120px">Status</th>
 							<th class="min-w-100px text-end-new">Actions</th>
 						</tr>
@@ -149,12 +149,13 @@
 
 							<td class="ps-5 text-dark fs-6">{{($users->currentPage() - 1) * $users->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{$user->first_name . ' ' . $user->last_name}}</td>
+							<td class="text-dark fs-6">{{$user->username }}</td>
 							<td class="text-dark fs-6">{{@$role_names[$user->role_id]}}</td>
 							<td class="text-dark fs-6">{{$user->email }}</td>
 							<td class="text-dark fs-6">{{$user->user_type}}</td>
 							<td class="text-dark fs-6">{{$user->phone_number}}</td>
 							<td class="text-dark fs-6">{{$user->gender}}</td>
-							<td class="text-dark fs-6 w-400px">{{$user->address}}</td>
+							
 
 							<td>
 								@if ($user->status == 1)

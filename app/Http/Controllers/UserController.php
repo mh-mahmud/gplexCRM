@@ -35,6 +35,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
+            'username' => 'required|string|unique:users,username',
             'password' => 'required|string'
         ]);
        
@@ -55,9 +56,11 @@ class UserController extends Controller
     public function update(Request $request) {
     	// dd($request->all());
         $request->validate([
+            'email' => 'required|email|unique:users,email,' . $request->id,
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'gender' => 'required',
+            'username' => 'required|string|unique:users,username,' . $request->id
+           
         ]);
        
         $user = $this->service->edit_user($request);
