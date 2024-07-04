@@ -29,7 +29,7 @@
                             <!--begin::Wrapper-->
                             <div class="me-4">
                                 <!--begin::Menu-->
-                               
+
                                 <!--begin::Menu 1-->
                                 <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
                                      id="kt_menu_61484bf44d957">
@@ -147,7 +147,7 @@
                 title: 'Success',
                 text: '{{ session('success')}}',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 150000
             });
         </script>
     @endif
@@ -310,7 +310,7 @@
 							</td>
 						</tr>
 						@endforeach
-					
+
 						</tbody>
 						<!--end::Table body-->
 					</table>
@@ -326,7 +326,7 @@
 		</div>
 
     	@include('components.pagination', ['paginator' => $agents])
-		
+
 
 		<!--End Table Pagination-->
 
