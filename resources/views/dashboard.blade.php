@@ -252,7 +252,7 @@
 											<span class="text-muted d-block" style="color: red !important;font-size:10px;">Due Date: {{substr($val->due_date, 0, 10)}}</span>
 										</div>
 										<!--end::Description-->
-										<span class="badge badge-light-success fs-8 fw-bolder">New</span>
+										<span class="badge badge-light-successconst_task fs-8 fw-bolder">{{$const_task[$val->status]}}</span>
 									</div>
 									@php
 									$i++;
