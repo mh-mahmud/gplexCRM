@@ -13,6 +13,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\ProductController;
 
 
 use App\Models\Promotion;
@@ -190,5 +191,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 	// Task routes end
 
+
+	// Product routes start
+	Route::get('product-list', [ProductController::class, 'productList'])->name('product-list');
+
+	// Product routes end
 
 });
