@@ -157,7 +157,7 @@
                                         <td class="text-dark fs-6">{{$user->user_type}}</td>
                                         <td class="text-dark fs-6">{{$user->phone_number}}</td>
                                         <td class="text-dark fs-6">{{$user->gender}}</td>
-                                        <td class="text-dark fs-6">{{$user->address}}</td>
+                                        <td class="text-dark fs-6 w-350px">{{$user->address}}</td>
 
                                         <td>
                                             @if ($user->status == 1)
@@ -166,7 +166,7 @@
                                                 <span class="badge badge-light-danger">Inactive</span>
                                             @endif
                                         </td>
-                                        <td class="text-end">
+                                        <td class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
                                             <a href="{{ route('user.show', $user->id) }}"
                                                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
