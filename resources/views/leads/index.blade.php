@@ -257,8 +257,8 @@ use Carbon\Carbon;
 
 									<td class="ps-5 text-dark fs-6">{{($leads->currentPage() - 1) * $leads->perPage() + $loop->iteration}}</td>
 									<!-- <td class="text-dark fs-6">{{ $lead->leadsForm?->form_name ?? '' }}</td> -->
-									<td class="text-dark fs-6">{{ $lead->first_name }}</td>
-                                    <td class="text-dark fs-6">{{ $lead->last_name }}</td>
+									<td class="text-dark fs-6 w-400px">{{ $lead->first_name }}</td>
+                                    <td class="text-dark fs-6 w-400px">{{ $lead->last_name }}</td>
                                     <td class="text-dark fs-6">{{ $lead->gender }}</td>
                                     <td class="text-dark fs-6">{{ $lead->age }}</td>
                                     <td class="text-dark fs-6">{{ $lead->title }}</td>

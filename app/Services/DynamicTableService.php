@@ -365,9 +365,26 @@ class DynamicTableService
         $existingColumns = Schema::getColumnListing($tableName);
 
         // collect columns to be deleted
-        $columnsToDelete = array_diff($existingColumns, array_column($fields, 'name'));
+       // $columnsToDelete = array_diff($existingColumns, array_column($fields, 'name'));
+       $columnsToDelete = array_diff($existingColumns, array_merge(array_column($fields, 'name'), ['id', 'lead_id', 'form_id', 'created_at', 'updated_at']));
 
         Schema::table($tableName, function (Blueprint $table) use ($fields, $columnsToDelete, $existingColumns) {
+            // Ensure required columns exist
+            if (!in_array('id', $existingColumns)) {
+                $table->id()->first();
+            }
+            if (!in_array('lead_id', $existingColumns)) {
+                $table->unsignedBigInteger('lead_id')->after('id');
+            }
+            if (!in_array('form_id', $existingColumns)) {
+                $table->char('form_id', 10)->nullable(false)->after('lead_id');
+            }
+            if (!in_array('created_at', $existingColumns)) {
+                $table->timestamp('created_at')->nullable()->after('form_id');
+            }
+            if (!in_array('updated_at', $existingColumns)) {
+                $table->timestamp('updated_at')->nullable()->after('created_at');
+            }
             // Delete columns that are not in the $fields array
             foreach ($columnsToDelete as $column) {
                 $table->dropColumn($column);
