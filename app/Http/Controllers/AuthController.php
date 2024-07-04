@@ -4,21 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use App\Models\User;
 
 class AuthController extends Controller
 {
+
+	public function index()
+    {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        } else {
+            return view('auth.login');
+        }
+    }
+
+	
     public function register(Request $request) {
 		//var_dump($request);die();
     	$inputs = $request->validate([
-    		'name' => 'required|string',
+    		'first_name' => 'required|string',
+    		'last_name' => 'required|string',
     		'email' => 'required|string|unique:users,email',
     		'password' => 'required|string|confirmed'
     	]);
 
     	$user = User::create([
-    		'name' => $inputs['name'],
+    		'first_name' => $inputs['first_name'],
+    		'last_name' => $inputs['first_name'],
     		'email' => $inputs['email'],
     		'password' => bcrypt($inputs['password'])
     	]);
@@ -31,30 +46,56 @@ class AuthController extends Controller
     	return response($response, 201);
     }
 
-    public function logout(Request $request) {
-    	auth()->user()->tokens()->delete();
-    	return [
-    		'message' => 'Logged Out'
-    	];
-    }
- 
-    public function login(Request $request) {
-    	$inputs = $request->validate([
-    		'email' => 'required|string',
-    		'password' => 'required|string'
-    	]);
+	public function postLogin_backup(Request $request)
+	{   
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-    	$user = User::where('email', $inputs['email'])->first();
-    	// check password
-    	if(!$user || !Hash::check($inputs['password'], $user->password)) {
-    		return response(['message' => 'Bad credetials'], 401);
-    	}
-    	$token = $user->createToken('gpleCRMToken')->plainTextToken;
+        // Attempt to log in with the provided credentials
+        if (Auth::attempt($request->only('email', 'password'), $request->has('remember'))) {
+            // Redirect to a specific route or homepage on successful login
+            return redirect()->intended('/dashboard');
+        }
 
-    	$response = [
-    		'user' => $user,
-    		'token' => $token
-    	];
-    	return response($response, 201);
+        // If authentication fails, redirect back with errors
+        return redirect()->back()->withErrors(['email' => 'The provided credentials do not match our records.']);
+	}
+
+	public function postLogin(Request $request)
+    {   
+        //Check user is already logged in
+        if(session()->has('users')) {
+            return redirect('dashboard')->with('success', 'You are already logged in.');
+        }
+
+        $this->validate($request,[
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if(Auth::attempt($credentials)) {
+            session()->regenerate();
+            session()->put('users', Auth::user());
+            return redirect()->intended('dashboard')->with('success', 'You have successfully logged in.');
+        }
+		//If the email address is correct but password is wrong
+		$user = User::where('email', $request->email)->first();
+		if(empty($user)) {
+			return redirect("login")->with('error', 'Invalid email address.');
+		}
+
+        return redirect("login")->with('error', 'Invalid password.');
     }
+
+	public function logout(Request $request)
+	{
+	   Auth::logout();
+       $request->session()->invalidate();
+       $request->session()->regenerateToken();
+       return redirect('login')->with('success', 'You have successfully logged out.');
+	}
 }

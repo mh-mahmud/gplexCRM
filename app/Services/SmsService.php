@@ -1,121 +1,230 @@
 <?php
+
 namespace App\Services;
+
 use App\Models\SmsTemplate;
-use App\Models\SmsQueue;
 use App\Models\SmsLog;
+use App\Models\SmsQueue;
+use Exception;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use DB;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+class SmsService
+{
+    public function smsTemplateList($request)
+    {
+        $sql = SmsTemplate::query();
+        $data = $request->all();
+        if(!empty($data["search"])) {
+            $sql->where('title','like', '%' . $data["search"] . '%');
 
-class SmsService {
+        }
+        if (isset($data['paginate']) && $data['paginate'] == false) {
+            return  $sql->orderBy('id', 'DESC')->get();
 
-	public function get_all_templates() {
-		return SmsTemplate::paginate(2);
-	}
+        } else {
+            return  $sql->orderBy('id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
 
-	public function sms_template_destroy_service() {
-        $data = [];
+        }
+    }
+
+    public function templateStore($request)
+    {
         $request->validate([
-            'id' => 'required'
+            'title' => 'required|unique:sms_templates|max:100',
+            'description' => 'required|max:191',
+           
         ]);
-
-        $check = SmsTemplate::find($request->id);
-        if(!empty($check)) {
-            $data['data'] = SmsTemplate::destroy($request->id);
-            $data['status'] = "success";
-            $data['msg'] = ["SmsTemplate deleted successfully"];
-            return response()->json(compact('data'))->setStatusCode(200);
-        }
-        $data['status'] = "failed";
-        $data['msg']= ["no data found"];
-        return response()->json(compact('data'))->setStatusCode(401);
-	}
-
-	public function send_sms_service($request) {
-        $data = [];
-        $request->validate([
-            'user_id' => 'required',
-            'sms_from' => 'required',
-            'sms_to' => 'required',
-            'sms_text' => 'required'
-        ]);
-
-        if(empty($request->send_status)) {
-            $request['send_status'] = 0;
-        }
-
-        if(empty($request->priority_level)) {
-            $request['priority_level'] = 5;
-        }
-        $request['log_time'] = date("Y-m-d h:i:s", time());
+        $data = $request->all();
 
         try {
-            $data['data'] = SmsQueue::create($request->all());
-            $data['status'] = "success";
-            $data['msg']=["Sms sending is on process successfully"];
-            return response()->json(compact('data'))->setStatusCode(200);
+            $dataObj                        = new SmsTemplate();
+            $dataObj->title                 = $data['title'];
+            $dataObj->description           = $data['description'];
+            $dataObj->status                = $data['status'];
 
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json(['error' => 'User not found'], 404);
-        } catch (\Exception $e) {
-            // Handle other types of exceptions
-            return response()->json(['error' => $e->getMessage()], 500);
+            $dataObj->save();
+
+        } catch (Exception $e) {
+            return (object)[
+                'status'             => 424,
+                'error'              => $e->getMessage()
+            ];
         }
-	}
 
-	public function sms_template_update_service() {
-        $data = [];
+        return (object)[
+            'status'                 => 201,
+            'info'                   => $dataObj->id
+        ];
+
+    }
+
+    public function getSmsTemplateById($id)
+    {
+        return SmsTemplate::findOrFail($id);
+    }
+
+    public function templateDelete($id)
+    {
+        $promotion = SmsTemplate::findOrFail($id);
+        $promotion->delete();
+    }
+
+    public function templateUpdate($request, $id)
+    {
         $request->validate([
-            'id' => 'required'
-        ]);
-
-        $branch_data = SmsTemplate::find($request->id);
-        if(!empty($branch_data)) {
-            $branch_data->update($request->all());
-            $data['status'] = "success";
-            $data['msg']=["SmsTemplate updated successfully"];
-            $data['data'] = $branch_data;
-            return response()->json(compact('data'))->setStatusCode(200);
-        }
-
-        $data['status'] = "failed";
-        $data['msg']=["no data found"];
-        return response()->json(compact('data'))->setStatusCode(401);
-	}
-
-	public function sms_template_show_service($id) {
-        $data = [];
-        $chk_data = SmsTemplate::find($id);
-        if(!empty($chk_data)) {
-            $status = "success";
-            $msg=["data found"];
-            $data['data'] = $chk_data;
-            return response()->json(compact('data'))->setStatusCode(200);
-        }
-        $data['status'] = "failed";
-        $data['msg']=["no data found"];
-        return response()->json(compact('data'))->setStatusCode(401);
-	}
-
-	public function sms_template_create_service($request) {
-        $data = [];
-        $request->validate([
-            'title' => 'required',
+            'title' => 'required|unique:sms_templates,title,'.$id,
             'description' => 'required',
-            'status' => 'required'
+           
         ]);
+        $data = $request->all();
 
-        $ckh_dub = SmsTemplate::where('title', $request->title)->first();
-        if(!empty($ckh_dub)) {
-            $data['status'] = "dublicate";
-            $data['msg']=["this template already created"];
-            return response()->json(compact('data'))->setStatusCode(200);
+        try {
+            $dataObj                        = SmsTemplate::findOrFail($id);
+            $dataObj->title                 = $data['title'];
+            $dataObj->description           = $data['description'];
+            $dataObj->status                = $data['status'];
+
+            $dataObj->save();
+
+        } catch (Exception $e) {
+            return (object)[
+                'status'             => 424,
+                'error'              => $e->getMessage()
+            ];
         }
 
-        $data['data'] = SmsTemplate::create($request->all());
-        $data['status'] = "success";
-        $data['msg']=["SmsTemplate saved successfully"];
-        return response()->json(compact('data'))->setStatusCode(200);
+        return (object)[
+            'status'                 => 208,
+            'info'                   => $dataObj->id
+        ];
+
+    }
+
+    public function sendSmsPro($request) {
+        $data = [];
+        $request->validate([
+            'sms_to' => ['required', 'digits:11'],
+            'sms_text' => 'required|max:191'
+        ],[
+            'sms_to.required' => 'Mobile NO is required',
+            'sms_to.digits' => 'Mobile NO have to be 11 digits',
+            'sms_text.required' => 'Content is required',
+            'sms_text.max' => 'Content may not be greater than 191 characters',
+        ]);
+
+        // if(empty($request->send_status)) {
+        //     $request['send_status'] = 0;
+        // }
+
+        // if(empty($request->priority_level)) {
+        //     $request['priority_level'] = 5;
+        // }
+        // $request['log_time'] = date("Y-m-d h:i:s", time());
+        $data = $request->all();
+
+        $dataObj                        = new SmsQueue();
+        $dataObj->sms_from              = config('constants.SMS_SEND_MOBILE_NO');
+        $dataObj->sms_to                = $data['sms_to'];
+        $dataObj->sms_text              = $data['sms_text'];
+        $dataObj->log_time              = Carbon::now();
+        $dataObj->user_id               = Auth::id();  
+
+        try {
+            $dataObj->send_status       = 1;
+            $dataObj->save();
+            
+            
+        } catch (\Exception $e) {
+            $dataObj->send_status       = 0;
+            $dataObj->save();
+            return (object)[
+                'status'                 => 401,
+                'message'                => $e->getMessage()
+            ];
+
+        }
+        return (object)[
+            'status'                 => 201,
+            'info'                   => $dataObj->id
+        ];
 	}
 
-	public function get_queue_list() {
+    public function sendSMSList($request)
+    {
+        $sql = SmsQueue::query();
+        $data = $request->all();
+        if(!empty($data["search"])) {
+            $sql->where('sms_to','like', '%' . $data["search"] . '%');
+
+        }
+        return $sql->orderBy('id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
+    }
+
+    public function  sendBulkSmsPro($request)
+    {
+        $request->validate([
+            'file' => 'required|file',
+            'sms_text' => 'required|string|max:180'
+        ]);
+        $allowedExtensions = ['csv', 'xls', 'xlsx'];
+        if (!in_array($request->file('file')->getClientOriginalExtension(), $allowedExtensions)) {
+            return (object)[
+                'status' => 400,
+                'message' => 'The file must be a type of: csv, xlsx, xls.'
+            ];
+        }
+        
+        $file = $request->file('file');
+        $data = $request->all();
+
+        try {
+            if ($file->getClientOriginalExtension() == 'csv') {
+                $rows = array_map('str_getcsv', file($file));
+            } else {
+                $spreadsheet = IOFactory::load($file->getPathname());
+                $worksheet = $spreadsheet->getActiveSheet();
+                $rows = $worksheet->toArray();
+            }
+
+            DB::beginTransaction();
+
+            foreach ($rows as $key => $row) {
+                if ($key == 0) {
+                    continue;
+                }
+
+                if (!isset($row[0]) || empty($row[0])) {
+                    continue;
+                }
+
+                $dataObj = new SmsQueue();
+                $dataObj->sms_from = config('constants.SMS_SEND_MOBILE_NO');
+                $dataObj->sms_to = "0".$row[0];
+                $dataObj->sms_text = $data['sms_text'];
+                $dataObj->log_time = Carbon::now();
+                $dataObj->user_id = Auth::id();
+                $dataObj->send_status = 1;
+                $dataObj->save();
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return (object)[
+                'status'                 => 401,
+                'message'                => $e->getMessage()
+            ];
+        }
+
+        return (object)[
+            'status'                 => 201,
+            'info'                   => $dataObj->id
+        ];
+    }
+   
+    public function get_queue_list() {
 		return SmsQueue::paginate(20);
 	}
 
@@ -184,4 +293,5 @@ class SmsService {
         $data['msg']= ["no data found"];
         return response()->json(compact('data'))->setStatusCode(401);
     }
+
 }

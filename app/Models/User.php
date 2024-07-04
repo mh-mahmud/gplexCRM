@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Permissions\HasPermissionsTrait;
+use App\Models\Role;
+use Auth;
+use Session;
 
 class User extends Authenticatable
 {
@@ -19,9 +22,18 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
+        'phone_number',
+        'user_id',
+        'status',
+        'gender',
+        'address',
+        'profile_image',
         'password',
+        'user_type',
+        'role_id'
     ];
 
     /**
@@ -49,5 +61,31 @@ class User extends Authenticatable
 
         return $this->hasMany(UsersRole::class);
 
+    }
+
+    public function agent()
+    {
+        return $this->hasOne(Agent::class);
+    }
+
+    public function get_menu_data() {
+        /*if(Auth::user()->user_type=='admin') {
+            return;
+        }*/
+
+        $ses_name = 'user_menu_data_' . Auth::user()->role_id;
+
+        if(!empty(Session::get($ses_name))) {
+            return Session::get($ses_name);
+        }
+        else {
+            $role_data = Role::where('id', Auth::user()->role_id)->first(['name', 'permission_details']);
+            if(!empty($role_data)) {
+                Session::put($ses_name, $role_data->permission_details);
+                return $role_data->permission_details;
+            }
+        }
+
+        return null;
     }
 }

@@ -1,127 +1,122 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\EmailService;
 use App\Models\EmailTemplate;
-use Mail;
-use App\Mail\SingleMail;
 
-class EmailController extends Controller
-{
-    protected $service;
-    public function __construct(EmailService $email_service) {
-    	$this->service = $email_service;
+
+class EmailController extends Controller {
+
+	// public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
+    protected $emailService;
+
+    public function __construct(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
+        $this->middleware('auth');
     }
 
-    /*
-        Email Templates
-    */
+	public function emailTemplateList(Request $request)
+    {      
+        $templates = $this->emailService->emailTemplateList($request);
+        return view('emails.template-list', compact('templates'));
+    }
+
+    public function templateCreate()
+    {       
+        return view('emails.template-create');
+    }
+
+    public function templateStore(Request $request)
+    { 
+        $result = $this->emailService->templateStore($request);
+        if($result->status == 201){
+            return redirect()->route('email-template')->with('success', 'Email template created successfully.');
+
+        }else{
+            session()->flash('error', 'Can not Create !');
+        }
+
+    }
+
+    public function templateShow($id)
+    {
+        $template = $this->emailService->getEmailTemplateById($id);
+        return view('emails.template-show', compact('template'));
+    }
+
+    public function templateEdit($id)
+    {
+        $template = $this->emailService->getEmailTemplateById($id);
+        return view('emails.template-edit', compact('template'));
+    }
+
+    public function templateDelete($id)
+    {
+        $this->emailService->templateDelete($id);
+        return redirect()->route('email-template')->with('success', 'Email template deleted successfully.');
+    }
+
+    public function templateUpdate(Request $request, $id)
+    { 
+        $result = $this->emailService->templateUpdate($request, $id);
         
-    public function email_template_list()
-    {
-        return EmailTemplate::all();
-    }
+        if($result->status == 208){
+            return redirect()->route('email-template')->with('success', 'Email template updated successfully.');
 
-    public function email_template_create(Request $request)
-    {
-        $data = [];
-        $request->validate([
-            'email_subject' => 'required',
-            'email_content' => 'required'
-        ]);
-
-        $ckh_dub = EmailTemplate::where('email_subject', $request->email_subject)->first();
-        if(!empty($ckh_dub)) {
-            $data['status'] = "dublicate";
-            $data['msg']=["this template already created"];
-            return response()->json(compact('data'))->setStatusCode(200);
+        }else{
+            session()->flash('error', 'Can not Update !');
         }
 
-        $data['data'] = EmailTemplate::create($request->all());
-        $data['status'] = "success";
-        $data['msg']=["EmailTemplate saved successfully"];
-        return response()->json(compact('data'))->setStatusCode(200);
     }
 
-    public function email_template_show(string $id)
-    {
-        $data = [];
-        $chk_data = EmailTemplate::find($id);
-        if(!empty($chk_data)) {
-            $status = "success";
-            $msg=["data found"];
-            $data['data'] = $chk_data;
-            return response()->json(compact('data'))->setStatusCode(200);
-        }
-        $data['status'] = "failed";
-        $data['msg']=["no data found"];
-        return response()->json(compact('data'))->setStatusCode(401);
+    public function sendEmail(Request $request)
+    {   
+        $request->merge(['paginate' => false]);   
+        $templates = $this->emailService->emailTemplateList($request);
+        return view('emails.send-email', compact('templates'));
     }
 
-    public function email_template_update(Request $request)
-    {
-        $data = [];
-        $request->validate([
-            'id' => 'required'
-        ]);
+    public function sendEmailPro(Request $request)
+    { 
+         $result = $this->emailService->sendEmailPro($request);
+         if($result->status == 200){
+            return redirect()->route('send-email')->with('success', 'Email send successfully.');
 
-        $branch_data = EmailTemplate::find($request->id);
-        if(!empty($branch_data)) {
-            $branch_data->update($request->all());
-            $data['status'] = "success";
-            $data['msg']=["EmailTemplate updated successfully"];
-            $data['data'] = $branch_data;
-            return response()->json(compact('data'))->setStatusCode(200);
+        }else{
+            session()->flash('error', 'Email can not send !');
         }
 
-        $data['status'] = "failed";
-        $data['msg']=["no data found"];
-        return response()->json(compact('data'))->setStatusCode(401);
     }
 
-    public function email_template_destroy(Request $request)
-    {
-        $data = [];
-        $request->validate([
-            'id' => 'required'
-        ]);
-
-        $check = EmailTemplate::find($request->id);
-        if(!empty($check)) {
-            $data['data'] = EmailTemplate::destroy($request->id);
-            $data['status'] = "success";
-            $data['msg'] = ["EmailTemplate deleted successfully"];
-            return response()->json(compact('data'))->setStatusCode(200);
-        }
-        $data['status'] = "failed";
-        $data['msg']= ["no data found"];
-        return response()->json(compact('data'))->setStatusCode(401);
+    public function sendEmailList(Request $request)
+    {      
+        $emails = $this->emailService->sendEmailList($request);
+        return view('emails.send-email-list', compact('emails'));
     }
 
-    public function send_email(Request $request) {
-        $data = [];
-        $request->validate([
-            'subject' => 'required',
-            'body' => 'required',
-            'to_email' => 'required'
-        ]);
+    public function sendBulkEmail(Request $request)
+    {   
+        $request->merge(['paginate' => false]);   
+        $templates = $this->emailService->emailTemplateList($request);
+        return view('emails.send-bulk-email', compact('templates'));
+    }
 
-        $subject = $request->subject;
-        $body = $request->body;
-        $to_email = $request->to_email;
+    public function sendBulkEmailPro(Request $request)
+    { 
+         $result = $this->emailService->sendBulkEmailPro($request);
+         if($result->status == 201) {
+            return redirect()->route('send-bulk-email')->with('success', 'Email send successfully.');
 
-        
-        try {
-            Mail::to($to_email)->send(new SingleMail($subject, $body));
-            $data['status'] = "success";
-            $data['message'] = "Email sent successfully";
-            return response()->json(compact('data'))->setStatusCode(200);
-        } catch (Exception $e) {
-            $data['status'] = "failed";
-            $data['message'] = $e->getMessage();
-            return response()->json(compact('data'))->setStatusCode(401);
+        } else if ($result->status == 400) {
+            return redirect()->route('send-bulk-email')->withErrors(['file' => $result->message]);
+        } else{
+            session()->flash('error', 'Email can not send !');
         }
 
     }

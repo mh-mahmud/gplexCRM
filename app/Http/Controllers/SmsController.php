@@ -1,75 +1,148 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\SmsService;
-use App\Models\SmsTemplate;
-use App\Models\SmsQueue;
-use App\Models\SmsLog;
+use App\Models\smsTemplate;
 
-class SmsController extends Controller
-{
-    protected $service;
-    public function __construct(SmsService $sms_service) {
-    	$this->service = $sms_service;
+
+class smsController extends Controller {
+
+	// public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
+    protected $smsService;
+
+    public function __construct(SmsService $smsService)
+    {
+        $this->smsService = $smsService;
+        $this->middleware('auth');
     }
 
-    /*
-        SMS Templates
-    */
+	public function smsTemplateList(Request $request)
+    {      
+        $templates = $this->smsService->smsTemplateList($request);
+        return view('sms.template-list', compact('templates'));
+    }
+
+    public function templateCreate()
+    {       
+        return view('sms.template-create');
+    }
+
+    public function templateStore(Request $request)
+    { 
+        $result = $this->smsService->templateStore($request);
+        if($result->status == 201){
+            return redirect()->route('sms-template')->with('success', 'Sms template created successfully.');
+
+        }else{
+            session()->flash('error', 'Can not Create !');
+        }
+
+    }
+
+    public function templateShow($id)
+    {
+        $template = $this->smsService->getSmsTemplateById($id);
+        return view('sms.template-show', compact('template'));
+    }
+
+    public function templateEdit($id)
+    {
+        $template = $this->smsService->getSmsTemplateById($id);
+        return view('sms.template-edit', compact('template'));
+    }
+
+    public function templateDelete($id)
+    {
+        $this->smsService->templateDelete($id);
+        return redirect()->route('sms-template')->with('success', 'Sms template deleted successfully.');
+    }
+
+    public function templateUpdate(Request $request, $id)
+    { 
+        $result = $this->smsService->templateUpdate($request, $id);
         
-    public function sms_template_list()
-    {
-        return $this->service->get_all_templates();
+        if($result->status == 208){
+            return redirect()->route('sms-template')->with('success', 'Sms template updated successfully.');
+
+        }else{
+            session()->flash('error', 'Can not Update !');
+        }
+
     }
 
-    public function sms_template_create(Request $request)
-    {
-        return $this->service->sms_template_create_service($request);
+    public function sendSMSList(Request $request)
+    {      
+        $sms = $this->smsService->sendSMSList($request);
+        return view('sms.send-sms-list', compact('sms'));
     }
 
-    public function sms_template_show(string $id)
-    {
-        return $this->service->sms_template_show_service($id);
+    public function sendSms(Request $request)
+    {   
+        $request->merge(['paginate' => false]);   
+        $templates = $this->smsService->smsTemplateList($request);
+        return view('sms.send-sms', compact('templates'));
     }
 
-    public function sms_template_update(Request $request)
+
+    public function sendSmsPro(Request $request)
     {
-        return $this->service->sms_template_update_service($request);
+        $result = $this->smsService->sendSmsPro($request);
+        if($result->status == 201){
+            return redirect()->route('send-sms')->with('success', 'SMS send successfully.');
+
+        }else{
+            session()->flash('error', 'Can not Send !');
+        }
     }
 
-    public function sms_template_destroy(Request $request)
-    {
-        return $this->service->sms_template_destroy_service($request);
+    public function sendBulkSms(Request $request)
+    {   
+        $request->merge(['paginate' => false]);   
+        $templates = $this->smsService->smsTemplateList($request);
+        return view('sms.send-bulk-sms', compact('templates'));
     }
 
-    public function send_sms(Request $request)
+    // For export excel sheet, zip and gd extension have to install
+    public function sendBulkSmsPro(Request $request)
     {
-        return $this->service->send_sms_service($request);
+        $result = $this->smsService->sendBulkSmsPro($request);
+        if($result->status == 201) {
+            return redirect()->route('send-bulk-sms')->with('success', 'SMS send successfully.');
+
+        } else if ($result->status == 400) {
+            return redirect()->route('send-bulk-sms')->withErrors(['file' => $result->message]);
+        } else {
+            session()->flash('error', 'Can not Send !');
+        }
     }
+
 
     public function sms_queue_list() {
-        return $this->service->get_queue_list();
+        return $this->smsService->get_queue_list();
     }
 
     public function sms_log_list() {
-        return $this->service->get_log_list();
+        return $this->smsService->get_log_list();
     }
 
     public function sms_queue_details($id) {
-        return $this->service->queue_details($id);
+        return $this->smsService->queue_details($id);
     }
     
     public function sms_log_details($id) {
-        return $this->service->log_details($id);
+        return $this->smsService->log_details($id);
     }
 
     public function single_sms_queue_delete(Request $request, $id) {
-        return $this->service->single_queue_delete($request, $id);
+        return $this->smsService->single_queue_delete($request, $id);
     }
 
     public function all_sms_queue_delete(Request $request) {
-        return $this->service->all_queue_delete($request);
+        return $this->smsService->all_queue_delete($request);
     }
 }

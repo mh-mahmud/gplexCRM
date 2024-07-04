@@ -1,180 +1,270 @@
 <?php
-
-
 namespace App\Services;
 
 use App\Models\User;
-use App\Repositories\UserRepository;
+use App\Models\Role;
+use App\Models\Menu;
+use App\Models\Permission;
+use App\Models\SmsQueue;
+use App\Models\SmsLog;
 use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
-class UserService
+class UserService {
+
+	public function get_all_user() {
+		return User::paginate(config('constants.ROW_PER_PAGE'));
+	}
+
+    public function get_all_role() {
+        return Role::paginate(config('constants.ROW_PER_PAGE'));
+    }
+
+    public function create_user($request) {
+
+        $user = User::create([
+            'user_id' => str_pad(mt_rand(1, 9999999999999), 20),
+            'email' => $request->email,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'user_type' =>'user',
+            'phone_number' => $request->phone_number,
+            'gender' => $request->gender,
+            'password' => bcrypt($request->password),
+            'status' => $request->status,
+        ]);
+        $user->save();
+        return $user;
+    }
+
+    public function show_user($id) {
+        return User::findOrFail($id);
+    }
+
+    public function edit_user($request) {
+        $user = User::findOrFail($request->id);
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->phone_number = $request->phone_number;
+        $user->gender = $request->gender;
+        $user->role_id = $request->role_id;
+        if(!empty($request->password)) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->status = $request->status;
+        $user->address = $request->address;
+        if($user->save()) {
+                return true;
+        }
+        return false;
+    }
+
+    public function deleteUser($id) {
+        $user = User::findOrFail($id);
+        if($user->delete()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function get_all_permission() {
+        return Menu::paginate(config('constants.ROW_PER_PAGE'));
+    }
+
+    public function get_parent_list() {
+        return Menu::whereNull('parent_id')->get(['id', 'name']);
+    }
+
+    public function create_permission($request) {
+
+        $data = Menu::create([
+            'name' => $request->name,
+            'sub_name' => $request->slug,
+            'show_in_menu' => $request->show_in_menu,
+            'parent_id' => !empty($request->parent_id) ? $request->parent_id : null
+        ]);
+        $data->save();
+        return $data;
+    }
+
+    public function edit_permission($request) {
+
+        $user = Menu::findOrFail($request->id);
+        $user->name = $request->name;
+        $user->sub_name = $request->slug;
+        $user->show_in_menu = $request->show_in_menu;
+        $user->parent_id = !empty($request->parent_id) ? $request->parent_id : null;
+        if($user->save()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function show_permission($id) {
+        return Menu::findOrFail($id);
+    }
+
+    public function delete_permission($id) {
+        $user = Menu::findOrFail($id);
+        if($user->delete()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function delete_role($id) {
+        $user = Role::findOrFail($id);
+        if($user->delete()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function menu_list() {
+        $data = [];
+        $menus = Menu::where('parent_id', '=', null)->get(['id', 'name', 'show_in_menu', 'status']);
+        foreach($menus as $key=>$val) {
+            $name = str_replace(" ", "_", $val->name);
+            $data[$name] = Menu::where('parent_id', $val->id)->get(['id', 'parent_id', 'name', 'sub_name', 'show_in_menu', 'status']);
+        }
+        return $data;
+    }
+
+    public function create_role_data($request) {
+        // dd($request->all());
+
+        $role_name = $request->role_name;
+        $all_req = $request->all();
+
+        unset($all_req['role_name']);
+        unset($all_req['_token']);
+        $data_set = [];
+        $id_set = [];
+
+        foreach($all_req as $key=>$val) {
+            for($i=0; $i<count($val); $i++) {
+                $menu_details = Menu::where('id', $val[$i])->first(['name','sub_name']);
+                $data_set[$key][$menu_details->sub_name] = $menu_details->name;
+                $id_set[$key][] = $val[$i];
+            }
+        }
+
+        $json_data = json_encode($data_set);
+        $id_data = json_encode($id_set);
+
+        $role = Role::create([
+            'name' => $role_name,
+            'permission_details' => $json_data,
+            'permission_ids' => $id_data,
+            'slug' => strtolower(str_replace(" ", "_", $role_name)),
+            'status' => 1
+        ]);
+        //dd($json_data);
+        $role->save();
+        return $role;
+    }
+
+    public function get_all_role_name() {
+        $send = [];
+        $data = Role::all(['id', 'name']);
+        foreach($data as $key=>$value) {
+            $send[$value->id] = $value->name;
+        }
+        return $send;
+    }
+
+    public function get_role_data($id) {
+        return Role::where('id', $id)->first(['id', 'name', 'permission_ids']);
+    }
+
+    public function edit_role_data($request) {
+
+        $role_name = $request->role_name;
+        $id = $request->id;
+        $all_req = $request->all();
+
+        unset($all_req['role_name']);
+        unset($all_req['_token']);
+        unset($all_req['id']);
+        $data_set = [];
+        $id_set = [];
+
+        foreach($all_req as $key=>$val) {
+            for($i=0; $i<count($val); $i++) {
+                $menu_details = Menu::where('id', $val[$i])->first(['name','sub_name']);
+                $data_set[$key][$menu_details->sub_name] = $menu_details->name;
+                $id_set[$key][] = $val[$i];
+            }
+        }
+        $json_data = json_encode($data_set);
+        $id_data = json_encode($id_set);
+
+        $role = Role::findOrFail($id);
+        $role->name = $role_name;
+        $role->permission_details = $json_data;
+        $role->permission_ids = $id_data;
+        $role->slug = strtolower(str_replace(" ", "_", $role_name));
+        $role->status = 1;
+        if($role->save()) {
+            return $role;
+        }
+        return false;
+    }
+
+    public function show_user_with_role($id)
+    {
+        $user = DB::table('users')
+        ->join('roles', 'users.role_id', '=', 'roles.id')
+        ->where('users.id', $id)
+            ->select('users.*', 'roles.name as role_name')
+            ->first();
+
+        return $user;
+    }
+
+    public function getUserById($id)
+    {
+        return User::findOrFail($id);
+    }
+
+    public function updateUser($id, $request)
 {
+    $user = User::findOrFail($id);
+    $data = $request->all();
 
-    protected $userRepository;
-
-    public function __construct()
-    {
-        $this->userRepository       = new UserRepository();
-    }
-
-    public function listItems($request)
-    {
-
-        try{
-
-            $listing = $this->userRepository->listing($request);
-
-        }catch (Exception $e) {
-            return response()->json([
-                'status'            => 424,
-                'messages'          => config('status.status_code.424'),
-                'error'             => $e->getMessage()
-            ]);
-
-        }
-        
-        return response()->json([
-            'status'                => 200,
-            'messages'              => config('status.status_code.200'),
-            'user_list'             => $listing
-        ]);
-    }
-
-    public function createItem($request)
-    {
-        $data = $request->all();
-
-        try{
-            
-            $user = $this->userRepository->create($data);
-
-        }catch (Exception $e) {
-            return response()->json([
-                'status'            => 424,
-                'messages'          => config('status.status_code.424'),
-                'error'             => $e->getMessage()
-            ]);
-
-        }
-        
-        return response()->json([
-            'status'                => 201,
-            'messages'              => config('status.status_code.201'),
-            'info'                  => $user
-        ]);
-    }
-
-    public function showItem($id)
-    {
-        try{
-
-            $user = $this->userRepository->show($id);
-
-        }catch (Exception $e) {
-
-
-            return response()->json([
-                'status'            => 424,
-                'messages'          => config('status.status_code.424'),
-                'error'             => $e->getMessage()
-            ]);
+    // Validate current password if provided
+    if (!empty($data['current_password'])) {
+        if (!Hash::check($data['current_password'], $user->password)) {
+            throw new \Exception('Current password is incorrect.');
         }
 
-        return response()->json([
-            'status'                => 200,
-            'message'               => config('status.status_code.200'),
-            'user_info'             => $user
-        ]);
-    }
-
-    public function updateItem($request,$id)
-    {
-        $data = $request->all();
-        
-        try{
-            
-            $user = $this->userRepository->update($data, $id);
-
-        }catch (Exception $e) {
-            return response()->json([
-                'status'            => 424,
-                'messages'          => config('status.status_code.424'),
-                'error'             => $e->getMessage()
-            ]);
-
+        if (!empty($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
         }
-        
-        return response()->json([
-            'status'                => 208,
-            'messages'              => config('status.status_code.208'),
-            'info'                  => $user
-        ]);
+    } else {
+        unset($data['password']);
     }
 
-    public function delete($id)
-    {
-        try{
-            
-            $user = $this->userRepository->delete($id);
-
-        }catch (Exception $e) {
-            return response()->json([
-                'status'            => 424,
-                'messages'          => config('status.status_code.424'),
-                'error'             => $e->getMessage()
-            ]);
-
+    // Handle profile image upload if provided
+    if ($request->hasFile('profile_image')) {
+        if ($user->profile_image) {
+            $previousImagePath = getcwd().'/uploads/agents/'.$user->profile_image;
+            if (file_exists($previousImagePath)) {
+                unlink($previousImagePath);
+            }
         }
-        
-        return response()->json([
-            'status'                => 209,
-            'messages'              => config('status.status_code.209'),
-            'info'                  => $user
-        ]);
+        $fileNameWithExt = $request->file('profile_image')->getClientOriginalName();
+        $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+        $extension = $request->file('profile_image')->getClientOriginalExtension();
+        $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+        $path = $request->file('profile_image')->move(getcwd().'/uploads/agents', $fileNameToStore);
+        $data['profile_image'] = $fileNameToStore;
     }
 
-    public function changePassword($request)
-    {
-        $data = $request->all();
-        try{
-            
-            $user = $this->userRepository->changePassword($data);
+    $user->update($data);
 
-        }catch (Exception $e) {
-            return response()->json([
-                'status'            => 424,
-                'messages'          => config('status.status_code.424'),
-                'error'             => $e->getMessage()
-            ]);
-
-        }
-        
-        return response()->json([
-            'status'                => 208,
-            'messages'              => config('status.status_code.200'),
-            'info'                  => $user
-        ]);
-    }
-
-    public function userStatusChange($id)
-    {
-        try{
-            
-            $user = $this->userRepository->userStatusChange($id);
-
-        }catch (Exception $e) {
-            return response()->json([
-                'status'            => 424,
-                'messages'          => config('status.status_code.424'),
-                'error'             => $e->getMessage()
-            ]);
-
-        }
-        
-        return response()->json([
-            'status'                => 208,
-            'messages'              => config('status.status_code.208'),
-            'info'                  => $user
-        ]);
-    }
+    return $user;
+}
 }

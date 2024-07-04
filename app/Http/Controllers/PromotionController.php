@@ -1,93 +1,112 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\PromotionService;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use App\Models\Promotion;
+use App\Services\PromotionService;
 
 class PromotionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    protected $promotion_service;
-    public function __construct(PromotionService $promotion_service) {
-        $this->promotion_service = $promotion_service;
+    protected $promotionService;
+
+    public function __construct(PromotionService $promotionService)
+    {
+        $this->promotionService = $promotionService;
     }
 
     public function index()
     {
-        return $this->promotion_service->getAllPromotion();
+        $promotions = $this->promotionService->getAllPromotion();
+        return view('promotion.index', compact('promotions'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store_backup(Request $request)
-    {
-        $request->validate([
-            'promotion_title' => 'required'
-        ]);
-        return Promotion::create($request->all());
+    public function create()
+    {   
+       
+        return view('promotion.create');
     }
-
 
     public function store(Request $request)
     {
         $request->validate([
             'promotion_title' => 'required',
-            'file_location' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:2048',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'file_location' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx,xlsx,csv|max:2048',
+           
+        ]);
+        //dd($request);die();
+        // Handle the file upload
+         $data = $request->all();
+         if ($request->hasFile('file_location')) {
+             $data['file_location'] = $request->file('file_location');
+         }
+
+        $this->promotionService->createPromotion($request->all());
+
+        return redirect()->route('promotion-index')->with('success', 'Promotion created successfully.');
+    }
+
+    public function show($id)
+    {
+        $promotion = $this->promotionService->getPromotionById($id);
+        return view('promotion.show', compact('promotion'));
+    }
+
+    public function edit($id)
+    {
+        $promotion = $this->promotionService->getPromotionById($id);
+        return view('promotion.edit', compact('promotion'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'promotion_title' => 'required',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'file_location' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx,xlsx,csv|max:2048',
+           
         ]);
 
-        // Handle File Upload
+        $data = $request->all();
         if ($request->hasFile('file_location')) {
-            $file = $request->file('file_location');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = $file->storeAs('uploads', $fileName);
-        } else {
-            $filePath = null;
+            $data['file_location'] = $request->file('file_location');
         }
 
-        // Create Promotion
-        $promotion = new Promotion();
-        //$promotion->promotion_title = $request->promotion_title;
-        $promotion->promotion_title = $request->input('promotion_title');
-        $promotion->description = $request->input('description');
-        $promotion->file_location = $filePath;
-        $promotion->start_date = $request->input('start_date');
-        $promotion->end_date = $request->input('end_date');
-        $promotion->promo_type = $request->input('promo_type');
-        //$promotion->status = $request->input('status', '1');
-        $promotion->status = $request->input('status') ?? 1; 
-        $promotion->save();
+        $this->promotionService->updatePromotion($id, $request->all());
 
-        return $promotion;
+        return redirect()->route('promotion-index')->with('success', 'Promotion updated successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function search(Request $request)
     {
-        return $this->promotion_service->showPromotion($id);
+        $searchTerm = trim($request->input('search'));
+
+        if (empty($searchTerm)) {
+            return redirect()->route('promotion-index')->with('error', 'Search Field cannot be blank.');
+        }
+
+        $request->validate([
+            'search' => 'required|string',
+        ]);
+
+        $promotions = $this->promotionService->searchPromotion($request);
+        return view('promotion.index', compact('promotions'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $promotion = Promotion::find($id);
-        $promotion->update($request->all());
-        return $promotion;
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        return $this->promotion_service->destroy($id);
+        $this->promotionService->deletePromotion($id);
+        return redirect()->route('promotion-index')->with('success', 'Promotion deleted successfully.');
     }
 }
