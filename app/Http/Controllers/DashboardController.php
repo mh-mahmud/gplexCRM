@@ -23,6 +23,7 @@ class DashboardController extends Controller {
 
 	public function dashboard()
     {
+
         $data = [];
         $data['lead_list'] = Lead::where('lead_status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
         $data['camp_list'] = Campaign::where('status', 1)->orderBy('id', 'desc')->limit(5)->get(['campaign_title', 'start_date', 'end_date', 'campaign_type', 'campaign_limit']);
@@ -32,6 +33,7 @@ class DashboardController extends Controller {
         $data['count_lead'] = Lead::where('lead_status', 1)->count();
         $data['active_agents'] = Agent::where('status', 1)->count();
         $data['active_products'] = Product::where('status', 1)->count();
+        $data['const_task'] = config('constants.TASK_STATUS');
         // dd($data);
         return view('dashboard', $data);
     }
