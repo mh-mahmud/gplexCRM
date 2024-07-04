@@ -154,7 +154,7 @@
 							<td class="text-dark fs-6">{{$user->user_type}}</td>
 							<td class="text-dark fs-6">{{$user->phone_number}}</td>
 							<td class="text-dark fs-6">{{$user->gender}}</td>
-							<td class="text-dark fs-6">{{$user->address}}</td>
+							<td class="text-dark fs-6 w-400px">{{$user->address}}</td>
 
 							<td>
 								@if ($user->status == 1)
