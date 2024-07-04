@@ -85,13 +85,13 @@
 							<!--begin::Input group-->
 							<div class="fv-row mb-10">
 								<!--begin::Label-->
-								<label class="form-label fs-6 fw-bolder text-dark">Email</label>
+								<label class="form-label fs-6 fw-bolder text-dark">Username</label>
 								<!--end::Label-->
 								<!--begin::Input-->
-								<input class="form-control form-control-lg form-control-solid" type="text" name="email" autocomplete="off" />
+								<input class="form-control form-control-lg form-control-solid" type="text" name="username" autocomplete="off" />
 							
-								@if ($errors->has('email'))
-                                <span class="text-danger">{{ $errors->first('email') }}</span>
+								@if ($errors->has('username'))
+                                <span class="text-danger">{{ $errors->first('username') }}</span>
                                 @endif
 								<!--end::Input-->
 							</div>
