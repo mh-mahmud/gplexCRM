@@ -70,12 +70,13 @@ Forms
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Form Name</label>
-                                    <select class="form-control form-control-sm form-control-solid" name="form_id" aria-label="Default select example">
+                                    <select class="form-control form-control-sm form-control-solid" name="form_id" disabled aria-label="Default select example" >
                                         <option value="">Select Form Name</option>
                                         @foreach($formName as $id => $name)
                                             <option value="{{ $id }}" {{ $id == $tableDetails[0]->form_id ? 'selected' : '' }}>{{ $name }}</option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="form_id" value="{{ $tableDetails[0]->form_id }}">
                                     @if ($errors->has('form_id'))
                                         <span class="text-danger">{{ $errors->first('form_id') }}</span>
                                     @endif
@@ -85,7 +86,7 @@ Forms
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Table Name</label>
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="table_name" value="{{ old('table_name', $tableDetails[0]->table_name) }}" autocomplete="off"/>
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="table_name" value="{{ old('table_name', $tableDetails[0]->table_name) }}" autocomplete="off" readonly/>
                                     @if ($errors->has('table_name'))
                                         <span class="text-danger">{{ $errors->first('table_name') }}</span>
                                     @endif
