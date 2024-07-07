@@ -22,7 +22,7 @@
                             <!--end::Title-->
                         </div>
                         <!--end::Page title-->
-						<a href="{{ route('send-sms-list') }}" class="btn btn-sm btn-primary">SMS List</a>                  
+						<a href="{{ route('send-sms-list') }}" class="btn btn-sm btn-primary">SMS List</a>
                     </div>
                     <!--end::Container-->
                 </div>
@@ -59,6 +59,8 @@
                                                     </select>
                                                 </div>
                                             </div> --}}
+
+                                        <div class="row">
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Mobile No.<span class="text-danger">*</span></label>
@@ -75,20 +77,23 @@
                                                     <select class=" form-control form-control-sm form-control-solid" name="template_id" id="template_id" aria-label="Default select example">
                                                         <option value=''>Select</option>
                                                         @foreach($templates as $template)
-                                                        <option value="{{$template->id}}" {{ old('template_id') == $template->id ? 'selected' : '' }}>{{ $template->title }}</option>
+                                                            <option value="{{$template->id}}" {{ old('template_id') == $template->id ? 'selected' : '' }}>{{ $template->title }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
-                                           <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="sms_text" id="sms_text" rows="3">{{ old('sms_text') }}</textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="sms_text" id="sms_text" rows="5">{{ old('sms_text') }}</textarea>
                                                     @if ($errors->has('sms_text'))
                                                         <span class="text-danger">{{ $errors->first('sms_text') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
+                                        </div>
+
+
                                         <!--End Row-->
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
                                             <input type="reset" value="Reset" class="btn btn-light me-2">
@@ -105,7 +110,7 @@
                                 <!--End Card body-->
 
                                 <!--begin::Actions-->
-                                
+
                                 <!--end::Actions-->
                             </div>
                         </div>
@@ -141,7 +146,7 @@
             </script>
         @endif
 
-<!--End Table Alert Message-->  
+<!--End Table Alert Message-->
 
 @endsection
 

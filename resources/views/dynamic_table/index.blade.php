@@ -133,10 +133,10 @@
 						<tr>
 
 							<td class="ps-5 text-dark fs-6">{{($dynamicTables->currentPage() - 1) * $dynamicTables->perPage() + $loop->iteration}}</td>
-						
+
 							<td class="text-dark fs-6">{{ $dynamicTable->leadsForm?->form_name ?? '' }}</td>
 							<td class="text-dark fs-6">{{$dynamicTable->table_name}}</td>
-		                    
+
 							<td class="text-end">
 								<a href="{{ route('dynamictable-show', $dynamicTable->table_name) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
@@ -194,7 +194,7 @@
 							</td>
 						</tr>
 						@endforeach
-					
+
 						</tbody>
 						<!--end::Table body-->
 					</table>
