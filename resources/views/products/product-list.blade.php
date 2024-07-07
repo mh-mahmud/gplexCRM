@@ -27,7 +27,7 @@
                         <!--begin::Actions-->
                         <div class="d-flex align-items-center py-1">
 
-                            <a href="{{ route('email-template-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
+                            <a href="{{ route('add-product') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Add</a>
 
                             <!--end::Button-->
                         </div>
@@ -81,7 +81,7 @@
 				</h3>
 
 				<div class="d-flex flex-wrap gap-2">
-				<form action="{{ route('email-template') }}" method="GET" class="d-flex">
+				<form action="{{ route('product-list') }}" method="GET" class="d-flex">
 					<!--begin::Input group-->
 					<div class="d-flex align-items-center position-relative">
 						<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
@@ -145,7 +145,7 @@
 								@endif
                             </td>
 							<td class="text-end">
-								<a href="{{ route('email-template-show', $product->id) }}"
+								<a href="{{ route('product-show', $product->id) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
 									<span class="svg-icon svg-icon-3">
@@ -183,7 +183,7 @@
 											</span>
 									<!--end::Svg Icon-->
 								</a>
-								<form action="{{ route('email-template-delete', $product->id) }}" method="POST" style="display: inline;">
+								<form action="{{ route('product-delete', $product->id) }}" method="POST" style="display: inline;">
 									@csrf
 									@method('DELETE')
 									<button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">

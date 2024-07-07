@@ -4,9 +4,9 @@ ALTER TABLE `roles` CHANGE `details` `permision_details` JSON NULL DEFAULT NULL;
 ALTER TABLE `roles` ADD `permission_ids` JSON NULL DEFAULT NULL AFTER `permission_details`;
 ALTER TABLE users ADD COLUMN username VARCHAR(191) UNIQUE AFTER user_id;
 
-----30/06/2024----
 
----Ishtiak add 
+
+---Ishtiak SQL start 
 
 CREATE TABLE `tasks` (
   `id` bigint(20) UNSIGNED NOT NULL,
@@ -26,3 +26,10 @@ ALTER TABLE `tasks`
   ALTER TABLE `tasks`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
+
+ALTER TABLE `products` CHANGE `product_type` `product_type` TINYINT(1) NOT NULL, CHANGE `status` `status` TINYINT(1) NOT NULL;
+
+ALTER TABLE `products` CHANGE `description` `description` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;
+
+ALTER TABLE `products` CHANGE `product_cost` `product_cost` DECIMAL(8,2) NULL, CHANGE `product_value` `product_value` DECIMAL(8,2) NULL;
+---Ishtiak SQL end
