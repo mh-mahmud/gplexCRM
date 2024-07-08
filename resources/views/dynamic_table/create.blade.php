@@ -160,6 +160,7 @@
                                             <div class="fv-row mt-8 text-center" style="padding-left:34px">
                                                 <button type="button" class="btn btn-sm btn-danger" onclick="removeField(this)"><i class="bi bi-x-lg"></i></button>
                                             </div>
+                                            <!--end::Input-->
                                         </div>
                                     </div>
                                 @endforeach

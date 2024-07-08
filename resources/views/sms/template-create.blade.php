@@ -57,50 +57,60 @@
 
                                     <form class="g-form w-100" action="{{ route('sms-template-store') }}"  method="POST">
                                          @csrf
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Title<span class="text-danger">*</span></label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="title" autocomplete="off" value="{{ old('title') }}" />
-                                                    <!--end::Input-->
-                                                    @if ($errors->has('title'))
-                                                        <span class="text-danger">{{ $errors->first('title') }}</span>
-                                                    @endif
+
+                                        <div class="row">
+                                            <div class="col-md-8 mx-auto">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="fv-row mb-3">
+                                                            <!--begin::Label-->
+                                                            <label class="form-label fw-bolder text-dark">Title<span class="text-danger">*</span></label>
+                                                            <!--end::Label-->
+                                                            <!--begin::Input-->
+                                                            <input class="form-control form-control-sm form-control-solid"
+                                                                   type="text" name="title" autocomplete="off" value="{{ old('title') }}" />
+                                                            <!--end::Input-->
+                                                            @if ($errors->has('title'))
+                                                                <span class="text-danger">{{ $errors->first('title') }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label fw-bolder text-dark" for="textarea">Description<span class="text-danger">*</span></label>
+                                                            <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{ old('description') }}</textarea>
+                                                            @if ($errors->has('description'))
+                                                                <span class="text-danger">{{ $errors->first('description') }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="fv-row mb-3">
+                                                            <label class="form-label fw-bolder text-dark">Status</label>
+                                                            <select class=" form-control form-control-sm form-control-solid" name="status"
+                                                                    aria-label="Default select example">
+
+                                                                <option value="1" selected>Active</option>
+                                                                <option value="0">Inactive</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-
-                                           <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Description<span class="text-danger">*</span></label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{ old('description') }}</textarea>
-                                                    @if ($errors->has('description'))
-                                                        <span class="text-danger">{{ $errors->first('description') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div> 
-                                            
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Status</label>
-                                                    <select class=" form-control form-control-sm form-control-solid" name="status"
-                                                            aria-label="Default select example">
-                                                        
-                                                        <option value="1" selected>Active</option>
-                                                        <option value="0">Inactive</option>
-                                                        
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                      <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                            <input type="reset" value="Reset" class="btn btn-light me-2">
-                                            <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Save Changes
-                                            </button>
                                         </div>
+
+
+                                      <div class="card-footer d-flex justify-content-center py-6 px-9">
+
+                                                  <input type="reset" value="Reset" class="btn btn-light me-2">
+                                                  <button type="submit" class="btn btn-primary"
+                                                          id="kt_account_profile_details_submit">Save Changes
+                                                  </button>
+                                      </div>
+
 
                                     </form>
 
@@ -110,7 +120,7 @@
                                 <!--End Card body-->
 
                                 <!--begin::Actions-->
-                                
+
                                 <!--end::Actions-->
                             </div>
                         </div>
@@ -121,6 +131,6 @@
 
             <!-- </div> -->
             <!--end::Content-->
-           
+
 
 @endsection

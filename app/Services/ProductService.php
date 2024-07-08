@@ -12,7 +12,7 @@ class ProductService
         $sql = Product::query();
         $data = $request->all();
         if(!empty($data["search"])) {
-            $sql->where('title','like', '%' . $data["search"] . '%');
+            $sql->where('name','like', '%' . $data["search"] . '%');
 
         }
         if (isset($data['paginate']) && $data['paginate'] == false) {
@@ -27,18 +27,19 @@ class ProductService
     public function productStore($request)
     {
         $request->validate([
-            'name' => 'required|unique:sms_templates|max:100',
-            'description' => 'required|max:191',
-           
+            'name' => 'required|unique:products|max:100',
+            'product_code' => 'required',
+            'product_type' => 'required',
+            'description' => 'max:191',         
         ]);
         $data = $request->all();
 
         try {
             $dataObj                        = new Product();
             $dataObj->name                  = $data['name'];
-            $dataObj->type                  = $data['type'];
-            $dataObj->cost                  = $data['cost'];
-            $dataObj->value                 = $data['value'];
+            $dataObj->product_type          = $data['product_type'];
+            $dataObj->product_cost          = $data['product_cost'];
+            $dataObj->product_value         = $data['product_value'];
             $dataObj->product_code          = $data['product_code'];
             $dataObj->description           = $data['description'];
             $dataObj->status                = $data['status'];
@@ -94,9 +95,25 @@ class ProductService
 
     }
 
+    public function getProductById($id)
+    {
+        return Product::findOrFail($id);
+    }
+
     public function productDelete($id)
     {
-        $promotion = Product::findOrFail($id);
-        $promotion->delete();
+        try {
+            $data = Product::findOrFail($id);
+            $data->delete();
+        } catch (Exception $e) {
+            return (object)[
+                'status'             => 424,
+                'error'              => $e->getMessage()
+            ];
+        }
+
+        return (object)[
+            'status'                 => 200,
+        ];
     }
 }

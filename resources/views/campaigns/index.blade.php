@@ -29,7 +29,7 @@
                             <!--begin::Wrapper-->
                             <div class="me-4">
                                 <!--begin::Menu-->
-                               
+
                                 <!--begin::Menu 1-->
                                 <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
                                      id="kt_menu_61484bf44d957">
@@ -236,19 +236,19 @@
 							<td class="ps-5 text-dark fs-6">{{($campaigns->currentPage() - 1) * $campaigns->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{$campaign->campaign_title }}</td>
 							<td class="text-dark fs-6">{{$campaign->promotion_title }}</td>
-							<td class="text-dark fs-6"> 
+							<td class="text-dark fs-6">
 							@if($campaign->start_date)
 								{{ \Carbon\Carbon::parse($campaign->start_date)->format('d-m-Y') }}
 							@endif
 							</td>
-							<td class="text-dark fs-6"> 
+							<td class="text-dark fs-6">
 							@if($campaign->end_date)
 								{{ \Carbon\Carbon::parse($campaign->end_date)->format('d-m-Y') }}
 							@endif
 							</td>
 							<td class="text-dark fs-6">{{$campaign->campaign_type }}</td>
 							<td class="text-dark fs-6">{{$campaign->campaign_limit }}</td>
-							
+
 		                    <td>
 								@if ($campaign->status == 1)
 									<span class="badge badge-light-success">Active</span>
@@ -256,7 +256,7 @@
 									<span class="badge badge-light-danger">Inactive</span>
 								@endif
                             </td>
-							<td class="text-end">
+							<td class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
 								<a href="{{ route('campaign-show', $campaign->id) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
@@ -313,7 +313,7 @@
 							</td>
 						</tr>
 						@endforeach
-					
+
 						</tbody>
 						<!--end::Table body-->
 					</table>

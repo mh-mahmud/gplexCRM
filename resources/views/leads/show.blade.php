@@ -116,7 +116,7 @@ use Carbon\Carbon;
                         </span>
                     </div>
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Address</span>
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Address</span>
                         <span>{{ $lead->address }}</span>
                     </div>
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
