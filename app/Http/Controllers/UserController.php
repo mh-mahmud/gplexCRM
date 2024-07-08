@@ -267,5 +267,22 @@ class UserController extends Controller
         }
     }
 
+
+    public function search(Request $request)
+    {
+        $searchTerm = trim($request->input('search'));
+
+        if (empty($searchTerm)) {
+            return redirect()->route('promotion-index')->with('error', 'Search Field cannot be blank.');
+        }
+
+        $request->validate([
+            'search' => 'required|string',
+        ]);
+
+        $promotions = $this->service->searchPromotion($request);
+        return view('promotion.index', compact('promotions'));
+    }
+
     
 }

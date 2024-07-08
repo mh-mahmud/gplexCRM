@@ -33,6 +33,7 @@ class UserService {
             'user_type' =>'user',
             'phone_number' => $request->phone_number,
             'gender' => $request->gender,
+            'address' => $request->address,
             'password' => bcrypt($request->password),
             'status' => $request->status,
         ]);
@@ -51,6 +52,7 @@ class UserService {
         $user->username = $request->username;
         $user->phone_number = $request->phone_number;
         $user->gender = $request->gender;
+        $user->address = $request->address;
         $user->role_id = $request->role_id;
         if(!empty($request->password)) {
             $user->password = bcrypt($request->password);
