@@ -236,7 +236,7 @@
                                     @foreach ($agents as $agent)
                                         <tr>
 
-                                            <td class="ps-5 text-dark fs-6">{{$loop->iteration}}</td>
+							                <td class="ps-5 text-dark fs-6">{{($agents->currentPage() - 1) * $agents->perPage() + $loop->iteration}}</td>
                                             <td class="text-dark fs-6">{{$agent->agent_id}}</td>
                                             <td class="text-dark fs-6 w-200px">{{$agent->first_name }}</td>
                                             <td class="text-dark fs-6 w-200px">{{$agent->last_name }}</td>
