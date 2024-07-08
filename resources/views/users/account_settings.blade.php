@@ -162,9 +162,9 @@ use Carbon\Carbon;
 							<div class="col-lg-8 fv-row">
 								<select name="gender" aria-label="Select a Gender" data-control="select2" data-placeholder="Select a Gender..." class="form-select form-select-solid form-select-lg">
 									<option value="">Select Gender</option>
-									<option value="male" {{ $user->gender === 'male' ? 'selected' : '' }}>Male</option>
-									<option value="female" {{ $user->gender === 'female' ? 'selected' : '' }}>Female</option>
-									<option value="other" {{ $user->gender === 'other' ? 'selected' : '' }}>Other</option>
+									<option value="Male" {{ $user->gender === 'Male' ? 'selected' : '' }}>Male</option>
+									<option value="Female" {{ $user->gender === 'Female' ? 'selected' : '' }}>Female</option>
+									<option value="Other" {{ $user->gender === 'Other' ? 'selected' : '' }}>Other</option>
 								</select>
 							</div>
 						</div>
