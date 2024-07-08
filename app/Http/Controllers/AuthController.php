@@ -21,7 +21,7 @@ class AuthController extends Controller
         }
     }
 
-	
+
     public function register(Request $request) {
 		//var_dump($request);die();
     	$inputs = $request->validate([
@@ -49,7 +49,7 @@ class AuthController extends Controller
     }
 
 	public function postLogin_backup(Request $request)
-	{   
+	{
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -66,7 +66,7 @@ class AuthController extends Controller
 	}
 
 	public function postLogin(Request $request)
-    {   
+    {
         //Check user is already logged in
         if(session()->has('users')) {
             return redirect('dashboard')->with('success', 'You are already logged in.');
