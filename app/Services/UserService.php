@@ -33,6 +33,7 @@ class UserService {
             'user_type' =>'user',
             'phone_number' => $request->phone_number,
             'gender' => $request->gender,
+            'address' => $request->address,
             'password' => bcrypt($request->password),
             'status' => $request->status,
         ]);
@@ -51,6 +52,7 @@ class UserService {
         $user->username = $request->username;
         $user->phone_number = $request->phone_number;
         $user->gender = $request->gender;
+        $user->address = $request->address;
         $user->role_id = $request->role_id;
         if(!empty($request->password)) {
             $user->password = bcrypt($request->password);
@@ -269,4 +271,24 @@ class UserService {
 
     return $user;
 }
+
+    public function searchUser($request)
+    {
+        $searchTerm = trim($request->input('search'));
+
+        $query = User::query();
+        //dd($query);die();
+        $query->where(function ($q) use ($searchTerm) {
+            $q->where('username', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('first_name', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('last_name', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('email', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('phone_number', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('user_type', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('gender', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('address', 'LIKE', '%' . $searchTerm . '%');
+        });
+
+        return $query->paginate(config('constants.ROW_PER_PAGE'));
+    }
 }

@@ -22,19 +22,55 @@ class ProductController extends Controller {
 
     public function productCreate()
     {       
-        return view('emails.template-create');
+        return view('products.create');
     }
 
     public function productStore(Request $request)
     { 
         $result = $this->productService->productStore($request);
         if($result->status == 201){
-            return redirect()->route('email-template')->with('success', 'Email template created successfully.');
+            return redirect()->route('product-list')->with('success', 'Product added successfully.');
 
         }else{
-            session()->flash('error', 'Can not Create !');
+            session()->flash('error', 'Can not Add!');
         }
 
+    }
+
+    public function productShow($id)
+    {
+        $product = $this->productService->getProductById($id);
+        return view('products.product-show', compact('product'));
+    }
+
+    public function productEdit($id)
+    {
+        $product = $this->productService->getProductById($id);
+        return view('products.edit', compact('product'));
+    }
+
+    public function productUpdate(Request $request, $id)
+    { 
+        $result = $this->productService->productUpdate($request, $id);
+        if($result->status == 208){
+            return redirect()->route('product-list')->with('success', 'Product updated successfully.');
+
+        }else{
+            session()->flash('error', 'Can not Update!');
+        }
+
+    }
+
+
+    public function productDelete($id)
+    {
+        $result = $this->productService->productDelete($id);
+        if($result->status == 200){
+            return redirect()->route('product-list')->with('success', 'Product deleted successfully.');
+
+        }else{
+            session()->flash('error', 'Can not Delete !');
+        }
     }
 
 }

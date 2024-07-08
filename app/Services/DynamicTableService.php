@@ -36,11 +36,11 @@ class DynamicTableService
                 $name = $field['name'];
                 $length = $field['character_length'] ?? null;
 
-                if ($type === 'varchar' && $length) {
+                if ($type === 'varchar') {
                     $column = $table->string($name, $length)->nullable();
                 } elseif ($type === 'int') {
                     $column = $table->integer($name)->nullable();
-                } elseif ($type === 'char' && $length) {
+                } elseif ($type === 'char') {
                     $column = $table->char($name, $length)->nullable();
                 } elseif ($type === 'date') {
                     $column = $table->date($name)->nullable();
@@ -88,6 +88,7 @@ class DynamicTableService
 
         return 'Data inserted successfully.';
     }
+
 
     public function getDynamicTableDetails($id)
     {

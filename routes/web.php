@@ -125,6 +125,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('user-profile/{id}',        [UserController::class, 'user_profile'])->name('user-profile');
 	Route::get('/account-settings/{id}/edit', [UserController::class, 'profile_edit'])->name('profile-edit');
 	Route::put('/account-settings/{id}', [UserController::class, 'profile_update'])->name('profile-update');
+	Route::post('/user/search', [UserController::class, 'search'])->name('user-search');
 
     Route::get('permission-list',        [UserController::class, 'permission_index'])->name('permission.index');
     Route::get('permission-show/{id}',        [UserController::class, 'permission_show'])->name('permission.show');
@@ -194,6 +195,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 	// Product routes start
 	Route::get('product-list', [ProductController::class, 'productList'])->name('product-list');
+	Route::get('add-product', [ProductController::class, 'productCreate'])->name('add-product');
+	Route::post('add-product-pro', [ProductController::class, 'productStore'])->name('add-product-pro');
+	Route::delete('product-delete/{id}', [ProductController::class, 'productDelete'])->name('product-delete');
+	Route::get('product-show/{id}', [ProductController::class, 'productShow'])->name('product-show');
+	Route::get('product-edit/{id}', [ProductController::class, 'productEdit'])->name('product-edit');
+	Route::put('product-update-pro/{id}', [ProductController::class, 'productUpdate'])->name('product-update-pro');
+
 
 	// Product routes end
 

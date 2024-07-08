@@ -267,5 +267,22 @@ class UserController extends Controller
         }
     }
 
+
+    public function search(Request $request)
+    {
+        $searchTerm = trim($request->input('search'));
+
+        if (empty($searchTerm)) {
+            return redirect()->route('users.index')->with('error', 'Search Field cannot be blank.');
+        }
+
+        $request->validate([
+            'search' => 'required|string',
+        ]);
+
+        $users = $this->service->searchUser($request);
+        return view('users.user_list', compact('users'));
+    }
+
     
 }

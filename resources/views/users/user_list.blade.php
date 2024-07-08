@@ -42,27 +42,29 @@
     <div class="container-fluid">
 
         <!--Table Alert Message-->
-        <div class="text-center">
-            <div class="row">
-                <div class="col-md-5 mx-auto">
-                    @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>{{ session('success') }}</strong>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-                    @if (session('error'))
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong> {{ session('error') }}</strong>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                        </div>
-                    @endif
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success')}}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
 
-
-                </div>
-            </div>
-        </div>
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error')}}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
 
         <!--End Table Alert Message-->
 
@@ -78,46 +80,29 @@
                         </h3>
 
                         <div class="d-flex flex-wrap gap-2">
-                            <!--begin::Input group start date-->
-                            <!-- <div class="position-relative">
-                                <input type="text" class="form-control form-control-solid flatpickr"
-                                       placeholder="Start date" name="date-table">
-                            </div> -->
-                            <!--end::Input group-->
-
-                            <!--begin::Input group end date-->
-                            <!-- <div class="position-relative">
-                                <input type="text" class="form-control form-control-solid"
-                                       placeholder="End date" name="date-table"/>
-                            </div> -->
-
-                            <!--end::Input group-->
-
-                            <!--begin::Input group-->
-                            <div class="d-flex align-items-center position-relative">
-                                <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                                <span class="svg-icon svg-icon-1 position-absolute ms-6">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                     viewBox="0 0 24 24" fill="none">
-									<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546"
-                                          height="2" rx="1" transform="rotate(45 17.0365 15.1223)"
-                                          fill="black"></rect>
-									<path
-                                        d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                                        fill="black"></path>
-								</svg>
-							</span>
-                                <!--end::Svg Icon-->
-                                <input type="text" data-kt-customer-table-filter="search"
-                                       class="form-control form-control-sm w-250px ps-15"
-                                       placeholder="Search Customers">
-                            </div>
-                            <!--end::Input group-->
-
-                            <button type="button" class="btn btn-sm btn-primary">Search</button>
-
-
-                        </div>
+				<form action="{{ route('user-search') }}" method="POST" class="d-flex">
+				@csrf
+					<!--begin::Input group-->
+					<div class="d-flex align-items-center position-relative">
+						<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+						<span class="svg-icon svg-icon-1 position-absolute ms-6">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+								viewBox="0 0 24 24" fill="none">
+								<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546"
+									height="2" rx="1" transform="rotate(45 17.0365 15.1223)"
+									fill="black"></rect>
+								<path
+									d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+									fill="black"></path>
+							</svg>
+						</span>
+						<!--end::Svg Icon-->
+						<input type="text" name="search" class="form-control form-control-sm form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by User">
+					</div>
+					<!--end::Input group-->
+					<button type="submit" class="btn btn-primary btn-sm ms-2">Search</button>
+				</form>
+			</div>
 
 
                     </div>
@@ -134,11 +119,11 @@
                                 <tr class="fw-bolder text-muted bg-light bd-cyan">
                                     <th class="ps-4 min-w-25px">SL</th>
                                     <th class="min-w-150px">Name</th>
-                                    <th class="min-w-140px">User Role</th>
+                                    <th class="min-w-120px">Username</th>
+                                    <th class="min-w-140px">Role</th>
                                     <th class="min-w-120px">Email</th>
                                     <th class="min-w-140px">User Type</th>
                                     <th class="min-w-120px">Phone Number</th>
-                                    <th class="min-w-120px">Gender</th>
                                     <th class="min-w-120px">Address</th>
                                     <th class="min-w-120px">Status</th>
                                     <th class="min-w-100px text-end-new">Actions</th>
@@ -152,11 +137,11 @@
 
                                         <td class="ps-5 text-dark fs-6">{{($users->currentPage() - 1) * $users->perPage() + $loop->iteration}}</td>
                                         <td class="text-dark fs-6">{{$user->first_name . ' ' . $user->last_name}}</td>
+                                        <td class="text-dark fs-6">{{$user->username }}</td>
                                         <td class="text-dark fs-6">{{@$role_names[$user->role_id]}}</td>
                                         <td class="text-dark fs-6">{{$user->email }}</td>
                                         <td class="text-dark fs-6">{{$user->user_type}}</td>
                                         <td class="text-dark fs-6">{{$user->phone_number}}</td>
-                                        <td class="text-dark fs-6">{{$user->gender}}</td>
                                         <td class="text-dark fs-6 w-350px">{{$user->address}}</td>
 
                                         <td>

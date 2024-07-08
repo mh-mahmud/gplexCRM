@@ -81,11 +81,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-12" style="text-align: right;">
-                                <button type="button" class="btn btn-sm btn-success" onclick="addField()"><i class="bi bi-plus-lg"></i> Add Field</button>
-                            </div>
-                        </div>
 
                         <div class="row mb-3" id="fields">
                             @if(old('fields'))
@@ -160,7 +155,6 @@
                                             <div class="fv-row mt-8 text-center" style="padding-left:34px">
                                                 <button type="button" class="btn btn-sm btn-danger" onclick="removeField(this)"><i class="bi bi-x-lg"></i></button>
                                             </div>
-                                            <!--end::Input-->
                                         </div>
                                     </div>
                                 @endforeach
@@ -240,12 +234,16 @@
                             @endif
                         </div>
 
-                        
-                        <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <a href="{{ route('dynamictable-create') }}" class="btn btn-light me-2">Reset</a>
-                                            <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Save Changes
-                                            </button>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-primary" onclick="addField()">Add New Field</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
                         </div>
                     </form>
                     <!-- End Form-->

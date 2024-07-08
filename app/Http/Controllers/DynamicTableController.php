@@ -15,6 +15,7 @@ use App\Models\LeadFormDetail;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class DynamicTableController extends Controller
 {
@@ -32,40 +33,74 @@ class DynamicTableController extends Controller
     }
 
     public function create()
-    {   
+    {
         //$parents = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
         $formName = LeadsForm::pluck('form_name', 'form_id');
         return view('dynamic_table.create', compact('formName'));
     }
 
+
     public function createTable(Request $request)
     {
+        // Custom validation rule for snake case
+        Validator::extend('snake_case', function ($attribute, $value, $parameters, $validator) {
+            //return preg_match('/^[a-z]+(_[a-z]+)*$/', $value);
+            return preg_match('/^[a-z0-9]+(_[a-z0-9]+)*$/', $value);
+        });
+    
+        Validator::replacer('snake_case', function ($message, $attribute, $rule, $parameters) {
+            $customAttributes = [
+                'table_name' => 'Table Name',
+                'fields.*.name' => 'Field Name',
+            ];
+    
+            return str_replace(':attribute', $customAttributes[$attribute] ?? $attribute, ':attribute must be in lowercase and words should be separated by underscores(Ex.table_name).');
+        });
+    
+        // Custom validation messages
+        $messages = [
+            'table_name.snake_case' => 'The :attribute must be in lowercase and words should be separated by underscores(Ex.table_name)',
+            'fields.*.name.snake_case' => 'The :attribute must be in lowercase and words should be separated by underscores(Ex.first_name)',
+        ];
+    
         // Validate the request inputs
-        $request->validate([
-            'table_name' => 'required|string|max:255',
+        $validator = Validator::make($request->all(), [
+            'table_name' => 'required|string|max:255|snake_case',
             'form_id' => 'required|string|max:10',
             'fields' => 'required|array',
-            'fields.*.name' => 'required|string|max:255',
+            'fields.*.name' => 'required|string|max:255|snake_case',
             'fields.*.type' => 'required|string|max:255',
             'fields.*.character_length' => 'nullable|integer',
             'fields.*.is_index' => 'nullable|boolean',
             'fields.*.is_null' => 'nullable|boolean',
             'fields.*.is_unique' => 'nullable|boolean',
-        ]);
-
+        ], $messages);
+    
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+    
         $tableName = $request->input('table_name');
         $formId = $request->input('form_id');
         $fields = $request->input('fields');
-
-        // service to create the table and insert data
-        $result = $this->dynamicTableService->createTable($tableName, $formId, $fields);
-
-        if ($result === 'Table already exists.') {
-            return redirect()->route('dynamictable-index')->with('error', $result);
+    
+        try {
+            // Service to create the table and insert data
+            $result = $this->dynamicTableService->createTable($tableName, $formId, $fields);
+    
+            if ($result === 'Table already exists.') {
+                return redirect()->route('dynamictable-index')->with('error', $result);
+            }
+    
+            return redirect()->route('dynamictable-index')->with('success', 'Dynamic Table created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('dynamictable-index')->with('error', 'An error occurred while creating the table: ' . $e->getMessage());
         }
-
-        return redirect()->route('dynamictable-index')->with('success','Dynamic Table created successfully.');
     }
+    
+
 
     public function show($tableName)
     {
@@ -84,35 +119,66 @@ class DynamicTableController extends Controller
     
         return view('dynamic_table.edit', compact('tableDetails', 'formName'));
     }
-    
+
     public function update(Request $request, $id)
     {
+        // Custom validation rule for snake case
+        Validator::extend('snake_case', function ($attribute, $value, $parameters, $validator) {
+            return preg_match('/^[a-z0-9]+(_[a-z0-9]+)*$/', $value);
+        });
+
+        Validator::replacer('snake_case', function ($message, $attribute, $rule, $parameters) {
+            $customAttributes = [
+                'table_name' => 'Table Name',
+                'fields.*.name' => 'Field Name',
+            ];
+
+            return str_replace(':attribute', $customAttributes[$attribute] ?? $attribute, ':attribute must be in lowercase and words should be separated by underscores.');
+        });
+
+        // Custom validation messages
+        $messages = [
+            'table_name.snake_case' => 'The :attribute must be in lowercase and words should be separated by underscores',
+            'fields.*.name.snake_case' => 'The :attribute must be in lowercase and words should be separated by underscores',
+        ];
+
         // Validate the request inputs
-        $request->validate([
-            'table_name' => 'required|string|max:255',
+        $validator = Validator::make($request->all(), [
+            'table_name' => 'required|string|max:255|snake_case',
             'form_id' => 'required|string|max:10',
             'fields' => 'required|array',
-            'fields.*.name' => 'required|string|max:255',
+            'fields.*.name' => 'required|string|max:255|snake_case',
             'fields.*.type' => 'required|string|max:255',
             'fields.*.character_length' => 'nullable|integer',
             'fields.*.is_index' => 'nullable|boolean',
             'fields.*.is_null' => 'nullable|boolean',
             'fields.*.is_unique' => 'nullable|boolean',
-        ]);
-    
+        ], $messages);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $tableName = $request->input('table_name');
         $formId = $request->input('form_id');
         $fields = $request->input('fields');
-    
-        // service to update the table and insert data
-        $result = $this->dynamicTableService->updateTable($tableName, $formId, $fields, $id);
-    
-        if ($result === 'Table not found.') {
-            return redirect()->route('dynamictable-index')->with('error', $result);
+
+        try {
+            // Service to update the table and insert data
+            $result = $this->dynamicTableService->updateTable($tableName, $formId, $fields, $id);
+
+            if ($result === 'Table not found.') {
+                return redirect()->route('dynamictable-index')->with('error', $result);
+            }
+
+            return redirect()->route('dynamictable-index')->with('success', 'Dynamic Table updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('dynamictable-index')->with('error', 'An error occurred while updating the table: ' . $e->getMessage());
         }
-    
-        return redirect()->route('dynamictable-index')->with('success', 'Dynamic Table updated successfully.');
     }
+
     
 
     public function search(Request $request)
