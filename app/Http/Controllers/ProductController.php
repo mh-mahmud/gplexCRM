@@ -32,7 +32,7 @@ class ProductController extends Controller {
             return redirect()->route('product-list')->with('success', 'Product added successfully.');
 
         }else{
-            session()->flash('error', 'Can not Add !');
+            session()->flash('error', 'Can not Add!');
         }
 
     }
@@ -41,6 +41,24 @@ class ProductController extends Controller {
     {
         $product = $this->productService->getProductById($id);
         return view('products.product-show', compact('product'));
+    }
+
+    public function productEdit($id)
+    {
+        $product = $this->productService->getProductById($id);
+        return view('products.edit', compact('product'));
+    }
+
+    public function productUpdate(Request $request, $id)
+    { 
+        $result = $this->productService->productUpdate($request, $id);
+        if($result->status == 208){
+            return redirect()->route('product-list')->with('success', 'Product updated successfully.');
+
+        }else{
+            session()->flash('error', 'Can not Update!');
+        }
+
     }
 
 

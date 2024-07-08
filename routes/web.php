@@ -198,6 +198,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('add-product-pro', [ProductController::class, 'productStore'])->name('add-product-pro');
 	Route::delete('product-delete/{id}', [ProductController::class, 'productDelete'])->name('product-delete');
 	Route::get('product-show/{id}', [ProductController::class, 'productShow'])->name('product-show');
+	Route::get('product-edit/{id}', [ProductController::class, 'productEdit'])->name('product-edit');
+	Route::put('product-update-pro/{id}', [ProductController::class, 'productUpdate'])->name('product-update-pro');
 
 
 	// Product routes end

@@ -27,10 +27,9 @@ class ProductService
     public function productStore($request)
     {
         $request->validate([
-            'name' => 'required|unique:products|max:100',
-            'product_code' => 'required',
-            'product_type' => 'required',
-            'description' => 'max:191',         
+            'name'          => 'required|unique:products|max:191',
+            'product_code'  => 'required',
+            'product_type'  => 'required',
         ]);
         $data = $request->all();
 
@@ -63,18 +62,19 @@ class ProductService
     public function productUpdate($request, $id)
     {
         $request->validate([
-           'name' => 'required|unique:sms_templates|max:100',
-           'description' => 'required|max:191',
-           
+            'name'          => 'required|unique:products|max:191'.$id,
+            'title'         => 'required|unique:sms_templates,title,'.$id,
+            'product_code'  => 'required',
+            'product_type'  => 'required',
         ]);
         $data = $request->all();
 
         try {
-            $dataObj                        = Product::findOrFail($id);
+            $dataObj                        = new Product();
             $dataObj->name                  = $data['name'];
-            $dataObj->type                  = $data['type'];
-            $dataObj->cost                  = $data['cost'];
-            $dataObj->value                 = $data['value'];
+            $dataObj->product_type          = $data['product_type'];
+            $dataObj->product_cost          = $data['product_cost'];
+            $dataObj->product_value         = $data['product_value'];
             $dataObj->product_code          = $data['product_code'];
             $dataObj->description           = $data['description'];
             $dataObj->status                = $data['status'];
