@@ -28,7 +28,7 @@ class ProductService
     {
         $request->validate([
             'name'          => 'required|unique:products|max:191',
-            'product_code'  => 'required',
+            'product_code'  => 'required|max:20',
             'product_type'  => 'required',
         ]);
         $data = $request->all();
@@ -62,15 +62,14 @@ class ProductService
     public function productUpdate($request, $id)
     {
         $request->validate([
-            'name'          => 'required|unique:products|max:191'.$id,
-            'title'         => 'required|unique:sms_templates,title,'.$id,
-            'product_code'  => 'required',
+            'name'         => 'required|max:191|unique:products,name,'.$id,
+            'product_code'  => 'required|max:20',
             'product_type'  => 'required',
         ]);
         $data = $request->all();
 
         try {
-            $dataObj                        = new Product();
+            $dataObj                        = Product::findOrFail($id);;
             $dataObj->name                  = $data['name'];
             $dataObj->product_type          = $data['product_type'];
             $dataObj->product_cost          = $data['product_cost'];
