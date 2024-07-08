@@ -16,6 +16,7 @@ use App\Models\LeadsForm;
 use App\Models\LeadFormDetail;
 use App\Models\Lead;
 use App\Services\LeadService;
+use Illuminate\Support\Facades\Schema;
 use DateTime;
 
 class LeadController  extends Controller
@@ -117,7 +118,7 @@ class LeadController  extends Controller
         return view('leads.show', compact('lead'));
     }
 
-    public function show($id)
+    public function show_backup_2($id)
     {
         $lead = $this->leadService->getLeadById($id);
 
@@ -131,6 +132,86 @@ class LeadController  extends Controller
 
         return view('leads.show', compact('lead', 'tableData'));
     }
+
+    public function show($id)
+    {
+        $lead = $this->leadService->getLeadById($id);
+
+        // Fetch dynamic fields data based on lead_id
+        $fields = LeadFormDetail::where('form_id', $lead->form_id)->get();
+        $tableData = [];
+        foreach ($fields as $field) {
+            $tableName = $field->table_name;
+            $tableData[$tableName] = DB::table($tableName)->where('lead_id', $lead->id)->get();
+        }
+
+        return view('leads.show', compact('lead', 'tableData'));
+    }
+
+
+
+    public function add($tableName, $leadId)
+    {
+        // Get column names
+        $columns = Schema::getColumnListing($tableName);
+
+        // Fetch lead form details
+        $fields = LeadFormDetail::where('table_name', $tableName)->first();
+
+        // Fetch lead details associated with the lead ID
+        $leads = Lead::where('id', $leadId)->first();
+
+        // Fetch column details with data types using raw SQL query
+        $columnDetails = DB::select("SHOW COLUMNS FROM $tableName");
+
+        // Map column names to their types
+        $columnTypes = [];
+        foreach ($columnDetails as $column) {
+            $columnName = $column->Field;
+            $columnType = $column->Type;
+            $columnTypes[$columnName] = $columnType;
+        }
+
+        // Filter out unwanted fields
+        $filteredColumns = array_filter($columns, function ($column) {
+            return !in_array($column, ['id', 'created_at', 'updated_at']);
+        });
+
+        // Return view with necessary data
+        return view('leads.add', compact('tableName', 'filteredColumns', 'leads', 'columnTypes'));
+    }
+
+    
+
+
+    // LeadController.php
+
+    public function storeTableData(Request $request)
+    {
+        $tableName = $request->input('tableName');
+        $data = $request->except(['_token', 'tableName']);
+        $lead_id = $request->input('lead_id'); 
+        $form_id =$request->input('form_id'); 
+        $data['lead_id'] = $lead_id;
+        $data['form_id'] = $form_id;
+        if (Schema::hasColumns($tableName, ['created_at', 'updated_at'])) {
+            $data['created_at'] = now();
+            $data['updated_at'] = now();
+        }
+
+        DB::table($tableName)->insert($data);
+        //return redirect()->back()->with('success', 'Data inserted successfully');
+        return redirect()->route('lead-show', ['id' => $lead_id])->with('success', 'Data inserted successfully');
+    }
+
+
+    public function deleteTableData($tableName, $id, $leadId)
+    {
+        $this->leadService->deleteTableRecord($tableName, $id, $leadId);
+        //return redirect()->route('lead-index')->with('success', 'Record deleted successfully.');
+        return redirect()->route('lead-show', ['id' => $leadId])->with('success', 'Data Deleted successfully');
+    }
+
 
 
 
@@ -286,7 +367,7 @@ class LeadController  extends Controller
         $leadFormDetailsColumns = LeadFormDetail::where('form_id', $request->form_id)->pluck('field_name')->toArray();
         // Get columns from Lead table
         //$leadColumns = (new Lead)->getFillable();
-		$lead = new Lead;
+        $lead = new Lead;
         $leadColumns = array_diff($lead->getFillable(), ['lead_status', 'no_of_employee']);
 
         //Merge columns ensuring no duplicates
@@ -507,7 +588,7 @@ class LeadController  extends Controller
                         }
                     }
 
-                   // dd($csvData);die();
+                    // dd($csvData);die();
 
                     // Custom validation rules for each field based on their types
                     $fieldValidations = [];
@@ -660,11 +741,8 @@ class LeadController  extends Controller
 
         return $date ? $date->format('Y-m-d') : null;
     }
+
+  
+
     
-
-
-
-
-
-
 }

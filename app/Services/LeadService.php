@@ -168,4 +168,11 @@ class LeadService
             DB::table($tableName)->where('lead_id', $lead->id)->delete();
         }
     }
+
+
+    public function deleteTableRecord($tableName, $id,$leadId)
+    {
+        //the delete operation
+        DB::table($tableName)->where('id', $id)->delete();
+    }
 }

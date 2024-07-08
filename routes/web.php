@@ -69,6 +69,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('/lead/{id}', [LeadController::class, 'update'])->name('lead-update');
 	Route::delete('/lead/{id}', [LeadController::class, 'destroy'])->name('lead-destroy');
 	Route::post('/lead/search', [LeadController::class, 'search'])->name('lead-search');
+	//Route::get('/leads/add/{tableName}', [LeadController::class, 'add'])->name('leads.add');
+	Route::get('/leads/add/{tableName}/{leadId}', [LeadController::class, 'add'])->name('leads.add');
+	Route::post('/leads/store-tabledata', [LeadController::class, 'storeTableData'])->name('store-tabledata');
+    Route::delete('/leads/delete-tabledata/{tableName}/{id}/{leadId}', [LeadController::class, 'deleteTableData'])->name('delete-tabledata');
+
+	//Route::get('/leads/add', 'LeadController@add')->name('leads.add');
 	
     //Lead Form route
 	Route::get('/leads-forms', [LeadsFormController::class, 'index'])->name('leadsform-index');

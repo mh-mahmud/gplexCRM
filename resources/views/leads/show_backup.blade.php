@@ -41,31 +41,8 @@ use Carbon\Carbon;
                                 Tables View
                   ***********************************-->
 <div class="container-fluid">
-@if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: '{{ session('success')}}',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: '{{ session('error')}}',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        </script>
-    @endif
     <div class="row">
-        <div class="col-xxl-12 mx-auto">
+        <div class="col-xxl-8 mx-auto">
             <div class="card mt-5">
                 <div class="card-header bg-light bd-cyan">
                     <div class="card-title">
@@ -225,51 +202,17 @@ use Carbon\Carbon;
                     @foreach ($tableData as $tableName => $data)
                     @if (!empty($data))
                     <div class="mt-4">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5><u>{{ ucwords(str_replace('_', ' ', $tableName)) }}</u></h5>
-                            <button type="button" class="btn btn-success btn-sm" onclick="window.location='{{ route('leads.add', ['tableName' => $tableName, 'leadId' => $lead->id]) }}'">
-                                <i class="bi bi-plus-lg"></i>
-                                Add New
-                            </button>
-                        </div>
-                        <table class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
-                            <thead>
-                                <tr class="fw-bolder text-muted bg-light bd-cyan">
-                                    @foreach ($data->first() as $key => $value)
-                                    @if (!in_array($key, ['id', 'lead_id', 'form_id','created_at', 'updated_at']))
-                                    <th class="min-w-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
-                                    @endif
-                                    @endforeach
-                                    <th class="min-w-50px">Action</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($data as $row)
-                                <tr>
-                                    @foreach ($row as $key => $value)
-                                    @if (!in_array($key, ['id', 'lead_id', 'form_id','created_at', 'updated_at']))
-                                    <td class="ps-5 text-dark fs-6">{{ $value }}</td>
-                                    @endif
-                                    @endforeach
-                                    <td>
-                                        <form action="{{ route('delete-tabledata', ['tableName' => $tableName, 'id' => $row->id, 'leadId' => $lead->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">
-                                            <i class="bi bi-x-lg"></i><!-- Remove icon -->
-                                            </button>
-                                        </form>
-                                    </td>
-
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <h5><u>{{ ucwords(str_replace('_', ' ', $tableName)) }}</u></h5>
+                        <ul class="list-group">
+                            @foreach ($data as $key => $value)
+                            @if (!in_array($key, ['id', 'lead_id', 'form_id']))
+                            <li class="list-group-item" style="background-color:#F5F8FA;"><span class="fs-6 fw-bolder mb-1 text-gray-900 w-lg-100px w-xxl-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</span>: {{ $value }}</li>
+                            @endif
+                            @endforeach
+                        </ul>
                     </div>
                     @endif
                     @endforeach
-
 
 
                 </div>
