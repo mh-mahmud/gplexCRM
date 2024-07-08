@@ -166,11 +166,12 @@
                                                 <span class="badge badge-light-danger">Inactive</span>
                                             @endif
                                         </td>
-                                        <td class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
-                                            <a href="{{ route('user.show', $user->id) }}"
-                                               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                                <span class="svg-icon svg-icon-3">
+                                        <td>
+                                            <div class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
+                                                <a href="{{ route('user.show', $user->id) }}"
+                                                   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                                    <span class="svg-icon svg-icon-3">
 												<svg xmlns="http://www.w3.org/2000/svg"
                                                      width="24px" height="24px" viewBox="0 0 24 24">
 														<g stroke="none" stroke-width="1"
@@ -187,12 +188,12 @@
 														</g>
 													</svg>
 											</span>
-                                                <!--end::Svg Icon-->
-                                            </a>
-                                            <a href="{{ route('user.edit', $user->id) }}"
-                                               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
-                                                <span class="svg-icon svg-icon-3">
+                                                    <!--end::Svg Icon-->
+                                                </a>
+                                                <a href="{{ route('user.edit', $user->id) }}"
+                                                   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                    <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                                    <span class="svg-icon svg-icon-3">
 												<svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                      height="24" viewBox="0 0 24 24" fill="none">
 													<path opacity="0.3"
@@ -203,17 +204,17 @@
                                                         fill="black"/>
 												</svg>
 											</span>
-                                                <!--end::Svg Icon-->
-                                            </a>
-                                            <form action="{{ route('user.destroy', $user->id) }}" method="POST"
-                                                  style="display: inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-                                                        onclick="return confirmDelete()">
-                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                                    <span class="svg-icon svg-icon-3">
+                                                    <!--end::Svg Icon-->
+                                                </a>
+                                                <form action="{{ route('user.destroy', $user->id) }}" method="POST"
+                                                      style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                                                            onclick="return confirmDelete()">
+                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                                                        <span class="svg-icon svg-icon-3">
 											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                  viewBox="0 0 24 24" fill="none">
 												<path
@@ -227,9 +228,11 @@
                                                       fill="black"/>
 											</svg>
 										</span>
-                                                    <!--end::Svg Icon-->
-                                                </button>
-                                            </form>
+                                                        <!--end::Svg Icon-->
+                                                    </button>
+                                                </form>
+                                            </div>
+
                                         </td>
                                     </tr>
                                 @endforeach
