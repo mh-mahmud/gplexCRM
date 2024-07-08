@@ -83,7 +83,7 @@
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Promotion Type</span>
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Description</span>
                         <span>{{ $promotion->description }}</span>
                     </div>
 

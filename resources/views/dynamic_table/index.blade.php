@@ -62,7 +62,7 @@
                 title: 'Error',
                 text: '{{ session('error')}}',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 7500
             });
         </script>
     @endif
