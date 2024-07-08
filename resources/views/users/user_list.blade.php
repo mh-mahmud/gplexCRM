@@ -122,10 +122,10 @@
                                     <th class="min-w-120px">Username</th>
                                     <th class="min-w-140px">Role</th>
                                     <th class="min-w-120px">Email</th>
-                                    <th class="min-w-140px">User Type</th>
-                                    <th class="min-w-120px">Phone Number</th>
-                                    <th class="min-w-120px">Address</th>
-                                    <th class="min-w-120px">Status</th>
+                                    <th class="min-w-140px">Type</th>
+                                    <th class="min-w-120px">Phone</th>
+                                    <th class="min-w-160px">Address</th>
+                                    <th class="min-w-50px">Status</th>
                                     <th class="min-w-100px text-end-new">Actions</th>
                                 </tr>
                                 </thead>
