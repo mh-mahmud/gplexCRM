@@ -271,4 +271,24 @@ class UserService {
 
     return $user;
 }
+
+    public function searchUser($request)
+    {
+        $searchTerm = trim($request->input('search'));
+
+        $query = User::query();
+        //dd($query);die();
+        $query->where(function ($q) use ($searchTerm) {
+            $q->where('username', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('first_name', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('last_name', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('email', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('phone_number', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('user_type', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('gender', 'LIKE', '%' . $searchTerm . '%')
+              ->orWhere('address', 'LIKE', '%' . $searchTerm . '%');
+        });
+
+        return $query->paginate(config('constants.ROW_PER_PAGE'));
+    }
 }

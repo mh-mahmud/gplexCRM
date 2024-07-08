@@ -273,15 +273,15 @@ class UserController extends Controller
         $searchTerm = trim($request->input('search'));
 
         if (empty($searchTerm)) {
-            return redirect()->route('promotion-index')->with('error', 'Search Field cannot be blank.');
+            return redirect()->route('users.index')->with('error', 'Search Field cannot be blank.');
         }
 
         $request->validate([
             'search' => 'required|string',
         ]);
 
-        $promotions = $this->service->searchPromotion($request);
-        return view('promotion.index', compact('promotions'));
+        $users = $this->service->searchUser($request);
+        return view('users.user_list', compact('users'));
     }
 
     

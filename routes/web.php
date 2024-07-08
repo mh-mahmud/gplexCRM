@@ -125,6 +125,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('user-profile/{id}',        [UserController::class, 'user_profile'])->name('user-profile');
 	Route::get('/account-settings/{id}/edit', [UserController::class, 'profile_edit'])->name('profile-edit');
 	Route::put('/account-settings/{id}', [UserController::class, 'profile_update'])->name('profile-update');
+	Route::post('/user/search', [UserController::class, 'search'])->name('user-search');
 
     Route::get('permission-list',        [UserController::class, 'permission_index'])->name('permission.index');
     Route::get('permission-show/{id}',        [UserController::class, 'permission_show'])->name('permission.show');

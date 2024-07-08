@@ -119,11 +119,11 @@
                                 <tr class="fw-bolder text-muted bg-light bd-cyan">
                                     <th class="ps-4 min-w-25px">SL</th>
                                     <th class="min-w-150px">Name</th>
-                                    <th class="min-w-140px">User Role</th>
+                                    <th class="min-w-120px">Username</th>
+                                    <th class="min-w-140px">Role</th>
                                     <th class="min-w-120px">Email</th>
                                     <th class="min-w-140px">User Type</th>
                                     <th class="min-w-120px">Phone Number</th>
-                                    <th class="min-w-120px">Gender</th>
                                     <th class="min-w-120px">Address</th>
                                     <th class="min-w-120px">Status</th>
                                     <th class="min-w-100px text-end-new">Actions</th>
@@ -137,11 +137,11 @@
 
                                         <td class="ps-5 text-dark fs-6">{{($users->currentPage() - 1) * $users->perPage() + $loop->iteration}}</td>
                                         <td class="text-dark fs-6">{{$user->first_name . ' ' . $user->last_name}}</td>
+                                        <td class="text-dark fs-6">{{$user->username }}</td>
                                         <td class="text-dark fs-6">{{@$role_names[$user->role_id]}}</td>
                                         <td class="text-dark fs-6">{{$user->email }}</td>
                                         <td class="text-dark fs-6">{{$user->user_type}}</td>
                                         <td class="text-dark fs-6">{{$user->phone_number}}</td>
-                                        <td class="text-dark fs-6">{{$user->gender}}</td>
                                         <td class="text-dark fs-6 w-350px">{{$user->address}}</td>
 
                                         <td>
