@@ -256,7 +256,8 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <div class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
+                                                <div
+                                                    class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
                                                     <a href="{{ route('agents-show', $agent->agent_id) }}"
                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
