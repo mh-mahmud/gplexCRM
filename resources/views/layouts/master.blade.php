@@ -92,6 +92,7 @@
 							</div>
 
 							<!-- settings -->
+							@if(Auth::user()->user_type=='admin')
 							<div class="menu-item">
 								<div class="menu-content pb-2">
 									<span class="menu-section text-muted text-uppercase fs-8 ls-1">Settings</span>
@@ -169,6 +170,7 @@
 									</div>
 								</div>
 							</div>
+							@endif
 							<!-- end settings -->
 
 							<div class="menu-item">
@@ -208,11 +210,14 @@
 
 									@php
 										$key = empty($key) ? 'dashboard' : $key;
+
 										if (Route::has($key)) {
 										    $key = $key;
 										} else {
 										    $key = 'dashboard';
 										}
+
+
 									@endphp
 									<div class="menu-item">
 										<a class="menu-link" href="{{ route($key) }}">
