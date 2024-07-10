@@ -46,8 +46,7 @@
                     <!-- Card Body-->
                     <div class="card-body">
 
-                        <!-- Start Form-->
-
+                        <!-- Start Form -->
                         <form class="g-form w-100" action="{{ route('send-sms-pro') }}" method="POST">
                             @csrf
                             {{-- <div class="col-md-6">
