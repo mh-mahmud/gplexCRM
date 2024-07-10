@@ -33,7 +33,7 @@
       ***********************************-->
     <div class="container-xxl">
         <div class="row">
-            <div class="col-xxl-12">
+            <div class="col-xxl-8 mx-auto">
                 <div class="card card-xxl-stretch mt-5">
                     <div class="card-header bg-light bd-cyan">
                         <!--begin::Card title-->
@@ -72,6 +72,8 @@
                                         @endif
                                     </div>
                                 </div>
+
+
                                 <div class="col-md-6">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">SMS Template</label>
@@ -85,6 +87,8 @@
                                         </select>
                                     </div>
                                 </div>
+
+
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="form-label fw-bolder text-dark" for="textarea">Content<span
@@ -97,6 +101,8 @@
                                         @endif
                                     </div>
                                 </div>
+
+
                             </div>
 
 
