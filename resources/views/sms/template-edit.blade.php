@@ -75,7 +75,7 @@
 
                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Description<span class="text-danger">*</span></label>
+                                                    <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
                                                     <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{$template->description}}</textarea>
                                                     @if ($errors->has('description'))
                                                         <span class="text-danger">{{ $errors->first('description') }}</span>

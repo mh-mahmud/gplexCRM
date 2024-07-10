@@ -55,7 +55,7 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('product-update-pro', $product->id) }}"  method="POST">
+                                    <form class="g-form w-100" action="{{ route('product-update-pro', $product->id) }}"  method="POST" enctype="multipart/form-data">
                                          @csrf
                                          @method('PUT')
                                             <div class="col-md-6">
@@ -94,8 +94,11 @@
                                                     <label class="form-label fw-bolder text-dark">Type<span class="text-danger">*</span></label>
                                                     <select class="form-control form-control-sm form-control-solid" name="product_type">
                                                         <option value="">Select</option>
-                                                        <option value="1" {{ $product->product_type == '1' ? 'selected' : '' }}>Virtual</option>                                                        
-                                                        <option value="1" {{ $product->product_type == '2' ? 'selected' : '' }}>Physical</option>
+                                                        @foreach (config('constants.PRODUCT_TYPE') as $key => $type)
+                                                        <option value="{{ $key }}" {{ $product->product_type ==  $key  ? 'selected' : '' }}>
+                                                            {{ $type }}
+                                                        </option>
+                                                    @endforeach
                                                     </select>
                                                     @if ($errors->has('product_type'))
                                                         <span class="text-danger">{{ $errors->first('product_type') }}</span>
@@ -125,6 +128,14 @@
                                                     <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{ $product->description }}</textarea>
                                                 </div>
                                             </div> 
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Image</label>
+                                                    <input class="form-control form-control-sm form-control-solid"
+                                                           type="file" name="img_path" autocomplete="off" />
+                                                </div>
+                                            </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
