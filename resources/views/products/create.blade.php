@@ -95,6 +95,7 @@
                                                         <option value="">Select</option>
                                                         <option value="1" {{ old('product_type') == '1' ? 'selected' : '' }}>Virtual</option>                                                        
                                                         <option value="1" {{ old('product_type') == '2' ? 'selected' : '' }}>Physical</option>
+                                                        {{-- Digital, Service --}}
                                                     </select>
                                                     @if ($errors->has('product_type'))
                                                         <span class="text-danger">{{ $errors->first('product_type') }}</span>
