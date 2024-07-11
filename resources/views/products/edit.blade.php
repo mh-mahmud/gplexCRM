@@ -98,7 +98,7 @@
                                                         <option value="{{ $key }}" {{ $product->product_type ==  $key  ? 'selected' : '' }}>
                                                             {{ $type }}
                                                         </option>
-                                                    @endforeach
+                                                        @endforeach
                                                     </select>
                                                     @if ($errors->has('product_type'))
                                                         <span class="text-danger">{{ $errors->first('product_type') }}</span>
