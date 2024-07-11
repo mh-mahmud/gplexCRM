@@ -142,10 +142,7 @@ use Carbon\Carbon;
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Address</span>
                         <span>{{ $lead->address }}</span>
                     </div>
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Age</span>
-                        <span>{{ $lead->age }}</span>
-                    </div>
+                    
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Company</span>
                         <span>{{ $lead->company }}</span>
@@ -227,20 +224,21 @@ use Carbon\Carbon;
                     <div class="mt-4">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5><u>{{ ucwords(str_replace('_', ' ', $tableName)) }}</u></h5>
-                            <button type="button" class="btn btn-success btn-sm" onclick="window.location='{{ route('leads.add', ['tableName' => $tableName, 'leadId' => $lead->id]) }}'">
+                            <button type="button" class="btn btn-success btn-sm" onclick="window.location='{{ route('leads-add', ['tableName' => $tableName, 'leadId' => $lead->id]) }}'">
                                 <i class="bi bi-plus-lg"></i>
                                 Add New
                             </button>
                         </div>
+                        <div class="table-responsive">
                         <table class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                             <thead>
                                 <tr class="fw-bolder text-muted bg-light bd-cyan">
                                     @foreach ($data->first() as $key => $value)
                                     @if (!in_array($key, ['id', 'lead_id', 'form_id','created_at', 'updated_at']))
-                                    <th class="min-w-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
+                                    <th class="ps-4 min-w-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
                                     @endif
                                     @endforeach
-                                    <th class="min-w-50px">Action</th>
+                                    <th class="min-w-50px text-end pe-4">Action</th>
 
                                 </tr>
                             </thead>
@@ -252,7 +250,7 @@ use Carbon\Carbon;
                                     <td class="ps-5 text-dark fs-6">{{ $value }}</td>
                                     @endif
                                     @endforeach
-                                    <td>
+                                    <td class="text-end pe-4">
                                         <form action="{{ route('delete-tabledata', ['tableName' => $tableName, 'id' => $row->id, 'leadId' => $lead->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?');">
                                             @csrf
                                             @method('DELETE')
@@ -266,6 +264,8 @@ use Carbon\Carbon;
                                 @endforeach
                             </tbody>
                         </table>
+                        </div>
+                       
                     </div>
                     @endif
                     @endforeach

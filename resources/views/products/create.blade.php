@@ -55,7 +55,7 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('add-product-pro') }}"  method="POST">
+                                    <form class="g-form w-100" action="{{ route('add-product-pro') }}"  method="POST" enctype="multipart/form-data">
                                          @csrf
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
@@ -91,11 +91,14 @@
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Type<span class="text-danger">*</span></label>
-                                                    <select class="form-control form-control-sm form-control-solid" name="product_type">
-                                                        <option value="">Select</option>
-                                                        <option value="1" {{ old('product_type') == '1' ? 'selected' : '' }}>Virtual</option>                                                        
-                                                        <option value="1" {{ old('product_type') == '2' ? 'selected' : '' }}>Physical</option>
-                                                        {{-- Digital, Service --}}
+                                                    <select class=" form-control form-control-sm form-control-solid"
+                                                        id="assigned_to" name="product_type" aria-label="Default select example">
+                                                        <option value=''>Select</option>
+                                                        @foreach (config('constants.PRODUCT_TYPE') as $key => $type)
+                                                            <option value="{{ $key }}">
+                                                                {{ $type }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                     @if ($errors->has('product_type'))
                                                         <span class="text-danger">{{ $errors->first('product_type') }}</span>
@@ -125,6 +128,14 @@
                                                     <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{ old('description') }}</textarea>
                                                 </div>
                                             </div> 
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Image</label>
+                                                    <input class="form-control form-control-sm form-control-solid"
+                                                           type="file" name="img_path" autocomplete="off" />
+                                                </div>
+                                            </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">

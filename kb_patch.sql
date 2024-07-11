@@ -32,4 +32,6 @@ ALTER TABLE `products` CHANGE `product_type` `product_type` TINYINT(1) NOT NULL,
 ALTER TABLE `products` CHANGE `description` `description` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;
 
 ALTER TABLE `products` CHANGE `product_cost` `product_cost` DECIMAL(8,2) NULL, CHANGE `product_value` `product_value` DECIMAL(8,2) NULL;
+
+ALTER TABLE `products` ADD `img_path` VARCHAR(180) NULL AFTER `product_code`;
 ---Ishtiak SQL end
