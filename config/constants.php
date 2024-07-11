@@ -5,6 +5,12 @@ return [
     'ROW_PER_PAGE'      => 20,
     'SMS_SEND_MOBILE_NO' => '0111111111',
     'ADMIN_ROLE_ID' => '1',
+    'PRODUCT_TYPE' => [
+        'Virtual',
+        'Physical',
+        'Digital',
+        'Service'
+    ],  
     'TASK_STATUS' => [
         'PENDING',
         'In Progress',

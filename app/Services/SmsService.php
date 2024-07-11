@@ -75,7 +75,7 @@ class SmsService
     {
         $request->validate([
             'title' => 'required|unique:sms_templates,title,'.$id,
-            'description' => 'required',
+            'description' => 'required|max:191',
            
         ]);
         $data = $request->all();

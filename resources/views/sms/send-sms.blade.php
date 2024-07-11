@@ -33,7 +33,7 @@
                   ***********************************-->
                 <div class="container-xxl">
                     <div class="row">
-                        <div class="col-xxl-12">
+                        <div class="col-xxl-8 mx-auto">
                             <div class="card card-xxl-stretch mt-5">
                                 <div class="card-header bg-light bd-cyan">
                                     <!--begin::Card title-->

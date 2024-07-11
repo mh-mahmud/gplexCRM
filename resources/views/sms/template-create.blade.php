@@ -40,7 +40,7 @@
                   ***********************************-->
                 <div class="container-xxl">
                     <div class="row">
-                        <div class="col-xxl-12">
+                        <div class="col-xxl-8 mx-auto">
                             <div class="card card-xxl-stretch mt-5">
                                 <div class="card-header bg-light bd-cyan">
                                     <!--begin::Card title-->
@@ -58,8 +58,7 @@
                                     <form class="g-form w-100" action="{{ route('sms-template-store') }}"  method="POST">
                                          @csrf
 
-                                        <div class="row">
-                                            <div class="col-md-8 mx-auto">
+                                       
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="fv-row mb-3">
@@ -78,7 +77,7 @@
 
                                                     <div class="col-12">
                                                         <div class="form-group">
-                                                            <label class="form-label fw-bolder text-dark" for="textarea">Description<span class="text-danger">*</span></label>
+                                                            <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
                                                             <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{ old('description') }}</textarea>
                                                             @if ($errors->has('description'))
                                                                 <span class="text-danger">{{ $errors->first('description') }}</span>
@@ -99,8 +98,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                          
 
 
                                       <div class="card-footer d-flex justify-content-center py-6 px-9">
