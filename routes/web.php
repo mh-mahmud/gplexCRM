@@ -70,9 +70,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::delete('/lead/{id}', [LeadController::class, 'destroy'])->name('lead-destroy');
 	Route::post('/lead/search', [LeadController::class, 'search'])->name('lead-search');
 	//Route::get('/leads/add/{tableName}', [LeadController::class, 'add'])->name('leads.add');
-	Route::get('/leads/add/{tableName}/{leadId}', [LeadController::class, 'add'])->name('leads.add');
+	Route::get('/leads/add/{tableName}/{leadId}', [LeadController::class, 'add'])->name('leads-add');
 	Route::post('/leads/store-tabledata', [LeadController::class, 'storeTableData'])->name('store-tabledata');
     Route::delete('/leads/delete-tabledata/{tableName}/{id}/{leadId}', [LeadController::class, 'deleteTableData'])->name('delete-tabledata');
+	Route::get('/lead/edit-tabledata/{tableName}/{leadId}/edit', [LeadController::class, 'editTableData'])->name('lead-edit-tabledata');
+	Route::post('/lead/update-table-data', [LeadController::class, 'updateTableData'])->name('update-tabledata');
 
 	//Route::get('/leads/add', 'LeadController@add')->name('leads.add');
 	
