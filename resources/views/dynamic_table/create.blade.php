@@ -56,20 +56,21 @@
                     <form class="g-form w-100" action="{{ route('dynamictable-store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <label class="form-label fw-bolder text-dark">Form Name</label>
-                                    <select class="form-control form-control-sm form-control-solid" name="form_id" aria-label="Default select example">
-                                        <option value="">Select Form Name</option>
-                                        @foreach($formName as $id => $name)
-                                            <option value="{{ $id }}">{{$name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('form_id'))
-                                        <span class="text-danger">{{ $errors->first('form_id') }}</span>
-                                    @endif
-                                </div>
-                            </div>
+                        <div class="col-md-6">
+    <div class="fv-row mb-3">
+        <label class="form-label fw-bolder text-dark">Form Name</label>
+        <select class="form-control form-control-sm form-control-solid" name="form_id" aria-label="Default select example">
+            <option value="">Select Form Name</option>
+            @foreach($formName as $id => $name)
+                <option value="{{ $id }}" {{ old('form_id') == $id ? 'selected' : '' }}>{{$name}}</option>
+            @endforeach
+        </select>
+        @if ($errors->has('form_id'))
+            <span class="text-danger">{{ $errors->first('form_id') }}</span>
+        @endif
+    </div>
+</div>
+
 
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">

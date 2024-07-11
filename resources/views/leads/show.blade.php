@@ -227,17 +227,18 @@ use Carbon\Carbon;
                     <div class="mt-4">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5><u>{{ ucwords(str_replace('_', ' ', $tableName)) }}</u></h5>
-                            <button type="button" class="btn btn-success btn-sm" onclick="window.location='{{ route('leads.add', ['tableName' => $tableName, 'leadId' => $lead->id]) }}'">
+                            <button type="button" class="btn btn-success btn-sm" onclick="window.location='{{ route('leads-add', ['tableName' => $tableName, 'leadId' => $lead->id]) }}'">
                                 <i class="bi bi-plus-lg"></i>
                                 Add New
                             </button>
                         </div>
+                        <div class="table-responsive">
                         <table class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                             <thead>
                                 <tr class="fw-bolder text-muted bg-light bd-cyan">
                                     @foreach ($data->first() as $key => $value)
                                     @if (!in_array($key, ['id', 'lead_id', 'form_id','created_at', 'updated_at']))
-                                    <th class="min-w-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
+                                    <th class="ps-4 min-w-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
                                     @endif
                                     @endforeach
                                     <th class="min-w-50px">Action</th>
@@ -266,6 +267,8 @@ use Carbon\Carbon;
                                 @endforeach
                             </tbody>
                         </table>
+                        </div>
+                       
                     </div>
                     @endif
                     @endforeach
