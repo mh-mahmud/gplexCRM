@@ -439,7 +439,7 @@
                                             <th class="ps-4 min-w-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
                                             @endif
                                             @endforeach
-                                            <th class="min-w-50px">Action</th>
+                                            <th class="min-w-50px text-end pe-4">Action</th>
 
                                         </tr>
                                     </thead>
@@ -451,7 +451,7 @@
                                             <td class="ps-5 text-dark fs-6">{{ $value }}</td>
                                             @endif
                                             @endforeach
-                                            <td>
+                                            <td class="text-end pe-4">
 
                                                 <a href="{{ route('lead-edit-tabledata', ['tableName' => $tableName, 'leadId' => $lead->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                     <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
