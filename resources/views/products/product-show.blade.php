@@ -86,6 +86,15 @@
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Image</span>
+                        <span>
+                            @if ($product->img_path)
+                            <img src="{{ asset('uploads/products/' . $product->img_path) }}" alt="Product Image"/>
+                            @endif
+                        </span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Status</span>
                         @if ($product->status === 1)
                             <span>Active</span>
