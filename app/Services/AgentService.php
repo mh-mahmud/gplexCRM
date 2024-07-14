@@ -88,7 +88,7 @@ class AgentService
         $user = User::findOrFail($agent->user_id);
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
-        $user->username = $id;
+        //$user->username = $id;
         $user->email = $request->email;
         $user->gender = $request->gender;
         $user->phone_number = $request->phone_number;

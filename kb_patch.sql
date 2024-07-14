@@ -33,3 +33,5 @@ ALTER TABLE `products` CHANGE `description` `description` TEXT CHARACTER SET utf
 
 ALTER TABLE `products` CHANGE `product_cost` `product_cost` DECIMAL(8,2) NULL, CHANGE `product_value` `product_value` DECIMAL(8,2) NULL;
 ---Ishtiak SQL end
+
+CREATE TABLE customers LIKE leads;

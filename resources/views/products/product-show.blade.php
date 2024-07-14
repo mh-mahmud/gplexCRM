@@ -67,11 +67,7 @@
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Product Type</span>
-                        @if ($product->status === 1)
-                            <span>Virtual</span>
-                        @else
-                            <span>Physical</span>
-                        @endif
+                       {{ config('constants.PRODUCT_TYPE')[$product->product_type] }}
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
@@ -85,8 +81,17 @@
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Description</span>
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Description</span>
                         <span>{{ $product->description }}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Image</span>
+                        <span>
+                            @if ($product->img_path)
+                            <img src="{{ asset('uploads/products/' . $product->img_path) }}" alt="Product Image"/>
+                            @endif
+                        </span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">

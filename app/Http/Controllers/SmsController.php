@@ -65,7 +65,7 @@ class smsController extends Controller {
     public function templateUpdate(Request $request, $id)
     { 
         $result = $this->smsService->templateUpdate($request, $id);
-        
+       
         if($result->status == 208){
             return redirect()->route('sms-template')->with('success', 'Sms template updated successfully.');
 

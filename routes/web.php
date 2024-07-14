@@ -58,7 +58,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::delete('/agents/{id}', [AgentController::class, 'destroy'])->name('agents-destroy');
 
 	// Lead routes
-	Route::get('/lead', [LeadController::class, 'index'])->name('lead-index');
+	//Route::get('/lead', [LeadController::class, 'index'])->name('lead-index');
+	Route::get('/leads/{form_id?}', [LeadController::class, 'index'])->name('lead-index');
 	Route::get('/lead/create', [LeadController::class, 'create'])->name('lead-create');
 	Route::get('/lead/leads-upload', [LeadController::class, 'leads_upload'])->name('leads-upload');
 	Route::get('/lead/sample-file', [LeadController::class, 'downloadSampleFile'])->name('sample-file');
@@ -69,6 +70,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('/lead/{id}', [LeadController::class, 'update'])->name('lead-update');
 	Route::delete('/lead/{id}', [LeadController::class, 'destroy'])->name('lead-destroy');
 	Route::post('/lead/search', [LeadController::class, 'search'])->name('lead-search');
+	//Route::get('/leads/add/{tableName}', [LeadController::class, 'add'])->name('leads.add');
+	Route::get('/leads/add/{tableName}/{leadId}', [LeadController::class, 'add'])->name('leads-add');
+	Route::post('/leads/store-tabledata', [LeadController::class, 'storeTableData'])->name('store-tabledata');
+    Route::delete('/leads/delete-tabledata/{tableName}/{id}/{leadId}', [LeadController::class, 'deleteTableData'])->name('delete-tabledata');
+	Route::get('/lead/edit-tabledata/{tableName}/{leadId}/edit', [LeadController::class, 'editTableData'])->name('lead-edit-tabledata');
+	Route::post('/lead/update-table-data', [LeadController::class, 'updateTableData'])->name('update-tabledata');
+
+	//Route::get('/leads/add', 'LeadController@add')->name('leads.add');
 	
     //Lead Form route
 	Route::get('/leads-forms', [LeadsFormController::class, 'index'])->name('leadsform-index');

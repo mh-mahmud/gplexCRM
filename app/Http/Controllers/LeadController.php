@@ -16,6 +16,7 @@ use App\Models\LeadsForm;
 use App\Models\LeadFormDetail;
 use App\Models\Lead;
 use App\Services\LeadService;
+use Illuminate\Support\Facades\Schema;
 use DateTime;
 
 class LeadController  extends Controller
@@ -28,7 +29,7 @@ class LeadController  extends Controller
     }
 
 
-    public function index()
+    public function index_backup()
     {
         $leads = $this->leadService->getAllLeads();
         //$formName = LeadsForm::pluck('form_name', 'form_id');
@@ -36,6 +37,20 @@ class LeadController  extends Controller
         return view('leads.index', compact('leads', 'formName'));
     }
 
+    public function index($form_id = null)
+    {
+        // Get all leads or filter by form_id if provided
+        if ($form_id) {
+            $leads = $this->leadService->getLeadsByFormId($form_id);
+        } else {
+            $leads = $this->leadService->getAllLeads();
+        }
+
+        // Get form names where parent_id is null
+        $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
+
+        return view('leads.index', compact('leads', 'formName'));
+    }
     public function create_backup()
     {
 
@@ -117,7 +132,7 @@ class LeadController  extends Controller
         return view('leads.show', compact('lead'));
     }
 
-    public function show($id)
+    public function show_backup_2($id)
     {
         $lead = $this->leadService->getLeadById($id);
 
@@ -132,16 +147,87 @@ class LeadController  extends Controller
         return view('leads.show', compact('lead', 'tableData'));
     }
 
+    public function show($id)
+    {
+        $lead = $this->leadService->getLeadById($id);
+
+        // Fetch dynamic fields data based on lead_id
+        $fields = LeadFormDetail::where('form_id', $lead->form_id)->get();
+        $tableData = [];
+        foreach ($fields as $field) {
+            $tableName = $field->table_name;
+            $tableData[$tableName] = DB::table($tableName)->where('lead_id', $lead->id)->get();
+        }
+
+        return view('leads.show', compact('lead', 'tableData'));
+    }
+
+
+
+    public function add($tableName, $leadId)
+    {
+        // Get column names
+        $columns = Schema::getColumnListing($tableName);
+
+        // Fetch lead form details
+        $fields = LeadFormDetail::where('table_name', $tableName)->first();
+
+        // Fetch lead details associated with the lead ID
+        $leads = Lead::where('id', $leadId)->first();
+
+        // Fetch column details with data types using raw SQL query
+        $columnDetails = DB::select("SHOW COLUMNS FROM $tableName");
+
+        // Map column names to their types
+        $columnTypes = [];
+        foreach ($columnDetails as $column) {
+            $columnName = $column->Field;
+            $columnType = $column->Type;
+            $columnTypes[$columnName] = $columnType;
+        }
+
+        // Filter out unwanted fields
+        $filteredColumns = array_filter($columns, function ($column) {
+            return !in_array($column, ['id', 'created_at', 'updated_at']);
+        });
+
+        // Return view with necessary data
+        return view('leads.add', compact('tableName', 'filteredColumns', 'leads', 'columnTypes'));
+    }
+
+    
+
+
+    // LeadController.php
+
+    public function storeTableData(Request $request)
+    {
+        $tableName = $request->input('tableName');
+        $data = $request->except(['_token', 'tableName']);
+        $lead_id = $request->input('lead_id'); 
+        $form_id =$request->input('form_id'); 
+        $data['lead_id'] = $lead_id;
+        $data['form_id'] = $form_id;
+        if (Schema::hasColumns($tableName, ['created_at', 'updated_at'])) {
+            $data['created_at'] = now();
+            $data['updated_at'] = now();
+        }
+
+        DB::table($tableName)->insert($data);
+        //return redirect()->back()->with('success', 'Data inserted successfully');
+        return redirect()->route('lead-show', ['id' => $lead_id])->with('success', 'Data inserted successfully');
+    }
+
+
+    public function deleteTableData($tableName, $id, $leadId)
+    {
+        $this->leadService->deleteTableRecord($tableName, $id, $leadId);
+        //return redirect()->route('lead-index')->with('success', 'Record deleted successfully.');
+        return redirect()->route('lead-show', ['id' => $leadId])->with('success', 'Data Deleted successfully');
+    }
 
 
     public function edit_backup($id)
-    {
-        $formName = LeadsForm::pluck('form_name', 'form_id');
-        $lead = $this->leadService->getLeadById($id);
-        return view('leads.edit', compact('lead', 'formName'));
-    }
-
-    public function edit($id)
     {
         //$formName = LeadsForm::pluck('form_name', 'form_id');
         $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
@@ -166,6 +252,27 @@ class LeadController  extends Controller
         return view('leads.edit', compact('lead', 'formName', 'fieldsByTable', 'tableData'));
     }
 
+    public function edit($id)
+    {
+        //$formName = LeadsForm::pluck('form_name', 'form_id');
+        $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
+        $lead = $this->leadService->getLeadById($id);
+        $tableData = [];
+
+        // Fetch dynamic fields data based on lead_id
+        $fields = LeadFormDetail::where('form_id', $lead->form_id)->get();
+        $tableData = [];
+        foreach ($fields as $field) {
+            $tableName = $field->table_name;
+            $tableData[$tableName] = DB::table($tableName)->where('lead_id', $lead->id)->get();
+        }
+
+
+        return view('leads.edit', compact('lead', 'formName', 'tableData'));
+    }
+
+
+
 
     public function update(Request $request, $id)
     {
@@ -179,9 +286,7 @@ class LeadController  extends Controller
         ]);
 
         $data = $request->all();
-        $dynamicFields = $request->except(['first_name', 'last_name', 'title', 'email', 'phone', 'form_id', '_token']);
-
-        $this->leadService->updateLead($id, $data, $request->input('form_id'), $dynamicFields);
+        $this->leadService->updateLead($id, $data);
 
         return redirect()->route('lead-index')->with('success', 'Lead updated successfully.');
     }
@@ -211,7 +316,39 @@ class LeadController  extends Controller
     }
 
 
+    public function editTableData($tableName, $leadId)
+    {
+        try {
+            $data = $this->leadService->getTableData($tableName, $leadId);
+            return view('leads.edit_table_data', $data);
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error occurred while retrieving data.']);
+        }
+    }
 
+ 
+   public function updateTableData(Request $request)
+    {
+        $tableName = $request->input('tableName');
+        $leadId = $request->input('lead_id');
+        $formId = $request->input('form_id');
+        $formData = $request->except(['_token', 'tableName', 'lead_id', 'form_id']);
+
+        // Validate $formData if needed
+
+        try {
+            DB::beginTransaction();
+
+            $this->leadService->updateTableData($tableName, $leadId, $formId, $formData);
+
+            DB::commit();
+
+            return redirect()->route('lead-edit', ['id' => $leadId])->with('success', 'Data updated successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Error occurred while saving data.']);
+        }
+    }
 
     public function leads_upload_backup(Request $request)
     {
@@ -286,7 +423,7 @@ class LeadController  extends Controller
         $leadFormDetailsColumns = LeadFormDetail::where('form_id', $request->form_id)->pluck('field_name')->toArray();
         // Get columns from Lead table
         //$leadColumns = (new Lead)->getFillable();
-		$lead = new Lead;
+        $lead = new Lead;
         $leadColumns = array_diff($lead->getFillable(), ['lead_status', 'no_of_employee']);
 
         //Merge columns ensuring no duplicates
@@ -507,7 +644,7 @@ class LeadController  extends Controller
                         }
                     }
 
-                   // dd($csvData);die();
+                    // dd($csvData);die();
 
                     // Custom validation rules for each field based on their types
                     $fieldValidations = [];
@@ -589,6 +726,11 @@ class LeadController  extends Controller
 
                         $leadData['form_id'] = $formId;
                         $leadData['lead_status'] = '1';
+                        $phone=$leadData['phone'];
+                        //ensure the phone number starts with '0'
+                        if (substr($leadData['phone'], 0, 1) !== '0') {
+                            $leadData['phone'] = '0' .$phone;
+                        }
                         $leadId = DB::table('leads')->insertGetId($leadData);
 
                         if (!$leadId) {
@@ -660,11 +802,8 @@ class LeadController  extends Controller
 
         return $date ? $date->format('Y-m-d') : null;
     }
+
+  
+
     
-
-
-
-
-
-
 }

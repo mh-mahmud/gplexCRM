@@ -33,6 +33,16 @@ class ProductService
         ]);
         $data = $request->all();
 
+        $fileNameToStore = '';
+        if ($request->hasFile('img_path')) {
+            $fileNameWithExt = $request->file('img_path')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('img_path')->getClientOriginalExtension();
+            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+            $request->file('img_path')->move(getcwd().'/uploads/products', $fileNameToStore);
+            
+        } 
+
         try {
             $dataObj                        = new Product();
             $dataObj->name                  = $data['name'];
@@ -42,6 +52,7 @@ class ProductService
             $dataObj->product_code          = $data['product_code'];
             $dataObj->description           = $data['description'];
             $dataObj->status                = $data['status'];
+            $dataObj->img_path              = $fileNameToStore;
 
             $dataObj->save();
 
@@ -67,6 +78,15 @@ class ProductService
             'product_type'  => 'required',
         ]);
         $data = $request->all();
+        $fileNameToStore = '';
+        if ($request->hasFile('img_path')) {
+            $fileNameWithExt = $request->file('img_path')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('img_path')->getClientOriginalExtension();
+            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+            $request->file('img_path')->move(getcwd().'/uploads/products', $fileNameToStore);
+            
+        } 
 
         try {
             $dataObj                        = Product::findOrFail($id);;
@@ -77,6 +97,7 @@ class ProductService
             $dataObj->product_code          = $data['product_code'];
             $dataObj->description           = $data['description'];
             $dataObj->status                = $data['status'];
+            $dataObj->img_path              = $fileNameToStore;
 
             $dataObj->save();
 
