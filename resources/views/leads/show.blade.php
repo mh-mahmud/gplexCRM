@@ -222,9 +222,17 @@
                             <span>{{ $lead->lead_notes }}</span>
                         </div>
 
+
+
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-body">
+
                         @foreach ($tableData as $tableName => $data)
                             @if (!empty($data))
-                                <div class="mt-4">
+                                <div>
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <h5><u>{{ ucwords(str_replace('_', ' ', $tableName)) }}</u></h5>
                                         <button type="button" class="btn btn-success btn-sm"
@@ -277,8 +285,6 @@
                                 </div>
                             @endif
                         @endforeach
-
-
                     </div>
                 </div>
             </div>
