@@ -222,8 +222,6 @@
                             <span>{{ $lead->lead_notes }}</span>
                         </div>
 
-
-
                     </div>
                 </div>
 
