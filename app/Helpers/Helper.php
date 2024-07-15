@@ -2,8 +2,8 @@
 
 
 namespace App\Helpers;
-
-use Auth;
+use App\Models\Logs;
+use Illuminate\Support\Facades\Auth;
 
 class Helper
 {
@@ -18,5 +18,14 @@ class Helper
 
         return strtolower(preg_replace("/[^a-zA-Z0-9]+/", "-", $value));
 
+    }
+
+    public function storeLog($log_text, $module_name, $action)
+    {
+        $log                = new Logs();
+        $log->user_id       = Auth::id();
+        $log->log_message   = $log_text." ".$module_name." ".$action;
+        $log->status        = 1;
+        $log->save();
     }
 }

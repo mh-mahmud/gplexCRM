@@ -34,4 +34,21 @@ ALTER TABLE `products` CHANGE `description` `description` TEXT CHARACTER SET utf
 ALTER TABLE `products` CHANGE `product_cost` `product_cost` DECIMAL(8,2) NULL, CHANGE `product_value` `product_value` DECIMAL(8,2) NULL;
 
 ALTER TABLE `products` ADD `img_path` VARCHAR(180) NULL AFTER `product_code`;
+
+CREATE TABLE `logs` (
+  `id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `log_message` varchar(500) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `logs`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+COMMIT;
 ---Ishtiak SQL end
