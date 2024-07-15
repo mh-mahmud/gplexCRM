@@ -16,10 +16,15 @@ class LeadService
         return Lead::with('leadsForm:form_id,form_name')->paginate(config('constants.ROW_PER_PAGE'));
     }
 
+    public function getLeadsByFormId($form_id)
+    {
+        return Lead::where('form_id', $form_id)->paginate(config('constants.ROW_PER_PAGE'));
+    }
     public function getLeadById($id)
     {
         return Lead::findOrFail($id);
     }
+
 
     public function createLead($data, $formId, $dynamicFields)
     {
@@ -138,12 +143,12 @@ class LeadService
 
         //fetch lead form details
         $fields = DB::table('lead_form_details')
-        ->where('table_name', $tableName)
+            ->where('table_name', $tableName)
             ->first();
 
         //fetch lead details with the lead ID
         $leads = DB::table('leads')
-        ->where('id', $leadId)
+            ->where('id', $leadId)
             ->first();
 
         //fetch column details with data types using 
@@ -213,18 +218,18 @@ class LeadService
         //dd($query);die();
         $query->where(function ($q) use ($searchTerm) {
             $q->where('title', 'LIKE', '%' . $searchTerm . '%')
-            ->orWhere('first_name', 'LIKE', '%' . $searchTerm . '%')
-            ->orWhere('last_name', 'LIKE', '%' . $searchTerm . '%')
-            ->orWhere('email', 'LIKE', '%' . $searchTerm . '%')
-            ->orWhere('phone', 'LIKE', '%' . $searchTerm . '%')
-            ->orWhere('gender', 'LIKE', '%' . $searchTerm . '%')
-            ->orWhere('dob', 'LIKE', '%' . $searchTerm . '%')
-            ->orWhere('age', 'LIKE', '%' . $searchTerm . '%')
-            ->orWhere('lead_rating', 'LIKE', '%' . $searchTerm . '%')
-            ->orWhere('lead_owner', 'LIKE', '%' . $searchTerm . '%')
-            ->orWhere('lead_source', 'LIKE', '%' . $searchTerm . '%')
-            ->orWhere('company', 'LIKE', '%' . $searchTerm . '%')
-            ->orWhere('industry', 'LIKE', '%' . $searchTerm . '%');
+                ->orWhere('first_name', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('last_name', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('email', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('phone', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('gender', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('dob', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('age', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('lead_rating', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('lead_owner', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('lead_source', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('company', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('industry', 'LIKE', '%' . $searchTerm . '%');
         });
 
         return $query->paginate(config('constants.ROW_PER_PAGE'));
@@ -252,7 +257,7 @@ class LeadService
     }
 
 
-    public function deleteTableRecord($tableName, $id,$leadId)
+    public function deleteTableRecord($tableName, $id, $leadId)
     {
         //the delete operation
         DB::table($tableName)->where('id', $id)->delete();

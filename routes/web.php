@@ -58,7 +58,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::delete('/agents/{id}', [AgentController::class, 'destroy'])->name('agents-destroy');
 
 	// Lead routes
-	Route::get('/lead', [LeadController::class, 'index'])->name('lead-index');
+	//Route::get('/lead', [LeadController::class, 'index'])->name('lead-index');
+	Route::get('/leads/{form_id?}', [LeadController::class, 'index'])->name('lead-index');
 	Route::get('/lead/create', [LeadController::class, 'create'])->name('lead-create');
 	Route::get('/lead/leads-upload', [LeadController::class, 'leads_upload'])->name('leads-upload');
 	Route::get('/lead/sample-file', [LeadController::class, 'downloadSampleFile'])->name('sample-file');

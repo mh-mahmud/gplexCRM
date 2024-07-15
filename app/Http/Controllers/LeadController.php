@@ -29,7 +29,7 @@ class LeadController  extends Controller
     }
 
 
-    public function index()
+    public function index_backup()
     {
         $leads = $this->leadService->getAllLeads();
         //$formName = LeadsForm::pluck('form_name', 'form_id');
@@ -37,6 +37,20 @@ class LeadController  extends Controller
         return view('leads.index', compact('leads', 'formName'));
     }
 
+    public function index($form_id = null)
+    {
+        // Get all leads or filter by form_id if provided
+        if ($form_id) {
+            $leads = $this->leadService->getLeadsByFormId($form_id);
+        } else {
+            $leads = $this->leadService->getAllLeads();
+        }
+
+        // Get form names where parent_id is null
+        $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
+
+        return view('leads.index', compact('leads', 'formName'));
+    }
     public function create_backup()
     {
 
@@ -712,6 +726,11 @@ class LeadController  extends Controller
 
                         $leadData['form_id'] = $formId;
                         $leadData['lead_status'] = '1';
+                        $phone=$leadData['phone'];
+                        //ensure the phone number starts with '0'
+                        if (substr($leadData['phone'], 0, 1) !== '0') {
+                            $leadData['phone'] = '0' .$phone;
+                        }
                         $leadId = DB::table('leads')->insertGetId($leadData);
 
                         if (!$leadId) {
