@@ -284,5 +284,39 @@ class UserController extends Controller
         return view('users.user_list', compact('users'));
     }
 
+
+    public function role_search(Request $request)
+    {
+        $searchTerm = trim($request->input('search'));
+
+        if (empty($searchTerm)) {
+            return redirect()->route('role-list')->with('error', 'Search Field cannot be blank.');
+        }
+
+        $request->validate([
+            'search' => 'required|string',
+        ]);
+
+        $roles = $this->service->searchRole($request);
+        return view('users.role_list', compact('roles'));
+    }
+
+
+    public function permission_search(Request $request)
+    {
+        $searchTerm = trim($request->input('search'));
+
+        if (empty($searchTerm)) {
+            return redirect()->route('permission.index')->with('error', 'Search Field cannot be blank.');
+        }
+
+        $request->validate([
+            'search' => 'required|string',
+        ]);
+
+        $users = $this->service->searchPermission($request);
+        return view('users.permission_list', compact('users'));
+    }
+
     
 }

@@ -144,6 +144,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('permission-update',      [UserController::class, 'permission_update'])->name('permission.update');
     Route::get('permission-details/{id}',     [UserController::class, 'permission_show']);
     Route::delete('permission-delete/{id}',   [UserController::class, 'permission_destroy'])->name('permission.destroy');
+	Route::post('/permission/search', [UserController::class, 'permission_search'])->name('permission-search');
 
     Route::get('role-list',        [UserController::class, 'role_index'])->name('role-list');
     Route::get('role-show/{id}',        [UserController::class, 'role_show'])->name('role.show');
@@ -152,6 +153,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('role-edit/{id}',      [UserController::class, 'role_edit'])->name('role-edit');
     Route::post('role-update',      [UserController::class, 'role_update'])->name('role-update');
     Route::delete('role-delete/{id}',   [UserController::class, 'role_destroy'])->name('role-destroy');
+	Route::post('/role/search', [UserController::class, 'role_search'])->name('role-search');
 
 	// Email template routes start
 	Route::get('email-template', [EmailController::class, 'emailTemplateList'])->name('email-template');
