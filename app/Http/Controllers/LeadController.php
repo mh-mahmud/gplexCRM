@@ -156,7 +156,7 @@ class LeadController  extends Controller
         $tableData = [];
         foreach ($fields as $field) {
             $tableName = $field->table_name;
-            $tableData[$tableName] = DB::table($tableName)->where('lead_id', $lead->id)->get();
+            $tableData[$tableName] = DB::table($tableName)->where('lead_id', $lead->id)->orderBy('id', 'desc')->get();
         }
 
         return view('leads.show', compact('lead', 'tableData'));

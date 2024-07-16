@@ -13,12 +13,12 @@ class LeadService
     public function getAllLeads()
     {
 
-        return Lead::with('leadsForm:form_id,form_name')->paginate(config('constants.ROW_PER_PAGE'));
+        return Lead::with('leadsForm:form_id,form_name')->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
     }
 
     public function getLeadsByFormId($form_id)
     {
-        return Lead::where('form_id', $form_id)->paginate(config('constants.ROW_PER_PAGE'));
+        return Lead::where('form_id', $form_id)->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
     }
     public function getLeadById($id)
     {

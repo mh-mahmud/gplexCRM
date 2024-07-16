@@ -242,25 +242,24 @@ use Carbon\Carbon;
                             <table class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                                 <thead>
                                     <tr class="fw-bolder text-muted bg-light bd-cyan">
-                                        @if ($data->isNotEmpty())
+                                        @if ($data->isNotEmpty() && $data->first() !== null)
                                         @foreach ($data->first() as $key => $value)
                                         @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_at', 'updated_at']))
                                         <th class="ps-4 min-w-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
                                         @endif
                                         @endforeach
-                                        @else
-                                        <th colspan="5" class="text-center">No data available</th>
-                                        @endif
-
                                         <th class="min-w-50px text-end pe-4">Action</th>
-
+                                        @else
+                                        <th class="ps-4 min-w-150px">&nbsp;</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if ($data->isNotEmpty())
                                     @foreach ($data as $row)
                                     <tr>
                                         @foreach ($row as $key => $value)
-                                        @if (!in_array($key, ['id', 'lead_id', 'form_id','created_at', 'updated_at']))
+                                        @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_at', 'updated_at']))
                                         <td class="ps-5 text-dark fs-6">{{ $value }}</td>
                                         @endif
                                         @endforeach
@@ -273,12 +272,18 @@ use Carbon\Carbon;
                                                 </button>
                                             </form>
                                         </td>
-
                                     </tr>
                                     @endforeach
+                                    @else
+                                    <tr>
+                                        <td colspan="100%" class="text-center">No data available</td>
+                                    </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
+
+
 
                     </div>
                     @endif
