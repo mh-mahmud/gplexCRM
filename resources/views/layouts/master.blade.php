@@ -27,6 +27,9 @@
 	<link href="{{url('/')}}/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 	<link href="{{url('/')}}/assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 	<link href="{{url('/')}}/assets/css/custom.css" rel="stylesheet" type="text/css" />
+	<link href="{{url('/')}}/assets/summernote-0.8.18/summernote.min.css" rel="stylesheet" type="text/css" />
+
+	<link href="{{url('/')}}/assets/summernote-0.8.18/summernote-bs4.min.css" rel="stylesheet" type="text/css" />
 	<script src="{{url('/')}}/assets/js/sweetalert2.min.js"></script>
 	<!--end::Global Stylesheets Bundle-->
 </head>
@@ -2838,16 +2841,22 @@
 	<script src="{{url('/')}}/assets/js/custom/modals/create-app.js"></script>
 	<script src="{{url('/')}}/assets/js/custom/modals/upgrade-plan.js"></script>
 	<!-- add by rokibuzzaman ck editor -->
-	<script src="{{url('/')}}/assets/vendor/ckeditor5/build/ckeditor.js"></script>
+	{{-- <script src="{{url('/')}}/assets/vendor/ckeditor5/build/ckeditor.js"></script> --}}
+	<script src="{{url('/')}}/assets/summernote-0.8.18/summernote.min.js"></script>
+	<script src="{{url('/')}}/assets/summernote-0.8.18/summernote-bs4.min.js"></script>
+
+
 	<script>
-		ClassicEditor
-			.create(document.querySelector('.editor'))
-			.then(editor => {
-                document.querySelector('.editor').ckeditorInstance = editor;
-            })
-			.catch(error => {
-				console.error(error);
-			});
+		// ClassicEditor
+		// 	.create(document.querySelector('.editor'))
+		// 	.then(editor => {
+        //         document.querySelector('.editor').ckeditorInstance = editor;
+        //     })
+		// 	.catch(error => {
+		// 		console.error(error);
+		// 	});
+		
+    //   });
 	</script>
 	<script>
 		$('[name="date-table"]').flatpickr();
@@ -2858,6 +2867,24 @@
 		$('[id="common_dob"]').flatpickr();
 		$('.date').flatpickr();
 
+	</script>
+	<script>
+		 $(function(){
+			$('.editor').summernote({
+					height: 300, 
+					toolbar: [
+						['style', ['style']],
+						['font', ['bold', 'italic', 'underline', 'clear']],
+						['fontname', ['fontname']],
+						['color', ['color']],
+						['para', ['ul', 'ol', 'paragraph']],
+						['height', ['height']],
+						['table', ['table']], 
+						['insert', ['link']], 
+						['view', ['fullscreen', 'codeview', 'help']]
+					]
+				});
+		});
 	</script>
 	@yield('endScript')
 	<!--end::Page Custom Javascript-->
