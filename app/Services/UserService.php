@@ -291,4 +291,34 @@ class UserService {
 
         return $query->paginate(config('constants.ROW_PER_PAGE'));
     }
+
+
+    public function searchRole($request)
+    {
+        $searchTerm = trim($request->input('search'));
+
+        $query = Role::query();
+        //dd($query);die();
+        $query->where(function ($q) use ($searchTerm) {
+            $q->where('name', 'LIKE', '%' . $searchTerm . '%')
+             ;
+        });
+
+        return $query->paginate(config('constants.ROW_PER_PAGE'));
+    }
+
+
+    public function searchPermission($request)
+    {
+        $searchTerm = trim($request->input('search'));
+
+        $query = Menu::query();
+        //dd($query);die();
+        $query->where(function ($q) use ($searchTerm) {
+            $q->where('name', 'LIKE', '%' . $searchTerm . '%')
+             ;
+        });
+
+        return $query->paginate(config('constants.ROW_PER_PAGE'));
+    }
 }

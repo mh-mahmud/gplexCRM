@@ -79,7 +79,7 @@
                             <span class="text-muted mt-1 fw-bold fs-7">Table data here</span> -->
                         </h3>
 
-                        <div class="d-flex flex-wrap gap-2">
+            <div class="d-flex flex-wrap gap-2">
 				<form action="{{ route('user-search') }}" method="POST" class="d-flex">
 				@csrf
 					<!--begin::Input group-->
