@@ -156,7 +156,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Promotion Name</label>
                                     <select class=" form-control form-control-sm form-control-solid" data-control="select2" name="promotion_id" aria-label="Default select example">
@@ -168,6 +168,20 @@
                                     </select>
                                     @if ($errors->has('promotion_id'))
                                     <span class="text-danger">{{ $errors->first('promotion_id') }}</span>
+                                    @endif
+                                </div>
+                            </div> -->
+                            <div class="col-md-6">
+                                <div class="fv-row mb-3">
+                                    <label class="form-label fw-bolder text-dark">Form Name</label>
+                                    <select class="form-control form-control-sm form-control-solid" name="form_id" aria-label="Default select example">
+                                        <option value="">Select Form Name</option>
+                                        @foreach($formName as $id => $name)
+                                        <option value="{{ $id }}" {{ old('form_id') == $id ? 'selected' : '' }}>{{$name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('form_id'))
+                                    <span class="text-danger">{{ $errors->first('form_id') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -251,6 +265,34 @@
                                     <!--end::Input-->
                                     @if ($errors->has('campaign_service'))
                                     <span class="text-danger">{{ $errors->first('campaign_service') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="fv-row mb-3">
+                                    <label class="form-label fw-bolder text-dark">Template</label>
+                                    <select class=" form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
+
+                                        <option value="email" selected>Email</option>
+                                        <option value="sms">SMS</option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                             <div class="col-md-6">
+                                <div class="fv-row mb-3">
+                                    <label class="form-label fw-bolder text-dark">Email Templage</label>
+                                    <select class=" form-control form-control-sm form-control-solid" data-control="select2" name="promotion_id" aria-label="Default select example">
+                                        <option value="">Select Email Templage</option>
+                                        @foreach($emails as $id => $name)
+                                        <option value="{{ $id }}">{{$name}}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @if ($errors->has('promotion_id'))
+                                    <span class="text-danger">{{ $errors->first('promotion_id') }}</span>
                                     @endif
                                 </div>
                             </div>
