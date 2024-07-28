@@ -78,13 +78,10 @@ class EmailService
     public function templateDelete($id)
     {
         return  DB::transaction(function () use ($id) {
-
             $promotion = EmailTemplate::findOrFail($id);
             $promotion->delete();
             Helper::storeLog($promotion->email_subject, "Email Template", "Deleted");
         });
-
-
     }
 
     public function templateUpdate($request, $id)
