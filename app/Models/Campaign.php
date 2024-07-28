@@ -10,7 +10,7 @@ class Campaign extends Model
     use HasFactory;
     protected $table = 'campaigns';
     protected $fillable = [
-        'campaign_title', 'start_date', 'end_date', 'description', 'campaign_type', 'campaign_limit', 'campaign_service', 'status', 'promotion_id'
+        'form_id','campaign_title', 'start_date', 'end_date', 'description', 'campaign_type', 'campaign_limit', 'campaign_service', 'status', 'promotion_id'
     ];
 
     public function promotion()

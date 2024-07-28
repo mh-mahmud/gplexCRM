@@ -13,6 +13,9 @@ use Carbon\Carbon;
 use App\Models\Campaign;
 use App\Services\CampaignService;
 use App\Models\Promotion;
+use App\Models\LeadsForm;
+use App\Models\EmailTemplate;
+use App\Models\smsTemplate;
 
 class CampaignController extends Controller
 {
@@ -33,7 +36,10 @@ class CampaignController extends Controller
     public function create()
     {
         $promotions = Promotion::pluck('promotion_title', 'id');
-        return view('campaigns.create', compact('promotions'));
+        $formName = LeadsForm::pluck('form_name', 'form_id');
+        $email = EmailTemplate::pluck('email_subject', 'id');
+        $sms = smsTemplate::pluck('title', 'id');
+        return view('campaigns.create', compact('promotions','formName','email','sms'));
     }
     
 
@@ -60,7 +66,8 @@ class CampaignController extends Controller
     {
         $campaign = $this->campaignService->getCampaignById($id);
         $promotions = Promotion::pluck('promotion_title', 'id');
-        return view('campaigns.edit', compact('campaign','promotions'));
+        $formName = LeadsForm::pluck('form_name', 'form_id');
+        return view('campaigns.edit', compact('campaign','promotions','formName'));
     }
 
     public function update(Request $request, $id)
