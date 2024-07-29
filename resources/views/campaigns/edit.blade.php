@@ -182,7 +182,7 @@
                                             <option value="{{ $id }}" {{ $id == $campaign->form_id ? 'selected' : '' }}>{{ $name }}</option>
                                         @endforeach
                                     </select>
-                                    <!-- <input type="hidden" name="form_id" value="{{ $tableDetails[0]->form_id }}"> -->
+                                    {{-- <input type="hidden" name="form_id" value="{{ $tableDetails[0]->form_id }}"> --}}
                                     @if ($errors->has('form_id'))
                                         <span class="text-danger">{{ $errors->first('form_id') }}</span>
                                     @endif

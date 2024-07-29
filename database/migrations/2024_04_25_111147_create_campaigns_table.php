@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
+            $table->char('form_id', 10)->nullable();
             $table->string('campaign_title');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();

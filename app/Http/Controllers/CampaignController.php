@@ -115,4 +115,12 @@ class CampaignController extends Controller
         return response()->json(['status' => 'Session cleared']);
     }
 
+    
+    public function campaign_leads_upload(Request $request)
+    {
+        $formId = $request->input('form_id');
+        return view('campaigns.campaign_leads_upload', compact('formId'));
+    }
+
+
 }
