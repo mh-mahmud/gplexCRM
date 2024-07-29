@@ -14,6 +14,7 @@ use App\Http\Controllers\SmsController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\LogController;
 
 
 use App\Models\Promotion;
@@ -216,5 +217,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 	// Product routes end
+
+	// Log
+	Route::get('log-list', [LogController::class, 'getLogList'])->name('log-list');
+
+
 
 });
