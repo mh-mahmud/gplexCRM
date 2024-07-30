@@ -121,7 +121,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::delete('/campaign/{id}', [CampaignController::class, 'destroy'])->name('campaign-destroy');
 	Route::post('/campaign/search', [CampaignController::class, 'search'])->name('campaign-search');
 	Route::post('/clear-session', [CampaignController::class, 'clearSession'])->name('clear.session');
-	Route::get('/campaign/lead-upload/{form_id}', [CampaignController::class, 'campaign_leads_upload'])->name('campaign-lead-upload');
+	Route::get('/campaign/lead-upload/{id}', [CampaignController::class, 'campaign_leads_upload'])->name('campaign-lead-upload');
 
 
 	// users route

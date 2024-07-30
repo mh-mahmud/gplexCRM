@@ -67,7 +67,9 @@ class CampaignController extends Controller
         $campaign = $this->campaignService->getCampaignById($id);
         $promotions = Promotion::pluck('promotion_title', 'id');
         $formName = LeadsForm::pluck('form_name', 'form_id');
-        return view('campaigns.edit', compact('campaign','promotions','formName'));
+        $email = EmailTemplate::pluck('email_subject', 'id');
+        $sms = smsTemplate::pluck('title', 'id');
+        return view('campaigns.edit', compact('campaign','promotions','formName','email','sms'));
     }
 
     public function update(Request $request, $id)

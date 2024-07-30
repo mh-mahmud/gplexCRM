@@ -136,7 +136,7 @@ class LeadsFormController extends Controller
         return redirect()->route('leadsform-index')->with('success', 'Leads Form deleted successfully.');
     }
 
-    private function getTotalLeadsCountsForForms($leadsForms)
+    private function getTotalLeadsCountsForFormsbackup($leadsForms)
     {
         $totalLeadsCounts = [];
 
@@ -156,4 +156,20 @@ class LeadsFormController extends Controller
 
         return $totalLeadsCounts;
     }
+
+    private function getTotalLeadsCountsForForms($leadsForms)
+    {
+        $totalLeadsCounts = [];
+
+        foreach ($leadsForms as $form) {
+            // Count the total number of leads for this form_id
+            $leadCount = DB::table('leads')->where('form_id', $form->form_id)->count();
+
+            // Store the count in the array with form_id as the key
+            $totalLeadsCounts[$form->form_id] = $leadCount;
+        }
+
+        return $totalLeadsCounts;
+    }
+
 }

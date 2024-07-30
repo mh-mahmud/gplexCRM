@@ -276,7 +276,7 @@ use Carbon\Carbon;
 
                                     <td>
                                         <div class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
-                                            <a href="{{ route('campaign-lead-upload', $campaign->form_id) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                            <a href="{{ route('campaign-lead-upload', $campaign->id) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                                                 <span class="svg-icon svg-icon-3">
                                                     <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
