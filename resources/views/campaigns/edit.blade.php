@@ -277,8 +277,8 @@
                                     <label class="form-label fw-bolder text-dark">Template</label>
                                     <select class=" form-control form-control-sm form-control-solid" name="status"  id="templateType" aria-label="Default select example">
 
-                                        <option value="Email">Email</option>
-                                        <option value="SMS">SMS</option>
+                                    <option value="Email" {{ $campaign->template_type == 'Email' ? 'selected' : '' }}>Email</option>
+                                    <option value="SMS" {{ $campaign->template_type == 'SMS' ? 'selected' : '' }}>SMS</option>
 
                                     </select>
                                 </div>

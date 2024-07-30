@@ -272,7 +272,7 @@
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Template</label>
-                                    <select class=" form-control form-control-sm form-control-solid" name="status"  id="templateType" aria-label="Default select example">
+                                    <select class=" form-control form-control-sm form-control-solid" name="template_type"  id="templateType" aria-label="Default select example">
 
                                         <option value="Email" selected>Email</option>
                                         <option value="SMS">SMS</option>

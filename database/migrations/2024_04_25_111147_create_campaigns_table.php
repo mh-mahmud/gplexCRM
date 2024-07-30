@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('end_date')->nullable();
             $table->text('description')->nullable();
             $table->string('campaign_type')->nullable();
+            $table->string('template_type')->nullable();
             $table->integer('campaign_limit')->nullable();
             $table->string('campaign_service')->nullable();
             $table->tinyInteger('status');

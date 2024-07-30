@@ -55,3 +55,28 @@ COMMIT;
 ---Ishtiak SQL end
 
 CREATE TABLE customers LIKE leads;
+
+
+CREATE TABLE `campaign_data` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `campaign_id` bigint(20) DEFAULT NULL,
+  `phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_template_id` int(11) DEFAULT NULL,
+  `sms_template_id` int(11) DEFAULT NULL,
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `campaign_data_email_unique` (`email`)
+)
+
+
+ALTER TABLE campaigns ADD COLUMN form_id CHAR(10) NULL AFTER id;
+
+ALTER TABLE campaigns ADD COLUMN email_template_id INT(20) NULL AFTER form_id,
+ADD COLUMN sms_template_id INT(20) NULL AFTER email_template_id;
+
+ALTER TABLE campaigns ADD COLUMN template_type VARCHAR(192) NULL AFTER campaign_type;
+
+
