@@ -80,3 +80,6 @@ ADD COLUMN sms_template_id INT(20) NULL AFTER email_template_id;
 ALTER TABLE campaigns ADD COLUMN template_type VARCHAR(192) NULL AFTER campaign_type;
 
 
+ALTER TABLE `campaign_data` ADD COLUMN `csv_id` CHAR(10) NULL AFTER `sms_template_id`;
+
+

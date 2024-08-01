@@ -38,28 +38,30 @@
                                 Forms
                   ***********************************-->
 <div class="container-xxl">
-@if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: '{{ session('success')}}',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        </script>
+    @if (session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '{{ session('
+            success ')}}',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
     @endif
 
     @if (session('error'))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: '{{ session('error')}}',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        </script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '{{ session('
+            error ')}}',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
     @endif
     <div class="row">
         <div class="col-xxl-12">
@@ -434,6 +436,7 @@
                                 <table class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                                     <thead>
                                         <tr class="fw-bolder text-muted bg-light bd-cyan">
+                                            <th class="ps-4 min-w-50px">SL</th>
                                             @foreach ($data->first() as $key => $value)
                                             @if (!in_array($key, ['id', 'lead_id', 'form_id','created_at', 'updated_at']))
                                             <th class="ps-4 min-w-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
@@ -444,8 +447,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($data as $row)
+                                        @foreach ($data as $index => $row)
                                         <tr>
+                                            <td class="ps-4 text-dark fs-6">{{ $index + 1 }}</td>
                                             @foreach ($row as $key => $value)
                                             @if (!in_array($key, ['id', 'lead_id', 'form_id','created_at', 'updated_at']))
                                             <td class="ps-5 text-dark fs-6">{{ $value }}</td>

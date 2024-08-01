@@ -13,9 +13,9 @@ class Campaign extends Model
         'form_id','email_template_id','sms_template_id','campaign_title', 'start_date', 'end_date', 'description', 'campaign_type','template_type', 'campaign_limit', 'campaign_service', 'status', 'promotion_id'
     ];
 
-    public function promotion()
-    {
-        return $this->belongsTo('App\Promotion');
-    }
+    // public function promotion()
+    // {
+    //     return $this->belongsTo('App\Promotion');
+    // }
    
 }

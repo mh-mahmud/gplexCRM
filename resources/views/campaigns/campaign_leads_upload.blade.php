@@ -63,8 +63,8 @@
 
 
                                 <h2>Lead File Upload Here</h2>
-
-                                <a href="{{ route('sample-file', ['form_id' => $formId]) }}" role="button" class="btn btn-sm btn-success d-flex align-items-center">
+                               
+                                    <a href="{{ route('campaign-sample-file', ['template_type' => $campaign->template_type]) }}" role="button" class="btn btn-sm btn-success d-flex align-items-center">
                                     <i class="bi bi-file-earmark-text-fill fs-2"></i> Download Sample File
                                 </a>
                             </div>
@@ -74,10 +74,14 @@
                     <!--begin::Body-->
                     <div class="card-body py-5">
                         <!-- Upload  -->
-                        <form id="file-upload-form" class="uploader" action="{{ route('lead-upload-file') }}" method="POST" enctype="multipart/form-data">
+                        <form id="file-upload-form" class="uploader" action="{{ route('campaign-lead-upload-file') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input id="file-upload" type="file" name="fileUpload" accept=".csv" />
-                            <input type="hidden" name="form_id" value="{{ $formId }}" />
+                            <input type="hidden" name="campaign_id" value="{{ $campaign->id }}" />
+                            <input type="hidden" name="email_template_id" value="{{ $campaign->email_template_id }}" />
+                            <input type="hidden" name="sms_template_id" value="{{ $campaign->sms_template_id }}" />
+                            <input type="hidden" name="template_type" value="{{ $campaign->template_type }}" />
+                           
 
                             <label for="file-upload" id="file-drag">
                                 <img id="file-image" src="#" alt="Preview" class="hidden">
