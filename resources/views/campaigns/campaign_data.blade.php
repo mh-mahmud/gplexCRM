@@ -132,7 +132,8 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: '{{ session('success')}}',
+            text: '{{ session('
+            success ')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -144,7 +145,8 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: '{{ session('error')}}',
+            text: '{{ session('
+            error ')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -201,10 +203,14 @@ use Carbon\Carbon;
                                     <!-- <th class="min-w-150px">Form ID</th> -->
                                     <th class="min-w-150px">Campaign Name</th>
                                     <!-- <th class="min-w-150px">Promotion</th> -->
+                                    @if ($campaign_data->first()->phone)
                                     <th class="min-w-140px">Phone</th>
+                                    @endif
+                                    @if ($campaign_data->first()->email)
                                     <th class="min-w-140px">Email</th>
+                                    @endif
                                     <th class="min-w-120px">Status</th>
-                                    
+
                                 </tr>
                             </thead>
                             <!--end::Table head-->
@@ -214,15 +220,15 @@ use Carbon\Carbon;
                                 <tr>
                                     <td class="ps-5 text-dark fs-6">{{($campaign_data->currentPage() - 1) * $campaign_data->perPage() + $loop->iteration}}</td>
                                     <td class="text-dark fs-6">{{$campaign_datas->campaign_title }}</td>
-                                 
-                                    <td class="text-dark fs-6">
-                                    {{$campaign_datas->phone }}
-                                    </td>
-                                    <td class="text-dark fs-6">
-                                    {{$campaign_datas->email }}
-                                    </td>
+
+                                    @if ($campaign_datas->phone)
+                                    <td class="text-dark fs-6">{{ $campaign_datas->phone }}</td>
+                                    @endif
+                                    @if ($campaign_datas->email)
+                                    <td class="text-dark fs-6">{{ $campaign_datas->email }}</td>
+                                    @endif
                                     <td class="text-dark fs-6">{{$campaign_datas->status }}</td>
-                                   
+
                                 </tr>
                                 @endforeach
 

@@ -166,9 +166,9 @@ class CampaignController extends Controller
     }
 
 
-    public function campaign_data()
+    public function campaign_data($id)
     {
-        $campaign_data = $this->campaignService->getAllCampaignData();
+        $campaign_data = $this->campaignService->getAllCampaignData($id);
         //dd($campaigns);die();
         return view('campaigns.campaign_data', compact('campaign_data'));
     }

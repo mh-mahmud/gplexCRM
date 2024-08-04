@@ -79,7 +79,7 @@ class CampaignService
 
     public function campaign_lead_upload_file(Request $request)
     {
-        // Custom validation messages
+        // custom validation messages show
         $messages = [
             'fileUpload.required' => 'The file upload is required.',
             'fileUpload.file' => 'The uploaded file must be a valid file.',
@@ -92,25 +92,25 @@ class CampaignService
         ], $messages);
 
         if ($validator->fails()) {
-            // Collect validation error messages
+            //validation error messages show
             $errorMessages = implode(' ', $validator->errors()->all());
             return ['error' => $errorMessages];
         }
 
         $dataInserted = false;
 
-        // Handle the file upload
+        // handle the file upload in csv
         if ($request->hasFile('fileUpload')) {
             $file = $request->file('fileUpload');
             $path = $file->getRealPath();
 
-            // Open the file and read its contents
+            // Open the file and read
             $handle = fopen($path, 'r');
             if ($handle !== false) {
-                // Read the first line (headers)
+                // read the 1st line (headers)
                 $headers = fgetcsv($handle);
 
-                // Check if the CSV header matches the expected values
+                // chk if the CSV header matches the expected values
                 if (($request->template_type == 'Email' && $headers[0] !== 'Email') ||
                     ($request->template_type == 'SMS' && $headers[0] !== 'Phone')) {
                     fclose($handle);
@@ -163,6 +163,7 @@ class CampaignService
                                 'email_template_id' => $request->input('email_template_id'),
                                 'campaign_id' => $request->input('campaign_id'),
                                 'csv_id' => $csv_id,
+                                'status' => 'Pending',
                                 'created_at' => now(),
                                 'updated_at' => now(),
                             ]);
@@ -172,6 +173,7 @@ class CampaignService
                                 'sms_template_id' => $request->input('sms_template_id'),
                                 'campaign_id' => $request->input('campaign_id'),
                                 'csv_id' => $csv_id,
+                                'status' => 'Pending',
                                 'created_at' => now(),
                                 'updated_at' => now(),
                             ]);
@@ -194,12 +196,14 @@ class CampaignService
     }
 
 
-    public function getAllCampaignData()
+    public function getAllCampaignData($id)
     {
         return CampaignData::join('campaigns', 'campaign_data.campaign_id', '=', 'campaigns.id')
-        ->select('campaign_data.*', 'campaigns.campaign_title as campaign_title')
-        ->paginate(config('constants.ROW_PER_PAGE'));
+            ->where('campaign_data.campaign_id', $id)
+            ->select('campaign_data.*', 'campaigns.campaign_title as campaign_title')
+            ->paginate(config('constants.ROW_PER_PAGE'));
     }
+
 
 }
 
