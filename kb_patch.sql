@@ -115,6 +115,20 @@ ALTER TABLE `proposals`
 ALTER TABLE `proposals`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 COMMIT;
+
+CREATE TABLE `proposal_products` (
+  `id` bigint(20) NOT NULL,
+  `proposal_id` bigint(20) NOT NULL,
+  `product_id` bigint(20) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `total_price` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE `proposal_products`
+  ADD PRIMARY KEY (`id`);
+
+  
 ---Ishtiak SQL end
 
 CREATE TABLE customers LIKE leads;
