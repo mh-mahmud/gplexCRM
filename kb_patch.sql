@@ -127,6 +127,33 @@ CREATE TABLE `proposal_products` (
 ALTER TABLE `proposal_products`
   ADD PRIMARY KEY (`id`);
 
+  CREATE TABLE `email_queue` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `campaign_id` char(20) DEFAULT NULL,
+  `user_id` char(20) NOT NULL,
+  `email_from` char(20) DEFAULT NULL,
+  `email_to` char(180) NOT NULL,
+  `email_subject` varchar(191) NOT NULL,
+  `email_content` text NOT NULL,
+  `send_status` varchar(30) DEFAULT NULL,
+  `priority_level` tinyint(4) DEFAULT NULL,
+  `log_time` datetime DEFAULT NULL,
+  `schedule_time` datetime DEFAULT NULL,
+  `status` varchar(30) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE `email_queue`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `email_queue`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+COMMIT;
+
+
+ALTER TABLE `email_log` CHANGE `send_status` `send_status` VARCHAR(30) NULL DEFAULT NULL;
+
   
 ---Ishtiak SQL end
 
