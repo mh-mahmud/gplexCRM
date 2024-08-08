@@ -258,7 +258,7 @@ use Carbon\Carbon;
                                     <td>
                                         <div class="d-inline-flex justify-content-center gap-1 w-100 border-bottom-0">
                                             <!-- Play Icon Link -->
-                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 play-icon" onclick="toggleIcon(this, 'play')">
+                                            <a href="{{ route('campaign-start', ['id' =>$campaign->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 play-icon" onclick="toggleIcon(this, 'play')">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                                                 <span class="svg-icon svg-icon-3">
                                                     <svg width="800px" height="800px" viewBox="-3 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
@@ -276,7 +276,7 @@ use Carbon\Carbon;
                                             </a>
 
                                             <!-- Stop Icon Link -->
-                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 stop-icon d-none" onclick="toggleIcon(this, 'stop')">
+                                            <a href="{{ route('campaign-stop', ['id' =>$campaign->id]) }}"  style="background-color: #FF3131;" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 stop-icon d-none" onclick="toggleIcon(this, 'stop')">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                                                 <span class="svg-icon svg-icon-3">
                                                     <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

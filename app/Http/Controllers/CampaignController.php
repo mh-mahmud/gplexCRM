@@ -19,6 +19,8 @@ use App\Models\LeadsForm;
 use App\Models\EmailTemplate;
 use App\Models\smsTemplate;
 use App\Models\CampaignData;
+use App\Mail\BulkEmail;
+use Mail;
 
 class CampaignController extends Controller
 {
@@ -172,6 +174,83 @@ class CampaignController extends Controller
         //dd($campaigns);die();
         return view('campaigns.campaign_data', compact('campaign_data'));
     }
+
+
+
+
+    public function startCampaign($id)
+    {
+        $campaign_type = Campaign::findOrFail($id);
+        $campaign = CampaignData::where('campaign_id', $id)->get();
+        $campaign_template_id = CampaignData::where('campaign_id', $id)->first();
+        $email_template = EmailTemplate::where('id', $campaign_template_id->email_template_id)->first();
+
+        if ($campaign->isEmpty()) {
+            return redirect()->route('campaign-index')->with('error', 'Campaign not found.');
+        }
+
+        $emailCount = 0;
+        $smsCount = 0;
+
+        if ($campaign_type->template_type == 'Email') {
+            $hasEmails = false;
+
+            foreach ($campaign as $emails) {
+                if ($emails->email) {
+                    $hasEmails = true;
+                    try {
+                        //Mail::to($emails->email)->queue(new BulkEmail($email_template->email_subject, $email_template->email_content));
+                        $dataObj                    = new EmailLog();
+                        $dataObj->email_from        = "Genuity";
+                        $dataObj->email_to          = $emails->email; 
+                        $dataObj->email_subject     = $email_template->email_subject;
+                        $dataObj->email_content     = $email_template->email_content;
+                        $dataObj->log_time          = Carbon::now();
+                        $dataObj->delivery_time     = Carbon::now();
+                        $dataObj->send_status       = config('constants.campaign_status.Pending');
+                        $dataObj->save();
+                        $emailCount++;
+                    } catch (\Exception $e) {
+                        return redirect()->route('campaign-index')->with('error', 'Failed to send email: ' . $e->getMessage());
+                    }
+                }
+            }
+
+            if (!$hasEmails) {
+                return redirect()->route('campaign-index')->with('error', 'No email addresses found for the campaign.');
+            }
+        } elseif ($campaign_type->template_type == 'SMS') {
+            $hasPhones = false;
+
+            foreach ($campaign as $phones) {
+                if ($phones->phone) {
+                    $hasPhones = true;
+                    try {
+                        Notification::route('sms', $phones->phone)->notify(new CampaignSMS($campaign));
+                        $smsCount++;
+                    } catch (\Exception $e) {
+                        return redirect()->route('campaign-index')->with('error', 'Failed to send SMS: ' . $e->getMessage());
+                    }
+                }
+            }
+
+            if (!$hasPhones) {
+                return redirect()->route('campaign-index')->with('error', 'No phone numbers found for the campaign.');
+            }
+        }
+
+        $successMessage = 'Campaign completed successfully.';
+        if ($emailCount > 0) {
+            $successMessage .= " Sent $emailCount emails.";
+        }
+        if ($smsCount > 0) {
+            $successMessage .= " Sent $smsCount SMS messages.";
+        }
+
+        return redirect()->route('campaign-index')->with('success', $successMessage);
+    }
+
+
 
 
 

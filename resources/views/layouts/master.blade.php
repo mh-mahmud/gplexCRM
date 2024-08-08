@@ -27,10 +27,9 @@
 	<link href="{{url('/')}}/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 	<link href="{{url('/')}}/assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 	<link href="{{url('/')}}/assets/summernote-0.8.18/summernote.min.css" rel="stylesheet" type="text/css" />
-    <link href="{{url('/')}}/assets/summernote-0.8.18/summernote-bs4.min.css" rel="stylesheet" type="text/css" />
+	<link href="{{url('/')}}/assets/summernote-0.8.18/summernote-bs4.min.css" rel="stylesheet" type="text/css" />
     <link href="{{url('/')}}/assets/css/custom.css" rel="stylesheet" type="text/css" />
-
-    <script src="{{url('/')}}/assets/js/sweetalert2.min.js"></script>
+	<script src="{{url('/')}}/assets/js/sweetalert2.min.js"></script>
 	<!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
