@@ -125,6 +125,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/clear-session', [CampaignController::class, 'clearSession'])->name('clear.session');
 	Route::get('/campaign/campaign-lead-upload/{id}', [CampaignController::class, 'campaign_leads_upload'])->name('campaign-lead-upload');
 	Route::get('/campaign/campaign-data/{id}', [CampaignController::class, 'campaign_data'])->name('campaign-data');
+	Route::get('/campaign/start/{id}', [CampaignController::class, 'startCampaign'])->name('campaign-start');
+    Route::get('/campaign/stop/{id}', [CampaignController::class, 'stopCampaign'])->name('campaign-stop');
 	
 
 

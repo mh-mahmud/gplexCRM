@@ -163,7 +163,7 @@ class CampaignService
                                 'email_template_id' => $request->input('email_template_id'),
                                 'campaign_id' => $request->input('campaign_id'),
                                 'csv_id' => $csv_id,
-                                'status' => 'Pending',
+                                'status' => config('constants.campaign_status.Pending'),
                                 'created_at' => now(),
                                 'updated_at' => now(),
                             ]);
@@ -173,7 +173,7 @@ class CampaignService
                                 'sms_template_id' => $request->input('sms_template_id'),
                                 'campaign_id' => $request->input('campaign_id'),
                                 'csv_id' => $csv_id,
-                                'status' => 'Pending',
+                                'status' => config('constants.campaign_status.Pending'),
                                 'created_at' => now(),
                                 'updated_at' => now(),
                             ]);
