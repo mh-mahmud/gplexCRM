@@ -235,15 +235,6 @@ class EmailService
                 continue;
             }
 
-            $queue                        = new EmailQueue();
-            $queue->email_from            = "Genuity";
-            $queue->email_to              = $row[0];
-            $queue->email_subject         = $data['email_subject'];
-            $queue->email_content         = $data['email_content'];
-            $queue->log_time              = Carbon::now();
-            $queue->send_status           = config('constants.campaign_status')["Pending"];
-            $queue->status                = config('constants.campaign_status')["Pending"];
-            $queue->save();
 
             
             Mail::to($row[0])->queue(new BulkEmail($data['email_subject'], $data['email_content']));
@@ -255,7 +246,7 @@ class EmailService
             $dataObj->email_content     = $data['email_content'];
             $dataObj->log_time          = Carbon::now();
             $dataObj->delivery_time     = Carbon::now();
-            $dataObj->send_status       = config('constants.campaign_status')["Success"];
+            $dataObj->send_status       = 1;
             $dataObj->save();
 
         }
