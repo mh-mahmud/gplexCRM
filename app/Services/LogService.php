@@ -8,7 +8,10 @@ class LogService
 {
     public function getLogList($request)
     {
-        return Logs::orderBy('id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
+        return Logs::join('users', 'users.id', '=', 'logs.user_id')
+                    ->select('logs.*', 'users.first_name', 'users.last_name')
+                    ->orderBy('id', 'DESC')
+                    ->paginate(config('constants.ROW_PER_PAGE'));
         
     }
 }

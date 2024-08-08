@@ -17,7 +17,7 @@ class LogController extends Controller {
     public function getLogList(Request $request)
     {      
         $logs = $this->logService->getLogList($request);
-        return view('logs.log-list', compact('logs'));
+        return view('log.logs', compact('logs'));
     }
 
 }

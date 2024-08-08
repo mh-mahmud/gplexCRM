@@ -224,9 +224,10 @@ class EmailService
             if (!isset($row[0]) || empty($row[0])) {
                 continue;
             }
+
+            
             
             Mail::to($row[0])->queue(new BulkEmail($data['email_subject'], $data['email_content']));
-            // dd(23);
 
             $dataObj                    = new EmailLog();
             $dataObj->email_from        = "Genuity";
