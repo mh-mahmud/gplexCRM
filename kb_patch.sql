@@ -154,7 +154,10 @@ COMMIT;
 
 ALTER TABLE `email_log` CHANGE `send_status` `send_status` VARCHAR(30) NULL DEFAULT NULL;
 
-  
+ALTER TABLE `email_queue` CHANGE `user_id` `customer_id` BIGINT(20) NULL;
+
+ALTER TABLE `sms_queue` CHANGE `user_id` `customer_id` BIGINT(20) NULL;
+
 ---Ishtiak SQL end
 
 CREATE TABLE customers LIKE leads;

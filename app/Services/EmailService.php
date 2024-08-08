@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\EmailTemplate;
 use App\Models\EmailLog;
+use App\Models\EmailQueue;
 use Exception;
 use Mail;
 use App\Mail\SingleMail;
@@ -134,7 +135,18 @@ class EmailService
         $to_email = $data["to_email"];
 
         try {
+            $queue                        = new EmailQueue();
+            $queue->email_from            = "Genuity";
+            $queue->email_to              = $data['to_email'];
+            $queue->email_subject         = $data['email_subject'];
+            $queue->email_content         = $data['email_content'];
+            $queue->log_time              = Carbon::now();
+            $queue->send_status           = config('constants.campaign_status')["Pending"];
+            $queue->status                = config('constants.campaign_status')["Pending"];
+            $queue->save();
+
             Mail::to($to_email)->send(new SingleMail($subject, $body));
+
             $dataObj                        = new EmailLog();
             $dataObj->email_from            = "Genuity";
             $dataObj->email_to              = $data['to_email'];
@@ -142,7 +154,7 @@ class EmailService
             $dataObj->email_content         = $data['email_content'];
             $dataObj->log_time              = Carbon::now();
             $dataObj->delivery_time         = Carbon::now();
-            $dataObj->send_status           = 1;
+            $dataObj->send_status           = config('constants.campaign_status')["Success"];
             $dataObj->save();
             
 
@@ -154,7 +166,7 @@ class EmailService
             $dataObj->email_content         = $data['email_content'];
             $dataObj->log_time              = Carbon::now();
             $dataObj->delivery_time         = Carbon::now();
-            $dataObj->send_status           = 0;
+            $dataObj->send_status           = config('constants.campaign_status')["Failed"];
             $dataObj->save();
 
             return (object)[
@@ -163,8 +175,6 @@ class EmailService
             ];
 
         }
-
-        
 
         return (object)[
             'status'                 => 200,
@@ -225,7 +235,7 @@ class EmailService
                 continue;
             }
 
-            
+
             
             Mail::to($row[0])->queue(new BulkEmail($data['email_subject'], $data['email_content']));
 
