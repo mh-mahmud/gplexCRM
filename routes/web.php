@@ -15,6 +15,8 @@ use App\Http\Controllers\LeadController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\CurrencyController;
 
 
 use App\Models\Promotion;
@@ -213,9 +215,24 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('product-show/{id}', [ProductController::class, 'productShow'])->name('product-show');
 	Route::get('product-edit/{id}', [ProductController::class, 'productEdit'])->name('product-edit');
 	Route::put('product-update-pro/{id}', [ProductController::class, 'productUpdate'])->name('product-update-pro');
-
-
 	// Product routes end
+
+
+	// Country routes start
+	Route::get('country-list', [countryController::class, 'countryList'])->name('country-list');
+	Route::get('add-country', [countryController::class, 'countryCreate'])->name('add-country');
+	Route::post('add-country-pro', [countryController::class, 'countryStore'])->name('add-country-pro');
+	Route::delete('country-delete/{id}', [countryController::class, 'countryDelete'])->name('country-delete');
+
+	// Country routes end
+
+	// Currency routes start
+	Route::get('currency-list', [CurrencyController::class, 'currencyList'])->name('currency-list');
+	Route::get('add-currency', [CurrencyController::class, 'currencyCreate'])->name('add-currency');
+	Route::post('add-currency-pro', [CurrencyController::class, 'currencyStore'])->name('add-currency-pro');
+	Route::delete('currency-delete/{id}', [CurrencyController::class, 'currencyDelete'])->name('currency-delete');
+
+	// Currency routes end
 
 	// Log
 	Route::get('log-list', [LogController::class, 'getLogList'])->name('log-list');
