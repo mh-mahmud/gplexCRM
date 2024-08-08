@@ -146,7 +146,7 @@ use Carbon\Carbon;
             title: 'Error',
             text: '{{ session('error')}}',
             showConfirmButton: false,
-            timer: 5500
+            timer: 1500
         });
     </script>
     @endif
