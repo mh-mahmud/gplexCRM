@@ -19,6 +19,8 @@ use App\Models\LeadsForm;
 use App\Models\EmailTemplate;
 use App\Models\smsTemplate;
 use App\Models\CampaignData;
+use App\Models\EmailQueue;
+use App\Models\SmsQueue;
 use App\Mail\BulkEmail;
 use Mail;
 
@@ -184,6 +186,7 @@ class CampaignController extends Controller
         $campaign = CampaignData::where('campaign_id', $id)->get();
         $campaign_template_id = CampaignData::where('campaign_id', $id)->first();
         $email_template = EmailTemplate::where('id', $campaign_template_id->email_template_id)->first();
+        $sms_template = smsTemplate::where('id', $campaign_template_id->sms_template_id)->first();
 
         if ($campaign->isEmpty()) {
             return redirect()->route('campaign-index')->with('error', 'Campaign not found.');
@@ -200,13 +203,14 @@ class CampaignController extends Controller
                     $hasEmails = true;
                     try {
                         //Mail::to($emails->email)->queue(new BulkEmail($email_template->email_subject, $email_template->email_content));
-                        $dataObj                    = new EmailLog();
+                        $dataObj                    = new EmailQueue();
                         $dataObj->email_from        = "Genuity";
+                        $dataObj->campaign_id       = $id;
                         $dataObj->email_to          = $emails->email; 
                         $dataObj->email_subject     = $email_template->email_subject;
                         $dataObj->email_content     = $email_template->email_content;
                         $dataObj->log_time          = Carbon::now();
-                        $dataObj->delivery_time     = Carbon::now();
+                        //$dataObj->delivery_time     = Carbon::now();
                         $dataObj->send_status       = config('constants.campaign_status.Pending');
                         $dataObj->save();
                         $emailCount++;
@@ -226,7 +230,14 @@ class CampaignController extends Controller
                 if ($phones->phone) {
                     $hasPhones = true;
                     try {
-                        Notification::route('sms', $phones->phone)->notify(new CampaignSMS($campaign));
+                        $dataObj = new SmsQueue();
+                        $dataObj->sms_from = config('constants.SMS_SEND_MOBILE_NO');
+                        $dataObj->sms_to = $phones->phone;
+                        $dataObj->sms_text = $sms_template->description;
+                        $dataObj->log_time = Carbon::now();
+                        //$dataObj->user_id = Auth::id();
+                        $dataObj->send_status = config('constants.campaign_status.Pending');
+                        $dataObj->save();
                         $smsCount++;
                     } catch (\Exception $e) {
                         return redirect()->route('campaign-index')->with('error', 'Failed to send SMS: ' . $e->getMessage());
@@ -238,6 +249,8 @@ class CampaignController extends Controller
                 return redirect()->route('campaign-index')->with('error', 'No phone numbers found for the campaign.');
             }
         }
+        CampaignData::where('campaign_id', $id)
+                ->update(['status' => config('constants.campaign_status.Completed')]);
 
         $successMessage = 'Campaign completed successfully.';
         if ($emailCount > 0) {

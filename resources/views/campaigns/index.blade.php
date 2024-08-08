@@ -146,7 +146,7 @@ use Carbon\Carbon;
             title: 'Error',
             text: '{{ session('error')}}',
             showConfirmButton: false,
-            timer: 1500
+            timer: 5500
         });
     </script>
     @endif
@@ -252,12 +252,18 @@ use Carbon\Carbon;
                                                 <!--end::Svg Icon-->
                                             </a>
 
-                                        
+
                                         </div>
                                     </td>
                                     <td>
                                         <div class="d-inline-flex justify-content-center gap-1 w-100 border-bottom-0">
+                                            @php
+                                            $hasPending = \App\Models\CampaignData::where('status', config('constants.campaign_status.Pending'))
+                                            ->where('campaign_id', $campaign->id)
+                                            ->exists();
+                                            @endphp
                                             <!-- Play Icon Link -->
+                                            @if($hasPending)
                                             <a href="{{ route('campaign-start', ['id' =>$campaign->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 play-icon" onclick="toggleIcon(this, 'play')">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                                                 <span class="svg-icon svg-icon-3">
@@ -276,7 +282,8 @@ use Carbon\Carbon;
                                             </a>
 
                                             <!-- Stop Icon Link -->
-                                            <a href="{{ route('campaign-stop', ['id' =>$campaign->id]) }}"  style="background-color: #FF3131;" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 stop-icon d-none" onclick="toggleIcon(this, 'stop')">
+                                            @else
+                                            <a href="{{ route('campaign-stop', ['id' =>$campaign->id]) }}" style="background-color: #FF3131;" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 stop-icon" onclick="toggleIcon(this, 'stop')">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                                                 <span class="svg-icon svg-icon-3">
                                                     <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -286,6 +293,7 @@ use Carbon\Carbon;
                                                 </span>
                                                 <!--end::Svg Icon-->
                                             </a>
+                                            @endif
                                         </div>
                                     </td>
 
@@ -406,18 +414,18 @@ use Carbon\Carbon;
 
 <script>
     function toggleIcon(element, type) {
-    const parent = element.parentElement;
-    const playIconLink = parent.querySelector('.play-icon');
-    const stopIconLink = parent.querySelector('.stop-icon');
-    
-    if (type === 'play') {
-        playIconLink.classList.add('d-none');
-        stopIconLink.classList.remove('d-none');
-    } else {
-        playIconLink.classList.remove('d-none');
-        stopIconLink.classList.add('d-none');
+        const parent = element.parentElement;
+        const playIconLink = parent.querySelector('.play-icon');
+        const stopIconLink = parent.querySelector('.stop-icon');
+
+        if (type === 'play') {
+            playIconLink.classList.add('d-none');
+            stopIconLink.classList.remove('d-none');
+        } else {
+            playIconLink.classList.remove('d-none');
+            stopIconLink.classList.add('d-none');
+        }
     }
-}
 
 
     function confirmDelete() {
