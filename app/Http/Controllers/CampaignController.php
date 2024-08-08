@@ -199,7 +199,16 @@ class CampaignController extends Controller
                 if ($emails->email) {
                     $hasEmails = true;
                     try {
-                        Mail::to($emails->email)->queue(new BulkEmail($email_template->email_subject, $email_template->email_content));
+                        //Mail::to($emails->email)->queue(new BulkEmail($email_template->email_subject, $email_template->email_content));
+                        $dataObj                    = new EmailLog();
+                        $dataObj->email_from        = "Genuity";
+                        $dataObj->email_to          = $emails->email; 
+                        $dataObj->email_subject     = $email_template->email_subject;
+                        $dataObj->email_content     = $email_template->email_content;
+                        $dataObj->log_time          = Carbon::now();
+                        $dataObj->delivery_time     = Carbon::now();
+                        $dataObj->send_status       = config('constants.campaign_status.Pending');
+                        $dataObj->save();
                         $emailCount++;
                     } catch (\Exception $e) {
                         return redirect()->route('campaign-index')->with('error', 'Failed to send email: ' . $e->getMessage());
