@@ -51,6 +51,111 @@ ALTER TABLE `logs`
 ALTER TABLE `logs`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 COMMIT;
+
+CREATE TABLE `countries` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(250) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE `countries`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `countries`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+COMMIT;
+
+
+CREATE TABLE `currencies` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(250) NOT NULL,
+  `symbol` varchar(10) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE `currencies`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `currencies`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+COMMIT;
+
+CREATE TABLE `proposals` (
+  `id` bigint(20) NOT NULL,
+  `subject` varchar(250) NOT NULL,
+  `lead_id` bigint(20) DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `start_date` timestamp NULL DEFAULT NULL,
+  `end_date` timestamp NULL DEFAULT NULL,
+  `currency` tinyint(4) DEFAULT NULL,
+  `assigned_agent_id` bigint(20) NOT NULL,
+  `send_to` varchar(250) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `city` varchar(250) DEFAULT NULL,
+  `state` varchar(250) DEFAULT NULL,
+  `country_id` bigint(20) DEFAULT NULL,
+  `zip_code` varchar(10) DEFAULT NULL,
+  `send_to_email` varchar(250) DEFAULT NULL,
+  `send_to_phone` varchar(20) DEFAULT NULL,
+  `discount` decimal(10,0) DEFAULT NULL,
+  `adjustment` decimal(10,0) DEFAULT NULL,
+  `sub_total` decimal(10,0) DEFAULT NULL,
+  `total` decimal(10,0) DEFAULT NULL,
+  `status` tinyint(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE `proposals`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `proposals`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+COMMIT;
+
+CREATE TABLE `proposal_products` (
+  `id` bigint(20) NOT NULL,
+  `proposal_id` bigint(20) NOT NULL,
+  `product_id` bigint(20) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `total_price` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE `proposal_products`
+  ADD PRIMARY KEY (`id`);
+
+  
 ---Ishtiak SQL end
 
 CREATE TABLE customers LIKE leads;
+
+
+CREATE TABLE `campaign_data` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `campaign_id` bigint(20) DEFAULT NULL,
+  `phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_template_id` int(11) DEFAULT NULL,
+  `sms_template_id` int(11) DEFAULT NULL,
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `campaign_data_email_unique` (`email`)
+)
+
+
+ALTER TABLE campaigns ADD COLUMN form_id CHAR(10) NULL AFTER id;
+
+ALTER TABLE campaigns ADD COLUMN email_template_id INT(20) NULL AFTER form_id,
+ADD COLUMN sms_template_id INT(20) NULL AFTER email_template_id;
+
+ALTER TABLE campaigns ADD COLUMN template_type VARCHAR(192) NULL AFTER campaign_type;
+
+
+ALTER TABLE `campaign_data` ADD COLUMN `csv_id` CHAR(10) NULL AFTER `sms_template_id`;
+
+

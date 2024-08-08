@@ -585,14 +585,14 @@ class LeadController  extends Controller
         $messages = [
             'fileUpload.required' => 'The file upload is required.',
             'fileUpload.file' => 'The uploaded file must be a valid file.',
-            'fileUpload.mimes' => 'The uploaded file must be a file of type: csv, txt.',
+            'fileUpload.mimes' => 'The uploaded file must be a file of type: csv',
             'form_id.required' => 'The form ID is required.',
             'form_id.exists' => 'The selected form ID is invalid.',
         ];
 
         // Validate the request
         $validator = Validator::make($request->all(), [
-            'fileUpload' => 'required|file|mimes:csv,txt',
+            'fileUpload' => 'required|file|mimes:csv',
             'form_id' => 'required|exists:leads_form,form_id'
         ], $messages);
 

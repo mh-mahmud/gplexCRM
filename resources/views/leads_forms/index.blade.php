@@ -321,7 +321,7 @@ use Carbon\Carbon;
     document.getElementById('submit_button').addEventListener('click', function() {
         var formId = document.getElementById('form_id').value;
         if (formId) {
-            var baseUrl = '{{ url(' / ') }}';
+            var baseUrl = '{{ url('/') }}';
             //window.location.href = 'http://localhost/gplexCRM/public/lead/create?form_id=' + formId;
             window.location.href = baseUrl + '/lead/create?form_id=' + formId;
         } else {

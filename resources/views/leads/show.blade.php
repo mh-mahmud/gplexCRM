@@ -47,8 +47,7 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: '{{ session('
-            success ')}}',
+            text: '{{ session('success')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -60,8 +59,7 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: '{{ session('
-            error ')}}',
+            text: '{{ session('error')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -243,6 +241,7 @@ use Carbon\Carbon;
                                 <thead>
                                     <tr class="fw-bolder text-muted bg-light bd-cyan">
                                         @if ($data->isNotEmpty() && $data->first() !== null)
+                                        <th class="ps-4 min-w-50px">SL</th>
                                         @foreach ($data->first() as $key => $value)
                                         @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_at', 'updated_at']))
                                         <th class="ps-4 min-w-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
@@ -256,8 +255,9 @@ use Carbon\Carbon;
                                 </thead>
                                 <tbody>
                                     @if ($data->isNotEmpty())
-                                    @foreach ($data as $row)
+                                    @foreach ($data as $index => $row)
                                     <tr>
+                                    <td class="ps-4 text-dark fs-6">{{ $index + 1 }}</td>
                                         @foreach ($row as $key => $value)
                                         @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_at', 'updated_at']))
                                         <td class="ps-5 text-dark fs-6">{{ $value }}</td>
