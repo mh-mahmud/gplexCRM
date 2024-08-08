@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
+            $table->char('form_id', 10)->nullable();
+            $table->string('email_template_id', 20)->nullable();
+            $table->string('sms_template_id', 20)->nullable(); 
             $table->string('campaign_title');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->text('description')->nullable();
             $table->string('campaign_type')->nullable();
+            $table->string('template_type')->nullable();
             $table->integer('campaign_limit')->nullable();
             $table->string('campaign_service')->nullable();
             $table->tinyInteger('status');

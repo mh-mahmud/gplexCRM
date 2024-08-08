@@ -155,17 +155,14 @@
         document.getElementById('template_id').addEventListener('change', function() {
             const selectedId = this.value;
             const selectedTemplate = templates.find(template => template.id == selectedId);
-            const editorInstance = document.querySelector('.editor').ckeditorInstance;
             if (selectedTemplate) {
                 document.getElementById('email_subject').value = selectedTemplate.email_subject;
-                if (editorInstance) {
-                    editorInstance.setData(selectedTemplate.email_content);
-                }
+                $('.editor').summernote('code', selectedTemplate.email_content);
+
             } else {
                 document.getElementById('email_subject').value = '';
-                if (editorInstance) {
-                    editorInstance.setData('');
-                }
+                $('.editor').summernote('code', '');
+
             }
         });
     });

@@ -127,12 +127,4 @@
 
 @endsection
 
-@section('endScript')
-<script>
 
-    document.addEventListener('DOMContentLoaded', function() {
-        CKEDITOR.replace('email_content');
-    });
-
-</script>
-@endsection

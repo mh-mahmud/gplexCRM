@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -11,8 +12,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Campaign;
+use Illuminate\Support\Facades\Response;
 use App\Services\CampaignService;
 use App\Models\Promotion;
+use App\Models\LeadsForm;
+use App\Models\EmailTemplate;
+use App\Models\smsTemplate;
+use App\Models\CampaignData;
 
 class CampaignController extends Controller
 {
@@ -33,9 +39,12 @@ class CampaignController extends Controller
     public function create()
     {
         $promotions = Promotion::pluck('promotion_title', 'id');
-        return view('campaigns.create', compact('promotions'));
+        $formName = LeadsForm::pluck('form_name', 'form_id');
+        $email = EmailTemplate::pluck('email_subject', 'id');
+        $sms = smsTemplate::pluck('title', 'id');
+        return view('campaigns.create', compact('promotions', 'formName', 'email', 'sms'));
     }
-    
+
 
     public function store(Request $request)
     {
@@ -44,7 +53,7 @@ class CampaignController extends Controller
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
         ]);
-       
+
         $this->campaignService->createCampaign($request->all());
 
         return redirect()->route('campaign-index')->with('success', 'Campaign created successfully.');
@@ -52,7 +61,7 @@ class CampaignController extends Controller
 
     public function show($id)
     {
-        $campaign = $this->campaignService->getCampaignByPromotionName($id);
+        $campaign = $this->campaignService->getCampaignDetailsID($id);
         return view('campaigns.show', compact('campaign'));
     }
 
@@ -60,7 +69,10 @@ class CampaignController extends Controller
     {
         $campaign = $this->campaignService->getCampaignById($id);
         $promotions = Promotion::pluck('promotion_title', 'id');
-        return view('campaigns.edit', compact('campaign','promotions'));
+        $formName = LeadsForm::pluck('form_name', 'form_id');
+        $email = EmailTemplate::pluck('email_subject', 'id');
+        $sms = smsTemplate::pluck('title', 'id');
+        return view('campaigns.edit', compact('campaign', 'promotions', 'formName', 'email', 'sms'));
     }
 
     public function update(Request $request, $id)
@@ -72,6 +84,7 @@ class CampaignController extends Controller
         ]);
 
         $data = $request->all();
+        //dd($data);die();
         $this->campaignService->updateCampaign($id, $data);
 
         return redirect()->route('campaign-index')->with('success', 'Campaign updated successfully.');
@@ -100,12 +113,66 @@ class CampaignController extends Controller
         return redirect()->route('campaign-index')->with('success', 'Campaign deleted successfully.');
     }
 
-    
+
     public function clearSession(Request $request)
     {
         $request->session()->forget('success');
         $request->session()->forget('error');
         return response()->json(['status' => 'Session cleared']);
     }
+
+
+    public function campaign_leads_upload($id)
+    {
+        //dd($id);die();
+        $campaign = $this->campaignService->getCampaignDetailsID($id);
+        return view('campaigns.campaign_leads_upload', compact('campaign'));
+    }
+
+    public function downloadCampaignSampleFile(Request $request)
+    {
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="campaign_sample_file.csv"',
+        ];
+
+        $callback = function () use ($request) {
+            $handle = fopen('php://output', 'w');
+
+            if ($request->template_type == 'Email') {
+                fputcsv($handle, ['Email']);
+            } elseif ($request->template_type == 'SMS') {
+                fputcsv($handle, ['Phone']);
+            } else {
+                //fputcsv($handle, ['Email', 'Phone']);
+            }
+
+            fclose($handle);
+        };
+
+        return Response::stream($callback, 200, $headers);
+    }
+
+
+    public function campaign_lead_upload_file(Request $request)
+    {
+        $result = $this->campaignService->campaign_lead_upload_file($request);
+
+        if (isset($result['error'])) {
+            return redirect()->back()->with('error', $result['error'])->withInput();
+        }
+
+        return redirect()->back()->with('success', $result['success']);
+    }
+
+
+    public function campaign_data($id)
+    {
+        $campaign_data = $this->campaignService->getAllCampaignData($id);
+        //dd($campaigns);die();
+        return view('campaigns.campaign_data', compact('campaign_data'));
+    }
+
+
 
 }

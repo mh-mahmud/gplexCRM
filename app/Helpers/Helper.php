@@ -20,7 +20,7 @@ class Helper
 
     }
 
-    public function storeLog($log_text, $module_name, $action)
+    public static function storeLog($log_text, $module_name, $action)
     {
         $log                = new Logs();
         $log->user_id       = Auth::id();

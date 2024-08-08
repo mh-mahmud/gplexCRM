@@ -156,7 +156,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Promotion Name</label>
                                     <select class=" form-control form-control-sm form-control-solid" data-control="select2" name="promotion_id" aria-label="Default select example">
@@ -168,6 +168,20 @@
                                     </select>
                                     @if ($errors->has('promotion_id'))
                                     <span class="text-danger">{{ $errors->first('promotion_id') }}</span>
+                                    @endif
+                                </div>
+                            </div> -->
+                            <div class="col-md-6">
+                                <div class="fv-row mb-3">
+                                    <label class="form-label fw-bolder text-dark">Form Name</label>
+                                    <select class="form-control form-control-sm form-control-solid" name="form_id" aria-label="Default select example">
+                                        <option value="">Select Form Name</option>
+                                        @foreach($formName as $id => $name)
+                                        <option value="{{ $id }}" {{ old('form_id') == $id ? 'selected' : '' }}>{{$name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('form_id'))
+                                    <span class="text-danger">{{ $errors->first('form_id') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -257,6 +271,50 @@
 
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
+                                    <label class="form-label fw-bolder text-dark">Template</label>
+                                    <select class=" form-control form-control-sm form-control-solid" name="template_type"  id="templateType" aria-label="Default select example">
+
+                                        <option value="Email" selected>Email</option>
+                                        <option value="SMS">SMS</option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                             <div class="col-md-6"  id="emailFields">
+                                <div class="fv-row mb-3">
+                                    <label class="form-label fw-bolder text-dark">Email Template</label>
+                                    <select class=" form-control form-control-sm form-control-solid" name="email_template_id" aria-label="Default select example">
+                                        <option value="">Select Email Template</option>
+                                        @foreach($email as $id => $name)
+                                        <option value="{{ $id }}">{{$name}}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @if ($errors->has('email_template_id'))
+                                    <span class="text-danger">{{ $errors->first('email_template_id') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 d-none" id="smsFields">
+                                <div class="fv-row mb-3">
+                                    <label class="form-label fw-bolder text-dark">SMS Template</label>
+                                    <select class=" form-control form-control-sm form-control-solid" name="sms_template_id" aria-label="Default select example">
+                                        <option value="">Select SMS Template</option>
+                                        @foreach($sms as $id => $name)
+                                        <option value="{{ $id }}">{{$name}}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @if ($errors->has('sms_template_id'))
+                                    <span class="text-danger">{{ $errors->first('sms_template_id') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Status</label>
                                     <select class=" form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
 
@@ -306,6 +364,30 @@
 
 <!-- </div> -->
 <!--end::Content-->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const templateTypeSelect = document.getElementById('templateType');
+        const emailFields = document.getElementById('emailFields');
+        const smsFields = document.getElementById('smsFields');
+
+        function toggleFields() {
+            const selectedType = templateTypeSelect.value;
+            if (selectedType === 'Email') {
+                emailFields.classList.remove('d-none');
+                smsFields.classList.add('d-none');
+            } else if (selectedType === 'SMS') {
+                emailFields.classList.add('d-none');
+                smsFields.classList.remove('d-none');
+            }
+        }
+
+        templateTypeSelect.addEventListener('change', toggleFields);
+
+        // Initialize the fields based on the default selection
+        toggleFields();
+    });
+</script>
 
 
 @endsection

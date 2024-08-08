@@ -83,7 +83,7 @@
                                 <img id="file-image" src="#" alt="Preview" class="hidden">
                                 <div id="start">
                                     <i class="fa fa-download" aria-hidden="true"></i>
-                                    <div>Select a file or drag here</div>
+                                    <div>Select a CSV file or drag here(Ex.sample-file.csv)</div>
                                     <div id="notimage" class="hidden">Please select a CSV file</div>
                                     <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
 

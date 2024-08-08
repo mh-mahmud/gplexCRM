@@ -27,6 +27,9 @@
 	<link href="{{url('/')}}/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 	<link href="{{url('/')}}/assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 	<link href="{{url('/')}}/assets/css/custom.css" rel="stylesheet" type="text/css" />
+	<link href="{{url('/')}}/assets/summernote-0.8.18/summernote.min.css" rel="stylesheet" type="text/css" />
+
+	<link href="{{url('/')}}/assets/summernote-0.8.18/summernote-bs4.min.css" rel="stylesheet" type="text/css" />
 	<script src="{{url('/')}}/assets/js/sweetalert2.min.js"></script>
 	<!--end::Global Stylesheets Bundle-->
 </head>
@@ -374,7 +377,46 @@
 														</div>
 													</div>
 												</div>
+
+												<div data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item menu-lg-down-accordion">
+													<span class="menu-link py-3">
+														<span class="menu-icon">
+															<!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
+															<span class="svg-icon svg-icon-2">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="black" />
+																	<rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="black" />
+																</svg>
+															</span>
+															<!--end::Svg Icon-->
+														</span>
+														<span class="menu-title">App Settings</span>
+														<span class="menu-arrow"></span>
+													</span>
+													<div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg py-lg-4 w-lg-225px">
+														<div class="menu-item">
+															<a class="menu-link py-3" href="{{ route('users.index') }}">
+																<span class="menu-bullet">
+																	<span class="bullet bullet-dot"></span>
+																</span>
+																<span class="menu-title">Country</span>
+															</a>
+														</div>
+														<div class="menu-item">
+															<a class="menu-link py-3" href="{{ route('create-user') }}">
+																<span class="menu-bullet">
+																	<span class="bullet bullet-dot"></span>
+																</span>
+																<span class="menu-title">Currency</span>
+															</a>
+														</div>
+													</div>
+												</div>
+												<!-- end user management -->
 											</div>
+											
+
+
 										</div>
 										<!-- end settyings -->
 										@endif
@@ -2838,16 +2880,22 @@
 	<script src="{{url('/')}}/assets/js/custom/modals/create-app.js"></script>
 	<script src="{{url('/')}}/assets/js/custom/modals/upgrade-plan.js"></script>
 	<!-- add by rokibuzzaman ck editor -->
-	<script src="{{url('/')}}/assets/vendor/ckeditor5/build/ckeditor.js"></script>
+	{{-- <script src="{{url('/')}}/assets/vendor/ckeditor5/build/ckeditor.js"></script> --}}
+	<script src="{{url('/')}}/assets/summernote-0.8.18/summernote.min.js"></script>
+	<script src="{{url('/')}}/assets/summernote-0.8.18/summernote-bs4.min.js"></script>
+
+
 	<script>
-		ClassicEditor
-			.create(document.querySelector('.editor'))
-			.then(editor => {
-                document.querySelector('.editor').ckeditorInstance = editor;
-            })
-			.catch(error => {
-				console.error(error);
-			});
+		// ClassicEditor
+		// 	.create(document.querySelector('.editor'))
+		// 	.then(editor => {
+        //         document.querySelector('.editor').ckeditorInstance = editor;
+        //     })
+		// 	.catch(error => {
+		// 		console.error(error);
+		// 	});
+		
+    //   });
 	</script>
 	<script>
 		$('[name="date-table"]').flatpickr();
@@ -2858,6 +2906,24 @@
 		$('[id="common_dob"]').flatpickr();
 		$('.date').flatpickr();
 
+	</script>
+	<script>
+		 $(function(){
+			$('.editor').summernote({
+					height: 300, 
+					toolbar: [
+						['style', ['style']],
+						['font', ['bold', 'italic', 'underline', 'clear']],
+						['fontname', ['fontname']],
+						['color', ['color']],
+						['para', ['ul', 'ol', 'paragraph']],
+						['height', ['height']],
+						['table', ['table']], 
+						['insert', ['link']], 
+						['view', ['fullscreen', 'codeview', 'help']]
+					]
+				});
+		});
 	</script>
 	@yield('endScript')
 	<!--end::Page Custom Javascript-->

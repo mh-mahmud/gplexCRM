@@ -11,6 +11,8 @@ use App\Mail\BulkEmail;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use DB;
+use App\Helpers\Helper;
+
 class EmailService
 {
     public function emailTemplateList($request)
@@ -40,12 +42,23 @@ class EmailService
         $data = $request->all();
 
         try {
-            $dataObj                        = new EmailTemplate();
-            $dataObj->email_subject         = $data['email_subject'];
-            $dataObj->email_content         = $data['email_content'];
-            $dataObj->status                = $data['status'];
+            return  DB::transaction(function () use ($data) {
+                $dataObj                        = new EmailTemplate();
+                $dataObj->email_subject         = $data['email_subject'];
+                $dataObj->email_content         = $data['email_content'];
+                $dataObj->status                = $data['status'];
+                $dataObj->save();
 
-            $dataObj->save();
+                Helper::storeLog($data['email_subject'], "Email Template", "Created");
+
+                return (object)[
+                    'status'                 => 201,
+                    'info'                   => $dataObj->id
+                ];
+        
+                
+            });
+
 
         } catch (Exception $e) {
             return (object)[
@@ -54,11 +67,7 @@ class EmailService
             ];
         }
 
-        return (object)[
-            'status'                 => 201,
-            'info'                   => $dataObj->id
-        ];
-
+       
     }
 
     public function getEmailTemplateById($id)
@@ -68,8 +77,11 @@ class EmailService
 
     public function templateDelete($id)
     {
-        $promotion = EmailTemplate::findOrFail($id);
-        $promotion->delete();
+        return  DB::transaction(function () use ($id) {
+            $promotion = EmailTemplate::findOrFail($id);
+            $promotion->delete();
+            Helper::storeLog($promotion->email_subject, "Email Template", "Deleted");
+        });
     }
 
     public function templateUpdate($request, $id)
@@ -82,12 +94,21 @@ class EmailService
         $data = $request->all();
 
         try {
-            $dataObj                        = EmailTemplate::findOrFail($id);
-            $dataObj->email_subject         = $data['email_subject'];
-            $dataObj->email_content         = $data['email_content'];
-            $dataObj->status                = $data['status'];
+            return  DB::transaction(function () use ($data, $id) {
+                $dataObj                        = EmailTemplate::findOrFail($id);
+                $dataObj->email_subject         = $data['email_subject'];
+                $dataObj->email_content         = $data['email_content'];
+                $dataObj->status                = $data['status'];
 
-            $dataObj->save();
+                $dataObj->save();
+
+                Helper::storeLog($data['email_subject'], "Email Template", "Updated");
+
+                return (object)[
+                    'status'                 => 208,
+                    'info'                   => $dataObj->id
+                ];
+            });
 
         } catch (Exception $e) {
             return (object)[
@@ -95,11 +116,6 @@ class EmailService
                 'error'              => $e->getMessage()
             ];
         }
-
-        return (object)[
-            'status'                 => 208,
-            'info'                   => $dataObj->id
-        ];
 
     }
 

@@ -14,6 +14,7 @@ use App\Http\Controllers\SmsController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\LogController;
 
 
 use App\Models\Promotion;
@@ -113,6 +114,8 @@ Route::group(['middleware' => 'auth'], function () {
 	//Campaign route
 	Route::get('/campaign', [CampaignController::class, 'index'])->name('campaign-index');
 	Route::get('/campaign/create', [CampaignController::class, 'create'])->name('campaign-create');
+	Route::get('/campaign/campaign-sample-file', [CampaignController::class, 'downloadCampaignSampleFile'])->name('campaign-sample-file');
+	Route::post('/campaign/campaign-lead-file-upload', [CampaignController::class, 'campaign_lead_upload_file'])->name('campaign-lead-upload-file');
 	Route::post('/campaign', [CampaignController::class, 'store'])->name('campaign-store');
 	Route::get('/campaign/{id}', [CampaignController::class, 'show'])->name('campaign-show');
 	Route::get('/campaign/{id}/edit', [CampaignController::class, 'edit'])->name('campaign-edit');
@@ -120,6 +123,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::delete('/campaign/{id}', [CampaignController::class, 'destroy'])->name('campaign-destroy');
 	Route::post('/campaign/search', [CampaignController::class, 'search'])->name('campaign-search');
 	Route::post('/clear-session', [CampaignController::class, 'clearSession'])->name('clear.session');
+	Route::get('/campaign/campaign-lead-upload/{id}', [CampaignController::class, 'campaign_leads_upload'])->name('campaign-lead-upload');
+	Route::get('/campaign/campaign-data/{id}', [CampaignController::class, 'campaign_data'])->name('campaign-data');
+	
 
 
 	// users route
@@ -215,5 +221,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 	// Product routes end
+
+	// Log
+	Route::get('log-list', [LogController::class, 'getLogList'])->name('log-list');
+
+
 
 });
