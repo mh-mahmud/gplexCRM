@@ -158,6 +158,10 @@ ALTER TABLE `email_queue` CHANGE `user_id` `customer_id` BIGINT(20) NULL;
 
 ALTER TABLE `sms_queue` CHANGE `user_id` `customer_id` BIGINT(20) NULL;
 
+ALTER TABLE `logs` ADD `module` VARCHAR(180) NULL AFTER `user_id`;
+
+ALTER TABLE `logs` ADD `sub_module` VARCHAR(180) NULL AFTER `module`;
+
 ---Ishtiak SQL end
 
 CREATE TABLE customers LIKE leads;

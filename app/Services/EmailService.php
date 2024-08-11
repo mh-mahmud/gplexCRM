@@ -50,7 +50,7 @@ class EmailService
                 $dataObj->status                = $data['status'];
                 $dataObj->save();
 
-                Helper::storeLog($data['email_subject'], "Email Template", "Created");
+                Helper::storeLog($data['email_subject'], "Email Template", "Email Template Create", "Created");
 
                 return (object)[
                     'status'                 => 201,
@@ -81,7 +81,7 @@ class EmailService
         return  DB::transaction(function () use ($id) {
             $promotion = EmailTemplate::findOrFail($id);
             $promotion->delete();
-            Helper::storeLog($promotion->email_subject, "Email Template", "Deleted");
+            Helper::storeLog($promotion->email_subject, "Email Template", "Email Template Delete",  "Deleted");
         });
     }
 
@@ -103,7 +103,7 @@ class EmailService
 
                 $dataObj->save();
 
-                Helper::storeLog($data['email_subject'], "Email Template", "Updated");
+                Helper::storeLog($data['email_subject'], "Email Template", "Email Template Update", "Updated");
 
                 return (object)[
                     'status'                 => 208,
