@@ -189,3 +189,7 @@ ALTER TABLE campaigns ADD COLUMN template_type VARCHAR(192) NULL AFTER campaign_
 ALTER TABLE `campaign_data` ADD COLUMN `csv_id` CHAR(10) NULL AFTER `sms_template_id`;
 
 
+
+ALTER TABLE `sms_queue` CHANGE `send_status` `send_status` VARCHAR(30) NULL;
+
+
