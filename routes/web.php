@@ -17,6 +17,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\ProposalController;
 
 
 use App\Models\Promotion;
@@ -240,6 +241,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::delete('currency-delete/{id}', [CurrencyController::class, 'currencyDelete'])->name('currency-delete');
 
 	// Currency routes end
+
+	// Proposal routes start
+	Route::get('proposal-list', [ProposalController::class, 'proposalList'])->name('proposal-list');
+
+	// Proposal routes end
 
 	// Log
 	Route::get('log-list', [LogController::class, 'getLogList'])->name('log-list');
