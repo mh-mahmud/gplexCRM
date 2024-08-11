@@ -57,6 +57,7 @@ return [
         'Failed' => 'Failed',
         'Expired' => 'Expired',
         'Canceled' => 'Canceled',
+        'Completed' => 'Completed',
     ],
 
     'svg_icons' => [
