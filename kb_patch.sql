@@ -192,4 +192,9 @@ ALTER TABLE `campaign_data` ADD COLUMN `csv_id` CHAR(10) NULL AFTER `sms_templat
 
 ALTER TABLE `sms_queue` CHANGE `send_status` `send_status` VARCHAR(30) NULL;
 
+ALTER TABLE `email_queue` ADD COLUMN `csv_id` CHAR(10) NULL AFTER `send_status`;
+
+ALTER TABLE `sms_queue` ADD COLUMN `csv_id` CHAR(10) NULL AFTER `send_status`;
+
+
 
