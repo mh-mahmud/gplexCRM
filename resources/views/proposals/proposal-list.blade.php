@@ -28,7 +28,7 @@
             <!--begin::Actions-->
             <div class="d-flex align-items-center py-1">
 
-                <a href="{{ route('add-Prposal') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Add Prposal</a>
+                <a href="{{ route('add-product') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Add Prposal</a>
 
                 <!--end::Button-->
             </div>
@@ -113,7 +113,7 @@
                     <div class="card-body py-3">
                         <!--begin::Table container-->
                         <div class="table-responsive">
-                            @if ($prposals->isNotEmpty())
+                            @if ($proposals->isNotEmpty())
                                 <!--begin::Table-->
 
                                 <table
@@ -136,14 +136,14 @@
                                     <!--end::Table head-->
                                     <!--begin::Table body-->
                                     <tbody>
-                                        @foreach ($prposals as $prposal)
+                                        @foreach ($proposals as $proposal)
                                             <tr>
                                                 <td class="ps-5 text-dark fs-6">
-                                                    {{ ($prposals->currentPage() - 1) * $prposals->perPage() + $loop->iteration }}
+                                                    {{ ($proposals->currentPage() - 1) * $proposals->perPage() + $loop->iteration }}
                                                 </td>
-                                                <td class="text-dark fs-6">{{ $prposal->proposal_no }}</td>
-                                                <td class="text-dark fs-6">{{ $prposal->subject }}</td>                                            
-                                                <td class="text-dark fs-6">{{ $prposal->customer_name }}</td>                                    
+                                                <td class="text-dark fs-6">{{ $proposal->proposal_no }}</td>
+                                                <td class="text-dark fs-6">{{ $proposal->subject }}</td>                                            
+                                                <td class="text-dark fs-6">{{ $proposal->customer_name }}</td>                                    
                                                 <td class="text-dark fs-6">{{ $task->total }}</td>
                                                 <td class="text-dark fs-6">
                                                     {{ Carbon::parse($task->start_date)->format('d-m-Y') }}
@@ -160,7 +160,7 @@
                                                         <option value=''>Select</option>
                                                         @foreach (config('constants.PROPOSAL_STATUS') as $key => $status)
                                                             <option value="{{ $key }}"
-                                                                {{ $prposal->status == $key ? 'selected' : '' }}>
+                                                                {{ $proposal->status == $key ? 'selected' : '' }}>
                                                                 {{ $status }}
                                                             </option>
                                                         @endforeach
@@ -185,7 +185,7 @@
                                                             </span>
                                                             <!--end::Svg Icon-->
                                                         </button>
-                                                    <form action="{{ route('delete-prposal', $prposal->id) }}" method="POST"
+                                                    <form action="{{ route('delete-prposal', $proposal->id) }}" method="POST"
                                                         style="display: inline;">
                                                         @csrf
                                                         @method('DELETE')
@@ -230,7 +230,7 @@
 
                 <!--Table Pagination-->
 
-                @include('components.pagination', ['paginator' => $prposals])
+                @include('components.pagination', ['paginator' => $proposals])
 
                 <!--End Table Pagination-->
 
