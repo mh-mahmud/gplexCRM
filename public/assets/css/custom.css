@@ -301,3 +301,18 @@ body.swal2-height-auto {
     padding-top: 0.2rem;
     padding-bottom: 0.2rem;
 }
+
+/*For Leads (Show Blade PHP) */
+.g-lead-details-area {
+    columns: 1;
+    break-inside: avoid;
+}
+
+@media all and (min-width: 1200px) {
+    .g-lead-details-area {
+        columns: 5;
+        break-inside: avoid;
+    }
+}
+
+/*End For Leads (Show Blade PHP) */
