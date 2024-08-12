@@ -244,6 +244,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 	// Proposal routes start
 	Route::get('proposal-list', [ProposalController::class, 'proposalList'])->name('proposal-list');
+	Route::get('add-proposal', [ProposalController::class, 'addProposal'])->name('add-proposal');
+
 
 	// Proposal routes end
 
