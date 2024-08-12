@@ -310,7 +310,7 @@ body.swal2-height-auto {
 
 @media all and (min-width: 1200px) {
     .g-lead-details-area {
-        columns: 5;
+        columns: 4;
         break-inside: avoid;
     }
 }
