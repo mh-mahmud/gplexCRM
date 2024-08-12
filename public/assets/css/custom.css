@@ -10,8 +10,7 @@
 }
 
 .card .card-header {
-    /*background-color: #DDD;*/
-    /* min-height: 60px; */
+    background-color: #DDD;
     min-height: 40px;
 }
 
