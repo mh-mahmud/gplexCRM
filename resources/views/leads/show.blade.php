@@ -285,8 +285,8 @@
                                 @foreach ($tableData as $tableName => $data)
                                     @if (!empty($data))
                                         <div>
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <h5><u>{{ ucwords(str_replace('_', ' ', $tableName)) }}</u></h5>
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <strong class="fs-3">{{ ucwords(str_replace('_', ' ', $tableName)) }}</strong>
                                                 <button type="button" class="btn btn-success btn-sm"
                                                         onclick="window.location='{{ route('leads-add', ['tableName' => $tableName, 'leadId' => $lead->id]) }}'">
                                                     <i class="bi bi-plus-lg"></i>
@@ -329,8 +329,8 @@
                                                                         @csrf
                                                                         @method('DELETE')
                                                                         <button type="submit"
-                                                                                class="btn btn-danger btn-sm px-3 py-2">
-                                                                            <i class="bi bi-x-lg p-0"></i>
+                                                                                class="btn btn-danger btn-sm px-2 py-1">
+                                                                            <i class="bi bi-x p-0"></i>
                                                                             <!-- Remove icon -->
                                                                         </button>
                                                                     </form>
