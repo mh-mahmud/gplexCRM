@@ -286,7 +286,8 @@
                                     @if (!empty($data))
                                         <div>
                                             <div class="d-flex justify-content-between align-items-center mb-1">
-                                                <strong class="fs-3">{{ ucwords(str_replace('_', ' ', $tableName)) }}</strong>
+                                                <strong
+                                                    class="fs-3">{{ ucwords(str_replace('_', ' ', $tableName)) }}</strong>
                                                 <button type="button" class="btn btn-success btn-sm"
                                                         onclick="window.location='{{ route('leads-add', ['tableName' => $tableName, 'leadId' => $lead->id]) }}'">
                                                     <i class="bi bi-plus-lg"></i>
