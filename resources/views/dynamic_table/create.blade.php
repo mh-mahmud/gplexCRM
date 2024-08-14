@@ -112,6 +112,7 @@
                                             <option value="date" @if($field['type']=='date' ) selected @endif>Date</option>
                                             <option value="text" @if($field['type']=='text' ) selected @endif>Text</option>
                                             <option value="boolean" @if($field['type']=='boolean' ) selected @endif>Boolean</option>
+                                            <option value="file" @if($field['type']=='file' ) selected @endif>File</option>
                                         </select>
                                         @if ($errors->has("fields.$index.type"))
                                         <span class="text-danger">{{ $errors->first("fields.$index.type") }}</span>
@@ -187,6 +188,7 @@
                                             <option value="date">Date</option>
                                             <option value="text">Text</option>
                                             <option value="boolean">Boolean</option>
+                                            <option value="file">File</option>
                                         </select>
                                         @if ($errors->has('fields.0.type'))
                                         <span class="text-danger">{{ $errors->first('fields.0.type') }}</span>
@@ -286,6 +288,7 @@
                         <option value="date">Date</option>
                         <option value="text">Text</option>
                         <option value="boolean">Boolean</option>
+                        <option value="file">File</option>
                     </select>
                 </div>
             </div>

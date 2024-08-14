@@ -170,7 +170,7 @@ class LeadController  extends Controller
         $columns = Schema::getColumnListing($tableName);
 
         // Fetch lead form details
-        $fields = LeadFormDetail::where('table_name', $tableName)->first();
+        $fields = LeadFormDetail::where('table_name', $tableName)->get();
 
         // Fetch lead details associated with the lead ID
         $leads = Lead::where('id', $leadId)->first();
@@ -183,6 +183,13 @@ class LeadController  extends Controller
         foreach ($columnDetails as $column) {
             $columnName = $column->Field;
             $columnType = $column->Type;
+            // Check if the field_value in $fields is 'file' and override the type
+            foreach ($fields as $field) {
+                if ($field->field_value == 'file' && $columnName == $field->field_name) {
+                    $columnType = 'file';
+                    break;
+                }
+            }
             $columnTypes[$columnName] = $columnType;
         }
 
@@ -195,26 +202,32 @@ class LeadController  extends Controller
         return view('leads.add', compact('tableName', 'filteredColumns', 'leads', 'columnTypes'));
     }
 
-    
-
-
-    // LeadController.php
-
     public function storeTableData(Request $request)
     {
         $tableName = $request->input('tableName');
         $data = $request->except(['_token', 'tableName']);
-        $lead_id = $request->input('lead_id'); 
-        $form_id =$request->input('form_id'); 
+        $lead_id = $request->input('lead_id');
+        $form_id = $request->input('form_id');
         $data['lead_id'] = $lead_id;
         $data['form_id'] = $form_id;
+        $fields = LeadFormDetail::where('table_name', $tableName)->get();
+        foreach ($fields as $field) {
+            $columnName = $field->field_name;
+            // chk if the field is a file input
+            if ($field->field_value === 'file' && $request->hasFile($columnName)) {
+                $fileNameWithExt = $request->file($columnName)->getClientOriginalName();
+                $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file($columnName)->getClientOriginalExtension();
+                $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+                $request->file($columnName)->move(getcwd() . '/uploads/files', $fileNameToStore);
+                $data[$columnName] = $fileNameToStore;
+            }
+        }
         if (Schema::hasColumns($tableName, ['created_at', 'updated_at'])) {
             $data['created_at'] = now();
             $data['updated_at'] = now();
         }
-
         DB::table($tableName)->insert($data);
-        //return redirect()->back()->with('success', 'Data inserted successfully');
         return redirect()->route('lead-show', ['id' => $lead_id])->with('success', 'Data inserted successfully');
     }
 

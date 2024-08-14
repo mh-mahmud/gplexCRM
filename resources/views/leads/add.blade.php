@@ -84,13 +84,17 @@
                                     $inputType = 'email';
                                     } elseif (strpos($type, 'text') !== false || strpos($type, 'blob') !== false) {
                                     $inputType = 'textarea';
-                                    } // Add more conditions based on your column types
+                                    }elseif ($type == 'file') {
+                                    $inputType = 'file';
+                                } // Add more conditions based on your column types
                                     }
                                     @endphp
                                     @if ($inputType === 'textarea')
                                     <textarea class="form-control form-control-sm  form-control-solid" id="{{ $column }}" name="{{ $column }}"></textarea>
                                     @elseif($inputType === 'date')
                                     <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $column }}">
+                                    @elseif($inputType === 'file')
+                                    <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
                                     @else
                                     <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
                                     @endif

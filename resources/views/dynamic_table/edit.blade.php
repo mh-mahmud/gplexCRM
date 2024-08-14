@@ -124,6 +124,7 @@ Forms
                                                 <option value="date" {{ $detail->field_value == 'date' ? 'selected' : '' }}>Date</option>
                                                 <option value="text" {{ $detail->field_value == 'text' ? 'selected' : '' }}>Text</option>
                                                 <option value="boolean" {{ $detail->field_value == 'boolean' ? 'selected' : '' }}>Boolean</option>
+                                                <option value="file" {{ $detail->field_value == 'file' ? 'selected' : '' }}>File</option>
                                             </select>
                                             @if ($errors->has("fields.{$key}.type"))
                                                 <span class="text-danger">{{ $errors->first("fields.{$key}.type") }}</span>
@@ -219,6 +220,7 @@ function addField() {
                         <option value="date">Date</option>
                         <option value="text">Text</option>
                         <option value="boolean">Boolean</option>
+                        <option value="file">File</option>
                     </select>
                 </div>
             </div>

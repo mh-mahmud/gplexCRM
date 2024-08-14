@@ -48,6 +48,8 @@ class DynamicTableService
                     $column = $table->text($name)->nullable();
                 } elseif ($type === 'boolean') {
                     $column = $table->boolean($name)->nullable();
+                } elseif ($type === 'file') {
+                    $column = $table->string($name)->nullable();
                 } else {
                     $column = $table->$type($name)->nullable();
                 }
@@ -66,7 +68,7 @@ class DynamicTableService
             $table->timestamps();
         });
 
-        //process insert data in table
+        //insert data in table
         $data = [];
         foreach ($fields as $field) {
             $data[] = [
@@ -83,7 +85,7 @@ class DynamicTableService
             ];
         }
 
-        // Insert data into the details table
+        // insert data into the lead form details table
         DB::table('lead_form_details')->insert($data);
 
         return 'Data inserted successfully.';
@@ -442,6 +444,9 @@ class DynamicTableService
             case 'boolean':
                 $column = $table->boolean($name)->nullable();
                 break;
+            case 'file':
+                $column = $table->string($name)->nullable();
+                break;
             default:
                 throw new \Exception("Unsupported column type: {$type}");
         }
@@ -475,6 +480,9 @@ class DynamicTableService
                 break;
             case 'boolean':
                 $column = $table->boolean($existingColumnName)->nullable()->change();
+                break;
+            case 'file':
+                $column = $table->string($existingColumnName)->nullable()->change();
                 break;
             default:
                 throw new \Exception("Unsupported column type: {$type}");
