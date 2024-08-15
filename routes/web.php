@@ -18,6 +18,7 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\ProposalController;
+use App\Http\Controllers\CustomerController;
 
 
 use App\Models\Promotion;
@@ -239,7 +240,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('add-currency', [CurrencyController::class, 'currencyCreate'])->name('add-currency');
 	Route::post('add-currency-pro', [CurrencyController::class, 'currencyStore'])->name('add-currency-pro');
 	Route::delete('currency-delete/{id}', [CurrencyController::class, 'currencyDelete'])->name('currency-delete');
-
 	// Currency routes end
 
 	// Proposal routes start
@@ -251,6 +251,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 	// Log
 	Route::get('log-list', [LogController::class, 'getLogList'])->name('log-list');
+
+	// Customer routes start
+	Route::get('customers', [CustomerController::class, 'index'])->name('customers');
+	Route::get('add-customer', [CustomerController::class, 'add_customer'])->name('add-customer');
+	Route::post('add-customer', [CustomerController::class, 'save_customer'])->name('post-add-customer');
 
 
 
