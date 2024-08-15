@@ -159,7 +159,7 @@ class LeadController  extends Controller
             $tableData[$tableName] = DB::table($tableName)->where('lead_id', $lead->id)->orderBy('id', 'desc')->get();
         }
 
-        return view('leads.show', compact('lead', 'tableData'));
+        return view('leads.show', compact('lead', 'tableData','fields'));
     }
 
 
@@ -340,28 +340,29 @@ class LeadController  extends Controller
     }
 
  
-   public function updateTableData(Request $request)
+    public function updateTableData(Request $request)
     {
         $tableName = $request->input('tableName');
         $leadId = $request->input('lead_id');
         $formId = $request->input('form_id');
-        $formData = $request->except(['_token', 'tableName', 'lead_id', 'form_id']);
-
-        // Validate $formData if needed
-
+        $leadTableId = $request->input('lead_table_id');
+        $formData = $request->except(['_token', 'tableName', 'lead_id', 'form_id', 'lead_table_id']);
+     
         try {
             DB::beginTransaction();
-
-            $this->leadService->updateTableData($tableName, $leadId, $formId, $formData);
-
+    
+            // Call service method to update the data
+            $this->leadService->updateTableData($request, $tableName, $leadId, $formId, $formData);
+    
             DB::commit();
-
-            return redirect()->route('lead-edit', ['id' => $leadId])->with('success', 'Data updated successfully');
+    
+            return redirect()->route('lead-edit', ['id' => $leadTableId])->with('success', 'Data updated successfully');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withErrors(['error' => 'Error occurred while saving data.']);
+            return back()->withErrors(['error' => 'Error occurred while saving data: ' . $e->getMessage()]);
         }
     }
+    
 
     public function leads_upload_backup(Request $request)
     {

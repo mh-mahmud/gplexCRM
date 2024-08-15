@@ -26,7 +26,7 @@
         <div class="d-flex align-items-center py-1">
 
             <!--begin::Button-->
-            <a href="{{ route('lead-edit', ['id' => $leads->id]) }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Lead Show</a>
+            <a href="{{ route('lead-edit', ['id' => $leads->lead_id]) }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Lead Show</a>
 
             <!--end::Button-->
         </div>
@@ -60,6 +60,7 @@
                         <input type="hidden" name="tableName" value="{{ $tableName }}">
                         <input type="hidden" name="form_id" value="{{ $leads->form_id }}">
                         <input type="hidden" name="lead_id" value="{{ $leads->id }}">
+                        <input type="hidden" name="lead_table_id" value="{{ $leads->lead_id }}">
 
                         @csrf
                         <div class="row">
@@ -80,6 +81,8 @@
                                     $inputType = 'email';
                                     } elseif (strpos($type, 'text') !== false || strpos($type, 'blob') !== false) {
                                     $inputType = 'textarea';
+                                    }elseif ($type == 'file') {
+                                    $inputType = 'file';
                                     }
                                     }
                                     $value = isset($existingData->$column) ? $existingData->$column : '';
@@ -88,6 +91,8 @@
                                     <textarea class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">{{ $value }}</textarea>
                                     @elseif($inputType === 'date')
                                     <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $column }}" value="{{ $value }}">
+                                    @elseif($inputType === 'file')
+                                    <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
                                     @else
                                     <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}" value="{{ $value }}">
                                     @endif
