@@ -335,10 +335,25 @@ class LeadService
         }
     }
 
-
     public function deleteTableRecord($tableName, $id, $leadId)
-    {
-        //the delete operation
+    {   // fetch fields for the table
+        $fields = LeadFormDetail::where('table_name', $tableName)->get();
+        $record = DB::table($tableName)->where('id', $id)->first();
+        if (!$record) {
+            throw new \Exception('Record not found.');
+        }
+        //loop through each field to check for files
+        foreach ($fields as $field) {
+            $columnName = $field->field_name;
+            if ($field->field_value === 'file' && !empty($record->$columnName)) {
+                $filePath = getcwd() . '/uploads/files/' . $record->$columnName;
+
+                if (file_exists($filePath)) {
+                    unlink($filePath); //remove the file from the server
+                }
+            }
+        }
         DB::table($tableName)->where('id', $id)->delete();
     }
+
 }

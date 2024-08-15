@@ -75,14 +75,12 @@ use Carbon\Carbon;
                  ***********************************-->
             <div class="card mt-2">
                 <div class="card-header">
-                <ul class="nav nav-tabs nav-stretch fs-6 border-0">
-                    <li class="nav-item">
-                            <a class="nav-link @if(session('success') || session('error')) @else active @endif"
-                                data-bs-toggle="tab" href="#g_lead_details">Lead Details</a>
+                    <ul class="nav nav-tabs nav-stretch fs-6 border-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#g_lead_details">Lead Details</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @if(session('success') || session('error')) active @endif"
-                                data-bs-toggle="tab" href="#g_lead_table">Lead Table</a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#g_lead_table">Lead Table</a>
                         </li>
                     </ul>
                 </div>
@@ -93,7 +91,7 @@ use Carbon\Carbon;
 
             {{--Tab Content--}}
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show @if(session('success') || session('error')) @else active @endif" id="g_lead_details" role="tabpanel">
+                <div class="tab-pane fade show active" id="g_lead_details" role="tabpanel">
                     <div class="card">
 
                         <div class="card-header bg-light bd-cyan">
@@ -281,8 +279,7 @@ use Carbon\Carbon;
                     </div>
                 </div>
 
-                
-                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_table" role="tabpanel">
+                <div class="tab-pane fade" id="g_lead_table" role="tabpanel">
                     <div class="card">
                         <div class="card-body">
 
@@ -330,7 +327,7 @@ use Carbon\Carbon;
 
                                                 @if ($isFile)
                                                 <td class="ps-5 text-dark fs-6">
-                                                    <a href="{{ url('uploads/files/' . $value) }}" download>Download</a>
+                                                    <a href="{{ url('uploads/files/' . $value) }}" download>{{ $value }}</a>
                                                 </td>
                                                 @else
                                                 <td class="ps-5 text-dark fs-6">{{ $value }}</td>
