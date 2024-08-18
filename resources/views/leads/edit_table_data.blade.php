@@ -83,6 +83,8 @@
                                     $inputType = 'textarea';
                                     }elseif ($type == 'file') {
                                     $inputType = 'file';
+                                    }elseif ($type == 'dropdown') {
+                                    $inputType = 'dropdown';
                                     }
                                     }
                                     $value = isset($existingData->$column) ? $existingData->$column : '';
@@ -93,6 +95,12 @@
                                     <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $column }}" value="{{ $value }}">
                                     @elseif($inputType === 'file')
                                     <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
+                                    @elseif($inputType === 'dropdown')
+                                    <select class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
+                                        @foreach($dropdownOptions[$column] as $option)
+                                        <option value="{{ $option }}">{{ ucfirst($option) }}</option>
+                                        @endforeach
+                                    </select>
                                     @else
                                     <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}" value="{{ $value }}">
                                     @endif

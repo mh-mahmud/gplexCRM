@@ -50,7 +50,14 @@ class DynamicTableService
                     $column = $table->boolean($name)->nullable();
                 } elseif ($type === 'file') {
                     $column = $table->string($name)->nullable();
-                } else {
+                } elseif ($type === 'dropdown') {
+                    // Ensure 'character_length' is treated as an array for the enum
+                    if (is_string($length)) {
+                        $length = explode(',', $length); // Convert comma-separated string to an array
+                    }
+                    $column = $table->enum($name, (array) $length)->nullable();
+                }
+                 else {
                     $column = $table->$type($name)->nullable();
                 }
 
@@ -447,6 +454,12 @@ class DynamicTableService
             case 'file':
                 $column = $table->string($name)->nullable();
                 break;
+            case 'dropdown':
+                if (is_string($length)) {
+                    $length = explode(',', $length); // Convert comma-separated string to an array
+                }
+                $column = $table->enum($name, (array) $length)->nullable();
+                break;
             default:
                 throw new \Exception("Unsupported column type: {$type}");
         }
@@ -483,6 +496,13 @@ class DynamicTableService
                 break;
             case 'file':
                 $column = $table->string($existingColumnName)->nullable()->change();
+                break;
+            case 'dropdown':
+                //$column = $table->string($existingColumnName)->nullable()->change();
+                if (is_string($length)) {
+                    $length = explode(',', $length); // Convert comma-separated string to an array
+                }
+                $column = $table->enum($existingColumnName, (array) $length)->nullable()->change();
                 break;
             default:
                 throw new \Exception("Unsupported column type: {$type}");

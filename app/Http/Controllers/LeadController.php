@@ -180,26 +180,34 @@ class LeadController  extends Controller
 
         // Map column names to their types
         $columnTypes = [];
+        $dropdownOptions = [];
         foreach ($columnDetails as $column) {
             $columnName = $column->Field;
             $columnType = $column->Type;
-            // Check if the field_value in $fields is 'file' and override the type
+            // chk if the field_value in $fields is 'file' and override the type
             foreach ($fields as $field) {
                 if ($field->field_value == 'file' && $columnName == $field->field_name) {
                     $columnType = 'file';
+                    break;
+                }elseif ($field->field_value == 'dropdown' && $columnName == $field->field_name) {
+                    $columnType = 'dropdown';
+                     // split the character length field into an array if it is a dropdown list
+                    if (!empty($field->character_length)) {
+                        $dropdownOptions[$columnName] = explode(',', $field->character_length);
+                    }
                     break;
                 }
             }
             $columnTypes[$columnName] = $columnType;
         }
 
-        // Filter out unwanted fields
+        // filter out unwanted fields
         $filteredColumns = array_filter($columns, function ($column) {
             return !in_array($column, ['id', 'created_at', 'updated_at']);
         });
 
-        // Return view with necessary data
-        return view('leads.add', compact('tableName', 'filteredColumns', 'leads', 'columnTypes'));
+        // return view with necessary data
+        return view('leads.add', compact('tableName', 'filteredColumns', 'leads', 'columnTypes', 'dropdownOptions'));
     }
 
     public function storeTableData(Request $request)

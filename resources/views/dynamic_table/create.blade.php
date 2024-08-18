@@ -113,6 +113,7 @@
                                             <option value="text" @if($field['type']=='text' ) selected @endif>Text</option>
                                             <option value="boolean" @if($field['type']=='boolean' ) selected @endif>Boolean</option>
                                             <option value="file" @if($field['type']=='file' ) selected @endif>File</option>
+                                            <option value="dropdown" @if($field['type']=='dropdown' ) selected @endif>Dropdown</option>
                                         </select>
                                         @if ($errors->has("fields.$index.type"))
                                         <span class="text-danger">{{ $errors->first("fields.$index.type") }}</span>
@@ -123,7 +124,7 @@
                                 <div class="col-md-2">
                                     <div class="fv-row">
                                         <label class="form-label fw-bolder text-dark">Character Length</label>
-                                        <input class="form-control form-control-sm form-control-solid" type="number" name="fields[{{ $index }}][character_length]" value="{{ $field['character_length'] }}" autocomplete="off" />
+                                        <input class="form-control form-control-sm form-control-solid" type="text" name="fields[{{ $index }}][character_length]" value="{{ $field['character_length'] }}" autocomplete="off" />
                                     </div>
                                 </div>
 
@@ -189,6 +190,7 @@
                                             <option value="text">Text</option>
                                             <option value="boolean">Boolean</option>
                                             <option value="file">File</option>
+                                            <option value="dropdown">Dropdown</option>
                                         </select>
                                         @if ($errors->has('fields.0.type'))
                                         <span class="text-danger">{{ $errors->first('fields.0.type') }}</span>
@@ -199,7 +201,7 @@
                                 <div class="col-md-2">
                                     <div class="fv-row">
                                         <label class="form-label fw-bolder text-dark">Character Length</label>
-                                        <input class="form-control form-control-sm form-control-solid" type="number" name="fields[0][character_length]" autocomplete="off" />
+                                        <input class="form-control form-control-sm form-control-solid" type="text" name="fields[0][character_length]" autocomplete="off" />
                                     </div>
                                 </div>
 
@@ -289,6 +291,7 @@
                         <option value="text">Text</option>
                         <option value="boolean">Boolean</option>
                         <option value="file">File</option>
+                        <option value="dropdown">Dropdown</option>
                     </select>
                 </div>
             </div>
@@ -296,7 +299,7 @@
             <div class="col-md-2">
                 <div class="fv-row">
                     <label class="form-label fw-bolder text-dark">Character Length</label>
-                    <input class="form-control form-control-sm form-control-solid" type="number" name="fields[${fieldIndex}][character_length]" autocomplete="off" />
+                    <input class="form-control form-control-sm form-control-solid" type="text" name="fields[${fieldIndex}][character_length]" autocomplete="off" />
                 </div>
             </div>
 

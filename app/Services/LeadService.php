@@ -207,6 +207,7 @@ class LeadService
 
         //column map names to their types
         $columnTypes = [];
+        $dropdownOptions = [];
         foreach ($columnDetails as $column) {
             $columnName = $column->Field;
             $columnType = $column->Type;
@@ -214,6 +215,13 @@ class LeadService
             foreach ($fields as $field) {
                 if ($field->field_value == 'file' && $columnName == $field->field_name) {
                     $columnType = 'file';
+                    break;
+                }elseif ($field->field_value == 'dropdown' && $columnName == $field->field_name) {
+                    $columnType = 'dropdown';
+                     // split the character length field into an array if it is a dropdown list
+                    if (!empty($field->character_length)) {
+                        $dropdownOptions[$columnName] = explode(',', $field->character_length);
+                    }
                     break;
                 }
             }
@@ -235,6 +243,7 @@ class LeadService
             'filteredColumns' => $filteredColumns,
             'leads' => $leads,
             'columnTypes' => $columnTypes,
+            'dropdownOptions' =>$dropdownOptions,
             'existingData' => $existingData,
         ];
     }
