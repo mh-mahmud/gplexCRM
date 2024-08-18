@@ -192,13 +192,14 @@ ALTER TABLE campaigns ADD COLUMN template_type VARCHAR(192) NULL AFTER campaign_
 
 ALTER TABLE `campaign_data` ADD COLUMN `csv_id` CHAR(10) NULL AFTER `sms_template_id`;
 
-
-
 ALTER TABLE `sms_queue` CHANGE `send_status` `send_status` VARCHAR(30) NULL;
 
 ALTER TABLE `email_queue` ADD COLUMN `csv_id` CHAR(10) NULL AFTER `send_status`;
 
 ALTER TABLE `sms_queue` ADD COLUMN `csv_id` CHAR(10) NULL AFTER `send_status`;
+
+ALTER TABLE lead_form_details CHANGE character_length character_length VARCHAR(191) NULL;
+
 
 
 

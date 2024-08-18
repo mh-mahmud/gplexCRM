@@ -124,6 +124,8 @@ Forms
                                                 <option value="date" {{ $detail->field_value == 'date' ? 'selected' : '' }}>Date</option>
                                                 <option value="text" {{ $detail->field_value == 'text' ? 'selected' : '' }}>Text</option>
                                                 <option value="boolean" {{ $detail->field_value == 'boolean' ? 'selected' : '' }}>Boolean</option>
+                                                <option value="file" {{ $detail->field_value == 'file' ? 'selected' : '' }}>File</option>
+                                                <option value="dropdown" {{ $detail->field_value == 'dropdown' ? 'selected' : '' }}>Dropdown</option>
                                             </select>
                                             @if ($errors->has("fields.{$key}.type"))
                                                 <span class="text-danger">{{ $errors->first("fields.{$key}.type") }}</span>
@@ -134,7 +136,7 @@ Forms
                                     <div class="col-md-2">
                                         <div class="fv-row">
                                             <label class="form-label fw-bolder text-dark">Character Length</label>
-                                            <input class="form-control form-control-sm form-control-solid" type="number" name="fields[{{ $key }}][character_length]" value="{{ $detail->character_length }}" autocomplete="off" />
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="fields[{{ $key }}][character_length]" value="{{ $detail->character_length }}" autocomplete="off" />
                                         </div>
                                     </div>
 
@@ -219,13 +221,15 @@ function addField() {
                         <option value="date">Date</option>
                         <option value="text">Text</option>
                         <option value="boolean">Boolean</option>
+                        <option value="file">File</option>
+                        <option value="dropdown">Dropdown</option>
                     </select>
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="fv-row">
                     <label class="form-label fw-bolder text-dark">Character Length</label>
-                    <input class="form-control form-control-sm form-control-solid" type="number" name="fields[${index}][character_length]" autocomplete="off" />
+                    <input class="form-control form-control-sm form-control-solid" type="text" name="fields[${index}][character_length]" autocomplete="off" />
                 </div>
             </div>
             <div class="col-md-1">

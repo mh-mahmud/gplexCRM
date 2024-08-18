@@ -67,7 +67,7 @@
                 <div class="p-5"></div>
                 <div class="row gy-5 g-xl-8">
                     <!--begin::Col-->
-                    <div class="col-xxl-4">
+                    <div class="col-sm-4">
                         <div class="card card-flush h-md-20 mb-5 mb-xl-10">
                             <!--begin::Header-->
                             <div class="card-header pt-5">
@@ -103,7 +103,7 @@
                         </div>
                     </div>
 
-                    <div class="col-xxl-4">
+                    <div class="col-sm-4">
                         <div class="card card-flush h-md-20 mb-5 mb-xl-10">
                             <!--begin::Header-->
                             <div class="card-header pt-5">
@@ -139,7 +139,7 @@
                         </div>
                     </div>
 
-                    <div class="col-xxl-4">
+                    <div class="col-sm-4">
                         <div class="card card-flush h-md-20 mb-5 mb-xl-10">
                             <!--begin::Header-->
                             <div class="card-header pt-5">
