@@ -307,11 +307,19 @@ body.swal2-height-auto {
     break-inside: avoid;
 }
 
-@media all and (min-width: 1200px) {
+@media all and (min-width: 1601px){
     .g-lead-details-area {
         columns: 4;
         break-inside: avoid;
     }
 }
+@media all and (1024px <= width <= 1600px) {
+    .g-lead-details-area {
+        columns: 3;
+        break-inside: avoid;
+    }
+}
+
+
 
 /*End For Leads (Show Blade PHP) */
