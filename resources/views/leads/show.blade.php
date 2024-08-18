@@ -109,46 +109,46 @@ use Carbon\Carbon;
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Form Name</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Form Name</span>
                                     <span>{{ $lead->leadsForm?->form_name ?? '' }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">First Name</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">First Name</span>
                                     <span>{{ $lead->first_name }}</span>
                                 </div>
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Last Name</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Last Name</span>
                                     <span>{{ $lead->last_name }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Email</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Email</span>
                                     <span>{{ $lead->email }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Phone</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Phone</span>
                                     <span>{{ $lead->phone }}</span>
                                 </div>
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Lead Title</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Title</span>
                                     <span>{{ $lead->title }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Alternative Number</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Alternative Number</span>
                                     <span>{{ $lead->alternative_number }}</span>
                                 </div>
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Gender</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Gender</span>
                                     @if ($lead->gender === 'Male')
                                     <span>Male</span>
                                     @elseif ($lead->gender === 'Female')
@@ -159,7 +159,7 @@ use Carbon\Carbon;
                                 </div>
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Date of Birth</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Date of Birth</span>
                                     <span>
                                         @if($lead->dob)
                                         {{ \Carbon\Carbon::parse($lead->dob)->format('d-m-Y') }}
@@ -168,12 +168,12 @@ use Carbon\Carbon;
                                 </div>
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Age</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Age</span>
                                     <span>{{ $lead->age }}</span>
                                 </div>
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Marital Status</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Marital Status</span>
                                     <span>
                                         @if(in_array($lead->marital_status, config('constants.marital_status')))
                                         {{ $lead->marital_status }}
@@ -184,19 +184,19 @@ use Carbon\Carbon;
                                 </div>
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Address</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Address</span>
                                     <span>{{ $lead->address }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Company</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Company</span>
                                     <span>{{ $lead->company }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Status</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Status</span>
                                     @if ($lead->lead_status === 1)
                                     <span>Active</span>
                                     @elseif ($lead->lead_status === 0)
@@ -206,32 +206,32 @@ use Carbon\Carbon;
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Lead Rating</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Rating</span>
                                     <span>{{ $lead->lead_rating }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Website</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Website</span>
                                     <span>{{ $lead->website }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Lead Owner</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Owner</span>
                                     <span>{{ $lead->lead_owner }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Industry</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Industry</span>
                                     <span>{{ $lead->industry }}</span>
                                 </div>
 
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Lead Source</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Source</span>
                                     <span>
                                         @if(in_array($lead->lead_source, config('constants.lead_source')))
                                         {{ $lead->lead_source }}
@@ -243,37 +243,37 @@ use Carbon\Carbon;
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Street</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Street</span>
                                     <span>{{ $lead->street }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">City</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">City</span>
                                     <span>{{ $lead->city }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Zip</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Zip</span>
                                     <span>{{ $lead->zip }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">State</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">State</span>
                                     <span>{{ $lead->state }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Country</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Country</span>
                                     <span>{{ $lead->country }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Lead Notes</span>
+                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Notes</span>
                                     <span>{{ $lead->lead_notes }}</span>
                                 </div>
                             </div>
