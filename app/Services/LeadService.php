@@ -108,7 +108,8 @@ class LeadService
                 $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
                 $extension = $request->file($fieldName)->getClientOriginalExtension();
                 $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
-                $request->file($fieldName)->move(public_path('uploads/files'), $fileNameToStore);
+                //$request->file($fieldName)->move(public_path('uploads/files'), $fileNameToStore);
+                $request->file($fieldName)->move(getcwd() . '/uploads/files', $fileNameToStore);
                 $tableData[$tableName][$fieldName] = $fileNameToStore;
             }
             // add dynamic field data to the table data array
