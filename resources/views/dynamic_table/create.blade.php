@@ -49,7 +49,7 @@
                 </div>
 
                 <!-- Card Body-->
-                <div class="card-body">
+                <div class="card-body pt-1">
 
                     <!-- Start Form-->
                     <form class="g-form w-100" action="{{ route('dynamictable-store') }}" enctype="multipart/form-data" method="POST">
@@ -131,7 +131,7 @@
                                 <div class="col-md-1">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">Is Index</label>
-                                        <div class="form-check">
+                                        <div class="form-check form-check-custom form-check-sm">
                                             <input class="form-check-input" type="checkbox" name="fields[{{ $index }}][is_index]" value="1" @if(isset($field['is_index'])) checked @endif>
                                             <label class="form-check-label">Is Index</label>
                                         </div>
@@ -141,7 +141,7 @@
                                 <div class="col-md-1">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">Is Null</label>
-                                        <div class="form-check">
+                                        <div class="form-check form-check-custom form-check-sm">
                                             <input class="form-check-input" type="checkbox" name="fields[{{ $index }}][is_null]" value="1" @if(isset($field['is_null'])) checked @endif>
                                             <label class="form-check-label">Is Null</label>
                                         </div>
