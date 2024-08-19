@@ -120,7 +120,7 @@ class LeadController  extends Controller
 
 
 
-        $this->leadService->createLead($data, $request->input('form_id'), $dynamicFields);
+        $this->leadService->createLead($data, $request->input('form_id'), $dynamicFields, $request);
 
         return redirect()->route('lead-index')->with('success', 'Lead created successfully.');
     }

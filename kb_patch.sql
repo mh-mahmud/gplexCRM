@@ -200,6 +200,8 @@ ALTER TABLE `sms_queue` ADD COLUMN `csv_id` CHAR(10) NULL AFTER `send_status`;
 
 ALTER TABLE lead_form_details CHANGE character_length character_length VARCHAR(191) NULL;
 
+ALTER TABLE `lead_form_details` ADD COLUMN `view_type` VARCHAR(100) NULL AFTER `is_unique`;
+
 
 
 

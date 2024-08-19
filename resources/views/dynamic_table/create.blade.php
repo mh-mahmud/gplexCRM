@@ -81,9 +81,30 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-3">
+                        {{--<div class="row mb-3">
                             <div class="col-md-12" style="text-align: right;">
                                 <button type="button" class="btn btn-sm btn-success" onclick="addField()"><i class="bi bi-plus-lg"></i> Add Field</button>
+                            </div>
+                        </div>--}}
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 d-flex gap-3">
+                                <div class="form-check form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="radio" value="" id="g-qty" name="view_type" checked>
+                                    <label class="form-check-label" for="g-qty">
+                                        Table View
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="radio" value="" id="g-hours" name="view_type">
+                                    <label class="form-check-label" for="g-hours">
+                                        Form View
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" style="text-align: right;">
+                            <button type="button" class="btn btn-sm btn-success" onclick="addField()"><i class="bi bi-plus-lg"></i> Add Field</button>
                             </div>
                         </div>
 
