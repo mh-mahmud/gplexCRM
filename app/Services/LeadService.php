@@ -365,4 +365,28 @@ class LeadService
         DB::table($tableName)->where('id', $id)->delete();
     }
 
+    public function search_on_url($request)
+    {
+        $searchTerm = trim($request);
+
+        $query = Lead::query();
+        $query->where(function ($q) use ($searchTerm) {
+            $q->where('title', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('first_name', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('last_name', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('email', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('phone', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('gender', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('dob', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('age', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('lead_rating', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('lead_owner', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('lead_source', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('company', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('industry', 'LIKE', '%' . $searchTerm . '%');
+        });
+
+        return $query->paginate(config('constants.ROW_PER_PAGE'));
+    }
+
 }
