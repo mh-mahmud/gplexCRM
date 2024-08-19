@@ -825,6 +825,18 @@ class LeadController  extends Controller
         return $date ? $date->format('Y-m-d') : null;
     }
 
+    public function search_phone($data) {
+        $searchTerm = trim($data);
+        $formName = [];
+
+        if (empty($searchTerm)) {
+            return redirect()->route('lead-index')->with('error', 'Search Field cannot be blank.');
+        }
+
+        $leads = $this->leadService->search_on_url($data);
+        return view('leads.index', compact('leads', 'formName'));
+    }
+
   
 
     
