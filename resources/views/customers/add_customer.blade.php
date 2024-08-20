@@ -60,12 +60,8 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Customer Name</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid" type="text" name="customer_name" autocomplete="off"/>
-                                                    <!--end::Input-->
                                                     @if ($errors->has('customer_name'))
                                                         <span class="text-danger">{{ $errors->first('customer_name') }}</span>
                                                     @endif
@@ -74,12 +70,8 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Customer ID</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid" readonly type="text" name="customer_id" autocomplete="off" value="{{ $rand_str }}" />
-                                                    <!--end::Input-->
                                                     @if ($errors->has('customer_id'))
                                                         <span class="text-danger">{{ $errors->first('customer_id') }}</span>
                                                     @endif
@@ -88,12 +80,8 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Products</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid" type="text" name="products" autocomplete="off"/>
-                                                    <!--end::Input-->
                                                     @if ($errors->has('products'))
                                                         <span class="text-danger">{{ $errors->first('products') }}</span>
                                                     @endif

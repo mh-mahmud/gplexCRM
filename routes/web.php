@@ -256,7 +256,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	// Customer routes start
 	Route::get('customers', [CustomerController::class, 'index'])->name('customers');
-	Route::get('add-customer', [CustomerController::class, 'add_customer'])->name('add-customer');
+	Route::get('add-customer/{leadid}', [CustomerController::class, 'add_customer'])->name('add-customer');
 	Route::post('add-customer', [CustomerController::class, 'save_customer'])->name('post-add-customer');
 
 
