@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\CustomerService;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Product;
 use Auth;
 
 class CustomerController extends Controller
@@ -18,14 +20,30 @@ class CustomerController extends Controller
         return 'hi';
     }
 
-    public function add_customer() {
+    public function add_customer($id) {
+
         $data = [];
+        $cus_data = $this->service->get_customer_data($id);
+        if(empty($cus_data->id)) {
+            return redirect()->back();
+        }
+        $data['cus'] = $cus_data;
+        $data['products'] = Product::all(['id', 'name']);
         $data['rand_str'] = $this->generateRandomString();
         return view('customers.add_customer', $data);
     }
 
-    public function save_customer() {
+    public function save_customer(Request $request) {
 
+        $request->validate([
+            'customer_notes' => 'required|string|max:191',
+            'product_id' => 'required'
+
+        ]);
+
+        dd($request->all());
+        $this->service->createCustomer($request->all());
+        return redirect()->route('customers')->with('success', 'Customer created successfully.');
     }
 
     function generateRandomString($length = 5) {

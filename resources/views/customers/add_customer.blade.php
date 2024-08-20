@@ -60,10 +60,40 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Customer Name</label>
-                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="customer_name" autocomplete="off"/>
-                                                    @if ($errors->has('customer_name'))
-                                                        <span class="text-danger">{{ $errors->first('customer_name') }}</span>
+                                                    <label class="form-label fw-bolder text-dark">First Name</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" readonly name="first_name" value="{{$cus->first_name}}"/>
+                                                    @if ($errors->has('first_name'))
+                                                        <span class="text-danger">{{ $errors->first('first_name') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Last Name</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" readonly name="last_name" value="{{$cus->last_name}}"/>
+                                                    @if ($errors->has('last_name'))
+                                                        <span class="text-danger">{{ $errors->first('last_name') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Phone</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" readonly name="phone" value="{{$cus->phone}}"/>
+                                                    @if ($errors->has('phone'))
+                                                        <span class="text-danger">{{ $errors->first('phone') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Email</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" readonly name="email" value="{{$cus->email}}"/>
+                                                    @if ($errors->has('email'))
+                                                        <span class="text-danger">{{ $errors->first('email') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -80,18 +110,20 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Products</label>
-                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="products" autocomplete="off"/>
-                                                    @if ($errors->has('products'))
-                                                        <span class="text-danger">{{ $errors->first('products') }}</span>
-                                                    @endif
+                                                    <label class="form-label fw-bolder text-dark">Product</label>
+                                                    <select class=" form-control form-control-sm form-control-solid" id="product_id" name="product_id" required aria-label="Default select example">
+                                                        <option value=''>Select</option>
+                                                        @foreach($products as $product)
+                                                            <option value="{{$product->id}}">{{ $product->name }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
 
                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Customer Notes</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="customer_notes" rows="3"></textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="customer_notes" rows="3" required></textarea>
                                                 </div>
                                             </div>
 
@@ -99,7 +131,7 @@
                                         <!--End Row-->
                                     <div class="card-footer d-flex justify-content-end py-6 px-9">
                                         <a href="{{ route('leadsform-create') }}" class="btn btn-light me-2">Back</a>
-                                        <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save</button>
+                                        <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Submit</button>
                                     </div>
 
                                     </form>
