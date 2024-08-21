@@ -24,12 +24,14 @@ class CustomerController extends Controller
 
         $data = [];
         $cus_data = $this->service->get_customer_data($id);
+        //dd($cus_data);
         if(empty($cus_data->id)) {
             return redirect()->back();
         }
         $data['cus'] = $cus_data;
         $data['products'] = Product::all(['id', 'name']);
         $data['rand_str'] = $this->generateRandomString();
+        $data['groups'] = config('constants.customer_group');
         return view('customers.add_customer', $data);
     }
 
@@ -41,8 +43,10 @@ class CustomerController extends Controller
 
         ]);
 
-        dd($request->all());
-        $this->service->createCustomer($request->all());
+        $data = $this->service->createCustomer($request);
+        if($data==false) {
+            die("Error");
+        }
         return redirect()->route('customers')->with('success', 'Customer created successfully.');
     }
 

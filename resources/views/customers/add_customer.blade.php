@@ -56,7 +56,8 @@
                                     <!-- Start Form-->
 
                                     <form class="g-form w-100" action="{{ route('post-add-customer') }}"  enctype="multipart/form-data" method="POST">
-                                         @csrf
+                                        @csrf
+                                        <input type="hidden" name="lead_id" value="{{ $cus->id }}">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
@@ -115,6 +116,18 @@
                                                         <option value=''>Select</option>
                                                         @foreach($products as $product)
                                                             <option value="{{$product->id}}">{{ $product->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Customer Group</label>
+                                                    <select class=" form-control form-control-sm form-control-solid" id="customer_group" name="customer_group" aria-label="Default select example">
+                                                        <option value=''>Select</option>
+                                                        @foreach($groups as $key=>$val)
+                                                            <option value="{{$val}}">{{ $val }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

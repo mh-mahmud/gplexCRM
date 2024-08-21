@@ -19,6 +19,7 @@ class CustomerService
     }
 
     public function createCustomer($request) {
+
         $data = new Customer();
         $data->lead_id = $request->lead_id;
         $data->customer_id = $request->customer_id;
