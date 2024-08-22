@@ -202,6 +202,8 @@ ALTER TABLE lead_form_details CHANGE character_length character_length VARCHAR(1
 
 ALTER TABLE `lead_form_details` ADD COLUMN `view_type` VARCHAR(100) NULL AFTER `is_unique`;
 
+ALTER TABLE `lead_form_details` ADD COLUMN `form_size` VARCHAR(100) NULL AFTER `view_type`;
+
 
 
 

@@ -152,7 +152,7 @@ class LeadController  extends Controller
         $lead = $this->leadService->getLeadById($id);
 
         // Fetch dynamic fields data based on lead_id
-        $fields = LeadFormDetail::where('form_id', $lead->form_id)->get();
+        $fields = LeadFormDetail::where('form_id', $lead->form_id)->orderBy('table_name')->get();
         $tableData = [];
         foreach ($fields as $field) {
             $tableName = $field->table_name;
