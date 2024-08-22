@@ -245,7 +245,7 @@
                         </div>
 
 
-                        <div class="card-footer d-flex justify-content-end py-6 px-9">
+                        <div class="card-footer d-flex justify-content-end pt-4 pb-0 px-0">
                             <a href="{{ route('dynamictable-create') }}" class="btn btn-light me-2">Reset</a>
                             <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes
                             </button>
