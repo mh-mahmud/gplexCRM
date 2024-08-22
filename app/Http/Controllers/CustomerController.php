@@ -17,7 +17,8 @@ class CustomerController extends Controller
     }
 
     public function index() {
-        return 'hi';
+        $customers = $this->service->get_all_customers();
+        return view('customers.index', compact('customers'));
     }
 
     public function add_customer($id) {
@@ -42,12 +43,12 @@ class CustomerController extends Controller
             'product_id' => 'required'
 
         ]);
-
         $data = $this->service->createCustomer($request);
-        if($data==false) {
-            die("Error");
+
+        if($data) {
+            return redirect()->route('customers')->with('success', 'Customer created successfully.');
         }
-        return redirect()->route('customers')->with('success', 'Customer created successfully.');
+        session()->flash('error', 'Can not Add!');
     }
 
     function generateRandomString($length = 5) {

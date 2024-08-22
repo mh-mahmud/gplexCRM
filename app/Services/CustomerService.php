@@ -30,4 +30,9 @@ class CustomerService
         }
         return false;
     }
+
+    public function get_all_customers() {
+        return Customer::with('lead_data')->orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
+        // return Customer::with('lead_data')->get();
+    }
 }
