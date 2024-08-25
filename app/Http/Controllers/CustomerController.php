@@ -29,9 +29,12 @@ class CustomerController extends Controller
         if(empty($cus_data->id)) {
             return redirect()->back();
         }
+
+        $rand_str = $this->generateRandomString();
+
         $data['cus'] = $cus_data;
         $data['products'] = Product::all(['id', 'name']);
-        $data['rand_str'] = $this->generateRandomString();
+        $data['rand_str'] = $rand_str;
         $data['groups'] = config('constants.customer_group');
         return view('customers.add_customer', $data);
     }
@@ -51,7 +54,7 @@ class CustomerController extends Controller
         session()->flash('error', 'Can not Add!');
     }
 
-    function generateRandomString($length = 5) {
+    public function generateRandomString($length = 5) {
         // Define the characters to use in the string
         $characters = '0123456789ABCDEFGHIJKLMN';
         $charactersLength = strlen($characters);
@@ -61,6 +64,11 @@ class CustomerController extends Controller
         for ($i = 0; $i < $length; $i++) {
             $randomIndex = random_int(0, $charactersLength - 1);
             $randomString .= $characters[$randomIndex];
+        }
+
+        // check rand str
+        if($this->service->check_rand_string($randomString)) {
+            return $this->generateRandomString($length=5);
         }
 
         return $randomString;
