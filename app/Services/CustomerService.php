@@ -35,4 +35,12 @@ class CustomerService
         return Customer::with('lead_data')->orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
         // return Customer::with('lead_data')->get();
     }
+
+    public function check_rand_string($randomString) {
+        $chk = Customer::where('customer_id', $randomString)->first();
+        if(is_null($chk)) {
+            return false;
+        }
+        return true;
+    }
 }
