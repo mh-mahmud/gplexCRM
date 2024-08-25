@@ -28,7 +28,7 @@
             <!--begin::Actions-->
             <div class="d-flex align-items-center py-1">
 
-                <a href="{{ route('add-product') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Add Prposal</a>
+                <a href="{{ route('add-proposal') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Add Prposal</a>
 
                 <!--end::Button-->
             </div>
