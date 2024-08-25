@@ -10,8 +10,7 @@
 }
 
 .card .card-header {
-    /*background-color: #DDD;*/
-    /* min-height: 60px; */
+    background-color: #DDD;
     min-height: 40px;
 }
 
@@ -237,7 +236,8 @@
 .g-login-main {
     display: flex;
 }
-@media all and (max-width: 991px){
+
+@media all and (max-width: 991px) {
     .g-login-main {
         display: flex;
         flex-direction: column-reverse;
@@ -250,14 +250,15 @@
     flex: 1;
     padding: 3rem;
 }
-@media all and (max-width: 991px){
+
+@media all and (max-width: 991px) {
     .g-login-left {
         flex: 1;
         padding: 1rem;
     }
 }
 
-.g-login-left-header{
+.g-login-left-header {
     font-size: 3rem;
 }
 
@@ -265,22 +266,24 @@
     flex: 1;
     flex-shrink: 0;
     background-image: linear-gradient(-60deg, #16a085 0%, #f4d03f 100%);
-    color:#ffffff;
+    color: #ffffff;
     display: grid;
     place-items: center;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 10px;
 }
-@media all and (max-width: 991px){
-  .g-login-right{
-      display: none;
-  }
+
+@media all and (max-width: 991px) {
+    .g-login-right {
+        display: none;
+    }
 }
-.g-login-btn-gradient{
+
+.g-login-btn-gradient {
     background-image: linear-gradient(-60deg, #16a085 0%, #f4d03f 100%);
 }
 
-.g-login-right h2{
+.g-login-right h2 {
     color: #fff;
     font-size: 2.5rem;
 }
@@ -294,6 +297,29 @@ body.swal2-height-auto {
 
 /*For All Table td style*/
 .table.gy-3 td {
-    padding-top: 0.3rem;
-    padding-bottom: 0.3rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
 }
+
+/*For Leads (Show Blade PHP) */
+.g-lead-details-area {
+    columns: 1;
+    break-inside: avoid;
+}
+
+@media all and (min-width: 1601px){
+    .g-lead-details-area {
+        columns: 4;
+        break-inside: avoid;
+    }
+}
+@media all and (1024px <= width <= 1600px) {
+    .g-lead-details-area {
+        columns: 3;
+        break-inside: avoid;
+    }
+}
+
+
+
+/*End For Leads (Show Blade PHP) */

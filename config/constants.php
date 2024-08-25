@@ -19,7 +19,14 @@ return [
         'Awaiting Feedback',
         'Completed',
         'Done Before'
-    ],  
+    ],
+    'customer_group' => [
+        'VIP',
+        'EXISTING',
+        'NEW CLIENT',
+        'ECONOMIC',
+        'SERVICE BASED'
+    ],
     'marital_status' => [
         'Single',
         'Married',

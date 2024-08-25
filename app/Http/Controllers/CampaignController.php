@@ -17,7 +17,7 @@ use App\Services\CampaignService;
 use App\Models\Promotion;
 use App\Models\LeadsForm;
 use App\Models\EmailTemplate;
-use App\Models\smsTemplate;
+use App\Models\SmsTemplate;
 use App\Models\CampaignData;
 use App\Models\EmailQueue;
 use App\Models\SmsQueue;
@@ -45,7 +45,7 @@ class CampaignController extends Controller
         $promotions = Promotion::pluck('promotion_title', 'id');
         $formName = LeadsForm::pluck('form_name', 'form_id');
         $email = EmailTemplate::pluck('email_subject', 'id');
-        $sms = smsTemplate::pluck('title', 'id');
+        $sms = SmsTemplate::pluck('title', 'id');
         return view('campaigns.create', compact('promotions', 'formName', 'email', 'sms'));
     }
 
@@ -75,7 +75,7 @@ class CampaignController extends Controller
         $promotions = Promotion::pluck('promotion_title', 'id');
         $formName = LeadsForm::pluck('form_name', 'form_id');
         $email = EmailTemplate::pluck('email_subject', 'id');
-        $sms = smsTemplate::pluck('title', 'id');
+        $sms = SmsTemplate::pluck('title', 'id');
         return view('campaigns.edit', compact('campaign', 'promotions', 'formName', 'email', 'sms'));
     }
 
@@ -179,187 +179,26 @@ class CampaignController extends Controller
 
 
 
-
     public function startCampaign($id)
     {
-        $campaign_type = Campaign::findOrFail($id);
-        $campaign = CampaignData::where('campaign_id', $id)->get();
-        $campaign_template_id = CampaignData::where('campaign_id', $id)->first();
-        $email_template = EmailTemplate::where('id', $campaign_template_id->email_template_id)->first();
-        $sms_template = smsTemplate::where('id', $campaign_template_id->sms_template_id)->first();
-
-        if ($campaign->isEmpty()) {
-            return redirect()->route('campaign-index')->with('error', 'Campaign not found.');
+        try {
+            $result = $this->campaignService->startCampaign($id);
+            return redirect()->route('campaign-index')->with('success', $result);
+        } catch (\Exception $e) {
+            return redirect()->route('campaign-index')->with('error', $e->getMessage());
         }
-
-        $emailCount = 0;
-        $smsCount = 0;
-
-        if ($campaign_type->template_type == 'Email') {
-            $hasEmails = false;
-
-            foreach ($campaign as $emails) {
-                if ($emails->email) {
-                    $hasEmails = true;
-                    try {
-                        //Mail::to($emails->email)->queue(new BulkEmail($email_template->email_subject, $email_template->email_content));
-                        $dataObj                    = new EmailQueue();
-                        $dataObj->email_from        = "Genuity";
-                        $dataObj->campaign_id       = $id;
-                        $dataObj->email_to          = $emails->email; 
-                        $dataObj->csv_id            = $emails->csv_id; 
-                        $dataObj->email_subject     = $email_template->email_subject;
-                        $dataObj->email_content     = $email_template->email_content;
-                        $dataObj->log_time          = Carbon::now();
-                        //$dataObj->delivery_time     = Carbon::now();
-                        $dataObj->send_status       = config('constants.campaign_status.Pending');
-                        $dataObj->save();
-                        $emailCount++;
-                    } catch (\Exception $e) {
-                        return redirect()->route('campaign-index')->with('error', 'Failed to send email: ' . $e->getMessage());
-                    }
-                }
-            }
-
-            if (!$hasEmails) {
-                return redirect()->route('campaign-index')->with('error', 'No email addresses found for the campaign.');
-            }
-        } elseif ($campaign_type->template_type == 'SMS') {
-            $hasPhones = false;
-
-            foreach ($campaign as $phones) {
-                if ($phones->phone) {
-                    $hasPhones = true;
-                    try {
-                        $dataObj = new SmsQueue();
-                        $dataObj->sms_from = config('constants.SMS_SEND_MOBILE_NO');
-                        $dataObj->campaign_id       = $id;
-                        $dataObj->sms_to = $phones->phone;
-                        $dataObj->csv_id = $phones->csv_id;
-                        $dataObj->sms_text = $sms_template->description;
-                        $dataObj->log_time = Carbon::now();
-                        //$dataObj->user_id = Auth::id();
-                        $dataObj->send_status = config('constants.campaign_status.Pending');
-                        $dataObj->save();
-                        $smsCount++;
-                    } catch (\Exception $e) {
-                        return redirect()->route('campaign-index')->with('error', 'Failed to send SMS: ' . $e->getMessage());
-                    }
-                }
-            }
-
-            if (!$hasPhones) {
-                return redirect()->route('campaign-index')->with('error', 'No phone numbers found for the campaign.');
-            }
-        }
-        CampaignData::where('campaign_id', $id)->delete();
-
-        $successMessage = 'Campaign completed successfully.';
-        if ($emailCount > 0) {
-            $successMessage .= " Sent $emailCount emails.";
-        }
-        if ($smsCount > 0) {
-            $successMessage .= " Sent $smsCount SMS messages.";
-        }
-
-        return redirect()->route('campaign-index')->with('success', $successMessage);
     }
-
 
 
 
     public function stopCampaign($id)
     {
-        $campaign_type = Campaign::findOrFail($id);
-        $campaign_email_queue = EmailQueue::where('campaign_id', $id)->get();
-        $campaign_sms_queue = SmsQueue::where('campaign_id', $id)->get();
-        $campaign_template_id = CampaignData::where('campaign_id', $id)->first();
-        //$email_template = EmailTemplate::where('id', $campaign_template_id->email_template_id)->first();
-        // $sms_template = smsTemplate::where('id', $campaign_template_id->sms_template_id)->first();
-
-        if ($campaign_email_queue->isEmpty() && $campaign_sms_queue->isEmpty()) {
-            return redirect()->route('campaign-index')->with('error', 'Campaign not found.');
+        try {
+            $result = $this->campaignService->stopCampaign($id);
+            return redirect()->route('campaign-index')->with('success', $result);
+        } catch (\Exception $e) {
+            return redirect()->route('campaign-index')->with('error', $e->getMessage());
         }
-
-        $emailCount = 0;
-        $smsCount = 0;
-
-        if ($campaign_type->template_type == 'Email') {
-            $hasEmails = false;
-
-            foreach ($campaign_email_queue as $emails) {
-                if ($emails->email_to) {
-                    $hasEmails = true;
-                    try {
-                        //Mail::to($emails->email)->queue(new BulkEmail($email_template->email_subject, $email_template->email_content));
-                        $dataObj                    = new CampaignData();
-                        //$dataObj->email_from        = "Genuity";
-                        $dataObj->campaign_id       = $id;
-                        $dataObj->email             = $emails->email_to; 
-                        $dataObj->email_template_id = $campaign_type->email_template_id;
-                        $dataObj->csv_id            = $emails->csv_id;
-                        //$dataObj->email_content     = $email_template->email_content;
-                        //$dataObj->log_time          = Carbon::now();
-                        //$dataObj->delivery_time     = Carbon::now();
-                        $dataObj->status       = config('constants.campaign_status.Pending');
-                        $dataObj->save();
-                        $emailCount++;
-                    } catch (\Exception $e) {
-                        return redirect()->route('campaign-index')->with('error', 'Failed to send email: ' . $e->getMessage());
-                    }
-                }
-            }
-
-            if (!$hasEmails) {
-                return redirect()->route('campaign-index')->with('error', 'No email addresses found for the campaign.');
-            }
-        } elseif ($campaign_type->template_type == 'SMS') {
-            $hasPhones = false;
-
-            foreach ($campaign_sms_queue as $phones) {
-                if ($phones->sms_to) {
-                    $hasPhones = true;
-                    try {
-                        $dataObj = new CampaignData();
-                        $dataObj->campaign_id       = $id;
-                        //$dataObj->sms_from = config('constants.SMS_SEND_MOBILE_NO');
-                        $dataObj->phone = $phones->sms_to;
-                        $dataObj->sms_template_id = $campaign_type->sms_template_id;
-                        $dataObj->csv_id            = $phones->csv_id;
-                        //$dataObj->email_content     = $email_template->email_content;
-                        //$dataObj->log_time          = Carbon::now();
-                        //$dataObj->delivery_time     = Carbon::now();
-                        $dataObj->status       = config('constants.campaign_status.Pending');
-                        $dataObj->save();
-                        $smsCount++;
-                    } catch (\Exception $e) {
-                        return redirect()->route('campaign-index')->with('error', 'Failed to send SMS: ' . $e->getMessage());
-                    }
-                }
-            }
-
-            if (!$hasPhones) {
-                return redirect()->route('campaign-index')->with('error', 'No phone numbers found for the campaign.');
-            }
-        }
-       
-
-        if ($campaign_type->template_type == 'Email'){
-            EmailQueue::where('campaign_id', $id)->delete();
-        }elseif($campaign_type->template_type == 'SMS'){
-            SmsQueue::where('campaign_id', $id)->delete();
-
-        }
-
-        $successMessage = 'Campaign Stop successfully.';
-        if ($emailCount > 0) {
-            $successMessage .= " Sent $emailCount emails.";
-        }
-        if ($smsCount > 0) {
-            $successMessage .= " Sent $smsCount SMS messages.";
-        }
-
-        return redirect()->route('campaign-index')->with('success', $successMessage);
     }
 
 

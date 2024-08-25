@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Lead;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\LeadFormDetail;
 use Maatwebsite\Excel\Facades\Excel;
@@ -26,7 +27,7 @@ class LeadService
     }
 
 
-    public function createLead($data, $formId, $dynamicFields)
+    public function createLead_backup($data, $formId, $dynamicFields)
     {
 
         $lead = Lead::create($data);
@@ -51,7 +52,7 @@ class LeadService
                 $tableData[$tableName][$fieldName] = $dynamicFields[$fieldName];
             } else {
                 // missing field default value
-                if ($field->field_value == 'varchar' || $field->field_value == 'char' || $field->field_value == 'text') {
+                if ($field->field_value == 'varchar' || $field->field_value == 'char' || $field->field_value == 'text'|| $field->field_value == 'file'|| $field->field_value == 'dropdown') {
                     $tableData[$tableName][$fieldName] = '';
                 } elseif ($field->field_value == 'int') {
                     $tableData[$tableName][$fieldName] = 0;
@@ -78,6 +79,72 @@ class LeadService
 
         return $lead;
     }
+
+
+    public function createLead($data, $formId, $dynamicFields, $request)
+    {
+        $lead = Lead::create($data);
+        $fields = LeadFormDetail::where('form_id', $formId)->get();
+        $tableData = [];
+
+        // prepare fields and data
+        foreach ($fields as $field) {
+            $fieldName = $field->field_name;
+            $tableName = $field->table_name;
+
+            // initialize table data array
+            if (!isset($tableData[$tableName])) {
+                $tableData[$tableName] = [
+                    'lead_id' => $lead->id,
+                    'form_id' => $formId,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+
+            // handle file upload
+            if ($field->field_value === 'file' && $request->hasFile($fieldName)) {
+                $fileNameWithExt = $request->file($fieldName)->getClientOriginalName();
+                $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file($fieldName)->getClientOriginalExtension();
+                $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+                //$request->file($fieldName)->move(public_path('uploads/files'), $fileNameToStore);
+                $request->file($fieldName)->move(getcwd() . '/uploads/files', $fileNameToStore);
+                $tableData[$tableName][$fieldName] = $fileNameToStore;
+            }
+            // add dynamic field data to the table data array
+            elseif (isset($dynamicFields[$fieldName]) && !empty($dynamicFields[$fieldName])) {
+                $tableData[$tableName][$fieldName] = $dynamicFields[$fieldName];
+            }
+            // handle default values for missing fields
+            else {
+                if (in_array($field->field_value, ['varchar', 'char', 'text', 'file', 'dropdown'])) {
+                    $tableData[$tableName][$fieldName] = '';
+                } elseif ($field->field_value == 'int') {
+                    $tableData[$tableName][$fieldName] = 0;
+                } elseif ($field->field_value == 'date') {
+                    $tableData[$tableName][$fieldName] = '';
+                } else {
+                    $tableData[$tableName][$fieldName] = null;
+                }
+            }
+        }
+
+        // insert dynamic table data
+        foreach ($tableData as $tableName => $data) {
+            // chk if there are any dynamic fields with values to insert
+            $hasDynamicFields = collect($data)->filter(function ($value, $key) {
+                return !in_array($key, ['lead_id', 'form_id', 'created_at', 'updated_at']) && !empty($value);
+            })->isNotEmpty();
+            // insert data fields with values to insert
+            if ($hasDynamicFields) {
+                DB::table($tableName)->insert($data);
+            }
+        }
+
+        return $lead;
+    }
+
 
 
 
@@ -136,7 +203,7 @@ class LeadService
         return $lead;
     }
 
-    public function getTableData($tableName, $leadId)
+    public function getTableData_backup($tableName, $leadId)
     {
         //get column names
         $columns = Schema::getColumnListing($tableName);
@@ -147,8 +214,12 @@ class LeadService
             ->first();
 
         //fetch lead details with the lead ID
-        $leads = DB::table('leads')
-            ->where('id', $leadId)
+        //$leads = DB::table('leads')
+        //->where('id', $leadId)
+        // ->first();
+
+        $leads = DB::table($tableName)
+        ->where('id', $leadId)
             ->first();
 
         //fetch column details with data types using 
@@ -169,7 +240,7 @@ class LeadService
 
         //fetch existing data
         $existingData = DB::table($tableName)
-            ->where('lead_id', $leadId)
+            ->where('id', $leadId)
             ->first();
 
         return [
@@ -181,34 +252,117 @@ class LeadService
         ];
     }
 
-    public function updateTableData($tableName, $leadId, $formId, $formData)
+
+    public function getTableData($tableName, $leadId)
     {
-        //the table exists in the database
+        //get column names
+        $columns = Schema::getColumnListing($tableName);
+
+        //fetch lead form details
+        $fields = DB::table('lead_form_details')
+            ->where('table_name', $tableName)
+            ->get();
+
+        //fetch lead details with the lead ID
+        $leads = DB::table($tableName)
+            ->where('id', $leadId)
+            ->first();
+
+        //fetch column details with data types using 
+        $columnDetails = DB::select("SHOW COLUMNS FROM $tableName");
+
+        //column map names to their types
+        $columnTypes = [];
+        $dropdownOptions = [];
+        foreach ($columnDetails as $column) {
+            $columnName = $column->Field;
+            $columnType = $column->Type;
+            // Check if the field_value in $fields is 'file' and override the type
+            foreach ($fields as $field) {
+                if ($field->field_value == 'file' && $columnName == $field->field_name) {
+                    $columnType = 'file';
+                    break;
+                }elseif ($field->field_value == 'dropdown' && $columnName == $field->field_name) {
+                    $columnType = 'dropdown';
+                     // split the character length field into an array if it is a dropdown list
+                    if (!empty($field->character_length)) {
+                        $dropdownOptions[$columnName] = explode(',', $field->character_length);
+                    }
+                    break;
+                }
+            }
+            $columnTypes[$columnName] = $columnType;
+        }
+
+        //filter out unwanted fields
+        $filteredColumns = array_filter($columns, function ($column) {
+            return !in_array($column, ['id', 'created_at', 'updated_at']);
+        });
+
+        //fetch existing data
+        $existingData = DB::table($tableName)
+            ->where('id', $leadId)
+            ->first();
+
+        return [
+            'tableName' => $tableName,
+            'filteredColumns' => $filteredColumns,
+            'leads' => $leads,
+            'columnTypes' => $columnTypes,
+            'dropdownOptions' =>$dropdownOptions,
+            'existingData' => $existingData,
+        ];
+    }
+
+    public function updateTableData($request, $tableName, $leadId, $formId, $formData)
+    {
+
         if (!Schema::hasTable($tableName)) {
             throw new \Exception('Table does not exist.');
         }
-
-        //updated_at field if it exists in the table
         if (Schema::hasColumn($tableName, 'updated_at')) {
             $formData['updated_at'] = now();
         }
-
-        //existing data for this lead and form combination
         $existingData = DB::table($tableName)
-            ->where('lead_id', $leadId)
+            ->where('id', $leadId)
             ->where('form_id', $formId)
             ->first();
 
         if (!$existingData) {
             throw new \Exception('Record not found.');
         }
+        $fields = LeadFormDetail::where('table_name', $tableName)->get();
+        foreach ($fields as $field) {
+            $columnName = $field->field_name;
 
-        //update existing table data
+            // chk if the field is a file input
+            if ($field->field_value === 'file' && $request->hasFile($columnName)) {
+                // delete the old file
+                if (!empty($existingData->$columnName)) {
+                    $oldFilePath = getcwd() . '/uploads/files/' . $existingData->$columnName;
+                    if (file_exists($oldFilePath)) {
+                        unlink($oldFilePath); // delete the old file
+                    }
+                }
+
+                //uploadfile
+                $fileNameWithExt = $request->file($columnName)->getClientOriginalName();
+                $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file($columnName)->getClientOriginalExtension();
+                $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+                $request->file($columnName)->move(getcwd() . '/uploads/files', $fileNameToStore);
+                // Store the new file name in the formData array
+                $formData[$columnName] = $fileNameToStore;
+            }
+        }
+
+        // update the custom table data
         DB::table($tableName)
-            ->where('lead_id', $leadId)
+            ->where('id', $leadId)
             ->where('form_id', $formId)
             ->update($formData);
     }
+    
 
     public function searchLeadForm($request)
     {
@@ -256,10 +410,49 @@ class LeadService
         }
     }
 
-
     public function deleteTableRecord($tableName, $id, $leadId)
-    {
-        //the delete operation
+    {   // fetch fields for the table
+        $fields = LeadFormDetail::where('table_name', $tableName)->get();
+        $record = DB::table($tableName)->where('id', $id)->first();
+        if (!$record) {
+            throw new \Exception('Record not found.');
+        }
+        //loop through each field to check for files
+        foreach ($fields as $field) {
+            $columnName = $field->field_name;
+            if ($field->field_value === 'file' && !empty($record->$columnName)) {
+                $filePath = getcwd() . '/uploads/files/' . $record->$columnName;
+
+                if (file_exists($filePath)) {
+                    unlink($filePath); //remove the file from the server
+                }
+            }
+        }
         DB::table($tableName)->where('id', $id)->delete();
     }
+
+    public function search_on_url($request)
+    {
+        $searchTerm = trim($request);
+
+        $query = Lead::query();
+        $query->where(function ($q) use ($searchTerm) {
+            $q->where('title', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('first_name', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('last_name', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('email', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('phone', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('gender', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('dob', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('age', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('lead_rating', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('lead_owner', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('lead_source', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('company', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('industry', 'LIKE', '%' . $searchTerm . '%');
+        });
+
+        return $query->paginate(config('constants.ROW_PER_PAGE'));
+    }
+
 }

@@ -63,10 +63,10 @@
 
                         @csrf
                         <div class="row">
-                        @foreach ($filteredColumns as $column)
-                        @if (!in_array($column, ['lead_id', 'form_id']))
+                            @foreach ($filteredColumns as $column)
+                            @if (!in_array($column, ['lead_id', 'form_id']))
                             <div class="col-md-4">
-                                
+
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark" for="{{ $column }}">{{ ucwords(str_replace('_', ' ', $column)) }}</label>
@@ -84,49 +84,61 @@
                                     $inputType = 'email';
                                     } elseif (strpos($type, 'text') !== false || strpos($type, 'blob') !== false) {
                                     $inputType = 'textarea';
-                                    } // Add more conditions based on your column types
+                                    }elseif ($type == 'file') {
+                                    $inputType = 'file';
+                                    }elseif ($type == 'dropdown') {
+                                    $inputType = 'dropdown';
+                                    }
                                     }
                                     @endphp
                                     @if ($inputType === 'textarea')
                                     <textarea class="form-control form-control-sm  form-control-solid" id="{{ $column }}" name="{{ $column }}"></textarea>
                                     @elseif($inputType === 'date')
                                     <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $column }}">
+                                    @elseif($inputType === 'file')
+                                    <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
+                                    @elseif($inputType === 'dropdown')
+                                    <select class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
+                                        @foreach($dropdownOptions[$column] as $option)
+                                        <option value="{{ $option }}">{{ ucfirst($option) }}</option>
+                                        @endforeach
+                                    </select>
                                     @else
                                     <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
                                     @endif
                                 </div>
-                               
+
                             </div>
                             @endif
                             @endforeach
                         </div>
-                                </div>
-
-
-
-
-
-
-                </div>
-                <!--End Row-->
-                <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <a href="{{ route('promotion-create') }}" class="btn btn-light me-2">Reset</a>
-                    <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes
-                    </button>
                 </div>
 
-                </form>
 
-                <!-- End Form-->
+
+
+
 
             </div>
-            <!--End Card body-->
+            <!--End Row-->
+            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                <a href="{{ route('promotion-create') }}" class="btn btn-light me-2">Reset</a>
+                <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes
+                </button>
+            </div>
 
-            <!--begin::Actions-->
+            </form>
 
-            <!--end::Actions-->
+            <!-- End Form-->
+
         </div>
+        <!--End Card body-->
+
+        <!--begin::Actions-->
+
+        <!--end::Actions-->
     </div>
+</div>
 </div>
 </div>
 <!-- End Forms-->

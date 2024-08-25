@@ -120,7 +120,7 @@ class LeadController  extends Controller
 
 
 
-        $this->leadService->createLead($data, $request->input('form_id'), $dynamicFields);
+        $this->leadService->createLead($data, $request->input('form_id'), $dynamicFields, $request);
 
         return redirect()->route('lead-index')->with('success', 'Lead created successfully.');
     }
@@ -152,14 +152,14 @@ class LeadController  extends Controller
         $lead = $this->leadService->getLeadById($id);
 
         // Fetch dynamic fields data based on lead_id
-        $fields = LeadFormDetail::where('form_id', $lead->form_id)->get();
+        $fields = LeadFormDetail::where('form_id', $lead->form_id)->orderBy('table_name')->get();
         $tableData = [];
         foreach ($fields as $field) {
             $tableName = $field->table_name;
             $tableData[$tableName] = DB::table($tableName)->where('lead_id', $lead->id)->orderBy('id', 'desc')->get();
         }
 
-        return view('leads.show', compact('lead', 'tableData'));
+        return view('leads.show', compact('lead', 'tableData','fields'));
     }
 
 
@@ -170,7 +170,7 @@ class LeadController  extends Controller
         $columns = Schema::getColumnListing($tableName);
 
         // Fetch lead form details
-        $fields = LeadFormDetail::where('table_name', $tableName)->first();
+        $fields = LeadFormDetail::where('table_name', $tableName)->get();
 
         // Fetch lead details associated with the lead ID
         $leads = Lead::where('id', $leadId)->first();
@@ -180,41 +180,62 @@ class LeadController  extends Controller
 
         // Map column names to their types
         $columnTypes = [];
+        $dropdownOptions = [];
         foreach ($columnDetails as $column) {
             $columnName = $column->Field;
             $columnType = $column->Type;
+            // chk if the field_value in $fields is 'file' and override the type
+            foreach ($fields as $field) {
+                if ($field->field_value == 'file' && $columnName == $field->field_name) {
+                    $columnType = 'file';
+                    break;
+                }elseif ($field->field_value == 'dropdown' && $columnName == $field->field_name) {
+                    $columnType = 'dropdown';
+                     // split the character length field into an array if it is a dropdown list
+                    if (!empty($field->character_length)) {
+                        $dropdownOptions[$columnName] = explode(',', $field->character_length);
+                    }
+                    break;
+                }
+            }
             $columnTypes[$columnName] = $columnType;
         }
 
-        // Filter out unwanted fields
+        // filter out unwanted fields
         $filteredColumns = array_filter($columns, function ($column) {
             return !in_array($column, ['id', 'created_at', 'updated_at']);
         });
 
-        // Return view with necessary data
-        return view('leads.add', compact('tableName', 'filteredColumns', 'leads', 'columnTypes'));
+        // return view with necessary data
+        return view('leads.add', compact('tableName', 'filteredColumns', 'leads', 'columnTypes', 'dropdownOptions'));
     }
-
-    
-
-
-    // LeadController.php
 
     public function storeTableData(Request $request)
     {
         $tableName = $request->input('tableName');
         $data = $request->except(['_token', 'tableName']);
-        $lead_id = $request->input('lead_id'); 
-        $form_id =$request->input('form_id'); 
+        $lead_id = $request->input('lead_id');
+        $form_id = $request->input('form_id');
         $data['lead_id'] = $lead_id;
         $data['form_id'] = $form_id;
+        $fields = LeadFormDetail::where('table_name', $tableName)->get();
+        foreach ($fields as $field) {
+            $columnName = $field->field_name;
+            // chk if the field is a file input
+            if ($field->field_value === 'file' && $request->hasFile($columnName)) {
+                $fileNameWithExt = $request->file($columnName)->getClientOriginalName();
+                $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file($columnName)->getClientOriginalExtension();
+                $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+                $request->file($columnName)->move(getcwd() . '/uploads/files', $fileNameToStore);
+                $data[$columnName] = $fileNameToStore;
+            }
+        }
         if (Schema::hasColumns($tableName, ['created_at', 'updated_at'])) {
             $data['created_at'] = now();
             $data['updated_at'] = now();
         }
-
         DB::table($tableName)->insert($data);
-        //return redirect()->back()->with('success', 'Data inserted successfully');
         return redirect()->route('lead-show', ['id' => $lead_id])->with('success', 'Data inserted successfully');
     }
 
@@ -327,28 +348,29 @@ class LeadController  extends Controller
     }
 
  
-   public function updateTableData(Request $request)
+    public function updateTableData(Request $request)
     {
         $tableName = $request->input('tableName');
         $leadId = $request->input('lead_id');
         $formId = $request->input('form_id');
-        $formData = $request->except(['_token', 'tableName', 'lead_id', 'form_id']);
-
-        // Validate $formData if needed
-
+        $leadTableId = $request->input('lead_table_id');
+        $formData = $request->except(['_token', 'tableName', 'lead_id', 'form_id', 'lead_table_id']);
+     
         try {
             DB::beginTransaction();
-
-            $this->leadService->updateTableData($tableName, $leadId, $formId, $formData);
-
+    
+            // Call service method to update the data
+            $this->leadService->updateTableData($request, $tableName, $leadId, $formId, $formData);
+    
             DB::commit();
-
-            return redirect()->route('lead-edit', ['id' => $leadId])->with('success', 'Data updated successfully');
+    
+            return redirect()->route('lead-edit', ['id' => $leadTableId])->with('success', 'Data updated successfully');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withErrors(['error' => 'Error occurred while saving data.']);
+            return back()->withErrors(['error' => 'Error occurred while saving data: ' . $e->getMessage()]);
         }
     }
+    
 
     public function leads_upload_backup(Request $request)
     {
@@ -801,6 +823,18 @@ class LeadController  extends Controller
         }
 
         return $date ? $date->format('Y-m-d') : null;
+    }
+
+    public function search_phone($data) {
+        $searchTerm = trim($data);
+        $formName = [];
+
+        if (empty($searchTerm)) {
+            return redirect()->route('lead-index')->with('error', 'Search Field cannot be blank.');
+        }
+
+        $leads = $this->leadService->search_on_url($data);
+        return view('leads.index', compact('leads', 'formName'));
     }
 
   

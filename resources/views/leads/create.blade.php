@@ -416,7 +416,7 @@
 
                         </div>
                         <div id="dynamic-fields" class="row">
-                        <input type="hidden" name="form_id" value="{{ request()->input('form_id') }}">
+                            <input type="hidden" name="form_id" value="{{ request()->input('form_id') }}">
                             @foreach($fieldsByTable as $tableName => $fields)
                             <div class="col-md-12">
                                 <h5><u>{{ ucwords(str_replace('_', ' ', $tableName)) }}</u></h5>
@@ -434,6 +434,19 @@
                                     <input type="date" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $field->field_name }}">
                                     @elseif($field->field_value == 'text')
                                     <textarea class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}" rows="1"></textarea>
+                                    @elseif($field->field_value == 'file')
+                                    <input type="file" class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}">
+                                    @elseif($field->field_value == 'dropdown')
+                                    @php
+                                    // Split the character_length string into an array of options
+                                    $dropdownOptions = explode(',', $field->character_length);
+                                    @endphp
+
+                                    <select class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}" id="{{ $field->field_name }}">
+                                        @foreach($dropdownOptions as $option)
+                                        <option value="{{ $option }}">{{ ucfirst($option) }}</option>
+                                        @endforeach
+                                    </select>
                                     @endif
                                 </div>
                             </div>
