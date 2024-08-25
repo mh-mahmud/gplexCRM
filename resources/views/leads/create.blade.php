@@ -443,6 +443,7 @@
                                     @endphp
 
                                     <select class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}" id="{{ $field->field_name }}">
+                                    <option value="" selected>Select {{ ucwords(str_replace('_', ' ', $field->field_name)) }}</option>
                                         @foreach($dropdownOptions as $option)
                                         <option value="{{ $option }}">{{ ucfirst($option) }}</option>
                                         @endforeach

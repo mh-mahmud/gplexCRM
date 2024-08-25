@@ -302,8 +302,7 @@
 
 <!--end::Toolbar-->
 <script>
-    let fieldIndex = {
-        {old('fields') ? count(old('fields')) : 1}};
+    let fieldIndex = {{old('fields') ? count(old('fields')) : 1}};
 
     function addField() {
         const fieldsContainer = document.getElementById('fields');

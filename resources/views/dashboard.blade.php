@@ -36,8 +36,7 @@
         Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: '{{ session('
-            success ')}}',
+            text: '{{ session('success')}}',
             showConfirmButton: false,
             timer: 2000
         });
@@ -49,8 +48,7 @@
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: '{{ session('
-            error ')}}',
+            text: '{{ session('error')}}',
             showConfirmButton: false,
             timer: 2000
         });

@@ -424,7 +424,7 @@
                         </div>
 
                         @foreach ($tableData as $tableName => $data)
-                        @if (!empty($data))
+                        @if ($data->isNotEmpty())
                         <div class="mt-4">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h5><u>{{ ucwords(str_replace('_', ' ', $tableName)) }}</u></h5>

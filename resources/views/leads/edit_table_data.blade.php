@@ -98,6 +98,7 @@
                                     @elseif($inputType === 'dropdown')
                                     <select class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
                                         @foreach($dropdownOptions[$column] as $option)
+                                        <option value="" selected>Select {{ ucwords(str_replace('_', ' ', $column)) }}</option>
                                         <option value="{{ $option }}" {{ $existingData->$column == $option ? 'selected' : '' }}>
                                             {{ ucfirst($option) }}
                                         </option>

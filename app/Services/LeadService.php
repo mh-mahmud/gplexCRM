@@ -118,12 +118,14 @@ class LeadService
             }
             // handle default values for missing fields
             else {
-                if (in_array($field->field_value, ['varchar', 'char', 'text', 'file', 'dropdown'])) {
+                if (in_array($field->field_value, ['varchar', 'char', 'text', 'file'])) {
                     $tableData[$tableName][$fieldName] = '';
                 } elseif ($field->field_value == 'int') {
                     $tableData[$tableName][$fieldName] = 0;
                 } elseif ($field->field_value == 'date') {
                     $tableData[$tableName][$fieldName] = '';
+                }elseif ($field->field_value == 'dropdown') {
+                    $tableData[$tableName][$fieldName] = null;
                 } else {
                     $tableData[$tableName][$fieldName] = null;
                 }

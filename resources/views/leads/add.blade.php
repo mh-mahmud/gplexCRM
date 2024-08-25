@@ -99,6 +99,7 @@
                                     <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
                                     @elseif($inputType === 'dropdown')
                                     <select class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
+                                        <option value="" selected>Select {{ ucwords(str_replace('_', ' ', $column)) }}</option>
                                         @foreach($dropdownOptions[$column] as $option)
                                         <option value="{{ $option }}">{{ ucfirst($option) }}</option>
                                         @endforeach
