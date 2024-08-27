@@ -71,7 +71,7 @@
 
         <div class="row">
             <div class="col-xxl-12">
-                <div class="card mt-5">
+                <div class="card mt-4">
                     <!--begin::Header-->
                     <div class="d-flex justify-content-between align-items-start card-header border-0 pt-1">
                         <h3 class="card-title align-items-start flex-column">

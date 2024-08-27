@@ -41,7 +41,7 @@
                 <div class="container-xxl">
                     <div class="row">
                         <div class="col-xxl-8 mx-auto">
-                            <div class="card card-xxl-stretch mt-5">
+                            <div class="card card-xxl-stretch mt-4">
                                 <div class="card-header bg-light bd-cyan">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
@@ -58,7 +58,7 @@
                                     <form class="g-form w-100" action="{{ route('sms-template-store') }}"  method="POST">
                                          @csrf
 
-                                       
+
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="fv-row mb-3">
@@ -98,7 +98,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                          
+
 
 
                                       <div class="card-footer d-flex justify-content-center py-6 px-9">

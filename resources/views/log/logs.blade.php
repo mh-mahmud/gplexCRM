@@ -6,7 +6,7 @@
 @section('content')
 
     <!--begin::Toolbar-->
-   
+
     <!--end::Toolbar-->
     <!--**********************************
                                     Tables
@@ -44,7 +44,7 @@
 
         <div class="row">
             <div class="col-xxl-12">
-                <div class="card mt-5">
+                <div class="card mt-4">
                     <!--begin::Header-->
                     <div class="d-flex justify-content-between align-items-start card-header border-0 pt-1">
                         <h3 class="card-title align-items-start flex-column">
@@ -61,7 +61,7 @@
                             @if ($logs->isNotEmpty())
                                 <!--begin::Table-->
 
-                                
+
                                                     <table class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                                                         <!--begin::Table head-->
                                                         <thead>
@@ -89,7 +89,7 @@
                                                             </td>
                                                         </tr>
                                                         @endforeach
-                                                    
+
                                                         </tbody>
                                                         <!--end::Table body-->
                                                     </table>
