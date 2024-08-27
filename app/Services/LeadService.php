@@ -27,7 +27,7 @@ class LeadService
     }
 
 
-    public function createLead($data, $formId, $dynamicFields)
+    public function createLead_backup($data, $formId, $dynamicFields)
     {
 
         $lead = Lead::create($data);
@@ -52,7 +52,7 @@ class LeadService
                 $tableData[$tableName][$fieldName] = $dynamicFields[$fieldName];
             } else {
                 // missing field default value
-                if ($field->field_value == 'varchar' || $field->field_value == 'char' || $field->field_value == 'text') {
+                if ($field->field_value == 'varchar' || $field->field_value == 'char' || $field->field_value == 'text'|| $field->field_value == 'file'|| $field->field_value == 'dropdown') {
                     $tableData[$tableName][$fieldName] = '';
                 } elseif ($field->field_value == 'int') {
                     $tableData[$tableName][$fieldName] = 0;
@@ -79,6 +79,74 @@ class LeadService
 
         return $lead;
     }
+
+
+    public function createLead($data, $formId, $dynamicFields, $request)
+    {
+        $lead = Lead::create($data);
+        $fields = LeadFormDetail::where('form_id', $formId)->get();
+        $tableData = [];
+
+        // prepare fields and data
+        foreach ($fields as $field) {
+            $fieldName = $field->field_name;
+            $tableName = $field->table_name;
+
+            // initialize table data array
+            if (!isset($tableData[$tableName])) {
+                $tableData[$tableName] = [
+                    'lead_id' => $lead->id,
+                    'form_id' => $formId,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+
+            // handle file upload
+            if ($field->field_value === 'file' && $request->hasFile($fieldName)) {
+                $fileNameWithExt = $request->file($fieldName)->getClientOriginalName();
+                $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file($fieldName)->getClientOriginalExtension();
+                $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+                //$request->file($fieldName)->move(public_path('uploads/files'), $fileNameToStore);
+                $request->file($fieldName)->move(getcwd() . '/uploads/files', $fileNameToStore);
+                $tableData[$tableName][$fieldName] = $fileNameToStore;
+            }
+            // add dynamic field data to the table data array
+            elseif (isset($dynamicFields[$fieldName]) && !empty($dynamicFields[$fieldName])) {
+                $tableData[$tableName][$fieldName] = $dynamicFields[$fieldName];
+            }
+            // handle default values for missing fields
+            else {
+                if (in_array($field->field_value, ['varchar', 'char', 'text', 'file'])) {
+                    $tableData[$tableName][$fieldName] = '';
+                } elseif ($field->field_value == 'int') {
+                    $tableData[$tableName][$fieldName] = 0;
+                } elseif ($field->field_value == 'date') {
+                    $tableData[$tableName][$fieldName] = '';
+                }elseif ($field->field_value == 'dropdown') {
+                    $tableData[$tableName][$fieldName] = null;
+                } else {
+                    $tableData[$tableName][$fieldName] = null;
+                }
+            }
+        }
+
+        // insert dynamic table data
+        foreach ($tableData as $tableName => $data) {
+            // chk if there are any dynamic fields with values to insert
+            $hasDynamicFields = collect($data)->filter(function ($value, $key) {
+                return !in_array($key, ['lead_id', 'form_id', 'created_at', 'updated_at']) && !empty($value);
+            })->isNotEmpty();
+            // insert data fields with values to insert
+            if ($hasDynamicFields) {
+                DB::table($tableName)->insert($data);
+            }
+        }
+
+        return $lead;
+    }
+
 
 
 

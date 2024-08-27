@@ -81,9 +81,50 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-3">
+                        {{--<div class="row mb-3">
                             <div class="col-md-12" style="text-align: right;">
                                 <button type="button" class="btn btn-sm btn-success" onclick="addField()"><i class="bi bi-plus-lg"></i> Add Field</button>
+                            </div>
+                        </div>--}}
+
+                        <div class="row justify-content-center align-items-center mb-3">
+                            <div class="col-md-6 d-flex gap-4">
+                                <div class="form-check form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="radio" value="table_view" id="table_view"
+                                        name="view_type" checked>
+                                    <label class="form-check-label" for="g-qty">
+                                        Table View
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="radio" value="form_view" id="form_view"
+                                        name="view_type">
+                                    <label class="form-check-label" for="g-hours">
+                                        Form View
+                                    </label>
+                                </div>
+
+                                <!-- Form Size Dropdown -->
+                                <div id="form_size_container" class="form-check flex-grow-1 mb-3" style="display: none;">
+                                    <label class="form-label fw-bolder text-dark">Form Size</label>
+                                    <select class="form-control form-control-sm form-control-solid" name="form_size" aria-label="Default select example">
+                                        <option value="">Select Form Size</option>
+                                        <option value="col-md-3">col-md-3</option>
+                                        <option value="col-md-6">col-md-6</option>
+                                        <option value="col-md-9">col-md-9</option>
+                                        <option value="col-md-12">col-md-12</option>
+                                    </select>
+                                    @if ($errors->has('form_size'))
+                                    <span class="text-danger">{{ $errors->first('form_size') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6" style="text-align: right;">
+                                <button type="button" class="btn btn-sm btn-success" onclick="addField()"><i
+                                        class="bi bi-plus-lg"></i> Add Field
+                                </button>
                             </div>
                         </div>
 
@@ -344,5 +385,30 @@
         fieldGroup.remove();
     }
 </script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const formViewRadio = document.getElementById('form_view');
+        const tableViewRadio = document.getElementById('table_view');
+        const formSizeContainer = document.getElementById('form_size_container');
+        //show or hide the form size dropdown based on the selected radio button
+        function toggleFormSizeDropdown() {
+            if (formViewRadio.checked) {
+                formSizeContainer.style.display = 'block';
+            } else {
+                formSizeContainer.style.display = 'none';
+            }
+        }
+        //attach event listeners to the radio buttons
+        formViewRadio.addEventListener('change', toggleFormSizeDropdown);
+        tableViewRadio.addEventListener('change', toggleFormSizeDropdown);
+
+        //initial check on page load
+        toggleFormSizeDropdown();
+    });
+</script>
+
+
 
 @endsection

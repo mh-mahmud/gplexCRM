@@ -15,6 +15,8 @@ class LeadFormDetail extends Model
         'field_name',
         'field_value',
         'table_name',
+        'view_type',
+        'form_size',
         'character_length',
         'is_index',
         'is_null',

@@ -17,7 +17,7 @@ use App\Services\CampaignService;
 use App\Models\Promotion;
 use App\Models\LeadsForm;
 use App\Models\EmailTemplate;
-use App\Models\smsTemplate;
+use App\Models\SmsTemplate;
 use App\Models\CampaignData;
 use App\Models\EmailQueue;
 use App\Models\SmsQueue;
@@ -45,7 +45,7 @@ class CampaignController extends Controller
         $promotions = Promotion::pluck('promotion_title', 'id');
         $formName = LeadsForm::pluck('form_name', 'form_id');
         $email = EmailTemplate::pluck('email_subject', 'id');
-        $sms = smsTemplate::pluck('title', 'id');
+        $sms = SmsTemplate::pluck('title', 'id');
         return view('campaigns.create', compact('promotions', 'formName', 'email', 'sms'));
     }
 
@@ -75,7 +75,7 @@ class CampaignController extends Controller
         $promotions = Promotion::pluck('promotion_title', 'id');
         $formName = LeadsForm::pluck('form_name', 'form_id');
         $email = EmailTemplate::pluck('email_subject', 'id');
-        $sms = smsTemplate::pluck('title', 'id');
+        $sms = SmsTemplate::pluck('title', 'id');
         return view('campaigns.edit', compact('campaign', 'promotions', 'formName', 'email', 'sms'));
     }
 

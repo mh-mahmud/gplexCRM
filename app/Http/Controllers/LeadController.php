@@ -70,7 +70,7 @@ class LeadController  extends Controller
 
         if ($request->has('form_id')) {
             $formId = $request->input('form_id');
-            $fields = LeadFormDetail::where('form_id', $formId)->get();
+            $fields = LeadFormDetail::where('form_id', $formId)->orderBy('table_name')->get();
 
             foreach ($fields as $field) {
                 $fieldsByTable[$field->table_name][] = $field;
@@ -120,7 +120,7 @@ class LeadController  extends Controller
 
 
 
-        $this->leadService->createLead($data, $request->input('form_id'), $dynamicFields);
+        $this->leadService->createLead($data, $request->input('form_id'), $dynamicFields, $request);
 
         return redirect()->route('lead-index')->with('success', 'Lead created successfully.');
     }
@@ -152,7 +152,7 @@ class LeadController  extends Controller
         $lead = $this->leadService->getLeadById($id);
 
         // Fetch dynamic fields data based on lead_id
-        $fields = LeadFormDetail::where('form_id', $lead->form_id)->get();
+        $fields = LeadFormDetail::where('form_id', $lead->form_id)->orderBy('table_name')->get();
         $tableData = [];
         foreach ($fields as $field) {
             $tableName = $field->table_name;

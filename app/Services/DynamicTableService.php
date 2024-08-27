@@ -18,7 +18,7 @@ class DynamicTableService
             ->paginate(config('constants.ROW_PER_PAGE'));
     }
 
-    public function createTable($tableName, $formId, $fields)
+    public function createTable($tableName, $formId, $fields, $viewType, $formSize)
     {
         // table already exists show this message
         if (Schema::hasTable($tableName)) {
@@ -87,6 +87,8 @@ class DynamicTableService
                 'is_index' => $field['is_index'] ?? 0,
                 'is_null' => $field['is_null'] ?? 0,
                 'is_unique' => $field['is_unique'] ?? 0,
+                'view_type' => $viewType,
+                'form_size' => $formSize,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
@@ -363,7 +365,7 @@ class DynamicTableService
 
 
 
-    public function updateTable($tableName, $formId, $fields, $id)
+    public function updateTable($tableName, $formId, $fields, $id,$viewType,$formSize)
     {
         // chk table details exist based on the $id
         $tableDetails = LeadFormDetail::where('table_name', $id)->first();
@@ -418,7 +420,7 @@ class DynamicTableService
         });
 
         // prepare data for lead_form_details table custom function
-        $data = $this->prepareLeadFormDetailsData($fields, $formId, $tableName);
+        $data = $this->prepareLeadFormDetailsData($fields, $formId, $tableName,$viewType,$formSize);
 
         // update lead_form_details table
         $this->updateLeadFormDetails($tableName, $data);
@@ -514,6 +516,68 @@ class DynamicTableService
         }
     }
 
+
+    private function modifyColumn_backup(Blueprint $table, $field, $existingColumnName)
+    {
+        $newName = $field['name']; // New name for the column
+        $type = $field['type'];
+        $length = $field['character_length'] ?? null;
+        $position = $field['position'] ?? null; // Position (after another column or first)
+
+        // Rename the column if the name has changed
+        if ($existingColumnName !== $newName) {
+            $table->renameColumn($existingColumnName, $newName);
+        }
+
+        // Modify the column type and other attributes
+        switch ($type) {
+            case 'varchar':
+                $column = $table->string($newName, $length)->nullable()->change();
+                break;
+            case 'int':
+                $column = $table->integer($newName)->nullable()->change();
+                break;
+            case 'char':
+                $column = $table->char($newName, $length)->nullable()->change();
+                break;
+            case 'date':
+                $column = $table->date($newName)->nullable()->change();
+                break;
+            case 'text':
+                $column = $table->text($newName)->nullable()->change();
+                break;
+            case 'boolean':
+                $column = $table->boolean($newName)->nullable()->change();
+                break;
+            case 'file':
+                $column = $table->string($newName)->nullable()->change();
+                break;
+            case 'dropdown':
+                if (is_string($length)) {
+                    $length = explode(',', $length); // Convert comma-separated string to an array
+                }
+                $column = $table->enum($newName, (array) $length)->nullable()->change();
+                break;
+            default:
+                throw new \Exception("Unsupported column type: {$type}");
+        }
+
+        // Set column as not nullable if specified
+        if (!isset($field['is_null']) || !$field['is_null']) {
+            $column->nullable(false)->change();
+        }
+
+        // Adjust the column position if specified
+        if ($position) {
+            if ($position === 'first') {
+                $column->first();
+            } else {
+                $column->after($position);
+            }
+        }
+    }
+
+
     private function updateConstraints(Blueprint $table, $field, $tableName)
     {
         $name = $field['name'];
@@ -547,7 +611,7 @@ class DynamicTableService
         }
     }
 
-    private function prepareLeadFormDetailsData($fields, $formId, $tableName)
+    private function prepareLeadFormDetailsData($fields, $formId, $tableName,$viewType,$formSize)
     {
         $data = [];
         foreach ($fields as $field) {
@@ -556,6 +620,8 @@ class DynamicTableService
                 'field_name' => $field['name'],
                 'field_value' => $field['type'],
                 'table_name' => $tableName,
+                'view_type' => $viewType,
+                'form_size' => $formSize,
                 'character_length' => $field['character_length'] ?? null,
                 'is_index' => $field['is_index'] ?? 0,
                 'is_null' => $field['is_null'] ?? 0,

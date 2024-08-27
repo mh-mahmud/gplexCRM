@@ -40,14 +40,14 @@
                                             <div class="col-md-12">
                                                 <div class="fv-row mb-5">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Name<span class="text-danger">*</span></label>
+                                                    <label class="form-label fw-bolder text-dark">Subject<span class="text-danger">*</span></label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="name" autocomplete="off" value="{{ old('name') }}" />
+                                                           type="text" name="subject" autocomplete="off" value="{{ old('subject') }}" />
                                                     <!--end::Input-->
-                                                    @if ($errors->has('name'))
-                                                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                                                    @if ($errors->has('subject'))
+                                                        <span class="text-danger">{{ $errors->first('subject') }}</span>
                                                     @endif
                                                     <!--end::Input-->
                                                 </div>
@@ -55,7 +55,7 @@
 
                                             <div class="col-md-12">
                                                 <div class="fv-row mb-5">
-                                                    <label class="form-label fw-bolder text-dark">Related
+                                                    <label class="form-label fw-bolder text-dark">Customer
                                                         <sup><i class="bi bi-asterisk text-danger"></i></sup>
                                                     </label>
                                                     <select class=" form-control form-control-sm form-control-solid"
@@ -72,14 +72,17 @@
 
                                                 <div class="fv-row mb-5">
                                                     <!--begin::Label-->
-                                                    <label for="g-proposal-datepicker"
-                                                           class="form-label fw-bolder text-dark">Date
-                                                        <sup><i class="bi bi-asterisk text-danger"></i></sup>
-                                                    </label>
+                                                    <label class="form-label fw-bolder text-dark">
+                                                        Date<span class="text-danger">*</span></label>
+                
                                                     <!--end::Label-->
-                                                    <input class="form-control form-control-sm form-control-solid ps-12"
-                                                           name="date" placeholder="Pick a date"
-                                                           id="g-proposal-datepicker"/>
+                                                    <!--begin::Input-->
+                                                    <div class="position-relative">
+                                                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" placeholder="Date" name="start_date" value="{{ old('start_date') }}">
+                                                        @if ($errors->has('start_date'))
+                                                        <span class="text-danger">{{ $errors->first('start_date') }}</span>
+                                                        @endif
+                                                    </div>
 
                                                 </div>
 
@@ -88,51 +91,37 @@
                                             <div class="col-xl-6">
 
                                                 <div class="fv-row mb-5">
-                                                    <!--begin::Label-->
-                                                    <label for="g-proposal-opentill"
-                                                           class="form-label fw-bolder text-dark">Open Till
-                                                        <sup><i class="bi bi-asterisk text-danger"></i></sup>
-                                                    </label>
-                                                    <!--end::Label-->
-                                                    <input class="form-control form-control-sm form-control-solid ps-12"
-                                                           name="date" placeholder="Pick a date"
-                                                           id="g-proposal-opentill"/>
-
+                                                    <label class="form-label fw-bolder text-dark">
+                                                        Open Till<span class="text-danger">*</span></label>
+                
+                                                    <div class="position-relative">
+                                                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" placeholder="Open Till" name="end_date" value="{{ old('end_date') }}">
+                                                        @if ($errors->has('end_date'))
+                                                        <span class="text-danger">{{ $errors->first('end_date') }}</span>
+                                                        @endif
+                                                    </div>
                                                 </div>
 
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="fv-row mb-5">
-                                                    <label class="form-label fw-bolder text-dark">Currency
-                                                        <sup><i class="bi bi-asterisk text-danger"></i></sup>
-                                                    </label>
-                                                    <select class=" form-control form-control-sm form-control-solid"
+                                                    <label class="form-label fw-bolder text-dark">Currency<span class="text-danger">*</span></label>
+                                                    <select class=" form-control form-control-sm form-control-solid" id="currency" name="currency"
                                                             aria-label="Default select example">
-                                                        <option selected>Open this select menu</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
+                                                        <option value=''>Select</option>
+                                                        @foreach($currencies as $currency)
+                                                        <option value="{{$currency->id}}" {{ old('currency') == $currency->id ? 'selected' : '' }}>{{ $currency->name }} </option>
+                                                        @endforeach
                                                     </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-5">
-                                                    <label class="form-label fw-bolder text-dark">Discount Type
-                                                    </label>
-                                                    <select class=" form-control form-control-sm form-control-solid"
-                                                            aria-label="Default select example">
-                                                        <option selected>Open this select menu</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
-                                                    </select>
+                                                    @if ($errors->has('currency'))
+                                                        <span class="text-danger">{{ $errors->first('currency') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 
 
-                                            <div class="col-md-6">
+                                            {{-- <div class="col-md-6">
                                                 <div class="form-check form-switch form-check-light">
                                                     <label class="form-label fw-bolder text-dark g-proposal-c-label"
                                                            for="status">Allow Comments</label>
@@ -142,7 +131,7 @@
                                                                name="status" checked="checked"/>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                         </div>
                                     </div>
@@ -153,12 +142,17 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Email</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="email" name="email" autocomplete="off"/>
-                                                    <!--end::Input-->
+                                                    <label class="form-label fw-bolder text-dark">Status<span class="text-danger">*</span></label>
+                                                    <select class=" form-control form-control-sm form-control-solid" id="currency" name="currency"
+                                                            aria-label="Default select example">
+                                                        <option value=''>Select</option>
+                                                        @foreach(config('constants.proposal_status') as $key => $status)
+                                                        <option value="{{$currency->id}}" {{ old('status') == $key ? 'selected' : '' }}>{{ $status }} </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @if ($errors->has('status'))
+                                                        <span class="text-danger">{{ $errors->first('status') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -175,132 +169,78 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="fv-row mb-5">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Last Name</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
+                                                    <label class="form-label fw-bolder text-dark">To<span class="text-danger">*</span></label>
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="email" autocomplete="off"/>
-                                                    <!--end::Input-->
+                                                           type="text" id="send_to" name="send_to" autocomplete="off" value="{{ old('send_to') }}"/>
+                                                    @if ($errors->has('send_to'))
+                                                        <span class="text-danger">{{ $errors->first('send_to') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="fv-row mb-5">
+                                                    <label class="form-label fw-bolder text-dark" for="textarea">Address</label>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" id="address" name="address" rows="3">{{ old('address') }}</textarea>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Password</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
+                                                    <label class="form-label fw-bolder text-dark">City</label>
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="password" name="email" autocomplete="off"/>
-                                                    <!--end::Input-->
+                                                           type="text" id="city" name="city" autocomplete="off" value="{{ old('city') }}"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Retype
-                                                        Password</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
+                                                    <label class="form-label fw-bolder text-dark">State</label>
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="password" name="email" autocomplete="off"/>
-                                                    <!--end::Input-->
+                                                           type="text" id="state" name="state" autocomplete="off" value="{{ old('state') }}"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label  fw-bolder text-dark">File
-                                                        Upload</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="file" name="email" autocomplete="off"/>
-                                                    <!--end::Input-->
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-5">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label  fw-bolder text-dark">Number</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="number" name="email" autocomplete="off"/>
-                                                    <!--end::Input-->
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-5">
-                                                    <label class="form-label fw-bolder text-dark">Select Options</label>
-                                                    <select class=" form-control form-control-sm form-control-solid"
+                                                    <label class="form-label  fw-bolder text-dark">Country</label>
+                                                    <select class=" form-control form-control-sm form-control-solid" id="country_id" name="country_id"
                                                             aria-label="Default select example">
-                                                        <option selected>Open this select menu</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
+                                                        <option value=''>Select</option>
+                                                        @foreach($countries as $country)
+                                                        <option value="{{$country->id}}" {{ old('country_id') == $country->id ? 'selected' : '' }}>{{ $country->name }} </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
-                                                    <label class="form-label fw-bolder text-dark">Select Company</label>
-                                                    <select class=" form-control form-control-sm form-control-solid"
-                                                            aria-label="Default select example">
-                                                        <option selected>Open this select menu</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
-                                                    </select>
+                                                    <label class="form-label fw-bolder text-dark">Zip Code</label>
+                                                    <input class="form-control form-control-sm form-control-solid"
+                                                           type="text" id="zip_code" name="zip_code" autocomplete="off" value="{{ old('zip_code') }}"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-5">
+                                                    <label class="form-label fw-bolder text-dark">Email</label>
+                                                    <input class="form-control form-control-sm form-control-solid"
+                                                           type="email" id="send_to_email" name="send_to_email" autocomplete="off" value="{{ old('send_to_email') }}"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark"
-                                                           for="g-proposal-textarea">Textarea</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid"
-                                                              name="g-proposal-textarea" rows="3"
-                                                              id="g-proposal-textarea"></textarea>
+                                                    <label class="form-label fw-bolder text-dark">Phone</label>
+                                                    <input class="form-control form-control-sm form-control-solid"
+                                                           type="text" id="send_to_phone" name="send_to_phone" autocomplete="off" value="{{ old('send_to_phone') }}"/>
                                                 </div>
                                             </div>
-
-
-                                            <div class="col-md-6">
-
-                                                <div class="fv-row form-label">
-                                                    <label class="col-lg-4 fw-bolder text-dark">Communication</label>
-                                                </div>
-
-                                                <!--begin::Options-->
-                                                <div class="d-flex align-items-center">
-                                                    <!--begin::Option-->
-                                                    <label class="form-check form-check-inline form-check-solid">
-                                                        <input class="form-check-input" name="communication[]"
-                                                               type="checkbox" value="1"/>
-                                                        <span class="fw-bold ps-2 fs-6">Email</span>
-                                                    </label>
-                                                    <!--end::Option-->
-                                                    <!--begin::Option-->
-                                                    <label class="form-check form-check-inline form-check-solid">
-                                                        <input class="form-check-input" name="communication[]"
-                                                               type="checkbox" value="2"/>
-                                                        <span class="fw-bold ps-2 fs-6">Phone</span>
-                                                    </label>
-                                                    <!--end::Option-->
-                                                </div>
-                                                <!--end::Options-->
-                                            </div>
-
-
                                         </div>
                                     </div>
 
