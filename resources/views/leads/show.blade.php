@@ -50,7 +50,8 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: '{{ session('success')}}',
+            text: '{{ session('
+            success ')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -62,7 +63,8 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: '{{ session('error')}}',
+            text: '{{ session('
+            error ')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -285,148 +287,175 @@ use Carbon\Carbon;
                     <div class="card">
                         <div class="card-body">
 
-                            {{-- Display form_view first --}}
                             @foreach ($tableData as $tableName => $data)
-                                @if (!empty($data))
-                                    @php
-                                        $field = $fields->firstWhere('table_name', $tableName);
-                                        $viewType = $field->view_type ?? 'table_view'; // Default to table_view if view_type is not set
-                                    @endphp
+                            @if (!empty($data))
+                            @php
+                            $field = $fields->firstWhere('table_name', $tableName);
+                            $viewType = $field->view_type ?? 'table_view'; // Default to table_view if view_type is not set
 
-                                    @if ($viewType === 'form_view')
-                                        <div class="row">
-                                            <h4 class="text-primary">{{ ucwords(str_replace('_', ' ', $tableName)) }}</h4>
-                                            @foreach ($data as $index => $row)
-                                                @foreach ($row as $key => $value)
-                                                    @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_at', 'updated_at']))
-                                                        @php
-                                                            $field = $fields->where('field_name', $key)->first();
-                                                            $formSize = $field->form_size ?? 'col-md-12';
-                                                            $isFile = $field && $field->field_value === 'file';
+                            // Initialize arrays to store column sizes and form data
+                            //Iterate over all rows to collect column information
+                            $columnSizes = [];
+                            $formData = [];
 
-                                                            // Map the column size to the corresponding mb- class
-                                                            $marginBottomClass = '';
-                                                            switch ($formSize) {
-                                                                case 'col-md-3':
-                                                                    $marginBottomClass = 'mb-3';
-                                                                    break;
-                                                                case 'col-md-6':
-                                                                    $marginBottomClass = 'mb-6';
-                                                                    break;
-                                                                case 'col-md-9':
-                                                                    $marginBottomClass = 'mb-9';
-                                                                    break;
-                                                                case 'col-md-12':
-                                                                default:
-                                                                    $marginBottomClass = 'mb-12';
-                                                                    break;
-                                                            }
-                                                        @endphp
+                            @endphp
+                            @if ($viewType === 'form_view')
+                            @foreach ($data as $row) 
+                            @foreach ($row as $key => $value)
+                            @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_at', 'updated_at']))
+                            @php
+                            $field = $fields->where('field_name', $key)->first();
+                            $formSize = $field->form_size ?? 'col-md-12';
+                            $isFile = $field && $field->field_value === 'file';
 
-                                                        <div class="{{ $formSize }} {{ $marginBottomClass }}">
-                                                            <label class="form-label">{{ ucwords(str_replace('_', ' ', $key)) }}</label>
-                                                            @if ($isFile)
-                                                                <div class="form-control">
-                                                                    @if (!empty($value))
-                                                                        <a href="{{ url('uploads/files/' . $value) }}" download>Download</a>
-                                                                    @else
-                                                                        <span>No file uploaded</span>
-                                                                    @endif
-                                                                </div>
-                                                            @else
-                                                                <div class="form-control">{{ $value }}</div>
-                                                            @endif
-                                                        </div>
-                                                    @endif
-                                                @endforeach
-                                            @endforeach
+                            // Map the column size to the corresponding mb- class
+                            $columnSize = '';
+                            switch ($formSize) {
+                            case 'col-md-3':
+                            $columnSize = '1';
+                            break;
+                            case 'col-md-6':
+                            $columnSize = '2';
+                            break;
+                            case 'col-md-9':
+                            $columnSize = '3';
+                            break;
+                            case 'col-md-12':
+                            default:
+                            $columnSize = '4';
+                            break;
+                            }
+
+                            // Store column sizes and form data
+                            if (!isset($columnSizes[$formSize])) {
+                            $columnSizes[$formSize] = $formSize;
+                            }
+
+                            if (!isset($formData[$formSize])) {
+                            $formData[$formSize] = [];
+                            }
+
+                            $formData[$formSize][] = [
+                            'key' => $key,
+                            'value' => $value,
+                            'isFile' => $isFile
+                            ];
+                            @endphp
+                            @endif
+                            @endforeach
+                            @endforeach
+
+                            <div class="row mb-1">
+                                <strong class="fs-3">{{ ucwords(str_replace('_', ' ', $tableName)) }}</strong>
+                                @foreach ($columnSizes as $formSize)
+                                <div class="{{ $formSize }}">
+                                    <div class="g-lead-details mb-5" style="columns: {{ $columnSize }}">
+                                        @foreach ($formData[$formSize] as $dataItem)
+                                        <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                            <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">
+                                                {{ ucwords(str_replace('_', ' ', $dataItem['key'])) }}
+                                            </span>
+                                            @if ($dataItem['isFile'])
+                                            @if (!empty($dataItem['value']))
+                                            <span><a href="{{ url('uploads/files/' . $dataItem['value']) }}" download>Download</a></span>
+                                            @else
+                                            <span></span>
+                                            @endif
+                                            @else
+                                            <span>{{ $dataItem['value'] }}</span>
+                                            @endif
                                         </div>
-                                    @endif
-                                @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                            @endif
+                            @endif
                             @endforeach
 
                             {{-- Display table_view after form_view --}}
                             @foreach ($tableData as $tableName => $data)
-                                @if (!empty($data))
-                                    @php
-                                        $field = $fields->firstWhere('table_name', $tableName);
-                                        $viewType = $field->view_type ?? 'table_view'; // Default to table_view if view_type is not set
-                                    @endphp
+                            @if (!empty($data))
+                            @php
+                            $field = $fields->firstWhere('table_name', $tableName);
+                            $viewType = $field->view_type ?? 'table_view'; // Default to table_view if view_type is not set
+                            @endphp
 
-                                    @if ($viewType === 'table_view')
-                                        <div>
-                                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                                <strong class="fs-3">{{ ucwords(str_replace('_', ' ', $tableName)) }}</strong>
-                                                <button type="button" class="btn btn-success btn-sm"
-                                                    onclick="window.location='{{ route('leads-add', ['tableName' => $tableName, 'leadId' => $lead->id]) }}'">
-                                                    <i class="bi bi-plus-lg"></i>
-                                                    Add New
-                                                </button>
-                                            </div>
-                                            <div class="table-responsive">
-                                                <table class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
-                                                    <thead>
-                                                        <tr class="fw-bolder text-muted bg-light bd-cyan">
-                                                            @if ($data->isNotEmpty() && $data->first() !== null)
-                                                                <th class="ps-4 min-w-50px">SL</th>
-                                                                @foreach ($data->first() as $key => $value)
-                                                                    @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_at', 'updated_at']))
-                                                                        <th class="ps-4 min-w-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
-                                                                    @endif
-                                                                @endforeach
-                                                                <th class="min-w-50px text-end pe-4">Action</th>
-                                                            @else
-                                                                <th class="ps-4 min-w-150px">&nbsp;</th>
-                                                            @endif
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @if ($data->isNotEmpty())
-                                                            @foreach ($data as $index => $row)
-                                                                <tr>
-                                                                    <td class="ps-4 text-dark fs-6">{{ $index + 1 }}</td>
-                                                                    @foreach ($row as $key => $value)
-                                                                        @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_at', 'updated_at']))
-                                                                            @php
-                                                                                $field = $fields->where('field_name', $key)->first();
-                                                                                $isFile = $field && $field->field_value === 'file';
-                                                                            @endphp
+                            @if ($viewType === 'table_view')
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <strong class="fs-3">{{ ucwords(str_replace('_', ' ', $tableName)) }}</strong>
+                                    <button type="button" class="btn btn-success btn-sm"
+                                        onclick="window.location='{{ route('leads-add', ['tableName' => $tableName, 'leadId' => $lead->id]) }}'">
+                                        <i class="bi bi-plus-lg"></i>
+                                        Add New
+                                    </button>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                                        <thead>
+                                            <tr class="fw-bolder text-muted bg-light bd-cyan">
+                                                @if ($data->isNotEmpty() && $data->first() !== null)
+                                                <th class="ps-4 min-w-50px">SL</th>
+                                                @foreach ($data->first() as $key => $value)
+                                                @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_at', 'updated_at']))
+                                                <th class="ps-4 min-w-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
+                                                @endif
+                                                @endforeach
+                                                <th class="min-w-50px text-end pe-4">Action</th>
+                                                @else
+                                                <th class="ps-4 min-w-150px">&nbsp;</th>
+                                                @endif
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if ($data->isNotEmpty())
+                                            @foreach ($data as $index => $row)
+                                            <tr>
+                                                <td class="ps-4 text-dark fs-6">{{ $index + 1 }}</td>
+                                                @foreach ($row as $key => $value)
+                                                @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_at', 'updated_at']))
+                                                @php
+                                                $field = $fields->where('field_name', $key)->first();
+                                                $isFile = $field && $field->field_value === 'file';
+                                                @endphp
 
-                                                                            @if ($isFile)
-                                                                                <td class="ps-5 text-dark fs-6">
-                                                                                    @if (!empty($value))
-                                                                                        <a href="{{ url('uploads/files/' . $value) }}" download>Download</a>
-                                                                                    @else
-                                                                                        <span></span>
-                                                                                    @endif
-                                                                                </td>
-                                                                            @else
-                                                                                <td class="ps-5 text-dark fs-6">{{ $value }}</td>
-                                                                            @endif
-                                                                        @endif
-                                                                    @endforeach
-                                                                    <td class="text-end pe-4">
-                                                                        <form action="{{ route('delete-tabledata', ['tableName' => $tableName, 'id' => $row->id, 'leadId' => $lead->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?');">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="submit" class="btn btn-danger btn-sm px-2 py-1">
-                                                                                <i class="bi bi-x p-0"></i>
-                                                                            </button>
-                                                                        </form>
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @else
-                                                            <tr>
-                                                                <td colspan="100%" class="text-center">No data available</td>
-                                                            </tr>
-                                                        @endif
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endif
+                                                @if ($isFile)
+                                                <td class="ps-5 text-dark fs-6">
+                                                    @if (!empty($value))
+                                                    <a href="{{ url('uploads/files/' . $value) }}" download>Download</a>
+                                                    @else
+                                                    <span></span>
+                                                    @endif
+                                                </td>
+                                                @else
+                                                <td class="ps-5 text-dark fs-6">{{ $value }}</td>
+                                                @endif
+                                                @endif
+                                                @endforeach
+                                                <td class="text-end pe-4">
+                                                    <form action="{{ route('delete-tabledata', ['tableName' => $tableName, 'id' => $row->id, 'leadId' => $lead->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?');">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm px-2 py-1">
+                                                            <i class="bi bi-x p-0"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                            @else
+                                            <tr>
+                                                <td colspan="100%" class="text-center">No data available</td>
+                                            </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @endif
+                            @endif
                             @endforeach
 
                         </div>
