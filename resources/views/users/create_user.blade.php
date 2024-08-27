@@ -28,7 +28,7 @@
                             <!--begin::Wrapper-->
                             <div class="me-4">
                                 <!--begin::Menu-->
-                               
+
                                 <!--begin::Menu 1-->
                                 <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
                                      id="kt_menu_61484bf44d957">
@@ -138,7 +138,7 @@
                 <div class="container-xxl">
                     <div class="row">
                         <div class="col-xxl-12">
-                            <div class="card card-xxl-stretch mt-8">
+                            <div class="card card-xxl-stretch mt-4">
                                 <div class="card-header">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
@@ -169,7 +169,7 @@
                                                     @if ($errors->has('first_name'))
                                                         <span class="text-danger">{{ $errors->first('first_name') }}</span>
                                                     @endif
-                                                   
+
                                                 </div>
                                             </div>
 
@@ -186,10 +186,10 @@
                                                     @if ($errors->has('last_name'))
                                                         <span class="text-danger">{{ $errors->first('last_name') }}</span>
                                                     @endif
-                                                   
+
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
@@ -203,7 +203,7 @@
                                                     @if ($errors->has('username'))
                                                         <span class="text-danger">{{ $errors->first('username') }}</span>
                                                     @endif
-                                                   
+
                                                 </div>
                                             </div>
 
@@ -235,7 +235,7 @@
                                                 </div>
                                             </div>
 
-                        
+
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
@@ -252,7 +252,7 @@
                                                 </div>
                                             </div>
 
-                                      
+
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
@@ -275,7 +275,7 @@
                                                             aria-label="Default select example">
                                                         <option value="1" selected>Active</option>
                                                         <option value="0">Inactive</option>
-                                                        
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -305,7 +305,7 @@
                                 <!--End Card body-->
 
                                 <!--begin::Actions-->
-                                
+
                                 <!--end::Actions-->
                             </div>
                         </div>
@@ -316,6 +316,6 @@
 
             <!-- </div> -->
             <!--end::Content-->
-           
+
 
 @endsection

@@ -125,7 +125,7 @@
 <div class="container-xxl">
     <div class="row">
         <div class="col-xxl-12">
-            <div class="card card-xxl-stretch mt-5">
+            <div class="card card-xxl-stretch mt-4">
                 <div class="card-header bg-light bd-cyan">
                     <!--begin::Card title-->
                     <div class="card-title m-0">
@@ -289,7 +289,7 @@
                                     <label class="form-label fw-bolder text-dark">Email Template</label>
                                     <select class=" form-control form-control-sm form-control-solid" name="email_template_id" aria-label="Default select example">
                                         <option value="">Select Email Template</option>
-                                       
+
                                         @foreach($email as $id => $name)
                                             <option value="{{ $id }}" {{ $id == $campaign->email_template_id ? 'selected' : '' }}>{{ $name }}</option>
                                         @endforeach

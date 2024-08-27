@@ -297,8 +297,8 @@ body.swal2-height-auto {
 
 /*For All Table td style*/
 .table.gy-3 td {
-    padding-top: 0.2rem;
-    padding-bottom: 0.2rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
 }
 
 /*For Leads (Show Blade PHP) */
