@@ -84,6 +84,30 @@ use Carbon\Carbon;
                             <a class="nav-link @if(session('success') || session('error')) active @endif"
                                 data-bs-toggle="tab" href="#g_lead_table">Lead Table</a>
                         </li>
+
+                        <!-- new tables added by customer panel -->
+                        <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_email">Email</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_sms">SMS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_meeting">Meetings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_proposals">Proposals</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_products">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_invoice">Invoice</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_activity_log">Activity Logs</a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
