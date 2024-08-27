@@ -192,7 +192,7 @@
                                 <div class="col-md-2">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">Is Unique</label>
-                                        <div class="form-check">
+                                        <div class="form-check form-check-custom form-check-sm">
                                             <input class="form-check-input" type="checkbox" name="fields[{{ $index }}][is_unique]" value="1" @if(isset($field['is_unique'])) checked @endif>
                                             <label class="form-check-label">Is Unique</label>
                                         </div>
@@ -201,7 +201,7 @@
 
                                 <div class="col-md-2">
                                     <div class="fv-row mt-8 text-center" style="padding-left:34px">
-                                        <button type="button" class="btn btn-sm btn-danger" onclick="removeField(this)"><i class="bi bi-x-lg"></i></button>
+                                        <button type="button" class="btn btn-sm btn-danger py-1 px-2" onclick="removeField(this)"><i class="bi bi-x-lg pe-0"></i></button>
                                     </div>
                                     <!--end::Input-->
                                 </div>
