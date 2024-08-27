@@ -41,7 +41,7 @@
                 <div class="container-xxl">
                     <div class="row">
                         <div class="col-xxl-12">
-                            <div class="card card-xxl-stretch mt-5">
+                            <div class="card card-xxl-stretch mt-4">
                                 <div class="card-header bg-light bd-cyan">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
@@ -89,10 +89,10 @@
                                                     <label class="form-label fw-bolder text-dark">Status</label>
                                                     <select class=" form-control form-control-sm form-control-solid" name="status"
                                                             aria-label="Default select example">
-                                                        
+
                                                         <option value="1" selected>Active</option>
                                                         <option value="0">Inactive</option>
-                                                        
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -112,7 +112,7 @@
                                 <!--End Card body-->
 
                                 <!--begin::Actions-->
-                                
+
                                 <!--end::Actions-->
                             </div>
                         </div>
@@ -123,6 +123,6 @@
 
             <!-- </div> -->
             <!--end::Content-->
-           
+
 
 @endsection

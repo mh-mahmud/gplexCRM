@@ -41,7 +41,7 @@
                 <div class="container-xxl">
                     <div class="row">
                         <div class="col-xxl-12">
-                            <div class="card card-xxl-stretch mt-5">
+                            <div class="card card-xxl-stretch mt-4">
                                 <div class="card-header bg-light bd-cyan">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
@@ -83,7 +83,7 @@
                                                                 @foreach($parents as $id => $name)
                                                                     <option value="{{ $id }}" {{ $leadsForm->parent_id == $id ? 'selected' : '' }}>{{$name}}</option>
                                                                 @endforeach
-                                                        
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -107,7 +107,7 @@
 
                                      </div>
                                         <!--End Row-->
-                                       
+
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
                                         <a href="{{ route('leadsform-edit', $leadsForm->id) }}" class="btn btn-light me-2">Reset</a>
                                             <button type="submit" class="btn btn-primary"
@@ -123,7 +123,7 @@
                                 <!--End Card body-->
 
                                 <!--begin::Actions-->
-                                
+
                                 <!--end::Actions-->
                             </div>
                         </div>

@@ -84,6 +84,33 @@ use Carbon\Carbon;
                             <a class="nav-link @if(session('success') || session('error')) active @endif"
                                 data-bs-toggle="tab" href="#g_lead_table">Lead Table</a>
                         </li>
+
+                        <!-- new tables added by customer panel -->
+                        <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_email">Email</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_sms">SMS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_meeting">Meetings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_proposals">Proposals</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_products">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_invoice">Invoice</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_tickets">Tickets</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_activity_log">Activity Logs</a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -109,46 +136,46 @@ use Carbon\Carbon;
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Form Name</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Form Name</span>
                                     <span>{{ $lead->leadsForm?->form_name ?? '' }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">First Name</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">First Name</span>
                                     <span>{{ $lead->first_name }}</span>
                                 </div>
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Last Name</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Last Name</span>
                                     <span>{{ $lead->last_name }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Email</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Email</span>
                                     <span>{{ $lead->email }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Phone</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Phone</span>
                                     <span>{{ $lead->phone }}</span>
                                 </div>
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Title</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Title</span>
                                     <span>{{ $lead->title }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Alternative Number</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Alternative Number</span>
                                     <span>{{ $lead->alternative_number }}</span>
                                 </div>
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Gender</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Gender</span>
                                     @if ($lead->gender === 'Male')
                                     <span>Male</span>
                                     @elseif ($lead->gender === 'Female')
@@ -159,7 +186,7 @@ use Carbon\Carbon;
                                 </div>
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Date of Birth</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Date of Birth</span>
                                     <span>
                                         @if($lead->dob)
                                         {{ \Carbon\Carbon::parse($lead->dob)->format('d-m-Y') }}
@@ -168,12 +195,12 @@ use Carbon\Carbon;
                                 </div>
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Age</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Age</span>
                                     <span>{{ $lead->age }}</span>
                                 </div>
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Marital Status</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Marital Status</span>
                                     <span>
                                         @if(in_array($lead->marital_status, config('constants.marital_status')))
                                         {{ $lead->marital_status }}
@@ -184,19 +211,19 @@ use Carbon\Carbon;
                                 </div>
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Address</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Address</span>
                                     <span>{{ $lead->address }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Company</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Company</span>
                                     <span>{{ $lead->company }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Status</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Status</span>
                                     @if ($lead->lead_status === 1)
                                     <span>Active</span>
                                     @elseif ($lead->lead_status === 0)
@@ -206,32 +233,32 @@ use Carbon\Carbon;
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Rating</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Rating</span>
                                     <span>{{ $lead->lead_rating }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Website</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Website</span>
                                     <span>{{ $lead->website }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Owner</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Owner</span>
                                     <span>{{ $lead->lead_owner }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Industry</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Industry</span>
                                     <span>{{ $lead->industry }}</span>
                                 </div>
 
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Source</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Source</span>
                                     <span>
                                         @if(in_array($lead->lead_source, config('constants.lead_source')))
                                         {{ $lead->lead_source }}
@@ -243,37 +270,37 @@ use Carbon\Carbon;
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Street</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Street</span>
                                     <span>{{ $lead->street }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">City</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">City</span>
                                     <span>{{ $lead->city }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Zip</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Zip</span>
                                     <span>{{ $lead->zip }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">State</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">State</span>
                                     <span>{{ $lead->state }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Country</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Country</span>
                                     <span>{{ $lead->country }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Notes</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Notes</span>
                                     <span>{{ $lead->lead_notes }}</span>
                                 </div>
                             </div>
@@ -428,6 +455,86 @@ use Carbon\Carbon;
                                     @endif
                                 @endif
                             @endforeach
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_email" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            Email Section
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_sms" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            SMS Section
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_meeting" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            Meeting Section
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_proposals" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            Proposal Section
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_products" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            Product Section
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_invoice" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            Invoice Section
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_tickets" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            Ticket Section
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_activity_log" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            Activity Log Section
 
                         </div>
                     </div>

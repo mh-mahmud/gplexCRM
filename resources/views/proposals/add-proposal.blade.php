@@ -7,7 +7,7 @@
             						     <!--begin::Toolbar-->
 	  <div class="toolbar" id="kt_toolbar">
             <!--begin::Container-->
-          
+
             <!--end::Container-->
         </div>
         <!--end::Toolbar-->
@@ -18,7 +18,7 @@
         <div class="container-xxl">
             <div class="row">
                 <div class="col-xxl-12">
-                    <div class="card card-xxl-stretch mt-5">
+                    <div class="card card-xxl-stretch mt-4">
                         <div class="card-header bg-light bd-cyan">
                             <!--begin::Card title-->
                             <div class="card-title m-0">
@@ -74,7 +74,7 @@
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">
                                                         Date<span class="text-danger">*</span></label>
-                
+
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <div class="position-relative">
@@ -93,7 +93,7 @@
                                                 <div class="fv-row mb-5">
                                                     <label class="form-label fw-bolder text-dark">
                                                         Open Till<span class="text-danger">*</span></label>
-                
+
                                                     <div class="position-relative">
                                                         <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" placeholder="Open Till" name="end_date" value="{{ old('end_date') }}">
                                                         @if ($errors->has('end_date'))
@@ -272,14 +272,14 @@
                                                     </div>
                                                     <!--end::Both add-ons-->
                                                 </div>
-                
-                
+
+
                                                 <div class="g-right-proposal-table-header d-flex align-items-center gap-3">
-                
+
                                                     <div class="min-w-sm-100px">
                                                         <strong>Show quantity as: </strong>
                                                     </div>
-                
+
                                                     <div class="form-check form-check-custom form-check-solid">
                                                         <input class="form-check-input" type="radio" value="" id="g-qty" name="quantity"/>
                                                         <label class="form-check-label" for="g-qty">
@@ -298,14 +298,14 @@
                                                             qty/hours
                                                         </label>
                                                     </div>
-                
+
                                                 </div>
-                
+
                                             </div>
                                         </div>
-                
-                
-                                        
+
+
+
                                             <div class="table-responsive">
                                                 <!--Proposal Table Preview-->
                                                 <table class="table table-rounded table-sm table-striped border align-middle gs-2">
@@ -351,14 +351,14 @@
                                                             </button>
                                                         </td>
                                                     </tr>
-                
+
                                                     </tbody>
                                                 </table>
-                
+
                                                 <!--End Proposal Table Preview-->
                                             </div>
-                
-                
+
+
                                             <div class="row">
                                                 <div class="col-md-4 ms-auto ">
                                                     <!-- Proposal Calculations-->
@@ -382,7 +382,7 @@
                                                                             <option value="percentage">%</option>
                                                                         </select>
                                                                     </div>
-                
+
                                                                 </th>
                                                                 <td class="text-end"> <strong>BDT</strong> -0.00</td>
                                                             </tr>
@@ -403,10 +403,10 @@
                                                     <!--End Proposal Calculations-->
                                                 </div>
                                             </div>
-                
-                
-                                       
-                
+
+
+
+
                                         <!--begin::Actions-->
                                         <div class="card-footer d-flex justify-content-end py-6 px-9">
                                             <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard
@@ -417,7 +417,7 @@
                                         </div>
                                         <!--end::Actions-->
                                     </div>
-                
+
                                 </div>
 
                             </form>
@@ -428,7 +428,7 @@
                         <!--End Card body-->
 
                         <!--begin::Actions-->
-                        
+
                         <!--end::Actions-->
                     </div>
                 </div>
@@ -439,6 +439,6 @@
 
             <!-- </div> -->
             <!--end::Content-->
-           
+
 
 @endsection

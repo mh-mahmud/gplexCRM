@@ -42,7 +42,7 @@
                 <div class="container-xxl">
                     <div class="row">
                         <div class="col-xxl-12">
-                            <div class="card card-xxl-stretch mt-8">
+                            <div class="card card-xxl-stretch mt-4">
                                 <div class="card-header">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
@@ -127,7 +127,7 @@
                                 <!--End Card body-->
 
                                 <!--begin::Actions-->
-                                
+
                                 <!--end::Actions-->
                             </div>
                         </div>
@@ -138,6 +138,6 @@
 
             <!-- </div> -->
             <!--end::Content-->
-           
+
 
 @endsection

@@ -44,7 +44,7 @@ Forms
 <div class="container-xxl">
     <div class="row">
         <div class="col-xxl-12">
-            <div class="card card-xxl-stretch mt-5">
+            <div class="card card-xxl-stretch mt-4">
                 <div class="card-header bg-light bd-cyan">
                     <!--begin::Card title-->
                     <div class="card-title m-0">
@@ -321,7 +321,7 @@ Forms
         const tableViewRadio = document.getElementById('table_view');
         const formSizeContainer = document.getElementById('form_size_container');
         const formSizeSelect = document.querySelector('select[name="form_size"]');
-        
+
         function toggleFormSize() {
             if (formViewRadio.checked) {
                 formSizeContainer.style.display = 'block';

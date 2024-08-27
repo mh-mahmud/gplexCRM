@@ -28,7 +28,7 @@
                             <!--begin::Wrapper-->
                             <div class="me-4">
                                 <!--begin::Menu-->
-                               
+
                                 <!--begin::Menu 1-->
                                 <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
                                      id="kt_menu_61484bf44d957">
@@ -138,7 +138,7 @@
                 <div class="container-xxl">
                     <div class="row">
                         <div class="col-xxl-12">
-                            <div class="card card-xxl-stretch mt-5">
+                            <div class="card card-xxl-stretch mt-4">
                             <!-- <div class="card card-xxl-stretch"> -->
                                 <div class="card-header bg-light bd-cyan">
                                     <!--begin::Card title-->
@@ -184,7 +184,7 @@
                                                     @if ($errors->has('first_name'))
                                                         <span class="text-danger">{{ $errors->first('first_name') }}</span>
                                                     @endif
-                                                   
+
                                                 </div>
                                             </div>
 
@@ -201,7 +201,7 @@
                                                     @if ($errors->has('last_name'))
                                                         <span class="text-danger">{{ $errors->first('last_name') }}</span>
                                                     @endif
-                                                   
+
                                                 </div>
                                             </div>
 
@@ -218,7 +218,7 @@
                                                 </div>
                                             </div>
 
-                        
+
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
@@ -235,7 +235,7 @@
                                                 </div>
                                             </div>
 
-                                      
+
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
@@ -246,7 +246,7 @@
                                                             <option value="Male">Male</option>
                                                             <option value="Female">Female</option>
                                                             <option value="Other">Other</option>
-                                                        
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -256,7 +256,7 @@
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">
                                                     Date Of Birth</label>
-                                                    
+
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <div class="position-relative">
@@ -269,7 +269,7 @@
                                                 </div>
                                             </div>
 
-    
+
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
@@ -290,10 +290,10 @@
                                                     <label class="form-label fw-bolder text-dark">Status</label>
                                                     <select class=" form-control form-control-sm form-control-solid" name="status"
                                                             aria-label="Default select example">
-                                                        
+
                                                         <option value="1" selected>Active</option>
                                                         <option value="0">Inactive</option>
-                                                        
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -330,7 +330,7 @@
                                 <!--End Card body-->
 
                                 <!--begin::Actions-->
-                                
+
                                 <!--end::Actions-->
                             </div>
                         </div>
@@ -341,6 +341,6 @@
 
             <!-- </div> -->
             <!--end::Content-->
-           
+
 
 @endsection
