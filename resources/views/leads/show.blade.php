@@ -105,6 +105,9 @@ use Carbon\Carbon;
                             <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_invoice">Invoice</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_tickets">Tickets</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_activity_log">Activity Logs</a>
                         </li>
 
@@ -452,6 +455,86 @@ use Carbon\Carbon;
                                     @endif
                                 @endif
                             @endforeach
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_email" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            Email Section
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_sms" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            SMS Section
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_meeting" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            Meeting Section
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_proposals" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            Proposal Section
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_products" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            Product Section
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_invoice" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            Invoice Section
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_tickets" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            Ticket Section
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_activity_log" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+
+                            Activity Log Section
 
                         </div>
                     </div>
