@@ -28,7 +28,7 @@
                             <!--begin::Wrapper-->
                             <div class="me-4">
                                 <!--begin::Menu-->
-                               
+
                                 <!--begin::Menu 1-->
                                 <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
                                      id="kt_menu_61484bf44d957">
@@ -138,7 +138,7 @@
                 <div class="container-xxl">
                     <div class="row">
                         <div class="col-xxl-12">
-                            <div class="card card-xxl-stretch mt-8">
+                            <div class="card card-xxl-stretch mt-4">
                                 <div class="card-header">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
@@ -165,7 +165,7 @@
                                                     @if ($errors->has('role_name'))
                                                         <span class="text-danger">{{ $errors->first('role_name') }}</span>
                                                     @endif
-                                                   
+
                                                 </div>
                                             </div>
 
@@ -203,7 +203,7 @@
                                 <!--End Card body-->
 
                                 <!--begin::Actions-->
-                                
+
                                 <!--end::Actions-->
                             </div>
                         </div>
@@ -214,6 +214,6 @@
 
             <!-- </div> -->
             <!--end::Content-->
-           
+
 
 @endsection

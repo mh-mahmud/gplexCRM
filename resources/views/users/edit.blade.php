@@ -57,7 +57,7 @@
             </div>
             @endif
 
-            
+
         </div>
     </div>
 </div>
@@ -67,7 +67,7 @@
                 <div class="container-xxl">
                     <div class="row">
                         <div class="col-xxl-12">
-                            <div class="card card-xxl-stretch mt-8">
+                            <div class="card card-xxl-stretch mt-4">
                                 <div class="card-header">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
@@ -99,7 +99,7 @@
                                                     @if ($errors->has('first_name'))
                                                         <span class="text-danger">{{ $errors->first('first_name') }}</span>
                                                     @endif
-                                                   
+
                                                 </div>
                                             </div>
 
@@ -116,7 +116,7 @@
                                                     @if ($errors->has('last_name'))
                                                         <span class="text-danger">{{ $errors->first('last_name') }}</span>
                                                     @endif
-                                                   
+
                                                 </div>
                                             </div>
 
@@ -133,7 +133,7 @@
                                                     @if ($errors->has('username'))
                                                         <span class="text-danger">{{ $errors->first('username') }}</span>
                                                     @endif
-                                                   
+
                                                 </div>
                                             </div>
 
@@ -186,7 +186,7 @@
                                             </div>
 
 
-                                           
+
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Set Role</label>
@@ -198,7 +198,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                           
+
 
 
                                             <div class="col-md-6">
@@ -208,7 +208,7 @@
                                                         <option value="">Select status</option>
                                                         <option @if($user_data->status=='1') selected  @endif value="1">Active</option>
                                                         <option @if($user_data->status=='0') selected  @endif value="1" value="0">Inactive</option>
-                                                        
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -238,7 +238,7 @@
                                 <!--End Card body-->
 
                                 <!--begin::Actions-->
-                                
+
                                 <!--end::Actions-->
                             </div>
                         </div>
@@ -249,6 +249,6 @@
 
             <!-- </div> -->
             <!--end::Content-->
-           
+
 
 @endsection
