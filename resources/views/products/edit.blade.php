@@ -41,7 +41,7 @@
                 <div class="container-xxl">
                     <div class="row">
                         <div class="col-xxl-12">
-                            <div class="card card-xxl-stretch mt-5">
+                            <div class="card card-xxl-stretch mt-4">
                                 <div class="card-header bg-light bd-cyan">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
@@ -127,7 +127,7 @@
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Description</label>
                                                     <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{ $product->description }}</textarea>
                                                 </div>
-                                            </div> 
+                                            </div>
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
@@ -136,7 +136,7 @@
                                                            type="file" name="img_path" autocomplete="off" />
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Status</label>
@@ -162,7 +162,7 @@
                                 <!--End Card body-->
 
                                 <!--begin::Actions-->
-                                
+
                                 <!--end::Actions-->
                             </div>
                         </div>
@@ -173,6 +173,6 @@
 
             <!-- </div> -->
             <!--end::Content-->
-           
+
 
 @endsection

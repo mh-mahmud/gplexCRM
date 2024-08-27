@@ -42,7 +42,7 @@
     <div class="container-xxl">
         <div class="row">
             <div class="col-xxl-12">
-                <div class="card card-xxl-stretch mt-5">
+                <div class="card card-xxl-stretch mt-4">
                     <div class="card-header bg-light bd-cyan">
                         <!--begin::Card title-->
                         <div class="card-title m-0">
