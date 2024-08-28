@@ -45,14 +45,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xxl-12 mx-auto">
-                <div class="card mt-5">
+                <div class="card mt-4">
                     <div class="card-header bg-light bd-cyan">
                         <div class="card-title">
                             <h2>Dynamic Table Details</h2>
                         </div>
                     </div>
                     <!--begin::Body-->
-                    <div class="card-body py-3">
+                    <div class="card-body p-1">
 
 
                         <div class="table-responsive">

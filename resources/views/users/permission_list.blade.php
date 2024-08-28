@@ -71,9 +71,9 @@ use Carbon\Carbon;
 
     <div class="row">
         <div class="col-xxl-12">
-            <div class="card mt-5">
+            <div class="card mt-4">
                 <!--begin::Header-->
-                <div class="d-flex justify-content-between align-items-start card-header border-0 pt-1">
+                <div class="d-flex justify-content-between align-items-start card-header border-0 p-1">
                     <h3 class="card-title align-items-start flex-column">
                         <!-- <span class="card-label fw-bolder fs-3 mb-1">Agent List</span>
                             <span class="text-muted mt-1 fw-bold fs-7">Table data here</span> -->
@@ -104,7 +104,7 @@ use Carbon\Carbon;
                 </div>
                 <!--end::Header-->
                 <!--begin::Body-->
-                <div class="card-body py-3">
+                <div class="card-body p-1">
                     <!--begin::Table container-->
                     <div class="table-responsive">
                         <!--begin::Table-->

@@ -143,14 +143,14 @@
         <div class="row">
             <div class="col-xxl-8 mx-auto">
                 <!-- <div class="card mb-5"> -->
-                <div class="card mt-5">
+                <div class="card mt-4">
                     <div class="card-header bg-light bd-cyan">
                         <div class="card-title">
                             <h2>Agent Details</h2>
                         </div>
                     </div>
                     <!--begin::Body-->
-                    <div class="card-body py-3">
+                    <div class="card-body p-1">
 
                         <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                             <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Image</span>

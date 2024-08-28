@@ -168,7 +168,7 @@
 			</div>
 			@endif
 
-			
+
 		</div>
 	</div>
 </div>
@@ -232,7 +232,7 @@
 			</div>
 			<!--end::Header-->
 			<!--begin::Body-->
-			<div class="card-body py-3">
+			 <div class="card-body p-1">
 				<!--begin::Table container-->
 				<div class="table-responsive">
 					<!--begin::Table-->
@@ -328,7 +328,7 @@
 							</td>
 						</tr>
 						@endforeach
-					
+
 						</tbody>
 						<!--end::Table body-->
 					</table>
