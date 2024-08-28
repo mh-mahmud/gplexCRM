@@ -184,7 +184,7 @@ Forms
                                 <div class="col-md-1">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">Is Index</label>
-                                        <div class="form-check">
+                                        <div class="form-check form-check-custom form-check-sm">
                                             <input class="form-check-input" type="checkbox" name="fields[{{ $key }}][is_index]" value="1" {{ $detail->is_index ? 'checked' : '' }}>
                                             <label class="form-check-label">Is Index</label>
                                         </div>
@@ -194,7 +194,7 @@ Forms
                                 <div class="col-md-1">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">Is Null</label>
-                                        <div class="form-check">
+                                        <div class="form-check form-check-custom form-check-sm">
                                             <input class="form-check-input" type="checkbox" name="fields[{{ $key }}][is_null]" value="1" {{ $detail->is_null ? 'checked' : '' }}>
                                             <label class="form-check-label">Is Null</label>
                                         </div>
@@ -204,7 +204,7 @@ Forms
                                 <div class="col-md-2">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">Is Unique</label>
-                                        <div class="form-check">
+                                        <div class="form-check form-check-custom form-check-sm">
                                             <input class="form-check-input" type="checkbox" name="fields[{{ $key }}][is_unique]" value="1" {{ $detail->is_unique ? 'checked' : '' }}>
                                             <label class="form-check-label">Is Unique</label>
                                         </div>
@@ -212,8 +212,8 @@ Forms
                                 </div>
 
                                 <div class="col-md-2">
-                                    <div class="fv-row mt-8 text-center">
-                                        <button type="button" class="btn btn-sm btn-danger" onclick="removeField(this)"><i class="bi bi-x-lg"></i></button>
+                                    <div class="fv-row mt-8 text-center" style="padding-left:34px">
+                                        <button type="button" class="btn btn-sm btn-danger py-1 px-2" onclick="removeField(this)"><i class="bi bi-x-lg pe-0"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -276,7 +276,7 @@ Forms
             <div class="col-md-1">
                 <div class="fv-row mb-3">
                     <label class="form-label fw-bolder text-dark">Is Index</label>
-                    <div class="form-check">
+                    <div class="form-check form-check-custom form-check-sm">
                         <input class="form-check-input" type="checkbox" name="fields[${index}][is_index]" value="1">
                         <label class="form-check-label">Is Index</label>
                     </div>
@@ -285,7 +285,7 @@ Forms
             <div class="col-md-1">
                 <div class="fv-row mb-3">
                     <label class="form-label fw-bolder text-dark">Is Null</label>
-                    <div class="form-check">
+                    <div class="form-check form-check-custom form-check-sm">
                         <input class="form-check-input" type="checkbox" name="fields[${index}][is_null]" value="1">
                         <label class="form-check-label">Is Null</label>
                     </div>
@@ -294,15 +294,15 @@ Forms
             <div class="col-md-2">
                 <div class="fv-row mb-3">
                     <label class="form-label fw-bolder text-dark">Is Unique</label>
-                    <div class="form-check">
+                    <div class="form-check form-check-custom form-check-sm">
                         <input class="form-check-input" type="checkbox" name="fields[${index}][is_unique]" value="1">
                         <label class="form-check-label">Is Unique</label>
                     </div>
                 </div>
             </div>
             <div class="col-md-2">
-                <div class="fv-row mt-8 text-center">
-                    <button type="button" class="btn btn-sm btn-danger" onclick="removeField(this)"><i class="bi bi-x-lg"></i></button>
+                <div class="fv-row mt-8 text-center" style="padding-left:34px">
+                    <button type="button" class="btn btn-sm btn-danger py-1 px-2" onclick="removeField(this)"><i class="bi bi-x-lg pe-0"></i></button>
                 </div>
             </div>
         </div>`;
