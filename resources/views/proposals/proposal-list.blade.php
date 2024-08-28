@@ -73,9 +73,9 @@
 
         <div class="row">
             <div class="col-xxl-12">
-                <div class="card mt-5">
+                <div class="card mt-4">
                     <!--begin::Header-->
-                    <div class="d-flex justify-content-between align-items-start card-header border-0 pt-1">
+                    <div class="d-flex justify-content-between align-items-start card-header border-0 p-1">
                         <h3 class="card-title align-items-start flex-column">
                             <span class="card-label fw-bolder fs-3 mb-1">Prposal List</span>
                             <!-- <span class="text-muted mt-1 fw-bold fs-7">Leads Form data here</span> -->
@@ -110,7 +110,7 @@
                     </div>
                     <!--end::Header-->
                     <!--begin::Body-->
-                    <div class="card-body py-3">
+                    <div class="card-body p-1">
                         <!--begin::Table container-->
                         <div class="table-responsive">
                             @if ($proposals->isNotEmpty())
@@ -142,8 +142,8 @@
                                                     {{ ($proposals->currentPage() - 1) * $proposals->perPage() + $loop->iteration }}
                                                 </td>
                                                 <td class="text-dark fs-6">{{ $proposal->proposal_no }}</td>
-                                                <td class="text-dark fs-6">{{ $proposal->subject }}</td>                                            
-                                                <td class="text-dark fs-6">{{ $proposal->customer_name }}</td>                                    
+                                                <td class="text-dark fs-6">{{ $proposal->subject }}</td>
+                                                <td class="text-dark fs-6">{{ $proposal->customer_name }}</td>
                                                 <td class="text-dark fs-6">{{ $task->total }}</td>
                                                 <td class="text-dark fs-6">
                                                     {{ Carbon::parse($task->start_date)->format('d-m-Y') }}
@@ -180,8 +180,8 @@
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                                         <path d="M9 19c-.512 0-1.024-.195-1.414-.586L3.586 14.414c-.781-.781-.781-2.047 0-2.828s2.047-.781 2.828 0L9 15.172l8.586-8.586c.781-.781 2.047-.781 2.828 0s.781 2.047 0 2.828l-10 10C10.024 18.805 9.512 19 9 19z" fill="black"/>
                                                                       </svg>
-                                                                      
-                                                                  </svg>                                                             
+
+                                                                  </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
                                                         </button>

@@ -24,19 +24,19 @@
                             <!--end::Title-->
                         </div>
                         <!--end::Page title-->
-                       
+
                         <!--begin::Actions-->
-                       
+
                         <!--end::Actions-->
                         <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
 						data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
-						class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">	
+						class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
 							<a href="{{ route('send-email') }}" class="btn btn-sm btn-primary">Send Email</a>
 							<a href="{{ route('send-bulk-email') }}" class="btn btn-sm btn-primary ms-1">Send Bulk Email</a>
 						</div>
                     </div>
                     <!--end::Container-->
-                    
+
                 </div>
                 <!--end::Toolbar-->
                  <!--**********************************
@@ -75,9 +75,9 @@
 
 <div class="row">
 	<div class="col-xxl-12">
-		<div class="card mt-5">
+		<div class="card mt-4">
 			<!--begin::Header-->
-			<div class="d-flex justify-content-between align-items-start card-header border-0 pt-1">
+			<div class="d-flex justify-content-between align-items-start card-header border-0 p-1">
 				<h3 class="card-title align-items-start flex-column">
 					<span class="card-label fw-bolder fs-3 mb-1">Send Email List</span>
 					<!-- <span class="text-muted mt-1 fw-bold fs-7">Leads Form data here</span> -->
@@ -112,7 +112,7 @@
 			</div>
 			<!--end::Header-->
 			<!--begin::Body-->
-			<div class="card-body py-3">
+			 <div class="card-body p-1">
 				<!--begin::Table container-->
 				<div class="table-responsive">
 				@if($emails->isNotEmpty())
@@ -148,7 +148,7 @@
                             </td>
 						</tr>
 						@endforeach
-					
+
 						</tbody>
 						<!--end::Table body-->
 					</table>
@@ -177,7 +177,7 @@
 		</ul> -->
 
     	@include('components.pagination', ['paginator' => $emails])
-	
+
 
 		<!--End Table Pagination-->
 

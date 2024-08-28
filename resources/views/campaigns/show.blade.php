@@ -31,7 +31,7 @@
                             <!--begin::Wrapper-->
                             <div class="me-4">
                                 <!--begin::Menu-->
-                               
+
                                 <!--begin::Menu 1-->
                                 <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
                                      id="kt_menu_61484bf44d957">
@@ -141,16 +141,16 @@
                   <div class="container-fluid">
     <div class="row">
         <div class="col-xxl-8 mx-auto">
-            <div class="card mt-5">
+            <div class="card mt-4">
                 <div class="card-header bg-light bd-cyan">
                     <div class="card-title">
                         <h2>Campaign Details</h2>
                     </div>
                 </div>
                 <!--begin::Body-->
-                <div class="card-body py-3">
+                <div class="card-body p-1">
 
-                
+
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Campaign Name</span>
@@ -209,14 +209,14 @@
                     </div>
 
 
-                    
-                
 
 
-                   
+
+
+
 
                 </div>
-            
+
 
             </div>
 

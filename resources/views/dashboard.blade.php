@@ -308,7 +308,7 @@
                         </div>
                         <!--end::Header-->
                         <!--begin::Body-->
-                        <div class="card-body py-3">
+                        <div class="card-body p-1">
                             <!--begin::Table container-->
                             <div class="table-responsive">
                                 <!--begin::Table-->
@@ -474,7 +474,7 @@
                         </div>
                         <!--end::Header-->
                         <!--begin::Body-->
-                        <div class="card-body py-3">
+                        <div class="card-body p-1">
                             <!--begin::Table container-->
                             <div class="table-responsive">
                                 <!--begin::Table-->
