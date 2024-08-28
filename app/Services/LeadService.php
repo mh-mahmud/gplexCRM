@@ -123,7 +123,7 @@ class LeadService
                 } elseif ($field->field_value == 'int') {
                     $tableData[$tableName][$fieldName] = 0;
                 } elseif ($field->field_value == 'date') {
-                    $tableData[$tableName][$fieldName] = '';
+                    $tableData[$tableName][$fieldName] = null;
                 }elseif ($field->field_value == 'dropdown') {
                     $tableData[$tableName][$fieldName] = null;
                 } else {
