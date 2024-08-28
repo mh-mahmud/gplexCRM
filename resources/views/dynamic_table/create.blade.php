@@ -201,7 +201,7 @@
 
                                 <div class="col-md-2">
                                     <div class="fv-row mt-8 text-center" style="padding-left:34px">
-                                        <button type="button" class="btn btn-sm btn-danger py-1 px-2" onclick="removeField(this)"><i class="bi bi-x-lg pe-0"></i></button>
+                                        <button type="button" class="btn btn-sm btn-danger py-1 py-0" onclick="removeField(this)"><i class="bi bi-x pe-0 pb-1"></i></button>
                                     </div>
                                     <!--end::Input-->
                                 </div>
@@ -278,7 +278,7 @@
 
                                 <div class="col-md-2">
                                     <div class="fv-row mt-8 text-center" style="padding-left:34px">
-                                        <button type="button" class="btn btn-sm btn-danger py-1 px-2" onclick="removeField(this)"><i class="bi bi-x-lg pe-0"></i></button>
+                                        <button type="button" class="btn btn-sm btn-danger p-1 py-0" onclick="removeField(this)"><i class="bi bi-x pe-0 pb-1"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -372,7 +372,7 @@
 
             <div class="col-md-2">
                 <div class="fv-row mt-8 text-center" style="padding-left:34px">
-                    <button type="button" class="btn btn-sm btn-danger py-1 px-2" onclick="removeField(this)"><i class="bi bi-x-lg pe-0"></i></button>
+                    <button type="button" class="btn btn-sm btn-danger p-1 py-0" onclick="removeField(this)"><i class="bi bi-x pe-0 pb-1"></i></button>
                 </div>
             </div>
         `;

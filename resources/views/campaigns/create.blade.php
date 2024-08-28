@@ -151,7 +151,8 @@
                                     <input class="form-control form-control-sm form-control-solid" type="text" name="campaign_title" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('campaign_title'))
-                                    <span class="text-danger">{{ $errors->first('campaign_title') }}</span>
+                                    <span class="text-danger">{{ $errors->first('campaign_title') }}
+                                    </span>
                                     @endif
                                 </div>
                             </div>
