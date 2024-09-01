@@ -81,6 +81,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/leads/delete-tabledata/{tableName}/{id}/{leadId}', [LeadController::class, 'deleteTableData'])->name('delete-tabledata');
 	Route::get('/lead/edit-tabledata/{tableName}/{leadId}/edit', [LeadController::class, 'editTableData'])->name('lead-edit-tabledata');
 	Route::post('/lead/update-table-data', [LeadController::class, 'updateTableData'])->name('update-tabledata');
+	Route::post('/lead/update-table-data-show', [LeadController::class, 'updateTableDatashow'])->name('update-tabledata-show');
 	// search lead on url
 	Route::get('/leads/phone/{phone}', [LeadController::class, 'search_phone'])->name('search-by-phone');
 
