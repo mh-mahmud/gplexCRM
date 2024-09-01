@@ -26,8 +26,8 @@ class DashboardController extends Controller {
 
         $data = [];
         $data['lead_list'] = Lead::where('lead_status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
-        $data['camp_list'] = Campaign::where('status', 1)->orderBy('id', 'desc')->limit(5)->get(['campaign_title', 'start_date', 'end_date', 'campaign_type', 'campaign_limit']);
-        $data['agent_list'] = Agent::where('status', 1)->limit(5)->get(['first_name', 'last_name', 'phone_number', 'agent_id']);
+        $data['camp_list'] = Campaign::where('status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'campaign_title', 'start_date', 'end_date', 'campaign_type', 'campaign_limit']);
+        $data['agent_list'] = Agent::with('user')->where('status', 1)->limit(5)->get();
         $data['todo_list'] = Task::where('status', '!=', 9)->limit(6)->get(['task_name', 'description', 'due_date', 'status']);
 
         $data['count_lead'] = Lead::where('lead_status', 1)->count();
