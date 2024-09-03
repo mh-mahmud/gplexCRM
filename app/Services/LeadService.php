@@ -83,6 +83,7 @@ class LeadService
 
     public function createLead($data, $formId, $dynamicFields, $request)
     {
+        dd("Hello");
         $lead = Lead::create($data);
         $fields = LeadFormDetail::where('form_id', $formId)->get();
         $tableData = [];
