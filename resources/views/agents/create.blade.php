@@ -270,17 +270,10 @@
                                             </div>
 
 
-
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label  fw-bolder text-dark">Image
-                                                        Upload</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="file" name="profile_image" autocomplete="off"/>
-                                                    <!--end::Input-->
+                                                    <label class="form-label  fw-bolder text-dark">Image Upload</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="file" name="profile_image" autocomplete="off"/>
                                                 </div>
                                             </div>
 

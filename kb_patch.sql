@@ -204,6 +204,6 @@ ALTER TABLE `lead_form_details` ADD COLUMN `view_type` VARCHAR(100) NULL AFTER `
 
 ALTER TABLE `lead_form_details` ADD COLUMN `form_size` VARCHAR(100) NULL AFTER `view_type`;
 
-
+ALTER TABLE `leads` ADD `profile_image` VARCHAR(191) NULL DEFAULT NULL AFTER `phone`;
 
 

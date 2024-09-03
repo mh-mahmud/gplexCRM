@@ -83,9 +83,25 @@ class LeadService
 
     public function createLead($data, $formId, $dynamicFields, $request)
     {
-        dd("Hello");
+        //dd($data);
+
+        if ($request->hasFile('profile_image')) {
+            $fileNameWithExt = $request->file('profile_image')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('profile_image')->getClientOriginalExtension();
+            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+            $path = $request->file('profile_image')->move(getcwd().'/uploads/leads', $fileNameToStore);
+            
+        } else {
+            
+            $fileNameToStore = '';
+        }
+
+        $data['profile_image'] = $fileNameToStore;
+
         $lead = Lead::create($data);
         $fields = LeadFormDetail::where('form_id', $formId)->get();
+        // dd($fields);
         $tableData = [];
 
         // prepare fields and data
@@ -132,6 +148,7 @@ class LeadService
                 }
             }
         }
+
 
         // insert dynamic table data
         foreach ($tableData as $tableName => $data) {
@@ -199,8 +216,26 @@ class LeadService
         return $lead;
     }
 
-    public function updateLead($id, $data)
+    public function updateLead($id, $data, $request)
     {
+
+        if ($request->hasFile('profile_image')) {
+
+            $fileNameWithExt = $request->file('profile_image')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('profile_image')->getClientOriginalExtension();
+            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+            $path = $request->file('profile_image')->move(getcwd().'/uploads/leads', $fileNameToStore);
+            $data['profile_image'] = $fileNameToStore;
+
+            // remove previous image
+            $image = Lead::where('id', $id)->first(['profile_image']);
+            if(!empty($image->profile_image)) {
+                $path_kaka = getcwd().'/uploads/leads/'.$image->profile_image;
+                @unlink($path_kaka);
+            }
+        }
+
         $lead = Lead::findOrFail($id);
         $lead->update($data);
         return $lead;

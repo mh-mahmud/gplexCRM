@@ -406,6 +406,16 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-3">
+                                <div class="fv-row mb-3">
+                                    <label class="form-label  fw-bolder text-dark">Profile Image</label>
+                                    <input class="form-control form-control-sm form-control-solid" type="file" name="profile_image" autocomplete="off"/>
+                                    @if(!empty($lead->profile_image))
+                                        <img src="{{ asset('uploads/leads/' . $lead->profile_image) }}" width="150">
+                                    @endif
+                                </div>
+                            </div>
+
                             <!-- Lead Notes -->
                             <div class="col-md-3">
                                 <div class="fv-row mb-3">

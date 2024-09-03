@@ -105,10 +105,10 @@ class LeadController  extends Controller
         $request->validate([
             'first_name' => 'required|string|max:191',
             'last_name' => 'required|string|max:191',
-            'title' => 'required|string|max:191',
             'email' => 'nullable|string|email|max:191|unique:leads,email',
             'phone' => 'required|string|max:191',
             'form_id' => 'required|exists:leads_form,form_id',
+            'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         //dd($request);die();
 
@@ -300,14 +300,14 @@ class LeadController  extends Controller
         $request->validate([
             'first_name' => 'required|string|max:191',
             'last_name' => 'required|string|max:191',
-            'title' => 'required|string|max:191',
             'email' => 'nullable|string|email|max:191|unique:leads,email,' . $id,
             'phone' => 'required|string|max:191',
             'form_id' => 'required|exists:leads_form,form_id',
+            'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = $request->all();
-        $this->leadService->updateLead($id, $data);
+        $this->leadService->updateLead($id, $data, $request);
 
         return redirect()->route('lead-index')->with('success', 'Lead updated successfully.');
     }
