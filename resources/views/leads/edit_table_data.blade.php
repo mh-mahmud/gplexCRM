@@ -60,6 +60,7 @@
                         <input type="hidden" name="tableName" value="{{ $tableName }}">
                         <input type="hidden" name="form_id" value="{{ $leads->form_id }}">
                         <input type="hidden" name="lead_id" value="{{ $leads->id }}">
+                        <input type="hidden" name="last_four_digit" value="{{$lastFourDigits }}">
                         <input type="hidden" name="lead_table_id" value="{{ $leads->lead_id }}">
 
                         @csrf

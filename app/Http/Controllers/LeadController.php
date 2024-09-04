@@ -341,7 +341,10 @@ class LeadController  extends Controller
     {
         try {
             $data = $this->leadService->getTableData($tableName, $leadId);
-            return view('leads.edit_table_data', $data);
+            $previousUrl = url()->previous();
+            $lastFourDigits = substr($previousUrl, -4);
+            //dd($lastSixDigits);die();
+            return view('leads.edit_table_data', $data, array_merge($data, ['lastFourDigits' => $lastFourDigits]));
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Error occurred while retrieving data.']);
         }
@@ -354,7 +357,8 @@ class LeadController  extends Controller
         $leadId = $request->input('lead_id');
         $formId = $request->input('form_id');
         $leadTableId = $request->input('lead_table_id');
-        $formData = $request->except(['_token', 'tableName', 'lead_id', 'form_id', 'lead_table_id']);
+        $lastFourDigits = $request->input('last_four_digit');
+        $formData = $request->except(['_token', 'tableName', 'lead_id', 'form_id', 'lead_table_id','last_four_digit']);
      
         try {
             DB::beginTransaction();
@@ -363,8 +367,14 @@ class LeadController  extends Controller
             $this->leadService->updateTableData($request, $tableName, $leadId, $formId, $formData);
     
             DB::commit();
-    
-            return redirect()->route('lead-edit', ['id' => $leadTableId])->with('success', 'Data updated successfully');
+
+            //return redirect()->route('lead-edit', ['id' => $leadTableId])->with('success', 'Data updated successfully');
+            // Conditional redirection based on the value of $lastFourDigits
+            if ($lastFourDigits === 'edit') {
+                return redirect()->route('lead-edit', ['id' => $leadTableId])->with('success', 'Data updated successfully');
+            } else {
+                return redirect()->route('lead-show', ['id' => $leadTableId])->with('success', 'Data Edited successfully');
+            }
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->withErrors(['error' => 'Error occurred while saving data: ' . $e->getMessage()]);
