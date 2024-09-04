@@ -39,6 +39,7 @@ class Lead extends Model
        'state',
        'country',
        'lead_notes',
+       'profile_image'
    ];
 
     public function leadsForm()

@@ -29,14 +29,11 @@
             <div class="d-flex align-items-center py-1">
 
                 <!--begin::Button-->
-                <a href="{{ route('lead-create') }}" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                   data-bs-target="#add_lead_modal">Create a Lead</a>
+                <a href="{{ route('lead-create') }}" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#add_lead_modal">Create a Lead</a>
                 &nbsp;&nbsp;
-                <a href="{{ route('dynamictable-create') }}" class="btn btn-sm btn-success"
-                   id="kt_toolbar_primary_button">Create Table</a>
+                <a href="{{ route('dynamictable-create') }}" class="btn btn-sm btn-success" id="kt_toolbar_primary_button">Create Table</a>
                 &nbsp;&nbsp;
-                <a href="{{ route('leadsform-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create
-                    Form</a>
+                <a href="{{ route('leadsform-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create Form</a>
 
                 <!--end::Button-->
             </div>

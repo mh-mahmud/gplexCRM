@@ -303,6 +303,14 @@ use Carbon\Carbon;
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Notes</span>
                                     <span>{{ $lead->lead_notes }}</span>
                                 </div>
+
+                                <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Profile Image</span>
+                                    <span></span>
+                                    @if(!empty($lead->profile_image))
+                                        <img src="{{ asset('uploads/leads/' . $lead->profile_image) }}" width="150">
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
