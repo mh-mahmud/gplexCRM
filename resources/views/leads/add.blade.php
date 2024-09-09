@@ -64,7 +64,7 @@
                         @csrf
                         <div class="row">
                             @foreach ($filteredColumns as $column)
-                            @if (!in_array($column, ['lead_id', 'form_id']))
+                            @if (!in_array($column, ['lead_id', 'form_id','created_by']))
                             <div class="col-md-4">
 
                                 <div class="fv-row mb-3">

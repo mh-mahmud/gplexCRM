@@ -206,4 +206,24 @@ ALTER TABLE `lead_form_details` ADD COLUMN `form_size` VARCHAR(100) NULL AFTER `
 
 ALTER TABLE `leads` ADD `profile_image` VARCHAR(191) NULL DEFAULT NULL AFTER `phone`;
 
+CREATE TABLE `meetings` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `lead_id` int(11) unsigned DEFAULT NULL,
+  `recipients` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_by` int(11) unsigned DEFAULT NULL,
+  `meeting_subject` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meeting_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meeting_date` datetime NOT NULL,
+  `meeting_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `attachments` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `duration` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `send_email` tinyint(4) DEFAULT NULL,
+  `send_sms` tinyint(4) DEFAULT NULL,
+  `meeting_feedback` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rating` tinyint(3) unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
+
 

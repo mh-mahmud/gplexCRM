@@ -217,7 +217,7 @@ class UserService {
         return false;
     }
 
-    public function show_user_with_role($id)
+    public function show_user_with_role_backup($id)
     {
         $user = DB::table('users')
         ->join('roles', 'users.role_id', '=', 'roles.id')
@@ -227,11 +227,29 @@ class UserService {
 
         return $user;
     }
+    public function show_user_with_role($id)
+    {
+
+        $user = DB::table('users')->where('id', $id)->first();
+        if ($user && !empty($user->role_id)) {
+            $user = DB::table('users')
+            ->join('roles', 'users.role_id', '=', 'roles.id')
+            ->where('users.id', $id)
+                ->select('users.*', 'roles.name as role_name')
+                ->first();
+
+            return $user;
+        }
+
+        return $user;
+    }
+
 
     public function getUserById($id)
     {
         return User::findOrFail($id);
     }
+    
 
     public function updateUser($id, $request)
 {
@@ -256,7 +274,7 @@ class UserService {
         if ($user->profile_image) {
             $previousImagePath = getcwd().'/uploads/agents/'.$user->profile_image;
             if (file_exists($previousImagePath)) {
-                unlink($previousImagePath);
+                @unlink($previousImagePath);
             }
         }
         $fileNameWithExt = $request->file('profile_image')->getClientOriginalName();

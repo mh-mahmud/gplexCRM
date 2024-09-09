@@ -30,6 +30,7 @@ class DynamicTableService
             $table->id();
             $table->unsignedBigInteger('lead_id');
             $table->char('form_id', 10)->nullable(false);
+            $table->string('created_by', 191)->nullable();
             
             foreach ($fields as $field) {
                 $type = $field['type'];
@@ -375,10 +376,11 @@ class DynamicTableService
 
         // get the exist column names of the table
         $existingColumns = Schema::getColumnListing($tableName);
+        //dd($existingColumns);die();
 
         // collect columns to be deleted
        // $columnsToDelete = array_diff($existingColumns, array_column($fields, 'name'));
-       $columnsToDelete = array_diff($existingColumns, array_merge(array_column($fields, 'name'), ['id', 'lead_id', 'form_id', 'created_at', 'updated_at']));
+       $columnsToDelete = array_diff($existingColumns, array_merge(array_column($fields, 'name'), ['id', 'lead_id', 'form_id','created_by', 'created_at', 'updated_at']));
 
         Schema::table($tableName, function (Blueprint $table) use ($fields, $columnsToDelete, $existingColumns) {
             // Ensure required columns exist
@@ -391,8 +393,12 @@ class DynamicTableService
             if (!in_array('form_id', $existingColumns)) {
                 $table->char('form_id', 10)->nullable(false)->after('lead_id');
             }
+            if (!in_array('created_by', $existingColumns)) {
+                $table->string('created_by', 191)->nullable()->after('form_id');
+                
+            }
             if (!in_array('created_at', $existingColumns)) {
-                $table->timestamp('created_at')->nullable()->after('form_id');
+                $table->timestamp('created_at')->nullable()->after('created_by');
             }
             if (!in_array('updated_at', $existingColumns)) {
                 $table->timestamp('updated_at')->nullable()->after('created_at');

@@ -40,6 +40,30 @@
                                 Forms
                   ***********************************-->
 <div class="container-xxl">
+
+@if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 2500
+            });
+        </script>
+    @endif
+
+    @if ($errors->any())
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                text: '{{ implode(' ', $errors->all()) }}',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        </script>
+    @endif
     <div class="row">
         <div class="col-xxl-12">
             <div class="card card-xxl-stretch mt-4">
