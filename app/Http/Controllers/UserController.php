@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Session;
+use App\Models\User;
+use App\Models\Agent;
 use Auth;
 
 class UserController extends Controller
@@ -316,6 +318,44 @@ class UserController extends Controller
 
         $users = $this->service->searchPermission($request);
         return view('users.permission_list', compact('users'));
+    }
+
+    public function deleteProfileImage($id)
+    {
+        $user = User::find($id);
+
+        // Set profile image to null
+        $user->profile_image = null;
+
+        $user->save();
+
+        //return redirect()->back();
+    }
+
+
+    public function updateProfileImage($id)
+    {
+        //$agent = Agent::findOrFail($id);
+        $user = User::findOrFail($id);
+        //dd($user);die();
+    
+        if ($user->profile_image) {
+            // Path to the image file
+            $imagePath = public_path('uploads/agents/' . $user->profile_image);
+    
+            // Delete the file if it exists
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+    
+            // Update the user record to remove the profile image
+            $user->profile_image = null;
+            $user->save();
+    
+            return response()->json(['success' => true]);
+        }
+    
+        return response()->json(['success' => false, 'message' => 'No profile image found']);
     }
 
     
