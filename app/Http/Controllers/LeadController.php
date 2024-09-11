@@ -67,6 +67,10 @@ class LeadController  extends Controller
         ];
 
         $fieldsByTable = [];
+        $old_phone = null;
+        if(!empty($_GET['phone'])) {
+            $old_phone = $_GET['phone'];
+        }
 
         if ($request->has('form_id')) {
             $formId = $request->input('form_id');
@@ -77,7 +81,7 @@ class LeadController  extends Controller
             }
         }
 
-        return view('leads.create', compact('formName', 'fieldsByTable'));
+        return view('leads.create', compact('formName', 'fieldsByTable', 'old_phone'));
     }
 
 
@@ -844,7 +848,12 @@ class LeadController  extends Controller
         }
 
         $leads = $this->leadService->search_on_url($data);
-        return view('leads.index', compact('leads', 'formName'));
+        if ($leads->isEmpty()) {
+            // dd("ami here");
+            return redirect('/lead/create?form_id=3092288972&phone='.$data)->with('error', 'No data found');
+        }
+        
+        return redirect()->route('lead-show', $leads[0]->id);
     }
 
   

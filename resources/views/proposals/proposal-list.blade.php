@@ -7,39 +7,34 @@
 
     <!--begin::Toolbar-->
     <div class="toolbar" id="kt_toolbar">
-        <!--begin::Container-->
+
         <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
-            <!--begin::Page title-->
-            <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
-                data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
-                class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-                <!--begin::Title-->
-                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Prposals
-                    <!--begin::Separator-->
+
+            <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+
+                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Proposals
+
                     <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
-                    <!--end::Separator-->
-                    <!--begin::Description-->
-                    <small class="text-muted fs-7 fw-bold my-1 ms-1">Prposal List</small>
-                    <!--end::Description-->
+                    <small class="text-muted fs-7 fw-bold my-1 ms-1">Proposal List</small>
                 </h1>
-                <!--end::Title-->
+
             </div>
-            <!--end::Page title-->
-            <!--begin::Actions-->
+
             <div class="d-flex align-items-center py-1">
 
                 <a href="{{ route('add-proposal') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Add Prposal</a>
 
-                <!--end::Button-->
             </div>
-            <!--end::Actions-->
         </div>
-        <!--end::Container-->
+
     </div>
     <!--end::Toolbar-->
+
+
+
     <!--**********************************
-                                    Tables
-                      ***********************************-->
+            Tables
+    ***********************************-->
     <div class="container-fluid">
 
         <!--Table Alert Message-->
@@ -74,42 +69,37 @@
         <div class="row">
             <div class="col-xxl-12">
                 <div class="card mt-4">
-                    <!--begin::Header-->
                     <div class="d-flex justify-content-between align-items-start card-header border-0 p-1">
                         <h3 class="card-title align-items-start flex-column">
                             <span class="card-label fw-bolder fs-3 mb-1">Prposal List</span>
-                            <!-- <span class="text-muted mt-1 fw-bold fs-7">Leads Form data here</span> -->
                         </h3>
 
                         {{-- <div class="d-flex flex-wrap gap-2">
-					<form action="{{ route('sms-template') }}" method="GET" class="d-flex">
-						<!--begin::Input group-->
-						<div class="d-flex align-items-center position-relative">
-							<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-							<span class="svg-icon svg-icon-1 position-absolute ms-6">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-									viewBox="0 0 24 24" fill="none">
-									<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546"
-										height="2" rx="1" transform="rotate(45 17.0365 15.1223)"
-										fill="black"></rect>
-									<path
-										d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-										fill="black"></path>
-								</svg>
-							</span>
-							<!--end::Svg Icon-->
-							<input type="text" name="search" class="form-control form-control-sm form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by SMS Template Title">
-						</div>
-						<!--end::Input group-->
-						<button type="submit" class="btn btn-primary btn-sm ms-2">Search</button>
-					</form>
-				</div> --}}
-
-
-
+        					<form action="{{ route('sms-template') }}" method="GET" class="d-flex">
+        						<!--begin::Input group-->
+        						<div class="d-flex align-items-center position-relative">
+        							<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+        							<span class="svg-icon svg-icon-1 position-absolute ms-6">
+        								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+        									viewBox="0 0 24 24" fill="none">
+        									<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546"
+        										height="2" rx="1" transform="rotate(45 17.0365 15.1223)"
+        										fill="black"></rect>
+        									<path
+        										d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+        										fill="black"></path>
+        								</svg>
+        							</span>
+        							<!--end::Svg Icon-->
+        							<input type="text" name="search" class="form-control form-control-sm form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by SMS Template Title">
+        						</div>
+        						<!--end::Input group-->
+        						<button type="submit" class="btn btn-primary btn-sm ms-2">Search</button>
+        					</form>
+        				</div> --}}
                     </div>
-                    <!--end::Header-->
-                    <!--begin::Body-->
+
+
                     <div class="card-body p-1">
                         <!--begin::Table container-->
                         <div class="table-responsive">
@@ -144,21 +134,21 @@
                                                 <td class="text-dark fs-6">{{ $proposal->proposal_no }}</td>
                                                 <td class="text-dark fs-6">{{ $proposal->subject }}</td>
                                                 <td class="text-dark fs-6">{{ $proposal->customer_name }}</td>
-                                                <td class="text-dark fs-6">{{ $task->total }}</td>
+                                                <td class="text-dark fs-6">{{ $proposal->total }}</td>
                                                 <td class="text-dark fs-6">
-                                                    {{ Carbon::parse($task->start_date)->format('d-m-Y') }}
+                                                    {{ Carbon::parse($proposal->start_date)->format('d-m-Y') }}
                                                 </td>
                                                 <td class="text-dark fs-6">
-                                                    {{ Carbon::parse($task->end_date)->format('d-m-Y') }}
+                                                    {{ Carbon::parse($proposal->end_date)->format('d-m-Y') }}
                                                 </td>
                                                 <td class="text-dark fs-6">
-                                                    {{ Carbon::parse($task->created_at)->format('d-m-Y h:i:s A') }}
+                                                    {{ Carbon::parse($proposal->created_at)->format('d-m-Y h:i:s A') }}
                                                 </td>
                                                 <td>
                                                     <select class=" form-control form-control-sm form-control-solid"
                                                         id="assigned_to" name="status" aria-label="Default select example">
                                                         <option value=''>Select</option>
-                                                        @foreach (config('constants.PROPOSAL_STATUS') as $key => $status)
+                                                        @foreach (config('constants.proposal_status') as $key => $status)
                                                             <option value="{{ $key }}"
                                                                 {{ $proposal->status == $key ? 'selected' : '' }}>
                                                                 {{ $status }}
@@ -185,8 +175,7 @@
                                                             </span>
                                                             <!--end::Svg Icon-->
                                                         </button>
-                                                    <form action="{{ route('delete-prposal', $proposal->id) }}" method="POST"
-                                                        style="display: inline;">
+                                                    <form action="{{ route('delete-proposal', $proposal->id) }}" method="POST" style="display: inline;">
                                                         @csrf
                                                         @method('DELETE')
 														<button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">
@@ -240,7 +229,7 @@
 
     <script>
         function confirmDelete() {
-            if (confirm("Are you sure you want to delete Email Template?")) {
+            if (confirm("Are you sure you want to delete proposal?")) {
                 document.getElementById('deleteForm').submit();
             }
             return false;

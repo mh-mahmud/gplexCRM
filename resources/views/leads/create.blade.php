@@ -105,7 +105,7 @@
                                     <label class="form-label fw-bolder text-dark">Phone</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="phone" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $old_phone }}" name="phone" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('phone'))
                                     <span class="text-danger">{{ $errors->first('phone') }}</span>
