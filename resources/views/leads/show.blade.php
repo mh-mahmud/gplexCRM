@@ -432,10 +432,11 @@ use Carbon\Carbon;
                                                 @if ($data->isNotEmpty() && $data->first() !== null)
                                                 <th class="ps-4 min-w-50px">SL</th>
                                                 @foreach ($data->first() as $key => $value)
-                                                @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_at', 'updated_at']))
+                                                @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_by', 'created_at', 'updated_at']))
                                                 <th class="ps-4 min-w-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
                                                 @endif
                                                 @endforeach
+                                                <th class="ps-4 min-w-150px">Created By</th>
                                                 <th class="min-w-50px text-end pe-4">Action</th>
                                                 @else
                                                 <th class="ps-4 min-w-150px">&nbsp;</th>
@@ -448,7 +449,7 @@ use Carbon\Carbon;
                                             <tr>
                                                 <td class="ps-4 text-dark fs-6">{{ $index + 1 }}</td>
                                                 @foreach ($row as $key => $value)
-                                                @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_at', 'updated_at']))
+                                                @if (!in_array($key, ['id', 'lead_id', 'form_id','created_by', 'created_at', 'updated_at']))
                                                 @php
                                                 $field = $fields->where('field_name', $key)->first();
                                                 $isFile = $field && $field->field_value === 'file';
@@ -472,6 +473,7 @@ use Carbon\Carbon;
                                                 @endif
                                                 @endif
                                                 @endforeach
+                                                <td class="ps-5 text-dark fs-6">{{ $row->created_by }}</td>
                                                 <td class="text-end pe-6">
                                                 <a href="{{ route('lead-edit-tabledata', ['tableName' => $tableName, 'leadId' => $row->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                     <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->

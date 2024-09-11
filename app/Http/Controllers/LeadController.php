@@ -235,9 +235,11 @@ class LeadController  extends Controller
                 $data[$columnName] = $fileNameToStore;
             }
         }
-        if (Schema::hasColumns($tableName, ['created_at', 'updated_at'])) {
+        if (Schema::hasColumns($tableName, ['created_by','created_at', 'updated_at'])) {
+            $data['created_by'] = Auth::user()->username;
             $data['created_at'] = now();
             $data['updated_at'] = now();
+           
         }
         DB::table($tableName)->insert($data);
         return redirect()->route('lead-show', ['id' => $lead_id])->with('success', 'Data inserted successfully');
@@ -381,7 +383,7 @@ class LeadController  extends Controller
             }
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withErrors(['error' => 'Error occurred while saving data: ' . $e->getMessage()]);
+            return back()->withErrors(['error' => '' . $e->getMessage()]);
         }
     }
     

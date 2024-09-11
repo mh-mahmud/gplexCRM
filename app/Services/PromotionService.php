@@ -58,7 +58,7 @@ class PromotionService
             if ($promotion->file_location) {
                 $oldFilePath = getcwd() . '/uploads/files/' . $promotion->file_location;
                 if (file_exists($oldFilePath)) {
-                    unlink($oldFilePath);
+                    @unlink($oldFilePath);
                 }
             }
         } else {
@@ -91,7 +91,7 @@ class PromotionService
         if ($promotion->file_location) {
             $imagePath = getcwd() . '/uploads/files/' . $promotion->file_location;
             if (file_exists($imagePath)) {
-                unlink($imagePath);
+                @unlink($imagePath);
             }
         }
         $promotion->delete();

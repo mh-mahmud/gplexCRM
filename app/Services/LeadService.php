@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\LeadFormDetail;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 
 class LeadService
 {
@@ -81,7 +84,7 @@ class LeadService
     }
 
 
-    public function createLead($data, $formId, $dynamicFields, $request)
+    public function createLead_without_integer_validation($data, $formId, $dynamicFields, $request)
     {
         //dd($data);
 
@@ -164,6 +167,116 @@ class LeadService
 
         return $lead;
     }
+
+
+
+
+
+    public function createLead($data, $formId, $dynamicFields, $request)
+    {
+        $fields = LeadFormDetail::where('form_id', $formId)->get();
+        $rules = [];
+        $messages = [];
+
+        // prepare validation rules based on the form fields
+        foreach ($fields as $field) {
+            $fieldName = $field->field_name;
+
+            if ($field->field_value == 'int') {
+                // define rules for integer fields with a maximum of 10 digits
+                $rules[$fieldName] = 'nullable|integer|digits_between:1,10';
+                $messages["{$fieldName}.digits_between"] = "{$fieldName} must be between 1 and 10 digits.";
+            }
+
+            // add other field validations as necessary (example for strings,files)
+        }
+
+        // Validate the dynamic fields data against the rules
+        $validator = Validator::make($dynamicFields, $rules, $messages);
+
+        if ($validator->fails()) {
+            // Throw validation error with custom message
+            throw new ValidationException($validator);
+        }
+
+        // handle the profile image separately
+        if ($request->hasFile('profile_image')) {
+            $fileNameWithExt = $request->file('profile_image')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('profile_image')->getClientOriginalExtension();
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('profile_image')->move(getcwd() . '/uploads/leads', $fileNameToStore);
+
+            $data['profile_image'] = $fileNameToStore;
+        } else {
+            $data['profile_image'] = '';
+        }
+
+        // create the lead data
+        $lead = Lead::create($data);
+        $tableData = [];
+
+        // prepare fields and data for insertion into dynamic tables
+        foreach ($fields as $field) {
+            $fieldName = $field->field_name;
+            $tableName = $field->table_name;
+
+            // Initialize table data array
+            if (!isset($tableData[$tableName])) {
+                $tableData[$tableName] = [
+                    'lead_id' => $lead->id,
+                    'form_id' => $formId,
+                    'created_by' => Auth::user()->username,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+
+            // handle file upload for dynamic fields
+            if ($field->field_value === 'file' && $request->hasFile($fieldName)) {
+                $fileNameWithExt = $request->file($fieldName)->getClientOriginalName();
+                $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file($fieldName)->getClientOriginalExtension();
+                $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+                $request->file($fieldName)->move(getcwd() . '/uploads/files', $fileNameToStore);
+                $tableData[$tableName][$fieldName] = $fileNameToStore;
+            }
+            // add dynamic field data to the table data array
+            elseif (isset($dynamicFields[$fieldName]) && !empty($dynamicFields[$fieldName])) {
+                $tableData[$tableName][$fieldName] = $dynamicFields[$fieldName];
+            }
+            // handle default values for missing fields
+            else {
+                if (in_array($field->field_value, ['varchar', 'char', 'text', 'file'])) {
+                    $tableData[$tableName][$fieldName] = '';
+                } elseif ($field->field_value == 'int') {
+                    $tableData[$tableName][$fieldName] = 0;
+                } elseif ($field->field_value == 'date') {
+                    $tableData[$tableName][$fieldName] = null;
+                } elseif ($field->field_value == 'dropdown') {
+                    $tableData[$tableName][$fieldName] = null;
+                } else {
+                    $tableData[$tableName][$fieldName] = null;
+                }
+            }
+        }
+
+        // insert dynamic table data
+        foreach ($tableData as $tableName => $data) {
+            // chk if there are any dynamic fields with values to insert
+            $hasDynamicFields = collect($data)->filter(function ($value, $key) {
+                return !in_array($key, ['lead_id', 'form_id','created_by', 'created_at', 'updated_at']) && !empty($value);
+            })->isNotEmpty();
+
+            // insert data fields with values to insert
+            if ($hasDynamicFields) {
+                DB::table($tableName)->insert($data);
+            }
+        }
+
+        return $lead;
+    }
+
 
 
 
@@ -334,7 +447,7 @@ class LeadService
 
         //filter out unwanted fields
         $filteredColumns = array_filter($columns, function ($column) {
-            return !in_array($column, ['id', 'created_at', 'updated_at']);
+            return !in_array($column, ['id','created_by', 'created_at', 'updated_at']);
         });
 
         //fetch existing data
@@ -361,6 +474,9 @@ class LeadService
         if (Schema::hasColumn($tableName, 'updated_at')) {
             $formData['updated_at'] = now();
         }
+        if (Schema::hasColumn($tableName, 'created_by')) {
+            $formData['created_by'] = Auth::user()->username;
+        }
         $existingData = DB::table($tableName)
             ->where('id', $leadId)
             ->where('form_id', $formId)
@@ -370,6 +486,8 @@ class LeadService
             throw new \Exception('Record not found.');
         }
         $fields = LeadFormDetail::where('table_name', $tableName)->get();
+        $rules = [];
+        $messages = [];
         foreach ($fields as $field) {
             $columnName = $field->field_name;
 
@@ -379,7 +497,7 @@ class LeadService
                 if (!empty($existingData->$columnName)) {
                     $oldFilePath = getcwd() . '/uploads/files/' . $existingData->$columnName;
                     if (file_exists($oldFilePath)) {
-                        unlink($oldFilePath); // delete the old file
+                        @unlink($oldFilePath); // delete the old file
                     }
                 }
 
@@ -389,9 +507,22 @@ class LeadService
                 $extension = $request->file($columnName)->getClientOriginalExtension();
                 $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
                 $request->file($columnName)->move(getcwd() . '/uploads/files', $fileNameToStore);
-                // Store the new file name in the formData array
+                // store the new file name in the formData array
                 $formData[$columnName] = $fileNameToStore;
             }
+            // integer validation
+            if ($field->field_value == 'int') {
+                $rules[$columnName] = 'nullable|integer|digits_between:1,10';
+                $messages["{$columnName}.digits_between"] = ucwords(str_replace('_', ' ', $columnName)) . " must be between 1 and 10 digits.";
+            }
+        }
+
+        // Validate the formData against the rules
+        $validator = Validator::make($formData, $rules, $messages);
+
+        if ($validator->fails()) {
+            // Throw validation error with custom message
+            throw new ValidationException($validator);
         }
 
         // update the custom table data
@@ -462,7 +593,7 @@ class LeadService
                 $filePath = getcwd() . '/uploads/files/' . $record->$columnName;
 
                 if (file_exists($filePath)) {
-                    unlink($filePath); //remove the file from the server
+                    @unlink($filePath); //remove the file from the server
                 }
             }
         }

@@ -1,3 +1,4 @@
+@if ($paginator->total() > 10)
 <ul class="pagination mt-5">
     <!-- Previous Page Link -->
     @if ($paginator->onFirstPage())
@@ -22,3 +23,4 @@
         <li class="page-item next disabled"><span class="page-link"><i class="next"></i></span></li>
     @endif
 </ul>
+@endif

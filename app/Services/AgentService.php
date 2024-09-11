@@ -101,7 +101,7 @@ class AgentService
             if ($user->profile_image) {
                 $previousImagePath = getcwd().'/uploads/agents/'.$user->profile_image;
                 if (file_exists($previousImagePath)) {
-                    unlink($previousImagePath);
+                    @unlink($previousImagePath);
                 }
             }
             $fileNameWithExt = $request->file('profile_image')->getClientOriginalName();
@@ -149,7 +149,7 @@ class AgentService
         if ($user->profile_image) {
             $imagePath = getcwd().'/uploads/agents/'.$user->profile_image;
             if (file_exists($imagePath)) {
-                unlink($imagePath);
+                @unlink($imagePath);
             }
         }
         $agent->delete();
