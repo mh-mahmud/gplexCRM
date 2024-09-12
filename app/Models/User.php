@@ -90,7 +90,7 @@ class User extends Authenticatable
         return null;
     }
 
-    public function hasPermission($permission)
+    public function hasPermission_rokib($permission)
     {
         //users role permission details (JSON format data)
         $permission_details = $this->get_menu_data();
@@ -106,4 +106,9 @@ class User extends Authenticatable
 
 
     
+    public function hasPermission($permission) {
+        $ses_name = 'user_menu_data_' . Auth::user()->role_id;
+        $get_sess =  Session::get($ses_name);
+        dd($get_sess);
+    }
 }
