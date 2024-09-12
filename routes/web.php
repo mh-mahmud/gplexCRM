@@ -250,6 +250,8 @@ Route::group(['middleware' => 'auth'], function () {
 	// Proposal routes start
 	Route::get('proposal-list', [ProposalController::class, 'proposalList'])->name('proposal-list');
 	Route::get('add-proposal', [ProposalController::class, 'addProposal'])->name('add-proposal');
+	Route::delete('delete-proposal/{id}', [ProposalController::class, 'countryDelete'])->name('delete-proposal');
+	
 
 
 	// Proposal routes end

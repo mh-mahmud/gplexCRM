@@ -17,7 +17,7 @@ class ProposalService
         $sql = Proposal::query();
         $data = $request->all();
         if(!empty($data["search"])) {
-            $sql->where('title','like', '%' . $data["search"] . '%');
+            $sql->where('subject','like', '%' . $data["search"] . '%');
 
         }
         if (isset($data['paginate']) && $data['paginate'] == false) {
