@@ -335,20 +335,16 @@ class UserController extends Controller
 
     public function updateProfileImage($id)
     {
-        //$agent = Agent::findOrFail($id);
         $user = User::findOrFail($id);
-        //dd($user);die();
-    
         if ($user->profile_image) {
-            // Path to the image file
-            $imagePath = public_path('uploads/agents/' . $user->profile_image);
-    
-            // Delete the file if it exists
+            // path to the image file
+            //$imagePath = public_path('uploads/agents/' . $user->profile_image);
+            $imagePath =getcwd().'/uploads/agents/'.$user->profile_image;
+            // delete the file if it exists
             if (file_exists($imagePath)) {
                 unlink($imagePath);
             }
-    
-            // Update the user record to remove the profile image
+            //Update the user record to remove the profile image
             $user->profile_image = null;
             $user->save();
     

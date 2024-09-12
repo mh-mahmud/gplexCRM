@@ -226,4 +226,6 @@ CREATE TABLE `meetings` (
   PRIMARY KEY (`id`)
 )
 
+ALTER TABLE `leads` ADD COLUMN `created_by` INT(11) UNSIGNED NULL AFTER `lead_notes`;
+
 

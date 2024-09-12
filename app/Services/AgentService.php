@@ -8,10 +8,19 @@ use App\Models\Agent;
 class AgentService
 {
 
-    public function getAllAgents()
+    public function getAllAgents_backup()
     {
         return Agent::orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
     }
+
+    public function getAllAgents()
+    {
+        return Agent::select('agents.*', 'users.username')
+        ->join('users', 'users.id', '=', 'agents.user_id')
+        ->orderBy('agents.created_at', 'desc') 
+        ->paginate(config('constants.ROW_PER_PAGE')); 
+    }
+
     
 
 
@@ -35,7 +44,7 @@ class AgentService
             'email' => $request->email,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'username' =>  $agent_id,
+            'username' =>  $request->username,
             'phone_number' => $request->phone_number,
             'gender' => $request->gender,
             'address' => $request->address,
@@ -88,6 +97,7 @@ class AgentService
         $user = User::findOrFail($agent->user_id);
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
+        $user->username = $request->username;
         //$user->username = $id;
         $user->email = $request->email;
         $user->gender = $request->gender;
@@ -95,7 +105,10 @@ class AgentService
         $user->address = $request->address;
         $user->status = $request->status;
         $user->user_type ='agent';
-        $user->password = bcrypt($request->password);
+        //$user->password = bcrypt($request->password);
+        if(!empty($request->password)) {
+			$user->password = bcrypt($request->password);
+		}
         if ($request->hasFile('profile_image')) {
            
             if ($user->profile_image) {

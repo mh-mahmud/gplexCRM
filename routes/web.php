@@ -84,6 +84,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/lead/update-table-data-show', [LeadController::class, 'updateTableDatashow'])->name('update-tabledata-show');
 	// search lead on url
 	Route::get('/leads/phone/{phone}', [LeadController::class, 'search_phone'])->name('search-by-phone');
+	Route::put('/leads/{id}/update-lead-profile-image', [LeadController::class, 'updateLeadProfileImage'])->name('update-lead-profile-image');
 
 	//Route::get('/leads/add', 'LeadController@add')->name('leads.add');
 	

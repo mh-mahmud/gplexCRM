@@ -213,6 +213,7 @@ class LeadService
         }
 
         // create the lead data
+        $data['created_by'] = Auth::user()->id;
         $lead = Lead::create($data);
         $tableData = [];
 

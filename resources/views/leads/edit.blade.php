@@ -410,9 +410,18 @@
                                 <div class="fv-row mb-3">
                                     <label class="form-label  fw-bolder text-dark">Profile Image</label>
                                     <input class="form-control form-control-sm form-control-solid" type="file" name="profile_image" autocomplete="off"/>
-                                    @if(!empty($lead->profile_image))
-                                        <img src="{{ asset('uploads/leads/' . $lead->profile_image) }}" width="150">
+                                    @if ($lead->profile_image)
+                                    <div class="mt-3" id="profile-image-container">
+                                        <img src="{{ asset('uploads/leads/' . $lead->profile_image) }}" alt="Profile Image" width="100px">
+                                        <button type="button" class="btn btn-danger btn-sm p-2" id="delete-profile-image">
+                                            <i class="fas fa-trash-alt pe-0"></i>
+                                        </button>
+                                    </div>
+
+                                    @else
+                                        <img alt="Logo" src="{{ asset('uploads/noimage.jpg') }}" width="100px"/>
                                     @endif
+                                    
                                 </div>
                             </div>
 
@@ -513,6 +522,34 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#delete-profile-image').click(function() {
+            if (confirm('Are you sure you want to delete your Lead profile image?')) {
+                $.ajax({
+                    url: '{{ route('update-lead-profile-image', $lead->id) }}', // Using the correct route
+                    type: 'PUT', // Correct HTTP method
+                    data: {
+                        _token: '{{ csrf_token() }}' // Include CSRF token
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#profile-image-container').remove();
+                           // alert('Profile image deleted successfully');
+                        } else {
+                            alert('Error deleting profile image');
+                        }
+                    },
+                    error: function() {
+                        alert('Error deleting profile image');
+                    }
+                });
+            }
+        });
+    });
+    </script>
 <!-- End Forms-->
 
 

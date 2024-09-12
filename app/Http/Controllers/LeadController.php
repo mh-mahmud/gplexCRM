@@ -849,6 +849,30 @@ class LeadController  extends Controller
         return view('leads.index', compact('leads', 'formName'));
     }
 
+
+    public function updateLeadProfileImage($id)
+    {
+        $lead = Lead::findOrFail($id);
+        if ($lead->profile_image) {
+            // Path to the image file
+            //$imagePath = public_path('uploads/agents/' . $lead->profile_image);
+            $imagePath =getcwd().'/uploads/leads/'.$lead->profile_image;
+    
+            // Delete the file if it exists
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+    
+            // Update the user record to remove the profile image
+            $lead->profile_image = null;
+            $lead->save();
+    
+            return response()->json(['success' => true]);
+        }
+    
+        return response()->json(['success' => false, 'message' => 'No profile image found']);
+    }
+
   
 
     

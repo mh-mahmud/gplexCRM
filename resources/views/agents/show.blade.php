@@ -175,6 +175,10 @@
                             <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Last Name</span>
                             <span>{{ $user->last_name }}</span>
                         </div>
+                        <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                            <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Username</span>
+                            <span>{{ $user->username }}</span>
+                        </div>
 
                         <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                             <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Email</span>

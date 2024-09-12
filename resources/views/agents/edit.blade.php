@@ -212,6 +212,23 @@
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">
+                                        Username</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control form-control-sm form-control-solid"
+                                        type="text" name="username" value="{{$user->username }}" autocomplete="off" />
+                                    <!--end::Input-->
+                                    @if ($errors->has('username'))
+                                    <span class="text-danger">{{ $errors->first('username') }}</span>
+                                    @endif
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="fv-row mb-3">
+                                    <!--begin::Label-->
+                                    <label class="form-label fw-bolder text-dark">
                                         Phone Number</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
@@ -293,8 +310,8 @@
                                     @if ($user->profile_image)
                                     <div class="mt-3" id="profile-image-container">
                                         <img src="{{ asset('uploads/agents/' . $user->profile_image) }}" alt="Profile Image" width="100px">
-                                        <button type="button" class="btn btn-danger btn-sm" id="delete-profile-image">
-                                            <i class="fas fa-trash-alt"></i>
+                                        <button type="button" class="btn btn-danger btn-sm p-2" id="delete-profile-image">
+                                            <i class="fas fa-trash-alt pe-0"></i>
                                         </button>
                                     </div>
 

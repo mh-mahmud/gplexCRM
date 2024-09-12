@@ -223,9 +223,10 @@
                                         <th class="min-w-150px">Agent ID</th>
                                         <th class="min-w-140px">First Name</th>
                                         <th class="min-w-140px">Last Name</th>
+                                        <th class="min-w-140px">Username</th>
                                         <th class="min-w-120px">Email</th>
                                         <th class="min-w-120px">Phone Number</th>
-                                        <th class="min-w-200px">Date Of Birth</th>
+                                        {{--<th class="min-w-200px">Date Of Birth</th>--}}
                                         <th class="min-w-120px">Status</th>
                                         <th class="min-w-100px text-end text-end-new">Actions</th>
                                     </tr>
@@ -240,13 +241,14 @@
                                             <td class="text-dark fs-6">{{$agent->agent_id}}</td>
                                             <td class="text-dark fs-6 w-200px">{{$agent->first_name }}</td>
                                             <td class="text-dark fs-6 w-200px">{{$agent->last_name }}</td>
+                                            <td class="text-dark fs-6 w-200px">{{$agent->username }}</td>
                                             <td class="text-dark fs-6">{{$agent->user->email}}</td>
                                             <td class="text-dark fs-6">{{$agent->phone_number}}</td>
-                                            <td class="text-dark fs-6 w-200px">
+                                            {{--<td class="text-dark fs-6 w-200px">
                                                 @if($agent->birth_day)
                                                     {{ \Carbon\Carbon::parse($agent->birth_day)->format('d-m-Y') }}
                                                 @endif
-                                            </td>
+                                            </td>--}}
 
                                             <td>
                                                 @if ($agent->status == 1)

@@ -120,6 +120,19 @@
                                     <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $column }}" value="{{ $value }}">
                                     @elseif($inputType === 'file')
                                     <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
+                                    {{--@if (!empty($existingData->$column))
+                                    <div class="mt-3" id="profile-image-container">
+                                    <a href="{{ asset('uploads/files/' . $existingData->$column) }}" target="_blank">
+                                    {{ $existingData->$column }}
+                                    </a>
+                                        <button type="button" class="btn btn-danger btn-sm p-2" id="delete-profile-image">
+                                            <i class="fas fa-trash-alt pe-0"></i>
+                                        </button>
+                                    </div>
+
+                                    @else
+                                        <img alt="Logo" src="{{ asset('uploads/noimage.jpg') }}" width="100px"/>
+                                    @endif--}}
                                     @elseif($inputType === 'dropdown')
                                     <select class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
                                     <option value="" selected>Select {{ ucwords(str_replace('_', ' ', $column)) }}</option>
