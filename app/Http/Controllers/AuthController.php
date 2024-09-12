@@ -78,6 +78,12 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
+        //If the user is inactive
+        $user = User::where('username', $request->username)->where('status', 1)->first();
+        if (empty($user)) {
+            return redirect("login")->with('error', 'You are an inactive user');
+        }
+
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials)) {

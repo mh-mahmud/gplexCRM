@@ -207,7 +207,7 @@
                                                     <select class=" form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
                                                         <option value="">Select status</option>
                                                         <option @if($user_data->status=='1') selected  @endif value="1">Active</option>
-                                                        <option @if($user_data->status=='0') selected  @endif value="1" value="0">Inactive</option>
+                                                        <option @if($user_data->status=='0') selected  @endif value="0">Inactive</option>
 
                                                     </select>
                                                 </div>
@@ -223,11 +223,9 @@
 
                                         </div>
                                         <!--End Row-->
-                                      <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <a href="{{ route('create-user') }}" class="btn btn-light btn-active-light-primary me-2">Reset</a>
-                                            <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Submit
-                                            </button>
+                                        <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                            {{--<a href="{{ route('create-user') }}" class="btn btn-light btn-active-light-primary me-2">Reset</a>--}}
+                                            <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Submit</button>
                                         </div>
 
                                     </form>
