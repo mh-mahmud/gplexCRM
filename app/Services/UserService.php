@@ -146,21 +146,29 @@ class UserService {
         unset($all_req['_token']);
         $data_set = [];
         $id_set = [];
+        $menu_set = [];
 
         foreach($all_req as $key=>$val) {
             for($i=0; $i<count($val); $i++) {
-                $menu_details = Menu::where('id', $val[$i])->first(['name','sub_name']);
+                $menu_details = Menu::where('id', $val[$i])->first(['name','sub_name', 'show_in_menu']);
                 $data_set[$key][$menu_details->sub_name] = $menu_details->name;
                 $id_set[$key][] = $val[$i];
+
+                if($menu_details->show_in_menu==1) {
+                    $menu_set[$key][$menu_details->sub_name] = $menu_details->name;
+                }
             }
         }
 
         $json_data = json_encode($data_set);
         $id_data = json_encode($id_set);
+        $menu_data = json_encode($menu_set);
 
         $role = Role::create([
             'name' => $role_name,
+            'menu_details' => $menu_data,
             'permission_details' => $json_data,
+            'menu_details' => $json_data,
             'permission_ids' => $id_data,
             'slug' => strtolower(str_replace(" ", "_", $role_name)),
             'status' => 1
@@ -194,23 +202,33 @@ class UserService {
         unset($all_req['id']);
         $data_set = [];
         $id_set = [];
+        $menu_set = [];
 
         foreach($all_req as $key=>$val) {
             for($i=0; $i<count($val); $i++) {
-                $menu_details = Menu::where('id', $val[$i])->first(['name','sub_name']);
+                $menu_details = Menu::where('id', $val[$i])->first(['name','sub_name', 'show_in_menu']);
                 $data_set[$key][$menu_details->sub_name] = $menu_details->name;
                 $id_set[$key][] = $val[$i];
+
+                if($menu_details->show_in_menu==1) {
+                    $menu_set[$key][$menu_details->sub_name] = $menu_details->name;
+                }
             }
         }
         $json_data = json_encode($data_set);
         $id_data = json_encode($id_set);
+        $menu_data = json_encode($menu_set);
+
+        // dd($menu_data);
 
         $role = Role::findOrFail($id);
         $role->name = $role_name;
         $role->permission_details = $json_data;
+        $role->menu_details = $menu_data;
         $role->permission_ids = $id_data;
         $role->slug = strtolower(str_replace(" ", "_", $role_name));
         $role->status = 1;
+        // dd("Loka");
         if($role->save()) {
             return $role;
         }

@@ -25,7 +25,7 @@ class AgentController extends Controller {
     public function __construct(AgentService $agentService)
     {
         $this->agentService = $agentService;
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
 	public function index()
