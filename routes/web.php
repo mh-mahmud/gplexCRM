@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 	Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 	Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
+
 	// agents route
 	Route::get('/agents', [AgentController::class, 'index'])->name('agents-index')->middleware(['check-permission']);
     Route::get('/agents/create', [AgentController::class, 'create'])->name('agents-create')->middleware(['check-permission']);
@@ -61,6 +62,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::put('/agents/{id?}', [AgentController::class, 'update'])->name('agents-update')->middleware(['check-permission']);
 	Route::post('/agents/search', [AgentController::class, 'search'])->name('agents-search')->middleware(['check-permission']);
 	Route::delete('/agents/{id?}', [AgentController::class, 'destroy'])->name('agents-destroy')->middleware(['check-permission']);
+	// end agents
 
 	// Lead routes
 	//Route::get('/lead', [LeadController::class, 'index'])->name('lead-index');

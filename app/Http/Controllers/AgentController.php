@@ -46,6 +46,7 @@ class AgentController extends Controller {
             'email' => 'required|email|unique:users,email',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
+            'username' => 'required|string|unique:users,username',
             'password' => 'required|string',
             'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
            
@@ -80,6 +81,7 @@ class AgentController extends Controller {
         $request->validate([
             'first_name' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $request->id,
+            'username' => 'required|string|unique:users,username,' . $request->id
             'last_name' => 'required|string',
             'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
