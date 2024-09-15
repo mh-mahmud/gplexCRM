@@ -44,14 +44,15 @@ class TaskService
         }
        
         $data = $request->all();
-
+// dd(config('constants.TASK_TO_DO'));
         try {
             $dataObj                        = new Task();
             $dataObj->task_name             = $data['task_name'];
             $dataObj->assigned_to           = Auth::user()->user_type == 'admin' ? $data['assigned_to'] : Auth::id();
             $dataObj->description           = $data['description'];
             $dataObj->due_date              = $data['due_date'];
-            $dataObj->status                = config('constants.TASK_TO_DO');
+            // $dataObj->status                = config('constants.TASK_TO_DO');
+            $dataObj->status                = 0;
             $dataObj->created_by            = Auth::id();
 
             $dataObj->save();

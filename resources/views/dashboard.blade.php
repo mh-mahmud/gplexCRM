@@ -265,7 +265,7 @@
                                         </div>
                                         <!--end::Description-->
                                         <span
-                                            class="badge badge-light-successconst_task fs-8 fw-bolder">{{$const_task[$val->status]}}</span>
+                                            class="badge badge-light-successconst_task fs-8 fw-bolder">{{@$const_task[$val->status]}}</span>
                                     </div>
                                     @php
                                         $i++;

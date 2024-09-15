@@ -166,9 +166,8 @@ class UserService {
 
         $role = Role::create([
             'name' => $role_name,
-            'menu_details' => $menu_data,
             'permission_details' => $json_data,
-            'menu_details' => $json_data,
+            'menu_details' => $menu_data,
             'permission_ids' => $id_data,
             'slug' => strtolower(str_replace(" ", "_", $role_name)),
             'status' => 1
