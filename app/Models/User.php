@@ -111,4 +111,5 @@ class User extends Authenticatable
         $get_sess =  Session::get($ses_name);
         dd($get_sess);
     }
+    
 }
