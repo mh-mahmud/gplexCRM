@@ -163,7 +163,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="email" name="email" autocomplete="off"/>
+                                                           type="email" name="email" value="{{ old('email') }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('email'))
                                                         <span class="text-danger">{{ $errors->first('email') }}</span>
@@ -179,7 +179,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="first_name" autocomplete="off"/>
+                                                           type="text" name="first_name" value="{{ old('first_name') }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('first_name'))
                                                         <span class="text-danger">{{ $errors->first('first_name') }}</span>
@@ -196,7 +196,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="last_name" autocomplete="off"/>
+                                                           type="text" name="last_name" value="{{ old('last_name') }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('last_name'))
                                                         <span class="text-danger">{{ $errors->first('last_name') }}</span>
@@ -213,7 +213,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="username" autocomplete="off"/>
+                                                           type="text" name="username" value="{{ old('username') }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('username'))
                                                         <span class="text-danger">{{ $errors->first('username') }}</span>
@@ -230,7 +230,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="phone_number" autocomplete="off"/>
+                                                           type="text" name="phone_number" value="{{ old('phone_number') }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                 </div>
                                             </div>
@@ -260,9 +260,12 @@
                                                     <select class=" form-control form-control-sm form-control-solid" name="gender"
                                                             aria-label="Default select example">
                                                             <option value="">Select Gender</option>
-                                                            <option value="Male">Male</option>
+                                                            {{--<option value="Male">Male</option>
                                                             <option value="Female">Female</option>
-                                                            <option value="Other">Other</option>
+                                                            <option value="Other">Other</option>--}}
+															<option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
+                                                            <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
+                                                            <option value="Other" {{ old('gender') == 'Other' ? 'selected' : '' }}>Other</option>
 
                                                     </select>
                                                 </div>
@@ -278,7 +281,7 @@
                                                     <!--begin::Input-->
                                                     <div class="position-relative">
                                                         <input type="text" class="form-control form-control-sm form-control-solid flatpickr"
-                                                            placeholder="Date Of Birth" name="birth_day">
+                                                            placeholder="Date Of Birth" name="birth_day" value="{{ old('birth_day') }}">
                                                     </div>
                                                     <!-- <input class="form-control form-control-sm form-control-solid"
                                                            type="date" name="birth_day" autocomplete="off"/> -->
@@ -301,8 +304,10 @@
                                                     <select class=" form-control form-control-sm form-control-solid" name="status"
                                                             aria-label="Default select example">
 
-                                                        <option value="1" selected>Active</option>
-                                                        <option value="0">Inactive</option>
+                                                            {{--<option value="1" selected>Active</option>
+                                                        <option value="0">Inactive</option>--}}
+														<option value="1" {{ old('status', '1') == '1' ? 'selected' : '' }}>Active</option>
+                                                        <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Inactive</option>
 
                                                     </select>
                                                 </div>
@@ -311,14 +316,14 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Address</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="address" rows="3"></textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="address" rows="3">{{ old('address') }}</textarea>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Note</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3"></textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{ old('description') }}</textarea>
                                                 </div>
                                             </div>
 
