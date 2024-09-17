@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LeadsFormController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\DynamicTableController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\SmsController;
@@ -137,6 +138,15 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/campaign/campaign-data/{id}', [CampaignController::class, 'campaign_data'])->name('campaign-data');
 	Route::get('/campaign/start/{id}', [CampaignController::class, 'startCampaign'])->name('campaign-start');
     Route::get('/campaign/stop/{id}', [CampaignController::class, 'stopCampaign'])->name('campaign-stop');
+
+	Route::get('/meeting', [MeetingController::class, 'index'])->name('meeting-index');
+    Route::get('/meeting/create', [MeetingController::class, 'create'])->name('meeting-create');
+    Route::post('/meeting', [MeetingController::class, 'store'])->name('meeting-store');
+    Route::get('/meeting/{id}', [MeetingController::class, 'show'])->name('meeting-show');
+    Route::get('/meeting/{id}/edit', [MeetingController::class, 'edit'])->name('meeting-edit');
+    Route::put('/meeting/{id}', [MeetingController::class, 'update'])->name('meeting-update');
+    Route::delete('/meeting/{id}', [MeetingController::class, 'destroy'])->name('meeting-destroy');
+    Route::post('/meeting/search', [MeetingController::class, 'search'])->name('meeting-search');
 	
 
 

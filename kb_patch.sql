@@ -212,13 +212,14 @@ CREATE TABLE `meetings` (
   `recipients` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_by` int(11) unsigned DEFAULT NULL,
   `meeting_subject` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meeting_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meeting_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `meeting_date` datetime NOT NULL,
   `meeting_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `attachments` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `duration` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `send_email` tinyint(4) DEFAULT NULL,
   `send_sms` tinyint(4) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL,
   `meeting_feedback` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `rating` tinyint(3) unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -229,4 +230,5 @@ CREATE TABLE `meetings` (
 ALTER TABLE `leads` ADD COLUMN `created_by` INT(11) UNSIGNED NULL AFTER `lead_notes`;
 
 ALTER TABLE `roles` ADD `menu_details` LONGTEXT NULL DEFAULT NULL AFTER `slug`;
+
 ALTER TABLE `menus` CHANGE `sub_name` `sub_name` CHAR(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;

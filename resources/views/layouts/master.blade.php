@@ -2902,6 +2902,7 @@
 		$('[name="start_date"]').flatpickr();
 		$('[name="end_date"]').flatpickr();
 		$('[name="dob"]').flatpickr();
+		$('[name="meeting_date"]').flatpickr();
 		$('[id="common_dob"]').flatpickr();
 		$('.date').flatpickr();
 

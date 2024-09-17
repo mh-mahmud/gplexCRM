@@ -44,6 +44,7 @@ class AgentController extends Controller {
         
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:users,email',
+            'username' => 'required|string|unique:users,username',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'username' => 'required|string|unique:users,username',

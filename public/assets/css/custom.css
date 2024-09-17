@@ -355,3 +355,7 @@ body.swal2-height-auto {
 }
 
 /*End Overwrite CSS*/
+
+.g-user-select > .select2-container--bootstrap5 .select2-selection--multiple:not(.form-select-sm):not(.form-select-lg) {
+    padding-block: 2px;
+}

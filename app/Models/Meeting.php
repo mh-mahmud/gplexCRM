@@ -25,5 +25,10 @@ class Meeting extends Model
         'rating',
     ];
 
+
+    public function user() {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
    
 }
