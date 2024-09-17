@@ -229,3 +229,4 @@ CREATE TABLE `meetings` (
 ALTER TABLE `leads` ADD COLUMN `created_by` INT(11) UNSIGNED NULL AFTER `lead_notes`;
 
 ALTER TABLE `roles` ADD `menu_details` LONGTEXT NULL DEFAULT NULL AFTER `slug`;
+ALTER TABLE `menus` CHANGE `sub_name` `sub_name` CHAR(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;

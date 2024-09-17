@@ -77,7 +77,7 @@
                                                 <div class="fv-row mb-5">
                                                     <label class="form-label fw-bolder text-dark">
                                                         Permision Name</label>
-                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="name" autocomplete="off"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="name" autocomplete="off" required />
                                                     @if ($errors->has('name'))
                                                         <span class="text-danger">{{ $errors->first('name') }}</span>
                                                     @endif
@@ -87,13 +87,8 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">
-                                                        Permision Slug</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="slug" autocomplete="off"/>
-                                                    <!--end::Input-->
+                                                    <label class="form-label fw-bolder text-dark">Permision Slug</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="slug" autocomplete="off"/>
                                                     @if ($errors->has('slug'))
                                                         <span class="text-danger">{{ $errors->first('slug') }}</span>
                                                     @endif
@@ -103,8 +98,7 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
                                                     <label class="form-label fw-bolder text-dark">Show in Menu</label>
-                                                    <select class=" form-control form-control-sm form-control-solid" name="show_in_menu"
-                                                            aria-label="Default select example">
+                                                    <select class=" form-control form-control-sm form-control-solid" name="show_in_menu" aria-label="Default select example" required>
                                                             <option value="">Select option</option>
                                                             <option value="1">Yes</option>
                                                             <option value="0">No</option>
@@ -123,7 +117,6 @@
                                         </div>
                                         <!--End Row-->
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <a href="{{ route('create-permission') }}" class="btn btn-light btn-active-light-primary me-2">Reset</a>
                                             <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Submit</button>
                                         </div>
 
