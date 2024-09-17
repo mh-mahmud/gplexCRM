@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 //use Auth;
+use View;
 
 class CheckPermission
 {
@@ -48,7 +49,8 @@ class CheckPermission
             $permission = request()->route()->getName();
             if (!$user || !$user->hasPermission($permission)) {
                 // Optionally redirect or abort with a 403 Forbidden response
-                return response()->json(['error' => 'Unauthorized'], 403);
+                // return response()->json(['error' => 'Unauthorized'], 403);
+                return response()->view('errors.401');
             }
         }
 

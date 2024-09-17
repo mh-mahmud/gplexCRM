@@ -106,7 +106,7 @@ class UserController extends Controller
         
         $request->validate([
             'name' => 'required|unique:permissions',
-            'slug' => 'required|unique:permissions',
+            // 'slug' => 'required|unique:permissions',
             'show_in_menu' => 'required'
         ]);
 
@@ -122,7 +122,7 @@ class UserController extends Controller
     public function permission_update(Request $request) {
         $request->validate([
             'name' => 'required',
-            'slug' => 'required'
+            'show_in_menu' => 'required'
         ]);
         $data = $this->service->edit_permission($request);
         if($data) {
