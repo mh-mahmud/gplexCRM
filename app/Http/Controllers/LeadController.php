@@ -26,6 +26,7 @@ class LeadController  extends Controller
     public function __construct(LeadService  $leadService)
     {
         $this->leadService = $leadService;
+        // $this->middleware(['auth']);
     }
 
 

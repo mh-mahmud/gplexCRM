@@ -21,6 +21,7 @@ class LeadsFormController extends Controller
     public function __construct(LeadsFormService $leadsFormService)
     {
         $this->leadsFormService = $leadsFormService;
+        // $this->middleware(['auth']);
     }
 
     public function index_backup()

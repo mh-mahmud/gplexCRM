@@ -69,12 +69,9 @@ class User extends Authenticatable
         return $this->hasOne(Agent::class);
     }
 
-    public function get_menu_data() {
-        /*if(Auth::user()->user_type=='admin') {
-            return;
-        }*/
+    public function get_menu_data($type=null) {
 
-        $ses_name = 'user_menu_data_' . Auth::user()->role_id;
+        /*$ses_name = 'user_menu_data_' . Auth::user()->role_id;
 
         if(!empty(Session::get($ses_name))) {
             return Session::get($ses_name);
@@ -84,6 +81,23 @@ class User extends Authenticatable
             if(!empty($role_data)) {
                 Session::put($ses_name, $role_data->permission_details);
                 return $role_data->permission_details;
+            }
+        }
+
+        return null;*/
+
+
+        // new menu session store code
+        $ses_name = 'user_menu_data_' . Auth::user()->role_id;
+
+        if(!empty(Session::get($ses_name))) {
+            return Session::get($ses_name);
+        }
+        else {
+            $role_data = Role::where('id', Auth::user()->role_id)->first(['name', 'menu_details']);
+            if(!empty($role_data)) {
+                Session::put($ses_name, $role_data->menu_details);
+                return $role_data->menu_details;
             }
         }
 
@@ -107,9 +121,28 @@ class User extends Authenticatable
 
     
     public function hasPermission($permission) {
-        $ses_name = 'user_menu_data_' . Auth::user()->role_id;
+
+        $permission_details = $this->get_menu_data();
+        
+        if ($permission_details) {
+            $data = [];
+            $permissions = json_decode($permission_details, true);
+
+            foreach($permissions as $keys=>$vals) {
+                foreach($vals as $key=>$val) {
+                    $data[$key] = 1;
+                }
+            }
+
+            if(isset($data[$permission])) {
+                return true;
+            }
+        }
+        return false;
+
+        /*$ses_name = 'user_menu_data_' . Auth::user()->role_id;
         $get_sess =  Session::get($ses_name);
-        dd($get_sess);
+        dd($get_sess);*/
     }
     
 }

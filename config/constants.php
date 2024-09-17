@@ -12,13 +12,13 @@ return [
         'Service'
     ],  
     'TASK_STATUS' => [
-        'PENDING',
-        'In Progress',
-        'Testing',
-        'Not Started',
-        'Awaiting Feedback',
-        'Completed',
-        'Done Before'
+        0 => 'PENDING',
+        1 => 'In Progress',
+        2 => 'Testing',
+        3 => 'Not Started',
+        4 => 'Awaiting Feedback',
+        5 => 'Completed',
+        6 => 'Done Before'
     ],
     'customer_group' => [
         'VIP',

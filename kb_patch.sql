@@ -229,4 +229,4 @@ CREATE TABLE `meetings` (
 
 ALTER TABLE `leads` ADD COLUMN `created_by` INT(11) UNSIGNED NULL AFTER `lead_notes`;
 
-
+ALTER TABLE `roles` ADD `menu_details` LONGTEXT NULL DEFAULT NULL AFTER `slug`;
