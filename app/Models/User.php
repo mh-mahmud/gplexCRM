@@ -104,20 +104,6 @@ class User extends Authenticatable
         return null;
     }
 
-    public function hasPermission_rokib($permission)
-    {
-        //users role permission details (JSON format data)
-        $permission_details = $this->get_menu_data();
-
-        if ($permission_details) {
-            $permissions = json_decode($permission_details, true);
-            //chk if the requested permission exists in the users permissions
-            return in_array($permission, $permissions);
-        }
-
-        return false;
-    }
-
 
     
     public function hasPermission($permission) {
@@ -139,10 +125,6 @@ class User extends Authenticatable
             }
         }
         return false;
-
-        /*$ses_name = 'user_menu_data_' . Auth::user()->role_id;
-        $get_sess =  Session::get($ses_name);
-        dd($get_sess);*/
     }
     
 }

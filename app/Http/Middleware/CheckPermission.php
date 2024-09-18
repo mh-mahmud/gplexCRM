@@ -20,22 +20,10 @@ class CheckPermission
      * @param  string  $permission
      * @return mixed
      */
-    public function handle_rokib($request, Closure $next, $permission)
-    {
-        // chk if the user is authenticated and has the required permission
-        if (Auth::check() && Auth::user()->hasPermission($permission)) {
-            return $next($request);
-        }
-        return redirect('/')->with('error', 'Access denied. You do not have the required permission.');
-    }
     
     
     public function handle(Request $request, Closure $next): Response
     {
-
-        /*if(!Auth::user()) {
-            return redirect('/login')->with('error', 'Access denied. You do not have the required permission.');
-        }*/
 
         // Assuming you have a user model with a 'hasPermission' method
         $user = Auth::user();
