@@ -164,7 +164,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="first_name" autocomplete="off"/>
+                                                           type="text" name="first_name" value="{{ old('first_name') }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('first_name'))
                                                         <span class="text-danger">{{ $errors->first('first_name') }}</span>
@@ -181,7 +181,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="last_name" autocomplete="off"/>
+                                                           type="text" name="last_name" value="{{ old('last_name') }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('last_name'))
                                                         <span class="text-danger">{{ $errors->first('last_name') }}</span>
@@ -198,7 +198,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="username" autocomplete="off"/>
+                                                           type="text" name="username" value="{{ old('username') }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('username'))
                                                         <span class="text-danger">{{ $errors->first('username') }}</span>
@@ -214,7 +214,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="email" name="email" autocomplete="off"/>
+                                                           type="email" name="email" value="{{ old('email') }}" autocomplete="off"/>
                                                     <!--end::Input-->
                                                     @if ($errors->has('email'))
                                                         <span class="text-danger">{{ $errors->first('email') }}</span>
