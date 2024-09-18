@@ -1,145 +1,161 @@
 <style type="text/css">
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
+@import url('https://fonts.googleapis.com/css?family=Catamaran:400,800');
+.error-container {
+  text-align: center;
+  font-size: 106px;
+  font-family: 'Catamaran', sans-serif;
+  font-weight: 800;
+  margin: 70px 15px;
+}
+.error-container > span {
+  display: inline-block;
+  position: relative;
+}
+.error-container > span.four {
+  width: 136px;
+  height: 43px;
+  border-radius: 999px;
+  background:
+    linear-gradient(140deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.07) 43%, transparent 44%, transparent 100%),
+    linear-gradient(105deg, transparent 0%, transparent 40%, rgba(0, 0, 0, 0.06) 41%, rgba(0, 0, 0, 0.07) 76%, transparent 77%, transparent 100%),
+    linear-gradient(to right, #d89ca4, #e27b7e);
+}
+.error-container > span.four:before,
+.error-container > span.four:after {
+  content: '';
+  display: block;
+  position: absolute;
+  border-radius: 999px;
+}
+.error-container > span.four:before {
+  width: 43px;
+  height: 156px;
+  left: 60px;
+  bottom: -43px;
+  background:
+    linear-gradient(128deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.07) 40%, transparent 41%, transparent 100%),
+    linear-gradient(116deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.07) 50%, transparent 51%, transparent 100%),
+    linear-gradient(to top, #99749D, #B895AB, #CC9AA6, #D7969E, #E0787F);
+}
+.error-container > span.four:after {
+  width: 137px;
+  height: 43px;
+  transform: rotate(-49.5deg);
+  left: -18px;
+  bottom: 36px;
+  background: linear-gradient(to right, #99749D, #B895AB, #CC9AA6, #D7969E, #E0787F);
+}
 
-:root {
-  --button: #b3b3b3;
-  --button-color: #0a0a0a;
-  --shadow: #000;
-  --bg: #737373;
-  --header: #7a7a7a;
-  --color: #fafafa;
-  --lit-header: #e6e6e6;
-  --speed: 2s;
+.error-container > span.zero {
+  vertical-align: text-top;
+  width: 156px;
+  height: 156px;
+  border-radius: 999px;
+  background: linear-gradient(-45deg, transparent 0%, rgba(0, 0, 0, 0.06) 50%,  transparent 51%, transparent 100%),
+    linear-gradient(to top right, #99749D, #99749D, #B895AB, #CC9AA6, #D7969E, #ED8687, #ED8687);
+  overflow: hidden;
+  animation: bgshadow 5s infinite;
 }
+.error-container > span.zero:before {
+  content: '';
+  display: block;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 90px;
+  height: 90px;
+  background-color: transparent;
+  left: 0px;
+  bottom: 0px;
+  background:
+    linear-gradient(95deg, transparent 0%, transparent 8%, rgba(0, 0, 0, 0.07) 9%, transparent 50%, transparent 100%),
+    linear-gradient(85deg, transparent 0%, transparent 19%, rgba(0, 0, 0, 0.05) 20%, rgba(0, 0, 0, 0.07) 91%, transparent 92%, transparent 100%);
+}
+.error-container > span.zero:after {
+  content: '';
+  display: block;
+  position: absolute;
+  border-radius: 999px;
+  width: 70px;
+  height: 70px;
+  left: 43px;
+  bottom: 43px;
+  background: #FDFAF5;
+  box-shadow: -2px 2px 2px 0px rgba(0, 0, 0, 0.1);
+}
+
+.screen-reader-text {
+    position: absolute;
+    top: -9999em;
+    left: -9999em;
+}
+    
+@keyframes bgshadow {
+  0% {
+    box-shadow: inset -160px 160px 0px 5px rgba(0, 0, 0, 0.4);
+  }
+  45% {
+    box-shadow: inset 0px 0px 0px 0px rgba(0, 0, 0, 0.1);
+  }
+  55% {
+    box-shadow: inset 0px 0px 0px 0px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    box-shadow: inset 160px -160px 0px 5px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* demo stuff */
 * {
-  box-sizing: border-box;
-  transform-style: preserve-3d;
-}
-@property --swing-x {
-  initial-value: 0;
-  inherits: false;
-  syntax: '<integer>';
-}
-@property --swing-y {
-  initial-value: 0;
-  inherits: false;
-  syntax: '<integer>';
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 body {
-  min-height: 100vh;
-  display: flex;
-  font-family: 'Roboto', sans-serif;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg);
-  color: var(--color);
-  perspective: 1200px;
+  background-color: #FDFAF5;
+  margin-bottom: 50px;
 }
-a {
-  text-transform: uppercase;
-  text-decoration: none;
-  background: var(--button);
-  color: var(--button-color);
-  padding: 1rem 4rem;
-  border-radius: 4rem;
-  font-size: 0.875rem;
-  letter-spacing: 0.05rem;
-}
-p {
-  font-weight: 100;
+html, button, input, select, textarea {
+    font-family: 'Montserrat', Helvetica, sans-serif;
+    color: #bbb;
 }
 h1 {
-  -webkit-animation: swing var(--speed) infinite alternate ease-in-out;
-          animation: swing var(--speed) infinite alternate ease-in-out;
-  font-size: clamp(5rem, 40vmin, 20rem);
-  font-family: 'Open Sans', sans-serif;
-  margin: 0;
-  margin-bottom: 1rem;
-  letter-spacing: 1rem;
-  transform: translate3d(0, 0, 0vmin);
-  --x: calc(50% + (var(--swing-x) * 0.5) * 1%);
-  background: radial-gradient(var(--lit-header), var(--header) 45%) var(--x) 100%/200% 200%;
-  -webkit-background-clip: text;
-  color: transparent;
-}
-h1:after {
-  -webkit-animation: swing var(--speed) infinite alternate ease-in-out;
-          animation: swing var(--speed) infinite alternate ease-in-out;
-  content: "401";
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: var(--shadow);
-  filter: blur(1.5vmin);
-  transform: scale(1.05) translate3d(0, 12%, -10vmin) translate(calc((var(--swing-x, 0) * 0.05) * 1%), calc((var(--swing-y) * 0.05) * 1%));
-}
-.cloak {
-  animation: swing var(--speed) infinite alternate-reverse ease-in-out;
-  height: 100%;
-  width: 100%;
-  transform-origin: 50% 30%;
-  transform: rotate(calc(var(--swing-x) * -0.25deg));
-/*  background: radial-gradient(40% 40% at 50% 42%, transparent, #000 35%);*/
-}
-.cloak__wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  overflow: hidden;
-}
-.cloak__container {
-  height: 250vmax;
-  width: 250vmax;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.info {
   text-align: center;
-  line-height: 1.5;
-  max-width: clamp(16rem, 90vmin, 25rem);
+  margin: 30px 15px;
 }
-.info > p {
-  margin-bottom: 3rem;
+.zoom-area { 
+  max-width: 490px;
+  margin: 30px auto 30px;
+  font-size: 19px;
+  text-align: center;
 }
-@-webkit-keyframes swing {
-  0% {
-    --swing-x: -100;
-    --swing-y: -100;
-  }
-  50% {
-    --swing-y: 0;
-  }
-  100% {
-    --swing-y: -100;
-    --swing-x: 100;
-  }
+.link-container {
+  text-align: center;
 }
-@keyframes swing {
-  0% {
-    --swing-x: -100;
-    --swing-y: -100;
-  }
-  50% {
-    --swing-y: 0;
-  }
-  100% {
-    --swing-y: -100;
-    --swing-x: 100;
-  }
+a.more-link {
+  text-transform: uppercase;
+  font-size: 13px;
+    background-color: #de7e85;
+    padding: 10px 15px;
+    border-radius: 0;
+    color: #fff;
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    line-height: 1.5;
+    text-decoration: none;
+  margin-top: 50px;
+  letter-spacing: 1px;
 }
-
 </style>
 
-<h1>401</h1>
-<div class="cloak__wrapper">
-  <div class="cloak__container">
-    <div class="cloak"></div>
-  </div>
-</div>
-<div class="info">
-  <h2>Unauthorized page</h2><a href="/dashboard">Go Back</a>
+<h1>404 Error Page #2</h1>
+<p class="zoom-area"> </p>
+<section class="error-container">
+  <span class="four"><span class="screen-reader-text">4</span></span>
+  <span class="zero"><span class="screen-reader-text">0</span></span>
+  <span class="four"><span class="screen-reader-text">4</span></span>
+</section>
+<div class="link-container">
+  <a href="/dashboard" class="more-link">Go Home</a>
 </div>
