@@ -123,31 +123,31 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('/promotion/search', [PromotionController::class, 'search'])->name('promotion-search');
 
 	//Campaign route
-	Route::get('/campaign', [CampaignController::class, 'index'])->name('campaign-index');
-	Route::get('/campaign/create', [CampaignController::class, 'create'])->name('campaign-create');
+	Route::get('/campaign', [CampaignController::class, 'index'])->name('campaign-index')->middleware(['check-permission']);
+	Route::get('/campaign/create', [CampaignController::class, 'create'])->name('campaign-create')->middleware(['check-permission']);
 	Route::get('/campaign/campaign-sample-file', [CampaignController::class, 'downloadCampaignSampleFile'])->name('campaign-sample-file')->middleware(['check-permission']);
-	Route::post('/campaign/campaign-lead-file-upload', [CampaignController::class, 'campaign_lead_upload_file'])->name('campaign-lead-upload-file');
+	Route::post('/campaign/campaign-lead-file-upload', [CampaignController::class, 'campaign_lead_upload_file'])->name('campaign-lead-upload-file')->middleware(['check-permission']);
 	Route::post('/campaign', [CampaignController::class, 'store'])->name('campaign-store');
-	Route::get('/campaign/{id?}', [CampaignController::class, 'show'])->name('campaign-show');
-	Route::get('/campaign/{id?}/edit', [CampaignController::class, 'edit'])->name('campaign-edit');
+	Route::get('/campaign/{id?}', [CampaignController::class, 'show'])->name('campaign-show')->middleware(['check-permission']);
+	Route::get('/campaign/{id?}/edit', [CampaignController::class, 'edit'])->name('campaign-edit')->middleware(['check-permission']);
 	Route::put('/campaign/{id}', [CampaignController::class, 'update'])->name('campaign-update');
-	Route::delete('/campaign/{id?}', [CampaignController::class, 'destroy'])->name('campaign-destroy');
+	Route::delete('/campaign/{id?}', [CampaignController::class, 'destroy'])->name('campaign-destroy')->middleware(['check-permission']);
 	Route::post('/campaign/search', [CampaignController::class, 'search'])->name('campaign-search');
 	Route::post('/clear-session', [CampaignController::class, 'clearSession'])->name('clear.session');
-	Route::get('/campaign/campaign-lead-upload/{id?}', [CampaignController::class, 'campaign_leads_upload'])->name('campaign-lead-upload');
-	Route::get('/campaign/campaign-data/{id?}', [CampaignController::class, 'campaign_data'])->name('campaign-data');
-	Route::get('/campaign/start/{id?}', [CampaignController::class, 'startCampaign'])->name('campaign-start');
-    Route::get('/campaign/stop/{id?}', [CampaignController::class, 'stopCampaign'])->name('campaign-stop');
+	Route::get('/campaign/campaign-lead-upload/{id?}', [CampaignController::class, 'campaign_leads_upload'])->name('campaign-lead-upload')->middleware(['check-permission']);
+	Route::get('/campaign/campaign-data/{id?}', [CampaignController::class, 'campaign_data'])->name('campaign-data')->middleware(['check-permission']);
+	Route::get('/campaign/start/{id?}', [CampaignController::class, 'startCampaign'])->name('campaign-start')->middleware(['check-permission']);
+    Route::get('/campaign/stop/{id?}', [CampaignController::class, 'stopCampaign'])->name('campaign-stop')->middleware(['check-permission']);
 
-	Route::get('/meeting', [MeetingController::class, 'index'])->name('meeting-index');
-    Route::get('/meeting/create', [MeetingController::class, 'create'])->name('meeting-create');
+	Route::get('/meeting', [MeetingController::class, 'index'])->name('meeting-index')->middleware(['check-permission']);
+    Route::get('/meeting/create', [MeetingController::class, 'create'])->name('meeting-create')->middleware(['check-permission']);
     Route::post('/meeting', [MeetingController::class, 'store'])->name('meeting-store');
-    Route::get('/meeting/{id?}', [MeetingController::class, 'show'])->name('meeting-show');
-    Route::get('/meeting/{id?}/edit', [MeetingController::class, 'edit'])->name('meeting-edit');
+    Route::get('/meeting/{id?}', [MeetingController::class, 'show'])->name('meeting-show')->middleware(['check-permission']);
+    Route::get('/meeting/{id?}/edit', [MeetingController::class, 'edit'])->name('meeting-edit')->middleware(['check-permission']);
     Route::put('/meeting/{id}', [MeetingController::class, 'update'])->name('meeting-update');
-    Route::delete('/meeting/{id?}', [MeetingController::class, 'destroy'])->name('meeting-destroy');
+    Route::delete('/meeting/{id?}', [MeetingController::class, 'destroy'])->name('meeting-destroy')->middleware(['check-permission']);
     Route::post('/meeting/search', [MeetingController::class, 'search'])->name('meeting-search');
-	Route::put('/meeting/{id}/update-attachments-file', [MeetingController::class, 'updateAttachmentsFile'])->name('update-attachments-file');
+	Route::put('/meeting/{id}/update-attachments-file', [MeetingController::class, 'updateAttachmentsFile'])->name('update-attachments-file')->middleware(['check-permission']);
 	
 
 

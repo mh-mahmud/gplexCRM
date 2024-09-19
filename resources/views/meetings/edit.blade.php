@@ -168,8 +168,15 @@
                             <div class="fv-row mb-3">
                                 <label class="form-label fw-bolder text-dark">Recipient Type</label>
                                 <select class="form-control form-control-sm form-control-solid" id="recipientType" name="recipient_type">
-                                    <option value="lead" {{ old('recipient_type', $meeting->recipient_type ?? '') == 'lead' ? 'selected' : '' }}>Lead</option>
-                                    <option value="user" {{ old('recipient_type', $meeting->recipient_type ?? '') == 'user' ? 'selected' : '' }}>User</option>
+                                    <!-- If lead_id is not null, set Lead as selected. If recipients is not null, set User as selected. -->
+                                    <option value="lead" 
+                                        {{ old('recipient_type', isset($meeting->lead_id) && $meeting->lead_id !== null ? 'lead' : '') == 'lead' ? 'selected' : '' }}>
+                                        Lead
+                                    </option>
+                                    <option value="user" 
+                                        {{ old('recipient_type', isset($meeting->recipients) && !empty($meeting->recipients) ? 'user' : '') == 'user' ? 'selected' : '' }}>
+                                        User
+                                    </option>
                                 </select>
                                 @if ($errors->has('recipient_type'))
                                     <span class="text-danger">{{ $errors->first('recipient_type') }}</span>

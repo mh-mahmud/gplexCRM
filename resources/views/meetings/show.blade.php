@@ -127,7 +127,7 @@ use Carbon\Carbon;
             </div>
             <!--end::Wrapper-->
             <!--begin::Button-->
-            <a href="{{ route('meeting-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Agent
+            <a href="{{ route('meeting-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Meeting
                 List</a>
             <!--end::Button-->
         </div>
