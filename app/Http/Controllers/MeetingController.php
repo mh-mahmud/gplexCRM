@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Services\MeetingService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use App\Models\Lead;
+use App\Models\User;
 
 class MeetingController extends Controller
 {
@@ -28,8 +30,8 @@ class MeetingController extends Controller
     // show creating a new meeting
     public function create()
     {   
-        $leads = DB::table('leads')->select('id', 'first_name','last_name')->get();
-        $users = DB::table('users')->select('id', 'username')->get();
+        $leads = DB::table('leads')->select('id', 'first_name','last_name','email')->get();
+        $users = DB::table('users')->select('id', 'username','email')->get();
         return view('meetings.create', compact('leads', 'users'));
     }
 
@@ -57,7 +59,18 @@ class MeetingController extends Controller
     public function show($id)
     {
         $meeting = $this->meetingService->getMeetingById($id);
-        return view('meetings.show', compact('meeting'));
+        $lead = null;
+        $users = [];
+
+        if ($meeting->lead_id) {
+            $lead = Lead::find($meeting->lead_id);
+        }
+
+        if ($meeting->recipients) {
+            $recipientIds = explode(',', $meeting->recipients); // Assuming recipients are stored as comma-separated IDs
+            $users = User::whereIn('id', $recipientIds)->get();
+    }
+        return view('meetings.show', compact('meeting','lead','users'));
     }
 
     //form for editing
@@ -69,8 +82,8 @@ class MeetingController extends Controller
             $meeting->recipients = explode(',', $meeting->recipients);
         }
         
-        $leads = DB::table('leads')->select('id', 'first_name','last_name')->get();
-        $users = DB::table('users')->select('id', 'username')->get();
+        $leads = DB::table('leads')->select('id', 'first_name','last_name','email')->get();
+        $users = DB::table('users')->select('id', 'username','email')->get();
         return view('meetings.edit', compact('meeting','leads','users'));
     }
 

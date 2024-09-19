@@ -221,7 +221,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <!-- Meeting Subject -->
+                           
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Meeting Subject</label>
@@ -232,7 +232,7 @@
                                 </div>
                             </div>
 
-                            <!-- Meeting Date -->
+                            
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Meeting Date</label>
@@ -243,7 +243,7 @@
                                 </div>
                             </div>
 
-                            <!-- Meeting Description -->
+                            
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label fw-bolder text-dark" for="textarea">Meeting Description</label>
@@ -254,7 +254,7 @@
                                 </div>
                             </div>
 
-                            <!-- Meeting Link -->
+                            
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Meeting Link</label>
@@ -265,7 +265,7 @@
                                 </div>
                             </div>
 
-                            <!-- Duration -->
+                           
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Duration</label>
@@ -276,7 +276,7 @@
                                 </div>
                             </div>
 
-                            <!-- Attachments -->
+                            
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Attachments</label>
@@ -306,7 +306,7 @@
                                 </div>
                             </div>
 
-                            <!-- Status -->
+                        
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Status</label>
@@ -389,28 +389,43 @@
         const recipientType = $('#recipientType');
         const leadDropdown = $('#leadDropdown');
         const userDropdown = $('#userDropdown');
+        const leadSelect = $('#g-lead-select');
+        const userSelect = $('#g-user-select');
 
+        //function to toggle dropdowns based on the recipient type select
         recipientType.on('change', function() {
             if ($(this).val() === 'lead') {
                 leadDropdown.show();
                 userDropdown.hide();
+                userSelect.val(null).trigger('change'); //clear user selection if lead is selected
             } else if ($(this).val() === 'user') {
                 leadDropdown.hide();
                 userDropdown.show();
+                leadSelect.val(null).trigger('change'); //clear lead selection when user is selected
             }
         });
 
-        // Trigger change event to show/hide on page load
+        // change event to show/hide appropriate dropdowns on page load
         recipientType.trigger('change');
 
-        $('#g-user-select').select2({
+        // select2 for user
+        userSelect.select2({
             placeholder: "Select User",
             allowClear: true
         });
 
-        $('#g-lead-select').select2({
-            placeholder: "Select Lead",
-            allowClear: true
+        //leadSelect.select2({
+            //placeholder: "Select Lead",
+           // allowClear: true
+        //});
+
+        // clear User selection when Lead is selected, and vice versa
+        recipientType.on('change', function() {
+            if ($(this).val() === 'lead') {
+                userSelect.val(null).trigger('change'); // clear users selection if lead is selected
+            } else if ($(this).val() === 'user') {
+                leadSelect.val(null).trigger('change'); // Clear lead selection if user is selected
+            }
         });
     });
 </script>

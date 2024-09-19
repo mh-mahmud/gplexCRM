@@ -153,6 +153,25 @@ use Carbon\Carbon;
                 <!--begin::Body-->
                 <div class="card-body p-1">
 
+                    <!-- Show Lead Information if lead_id exists -->
+                    @if($lead)
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Lead</span>
+                        <span>{{ $lead->first_name . ' ' . $lead->last_name . ' <' . $lead->email . '>' }}</span>
+                    </div>
+                    @endif
+
+                    <!-- Show Recipients Information if recipients exist -->
+                    @if($users && count($users) > 0)
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Recipients</span>
+                        <span>
+                            @foreach($users as $user)
+                            {{ $user->username . ' <' . $user->email . '>' }}{{ !$loop->last ? ', ' : '' }}
+                            @endforeach
+                        </span>
+                    </div>
+                    @endif
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Meeting Subject</span>
@@ -163,11 +182,41 @@ use Carbon\Carbon;
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Meeting Description</span>
                         <span>{{ $meeting->meeting_description }}</span>
                     </div>
+                    
+
+                    @php
+                    date_default_timezone_set('Asia/Dhaka');
+                    //assuming the $meeting->meeting_date is a datetime string
+                    $meetingDate = Carbon::parse($meeting->meeting_date); // Parse date with Carbon
+                    // Format pieces of the date and time
+                    $dayOfWeek = $meetingDate->format('l'); // full day name (example., Thursday)
+                    $day = $meetingDate->format('d'); // numeric day (example., 12)
+                    $monthYear = $meetingDate->format('F Y'); // full month and year (example., September 2024)
+                    $time = $meetingDate->format('g:i A'); // time with AM/PM (example., 2:00 PM)
+                    $timezone = $meetingDate->timezoneName; // timezone (example., Asia/Dhaka)
+                    @endphp
+
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Meeting Date</span>
-                        <span>{{ $meeting->meeting_date }}</span>
+                        <span>
+                            <div class="calendar-block">
+                                <!-- Display the day of the week -->
+                                <div class="calendar-header">{{ $dayOfWeek }}</div>
+                                <!-- Display the numeric day -->
+                                <div class="calendar-date">{{ $day }}</div>
+                                <!-- Display the month and year -->
+                                <div class="calendar-footer">
+                                    <div class="calendar-month-year">{{ $monthYear }}</div>
+                                    <div class="calendar-time-block">
+                                        <!-- Display the time -->
+                                        <div class="calendar-time">{{ $time }}</div>
+                                        <!-- Display the timezone dynamically -->
+                                        <div class="calendar-timezone">({{ $timezone }})</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </span>
                     </div>
-
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Meeting Link</span>
                         <span>{{ $meeting->meeting_link }}</span>
@@ -187,7 +236,7 @@ use Carbon\Carbon;
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Attachments</span>
                         <span> <a href="{{ asset('uploads/meetings/' . $meeting->attachments) }}" target="_blank">
-                        <i class="fas fa-paperclip me-1"></i>Attachment
+                                <i class="fas fa-paperclip me-1"></i>Attachment
                             </a></span>
                     </div>
 

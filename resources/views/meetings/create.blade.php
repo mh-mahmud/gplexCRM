@@ -161,10 +161,10 @@
                             <div class="col-md-6" id="leadDropdown" style="display: {{ old('recipient_type') == 'lead' ? 'block' : 'none' }}">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Select Lead</label>
-                                    <select id="g-lead-select" class="form-control form-control-sm form-control-solid" name="lead_id" data-allow-clear="true" data-kt-select2="select2">
+                                    <select id="g-lead-select" class="form-control form-control-sm form-control-solid" name="lead_id">
                                         <option value="">Select Lead</option>
                                         @foreach($leads as $lead)
-                                        <option value="{{ $lead->id }}" {{ old('lead_id') == $lead->id ? 'selected' : '' }}> {{ $lead->first_name . ' ' . $lead->last_name }}</option>
+                                        <option value="{{ $lead->id }}" {{ old('lead_id') == $lead->id ? 'selected' : '' }}> {{ $lead->first_name . ' ' . $lead->last_name . ' <' . $lead->email . '>' }}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('lead_id'))
@@ -179,7 +179,8 @@
                                     <label class="form-label fw-bolder text-dark">Select User</label>
                                     <select id="g-user-select" class="form-control form-control-sm form-control-solid" name="recipients[]" multiple="multiple" data-allow-clear="true" data-kt-select2="select2">
                                         @foreach($users as $user)
-                                        <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>{{ $user->username }}</option>
+                                        <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>{{ $user->username . ' <' . $user->email . '>' }}
+                                        </option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('user_id'))
@@ -187,7 +188,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <!-- Meeting Subject -->
+                            
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Meeting Subject</label>
@@ -198,7 +199,7 @@
                                 </div>
                             </div>
 
-                            <!-- Meeting Date -->
+                           
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Meeting Date</label>
@@ -211,7 +212,7 @@
 
 
 
-                            <!-- Meeting Description -->
+                            
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label fw-bolder text-dark" for="textarea">Meeting Description</label>
@@ -221,7 +222,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <!-- Meeting Link -->
+                           
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Meeting Link</label>
@@ -232,7 +233,7 @@
                                 </div>
                             </div>
 
-                            <!-- Duration -->
+                           
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Duration</label>
@@ -297,7 +298,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         $('[name="meeting_date"]').flatpickr({
             enableTime: true,  // enables time picker
-            dateFormat: "Y-m-d H:i",  // custom date format
+            dateFormat: "Y-m-d H:i",//custom date format
             time_24hr: true,  // 24-hour time format
             onOpen: function(selectedDates, dateStr, instance) {
                 if (!dateStr) { // Only set current date if no date is already selected
@@ -325,7 +326,7 @@
             }
         });
 
-        // Trigger change event to show/hide on page load
+        // change event to show/hide on page load
         recipientType.dispatchEvent(new Event('change'));
 
         $('#g-user-select').select2({
@@ -333,10 +334,10 @@
             allowClear: true
         })
 
-        $('#g-lead-select').select2({
-            placeholder: "Select Lead",
-            allowClear: true
-        })
+        //$('#g-lead-select').select2({
+            //placeholder: "Select Lead",
+           // allowClear: true
+       // })
     });
 </script>
 

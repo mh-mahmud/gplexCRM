@@ -117,6 +117,7 @@ class MeetingService
 
         return Meeting::where('meeting_subject', 'LIKE', "%{$searchTerm}%")
             ->orWhere('meeting_description', 'LIKE', "%{$searchTerm}%")
+            ->orWhere('meeting_date', 'LIKE', "%{$searchTerm}%")
             ->orderBy('created_at', 'desc')
             ->paginate(config('constants.ROW_PER_PAGE'));
     }
