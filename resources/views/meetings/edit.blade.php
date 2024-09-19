@@ -188,7 +188,7 @@
                             <div class="col-md-6" id="leadDropdown" style="display: {{ old('recipient_type', $meeting->recipient_type ?? '') == 'lead' ? 'block' : 'none' }}">
                             <div class="fv-row mb-3">
                                 <label class="form-label fw-bolder text-dark">Select Lead</label>
-                                <select id="g-lead-select" class="form-control form-control-sm form-control-solid" name="lead_id" data-allow-clear="true" data-kt-select2="select2">
+                                <select id="g-lead-select" class="form-control form-control-sm form-control-solid" name="lead_id">
                                     <option value="">Select Lead</option>
                                     @foreach($leads as $lead)
                                         <option value="{{ $lead->id }}" {{ old('lead_id', $meeting->lead_id ?? '') == $lead->id ? 'selected' : '' }}>

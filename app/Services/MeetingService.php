@@ -73,6 +73,7 @@ class MeetingService
             $meeting->attachments = $fileNameToStore;
         }
         $recipients = is_array($request->recipients) ? implode(',', $request->recipients) : null;
+        
 
         //dd($request->lead_id);die();
 
