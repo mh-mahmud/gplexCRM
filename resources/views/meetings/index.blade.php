@@ -361,7 +361,7 @@ use Carbon\Carbon;
 
 
     function confirmDelete() {
-        if (confirm("Are you sure you want to delete Campaign?")) {
+        if (confirm("Are you sure you want to delete Meeting?")) {
             document.getElementById('deleteForm').submit();
         }
         return false;

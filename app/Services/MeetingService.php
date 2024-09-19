@@ -38,6 +38,7 @@ class MeetingService
             'meeting_link' => $request->meeting_link,
             'attachments' => $fileNameToStore,
             'duration' => $request->duration,
+            'status' => $request->status,
             //'send_email' => $request->send_email,
             //'send_sms' => $request->send_sms,
             //'meeting_feedback' => $request->meeting_feedback,
@@ -58,7 +59,8 @@ class MeetingService
 
         if ($request->hasFile('attachments')) {
             if ($meeting->attachments) {
-                $existingFilePath = public_path('uploads/meetings/'.$meeting->attachments);
+                //$existingFilePath = public_path('uploads/meetings/'.$meeting->attachments);
+                $existingFilePath = getcwd() . '/uploads/meetings/' . $meeting->attachments;
                 if (file_exists($existingFilePath)) {
                     unlink($existingFilePath);
                 }
@@ -66,23 +68,28 @@ class MeetingService
 
             $file = $request->file('attachments');
             $fileNameToStore = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('uploads/meetings'), $fileNameToStore);
+            //$file->move(public_path('uploads/meetings'), $fileNameToStore);
+            $file->move(getcwd().'/uploads/meetings', $fileNameToStore);
             $meeting->attachments = $fileNameToStore;
         }
+        $recipients = is_array($request->recipients) ? implode(',', $request->recipients) : null;
+
+        //dd($request->lead_id);die();
 
         $meeting->update([
-            'lead_id' => $request->lead_id,
-            'recipients' => $request->recipients,
+            'lead_id' => isset($request->lead_id) ? $request->lead_id : null,
+            'recipients' => isset($recipients) ? $recipients : null,
             'meeting_subject' => $request->meeting_subject,
             'meeting_description' => $request->meeting_description,
             'meeting_date' => $request->meeting_date,
             'meeting_link' => $request->meeting_link,
             'attachments' => $meeting->attachments,
             'duration' => $request->duration,
-            'send_email' => $request->send_email,
-            'send_sms' => $request->send_sms,
-            'meeting_feedback' => $request->meeting_feedback,
-            'rating' => $request->rating,
+            'status' => $request->status,
+            //'send_email' => $request->send_email,
+            //'send_sms' => $request->send_sms,
+            //'meeting_feedback' => $request->meeting_feedback,
+            //'rating' => $request->rating,
         ]);
     }
 
@@ -92,7 +99,8 @@ class MeetingService
         $meeting = Meeting::findOrFail($id);
 
         if ($meeting->attachments) {
-            $existingFilePath = public_path('uploads/meetings/'.$meeting->attachments);
+            //$existingFilePath = public_path('uploads/meetings/'.$meeting->attachments);
+            $existingFilePath = getcwd() . '/uploads/meetings/' . $meeting->attachments;
             if (file_exists($existingFilePath)) {
                 unlink($existingFilePath);
             }

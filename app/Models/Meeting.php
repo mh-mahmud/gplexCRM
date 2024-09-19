@@ -21,6 +21,7 @@ class Meeting extends Model
         'duration',
         'send_email',
         'send_sms',
+        'status',
         'meeting_feedback',
         'rating',
     ];

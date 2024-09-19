@@ -147,6 +147,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/meeting/{id}', [MeetingController::class, 'update'])->name('meeting-update');
     Route::delete('/meeting/{id}', [MeetingController::class, 'destroy'])->name('meeting-destroy');
     Route::post('/meeting/search', [MeetingController::class, 'search'])->name('meeting-search');
+	Route::put('/meeting/{id}/update-attachments-file', [MeetingController::class, 'updateAttachmentsFile'])->name('update-attachments-file');
 	
 
 

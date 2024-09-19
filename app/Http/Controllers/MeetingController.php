@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Meeting;
 use Illuminate\Http\Request;
 use App\Services\MeetingService;
 use Illuminate\Support\Facades\Validator;
@@ -27,7 +28,7 @@ class MeetingController extends Controller
     // show creating a new meeting
     public function create()
     {   
-        $leads = DB::table('leads')->select('id', 'first_name')->get();
+        $leads = DB::table('leads')->select('id', 'first_name','last_name')->get();
         $users = DB::table('users')->select('id', 'username')->get();
         return view('meetings.create', compact('leads', 'users'));
     }
@@ -41,7 +42,7 @@ class MeetingController extends Controller
             'meeting_description' => 'nullable|string',
             'meeting_date' => 'required|date',
             'meeting_link' => 'nullable|url',
-            'attachments' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:2048',
+            'attachments' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx,xls,xlsx|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -63,7 +64,14 @@ class MeetingController extends Controller
     public function edit($id)
     {
         $meeting = $this->meetingService->getMeetingById($id);
-        return view('meetings.edit', compact('meeting'));
+        // Convert the recipients string into an array
+        if ($meeting->recipients) {
+            $meeting->recipients = explode(',', $meeting->recipients);
+        }
+        
+        $leads = DB::table('leads')->select('id', 'first_name','last_name')->get();
+        $users = DB::table('users')->select('id', 'username')->get();
+        return view('meetings.edit', compact('meeting','leads','users'));
     }
 
     // update the specified meeting
@@ -74,7 +82,7 @@ class MeetingController extends Controller
             'meeting_description' => 'required|string',
             'meeting_date' => 'required|date',
             'meeting_link' => 'nullable|url',
-            'attachments' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:2048',
+            'attachments' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx,xls,xlsx|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -103,6 +111,29 @@ class MeetingController extends Controller
 
         $meetings = $this->meetingService->searchMeetings($request);
         return view('meetings.index', compact('meetings'));
+    }
+
+
+
+    public function updateAttachmentsFile($id)
+    {
+        $meeting = Meeting::findOrFail($id);
+        if ($meeting->attachments) {
+            // path to the image file
+            //$imagePath = public_path('uploads/agents/' . $user->profile_image);
+            $filePath =getcwd().'/uploads/meetings/'.$meeting->attachments;
+            // delete the file if it exists
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            //Update the user record to remove the profile image
+            $meeting->attachments = null;
+            $meeting->save();
+    
+            return response()->json(['success' => true]);
+        }
+    
+        return response()->json(['success' => false, 'message' => 'No profile image found']);
     }
 }
 

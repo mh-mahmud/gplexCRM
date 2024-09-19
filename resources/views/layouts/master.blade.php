@@ -2902,11 +2902,45 @@
 		$('[name="start_date"]').flatpickr();
 		$('[name="end_date"]').flatpickr();
 		$('[name="dob"]').flatpickr();
-		$('[name="meeting_date"]').flatpickr();
+		//$('[name="meeting_date"]').flatpickr();
 		$('[id="common_dob"]').flatpickr();
 		$('.date').flatpickr();
 
 	</script>
+
+<script>
+    // Function to initialize Flatpickr with current date on open
+    function initializeFlatpickrWithCurrentDate(selector) {
+        $(selector).flatpickr({
+            dateFormat: "Y-m-d",  // Date format without time
+            onOpen: function(selectedDates, dateStr, instance) {
+                if (!dateStr) { // Only set current date if no date is already selected
+                    instance.setDate(new Date()); // Set current date
+                }
+            }
+        });
+    }
+
+    // Keep the original flatpickr initialization and add the current date behavior
+    $('[name="date-table"]').flatpickr();
+    $('[name="birth_day"]').flatpickr();
+    $('[name="start_date"]').flatpickr();
+    $('[name="end_date"]').flatpickr();
+    $('[name="dob"]').flatpickr();
+    //$('[name="meeting_date"]').flatpickr(); // Commented as per your code
+    $('[id="common_dob"]').flatpickr();
+    $('.date').flatpickr();
+
+    // Apply the current date on open for these specific fields
+    initializeFlatpickrWithCurrentDate('[name="date-table"]');
+    initializeFlatpickrWithCurrentDate('[name="birth_day"]');
+    initializeFlatpickrWithCurrentDate('[name="start_date"]');
+    initializeFlatpickrWithCurrentDate('[name="end_date"]');
+    initializeFlatpickrWithCurrentDate('[name="dob"]');
+    initializeFlatpickrWithCurrentDate('[id="common_dob"]');
+    initializeFlatpickrWithCurrentDate('.date');
+</script>
+
 	<script>
 		 $(function(){
 			$('.editor').summernote({
