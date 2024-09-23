@@ -67,6 +67,15 @@ return [
         'Completed' => 'Completed',
     ],
 
+    'meeting_status' => [
+        'Pending' => 'Pending',
+        'Success' => 'Success',
+        'Failed' => 'Failed',
+        'Expired' => 'Expired',
+        'Canceled' => 'Canceled',
+        'Completed' => 'Completed',
+    ],
+
     'proposal_status' => [
         'draft' => 'Draft',
         'sent' => 'Sent',

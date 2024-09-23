@@ -178,12 +178,6 @@ use Carbon\Carbon;
                         <span>{{ $meeting->meeting_subject }}</span>
                     </div>
 
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Meeting Description</span>
-                        <span>{{ $meeting->meeting_description }}</span>
-                    </div>
-                    
-
                     @php
                     date_default_timezone_set('Asia/Dhaka');
                     //assuming the $meeting->meeting_date is a datetime string
@@ -196,42 +190,44 @@ use Carbon\Carbon;
                     $timezone = $meetingDate->timezoneName; // timezone (example., Asia/Dhaka)
                     @endphp
 
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Meeting Date</span>
+                    <div class="position-relative d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <!-- <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Meeting Date</span> -->
                         <span>
-                            <div class="calendar-block">
-                                <!-- Display the day of the week -->
-                                <div class="calendar-header">{{ $dayOfWeek }}</div>
-                                <!-- Display the numeric day -->
-                                <div class="calendar-date">{{ $day }}</div>
-                                <!-- Display the month and year -->
-                                <div class="calendar-footer">
-                                    <div class="calendar-month-year">{{ $monthYear }}</div>
-                                    <div class="calendar-time-block">
-                                        <!-- Display the time -->
-                                        <div class="calendar-time">{{ $time }}</div>
-                                        <!-- Display the timezone dynamically -->
-                                        <div class="calendar-timezone">({{ $timezone }})</div>
+                            <div class="calendar-block position-relative">
+                                <div class="calendar-left">
+                                    <!-- Display the day of the week -->
+                                    <div class="calendar-header">{{ $dayOfWeek }}</div>
+                                    <!-- Display the numeric day -->
+                                    <div class="calendar-date">{{ $day }}</div>
+                                    <!-- Display the month and year -->
+                                    <div class="calendar-footer">
+                                        <div class="calendar-month-year">{{ $monthYear }}</div>
+                                        <div class="calendar-time-block">
+                                            <!-- Display the time -->
+                                            <div class="calendar-time">{{ $time }}</div>
+                                            <!-- Display the timezone dynamically -->
+                                            <div class="calendar-timezone">({{ $timezone }})</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </span>
-                    </div>
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Meeting Link</span>
-                        <span>{{ $meeting->meeting_link }}</span>
+
+                        <!-- Event details placed behind the calendar using z-index -->
+                        <span class="position-absolute event-details-block">
+                            <div class="event-details">
+                                <h3>Details of the event</h3>
+                                <ul>
+                                    <li><strong>Description:</strong>{{ $meeting->meeting_description }}</li>
+                                    <li>
+                                    Please attend the meeting on time.<br><strong>How to Join:</strong> <a href="{{ $meeting->meeting_link }}">{{ $meeting->meeting_link }}</a></li>
+                                    <li><strong>Duration:</strong> {{ $meeting->duration }}</li>
+                                </ul>
+                            </div>
+                        </span>
                     </div>
 
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Duration</span>
-                        <span>{{ $meeting->duration }}</span>
-                    </div>
-
-
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Created By</span>
-                        <span>{{ $meeting->user->username ?? 'N/A' }}</span>
-                    </div>
+               
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Attachments</span>
@@ -247,6 +243,11 @@ use Carbon\Carbon;
                         @elseif ($meeting->status === 0)
                         <span>Inactive</span>
                         @endif
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Created By</span>
+                        <span>{{ $meeting->user->username ?? 'N/A' }}</span>
                     </div>
 
 

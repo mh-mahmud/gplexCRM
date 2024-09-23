@@ -316,6 +316,26 @@
                                     </select>
                                 </div>
                             </div>
+
+                           
+                        <div class="col-md-2">
+                            <div class="fv-row mt-10 form-check form-check-custom form-check-sm">
+                                <input class="form-check-input form-check-sm" type="checkbox" name="send_email" id="sendEmail" value="1" {{ old('send_email', $meeting->send_email) ? 'checked' : '' }}>
+                                <label class="form-check-label fw-bolder text-dark" for="sendEmail">
+                                    Send Email
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-2">
+                            <div class="fv-row mt-10 form-check form-check-custom form-check-sm">
+                                <input class="form-check-input" type="checkbox" name="send_sms" id="sendSMS" value="1" {{ old('send_sms', $meeting->send_sms) ? 'checked' : '' }}>
+                                <label class="form-check-label fw-bolder text-dark" for="sendSMS">
+                                    Send SMS
+                                </label>
+                            </div>
+                        </div>
+
                         </div>
                         <!-- End Row -->
                         <div class="card-footer d-flex justify-content-end py-6 px-9">

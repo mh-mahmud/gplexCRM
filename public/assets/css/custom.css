@@ -418,3 +418,47 @@ body.swal2-height-auto {
 
 /* end meeting module calender design CSS*/
 
+
+
+
+/* Event details section - Positioned behind the calendar */
+.event-details-block {
+    /* top: 0; */
+    left: 160px; /* Adjust this value based on spacing */
+    z-index: 1; /* Ensure it is behind the calendar */
+    opacity: 0.9; /* Optional: Make it slightly transparent */
+}
+
+.event-details {
+    /* background-color: #fff; */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.event-details h3 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.event-details ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.event-details ul li {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.event-details ul li strong {
+    font-weight: bold;
+}
+
+.event-details ul li a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.event-details ul li a:hover {
+    text-decoration: underline;
+}
