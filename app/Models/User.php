@@ -104,11 +104,31 @@ class User extends Authenticatable
         return null;
     }
 
+    public function get_permission_data($type=null) {
+
+
+        // new menu session store code
+        $ses_name = 'user_permission_data_' . Auth::user()->role_id;
+
+        if(!empty(Session::get($ses_name))) {
+            return Session::get($ses_name);
+        }
+        else {
+            $role_data = Role::where('id', Auth::user()->role_id)->first(['name', 'permission_details']);
+            if(!empty($role_data)) {
+                Session::put($ses_name, $role_data->permission_details);
+                return $role_data->permission_details;
+            }
+        }
+
+        return null;
+    }
+
 
     
     public function hasPermission($permission) {
 
-        $permission_details = $this->get_menu_data();
+        $permission_details = $this->get_permission_data();
         
         if ($permission_details) {
             $data = [];
