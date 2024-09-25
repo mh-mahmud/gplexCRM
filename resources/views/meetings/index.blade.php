@@ -526,25 +526,23 @@ use Carbon\Carbon;
 <!-- <script src="{{url('/')}}/assets/js/jquery-3.6.0.min.js"></script> -->
 <script>
     $(document).ready(function() {
-        // Trigger modal and load data
+        //Trigger modal and load data
         $('a[data-bs-target="#add_feedback_modal"]').on('click', function() {
             var meetingId = $(this).data('id');
-            // Set the form action dynamically with meeting ID using route
+            //Set the form action dynamically with meeting ID using route
             var formAction = "{{ route('meeting-update-feedback', ':id') }}";  // ':id' is a placeholder
             formAction = formAction.replace(':id', meetingId);  // Replace ':id' with actual meetingId
             $('form[name="star-rating-form"]').attr('action', formAction);
-
-            // Make an AJAX call to fetch the meeting data
-            var fetchUrl = "{{ route('meeting-feedback', ':id') }}";  // Define the route for fetching data
-            fetchUrl = fetchUrl.replace(':id', meetingId);  // Replace ':id' with actual meetingId
+            //Make an AJAX call to fetch the meeting data
+            var fetchUrl = "{{ route('meeting-feedback', ':id') }}"; // Define the route for fetching data
+            fetchUrl = fetchUrl.replace(':id', meetingId);// Replace ':id' with actual meetingId
             $.ajax({
                 url: fetchUrl,
                 type: 'GET',
                 success: function(data) {
-                    // Populate the modal fields with AJAX response
+                    //Populate the modal fields with AJAX response
                     $('textarea[name="meeting_feedback"]').val(data.meeting_feedback);
-
-                    // Update the rating value in the modal
+                    //Update the rating value in the modal
                     $('input[name="rating"]').prop('checked', false); // Uncheck all ratings first
                     if (data.rating) {
                         $('input[name="rating"][value="' + data.rating + '"]').prop('checked', true);
