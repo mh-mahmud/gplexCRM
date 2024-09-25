@@ -30,6 +30,7 @@
 	<link href="{{url('/')}}/assets/summernote-0.8.18/summernote-bs4.min.css" rel="stylesheet" type="text/css" />
     <link href="{{url('/')}}/assets/css/custom.css" rel="stylesheet" type="text/css" />
 	<script src="{{url('/')}}/assets/js/sweetalert2.min.js"></script>
+	<script src="{{url('/')}}/assets/js/jquery-3.6.0.min.js"></script>
 	<!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->

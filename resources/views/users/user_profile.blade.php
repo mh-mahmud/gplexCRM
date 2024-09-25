@@ -206,16 +206,18 @@
                             <span>Male</span>
                         @elseif ($user->gender === 'Female')
                             <span>Female</span>
-                        @else
+                        @elseif ($user->gender === 'Other')
                             <span>Other</span>
+                        @else
+                            <span></span>
                         @endif
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Status</span>
-                        @if ($user->status === 1)
+                        @if ($user->status ==1)
                             <span>Active</span>
-                        @elseif ($user->status === 0)
+                        @elseif ($user->status ==0)
                             <span>Inactive</span>
                         @endif
                     </div>

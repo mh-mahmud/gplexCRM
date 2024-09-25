@@ -210,8 +210,10 @@
                                 <span>Male</span>
                             @elseif ($agent->gender === 'Female')
                                 <span>Female</span>
-                            @else
+                            @elseif ($agent->gender === 'Other')
                                 <span>Other</span>
+                            @else
+                                <span></span>
                             @endif
                         </div>
 

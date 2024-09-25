@@ -24,8 +24,10 @@ class MeetingController extends Controller
     public function index()
     {
         $meetings = $this->meetingService->getAllMeetings();
+        //$meeting = $meetings->first();  
         return view('meetings.index', compact('meetings'));
     }
+    
 
     // show creating a new meeting
     public function create()
@@ -147,6 +149,39 @@ class MeetingController extends Controller
         }
     
         return response()->json(['success' => false, 'message' => 'No profile image found']);
+    }
+
+
+    public function updateFeedback(Request $request, $id)
+    {
+        // Validation
+        $request->validate([
+            'meeting_feedback' => 'string|max:255',
+            'rating' => 'integer|max:5',
+        ]);
+
+        // Update the meeting via service
+        $result = $this->meetingService->updateFeedback($id, $request->input('meeting_feedback'), $request->input('rating'));
+
+        if ($result) {
+            return redirect()->route('meeting-index')->with('success', 'Meeting feedback updated successfully.');
+        } else {
+            return back()->withErrors(['error' => 'Failed to update the meeting.']);
+        }
+    }
+
+
+    public function getMeetingFeedback($id)
+    {
+        $meeting = Meeting::find($id);
+        if (!$meeting) {
+            return response()->json(['error' => 'Meeting not found'], 404);
+        }
+        //Return the meeting data as a JSON response
+        return response()->json([
+            'meeting_feedback' => $meeting->meeting_feedback,
+            'rating' => $meeting->rating,
+        ]);
     }
 }
 

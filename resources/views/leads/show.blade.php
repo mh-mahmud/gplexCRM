@@ -180,8 +180,10 @@ use Carbon\Carbon;
                                     <span>Male</span>
                                     @elseif ($lead->gender === 'Female')
                                     <span>Female</span>
-                                    @else
+                                    @elseif ($lead->gender === 'Other')
                                     <span>Other</span>
+                                    @else
+                                    <span></span>
                                     @endif
                                 </div>
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">

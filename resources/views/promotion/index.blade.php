@@ -136,7 +136,7 @@
 						<tr>
 
 							<td class="ps-5 text-dark fs-6">{{($promotions->currentPage() - 1) * $promotions->perPage() + $loop->iteration}}</td>
-							<td class="ps-5 text-dark fs-6">{{$promotion->promotion_title }}</td>
+							<td class="ps-5 text-dark fs-6 w-300px">{{$promotion->promotion_title }}</td>
 							<td class="text-dark fs-6">
 							@if($promotion->start_date)
 								{{ \Carbon\Carbon::parse($promotion->start_date)->format('d-m-Y') }}
@@ -147,7 +147,7 @@
 								{{ \Carbon\Carbon::parse($promotion->end_date)->format('d-m-Y') }}
 							@endif
 							</td>
-							<td class="text-dark fs-6">{{$promotion->promo_type }}</td>
+							<td class="text-dark fs-6 w-300px">{{$promotion->promo_type }}</td>
 
 		                    <td>
 								@if ($promotion->status == 1)
