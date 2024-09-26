@@ -35,15 +35,7 @@ use App\Models\Promotion;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
-//Route::get('/login', [AuthController::class, 'index'])->name('login');
-//Route::post('/post_login', [AuthController::class, 'postLogin'])->name('login.post');
-/*Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');*/
 Route::get('/', [AuthController::class, 'index'])->name('login_index');
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/post_login', [AuthController::class, 'postLogin'])->name('login.post');
