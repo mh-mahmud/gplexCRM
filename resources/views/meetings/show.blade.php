@@ -220,14 +220,14 @@ use Carbon\Carbon;
                                 <ul>
                                     <li><strong>Description:</strong>{{ $meeting->meeting_description }}</li>
                                     <li>
-                                    Please attend the meeting on time.<br><strong>How to Join:</strong> <a href="{{ $meeting->meeting_link }}">{{ $meeting->meeting_link }}</a></li>
+                                        Please attend the meeting on time.<br><strong>How to Join:</strong> <a href="{{ $meeting->meeting_link }}">{{ $meeting->meeting_link }}</a></li>
                                     <li><strong>Duration:</strong> {{ $meeting->duration }}</li>
                                 </ul>
                             </div>
                         </span>
                     </div>
 
-               
+
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Attachments</span>
@@ -248,6 +248,24 @@ use Carbon\Carbon;
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Created By</span>
                         <span>{{ $meeting->user->username ?? 'N/A' }}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Rating</span>
+                        <span>
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if($i <=$meeting->rating)
+                                <i class="fa fa-star text-warning"></i> <!-- yellow star ratings -->
+                                @else
+                                <i class="fa fa-star text-muted"></i> <!-- grey star remaining -->
+                                @endif
+                                @endfor
+                        </span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Meeting Feedback</span>
+                        <span>{{ $meeting->meeting_feedback }}</span>
                     </div>
 
 

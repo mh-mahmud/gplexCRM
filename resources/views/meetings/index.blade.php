@@ -268,22 +268,32 @@ use Carbon\Carbon;
 
                         <!-- Star Ratings -->
                         <input class="star" type="radio" id="st-1" value="1" name="rating" />
-                        <label class="star-label" for="st-1"><div class="star-shape"></div></label>
+                        <label class="star-label" for="st-1">
+                            <div class="star-shape"></div>
+                        </label>
 
                         <input class="star" type="radio" id="st-2" value="2" name="rating" />
-                        <label class="star-label" for="st-2"><div class="star-shape"></div></label>
+                        <label class="star-label" for="st-2">
+                            <div class="star-shape"></div>
+                        </label>
 
                         <input class="star" type="radio" id="st-3" value="3" name="rating" />
-                        <label class="star-label" for="st-3"><div class="star-shape"></div></label>
+                        <label class="star-label" for="st-3">
+                            <div class="star-shape"></div>
+                        </label>
 
                         <input class="star" type="radio" id="st-4" value="4" name="rating" />
-                        <label class="star-label" for="st-4"><div class="star-shape"></div></label>
+                        <label class="star-label" for="st-4">
+                            <div class="star-shape"></div>
+                        </label>
 
                         <input class="star" type="radio" id="st-5" value="5" name="rating" />
-                        <label class="star-label" for="st-5"><div class="star-shape"></div></label>
+                        <label class="star-label" for="st-5">
+                            <div class="star-shape"></div>
+                        </label>
 
                         <!-- Skip Button for Removing Rating -->
-                        <label class="skip-button" for="skip-star">&times;</label>
+                        <!-- <label class="skip-button" for="skip-star">&times;</label> -->
                     </div>
                     <p id="result">Not chosen</p>
                 </div>
@@ -360,6 +370,7 @@ use Carbon\Carbon;
                                 <th class="min-w-140px">Duration</th>
                                 <th class="min-w-140px">Created By</th>
                                 <th class="min-w-120px">Status</th>
+                                <th class="min-w-120px">Rating</th>
                                 <th class="min-w-100px text-center text-center-new">Actions</th>
                             </tr>
                         </thead>
@@ -369,7 +380,7 @@ use Carbon\Carbon;
                             @foreach ($meetings as $meeting)
                             <tr>
                                 <td class="ps-5 text-dark fs-6">{{($meetings->currentPage() - 1) * $meetings->perPage() + $loop->iteration}}</td>
-                                <td class="text-dark fs-6">{{$meeting->meeting_subject }}</td>
+                                <td class="text-dark fs-6 w-250px">{{$meeting->meeting_subject }}</td>
                                 <td class="text-dark fs-6">{{$meeting->meeting_date }}</td>
                                 <td class="text-dark fs-6">{{$meeting->duration }}</td>
                                 <td class="text-dark fs-6">{{$meeting->user->username ?? 'N/A'}}</td>
@@ -380,6 +391,16 @@ use Carbon\Carbon;
                                     @elseif ($meeting->status == 0)
                                     <span class="badge badge-light-danger">Inactive</span>
                                     @endif
+                                </td>
+
+                                <td class="text-dark fs-6">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if($i <=$meeting->rating)
+                                        <i class="fa fa-star text-warning"></i> <!-- Yellow star for ratings -->
+                                        @else
+                                        <i class="fa fa-star text-muted"></i> <!-- Grey star for remaining -->
+                                        @endif
+                                        @endfor
                                 </td>
 
 
@@ -530,12 +551,12 @@ use Carbon\Carbon;
         $('a[data-bs-target="#add_feedback_modal"]').on('click', function() {
             var meetingId = $(this).data('id');
             //Set the form action dynamically with meeting ID using route
-            var formAction = "{{ route('meeting-update-feedback', ':id') }}";  // ':id' is a placeholder
-            formAction = formAction.replace(':id', meetingId);  // Replace ':id' with actual meetingId
+            var formAction = "{{ route('meeting-update-feedback', ':id') }}"; // ':id' is a placeholder
+            formAction = formAction.replace(':id', meetingId); // Replace ':id' with actual meetingId
             $('form[name="star-rating-form"]').attr('action', formAction);
             //Make an AJAX call to fetch the meeting data
             var fetchUrl = "{{ route('meeting-feedback', ':id') }}"; // Define the route for fetching data
-            fetchUrl = fetchUrl.replace(':id', meetingId);// Replace ':id' with actual meetingId
+            fetchUrl = fetchUrl.replace(':id', meetingId); // Replace ':id' with actual meetingId
             $.ajax({
                 url: fetchUrl,
                 type: 'GET',
