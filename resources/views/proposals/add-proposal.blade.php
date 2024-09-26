@@ -32,7 +32,8 @@
 
                             <!-- Start Form-->
 
-                            <form class="g-form g-proposal w-100" action="{{ route('add-product-pro') }}"  method="POST">
+                            <form class="g-form g-proposal w-100" action="{{ route('store-proposal') }}" enctype="multipart/form-data" method="POST">
+                                @csrf
                                 <div class="row">
                                     <!--Left Part-->
                                     <div class="col-xl-6">
@@ -69,31 +70,22 @@
                                             </div>
 
                                             <div class="col-xl-6">
-
                                                 <div class="fv-row mb-5">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">
-                                                        Date<span class="text-danger">*</span></label>
-
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
+                                                    <label class="form-label fw-bolder text-dark">Date<span class="text-danger">*</span></label>
                                                     <div class="position-relative">
                                                         <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" placeholder="Date" name="start_date" value="{{ old('start_date') }}">
                                                         @if ($errors->has('start_date'))
                                                         <span class="text-danger">{{ $errors->first('start_date') }}</span>
                                                         @endif
                                                     </div>
-
                                                 </div>
-
                                             </div>
 
                                             <div class="col-xl-6">
 
                                                 <div class="fv-row mb-5">
-                                                    <label class="form-label fw-bolder text-dark">
-                                                        Open Till<span class="text-danger">*</span></label>
-
+                                                    <label class="form-label fw-bolder text-dark">Open Till<span class="text-danger">*</span></label>
                                                     <div class="position-relative">
                                                         <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" placeholder="Open Till" name="end_date" value="{{ old('end_date') }}">
                                                         @if ($errors->has('end_date'))

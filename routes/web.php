@@ -260,6 +260,7 @@ Route::group(['middleware' => ['auth']], function () {
 	// Proposal routes start
 	Route::get('proposal-list', [ProposalController::class, 'proposalList'])->name('proposal-list')->middleware(['check-permission']);
 	Route::get('add-proposal', [ProposalController::class, 'addProposal'])->name('add-proposal')->middleware(['check-permission']);
+	Route::post('add-proposal', [ProposalController::class, 'saveProposal'])->name('store-proposal')->middleware(['check-permission']);
 	Route::delete('delete-proposal/{id?}', [ProposalController::class, 'countryDelete'])->name('delete-proposal')->middleware(['check-permission']);
 	
 
