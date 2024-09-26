@@ -132,8 +132,7 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: '{{ session('
-            success ')}}',
+            text: '{{ session('success')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -145,8 +144,7 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: '{{ session('
-            error ')}}',
+            text: '{{ session('error')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -295,7 +293,7 @@ use Carbon\Carbon;
                         </label>
 
                         <!-- Skip Button for Removing Rating -->
-                        <label class="skip-button" for="skip-star">&times;</label>
+                        <!-- <label class="skip-button" for="skip-star">&times;</label> -->
                     </div>
                     <p id="result">Not chosen</p>
                 </div>
@@ -382,7 +380,7 @@ use Carbon\Carbon;
                             @foreach ($meetings as $meeting)
                             <tr>
                                 <td class="ps-5 text-dark fs-6">{{($meetings->currentPage() - 1) * $meetings->perPage() + $loop->iteration}}</td>
-                                <td class="text-dark fs-6">{{$meeting->meeting_subject }}</td>
+                                <td class="text-dark fs-6 w-250px">{{$meeting->meeting_subject }}</td>
                                 <td class="text-dark fs-6">{{$meeting->meeting_date }}</td>
                                 <td class="text-dark fs-6">{{$meeting->duration }}</td>
                                 <td class="text-dark fs-6">{{$meeting->user->username ?? 'N/A'}}</td>
