@@ -347,6 +347,7 @@ class LeadController  extends Controller
     public function editTableData($tableName, $leadId)
     {
         try {
+            //dd($leadId);die();
             $data = $this->leadService->getTableData($tableName, $leadId);
             $previousUrl = url()->previous();
             $lastFourDigits = substr($previousUrl, -4);

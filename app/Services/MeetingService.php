@@ -227,4 +227,21 @@ class MeetingService
             ->orderBy('created_at', 'desc')
             ->paginate(config('constants.ROW_PER_PAGE'));
     }
+
+
+    public function updateFeedback($id, $meeting_feedback, $rating)
+    {
+        // Find the meeting by ID
+        $meeting = Meeting::find($id);
+        
+        if (!$meeting) {
+            return false;
+        }
+
+        // Update feedback and rating
+        $meeting->meeting_feedback = $meeting_feedback;
+        $meeting->rating = $rating;
+
+        return $meeting->save();
+    }
 }
