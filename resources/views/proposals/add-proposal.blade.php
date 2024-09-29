@@ -250,8 +250,7 @@
                                                     <!--begin::Both add-ons-->
                                                     <div class="input-group input-group-sm min-w-300px w-100 w-md-500px">
                                                         <div class="flex-grow-1">
-                                                            <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2"
-                                                                    data-placeholder="Add an item">
+                                                            <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2" data-placeholder="Add an item">
                                                                 <option></option>
                                                                 <option value="1">Option 1</option>
                                                                 <option value="2">Option 2</option>
@@ -303,7 +302,7 @@
                                                 <table class="table table-rounded table-sm table-striped border align-middle gs-2">
                                                     <thead>
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
-                                                        <th>Item</th>
+                                                        <th>Item Name</th>
                                                         <th>Description</th>
                                                         <th>Qty</th>
                                                         <th>Rate</th>
@@ -316,12 +315,10 @@
                                                     <tbody>
                                                     <tr>
                                                         <td>
-                                                            <textarea class="form-control form-control-sm min-w-250px" name="" cols="30" rows="2"
-                                                                      placeholder="Description"></textarea>
+                                                            <textarea class="form-control form-control-sm min-w-250px" name="" cols="30" rows="2"placeholder=""></textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea class="form-control form-select-sm min-w-250px" name="" cols="30" rows="2"
-                                                                      placeholder="Long Description"></textarea>
+                                                            <textarea class="form-control form-select-sm min-w-250px" name="" cols="30" rows="2"placeholder="Long Description"></textarea>
                                                         </td>
                                                         <td>
                                                             <input class="form-control form-control-sm" type="number" name="" placeholder="Unit">
@@ -330,8 +327,7 @@
                                                             <input class="form-control form-control-sm" type="number" name="" placeholder="Rate">
                                                         </td>
                                                         <td>
-                                                            <select class="form-select form-select-sm" data-control="select2"
-                                                                    data-placeholder="No Tax">
+                                                            <select class="form-select form-select-sm" data-control="select2" data-placeholder="No Tax">
                                                                 <option></option>
                                                                 <option value="1">Option 1</option>
                                                                 <option value="2">Option 2</option>
