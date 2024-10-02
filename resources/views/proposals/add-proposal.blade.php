@@ -42,36 +42,29 @@
                                                 <div class="fv-row mb-5">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Subject<span class="text-danger">*</span></label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="subject" autocomplete="off" value="{{ old('subject') }}" />
-                                                    <!--end::Input-->
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="subject" autocomplete="off" value="{{ old('subject') }}" />
                                                     @if ($errors->has('subject'))
                                                         <span class="text-danger">{{ $errors->first('subject') }}</span>
                                                     @endif
-                                                    <!--end::Input-->
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="fv-row mb-5">
-                                                    <label class="form-label fw-bolder text-dark">Customer
+                                                    <label class="form-label fw-bolder text-dark">Lead ID
                                                         <sup><i class="bi bi-asterisk text-danger"></i></sup>
                                                     </label>
-                                                    <select class=" form-control form-control-sm form-control-solid"
-                                                            aria-label="Default select example">
-                                                        <option selected>Nothing Selected</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
+                                                    <select class=" form-control form-control-sm form-control-solid" aria-label="Default select example">
+                                                        <option selected>Selecte Lead</option>
+                                                        @foreach($leads as $lead)
+                                                            <option>{{ $lead->first_name . " " . $lead->last_name }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
 
                                             <div class="col-xl-6">
                                                 <div class="fv-row mb-5">
-                                                    <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Date<span class="text-danger">*</span></label>
                                                     <div class="position-relative">
                                                         <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" placeholder="Date" name="start_date" value="{{ old('start_date') }}">
@@ -103,12 +96,21 @@
                                                             aria-label="Default select example">
                                                         <option value=''>Select</option>
                                                         @foreach($currencies as $currency)
-                                                        <option value="{{$currency->id}}" {{ old('currency') == $currency->id ? 'selected' : '' }}>{{ $currency->name }} </option>
+                                                        <option value="{{$currency->id}}" {{ old("currency") == $currency->id ? "selected" : "" }}>
+                                                            {{ $currency->name }}
+                                                        </option>
                                                         @endforeach
                                                     </select>
                                                     @if ($errors->has('currency'))
                                                         <span class="text-danger">{{ $errors->first('currency') }}</span>
                                                     @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label  fw-bolder text-dark">Upload PDF/Xcel/Word</label>
+                                                    <input class="form-control form-control-sm form-control-solid" accept=".csv,.xls,.xlsx,.docx" type="file" name="upload_file" autocomplete="off"/>
                                                 </div>
                                             </div>
 
