@@ -117,13 +117,8 @@
 
                                             {{-- <div class="col-md-6">
                                                 <div class="form-check form-switch form-check-light">
-                                                    <label class="form-label fw-bolder text-dark g-proposal-c-label"
-                                                           for="status">Allow Comments</label>
-                                                    <div>
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                               id="status"
-                                                               name="status" checked="checked"/>
-                                                    </div>
+                                                    <label class="form-label fw-bolder text-dark g-proposal-c-label" for="status">Allow Comments</label>
+                                                    <div><input class="form-check-input" type="checkbox" value="" id="status" name="status" checked="checked"/></div>
                                                 </div>
                                             </div> --}}
 
@@ -137,8 +132,7 @@
                                                 <div class="fv-row mb-5">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Status<span class="text-danger">*</span></label>
-                                                    <select class=" form-control form-control-sm form-control-solid" id="currency" name="currency"
-                                                            aria-label="Default select example">
+                                                    <select class=" form-control form-control-sm form-control-solid" id="currency" name="currency" aria-label="Default select example">
                                                         <option value=''>Select</option>
                                                         @foreach(config('constants.proposal_status') as $key => $status)
                                                         <option value="{{$currency->id}}" {{ old('status') == $key ? 'selected' : '' }}>{{ $status }} </option>
@@ -152,23 +146,15 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">First
-                                                        Name</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="email" autocomplete="off"/>
-                                                    <!--end::Input-->
+                                                    <label class="form-label fw-bolder text-dark">First Name</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="email" autocomplete="off"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="fv-row mb-5">
-                                                    <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">To<span class="text-danger">*</span></label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" id="send_to" name="send_to" autocomplete="off" value="{{ old('send_to') }}"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" id="send_to" name="send_to" autocomplete="off" value="{{ old('send_to') }}"/>
                                                     @if ($errors->has('send_to'))
                                                         <span class="text-danger">{{ $errors->first('send_to') }}</span>
                                                     @endif
@@ -186,24 +172,21 @@
                                                 <div class="fv-row mb-5">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">City</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" id="city" name="city" autocomplete="off" value="{{ old('city') }}"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" id="city" name="city" autocomplete="off" value="{{ old('city') }}"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
                                                     <label class="form-label fw-bolder text-dark">State</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" id="state" name="state" autocomplete="off" value="{{ old('state') }}"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" id="state" name="state" autocomplete="off" value="{{ old('state') }}"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
                                                     <label class="form-label  fw-bolder text-dark">Country</label>
-                                                    <select class=" form-control form-control-sm form-control-solid" id="country_id" name="country_id"
-                                                            aria-label="Default select example">
+                                                    <select class=" form-control form-control-sm form-control-solid" id="country_id" name="country_id" aria-label="Default select example">
                                                         <option value=''>Select</option>
                                                         @foreach($countries as $country)
                                                         <option value="{{$country->id}}" {{ old('country_id') == $country->id ? 'selected' : '' }}>{{ $country->name }} </option>
@@ -215,8 +198,7 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
                                                     <label class="form-label fw-bolder text-dark">Zip Code</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" id="zip_code" name="zip_code" autocomplete="off" value="{{ old('zip_code') }}"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" id="zip_code" name="zip_code" autocomplete="off" value="{{ old('zip_code') }}"/>
                                                 </div>
                                             </div>
 
