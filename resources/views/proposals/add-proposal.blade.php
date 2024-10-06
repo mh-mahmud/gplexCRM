@@ -109,7 +109,7 @@
 
                                             <div class="col-md-12">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label  fw-bolder text-dark">Upload PDF/Xcel/Word</label>
+                                                    <label class="form-label  fw-bolder text-dark">Upload PDF, xcel or Word</label>
                                                     <input class="form-control form-control-sm form-control-solid" accept=".csv,.xls,.xlsx,.docx" type="file" name="upload_file" autocomplete="off"/>
                                                 </div>
                                             </div>
@@ -132,10 +132,10 @@
                                                 <div class="fv-row mb-5">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Status<span class="text-danger">*</span></label>
-                                                    <select class=" form-control form-control-sm form-control-solid" id="currency" name="currency" aria-label="Default select example">
+                                                    <select class=" form-control form-control-sm form-control-solid" id="status" name="status" aria-label="Default select example">
                                                         <option value=''>Select</option>
                                                         @foreach(config('constants.proposal_status') as $key => $status)
-                                                        <option value="{{$currency->id}}" {{ old('status') == $key ? 'selected' : '' }}>{{ $status }} </option>
+                                                        <option value="{{$status}}" {{ old('status') == $key ? 'selected' : '' }}>{{ $status }} </option>
                                                         @endforeach
                                                     </select>
                                                     @if ($errors->has('status'))
@@ -147,13 +147,13 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
                                                     <label class="form-label fw-bolder text-dark">First Name</label>
-                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="email" autocomplete="off"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="first_name" autocomplete="off"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="fv-row mb-5">
-                                                    <label class="form-label fw-bolder text-dark">To<span class="text-danger">*</span></label>
+                                                    <label class="form-label fw-bolder text-dark">Email To<span class="text-danger">*</span></label>
                                                     <input class="form-control form-control-sm form-control-solid" type="text" id="send_to" name="send_to" autocomplete="off" value="{{ old('send_to') }}"/>
                                                     @if ($errors->has('send_to'))
                                                         <span class="text-danger">{{ $errors->first('send_to') }}</span>
@@ -202,21 +202,22 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <div class="fv-row mb-5">
                                                     <label class="form-label fw-bolder text-dark">Email</label>
                                                     <input class="form-control form-control-sm form-control-solid"
                                                            type="email" id="send_to_email" name="send_to_email" autocomplete="off" value="{{ old('send_to_email') }}"/>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark">Phone</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" id="send_to_phone" name="send_to_phone" autocomplete="off" value="{{ old('send_to_phone') }}"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" id="phone" name="phone" autocomplete="off" value="{{ old('phone') }}"/>
                                                 </div>
                                             </div>
+
+
                                         </div>
                                     </div>
 
@@ -228,10 +229,8 @@
 
                                     <div class="card">
                                         <div class="card-header">
-                                            <div
-                                                class="g-proposal-add-item d-flex flex-wrap justify-content-between align-items-center w-100 gap-3">
-                                                <div>
-                                                    <!--begin::Both add-ons-->
+                                            <div class="g-proposal-add-item d-flex flex-wrap justify-content-between align-items-center w-100 gap-3">
+                                                <!-- <div>
                                                     <div class="input-group input-group-sm min-w-300px w-100 w-md-500px">
                                                         <div class="flex-grow-1">
                                                             <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2" data-placeholder="Add an item">
@@ -245,11 +244,10 @@
                                                         </div>
                                                         <span class="input-group-sm input-group-text"><i class="bi bi-plus fs-4"></i></span>
                                                     </div>
-                                                    <!--end::Both add-ons-->
-                                                </div>
+                                                </div> -->
 
 
-                                                <div class="g-right-proposal-table-header d-flex align-items-center gap-3">
+                                                <!-- <div class="g-right-proposal-table-header d-flex align-items-center gap-3">
 
                                                     <div class="min-w-sm-100px">
                                                         <strong>Show quantity as: </strong>
@@ -274,7 +272,7 @@
                                                         </label>
                                                     </div>
 
-                                                </div>
+                                                </div> -->
 
                                             </div>
                                         </div>
@@ -288,40 +286,41 @@
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
                                                         <th>Item Name</th>
                                                         <th>Description</th>
-                                                        <th>Qty</th>
-                                                        <th>Rate</th>
-                                                        <th>Tax</th>
+                                                        <th>Price</th>
+                                                        <th>Offer Price</th>
+                                                        <th>Tax Amount</th>
                                                         <th>Amount</th>
-                                                        <th><i class="bi bi-gear-fill"></i>
-                                                        </th>
+                                                        <!-- <th><i class="bi bi-gear-fill"></i></th> -->
                                                     </tr>
                                                     </thead>
                                                     <tbody>
                                                     <tr>
                                                         <td>
-                                                            <textarea class="form-control form-control-sm min-w-250px" name="" cols="30" rows="2"placeholder=""></textarea>
+                                                            <textarea class="form-control form-control-sm min-w-250px" name="product_name" cols="30" rows="2"placeholder=""></textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea class="form-control form-select-sm min-w-250px" name="" cols="30" rows="2"placeholder="Long Description"></textarea>
+                                                            <textarea class="form-control form-select-sm min-w-250px" name="product_description" cols="30" rows="2"placeholder="Long Description"></textarea>
                                                         </td>
                                                         <td>
-                                                            <input class="form-control form-control-sm" type="number" name="" placeholder="Unit">
+                                                            <input class="form-control form-control-sm" type="number" name="price">
                                                         </td>
                                                         <td>
-                                                            <input class="form-control form-control-sm" type="number" name="" placeholder="Rate">
+                                                            <input class="form-control form-control-sm" type="number" name="offer_price">
                                                         </td>
                                                         <td>
+                                                            <input class="form-control form-control-sm" type="number" name="tax">
                                                             <select class="form-select form-select-sm" data-control="select2" data-placeholder="No Tax">
                                                                 <option></option>
-                                                                <option value="1">Option 1</option>
-                                                                <option value="2">Option 2</option>
-                                                            </select></td>
+                                                                <option value="1">Fixed</option>
+                                                                <option value="2">%</option>
+                                                            </select>
+                                                        </td>
                                                         <td>320,800</td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <button type="button" class="btn btn-sm btn-primary py-2 px-2">
                                                                 <i class="bi bi-check"></i>
                                                             </button>
-                                                        </td>
+                                                        </td> -->
                                                     </tr>
 
                                                     </tbody>

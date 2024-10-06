@@ -268,3 +268,5 @@ CREATE TABLE `invoices` (
 
 
 ALTER TABLE `campaigns` CHANGE `start_date` `start_date` DATETIME NULL,CHANGE `end_date` `end_date` DATETIME NULL;
+ALTER TABLE `proposals` CHANGE `currency` `currency` CHAR(10) NULL DEFAULT NULL;
+
