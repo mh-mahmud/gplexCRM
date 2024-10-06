@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\CampaignData;
 use App\Models\EmailTemplate;
-use App\Models\smsTemplate;
+use App\Models\SmsTemplate;
 use App\Models\EmailQueue;
 use App\Models\SmsQueue;
 use Carbon\Carbon;
@@ -94,7 +94,8 @@ class CampaignService
 
         // Validate the request
         $validator = Validator::make($request->all(), [
-            'fileUpload' => 'required|file|mimes:csv,txt',
+            //'fileUpload' => 'required|file|mimes:csv,txt',
+            'fileUpload' => 'required|file|mimes:csv,txt,xls,xlsx',
         ], $messages);
 
         if ($validator->fails()) {

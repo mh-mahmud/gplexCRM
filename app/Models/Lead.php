@@ -39,6 +39,7 @@ class Lead extends Model
        'state',
        'country',
        'lead_notes',
+       'created_by',
        'profile_image'
    ];
 

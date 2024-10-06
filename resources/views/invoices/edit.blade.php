@@ -173,10 +173,10 @@
                                         {{ old('recipient_type', isset($meeting->lead_id) && $meeting->lead_id !== null ? 'lead' : '') == 'lead' ? 'selected' : '' }}>
                                         Lead
                                     </option>
-                                    {{--<option value="user" 
+                                    <option value="user" 
                                         {{ old('recipient_type', isset($meeting->recipients) && !empty($meeting->recipients) ? 'user' : '') == 'user' ? 'selected' : '' }}>
                                         User
-                                    </option>--}}
+                                    </option>
                                 </select>
                                 @if ($errors->has('recipient_type'))
                                     <span class="text-danger">{{ $errors->first('recipient_type') }}</span>
@@ -192,7 +192,7 @@
                                     <option value="">Select Lead</option>
                                     @foreach($leads as $lead)
                                         <option value="{{ $lead->id }}" {{ old('lead_id', $meeting->lead_id ?? '') == $lead->id ? 'selected' : '' }}>
-                                        {{ $lead->first_name . ' ' . $lead->last_name . ' <' . $lead->email . '>' }}
+                                            {{ $lead->first_name . ' ' . $lead->last_name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -212,7 +212,7 @@
                                                     @if(is_array(old('recipients', $meeting->recipients ?? [])) && in_array($user->id, old('recipients', $meeting->recipients ?? [])))
                                                         selected
                                                     @endif>
-                                                    {{ $user->username . ' <' . $user->email . '>' }}
+                                                {{ $user->username }}
                                             </option>
                                         @endforeach
                                     </select>

@@ -20,6 +20,7 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\InvoiceController;
 
 
 use App\Models\Promotion;
@@ -139,12 +140,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/meeting/{id}', [MeetingController::class, 'update'])->name('meeting-update');
     Route::delete('/meeting/{id?}', [MeetingController::class, 'destroy'])->name('meeting-destroy')->middleware(['check-permission']);
     Route::post('/meeting/search', [MeetingController::class, 'search'])->name('meeting-search');
-	Route::put('/meeting/{id?}/update-attachments-file', [MeetingController::class, 'updateAttachmentsFile'])->name('update-attachments-file')->middleware(['check-permission']);
-	Route::post('/meeting/meeting-update-feedback/{id?}', [MeetingController::class, 'updateFeedback'])->name('meeting-update-feedback')->middleware(['check-permission']);
-	Route::get('/meeting-feedback/{id?}', [MeetingController::class, 'getMeetingFeedback'])->name('meeting-feedback')->middleware(['check-permission']);
+	Route::put('/meeting/{id?}/update-attachments-file', [MeetingController::class, 'updateAttachmentsFile'])->name('update-attachments-file');
+	Route::post('/meeting/meeting-update-feedback/{id?}', [MeetingController::class, 'updateFeedback'])->name('meeting-update-feedback');
+	Route::get('/meeting-feedback/{id?}', [MeetingController::class, 'getMeetingFeedback'])->name('meeting-feedback');
+
+    // invoice route
+	Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice-index')->middleware(['check-permission']);
+	Route::get('/invoice/create', [InvoiceController::class, 'create'])->name('invoice-create')->middleware(['check-permission']);
+	Route::post('/invoice', [InvoiceController::class, 'store'])->name('invoice-store');
+	Route::get('/invoice/{id?}', [InvoiceController::class, 'show'])->name('invoice-show')->middleware(['check-permission']);
+	Route::get('/invoice/{id?}/edit', [InvoiceController::class, 'edit'])->name('invoice-edit')->middleware(['check-permission']);
+	Route::put('/invoice/{id}', [InvoiceController::class, 'update'])->name('invoice-update');
+	Route::delete('/invoice/{id?}', [InvoiceController::class, 'destroy'])->name('invoice-destroy');
+	Route::post('/invoice/search', [InvoiceController::class, 'search'])->name('invoice-search');
 	
-
-
 	// users route
     Route::get('user-list',        [UserController::class, 'index'])->name('users.index')->middleware(['check-permission']);
     Route::get('user-show/{id?}',        [UserController::class, 'show'])->name('user.show')->middleware(['check-permission']);

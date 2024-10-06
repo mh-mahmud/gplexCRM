@@ -381,7 +381,7 @@ use Carbon\Carbon;
                             <tr>
                                 <td class="ps-5 text-dark fs-6">{{($meetings->currentPage() - 1) * $meetings->perPage() + $loop->iteration}}</td>
                                 <td class="text-dark fs-6 w-250px">{{$meeting->meeting_subject }}</td>
-                                <td class="text-dark fs-6">{{ \Carbon\Carbon::parse($meeting->meeting_date)->format('Y-m-d h:i A') }}</td>
+                                <td class="text-dark fs-6">{{$meeting->meeting_date }}</td>
                                 <td class="text-dark fs-6">{{$meeting->duration }}</td>
                                 <td class="text-dark fs-6">{{$meeting->user->username ?? 'N/A'}}</td>
 

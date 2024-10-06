@@ -460,7 +460,11 @@ class LeadController  extends Controller
         $request->validate([
             'form_id' => 'required|exists:leads_form,form_id'
         ]);
-        $leadFormDetailsColumns = LeadFormDetail::where('form_id', $request->form_id)->pluck('field_name')->toArray();
+        //$leadFormDetailsColumns = LeadFormDetail::where('form_id', $request->form_id)->pluck('field_name')->toArray();
+        $leadFormDetailsColumns = LeadFormDetail::where('form_id', $request->form_id)
+        ->where('field_value', '!=', 'file') // Exclude fields with 'file'
+        ->pluck('field_name')
+        ->toArray();
         // Get columns from Lead table
         //$leadColumns = (new Lead)->getFillable();
         $lead = new Lead;
@@ -632,7 +636,8 @@ class LeadController  extends Controller
 
         // Validate the request
         $validator = Validator::make($request->all(), [
-            'fileUpload' => 'required|file|mimes:csv',
+            //'fileUpload' => 'required|file|mimes:csv',
+            'fileUpload' => 'required|file|mimes:csv,txt,xls,xlsx',
             'form_id' => 'required|exists:leads_form,form_id'
         ], $messages);
 
@@ -675,6 +680,7 @@ class LeadController  extends Controller
                 while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
                     //dd($header);die();
                     $csvData = array_combine($dbHeader, $data);
+                    //dd($csvData['dob']);die();
                     $csvData['dob'] = $this->convertDate($csvData['dob']);
                     foreach ($fieldsConfig as $tableFields) {
                         foreach ($tableFields as $field) {
@@ -771,7 +777,9 @@ class LeadController  extends Controller
                         if (substr($leadData['phone'], 0, 1) !== '0') {
                             $leadData['phone'] = '0' .$phone;
                         }
+                       
                         $leadId = DB::table('leads')->insertGetId($leadData);
+                        //dd($leadData);die();
 
                         if (!$leadId) {
                             throw new \Exception("Failed to insert lead data and retrieve lead ID.");
@@ -791,14 +799,25 @@ class LeadController  extends Controller
                             }
 
 
+                            // foreach ($fields as $field) {
+                            //     if (isset($csvData[$field->field_name])) {
+                            //         // Check for empty strings and set to NULL if empty
+                            //         $insertData[$field->field_name] = $csvData[$field->field_name] === '' ? NULL : $csvData[$field->field_name];
+                            //     }
+                            // }
+
                             foreach ($fields as $field) {
-                                if (isset($csvData[$field->field_name])) {
+                                // If the field is of type 'file', insert NULL
+                                if ($field->field_value === 'file') {
+                                    $insertData[$field->field_name] = '';
+                                } elseif (isset($csvData[$field->field_name])) {
                                     // Check for empty strings and set to NULL if empty
                                     $insertData[$field->field_name] = $csvData[$field->field_name] === '' ? NULL : $csvData[$field->field_name];
                                 }
                             }
 
                             if (!empty($insertData)) {
+                                //dd($insertData);die();
                                 DB::table($tableName)->insert($insertData);
                             }
                         }
@@ -829,7 +848,49 @@ class LeadController  extends Controller
     }
 
 
+
     private function convertDate($dateString)
+    {
+        if (empty($dateString)) {
+            return null;
+        }
+
+        $formats = [
+            'd/m/Y',  // day/month/year (e.g., 01/10/2024)
+            'm/d/Y',  // month/day/year (e.g., 10/01/2024)
+            'Y-m-d',  // year-month-day (e.g., 2024-10-01)
+            'Y/m/d',  // year/month/day (e.g., 2024/10/01)
+            'd-m-Y',  // day-month-year (e.g., 01-10-2024)
+            'm-d-Y',  // month-day-year (e.g., 10-01-2024)
+            'Y.m.d',  // year.month.day (e.g., 2024.10.01)
+            'd.m.Y',  // day.month.year (e.g., 01.10.2024)
+            'd/m/y',  // day/month/two-digit year (e.g., 01/10/24)
+            'm/d/y',  // month/day/two-digit year (e.g., 10/01/24)
+            'd-m-y',  // day-month-two-digit year (e.g., 01-10-24)
+            'm-d-y',  // month-day-two-digit year (e.g., 10-01-24)
+            'd.m.y',  // day.month.two-digit year (e.g., 01.10.24)
+            'd/m/y',  // day/month/two-digit year (e.g., 1/10/24)
+            'd.m.y',  // day.month.two-digit year (e.g., 1.10.24)
+            'd M Y',  // day Month year (e.g., 1 Jan 2023)
+            'M d, Y', // Month day, year (e.g., Jan 1, 2023)
+            'd-M-Y',  // day-Month-year (e.g., 01-Jan-2023)
+            'Ymd',    // yearmonthday (e.g., 20231001)
+            'dmy',    // daymonthyear (e.g., 01102023)
+            'mdY',    // monthdayyear (e.g., 10012023)
+        ];
+
+        foreach ($formats as $format) {
+            $date = DateTime::createFromFormat($format, $dateString);
+            if ($date) {
+                return $date->format('Y-m-d'); // Return in Y-m-d format
+            }
+        }
+
+        return null;
+    }
+
+    
+    private function convertDate_backup($dateString)
     {
         if (empty($dateString)) {
             return null;
@@ -842,6 +903,7 @@ class LeadController  extends Controller
 
         return $date ? $date->format('Y-m-d') : null;
     }
+    
 
     public function search_phone($data) {
         $searchTerm = trim($data);

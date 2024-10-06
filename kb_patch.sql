@@ -235,3 +235,36 @@ ALTER TABLE `menus` CHANGE `sub_name` `sub_name` CHAR(25) CHARACTER SET utf8mb4 
 
 ALTER TABLE `email_queue` ADD COLUMN `meeting_id` CHAR(20) NULL AFTER `customer_id`;
 ALTER TABLE `sms_queue` ADD COLUMN `meeting_id` CHAR(20) NULL AFTER `customer_id`;
+ALTER TABLE `sms_queue` CHANGE `sms_text` `sms_text` TEXT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
+
+
+--not live send sql
+CREATE TABLE `invoices` (
+    `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `customer_id` BIGINT UNSIGNED NOT NULL,
+    `invoice_number` VARCHAR(255) UNIQUE NOT NULL,
+    `invoice_date` DATE NOT NULL,
+    `due_date` DATE NOT NULL,
+    `currency` CHAR(3) DEFAULT 'BDT', -- Default currency set to BDT (Taka)
+    `sub_total` DECIMAL(15, 2) DEFAULT 0.00,
+    `discount` DECIMAL(15, 2) DEFAULT 0.00,
+    `discount_type` ENUM('No discount', 'Before tax', 'After tax') DEFAULT 'No discount',
+    `adjustment` DECIMAL(15, 2) DEFAULT 0.00,
+    `total_amount` DECIMAL(15, 2) DEFAULT 0.00,
+    `client_note` TEXT NULL,
+    `item_description` TEXT NULL,
+    `prevent_reminders` tinyint(4) DEFAULT NULL,
+    `is_recurring` tinyint(4) DEFAULT NULL,
+    `payment_mode` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+    `sale_agent_id` BIGINT UNSIGNED NULL,
+    `created_at` TIMESTAMP NULL DEFAULT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL,
+    `deleted_at` TIMESTAMP NULL DEFAULT NULL,
+    
+    -- Foreign key constraints
+    CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers`(`id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_sale_agent_id` FOREIGN KEY (`sale_agent_id`) REFERENCES `users`(`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+ALTER TABLE `campaigns` CHANGE `start_date` `start_date` DATETIME NULL,CHANGE `end_date` `end_date` DATETIME NULL;

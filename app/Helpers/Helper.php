@@ -4,6 +4,7 @@
 namespace App\Helpers;
 use App\Models\Logs;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Helper
 {
@@ -30,4 +31,25 @@ class Helper
         $log->status            = 1;
         $log->save();
     }
+
+
+
+    public static function getEnumValues($table, $column)
+    {
+        $query = "SHOW COLUMNS FROM `{$table}` WHERE Field = '{$column}'";
+        $result = DB::select($query);
+        if (!empty($result)) {
+            $type = $result[0]->Type;
+            // Use regex to extract the enum values
+            preg_match('/^enum\((.*)\)$/', $type, $matches);
+            if (isset($matches[1])) {
+                $enum = array_map(function ($value) {
+                    return trim($value, "'");
+                }, explode(',', $matches[1]));
+                return $enum;
+            }
+        }
+        return [];
+    }
+
 }

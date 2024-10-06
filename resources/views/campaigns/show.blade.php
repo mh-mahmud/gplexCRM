@@ -166,7 +166,7 @@
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Start Date</span>
                         <span>
                         @if($campaign->start_date)
-                        {{ \Carbon\Carbon::parse($campaign->start_date)->format('d-m-Y') }}
+                        {{ \Carbon\Carbon::parse($campaign->start_date)->format('Y-m-d h:i A') }}
                         @endif
                         </span>
                     </div>
@@ -175,7 +175,7 @@
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">End Date</span>
                         <span>
                         @if($campaign->end_date)
-                        {{ \Carbon\Carbon::parse($campaign->end_date)->format('d-m-Y') }}
+                        {{ \Carbon\Carbon::parse($campaign->end_date)->format('Y-m-d h:i A') }}
                         @endif</span>
                     </div>
 

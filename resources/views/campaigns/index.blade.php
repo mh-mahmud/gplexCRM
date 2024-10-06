@@ -221,12 +221,12 @@ use Carbon\Carbon;
                                     <!-- <td class="text-dark fs-6">{{$campaign->promotion_title }}</td> -->
                                     <td class="text-dark fs-6">
                                         @if($campaign->start_date)
-                                        {{ \Carbon\Carbon::parse($campaign->start_date)->format('d-m-Y') }}
+                                        {{ \Carbon\Carbon::parse($campaign->start_date)->format('Y-m-d h:i A') }}
                                         @endif
                                     </td>
                                     <td class="text-dark fs-6">
                                         @if($campaign->end_date)
-                                        {{ \Carbon\Carbon::parse($campaign->end_date)->format('d-m-Y') }}
+                                        {{ \Carbon\Carbon::parse($campaign->end_date)->format('Y-m-d h:i A') }}
                                         @endif
                                     </td>
                                     <td class="text-dark fs-6">{{$campaign->campaign_type }}</td>

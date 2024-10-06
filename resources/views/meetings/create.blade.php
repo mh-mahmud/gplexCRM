@@ -149,7 +149,7 @@
                                     <label class="form-label fw-bolder text-dark">Recipient Type</label>
                                     <select class="form-control form-control-sm form-control-solid" id="recipientType" name="recipient_type">
                                         <option value="lead" {{ old('recipient_type') == 'lead' ? 'selected' : '' }}>Lead</option>
-                                        <option value="user" {{ old('recipient_type') == 'user' ? 'selected' : '' }}>User</option>
+                                        {{--<option value="user" {{ old('recipient_type') == 'user' ? 'selected' : '' }}>User</option>--}}
                                     </select>
                                     @if ($errors->has('recipient_type'))
                                     <span class="text-danger">{{ $errors->first('recipient_type') }}</span>

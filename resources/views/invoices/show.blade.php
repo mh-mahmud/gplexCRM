@@ -214,7 +214,7 @@ use Carbon\Carbon;
                         </span>
 
                         <!-- Event details placed behind the calendar using z-index -->
-                        <span class="event-details-block">
+                        <span class="position-absolute event-details-block">
                             <div class="event-details">
                                 <h3>Details of the event</h3>
                                 <ul>

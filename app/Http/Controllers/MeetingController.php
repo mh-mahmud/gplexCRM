@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Models\Lead;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class MeetingController extends Controller
 {
@@ -27,13 +28,29 @@ class MeetingController extends Controller
         //$meeting = $meetings->first();  
         return view('meetings.index', compact('meetings'));
     }
-    
+
 
     // show creating a new meeting
     public function create()
-    {   
-        $leads = DB::table('leads')->select('id', 'first_name','last_name','email')->get();
-        $users = DB::table('users')->select('id', 'username','email')->get();
+    {
+        //$leads = DB::table('leads')->select('id', 'first_name','last_name','email')->get();
+        //$users = DB::table('users')->select('id', 'username','email')->get();
+        if (Auth::user()->user_type === 'admin') {
+            $leads = DB::table('leads')
+            ->select('id', 'first_name', 'last_name', 'email')
+            ->where('lead_status', 1)
+            ->get();
+        } else {
+            $leads = DB::table('leads')
+            ->select('id', 'first_name', 'last_name', 'email')
+            ->where('lead_status', 1)
+            ->where('created_by', Auth::user()->id)
+            ->get();
+        }
+        $users = DB::table('users')
+        ->select('id', 'username', 'email')
+        ->where('status', '1')
+        ->get();
         return view('meetings.create', compact('leads', 'users'));
     }
 
@@ -83,9 +100,25 @@ class MeetingController extends Controller
         if ($meeting->recipients) {
             $meeting->recipients = explode(',', $meeting->recipients);
         }
-        
-        $leads = DB::table('leads')->select('id', 'first_name','last_name','email')->get();
-        $users = DB::table('users')->select('id', 'username','email')->get();
+
+        //$leads = DB::table('leads')->select('id', 'first_name','last_name','email')->get();
+        //$users = DB::table('users')->select('id', 'username','email')->get();
+        if (Auth::user()->user_type === 'admin') {
+            $leads = DB::table('leads')
+            ->select('id', 'first_name', 'last_name', 'email')
+            ->where('lead_status', 1)
+            ->get();
+        } else {
+            $leads = DB::table('leads')
+            ->select('id', 'first_name', 'last_name', 'email')
+            ->where('lead_status', 1)
+            ->where('created_by', Auth::user()->id)
+            ->get();
+        }
+        $users = DB::table('users')
+        ->select('id', 'username', 'email')
+        ->where('status', '1')
+        ->get();
         return view('meetings.edit', compact('meeting','leads','users'));
     }
 

@@ -176,7 +176,8 @@
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Form Name</label>
-                                    <select class="form-control form-control-sm form-control-solid" name="form_id" disabled aria-label="Default select example" >
+                                    {{--<select class="form-control form-control-sm form-control-solid" name="form_id" disabled aria-label="Default select example" >--}}
+                                    <select class="form-control form-control-sm form-control-solid" name="form_id"  aria-label="Default select example" >
                                         <option value="">Select Form Name</option>
                                         @foreach($formName as $id => $name)
                                             <option value="{{ $id }}" {{ $id == $campaign->form_id ? 'selected' : '' }}>{{ $name }}</option>
@@ -367,6 +368,33 @@
 
 <!-- </div> -->
 <!--end::Content-->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        $('[name="start_date"]').flatpickr({
+            enableTime: true,  // enables time picker
+            dateFormat: "Y-m-d H:i", // custom date format
+            time_24hr: true,  // 24-hour time format
+            onOpen: function(selectedDates, dateStr, instance) {
+                if (!dateStr) { // only set current date if no date is already selected
+                    instance.setDate(new Date());  // set current date and time when opened
+                }
+            }
+        });
+
+       
+        $('[name="end_date"]').flatpickr({
+            enableTime: true,  // enables time picker
+            dateFormat: "Y-m-d H:i", // custom date format
+            time_24hr: true,  // 24-hour time format
+            onOpen: function(selectedDates, dateStr, instance) {
+                if (!dateStr) { // only set current date if no date is already selected
+                    instance.setDate(new Date());  // set current date and time when opened
+                }
+            }
+        });
+    });
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

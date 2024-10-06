@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('email_template_id', 20)->nullable();
             $table->string('sms_template_id', 20)->nullable(); 
             $table->string('campaign_title');
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->text('description')->nullable();
             $table->string('campaign_type')->nullable();
             $table->string('template_type')->nullable();

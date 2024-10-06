@@ -44,8 +44,10 @@ class CampaignController extends Controller
     {
         $promotions = Promotion::pluck('promotion_title', 'id');
         $formName = LeadsForm::pluck('form_name', 'form_id');
-        $email = EmailTemplate::pluck('email_subject', 'id');
-        $sms = SmsTemplate::pluck('title', 'id');
+        //$email = EmailTemplate::pluck('email_subject', 'id');
+       // $sms = SmsTemplate::pluck('title', 'id');
+        $email = EmailTemplate::where('status', 1)->pluck('email_subject', 'id');
+        $sms = SmsTemplate::where('status', 1)->pluck('title', 'id');
         return view('campaigns.create', compact('promotions', 'formName', 'email', 'sms'));
     }
 
@@ -74,8 +76,10 @@ class CampaignController extends Controller
         $campaign = $this->campaignService->getCampaignById($id);
         $promotions = Promotion::pluck('promotion_title', 'id');
         $formName = LeadsForm::pluck('form_name', 'form_id');
-        $email = EmailTemplate::pluck('email_subject', 'id');
-        $sms = SmsTemplate::pluck('title', 'id');
+        //$email = EmailTemplate::pluck('email_subject', 'id');
+        //$sms = SmsTemplate::pluck('title', 'id');
+        $email = EmailTemplate::where('status', 1)->pluck('email_subject', 'id');
+        $sms = SmsTemplate::where('status', 1)->pluck('title', 'id');
         return view('campaigns.edit', compact('campaign', 'promotions', 'formName', 'email', 'sms'));
     }
 
