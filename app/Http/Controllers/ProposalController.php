@@ -31,7 +31,13 @@ class ProposalController extends Controller {
     {      
         $countries = $this->countryService->countryList($request);
         $currencies = $this->currencyService->currencyList($request);
-        return view('proposals.add-proposal', compact('countries', 'currencies'));
+        $leads = $this->proposalService->getLeadsData();
+
+        return view('proposals.add-proposal', compact('countries', 'currencies', 'leads'));
+    }
+
+    public function saveProposal(Request $request) {
+        dd($request->all());
     }
     
 

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Proposal;
 use App\Models\Logs;
+use App\Models\Lead;
 use Exception;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -79,8 +80,10 @@ class ProposalService
                 'error'              => $e->getMessage()
             ];
         }
+    }
 
-       
+    public function getLeadsData() {
+        return Lead::where('lead_status', 1)->get(['first_name', 'last_name', 'email', 'phone', 'city', 'state', 'zip', 'country', 'address', 'street']);
     }
 
 }
