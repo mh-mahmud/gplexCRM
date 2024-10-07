@@ -288,7 +288,7 @@
                                                         <th>Description</th>
                                                         <th>Price</th>
                                                         <th>Offer Price</th>
-                                                        <th>Tax Amount</th>
+                                                        <!-- <th>Tax Amount</th> -->
                                                         <th>Amount</th>
                                                         <!-- <th><i class="bi bi-gear-fill"></i></th> -->
                                                     </tr>
@@ -302,20 +302,19 @@
                                                             <textarea class="form-control form-select-sm min-w-250px" name="product_description" cols="30" rows="2"placeholder="Long Description"></textarea>
                                                         </td>
                                                         <td>
-                                                            <input class="form-control form-control-sm" type="number" name="price">
+                                                            <input id="price" class="form-control form-control-sm" type="number" name="price">
                                                         </td>
                                                         <td>
-                                                            <input class="form-control form-control-sm" type="number" name="offer_price">
+                                                            <input id="offer_price" class="form-control form-control-sm" type="number" name="offer_price">
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <input class="form-control form-control-sm" type="number" name="tax">
-                                                            <select class="form-select form-select-sm" data-control="select2" data-placeholder="No Tax">
-                                                                <option></option>
-                                                                <option value="1">Fixed</option>
-                                                                <option value="2">%</option>
+                                                            <select class="form-select form-select-sm" data-control="" data-placeholder="No Tax">
+                                                                <option value="fixed">Fixed</option>
+                                                                <option value="percent">%</option>
                                                             </select>
-                                                        </td>
-                                                        <td>320,800</td>
+                                                        </td> -->
+                                                        <td><b><span id="total_amount">0</span></b></td>
                                                         <!-- <td>
                                                             <button type="button" class="btn btn-sm btn-primary py-2 px-2">
                                                                 <i class="bi bi-check"></i>
@@ -337,36 +336,49 @@
                                                         <table class="table table-sm table-row-bordered align-middle">
                                                             <tr>
                                                                 <th class="text-end"><strong>Sub Total:</strong></th>
-                                                                <td class="text-end"><strong>BDT</strong> 0.00</td>
+                                                                <td class="text-end"><strong>BDT</strong> <span id="sub_total">0</span></td>
                                                             </tr>
-                                                            <tr>
+                                                            <!-- <tr>
                                                                 <th><strong>Discount :</strong>
                                                                     <div class="input-group">
                                                                         <div class="flex-grow-1">
                                                                             <input
                                                                                 class="form-control form-control-sm rounded-end-0 border-end"
-                                                                                type="text" name="">
+                                                                                type="text" name="discount">
                                                                         </div>
                                                                         <select class="form-select form-select-sm form-control-sm"
-                                                                                name="" id="">
+                                                                                name="discount_type" id="">
                                                                             <option value="fixed">Fixed Amount</option>
                                                                             <option value="percentage">%</option>
                                                                         </select>
                                                                     </div>
-
+                                                                </th>
+                                                                <td class="text-end"> <strong>BDT</strong> -0.00</td>
+                                                            </tr> -->
+                                                            <tr>
+                                                                <th><strong>Tax :</strong>
+                                                                    <div class="input-group">
+                                                                        <div class="flex-grow-1">
+                                                                            <input id="tax_amount" class="form-control form-control-sm rounded-end-0 border-end" type="number" name="tax_amount">
+                                                                        </div>
+                                                                        <select class="form-select form-select-sm form-control-sm" name="tax_type" id="tax_type">
+                                                                            <!-- <option value="fixed">Fixed Amount</option> -->
+                                                                            <option value="percentage">%</option>
+                                                                        </select>
+                                                                    </div>
                                                                 </th>
                                                                 <td class="text-end"> <strong>BDT</strong> -0.00</td>
                                                             </tr>
                                                             <tr>
-                                                                <th><strong>Adjustment :</strong>
-                                                                    <input class="form-control form-control-sm" type="text" name="">
+                                                                <th><strong>Discount :</strong>
+                                                                    <input id="discount" class="form-control form-control-sm" type="text" name="discount">
                                                                 </th>
-                                                                <td class="text-end"><strong>BDT</strong>  -0.00</td>
+                                                                <td class="text-end"><strong>BDT</strong>  <span id="discount_right">0</span></td>
                                                             </tr>
                                                             <tr>
                                                                 <th class="text-end"><strong>Total</strong></th>
                                                                 <td class="text-end">
-                                                                    <strong>BDT</strong> 15478.025
+                                                                    <strong>BDT</strong> <span id="total_amount_final"></span>
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -380,10 +392,8 @@
 
                                         <!--begin::Actions-->
                                         <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                            <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard
-                                            </button>
                                             <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Save Changes
+                                                    id="kt_account_profile_details_submit">Submit
                                             </button>
                                         </div>
                                         <!--end::Actions-->
@@ -411,5 +421,26 @@
             <!-- </div> -->
             <!--end::Content-->
 
+
+@section('endScript')
+
+<script type="text/javascript">
+    $("#offer_price").on("focusout", function() {
+        let offer_price = parseFloat($("#offer_price").val()) || 0;
+        let price = parseFloat($("#price").val()) || 0;
+        let discount = price - offer_price;
+        $("#total_amount").text(offer_price);
+        $("#sub_total").text(offer_price);
+        $("#discount").val(discount);
+        $("#discount_right").text(discount);
+    });
+
+    $("#offer_price").on("focusout", function() {
+        let offer_price = parseFloat($("#offer_price").val()) || 0;  // Convert input to number or default to 0
+        $("#total_amount").text(offer_price);  // Update total_amount with the formatted number
+    });
+</script>
+
+@endsection
 
 @endsection
