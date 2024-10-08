@@ -229,9 +229,8 @@
                                                         <option value="" selected>Nothing Selected</option>
                                                         @foreach($products as $product)
                                                         <option value="{{ $product->id }}"
-                                                            data-name="{{ $product->name }}"
                                                             data-description="{{ $product->description }}"
-                                                            data-rate="{{ $product->product_value }}">
+                                                            data-rate="{{ $product->rate }}">
                                                             {{ $product->name }}
                                                         </option>
                                                         @endforeach
@@ -274,9 +273,10 @@
                                 </div>
 
 
+
                                 <div class="table-responsive">
-                                    <!--Invoice Table Preview-->
-                                    <table class="table table-rounded table-sm table-striped border align-middle gs-2" id="proposal-table">
+                                    <!--Proposal Table Preview-->
+                                    <table class="table table-rounded table-sm table-striped border align-middle gs-2">
                                         <thead>
                                             <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
                                                 <th>Item</th>
@@ -285,48 +285,47 @@
                                                 <th>Rate</th>
                                                 <th>Tax</th>
                                                 <th>Amount</th>
-                                                <th><i class="bi bi-gear-fill"></i></th>
+                                                <th><i class="bi bi-gear-fill"></i>
+                                                </th>
                                             </tr>
                                         </thead>
-                                        <tbody id="table-body">
+                                        <tbody>
                                             <tr>
                                                 <td>
-                                                    <textarea class="form-control form-control-sm min-w-250px" name="item_name" cols="30" rows="2"
-                                                        id="item-name" placeholder="Description"></textarea>
+                                                    <textarea class="form-control form-control-sm min-w-250px" name="" cols="30" rows="2"
+                                                        placeholder="Description"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea class="form-control form-select-sm min-w-250px" name="description" cols="30" rows="2"
-                                                        id="item-description" placeholder="Long Description"></textarea>
+                                                    <textarea class="form-control form-select-sm min-w-250px" name="" cols="30" rows="2"
+                                                        placeholder="Long Description"></textarea>
                                                 </td>
                                                 <td>
-                                                    <input class="form-control form-control-sm" type="number" name="quantity"
-                                                        id="item-quantity" placeholder="Quantity">
+                                                    <input class="form-control form-control-sm" type="number" name="" placeholder="Unit">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control form-control-sm" type="number" name="rate" id="item-rate"
-                                                        placeholder="Rate">
+                                                    <input class="form-control form-control-sm" type="number" name="" placeholder="Rate">
                                                 </td>
                                                 <td>
                                                     <select class="form-select form-select-sm" data-control="select2"
-                                                        data-placeholder="No Tax" id="item-tax">
-                                                        <option value="0.00">No Tax (0.00%)</option>
-                                                        <option value="5.00">5.00%</option>
-                                                        <option value="10.00">10.00%</option>
-                                                        <option value="15.00">15.00%</option>
+                                                        data-placeholder="No Tax">
+                                                        <option></option>
+                                                        <option value="1">Option 1</option>
+                                                        <option value="2">Option 2</option>
                                                     </select>
                                                 </td>
-                                                <td id="item-amount">0.00</td>
+                                                <td>320,800</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-sm btn-primary py-2 px-2 add-row">
+                                                    <button type="button" class="btn btn-sm btn-primary py-2 px-2">
                                                         <i class="bi bi-check"></i>
                                                     </button>
                                                 </td>
                                             </tr>
+
                                         </tbody>
                                     </table>
+
                                     <!--End Proposal Table Preview-->
                                 </div>
-
 
 
                                 <div class="row">
@@ -426,104 +425,48 @@
     </div>
 </div>
 
-
 <script>
-  $(document).ready(function() {
-   
-    //new row logic
-    $(document).on('click', '.add-row', function() {
-        var currentRow = $(this).closest('tr');
+    $(document).ready(function() {
+        // Listen for changes in the product select dropdown
+        $('#product-select').on('change', function() {
+            // Get the selected product option
+            var selectedOption = $(this).find('option:selected');
 
-        //validation: ensure necessary fields are filled before adding a new row
-        var itemName = currentRow.find('textarea[name="item_name"]').val();
-        var description = currentRow.find('textarea[name="description"]').val();
-        var quantity = currentRow.find('input[name="quantity"]').val();
-        var rate = currentRow.find('input[name="rate"]').val();
+            // Get the product data from data attributes
+            var itemName = selectedOption.text();
+            var description = selectedOption.data('description');
+            var rate = selectedOption.data('rate');
 
-        if (itemName !== "" && description !== "" && quantity !== "" && rate !== "") {
-            var newRow = `<tr>
-                <td>
-                    <textarea class="form-control form-control-sm min-w-250px" name="item_name" cols="30" rows="2"
-                        placeholder="Description"></textarea>
-                </td>
-                <td>
-                    <textarea class="form-control form-select-sm min-w-250px" name="description" cols="30" rows="2"
-                        placeholder="Long Description"></textarea>
-                </td>
-                <td>
-                    <input class="form-control form-control-sm" type="number" name="quantity"
-                        placeholder="Quantity">
-                </td>
-                <td>
-                    <input class="form-control form-control-sm" type="number" name="rate"
-                        placeholder="Rate">
-                </td>
-                <td>
-                    <select class="form-select form-select-sm" data-control="select2"
-                        data-placeholder="No Tax">
-                        <option value="0.00">No Tax (0.00%)</option>
-                        <option value="5.00">5.00%</option>
-                        <option value="10.00">10.00%</option>
-                        <option value="15.00">15.00%</option>
-                    </select>
-                </td>
-                <td id="item-amount">0.00</td>
-                <td>
-                   
-                    <button type="button" class="btn btn-sm btn-danger py-2 px-2 remove-row">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </td>
-            </tr>`;
+            // Populate the table fields with the selected product data
+            $('#item-name').val(itemName);
+            $('#item-description').val(description);
+            $('#item-rate').val(rate);
 
-            $('#table-body').append(newRow);
-             //clear the dropdown and input fields after adding a new row
-             $('#product-select').val('').trigger('change');
-        } else {
-            alert('Please fill all fields before adding a new row.');
-        }
+            // Optionally calculate the amount (quantity * rate)
+            var quantity = $('#item-quantity').val();
+            if (quantity && rate) {
+                $('#item-amount').text((quantity * rate).toFixed(2));
+            }
+        });
+
+        // Listen for changes in the quantity field to update the amount
+        $('#item-quantity').on('input', function() {
+            var quantity = $(this).val();
+            var rate = $('#item-rate').val();
+            if (quantity && rate) {
+                $('#item-amount').text((quantity * rate).toFixed(2));
+            }
+        });
+
+        // Listen for changes in the rate field to update the amount
+        $('#item-rate').on('input', function() {
+            var rate = $(this).val();
+            var quantity = $('#item-quantity').val();
+            if (quantity && rate) {
+                $('#item-amount').text((quantity * rate).toFixed(2));
+            }
+        });
     });
-
-    // remove row logic
-    $(document).on('click', '.remove-row', function() {
-        $(this).closest('tr').remove();
-    });
-
-    //handle product selection and get only the last row
-    $('#product-select').on('change', function() {
-        var selectedOption = $(this).find('option:selected');
-
-        //get selected product
-        var productName = selectedOption.data('name');
-        var productDescription = selectedOption.data('description');
-        var productRate = selectedOption.data('rate');
-
-        //get the last row in the table
-        var lastRow = $('#table-body tr:last');
-
-        //set values in the last row
-        lastRow.find('textarea[name="item_name"]').val(productName);
-        lastRow.find('textarea[name="description"]').val(productDescription);
-        lastRow.find('input[name="rate"]').val(productRate);
-
-        //optionally calculate the amount ex.(quantity * rate)
-        var quantity = lastRow.find('input[name="quantity"]').val();
-        if (quantity && productRate) {
-            lastRow.find('#item-amount').text((quantity * productRate).toFixed(2));
-        }
-    });
-
-    // listen for changes in the quantity field to update the amount in the last row
-    $(document).on('input', 'input[name="quantity"], input[name="rate"]', function() {
-        var lastRow = $('#table-body tr:last');
-        var quantity = lastRow.find('input[name="quantity"]').val();
-        var rate = lastRow.find('input[name="rate"]').val();
-        if (quantity && rate) {
-            lastRow.find('#item-amount').text((quantity * rate).toFixed(2));
-        }
-    });
-});
-
 </script>
 <!-- End Forms-->
 
