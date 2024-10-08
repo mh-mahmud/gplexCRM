@@ -154,7 +154,7 @@
                                             <div class="col-md-12">
                                                 <div class="fv-row mb-5">
                                                     <label class="form-label fw-bolder text-dark">Email To<span class="text-danger">*</span></label>
-                                                    <input class="form-control form-control-sm form-control-solid" type="text" id="send_to" name="send_to" autocomplete="off" value="{{ old('send_to') }}"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="email" id="send_to" name="send_to" autocomplete="off" value="{{ old('send_to') }}"/>
                                                     @if ($errors->has('send_to'))
                                                         <span class="text-danger">{{ $errors->first('send_to') }}</span>
                                                     @endif
@@ -186,10 +186,10 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
                                                     <label class="form-label  fw-bolder text-dark">Country</label>
-                                                    <select class=" form-control form-control-sm form-control-solid" id="country_id" name="country_id" aria-label="Default select example">
+                                                    <select class=" form-control form-control-sm form-control-solid" name="country_name" aria-label="Default select example">
                                                         <option value=''>Select</option>
                                                         @foreach($countries as $country)
-                                                        <option value="{{$country->id}}" {{ old('country_id') == $country->id ? 'selected' : '' }}>{{ $country->name }} </option>
+                                                        <option value="{{$country->name}}" {{ old('country_name') == $country->name ? 'selected' : '' }}>{{ $country->name }} </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -296,10 +296,10 @@
                                                     <tbody>
                                                     <tr>
                                                         <td>
-                                                            <textarea class="form-control form-control-sm min-w-250px" name="product_name" cols="30" rows="2"placeholder=""></textarea>
+                                                            <textarea class="form-control form-control-sm min-w-250px" name="item_name" cols="30" rows="2"placeholder=""></textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea class="form-control form-select-sm min-w-250px" name="product_description" cols="30" rows="2"placeholder="Long Description"></textarea>
+                                                            <textarea class="form-control form-select-sm min-w-250px" name="item_description" cols="30" rows="2"placeholder="Long Description"></textarea>
                                                         </td>
                                                         <td>
                                                             <input id="price" class="form-control form-control-sm" type="number" name="price">
@@ -359,7 +359,7 @@
                                                                 <th><strong>Tax :</strong>
                                                                     <div class="input-group">
                                                                         <div class="flex-grow-1">
-                                                                            <input id="tax_amount" class="form-control form-control-sm rounded-end-0 border-end" type="number" name="tax_amount">
+                                                                            <input id="tax_amount" class="form-control form-control-sm rounded-end-0 border-end" type="text" name="tax_percent">
                                                                         </div>
                                                                         <select class="form-select form-select-sm form-control-sm" name="tax_type" id="tax_type">
                                                                             <!-- <option value="fixed">Fixed Amount</option> -->
@@ -367,18 +367,18 @@
                                                                         </select>
                                                                     </div>
                                                                 </th>
-                                                                <td class="text-end"> <strong>BDT</strong> -0.00</td>
+                                                                <td class="text-end"> <strong>BDT</strong> <span id="tax_field">0</span></td>
                                                             </tr>
                                                             <tr>
                                                                 <th><strong>Discount :</strong>
-                                                                    <input id="discount" class="form-control form-control-sm" type="text" name="discount">
+                                                                    <input id="discount" disabled class="form-control form-control-sm" type="text" name="discount">
                                                                 </th>
                                                                 <td class="text-end"><strong>BDT</strong>  <span id="discount_right">0</span></td>
                                                             </tr>
                                                             <tr>
-                                                                <th class="text-end"><strong>Total</strong></th>
+                                                                <th class="text-end"><strong>Total with Tax: </strong></th>
                                                                 <td class="text-end">
-                                                                    <strong>BDT</strong> <span id="total_amount_final"></span>
+                                                                    <strong>BDT</strong> <span id="total_amount_final">0</span>
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -425,10 +425,13 @@
 @section('endScript')
 
 <script type="text/javascript">
+    var offer_price = 0;
+    var price = 0;
+    var discount = 0;
     $("#offer_price").on("focusout", function() {
-        let offer_price = parseFloat($("#offer_price").val()) || 0;
-        let price = parseFloat($("#price").val()) || 0;
-        let discount = price - offer_price;
+        offer_price = parseFloat($("#offer_price").val()) || 0;
+        price = parseFloat($("#price").val()) || 0;
+        discount = price - offer_price;
         $("#total_amount").text(offer_price);
         $("#sub_total").text(offer_price);
         $("#discount").val(discount);
@@ -436,8 +439,22 @@
     });
 
     $("#offer_price").on("focusout", function() {
-        let offer_price = parseFloat($("#offer_price").val()) || 0;  // Convert input to number or default to 0
-        $("#total_amount").text(offer_price);  // Update total_amount with the formatted number
+        var offer_price = parseFloat($("#offer_price").val()) || 0;
+        $("#total_amount").text(offer_price);
+    });
+
+    $("#tax_amount").on("focusout", function() {
+        var tax = parseFloat($("#tax_amount").val()) || 0;
+        offer_price = parseFloat($("#offer_price").val()) || 0;
+        
+        if(offer_price > 0 && tax >= 0 && tax <= 50) {
+            var tax_value = offer_price*tax/100;
+            tax_value = parseFloat(tax_value).toFixed(2);
+            $("#tax_field").text(tax_value);
+            var final = tax_value + offer_price;
+            // final = parseFloat(final).toFixed(2);
+            $("#total_amount_final").text(final);
+        }
     });
 </script>
 

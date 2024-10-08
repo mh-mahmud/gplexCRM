@@ -270,3 +270,13 @@ CREATE TABLE `invoices` (
 ALTER TABLE `campaigns` CHANGE `start_date` `start_date` DATETIME NULL,CHANGE `end_date` `end_date` DATETIME NULL;
 ALTER TABLE `proposals` CHANGE `currency` `currency` CHAR(10) NULL DEFAULT NULL;
 
+ALTER TABLE `proposals` ADD `first_name` VARCHAR(50) NULL DEFAULT NULL AFTER `assigned_agent_id`; 
+ALTER TABLE `proposals` CHANGE `country_id` `country_name` VARCHAR(50) NULL DEFAULT NULL;
+ALTER TABLE `proposals` ADD `item_name` VARCHAR(255) NULL DEFAULT NULL AFTER `country_name`, ADD `item_description` TEXT NULL DEFAULT NULL AFTER `item_name`;
+ALTER TABLE `proposals` CHANGE `adjustment` `price` DECIMAL(10,0) NULL DEFAULT NULL;
+ALTER TABLE `proposals` CHANGE `sub_total` `offer_price` DECIMAL(10,0) NULL DEFAULT NULL;
+ALTER TABLE `proposals` CHANGE `discount` `discount` DECIMAL(10,2) NULL DEFAULT NULL; 
+ALTER TABLE `proposals` CHANGE `price` `price` DECIMAL(10,2) NULL DEFAULT NULL; 
+ALTER TABLE `proposals` CHANGE `offer_price` `offer_price` DECIMAL(10,2) NULL DEFAULT NULL; 
+ALTER TABLE `proposals` CHANGE `total` `total_price` DECIMAL(10,2) NULL DEFAULT NULL;
+ALTER TABLE `proposals` ADD `tax_percent` DECIMAL(3,1) NULL DEFAULT NULL AFTER `discount`, ADD `tax_amount` DECIMAL(10,2) NULL DEFAULT NULL AFTER `tax_percent`;
