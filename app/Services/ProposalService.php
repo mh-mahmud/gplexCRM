@@ -88,6 +88,7 @@ class ProposalService
 
     public function save_proposal($request) {
 
+
         // handle the profile image separately
         if ($request->hasFile('upload_file')) {
             $fileNameWithExt = $request->file('upload_file')->getClientOriginalName();
@@ -104,11 +105,21 @@ class ProposalService
         $proposal = new Proposal();
         $proposal->subject = $request->subject;
         $proposal->lead_id = $request->lead_id;
+        $proposal->first_name = $request->first_name;
+        $proposal->company_name = $request->company_name;
+
+        $proposal->address = $request->address;
+        $proposal->city = $request->city;
+        $proposal->state = $request->state;
+        $proposal->country_name = $request->country_name;
+        $proposal->zip_code = $request->zip_code;
+
         $proposal->start_date = $request->start_date;
         $proposal->end_date = $request->end_date;
         $proposal->currency = $request->currency;
         $proposal->status = $request->status;
         $proposal->send_to = $request->send_to;
+        $proposal->phone = $request->phone;
         $proposal->price = $request->price;
         $proposal->offer_price = $request->offer_price;
         $proposal->item_name = $request->item_name;
@@ -122,7 +133,7 @@ class ProposalService
         $proposal->status = $request->status;
         $proposal->save();
 
-        dd($proposal);
+        // dd($proposal);
         return $proposal;
 
     }

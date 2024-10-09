@@ -42,7 +42,7 @@
                                                 <div class="fv-row mb-5">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Subject<span class="text-danger">*</span></label>
-                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="subject" autocomplete="off" value="{{ old('subject') }}" />
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="subject"  value="{{ old('subject') }}" />
                                                     @if ($errors->has('subject'))
                                                         <span class="text-danger">{{ $errors->first('subject') }}</span>
                                                     @endif
@@ -55,7 +55,7 @@
                                                         <sup><i class="bi bi-asterisk text-danger"></i></sup>
                                                     </label>
                                                     <select name="lead_id" class=" form-control form-control-sm form-control-solid" aria-label="Default select example">
-                                                        <option value="">Selecte Lead</option>
+                                                        <option value="">Select Lead</option>
                                                         @foreach($leads as $lead)
                                                             <option value="{{ $lead->id }}">{{ $lead->first_name . " " . $lead->last_name }}</option>
                                                         @endforeach
@@ -63,6 +63,13 @@
                                                     @if ($errors->has('lead_id'))
                                                         <span class="text-danger">{{ $errors->first('lead_id') }}</span>
                                                     @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="fv-row mb-5">
+                                                    <label class="form-label fw-bolder text-dark">Company Name</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="company_name" />
                                                 </div>
                                             </div>
 
@@ -113,7 +120,10 @@
                                             <div class="col-md-12">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label  fw-bolder text-dark">Upload PDF, xcel or Word</label>
-                                                    <input class="form-control form-control-sm form-control-solid" accept=".csv,.xls,.xlsx,.docx" type="file" name="upload_file" autocomplete="off"/>
+                                                    <input class="form-control form-control-sm form-control-solid" accept=".csv,.xls,.xlsx,.docx" type="file" name="upload_file" />
+                                                    @if ($errors->has('upload_file'))
+                                                        <span class="text-danger">{{ $errors->first('upload_file') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -150,14 +160,14 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
                                                     <label class="form-label fw-bolder text-dark">First Name</label>
-                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="first_name" autocomplete="off"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="first_name" />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="fv-row mb-5">
                                                     <label class="form-label fw-bolder text-dark">Email To<span class="text-danger">*</span></label>
-                                                    <input class="form-control form-control-sm form-control-solid" type="email" id="send_to" name="send_to" autocomplete="off" value="{{ old('send_to') }}"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="email" id="send_to" name="send_to"  value="{{ old('send_to') }}"/>
                                                     @if ($errors->has('send_to'))
                                                         <span class="text-danger">{{ $errors->first('send_to') }}</span>
                                                     @endif
@@ -175,14 +185,14 @@
                                                 <div class="fv-row mb-5">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">City</label>
-                                                    <input class="form-control form-control-sm form-control-solid" type="text" id="city" name="city" autocomplete="off" value="{{ old('city') }}"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" id="city" name="city"  value="{{ old('city') }}"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
                                                     <label class="form-label fw-bolder text-dark">State</label>
-                                                    <input class="form-control form-control-sm form-control-solid" type="text" id="state" name="state" autocomplete="off" value="{{ old('state') }}"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" id="state" name="state"  value="{{ old('state') }}"/>
                                                 </div>
                                             </div>
 
@@ -201,7 +211,7 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
                                                     <label class="form-label fw-bolder text-dark">Zip Code</label>
-                                                    <input class="form-control form-control-sm form-control-solid" type="text" id="zip_code" name="zip_code" autocomplete="off" value="{{ old('zip_code') }}"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" id="zip_code" name="zip_code"  value="{{ old('zip_code') }}"/>
                                                 </div>
                                             </div>
 
@@ -209,20 +219,20 @@
                                                 <div class="fv-row mb-5">
                                                     <label class="form-label fw-bolder text-dark">Email</label>
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="email" id="send_to_email" name="send_to_email" autocomplete="off" value="{{ old('send_to_email') }}"/>
+                                                           type="email" id="send_to_email" name="send_to_email"  value="{{ old('send_to_email') }}"/>
                                                 </div>
                                             </div> -->
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark">Phone</label>
-                                                    <input class="form-control form-control-sm form-control-solid" type="text" id="phone" name="phone" autocomplete="off" value="{{ old('phone') }}"/>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" id="phone" name="phone"  value="{{ old('phone') }}"/>
                                                 </div>
                                             </div>
 
 
-                                        </div>
                                     </div>
+                                        </div>
 
 
                                 </div>

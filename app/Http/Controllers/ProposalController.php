@@ -40,7 +40,7 @@ class ProposalController extends Controller {
 
         $request->validate([
             'subject' => 'required|string|max:191',
-            'lead_id' => 'required|string|max:191',
+            'lead_id' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
             'currency' => 'required',
@@ -50,7 +50,7 @@ class ProposalController extends Controller {
             'offer_price' => 'required|numeric',
             'item_name' => 'required|string|max:191',
             'item_description' => 'required|string',
-            'upload_file' => 'image|mimes:xcel,pdf,docx,txt|max:1024',
+            'upload_file' => 'file|mimes:xlsx,xls,pdf,docx,txt|max:1024',
         ]);
 
         $entry = $this->proposalService->save_proposal($request);
