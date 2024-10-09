@@ -54,12 +54,15 @@
                                                     <label class="form-label fw-bolder text-dark">Lead ID
                                                         <sup><i class="bi bi-asterisk text-danger"></i></sup>
                                                     </label>
-                                                    <select class=" form-control form-control-sm form-control-solid" aria-label="Default select example">
-                                                        <option selected>Selecte Lead</option>
+                                                    <select name="lead_id" class=" form-control form-control-sm form-control-solid" aria-label="Default select example">
+                                                        <option value="">Selecte Lead</option>
                                                         @foreach($leads as $lead)
-                                                            <option>{{ $lead->first_name . " " . $lead->last_name }}</option>
+                                                            <option value="{{ $lead->id }}">{{ $lead->first_name . " " . $lead->last_name }}</option>
                                                         @endforeach
                                                     </select>
+                                                    @if ($errors->has('lead_id'))
+                                                        <span class="text-danger">{{ $errors->first('lead_id') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -96,7 +99,7 @@
                                                             aria-label="Default select example">
                                                         <option value=''>Select</option>
                                                         @foreach($currencies as $currency)
-                                                        <option value="{{$currency->id}}" {{ old("currency") == $currency->id ? "selected" : "" }}>
+                                                        <option value="{{$currency->name}}" {{ old("currency") == $currency->name ? "selected" : "" }}>
                                                             {{ $currency->name }}
                                                         </option>
                                                         @endforeach
@@ -297,15 +300,27 @@
                                                     <tr>
                                                         <td>
                                                             <textarea class="form-control form-control-sm min-w-250px" name="item_name" cols="30" rows="2"placeholder=""></textarea>
+                                                            @if ($errors->has('item_name'))
+                                                                <span class="text-danger">{{ $errors->first('item_name') }}</span>
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             <textarea class="form-control form-select-sm min-w-250px" name="item_description" cols="30" rows="2"placeholder="Long Description"></textarea>
+                                                            @if ($errors->has('item_description'))
+                                                                <span class="text-danger">{{ $errors->first('item_description') }}</span>
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             <input id="price" class="form-control form-control-sm" type="number" name="price">
+                                                            @if ($errors->has('price'))
+                                                                <span class="text-danger">{{ $errors->first('price') }}</span>
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             <input id="offer_price" class="form-control form-control-sm" type="number" name="offer_price">
+                                                            @if ($errors->has('offer_price'))
+                                                                <span class="text-danger">{{ $errors->first('offer_price') }}</span>
+                                                            @endif
                                                         </td>
                                                         <!-- <td>
                                                             <input class="form-control form-control-sm" type="number" name="tax">
@@ -336,7 +351,7 @@
                                                         <table class="table table-sm table-row-bordered align-middle">
                                                             <tr>
                                                                 <th class="text-end"><strong>Sub Total:</strong></th>
-                                                                <td class="text-end"><strong>BDT</strong> <span id="sub_total">0</span></td>
+                                                                <td class="text-end"><b><span class="cur-data">BDT</span></b> <span id="sub_total">0</span></td>
                                                             </tr>
                                                             <!-- <tr>
                                                                 <th><strong>Discount :</strong>
@@ -367,18 +382,18 @@
                                                                         </select>
                                                                     </div>
                                                                 </th>
-                                                                <td class="text-end"> <strong>BDT</strong> <span id="tax_field">0</span></td>
+                                                                <td class="text-end"> <b><span class="cur-data">BDT</span></b> <span id="tax_field">0</span></td>
                                                             </tr>
                                                             <tr>
                                                                 <th><strong>Discount :</strong>
                                                                     <input id="discount" disabled class="form-control form-control-sm" type="text" name="discount">
                                                                 </th>
-                                                                <td class="text-end"><strong>BDT</strong>  <span id="discount_right">0</span></td>
+                                                                <td class="text-end"><b><span class="cur-data">BDT</span></b>  <span id="discount_right">0</span></td>
                                                             </tr>
                                                             <tr>
                                                                 <th class="text-end"><strong>Total with Tax: </strong></th>
                                                                 <td class="text-end">
-                                                                    <strong>BDT</strong> <span id="total_amount_final">0</span>
+                                                                    <b><span class="cur-data">BDT</span></b> <span id="total_amount_final">0</span>
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -425,23 +440,23 @@
 @section('endScript')
 
 <script type="text/javascript">
-    var offer_price = 0;
+    /*var offer_price = 0;
     var price = 0;
-    var discount = 0;
+    var discount = 0;*/
     $("#offer_price").on("focusout", function() {
-        offer_price = parseFloat($("#offer_price").val()) || 0;
-        price = parseFloat($("#price").val()) || 0;
-        discount = price - offer_price;
+        var offer_price = parseFloat($("#offer_price").val()) || 0;
+        var price = parseFloat($("#price").val()) || 0;
+        var discount = price - offer_price;
         $("#total_amount").text(offer_price);
         $("#sub_total").text(offer_price);
         $("#discount").val(discount);
         $("#discount_right").text(discount);
     });
 
-    $("#offer_price").on("focusout", function() {
-        var offer_price = parseFloat($("#offer_price").val()) || 0;
-        $("#total_amount").text(offer_price);
-    });
+    // $("#offer_price").on("focusout", function() {
+    //     var offer_price = parseFloat($("#offer_price").val()) || 0;
+    //     $("#total_amount").text(offer_price);
+    // });
 
     $("#tax_amount").on("focusout", function() {
         var tax = parseFloat($("#tax_amount").val()) || 0;
@@ -449,12 +464,18 @@
         
         if(offer_price > 0 && tax >= 0 && tax <= 50) {
             var tax_value = offer_price*tax/100;
+            var final = tax_value + offer_price;
+
             tax_value = parseFloat(tax_value).toFixed(2);
             $("#tax_field").text(tax_value);
-            var final = tax_value + offer_price;
             // final = parseFloat(final).toFixed(2);
             $("#total_amount_final").text(final);
         }
+    });
+
+    $("#currency").on("change", function() {
+        var cur_val = $(this).val();
+        $(".cur-data").text(cur_val);
     });
 </script>
 

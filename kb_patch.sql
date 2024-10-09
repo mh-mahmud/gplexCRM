@@ -280,3 +280,5 @@ ALTER TABLE `proposals` CHANGE `price` `price` DECIMAL(10,2) NULL DEFAULT NULL;
 ALTER TABLE `proposals` CHANGE `offer_price` `offer_price` DECIMAL(10,2) NULL DEFAULT NULL; 
 ALTER TABLE `proposals` CHANGE `total` `total_price` DECIMAL(10,2) NULL DEFAULT NULL;
 ALTER TABLE `proposals` ADD `tax_percent` DECIMAL(3,1) NULL DEFAULT NULL AFTER `discount`, ADD `tax_amount` DECIMAL(10,2) NULL DEFAULT NULL AFTER `tax_percent`;
+ALTER TABLE `proposals` ADD `proposal_file_name` VARCHAR(255) NULL DEFAULT NULL AFTER `country_name`;
+ALTER TABLE `proposals` ADD `created_at` TIMESTAMP NULL DEFAULT NULL AFTER `status`, ADD `updated_at` TIMESTAMP NULL DEFAULT NULL AFTER `created_at`; 

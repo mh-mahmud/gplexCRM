@@ -37,7 +37,26 @@ class ProposalController extends Controller {
     }
 
     public function saveProposal(Request $request) {
-        dd($request->all());
+
+        $request->validate([
+            'subject' => 'required|string|max:191',
+            'lead_id' => 'required|string|max:191',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'currency' => 'required',
+            'status' => 'required',
+            'send_to' => 'required|email',
+            'price' => 'required|numeric',
+            'offer_price' => 'required|numeric',
+            'item_name' => 'required|string|max:191',
+            'item_description' => 'required|string',
+            'upload_file' => 'image|mimes:xcel,pdf,docx,txt|max:1024',
+        ]);
+
+        $entry = $this->proposalService->save_proposal($request);
+        return redirect()->route('proposal-list')->with('success', 'Proposal created successfully.');
+
+        // dd($request->all());
     }
     
 

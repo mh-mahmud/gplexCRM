@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Proposal extends Model
 {
     use HasFactory;
-    protected $fillable = ['subject', 'customer_id', 'status', 'start_date', 'end_date'];
+    protected $guarded = [];
 
     public function products()
     {
