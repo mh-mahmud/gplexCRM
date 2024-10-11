@@ -132,10 +132,12 @@ class ProposalService
         $proposal->total_price = $proposal->tax_amount + $request->offer_price;
         $proposal->status = $request->status;
         $proposal->save();
-
-        // dd($proposal);
         return $proposal;
 
+    }
+
+    public function proposal_details($id) {
+        return Proposal::findOrFail($id);
     }
 
 }

@@ -58,6 +58,11 @@ class ProposalController extends Controller {
 
         // dd($request->all());
     }
+
+    public function show($id) {
+        $data = $this->proposalService->proposal_details($id);
+        return view('proposals.show', compact('data'));
+    }
     
 
 }
