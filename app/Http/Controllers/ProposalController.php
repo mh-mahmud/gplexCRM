@@ -63,6 +63,34 @@ class ProposalController extends Controller {
         $data = $this->proposalService->proposal_details($id);
         return view('proposals.show', compact('data'));
     }
+
+    public function edit(Request $request, $id) {
+        $countries = $this->countryService->countryList($request);
+        $currencies = $this->currencyService->currencyList($request);
+        $leads = $this->proposalService->getLeadsData();
+        $data = $this->proposalService->proposal_details($id);
+        return view('proposals.edit', compact('data', 'countries', 'currencies', 'leads'));
+    }
+
+    public function update(Request $request, $id) {
+        $request->validate([
+            'subject' => 'required|string|max:191',
+            'lead_id' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'currency' => 'required',
+            'status' => 'required',
+            'send_to' => 'required|email',
+            'price' => 'required|numeric',
+            'offer_price' => 'required|numeric',
+            'item_name' => 'required|string|max:191',
+            'item_description' => 'required|string',
+            'upload_file' => 'file|mimes:xlsx,xls,pdf,docx,txt|max:1024',
+        ]);
+
+        $entry = $this->proposalService->update_proposal($request, $id);
+        return redirect()->back()->with('success', 'Proposal updated successfully.');
+    }
     
 
 }
