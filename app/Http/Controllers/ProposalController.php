@@ -91,6 +91,11 @@ class ProposalController extends Controller {
         $entry = $this->proposalService->update_proposal($request, $id);
         return redirect()->back()->with('success', 'Proposal updated successfully.');
     }
+
+    public function delete_proposal($id) {
+        $this->proposalService->delete_proposal($id);
+        return redirect()->back()->with('success', 'Proposal deleted successfully.');
+    }
     
 
 }

@@ -270,7 +270,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('proposal-list', [ProposalController::class, 'proposalList'])->name('proposal-list')->middleware(['check-permission']);
 	Route::get('add-proposal', [ProposalController::class, 'addProposal'])->name('add-proposal')->middleware(['check-permission']);
 	Route::post('add-proposal', [ProposalController::class, 'saveProposal'])->name('store-proposal')->middleware(['check-permission']);
-	Route::delete('delete-proposal/{id?}', [ProposalController::class, 'countryDelete'])->name('delete-proposal')->middleware(['check-permission']);
+	Route::delete('delete-proposal/{id?}', [ProposalController::class, 'delete_proposal'])->name('delete-proposal')->middleware(['check-permission']);
 	Route::get('/proposal/{id?}', [ProposalController::class, 'show'])->name('proposal-show')->middleware(['check-permission']);
 	Route::get('/proposal/{id?}/edit', [ProposalController::class, 'edit'])->name('proposal-edit')->middleware(['check-permission']);
 	Route::put('/proposal/{id?}', [ProposalController::class, 'update'])->name('proposal-update');

@@ -72,8 +72,7 @@
 
                                             <div class="col-md-12">
                                                 <div class="fv-row mb-5">
-                                                    <label class="form-label fw-bolder text-dark">Lead ID
-                                                        <sup><i class="bi bi-asterisk text-danger"></i></sup>
+                                                    <label class="form-label fw-bolder text-dark">Lead ID<span class="text-danger">*</span>
                                                     </label>
                                                     <select name="lead_id" class=" form-control form-control-sm form-control-solid" aria-label="Default select example">
                                                         <option value="">Select Lead</option>

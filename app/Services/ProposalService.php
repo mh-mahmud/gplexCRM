@@ -191,4 +191,18 @@ class ProposalService
 
     }
 
+    public function delete_proposal($id)
+    {
+        $record = Proposal::where('id', $id)->first();
+        if (!$record) {
+            throw new \Exception('Record not found.');
+        }
+
+        $filePath = getcwd() . '/uploads/proposals/' . $record->proposal_file_name;
+        if (file_exists($filePath)) {
+            @unlink($filePath); //remove the file from the server
+        }
+        Proposal::where('id', $id)->delete();
+    }
+
 }
