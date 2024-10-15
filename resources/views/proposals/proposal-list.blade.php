@@ -111,30 +111,35 @@
                                     <thead>
                                         <tr class="fw-bolder text-muted bg-light bd-cyan">
                                             <th class="ps-4 min-w-120px">SL</th>
-                                            <th class="min-w-120px">Proposal NO</th>
+                                            <th class="min-w-120px">Lead</th>
                                             <th class="min-w-150px">Subject</th>
-                                            <th class="min-w-120px">To</th>
-                                            <th class="min-w-120px">Total</th>
-                                            <th class="min-w-120px">Date</th>
-                                            <th class="min-w-120px">Open Till</th>
-                                            <th class="min-w-120px">Created At</th>
+                                            <th class="min-w-150px">Company</th>
+                                            <th class="min-w-120px">Email</th>
+                                            <!-- <th class="min-w-120px">Date</th> -->
+                                            <!-- <th class="min-w-120px">Open Till</th> -->
+                                            <th class="min-w-120px">Price</th>
+                                            <th class="min-w-120px">Offer Price</th>
+                                            <!-- <th class="min-w-120px">Offer Price with Tax</th> -->
+                                            <!-- <th class="min-w-120px">Created At</th> -->
                                             <th class="min-w-120px">Status</th>
                                             <th class="min-w-100px text-end-new">Actions</th>
                                         </tr>
                                     </thead>
-                                    <!--end::Table head-->
-                                    <!--begin::Table body-->
+
                                     <tbody>
                                         @foreach ($proposals as $proposal)
                                             <tr>
                                                 <td class="ps-5 text-dark fs-6">
                                                     {{ ($proposals->currentPage() - 1) * $proposals->perPage() + $loop->iteration }}
                                                 </td>
-                                                <td class="text-dark fs-6">{{ $proposal->proposal_no }}</td>
+                                                <td class="text-dark fs-6"><a target="_blank" href="{{ route('lead-show', $proposal->lead_id) }}">{{ $proposal->first_name }}</a></td>
                                                 <td class="text-dark fs-6">{{ $proposal->subject }}</td>
-                                                <td class="text-dark fs-6">{{ $proposal->customer_name }}</td>
-                                                <td class="text-dark fs-6">{{ $proposal->total }}</td>
-                                                <td class="text-dark fs-6">
+                                                <td class="text-dark fs-6">{{ $proposal->company_name }}</td>
+                                                <td class="text-dark fs-6">{{ $proposal->send_to }}</td>
+                                                <td class="text-dark fs-6">{{ $proposal->price }}</td>
+                                                <td class="text-dark fs-6">{{ $proposal->offer_price }}</td>
+                                                <!-- <td class="text-dark fs-6">{{ $proposal->total_price }}</td> -->
+                                                <!-- <td class="text-dark fs-6">
                                                     {{ Carbon::parse($proposal->start_date)->format('d-m-Y') }}
                                                 </td>
                                                 <td class="text-dark fs-6">
@@ -142,19 +147,8 @@
                                                 </td>
                                                 <td class="text-dark fs-6">
                                                     {{ Carbon::parse($proposal->created_at)->format('d-m-Y h:i:s A') }}
-                                                </td>
-                                                <td>
-                                                    <select class=" form-control form-control-sm form-control-solid"
-                                                        id="assigned_to" name="status" aria-label="Default select example">
-                                                        <option value=''>Select</option>
-                                                        @foreach (config('constants.proposal_status') as $key => $status)
-                                                            <option value="{{ $key }}"
-                                                                {{ $proposal->status == $key ? 'selected' : '' }}>
-                                                                {{ $status }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </td>
+                                                </td> -->
+                                                <td class="text-dark fs-6">{{ $proposal->status }}</td>
 
                                                 <td>
                                                     <div class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
@@ -193,22 +187,11 @@
                                                         </span>
                                                     </a>
 
-                                                        <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
-                                                            <span class="svg-icon svg-icon-3">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                        <path d="M9 19c-.512 0-1.024-.195-1.414-.586L3.586 14.414c-.781-.781-.781-2.047 0-2.828s2.047-.781 2.828 0L9 15.172l8.586-8.586c.781-.781 2.047-.781 2.828 0s.781 2.047 0 2.828l-10 10C10.024 18.805 9.512 19 9 19z" fill="black"/>
-                                                                      </svg>
 
-                                                                  </svg>
-                                                            </span>
-                                                        </button>
                                                     <form action="{{ route('delete-proposal', $proposal->id) }}" method="POST" style="display: inline;">
                                                         @csrf
                                                         @method('DELETE')
 														<button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">
-
-                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                                         <span class="svg-icon svg-icon-3">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none">
@@ -224,7 +207,7 @@
                                                             </svg>
                                                         </span>
 														</button>
-                                                        <!--end::Svg Icon-->
+
                                                     </form>
                                                     <div>
                                                 </td>
