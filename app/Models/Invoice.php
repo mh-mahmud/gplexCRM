@@ -24,11 +24,18 @@ class Invoice extends Model
         'discount_type',
         'adjustment',
         'total_amount',
+        'total_tax',
+        'address',
+        'admin_note',
         'client_note',
+        'terms_conditions',
         'item_description',
         'prevent_reminders',
+        'invoice_status',
         'is_recurring',
+        'payment_mode',
         'sale_agent_id',
+        'invoice_status',
     ];
 
     // Dates to handle date and soft delete functionality
