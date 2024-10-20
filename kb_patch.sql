@@ -270,3 +270,23 @@ CREATE TABLE `invoices` (
 ALTER TABLE `campaigns` CHANGE `start_date` `start_date` DATETIME NULL,CHANGE `end_date` `end_date` DATETIME NULL;
 ALTER TABLE `proposals` CHANGE `currency` `currency` CHAR(10) NULL DEFAULT NULL;
 
+ALTER TABLE `proposals` ADD `first_name` VARCHAR(50) NULL DEFAULT NULL AFTER `assigned_agent_id`; 
+ALTER TABLE `proposals` CHANGE `country_id` `country_name` VARCHAR(50) NULL DEFAULT NULL;
+ALTER TABLE `proposals` ADD `item_name` VARCHAR(255) NULL DEFAULT NULL AFTER `country_name`, ADD `item_description` TEXT NULL DEFAULT NULL AFTER `item_name`;
+ALTER TABLE `proposals` CHANGE `adjustment` `price` DECIMAL(10,0) NULL DEFAULT NULL;
+ALTER TABLE `proposals` CHANGE `sub_total` `offer_price` DECIMAL(10,0) NULL DEFAULT NULL;
+ALTER TABLE `proposals` CHANGE `discount` `discount` DECIMAL(10,2) NULL DEFAULT NULL; 
+ALTER TABLE `proposals` CHANGE `price` `price` DECIMAL(10,2) NULL DEFAULT NULL; 
+ALTER TABLE `proposals` CHANGE `offer_price` `offer_price` DECIMAL(10,2) NULL DEFAULT NULL; 
+ALTER TABLE `proposals` CHANGE `total` `total_price` DECIMAL(10,2) NULL DEFAULT NULL;
+ALTER TABLE `proposals` ADD `tax_percent` DECIMAL(3,1) NULL DEFAULT NULL AFTER `discount`, ADD `tax_amount` DECIMAL(10,2) NULL DEFAULT NULL AFTER `tax_percent`;
+ALTER TABLE `proposals` ADD `proposal_file_name` VARCHAR(255) NULL DEFAULT NULL AFTER `country_name`;
+ALTER TABLE `proposals` ADD `created_at` TIMESTAMP NULL DEFAULT NULL AFTER `status`, ADD `updated_at` TIMESTAMP NULL DEFAULT NULL AFTER `created_at`;
+
+
+-- 10-10-2024
+ALTER TABLE `proposals` CHANGE `status` `status` CHAR(15) NULL DEFAULT NULL;
+ALTER TABLE `proposals` CHANGE `assigned_agent_id` `assigned_agent_id` INT NULL DEFAULT NULL;
+ALTER TABLE `proposals` ADD `company_name` VARCHAR(50) NULL DEFAULT NULL AFTER `lead_id`;
+ALTER TABLE `proposals` CHANGE `send_to_phone` `phone` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL;
+  -- delete send_to_email column

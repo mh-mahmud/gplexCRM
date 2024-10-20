@@ -83,7 +83,126 @@ class ProposalService
     }
 
     public function getLeadsData() {
-        return Lead::where('lead_status', 1)->get(['first_name', 'last_name', 'email', 'phone', 'city', 'state', 'zip', 'country', 'address', 'street']);
+        return Lead::where('lead_status', 1)->get(['id', 'first_name', 'last_name', 'email', 'phone', 'city', 'state', 'zip', 'country', 'address', 'street']);
+    }
+
+    public function save_proposal($request) {
+
+
+        // handle the profile image separately
+        if ($request->hasFile('upload_file')) {
+            $fileNameWithExt = $request->file('upload_file')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('upload_file')->getClientOriginalExtension();
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('upload_file')->move(getcwd() . '/uploads/proposals', $fileNameToStore);
+
+            $data['upload_file'] = $fileNameToStore;
+        } else {
+            $data['upload_file'] = '';
+        }
+
+        $proposal = new Proposal();
+        $proposal->subject = $request->subject;
+        $proposal->lead_id = $request->lead_id;
+        $proposal->first_name = $request->first_name;
+        $proposal->company_name = $request->company_name;
+
+        $proposal->address = $request->address;
+        $proposal->city = $request->city;
+        $proposal->state = $request->state;
+        $proposal->country_name = $request->country_name;
+        $proposal->zip_code = $request->zip_code;
+
+        $proposal->start_date = $request->start_date;
+        $proposal->end_date = $request->end_date;
+        $proposal->currency = $request->currency;
+        $proposal->status = $request->status;
+        $proposal->send_to = $request->send_to;
+        $proposal->phone = $request->phone;
+        $proposal->price = $request->price;
+        $proposal->offer_price = $request->offer_price;
+        $proposal->item_name = $request->item_name;
+        $proposal->item_description = $request->item_description;
+        $proposal->proposal_file_name = $data['upload_file'];
+
+        $proposal->discount = $request->price - $request->offer_price;
+        $proposal->tax_percent = $request->tax_percent;
+        $proposal->tax_amount = $request->offer_price * $request->tax_percent/100;
+        $proposal->total_price = $proposal->tax_amount + $request->offer_price;
+        $proposal->status = $request->status;
+        $proposal->save();
+        return $proposal;
+
+    }
+
+    public function proposal_details($id) {
+        return Proposal::findOrFail($id);
+    }
+
+    public function update_proposal($request, $id) {
+
+        if ($request->hasFile('upload_file')) {
+            $fileNameWithExt = $request->file('upload_file')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('upload_file')->getClientOriginalExtension();
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('upload_file')->move(getcwd() . '/uploads/proposals', $fileNameToStore);
+
+            $data['upload_file'] = $fileNameToStore;
+        } else {
+            $data['upload_file'] = '';
+        }
+
+        $proposal = Proposal::findOrFail($id);
+        $proposal->subject = $request->subject;
+        $proposal->lead_id = $request->lead_id;
+        $proposal->first_name = $request->first_name;
+        $proposal->company_name = $request->company_name;
+
+        $proposal->address = $request->address;
+        $proposal->city = $request->city;
+        $proposal->state = $request->state;
+        $proposal->country_name = $request->country_name;
+        $proposal->zip_code = $request->zip_code;
+
+        $proposal->start_date = $request->start_date;
+        $proposal->end_date = $request->end_date;
+        $proposal->currency = $request->currency;
+        $proposal->status = $request->status;
+        $proposal->send_to = $request->send_to;
+        $proposal->phone = $request->phone;
+        $proposal->price = $request->price;
+        $proposal->offer_price = $request->offer_price;
+        $proposal->item_name = $request->item_name;
+        $proposal->item_description = $request->item_description;
+        
+        if($request->upload_file) {
+            $proposal->proposal_file_name = $data['upload_file'];
+        }
+
+        $proposal->discount = $request->price - $request->offer_price;
+        $proposal->tax_percent = $request->tax_percent;
+        $proposal->tax_amount = $request->offer_price * $request->tax_percent/100;
+        $proposal->total_price = $proposal->tax_amount + $request->offer_price;
+        $proposal->status = $request->status;
+        $proposal->save();
+        return $proposal;
+
+    }
+
+    public function delete_proposal($id)
+    {
+        $record = Proposal::where('id', $id)->first();
+        if (!$record) {
+            throw new \Exception('Record not found.');
+        }
+
+        $filePath = getcwd() . '/uploads/proposals/' . $record->proposal_file_name;
+        if (file_exists($filePath)) {
+            @unlink($filePath); //remove the file from the server
+        }
+        Proposal::where('id', $id)->delete();
     }
 
 }
