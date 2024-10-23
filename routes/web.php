@@ -153,6 +153,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::put('/invoice/{id}', [InvoiceController::class, 'update'])->name('invoice-update');
 	Route::delete('/invoice/{id?}', [InvoiceController::class, 'destroy'])->name('invoice-destroy');
 	Route::post('/invoice/search', [InvoiceController::class, 'search'])->name('invoice-search');
+	Route::get('/invoice/{invoiceId}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoice-download');
 	
 	// users route
     Route::get('user-list',        [UserController::class, 'index'])->name('users.index')->middleware(['check-permission']);

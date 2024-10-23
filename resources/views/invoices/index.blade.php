@@ -242,7 +242,7 @@ use Carbon\Carbon;
                                     <td class="text-dark fs-6">{{$invoice->invoice_number}}</td>
                                     <td class="text-dark fs-6 w-200px">{{$invoice->total_amount}}</td>
                                     <td class="text-dark fs-6 w-200px">{{$invoice->total_tax }}</td>
-                                    <td class="text-dark fs-6 w-200px">{{$invoice->discount }}</td>
+                                    <td class="text-dark fs-6 w-200px">{{ $invoice->discount ?? '0.00' }}</td>
                                     <td class="text-dark fs-6 w-200px">  
                                         @if($invoice->invoice_date)
                                         {{ \Carbon\Carbon::parse($invoice->invoice_date)->format('d-m-Y') }}
@@ -264,7 +264,7 @@ use Carbon\Carbon;
                                     <td>
                                         <div
                                             class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
-                                            <a href="{{ route('invoice-show', $invoice->id) }}"
+                                            <a href="{{ route('invoice-show', $invoice->id) }}" target="_blank"
                                                 class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                                                 <span class="svg-icon svg-icon-3">

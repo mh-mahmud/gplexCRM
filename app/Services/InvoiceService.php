@@ -25,13 +25,13 @@ class InvoiceService
             $items[] = [
                 'Item' => $data['items']['item_name'][$i] ?? '',
                 'Description' => $data['items']['description'][$i] ?? '',
-                'Qty' => $data['items']['quantity'][$i] ?? 0,         
-                'Rate' => $data['items']['rate'][$i] ?? 0,            
+                'Qty' => $data['items']['quantity'][$i] ?? 0,
+                'Rate' => $data['items']['rate'][$i] ?? 0,
                 'Tax' => $data['items']['tax'][$i] ?? 0,
                 'Amount' => ($data['items']['quantity'][$i] ?? 0) * ($data['items']['rate'][$i] ?? 0) // Calculate Amount (Qty * Rate)
             ];
         }
-        //encode the items array as JSON
+        //array as JSON
         $itemDescriptionJson = json_encode($items);
         //create the invoice
         $invoice = Invoice::create([
@@ -64,35 +64,46 @@ class InvoiceService
     public function updateInvoice(array $data, $id)
     {
         $invoice = Invoice::findOrFail($id);
-
-        // Update the invoice fields
-        $invoice->invoice_number = 'INV-' .$data['invoice_number'];
+        //dd($data);die();
+        $invoice->invoice_number = 'INV-' . $data['invoice_number'];
+        $invoice->customer_id = $data['customer_id'];
+        $invoice->address = $data['address'];
+        $invoice->invoice_date = $data['invoice_date'];
+        $invoice->due_date = $data['due_date'];
         $invoice->sub_total = $data['sub_total'];
         $invoice->total_amount = $data['total_amount'];
-        $invoice->total_tax = $data['total_tax'];
+        $invoice->total_tax = $data['total_tax']?? null;
         $invoice->discount = $data['discount'] ?? null;
         $invoice->discount_type = $data['discount_type_name'] ?? null;
         $invoice->adjustment = $data['adjustment'] ?? null;
-
-        // Prepare items data to be saved as JSON
+        $invoice->admin_note = $data['admin_note'];
+        $invoice->client_note = $data['client_note'];
+        $invoice->terms_conditions = $data['terms_conditions'];
+        $invoice->currency = $data['currency'];
+        $invoice->payment_mode = $data['payment_mode'];
+        $invoice->sale_agent_id = $data['sale_agent_id'];
+        $invoice->invoice_status = $data['invoice_status'];
+        //saved as json, excluding empty rows
         $items = [];
         foreach ($data['items']['item_name'] as $key => $itemName) {
-            $items[] = [
-                'Item' => $itemName,
-                'Description' => $data['items']['description'][$key],
-                'Qty' => $data['items']['quantity'][$key],
-                'Rate' => $data['items']['rate'][$key],
-                'Tax' => $data['items']['tax'][$key],
-                'Amount' => ($data['items']['quantity'][$key] ?? 0) * ($data['items']['rate'][$key] ?? 0)
-            ];
+            //chk if any relevant field for the item is filled out
+            if (!empty($itemName) || !empty($data['items']['description'][$key]) || !empty($data['items']['quantity'][$key]) || !empty($data['items']['rate'][$key])) {
+                $items[] = [
+                    'Item' => $itemName,
+                    'Description' => $data['items']['description'][$key] ?? '',
+                    'Qty' => $data['items']['quantity'][$key] ?? 0,
+                    'Rate' => $data['items']['rate'][$key] ?? 0,
+                    'Tax' => $data['items']['tax'][$key] ?? 0,
+                    'Amount' => ($data['items']['quantity'][$key] ?? 0) * ($data['items']['rate'][$key] ?? 0),
+                ];
+            }
         }
 
-        // Convert items array to JSON
+        //array to JSON
         $invoice->item_description = json_encode($items);
-
-        // Save the updated invoice
         $invoice->save();
     }
+
 
     public function searchInvoices($request)
     {
