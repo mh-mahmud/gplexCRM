@@ -308,6 +308,9 @@
                                                         </option>
                                                         @endforeach
                                                     </select>
+                                                    @if ($errors->has('product_id'))
+                                                    <span class="text-danger">{{ $errors->first('product_id') }}</span>
+                                                    @endif
                                                 </div>
                                                 <span class="input-group-sm input-group-text"><i class="bi bi-plus fs-4"></i></span>
                                             </div>
@@ -369,6 +372,9 @@
                                                 <td>
                                                     <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
                                                         id="item-name" placeholder="Item Name">{{ $item['Item'] }}</textarea>
+                                                        @error('items.*.item_name')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
                                                 </td>
                                                 <td>
                                                     <textarea class="form-control form-select-sm min-w-250px" name="items[description][]" cols="30" rows="2"
@@ -385,7 +391,7 @@
                                                 <td>
                                                     <select class="form-select form-select-sm" data-control="select2" data-placeholder="No Tax" id="item-tax"
                                                         name="items[tax][]">
-                                                        <option value="0.00" {{ $item['Tax'] == '0.00' ? 'selected' : '' }}>No Tax (0.00%)</option>
+                                                        <option value="" {{ $item['Tax'] == '' ? 'selected' : '' }}>No Tax (0.00%)</option>
                                                         <option value="5.00" {{ $item['Tax'] == '5.00' ? 'selected' : '' }}>5.00%</option>
                                                         <option value="10.00" {{ $item['Tax'] == '10.00' ? 'selected' : '' }}>10.00%</option>
                                                         <option value="15.00" {{ $item['Tax'] == '15.00' ? 'selected' : '' }}>15.00%</option>

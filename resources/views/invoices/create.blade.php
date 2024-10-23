@@ -311,6 +311,9 @@
                                                         </option>
                                                         @endforeach
                                                     </select>
+                                                    @if ($errors->has('product_id'))
+                                                    <span class="text-danger">{{ $errors->first('product_id') }}</span>
+                                                    @endif
                                                 </div>
                                                 <span class="input-group-sm input-group-text"><i class="bi bi-plus fs-4"></i></span>
                                             </div>
@@ -365,7 +368,7 @@
                                         </thead>
 
 
-                                        <tbody id="table-body">
+                                        <!-- <tbody id="table-body">
                                             <tr>
                                                 <td>
                                                     <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
@@ -399,7 +402,67 @@
                                                     </button>
                                                 </td>
                                             </tr>
+                                        </tbody> -->
+
+                                        <tbody id="table-body">
+                                            <tr>
+
+                                                <td>
+                                                    <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2" id="item-name" placeholder="Item Name">{{ old('items.item_name.0') }}</textarea>
+                                                    @error('items.item_name.0')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </td>
+
+
+                                                <td>
+                                                    <textarea class="form-control form-control-sm min-w-250px" name="items[description][]" cols="30" rows="2" id="item-description" placeholder="Description">{{ old('items.description.0') }}</textarea>
+                                                    @error('items.description.0')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </td>
+
+
+                                                <td>
+                                                    <input class="form-control form-control-sm" type="number" name="items[quantity][]" id="item-quantity" placeholder="Quantity" value="{{ old('items.quantity.0') }}">
+                                                    @error('items.quantity.0')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </td>
+
+
+                                                <td>
+                                                    <input class="form-control form-control-sm" type="number" name="items[rate][]" id="item-rate" placeholder="Rate" value="{{ old('items.rate.0') }}">
+                                                    @error('items.rate.0')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </td>
+
+
+                                                <td>
+                                                    <select class="form-select form-select-sm" name="items[tax][]">
+                                                        <option value="0.00" {{ old('items.tax.0') == '0.00' ? 'selected' : '' }}>No Tax (0.00%)</option>
+                                                        <option value="5.00" {{ old('items.tax.0') == '5.00' ? 'selected' : '' }}>5.00%</option>
+                                                        <option value="10.00" {{ old('items.tax.0') == '10.00' ? 'selected' : '' }}>10.00%</option>
+                                                        <option value="15.00" {{ old('items.tax.0') == '15.00' ? 'selected' : '' }}>15.00%</option>
+                                                    </select>
+                                                    @error('items.tax.0')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </td>
+
+
+                                                <td class="item-amount">0.00</td>
+
+
+                                                <td>
+                                                    <button type="button" class="btn btn-sm btn-primary py-2 px-2 add-row">
+                                                        <i class="bi bi-check"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
                                         </tbody>
+
 
                                     </table>
                                     <!--End Proposal Table Preview-->
@@ -679,8 +742,7 @@
 
                 //append the new row to the table body
                 $('#table-body').append(newRow);
-
-                // clear the product selection
+               // clear the product selection
                 $('#product-select').val('').trigger('change');
             } else {
                 //alert user if any field in the last row is not filled
