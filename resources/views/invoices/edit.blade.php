@@ -371,7 +371,7 @@
                                             <tr>
                                                 <td>
                                                     <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
-                                                        id="item-name" placeholder="Item Name">{{ $item['Item'] }}</textarea>
+                                                        id="item-name" placeholder="Item Name" readonly>{{ $item['Item'] }}</textarea>
                                                         @error('items.*.item_name')
                                                     <div class="text-danger">{{ $message }}</div>
                                                     @enderror
@@ -408,7 +408,7 @@
                                             <tr>
                                                 <td>
                                                     <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
-                                                        id="item-name" placeholder="Item Name"></textarea>
+                                                        id="item-name" placeholder="Item Name" readonly></textarea>
                                                 </td>
                                                 <td>
                                                     <textarea class="form-control form-select-sm min-w-250px" name="items[description][]" cols="30" rows="2"
@@ -743,7 +743,7 @@
                 var newRow = `<tr>
                    <td>
                        <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
-                           placeholder="Item Name"></textarea>
+                           placeholder="Item Name" readonly></textarea>
                    </td>
                    <td>
                        <textarea class="form-control form-select-sm min-w-250px" name="items[description][]" cols="30" rows="2"

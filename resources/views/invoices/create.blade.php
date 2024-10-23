@@ -407,7 +407,7 @@
                                             <tr>
 
                                                 <td>
-                                                    <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2" id="item-name" placeholder="Item Name">{{ old('items.item_name.0') }}</textarea>
+                                                    <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2" id="item-name" placeholder="Item Name" readonly>{{ old('items.item_name.0') }}</textarea>
                                                     @error('items.item_name.0')
                                                     <div class="text-danger">{{ $message }}</div>
                                                     @enderror
@@ -708,7 +708,7 @@
                 var newRow = `<tr>
                    <td>
                        <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
-                           placeholder="Item Name"></textarea>
+                           placeholder="Item Name" readonly></textarea>
                    </td>
                    <td>
                        <textarea class="form-control form-select-sm min-w-250px" name="items[description][]" cols="30" rows="2"
