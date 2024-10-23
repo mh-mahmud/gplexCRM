@@ -354,5 +354,11 @@ class UserController extends Controller
         return response()->json(['success' => false, 'message' => 'No profile image found']);
     }
 
+    public function role_show($id) {
+        $res = [];
+        $res['user'] = $this->service->show_role_data($id);
+        return view('users.show_roles', $res);
+    }
+
     
 }

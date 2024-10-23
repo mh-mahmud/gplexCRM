@@ -110,6 +110,10 @@ class UserService {
         return Menu::findOrFail($id);
     }
 
+    public function show_role_data($id) {
+        return Role::findOrFail($id);
+    }
+
     public function delete_permission($id) {
         $user = Menu::findOrFail($id);
         if($user->delete()) {
