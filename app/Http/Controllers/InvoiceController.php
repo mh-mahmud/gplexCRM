@@ -49,7 +49,6 @@ class InvoiceController extends Controller
 
     public function store_backup(Request $request)
     {
-        // Validate the request data with custom error messages
         $validatedData = $request->validate([
             'customer_id' => 'required|exists:customers,id',
             'invoice_number' => 'required|unique:invoices,invoice_number',
@@ -57,47 +56,50 @@ class InvoiceController extends Controller
             'due_date' => 'nullable|date|after_or_equal:invoice_date',
             'product_id' => 'required|exists:products,id',
         ], [
-            'product_id.required' => 'Product item is required', // Custom error message
+            'product_id.required' => 'Product item is required',
         ]);
-
-        // Create the invoice using the validated data
         $invoice = $this->invoiceService->createInvoice($request->all());
-
-        // Redirect to the invoice index with a success message
         return redirect()->route('invoice-index')->with('success', 'Invoice Created Successfully!');
     }
 
     public function store(Request $request)
-{
-    // Validate the request data with custom error messages for each item field
-    $validatedData = $request->validate([
-        'customer_id' => 'required|exists:customers,id',
-        'invoice_number' => 'required|unique:invoices,invoice_number',
-        'invoice_date' => 'required|date',
-        'due_date' => 'nullable|date|after_or_equal:invoice_date',
-        
-        // Item validation
-        'items.item_name.*' => 'required|string',  // Validate each item name
-        'items.description.*' => 'required|string',  // Validate each description
-        'items.quantity.*' => 'required|integer|min:1',  // Validate each quantity
-        'items.rate.*' => 'required|numeric|min:0',  // Validate each rate
-        'items.tax.*' => 'nullable|numeric|min:0|max:100',  // Validate each tax percentage
-    ], [
-        // Custom error messages for each item
-        'items.item_name.*.required' => 'Item Name is required for all items',
-        'items.description.*.required' => 'Description is required for all items',
-        'items.quantity.*.required' => 'Quantity is required and must be at least 1',
-        'items.rate.*.required' => 'Rate is required and must be a positive number',
-        'items.tax.*.numeric' => 'Tax must be a valid percentage',
-        'items.tax.*.max' => 'Tax cannot exceed 100%',
-    ]);
+    {
 
-    // Create the invoice using the validated data
-    $invoice = $this->invoiceService->createInvoice($request->all());
-
-    // Redirect to the invoice index with a success message
-    return redirect()->route('invoice-index')->with('success', 'Invoice Created Successfully!');
-}
+        $validatedData = $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            //'invoice_number' => 'required|unique:invoices,invoice_number',
+            'invoice_date' => 'required|date',
+            'due_date' => 'nullable|date|after_or_equal:invoice_date',
+            'product_id' => 'required|exists:products,id',
+            //item validation
+            'items.item_name.*' => 'required|string',
+            'items.quantity.*' => 'required|integer|min:1',
+            'items.rate.*' => 'required|numeric|min:0',
+            'items.tax.*' => 'nullable|numeric|min:0|max:100',
+        ], [
+            'items.item_name.*.required' => 'Item Name is required for all items',
+            'items.quantity.*.required' => 'Quantity is required and must be at least 1',
+            'items.rate.*.required' => 'Rate is required and must be a positive number',
+            'items.tax.*.numeric' => 'Tax must be a valid percentage',
+            'items.tax.*.max' => 'Tax cannot exceed 100%',
+            'product_id.required' => 'Item is required',
+            //'invoice_number.unique' => 'This invoice number is already in use by another invoice',
+        ]);
+        try {
+           
+            $invoice = $this->invoiceService->createInvoice($request->all());
+            return redirect()->route('invoice-index')->with('success', 'Invoice Created Successfully!');
+        } catch (\Illuminate\Database\QueryException $e) {
+            
+            if ($e->getCode() === '23000') { 
+                return back()->withErrors(['invoice_number' => 'This invoice number exists'])->withInput();
+            }
+    
+            // Handle other database errors
+            return back()->withErrors(['error' => 'There was an error creating the invoice. Please try again later.'])->withInput();
+        }
+    }
+    
 
 
     public function show($id)
@@ -128,9 +130,46 @@ class InvoiceController extends Controller
 
         $validatedData = $request->validate([
             'customer_id' => 'required|exists:customers,id',
-            'invoice_number' => 'required|unique:invoices,invoice_number,' . $id, //current invoice number
+            //'invoice_number' => 'required|unique:invoices,invoice_number,' . $id, //current invoice number
             'invoice_date' => 'required|date',
             'due_date' => 'nullable|date|after_or_equal:invoice_date',
+        ]);
+
+       try {
+            $invoice = $this->invoiceService->updateInvoice($request->all(), $id);
+            return redirect()->route('invoice-index')->with('success', 'Invoice Updated Successfully!');
+        } catch (\Illuminate\Database\QueryException $e) {
+            
+            if ($e->getCode() === '23000') { 
+                return back()->withErrors(['invoice_number' => 'This invoice number exists'])->withInput();
+            }
+    
+            // Handle other database errors
+            return back()->withErrors(['error' => 'There was an error creating the invoice. Please try again later.'])->withInput();
+        }
+    }
+
+    public function update_backup(Request $request, $id)
+    {
+
+        $validatedData = $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            //'invoice_number' => 'required|unique:invoices,invoice_number,' . $id,
+            'invoice_date' => 'required|date',
+            'due_date' => 'nullable|date|after_or_equal:invoice_date',
+             //item validation - maintaining the same structure as store
+            'items.item_name.*' => 'required|string',
+            'items.quantity.*' => 'required|integer|min:1',
+            'items.rate.*' => 'required|numeric|min:0',
+            'items.tax.*' => 'nullable|numeric|min:0|max:100',
+        ], [
+            //custom error messages
+            'items.item_name.*.required' => 'Item Name is required for all items',
+            'items.quantity.*.required' => 'Quantity is required and must be at least 1',
+            'items.rate.*.required' => 'Rate is required and must be a positive number',
+            'items.tax.*.numeric' => 'Tax must be a valid percentage',
+            'items.tax.*.max' => 'Tax cannot exceed 100%',
+            //'invoice_number.unique' => 'This invoice number is already in use by another invoice',
         ]);
 
         $invoice = $this->invoiceService->updateInvoice($request->all(), $id);

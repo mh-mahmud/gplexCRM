@@ -114,8 +114,7 @@
                                                 <input class="form-control form-control-sm"
                                                     type="text" name="invoice_number" id="invoice_number"
                                                     value="{{ old('invoice_number', sprintf('%06d', $nextInvoiceNumber)) }}" />
-
-                                                @if ($errors->has('invoice_number'))
+                                                @if($errors->has('invoice_number'))
                                                 <span class="text-danger">{{ $errors->first('invoice_number') }}</span>
                                                 @endif
                                             </div>
@@ -534,7 +533,7 @@
                                     <div class="col-md-12">
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark" for="textarea">Terms & Conditions</label>
-                                            <textarea class="form-control form-control-sm  form-control-solid" id="address" name="terms_conditions" rows="3">{{ old('terms_conditions') }}</textarea>
+                                            <textarea class="form-control form-control-sm  form-control-solid" id="terms_conditions" name="terms_conditions" rows="3">{{ old('terms_conditions') }}</textarea>
                                             @if ($errors->has('terms_condition'))
                                             <span class="text-danger">{{ $errors->first('terms_condition') }}</span>
                                             @endif
@@ -705,8 +704,7 @@
             var quantity = lastRow.find('input[name="items[quantity][]"]').val();
             var rate = lastRow.find('input[name="items[rate][]"]').val();
 
-            if (itemName !== "" && description !== "" && quantity !== "" && rate !== "") {
-                //all fields are filled, add a new row
+            if (itemName !== "" && quantity !== "" && rate !== "") {
                 var newRow = `<tr>
                    <td>
                        <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
@@ -742,13 +740,101 @@
 
                 //append the new row to the table body
                 $('#table-body').append(newRow);
-               // clear the product selection
+                // clear the product selection
                 $('#product-select').val('').trigger('change');
             } else {
                 //alert user if any field in the last row is not filled
                 alert('Please fill all fields in the last row before adding a new one.');
             }
         });
+
+
+        $(document).on('click', '.add-row-backup', function() {
+            //alert('asdsd');
+            var lastRow = $('#table-body tr:last'); // reference to the last row
+            // clear any previous error messages and highlights
+            lastRow.find('.error-message').remove(); // remove any existing error messages
+            lastRow.find('textarea, input').removeClass('is-invalid'); // remove error highlight
+           // get the values from the last row
+            var itemName = lastRow.find('textarea[name="items[item_name][]"]').val();
+            var description = lastRow.find('textarea[name="items[description][]"]').val();
+            var quantity = lastRow.find('input[name="items[quantity][]"]').val();
+            var rate = lastRow.find('input[name="items[rate][]"]').val();
+
+            var isValid = true;
+
+            // Validate Item Name
+            if (itemName == "") {
+                alert('asdsd');
+                lastRow.find('textarea[name="items[item_name][]"]').addClass('is-invalid'); // highlight field
+                lastRow.find('textarea[name="items[item_name][]"]').after('<div class="error-message text-danger">Item Name is required</div>'); // add error message
+                isValid = false;
+            }
+
+            // Validate Description
+            if (description === "") {
+                lastRow.find('textarea[name="items[description][]"]').addClass('is-invalid');
+                lastRow.find('textarea[name="items[description][]"]').after('<div class="error-message text-danger">Description is required</div>');
+                isValid = false;
+            }
+
+            // Validate Quantity
+            if (quantity === "" || quantity <= 0) {
+                lastRow.find('input[name="items[quantity][]"]').addClass('is-invalid');
+                lastRow.find('input[name="items[quantity][]"]').after('<div class="error-message text-danger">Quantity must be greater than 0</div>');
+                isValid = false;
+            }
+
+            // Validate Rate
+            if (rate === "" || rate <= 0) {
+                lastRow.find('input[name="items[rate][]"]').addClass('is-invalid');
+                lastRow.find('input[name="items[rate][]"]').after('<div class="error-message text-danger">Rate must be greater than 0</div>');
+                isValid = false;
+            }
+
+            // If all fields are valid, add a new row
+            if (isValid) {
+                var newRow = `<tr>
+            <td>
+                <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
+                    placeholder="Item Name"></textarea>
+            </td>
+            <td>
+                <textarea class="form-control form-select-sm min-w-250px" name="items[description][]" cols="30" rows="2"
+                    placeholder="Description"></textarea>
+            </td>
+            <td>
+                <input class="form-control form-control-sm" type="number" name="items[quantity][]"
+                    placeholder="Quantity">
+            </td>
+            <td>
+                <input class="form-control form-control-sm" type="number" name="items[rate][]"
+                    placeholder="Rate">
+            </td>
+            <td>
+                <select class="form-select form-select-sm" name="items[tax][]">
+                    <option value="0.00">No Tax (0.00%)</option>
+                    <option value="5.00">5.00%</option>
+                    <option value="10.00">10.00%</option>
+                    <option value="15.00">15.00%</option>
+                </select>
+            </td>
+            <td class="item-amount">0.00</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-danger py-2 px-2 remove-row">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </td>
+        </tr>`;
+
+                // Append the new row to the table body
+                $('#table-body').append(newRow);
+
+                // Clear the product selection if there is any dropdown or selection mechanism
+                $('#product-select').val('').trigger('change');
+            }
+        });
+
 
         //remove row logic
         $(document).on('click', '.remove-row', function() {

@@ -576,5 +576,16 @@ body.swal2-height-auto {
     color: lightgray;
     text-decoration:underline;
   }
+  
 
   /* end meeting module rating design CSS*/
+
+ /* error message Invoice module rating design CSS*/
+
+.is-invalid {
+    border-color: #dc3545; /* Red border for invalid fields */
+}
+.error-message {
+    font-size: 0.875rem; /* Smaller text for error message */
+    color: #dc3545; /* Red color for error message */
+}

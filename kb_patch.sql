@@ -238,33 +238,38 @@ ALTER TABLE `sms_queue` ADD COLUMN `meeting_id` CHAR(20) NULL AFTER `customer_id
 ALTER TABLE `sms_queue` CHANGE `sms_text` `sms_text` TEXT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
 
 
---not live send sql
+
 CREATE TABLE `invoices` (
-    `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    `customer_id` BIGINT UNSIGNED NOT NULL,
-    `invoice_number` VARCHAR(255) UNIQUE NOT NULL,
-    `invoice_date` DATE NOT NULL,
-    `due_date` DATE NOT NULL,
-    `currency` CHAR(3) DEFAULT 'BDT', -- Default currency set to BDT (Taka)
-    `sub_total` DECIMAL(15, 2) DEFAULT 0.00,
-    `discount` DECIMAL(15, 2) DEFAULT 0.00,
-    `discount_type` ENUM('No discount', 'Before tax', 'After tax') DEFAULT 'No discount',
-    `adjustment` DECIMAL(15, 2) DEFAULT 0.00,
-    `total_amount` DECIMAL(15, 2) DEFAULT 0.00,
-    `client_note` TEXT NULL,
-    `item_description` TEXT NULL,
-    `prevent_reminders` tinyint(4) DEFAULT NULL,
-    `is_recurring` tinyint(4) DEFAULT NULL,
-    `payment_mode` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `sale_agent_id` BIGINT UNSIGNED NULL,
-    `created_at` TIMESTAMP NULL DEFAULT NULL,
-    `updated_at` TIMESTAMP NULL DEFAULT NULL,
-    `deleted_at` TIMESTAMP NULL DEFAULT NULL,
-    
-    -- Foreign key constraints
-    CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers`(`id`) ON DELETE CASCADE,
-    CONSTRAINT `fk_sale_agent_id` FOREIGN KEY (`sale_agent_id`) REFERENCES `users`(`id`) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `customer_id` bigint(20) unsigned NOT NULL,
+  `invoice_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `invoice_date` date NOT NULL,
+  `due_date` date DEFAULT NULL,
+  `currency` char(3) COLLATE utf8mb4_unicode_ci DEFAULT 'BDT',
+  `sub_total` decimal(15,2) DEFAULT 0.00,
+  `discount` decimal(15,2) DEFAULT 0.00,
+  `discount_type` enum('No discount','Before tax','After tax') COLLATE utf8mb4_unicode_ci DEFAULT 'No discount',
+  `adjustment` decimal(15,2) DEFAULT 0.00,
+  `total_amount` decimal(15,2) DEFAULT 0.00,
+  `total_tax` decimal(15,2) DEFAULT 0.00,
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `admin_note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `client_note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `terms_conditions` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `item_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `prevent_reminders` tinyint(4) DEFAULT NULL,
+  `is_recurring` tinyint(4) DEFAULT NULL,
+  `payment_mode` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sale_agent_id` char(4) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `invoice_status` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `invoice_number` (`invoice_number`),
+  KEY `fk_customer_id` (`customer_id`),
+  CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 
 ALTER TABLE `campaigns` CHANGE `start_date` `start_date` DATETIME NULL,CHANGE `end_date` `end_date` DATETIME NULL;
@@ -290,3 +295,22 @@ ALTER TABLE `proposals` CHANGE `assigned_agent_id` `assigned_agent_id` INT NULL 
 ALTER TABLE `proposals` ADD `company_name` VARCHAR(50) NULL DEFAULT NULL AFTER `lead_id`;
 ALTER TABLE `proposals` CHANGE `send_to_phone` `phone` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL;
   -- delete send_to_email column
+
+  CREATE TABLE `countries` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(250) COLLATE utf8mb4_general_ci NOT NULL,
+  `status` tinyint NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `currencies` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(250) COLLATE utf8mb4_general_ci NOT NULL,
+  `symbol` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` tinyint NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
