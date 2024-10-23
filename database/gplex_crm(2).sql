@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 15, 2024 at 11:37 AM
+-- Generation Time: Oct 23, 2024 at 11:00 AM
 -- Server version: 8.3.0
--- PHP Version: 8.2.18
+-- PHP Version: 8.1.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -55,8 +55,10 @@ CREATE TABLE IF NOT EXISTS `agents` (
 --
 
 INSERT INTO `agents` (`agent_id`, `user_id`, `first_name`, `last_name`, `phone_number`, `birth_day`, `status`, `role_id`, `did`, `seat_id`, `skill_id`, `gender`, `address`, `description`, `performance`, `created_at`, `updated_at`) VALUES
-('1538', 2, 'Md', 'Rokibuzzaman', '01731214425', '2024-05-22', 1, NULL, NULL, NULL, NULL, 'male', 'Mirpur', 'note that', NULL, '2024-05-20 11:26:27', '2024-05-20 11:26:27'),
+('1538', 2, 'Md', 'Rokibuzzaman', '01731214425', '2024-05-22', 1, NULL, NULL, NULL, NULL, NULL, 'Mirpur', 'note that', NULL, '2024-05-20 11:26:27', '2024-09-12 00:52:30'),
+('1979', 7, 'Ali', 'Hossian', '01919102030', '2024-09-01', 1, NULL, NULL, NULL, NULL, 'Male', NULL, NULL, NULL, '2024-09-11 01:08:09', '2024-09-12 00:59:30'),
 ('2125', 6, 'Alamin', 'Khan', '01731214425', '2024-06-12', 1, NULL, NULL, NULL, NULL, 'Female', '441/5,senpara', '441/5,senpara', NULL, '2024-06-02 14:17:30', '2024-07-07 19:43:08'),
+('2479', 8, 'Agent', 'New', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-09-15 04:07:26', '2024-09-15 04:07:26'),
 ('9271', 4, 'jaman', 'hasans', '01731214425', '2024-05-01', 1, NULL, NULL, NULL, NULL, NULL, 'dfdfd', 'ddfdd', NULL, '2024-05-27 12:59:32', '2024-07-04 13:26:37');
 
 -- --------------------------------------------------------
@@ -177,58 +179,6 @@ CREATE TABLE IF NOT EXISTS `city` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `com_details`
---
-
-DROP TABLE IF EXISTS `com_details`;
-CREATE TABLE IF NOT EXISTS `com_details` (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `lead_id` bigint UNSIGNED NOT NULL,
-  `form_id` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `com_details_420` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `com_details`
---
-
-INSERT INTO `com_details` (`id`, `lead_id`, `form_id`, `created_at`, `updated_at`, `com_details_420`) VALUES
-(8, 197, '3092288972', '2024-07-09 19:05:42', '2024-07-09 20:25:31', '2024-07-27'),
-(9, 197, '3092288972', '2024-07-11 14:12:55', '2024-07-11 14:12:55', '2024-07-18');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `com_info`
---
-
-DROP TABLE IF EXISTS `com_info`;
-CREATE TABLE IF NOT EXISTS `com_info` (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `lead_id` bigint UNSIGNED NOT NULL,
-  `form_id` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `company_name` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `company_txn` int DEFAULT NULL,
-  `company_estd` date DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `company_detailss` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `com_info`
---
-
-INSERT INTO `com_info` (`id`, `lead_id`, `form_id`, `company_name`, `company_txn`, `company_estd`, `created_at`, `updated_at`, `company_detailss`) VALUES
-(62, 197, '3092288972', 'Fabri Life Ltd', 820820, '2024-07-16', '2024-07-09 18:37:43', '2024-07-11 12:09:59', 'senpara');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `countries`
 --
 
@@ -240,7 +190,19 @@ CREATE TABLE IF NOT EXISTS `countries` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `countries`
+--
+
+INSERT INTO `countries` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(4, 'United States', 1, '2024-10-06 09:35:55', NULL),
+(5, 'England', 1, '2024-10-06 09:35:55', NULL),
+(6, 'Bangladesh', 1, '2024-10-06 09:36:16', NULL),
+(7, 'Australia', 1, '2024-10-06 09:36:16', NULL),
+(8, 'Saudi Arabia', 1, '2024-10-06 09:41:22', NULL),
+(9, 'Iran', 1, '2024-10-06 09:41:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -272,7 +234,16 @@ CREATE TABLE IF NOT EXISTS `currencies` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `currencies`
+--
+
+INSERT INTO `currencies` (`id`, `name`, `symbol`, `status`, `created_at`, `updated_at`) VALUES
+(4, 'USD', '$', 1, '2024-08-25 07:03:24', '2024-08-25 07:03:24'),
+(5, 'BDT', NULL, 0, NULL, NULL),
+(6, 'EURO', NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -283,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `currencies` (
 DROP TABLE IF EXISTS `customers`;
 CREATE TABLE IF NOT EXISTS `customers` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `form_id` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lead_id` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `customer_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `customer_group` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `customer_notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
@@ -291,7 +262,16 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `customer_id` (`customer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`id`, `lead_id`, `customer_id`, `customer_group`, `customer_notes`, `created_at`, `updated_at`) VALUES
+(1, '201', 'G0I20', 'NEW CLIENT', 'this is a test note.', '2024-08-21 22:03:11', '2024-08-21 22:03:11'),
+(3, '201', '0DE1G', 'NEW CLIENT', 'hyy byj tyjyt jytj', '2024-08-21 22:05:06', '2024-08-21 22:05:06'),
+(4, '201', 'B88GA', 'NEW CLIENT', 'This is a test note.', '2024-08-21 22:06:57', '2024-08-21 22:06:57');
 
 -- --------------------------------------------------------
 
@@ -394,6 +374,7 @@ CREATE TABLE IF NOT EXISTS `leads` (
   `last_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profile_image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `alternative_number` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `gender` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dob` date DEFAULT NULL,
@@ -415,19 +396,23 @@ CREATE TABLE IF NOT EXISTS `leads` (
   `state` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `country` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `lead_notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `created_by` int UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `leads_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=216 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `leads`
 --
 
-INSERT INTO `leads` (`id`, `form_id`, `first_name`, `last_name`, `email`, `phone`, `alternative_number`, `gender`, `dob`, `marital_status`, `address`, `age`, `company`, `lead_status`, `title`, `lead_rating`, `website`, `lead_owner`, `industry`, `no_of_employee`, `lead_source`, `street`, `city`, `zip`, `state`, `country`, `lead_notes`, `created_at`, `updated_at`) VALUES
-(197, '3092288972', 'Hasan', 'Mahmudss', 'mahmud@gmail.com', '01731214426', NULL, 'Male', '2024-07-10', NULL, NULL, 23, NULL, 1, 'Event Lead', 34, NULL, NULL, NULL, NULL, 'Email marketing', NULL, NULL, NULL, NULL, NULL, NULL, '2024-07-09 18:37:43', '2024-07-09 18:42:00'),
-(201, '4066346214', 'Md', 'Rahat', 'rahat@gmail.com', '01741214453', NULL, NULL, '1990-11-07', NULL, NULL, NULL, NULL, 1, 'Rahat Lead', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `leads` (`id`, `form_id`, `first_name`, `last_name`, `email`, `phone`, `profile_image`, `alternative_number`, `gender`, `dob`, `marital_status`, `address`, `age`, `company`, `lead_status`, `title`, `lead_rating`, `website`, `lead_owner`, `industry`, `no_of_employee`, `lead_source`, `street`, `city`, `zip`, `state`, `country`, `lead_notes`, `created_by`, `created_at`, `updated_at`) VALUES
+(197, '3092288972', 'Hasan', 'Mahmudss', 'mahmud@gmail.com', '01731214426', '27164663_987829178034171_2149106983021255887_o_1725360931.jpg', NULL, 'Male', '2024-07-10', NULL, NULL, 23, NULL, 1, 'Event Lead', 34, NULL, 'www', 'CAR', NULL, 'Email marketing', 'd block', NULL, '2311', NULL, 'BD', NULL, 1, '2024-07-09 18:37:43', '2024-09-03 04:55:31'),
+(201, '4066346214', 'Md', 'Rahat', 'rahat@gmail.com', '01741214453', NULL, NULL, NULL, '1990-11-07', NULL, NULL, NULL, NULL, 1, 'Rahat Lead', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL),
+(213, '3092288972', 'sefsef', 'sgfv', NULL, '543544353', '435716252_1489407025314087_3950906095775722499_n_1725360976.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Business Man', NULL, 'gplex.com', 'Daud Ibrahim', 'GMG', NULL, 'Social media', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2024-09-03 00:58:52', '2024-09-03 04:56:16'),
+(214, '3092288972', 'fvdvg', 'dv dfvdv d', NULL, '(123) 456-7890', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2024-09-04 23:16:52', '2024-09-04 23:16:52'),
+(215, '3092288972', 'trryr', 'rtgrr', NULL, '+1 123 456 7890', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 'Social media', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2024-09-04 23:33:28', '2024-09-04 23:35:54');
 
 -- --------------------------------------------------------
 
@@ -524,23 +509,6 @@ CREATE TABLE IF NOT EXISTS `lead_form_details` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=317 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `lead_form_details`
---
-
-INSERT INTO `lead_form_details` (`id`, `form_id`, `field_name`, `field_value`, `table_name`, `character_length`, `is_index`, `is_null`, `is_unique`, `created_at`, `updated_at`) VALUES
-(133, '9426101292', 'child_nam', 'char', 'table_survey_details', 50, 0, 1, 0, '2024-05-29 19:33:32', '2024-05-29 19:33:32'),
-(134, '9426101292', 'child_age', 'char', 'table_survey_details', 5, 0, 1, 0, '2024-05-29 19:33:32', '2024-05-29 19:33:32'),
-(135, '9426101292', 'child_education', 'varchar', 'table_survey_details', 191, 0, 1, 0, '2024-05-29 19:33:32', '2024-05-29 19:33:32'),
-(136, '9426101292', 'father_name', 'varchar', 'table_survey_details', 191, 0, 1, 0, '2024-05-29 19:33:32', '2024-05-29 19:33:32'),
-(137, '9426101292', 'mother_name', 'varchar', 'table_survey_details', 191, 0, 1, 0, '2024-05-29 19:33:32', '2024-05-29 19:33:32'),
-(138, '9426101292', 'parent_id', 'char', 'table_survey_details', 10, 0, 1, 0, '2024-05-29 19:33:32', '2024-05-29 19:33:32'),
-(262, '3092288972', 'com_details_420', 'date', 'com_details', NULL, 0, 1, 0, '2024-07-04 19:08:04', '2024-07-04 19:08:04'),
-(281, '3092288972', 'company_name', 'varchar', 'com_info', 60, 0, 1, 0, '2024-07-07 17:07:42', '2024-07-07 17:07:42'),
-(282, '3092288972', 'company_txn', 'int', 'com_info', NULL, 0, 1, 0, '2024-07-07 17:07:42', '2024-07-07 17:07:42'),
-(283, '3092288972', 'company_estd', 'date', 'com_info', NULL, 0, 1, 0, '2024-07-07 17:07:42', '2024-07-07 17:07:42'),
-(284, '3092288972', 'company_detailss', 'text', 'com_info', NULL, 0, 1, 0, '2024-07-07 17:07:42', '2024-07-07 17:07:42');
 
 -- --------------------------------------------------------
 
@@ -642,13 +610,13 @@ CREATE TABLE IF NOT EXISTS `menus` (
   `id` int NOT NULL AUTO_INCREMENT,
   `parent_id` int DEFAULT NULL,
   `name` char(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sub_name` char(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sub_name` char(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `show_in_menu` tinyint(1) NOT NULL DEFAULT '1',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `menus`
@@ -657,7 +625,7 @@ CREATE TABLE IF NOT EXISTS `menus` (
 INSERT INTO `menus` (`id`, `parent_id`, `name`, `sub_name`, `show_in_menu`, `status`, `created_at`, `updated_at`) VALUES
 (1, NULL, 'Agents', '', 1, 1, '2024-05-21 19:24:20', NULL),
 (2, NULL, 'Leads Form', '', 1, 1, '2024-05-21 19:24:20', NULL),
-(3, NULL, 'Lead Management', '', 1, 1, '2024-05-21 19:24:44', NULL),
+(3, NULL, 'Contractors', '', 1, 1, '2024-05-21 19:24:44', NULL),
 (4, NULL, 'Campaign', '', 1, 1, '2024-05-21 19:24:44', NULL),
 (5, NULL, 'Email Module', '', 1, 1, '2024-05-21 19:25:33', NULL),
 (6, NULL, 'SMS Module', '', 1, 1, '2024-05-21 19:25:33', NULL),
@@ -667,8 +635,8 @@ INSERT INTO `menus` (`id`, `parent_id`, `name`, `sub_name`, `show_in_menu`, `sta
 (10, 2, 'Create Form', 'leadsform-create', 1, 1, '2024-06-02 17:17:55', NULL),
 (11, 2, 'Create Dynamic Tables', 'dynamictable-create', 1, 1, '2024-06-02 17:18:13', NULL),
 (12, 2, 'Dynamic Tables List', 'dynamictable-index', 1, 1, '2024-06-02 17:18:17', NULL),
-(13, 3, 'Leads', 'lead-index', 1, 1, '2024-06-02 17:19:20', NULL),
-(14, 3, 'Create a Lead', 'lead-create', 1, 1, '2024-06-02 17:19:59', NULL),
+(13, 3, 'Contractor List', 'lead-index', 1, 1, '2024-06-02 17:19:20', '2024-09-12 03:12:01'),
+(14, 3, 'Create a Contractor', 'lead-create', 1, 1, '2024-06-02 17:19:59', '2024-09-12 03:33:20'),
 (15, 4, 'Campaign List', 'campaign-index', 1, 1, '2024-06-02 17:22:56', '2024-06-12 10:28:48'),
 (16, 4, 'Create a Campaign', 'campaign-create', 1, 1, '2024-06-02 17:23:07', '2024-06-12 10:29:55'),
 (17, 4, 'Promotion List', 'promotion-index', 0, 1, '2024-06-02 17:23:26', '2024-07-28 11:48:25'),
@@ -681,7 +649,19 @@ INSERT INTO `menus` (`id`, `parent_id`, `name`, `sub_name`, `show_in_menu`, `sta
 (24, 6, 'Send SMS', 'send-sms', 0, 0, '2024-06-02 17:43:26', NULL),
 (25, 6, 'SMS Templates', 'sms-template', 0, 0, '2024-06-02 17:44:29', NULL),
 (26, 6, 'Create Template', 'sms-template-create', 0, 0, '2024-06-02 17:44:51', NULL),
-(28, 6, 'Send Bulk SMS', 'send-bulk-sms', 1, 1, '2024-06-06 17:22:37', '2024-06-06 17:22:37');
+(28, 6, 'Send Bulk SMS', 'send-bulk-sms', 1, 1, '2024-06-06 17:22:37', '2024-06-06 17:22:37'),
+(31, NULL, 'Tasks', 'tasks', 1, 1, '2024-09-12 03:06:31', '2024-09-12 03:06:31'),
+(32, 31, 'Task List', 'task-list', 1, 1, '2024-09-12 03:07:08', '2024-09-12 03:07:08'),
+(33, 31, 'Add Task', 'add-task', 1, 1, '2024-09-12 03:07:22', '2024-09-12 03:07:22'),
+(34, 1, 'Agent Store', 'agents-store', 0, 1, '2024-09-15 03:09:22', '2024-09-15 03:09:22'),
+(35, 1, 'Agent Show', 'agents-show', 0, 1, '2024-09-15 03:09:52', '2024-09-15 05:01:47'),
+(36, 1, 'Agent Edit', 'agents-edit', 0, 1, '2024-09-15 03:10:13', '2024-09-15 03:10:13'),
+(37, 1, 'Agent Update', 'agents-update', 0, 1, '2024-09-15 03:10:30', '2024-09-15 03:10:30'),
+(38, 1, 'Agent Search', 'agents-search', 0, 1, '2024-09-15 03:10:55', '2024-09-15 03:10:55'),
+(39, 1, 'Agent Delete', 'agents-destroy', 0, 1, '2024-09-15 03:11:19', '2024-09-15 03:11:19'),
+(41, NULL, 'Proposal', NULL, 1, 1, '2024-09-26 04:01:28', '2024-09-26 04:01:28'),
+(42, 41, 'Proposal List', 'proposal-list', 1, 1, '2024-09-26 04:02:09', '2024-09-26 04:02:09'),
+(43, 41, 'Send a Proposal', 'add-proposal', 1, 1, '2024-09-26 04:03:27', '2024-09-26 04:03:27');
 
 -- --------------------------------------------------------
 
@@ -863,15 +843,17 @@ CREATE TABLE IF NOT EXISTS `products` (
   `status` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `invoice_amount` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `description`, `product_type`, `product_cost`, `product_value`, `product_code`, `img_path`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'demo', 'demo', 0, 0.00, 0.00, NULL, NULL, 0, NULL, NULL);
+INSERT INTO `products` (`id`, `name`, `description`, `product_type`, `product_cost`, `product_value`, `product_code`, `img_path`, `status`, `created_at`, `updated_at`, `invoice_amount`) VALUES
+(1, 'Call Center', 'demo', 1, 0.00, 0.00, NULL, NULL, 0, '2024-08-01 07:14:32', '2024-08-01 07:14:37', NULL),
+(2, 'Email Bluster', 'Email bluster project', 1, 0.00, 0.00, NULL, NULL, 0, '2024-08-01 07:14:41', '2024-08-01 07:14:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -914,26 +896,35 @@ CREATE TABLE IF NOT EXISTS `proposals` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `subject` varchar(250) COLLATE utf8mb4_general_ci NOT NULL,
   `lead_id` bigint DEFAULT NULL,
+  `company_name` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `customer_id` bigint DEFAULT NULL,
   `start_date` timestamp NULL DEFAULT NULL,
   `end_date` timestamp NULL DEFAULT NULL,
-  `currency` tinyint DEFAULT NULL,
-  `assigned_agent_id` bigint NOT NULL,
+  `currency` char(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `assigned_agent_id` int DEFAULT NULL,
+  `first_name` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `send_to` varchar(250) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `address` text COLLATE utf8mb4_general_ci,
   `city` varchar(250) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `state` varchar(250) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `country_id` bigint DEFAULT NULL,
+  `country_name` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `proposal_file_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `item_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `item_description` text COLLATE utf8mb4_general_ci,
   `zip_code` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `send_to_email` varchar(250) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `send_to_phone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `discount` decimal(10,0) DEFAULT NULL,
-  `adjustment` decimal(10,0) DEFAULT NULL,
-  `sub_total` decimal(10,0) DEFAULT NULL,
-  `total` decimal(10,0) DEFAULT NULL,
-  `status` tinyint NOT NULL,
+  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `discount` decimal(10,2) DEFAULT NULL,
+  `tax_percent` decimal(3,1) DEFAULT NULL,
+  `tax_amount` decimal(10,2) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `offer_price` decimal(10,2) DEFAULT NULL,
+  `total_price` decimal(10,2) DEFAULT NULL,
+  `status` char(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -963,6 +954,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `menu_details` longtext COLLATE utf8mb4_unicode_ci,
   `permission_details` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   `permission_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   `status` tinyint NOT NULL COMMENT '0 => Inactive, 1 => Active',
@@ -975,12 +967,13 @@ CREATE TABLE IF NOT EXISTS `roles` (
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`id`, `name`, `slug`, `permission_details`, `permission_ids`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin', '[]', '[]', 1, '2024-01-11 08:27:56', '2024-07-16 11:34:12'),
-(2, 'Saless Agent', 'saless_agent', '[]', '[]', 1, '2024-01-11 11:26:06', '2024-07-16 10:20:27'),
-(4, 'Supervisor Panel', 'supervisor-panel', NULL, NULL, 1, NULL, NULL),
-(5, 'Super Admin', 'super_admin', '{\"Agents\":{\"agents-index\":\"Agent List\",\"agents-create\":\"Create Agent\"},\"Leads_Form\":{\"leadsform-index\":\"Form List\",\"leadsform-create\":\"Create Form\",\"dynamictable-create\":\"Create Dynamic Tables\",\"dynamictable-index\":\"Dynamic Tables List\"},\"Lead_Management\":{\"lead-index\":\"Leads\",\"lead-create\":\"Create a Lead\"},\"Campaign\":{\"campaign-index\":\"Campaign List\",\"campaign-create\":\"Create a Campaign\"},\"Email_Module\":{\"send-email\":\"Send an Email\",\"send-email-list\":\"Emails\",\"email-template\":\"Email Templates\",\"email-template-create\":\"Create Template\"},\"SMS_Module\":{\"send-sms-list\":\"SMS List\",\"send-sms\":\"Send SMS\",\"sms-template\":\"SMS Templates\",\"sms-template-create\":\"Create Template\",\"send-bulk-sms\":\"Send Bulk SMS\"}}', '{\"Agents\":[\"7\",\"8\"],\"Leads_Form\":[\"9\",\"10\",\"11\",\"12\"],\"Lead_Management\":[\"13\",\"14\"],\"Campaign\":[\"15\",\"16\"],\"Email_Module\":[\"19\",\"20\",\"21\",\"22\"],\"SMS_Module\":[\"23\",\"24\",\"25\",\"26\",\"28\"]}', 1, '2024-06-02 11:47:22', '2024-07-28 11:49:35'),
-(6, 'Agent Supervisor', 'agent_supervisor', '{\"Agents\":{\"agents-index\":\"Agent List\",\"agents-create\":\"Create Agent\"},\"Leads_Form\":{\"leadsform-index\":\"Form List\",\"leadsform-create\":\"Create Form\",\"dynamictable-create\":\"Create Dynamic Tables\",\"dynamictable-index\":\"Dynamic Tables List\"},\"Lead_Management\":{\"lead-index\":\"Leads\",\"lead-create\":\"Create a Lead\"},\"Campaign\":{\"campaign-index\":\"Campaign List\",\"campaign-create\":\"Create a Campaign\",\"promotion-index\":\"Promotion List\",\"promotion-create\":\"Create Promotion\"},\"Email_Module\":{\"send-email\":\"Send an Email\",\"send-email-list\":\"Emails\",\"email-template\":\"Email Templates\",\"email-template-create\":\"Create Template\"},\"SMS_Module\":{\"send-sms-list\":\"SMS List\",\"send-sms\":\"Send SMS\",\"sms-template\":\"SMS Templates\",\"sms-template-create\":\"Create Template\",\"send-bulk-sms\":\"Send Bulk SMS\"}}', '{\"Agents\":[\"7\",\"8\"],\"Leads_Form\":[\"9\",\"10\",\"11\",\"12\"],\"Lead_Management\":[\"13\",\"14\"],\"Campaign\":[\"15\",\"16\",\"17\",\"18\"],\"Email_Module\":[\"19\",\"20\",\"21\",\"22\"],\"SMS_Module\":[\"23\",\"24\",\"25\",\"26\",\"28\"]}', 1, '2024-06-02 12:46:55', '2024-06-12 10:32:21');
+INSERT INTO `roles` (`id`, `name`, `slug`, `menu_details`, `permission_details`, `permission_ids`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 'admin', NULL, '[]', '[]', 1, '2024-01-11 08:27:56', '2024-07-16 11:34:12'),
+(2, 'Saless Agent', 'saless_agent', '{\"Agents\":{\"agents-index\":\"Agent List\",\"agents-create\":\"Create Agent\"},\"Leads_Form\":{\"leadsform-index\":\"Form List\"},\"Contractors\":{\"lead-index\":\"Contractor List\",\"lead-create\":\"Create a Contractor\"},\"Campaign\":{\"campaign-index\":\"Campaign List\",\"campaign-create\":\"Create a Campaign\",\"promotion-create\":\"Create Promotion\"}}', '{\"Agents\":{\"agents-index\":\"Agent List\",\"agents-create\":\"Create Agent\",\"agents-edit\":\"Agent Edit\",\"agents-search\":\"Agent Search\"},\"Leads_Form\":{\"leadsform-index\":\"Form List\"},\"Contractors\":{\"lead-index\":\"Contractor List\",\"lead-create\":\"Create a Contractor\"},\"Campaign\":{\"campaign-index\":\"Campaign List\",\"campaign-create\":\"Create a Campaign\",\"promotion-index\":\"Promotion List\",\"promotion-create\":\"Create Promotion\"}}', '{\"Agents\":[\"7\",\"8\",\"36\",\"38\"],\"Leads_Form\":[\"9\"],\"Contractors\":[\"13\",\"14\"],\"Campaign\":[\"15\",\"16\",\"17\",\"18\"]}', 1, '2024-01-11 11:26:06', '2024-09-15 04:43:33'),
+(4, 'Supervisor Panel', 'supervisor-panel', NULL, NULL, NULL, 1, NULL, NULL),
+(5, 'Super Admin', 'super_admin', '{\"Agents\":{\"agents-index\":\"Agent List\",\"agents-create\":\"Create Agent\"},\"Leads_Form\":{\"leadsform-index\":\"Form List\",\"leadsform-create\":\"Create Form\",\"dynamictable-create\":\"Create Dynamic Tables\",\"dynamictable-index\":\"Dynamic Tables List\"},\"Contractors\":{\"lead-index\":\"Contractor List\",\"lead-create\":\"Create a Contractor\"},\"Campaign\":{\"campaign-index\":\"Campaign List\",\"campaign-create\":\"Create a Campaign\",\"promotion-create\":\"Create Promotion\"},\"Email_Module\":{\"send-email\":\"Send an Email\",\"email-template\":\"Email Templates\",\"email-template-create\":\"Create Template\"},\"SMS_Module\":{\"send-bulk-sms\":\"Send Bulk SMS\"},\"Tasks\":{\"task-list\":\"Task List\",\"add-task\":\"Add Task\"},\"Proposal\":{\"proposal-list\":\"Proposal List\",\"add-proposal\":\"Send a Proposal\"}}', '{\"Agents\":{\"agents-index\":\"Agent List\",\"agents-create\":\"Create Agent\",\"agents-store\":\"Agent Store\",\"agents-show\":\"Agent Show\",\"agents-edit\":\"Agent Edit\",\"agents-update\":\"Agent Update\",\"agents-search\":\"Agent Search\",\"agents-destroy\":\"Agent Delete\"},\"Leads_Form\":{\"leadsform-index\":\"Form List\",\"leadsform-create\":\"Create Form\",\"dynamictable-create\":\"Create Dynamic Tables\",\"dynamictable-index\":\"Dynamic Tables List\"},\"Contractors\":{\"lead-index\":\"Contractor List\",\"lead-create\":\"Create a Contractor\"},\"Campaign\":{\"campaign-index\":\"Campaign List\",\"campaign-create\":\"Create a Campaign\",\"promotion-index\":\"Promotion List\",\"promotion-create\":\"Create Promotion\"},\"Email_Module\":{\"send-email\":\"Send an Email\",\"send-email-list\":\"Emails\",\"email-template\":\"Email Templates\",\"email-template-create\":\"Create Template\"},\"SMS_Module\":{\"send-sms-list\":\"SMS List\",\"send-sms\":\"Send SMS\",\"sms-template\":\"SMS Templates\",\"sms-template-create\":\"Create Template\",\"send-bulk-sms\":\"Send Bulk SMS\"},\"Tasks\":{\"task-list\":\"Task List\",\"add-task\":\"Add Task\"},\"Proposal\":{\"proposal-list\":\"Proposal List\",\"add-proposal\":\"Send a Proposal\"}}', '{\"Agents\":[\"7\",\"8\",\"34\",\"35\",\"36\",\"37\",\"38\",\"39\"],\"Leads_Form\":[\"9\",\"10\",\"11\",\"12\"],\"Contractors\":[\"13\",\"14\"],\"Campaign\":[\"15\",\"16\",\"17\",\"18\"],\"Email_Module\":[\"19\",\"20\",\"21\",\"22\"],\"SMS_Module\":[\"23\",\"24\",\"25\",\"26\",\"28\"],\"Tasks\":[\"32\",\"33\"],\"Proposal\":[\"42\",\"43\"]}', 1, '2024-06-02 11:47:22', '2024-09-26 04:03:51'),
+(6, 'Agent Supervisor', 'agent_supervisor', NULL, '{\"Agents\":{\"agents-index\":\"Agent List\",\"agents-create\":\"Create Agent\"},\"Leads_Form\":{\"leadsform-index\":\"Form List\",\"leadsform-create\":\"Create Form\",\"dynamictable-create\":\"Create Dynamic Tables\",\"dynamictable-index\":\"Dynamic Tables List\"},\"Lead_Management\":{\"lead-index\":\"Leads\",\"lead-create\":\"Create a Lead\"},\"Campaign\":{\"campaign-index\":\"Campaign List\",\"campaign-create\":\"Create a Campaign\",\"promotion-index\":\"Promotion List\",\"promotion-create\":\"Create Promotion\"},\"Email_Module\":{\"send-email\":\"Send an Email\",\"send-email-list\":\"Emails\",\"email-template\":\"Email Templates\",\"email-template-create\":\"Create Template\"},\"SMS_Module\":{\"send-sms-list\":\"SMS List\",\"send-sms\":\"Send SMS\",\"sms-template\":\"SMS Templates\",\"sms-template-create\":\"Create Template\",\"send-bulk-sms\":\"Send Bulk SMS\"}}', '{\"Agents\":[\"7\",\"8\"],\"Leads_Form\":[\"9\",\"10\",\"11\",\"12\"],\"Lead_Management\":[\"13\",\"14\"],\"Campaign\":[\"15\",\"16\",\"17\",\"18\"],\"Email_Module\":[\"19\",\"20\",\"21\",\"22\"],\"SMS_Module\":[\"23\",\"24\",\"25\",\"26\",\"28\"]}', 1, '2024-06-02 12:46:55', '2024-06-12 10:32:21'),
+(12, 'Primary Agents', 'primary_agents', '{\"Agents\":{\"agents-index\":\"Agent List\",\"agents-create\":\"Create Agent\"},\"Tasks\":{\"task-list\":\"Task List\",\"add-task\":\"Add Task\"}}', '{\"Agents\":{\"agents-index\":\"Agent List\",\"agents-create\":\"Create Agent\",\"agents-store\":\"Agent Store\",\"agents-show\":\"Agent Show\",\"agents-search\":\"Agent Search\"},\"SMS_Module\":{\"send-sms-list\":\"SMS List\",\"send-sms\":\"Send SMS\"},\"Tasks\":{\"task-list\":\"Task List\",\"add-task\":\"Add Task\"}}', '{\"Agents\":[\"7\",\"8\",\"34\",\"35\",\"38\"],\"SMS_Module\":[\"23\",\"24\"],\"Tasks\":[\"32\",\"33\"]}', 1, '2024-09-15 05:44:23', '2024-09-15 05:44:23');
 
 -- --------------------------------------------------------
 
@@ -1127,32 +1120,6 @@ CREATE TABLE IF NOT EXISTS `state` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `table_survey_details`
---
-
-DROP TABLE IF EXISTS `table_survey_details`;
-CREATE TABLE IF NOT EXISTS `table_survey_details` (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `lead_id` bigint UNSIGNED NOT NULL,
-  `form_id` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `child_name` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `child_age` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `child_education` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `child_habit` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `child_food_details` char(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `child_names` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `father_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mother_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parent_id` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `child_nam` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tasks`
 --
 
@@ -1168,7 +1135,21 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tasks`
+--
+
+INSERT INTO `tasks` (`id`, `task_name`, `description`, `due_date`, `assigned_to`, `created_by`, `status`, `created_at`, `updated_at`) VALUES
+(4, 'This is my task', 'This is a description', '2024-09-25 00:00:00', 4, 1, 1, '2024-09-11 00:42:18', '2024-09-11 00:42:35'),
+(5, 'My task', 'This is a new task', '2024-09-16 00:00:00', 7, 7, 2, '2024-09-11 01:09:01', '2024-09-11 01:10:16'),
+(6, 'fgvbfdvbdf', 'dfv dfvdfvd', '2024-09-11 07:15:52', 7, 1, 1, NULL, NULL),
+(7, 'sdfvs', 'dfvsdfvdsv', '2024-09-11 07:15:52', 2, 1, 1, NULL, NULL),
+(8, 'Find a shape', NULL, '2024-09-17 00:00:00', 8, 8, 1, '2024-09-15 05:47:37', '2024-09-15 05:47:37'),
+(9, 'bhfg', 'fghdbhd', '2024-09-18 00:00:00', 8, 8, 2, '2024-09-15 05:57:39', '2024-09-15 05:57:46'),
+(10, 'dsfds', 'dfvdsv', '2024-09-10 00:00:00', 8, 8, 0, '2024-09-18 05:33:39', '2024-09-18 05:33:39'),
+(11, 'erfgvrfvvdsvsd', 'vf svsdds sdsdf df dfvsdf sds', '2024-09-26 00:00:00', 8, 8, 0, '2024-09-18 05:33:53', '2024-09-18 05:33:53');
 
 -- --------------------------------------------------------
 
@@ -1199,7 +1180,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
@@ -1207,9 +1188,11 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `user_id`, `username`, `first_name`, `last_name`, `email`, `phone_number`, `user_type`, `gender`, `profile_image`, `address`, `role_id`, `email_verified_at`, `password`, `remember_token`, `status`, `created_at`, `updated_at`) VALUES
 (1, '6798657284978', 'root', 'Momin', 'Riyads', 'momin@gmail.com', '01731415537', 'admin', NULL, '150-26_1719113695.jpg', '443/5,senpara edit final', '5', NULL, '$2y$12$JRvyCWa35X6er4gfDJcYbOTj1X.HlQa2xeYUnd7sZyNA2OR4Xpgye', NULL, '1', '2024-05-20 11:24:44', '2024-07-18 11:27:14'),
-(2, '6798657284999', 'hasan', 'Md', 'Rokibuzzamans', 'rokib@gmail.com', '01731415537', 'agent', NULL, 'mypic_recent_1718885568.jpg', NULL, '6', NULL, '$2y$12$efRMYUX2gcD5s65PgOsz4uDVlukLV/021ljRk3KbP/Cpx4Z1GJjam', NULL, '1', '2024-05-20 11:26:27', '2024-07-08 11:23:13'),
+(2, '6798657284999', 'hasan', 'Md', 'Rokibuzzaman', 'rokib@gmail.com', '01731214425', 'agent', NULL, 'mypic_recent_1718885568.jpg', 'Mirpur', '6', NULL, '$2y$12$efRMYUX2gcD5s65PgOsz4uDVlukLV/021ljRk3KbP/Cpx4Z1GJjam', NULL, '1', '2024-05-20 11:26:27', '2024-09-12 00:52:30'),
 (4, '7620974445398', '9271', 'jaman', 'hasans', 'jaman@gmail.com', '01731214425', 'agent', NULL, '', 'dfdfd', NULL, NULL, '$2y$12$CoS4dSJLFC1OjWLJVH9yKO9xaDlOGzOzVx63ETWaAIpFbfEIdIrLW', NULL, '1', '2024-05-27 12:59:32', '2024-07-04 13:26:37'),
-(6, '1634034265973', '2125', 'Alamin', 'Khan', 'alamin@gmail.com', '01731214425', 'agent', 'Female', 'image_profile_1717312650.png', '441/5,senpara', NULL, NULL, '$2y$12$.opFHLgXXSm67t9PtAqQL.DCAmR7Vpsl8PnV28gIH1oRBE8izZyG.', NULL, '1', '2024-06-02 14:17:30', '2024-07-07 19:43:07');
+(6, '1634034265973', '2125', 'Alamin', 'Khan', 'alamin@gmail.com', '01731214425', 'agent', 'Female', 'image_profile_1717312650.png', '441/5,senpara', NULL, NULL, '$2y$12$OuJNqIdHRS7DT6cfIhuEWOU2u1j/TC/NmieLMYIVplrxTQ3qYnTXK', NULL, '1', '2024-06-02 14:17:30', '2024-08-21 22:14:56'),
+(7, '2691710845749', '1979', 'Ali', 'Hossian', 'ali@gmail.com', '01919102030', 'agent', 'Male', '', NULL, '2', NULL, '$2y$12$4mn6qyOhpAuV46gOO4VjZuK2zvIUgWmyOyBGIoV6lypN1vfN4Gz22', NULL, '1', '2024-09-11 01:08:09', '2024-09-12 04:49:25'),
+(8, '6487901907748', '1600', 'Agent', 'New', 'new@gmail.com', NULL, 'agent', NULL, '', NULL, '12', NULL, '$2y$12$acw1ZhoYwqemn6GyPUC0x.XAFv5s0zLUDT3MaPumPrKFjxYBPW0C2', NULL, '1', '2024-09-15 04:07:26', '2024-09-15 05:47:01');
 
 -- --------------------------------------------------------
 
