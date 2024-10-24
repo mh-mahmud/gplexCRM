@@ -162,6 +162,8 @@ ALTER TABLE `logs` ADD `module` VARCHAR(180) NULL AFTER `user_id`;
 
 ALTER TABLE `logs` ADD `sub_module` VARCHAR(180) NULL AFTER `module`;
 
+ALTER TABLE `sms_queue` ADD `user_id` BIGINT NULL AFTER `delete_request`;
+
 ---Ishtiak SQL end
 
 CREATE TABLE customers LIKE leads;
@@ -314,3 +316,5 @@ CREATE TABLE `currencies` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE `products` CHANGE `product_cost` `product_cost` DECIMAL(15,2) NULL DEFAULT NULL, CHANGE `product_value` `product_value` DECIMAL(15,2) NULL DEFAULT NULL;

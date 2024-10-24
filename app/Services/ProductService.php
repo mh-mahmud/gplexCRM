@@ -30,6 +30,8 @@ class ProductService
             'name'          => 'required|unique:products|max:191',
             'product_code'  => 'required|max:20',
             'product_type'  => 'required',
+            'product_cost'  => 'nullable|numeric|min:0|max:9999999.99', 
+            'product_value' => 'nullable|numeric|min:0|max:9999999.99', 
         ]);
         $data = $request->all();
 
@@ -76,6 +78,8 @@ class ProductService
             'name'         => 'required|max:191|unique:products,name,'.$id,
             'product_code'  => 'required|max:20',
             'product_type'  => 'required',
+            'product_cost'  => 'nullable|max:15',
+            'product_value' => 'nullable|max:15',
         ]);
         $data = $request->all();
         $fileNameToStore = '';

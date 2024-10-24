@@ -25,7 +25,7 @@ class EmailService
 
         }
         if (isset($data['paginate']) && $data['paginate'] == false) {
-            return  $sql->orderBy('id', 'DESC')->get();
+            return  $sql->where('status', 1)->orderBy('id', 'DESC')->get();
 
         } else {
             return  $sql->orderBy('id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
