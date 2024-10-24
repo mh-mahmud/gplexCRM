@@ -25,8 +25,8 @@ class Helper
     {
         $log                    = new Logs();
         $log->user_id           = Auth::id();
-        $log->module_name       = $module_name;
-        $log->sub_module_name   = $sub_module_name;
+        $log->module            = $module_name;
+        $log->sub_module        = $sub_module_name;
         $log->log_message       = $log_text." ".$module_name." ".$action;
         $log->status            = 1;
         $log->save();
