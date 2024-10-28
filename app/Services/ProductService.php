@@ -27,11 +27,22 @@ class ProductService
     public function productStore($request)
     {
         $request->validate([
-            'name'          => 'required|unique:products|max:191',
-            'product_code'  => 'required|max:20',
-            'product_type'  => 'required',
-            'product_cost'  => 'nullable|numeric|min:0|max:9999999.99', 
-            'product_value' => 'nullable|numeric|min:0|max:9999999.99', 
+            'name' => 'required|unique:products|max:191',
+            'product_code' => 'required|max:20',
+            'product_type' => 'required',
+            'product_cost' => [
+                'nullable',
+                'numeric',
+                'regex:/^\d{1,11}(\.\d{1,2})?$/'
+            ],
+            'product_value' => [
+                'nullable',
+                'numeric',
+                'regex:/^\d{1,11}(\.\d{1,2})?$/'
+            ],
+        ], [
+            'product_cost.regex' => 'The product cost must have at most 11 digits before the decimal point and up to 2 digits after the decimal point.',
+            'product_value.regex' => 'The product value must have at most 11 digits before the decimal point and up to 2 digits after the decimal point.',
         ]);
         $data = $request->all();
 
@@ -78,8 +89,19 @@ class ProductService
             'name'         => 'required|max:191|unique:products,name,'.$id,
             'product_code'  => 'required|max:20',
             'product_type'  => 'required',
-            'product_cost'  => 'nullable|max:15',
-            'product_value' => 'nullable|max:15',
+            'product_cost' => [
+                'nullable',
+                'numeric',
+                'regex:/^\d{1,11}(\.\d{1,2})?$/'
+            ],
+            'product_value' => [
+                'nullable',
+                'numeric',
+                'regex:/^\d{1,11}(\.\d{1,2})?$/'
+            ],
+        ], [
+            'product_cost.regex' => 'The product cost must have at most 11 digits before the decimal point and up to 2 digits after the decimal point.',
+            'product_value.regex' => 'The product value must have at most 11 digits before the decimal point and up to 2 digits after the decimal point.',
         ]);
         $data = $request->all();
         $fileNameToStore = '';

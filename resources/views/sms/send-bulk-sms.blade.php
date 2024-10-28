@@ -34,7 +34,7 @@
                   ***********************************-->
                 <div class="container-xxl">
                     <div class="row">
-                        <div class="col-xxl-12">
+                        <div class="col-xxl-8 mx-auto">
                             <div class="card card-xxl-stretch mt-4">
                                 <div class="card-header bg-light bd-cyan">
                                     <!--begin::Card title-->
@@ -60,34 +60,36 @@
                                                     </select>
                                                 </div>
                                             </div> --}}
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Mobile No.<span class="text-danger">*</span></label>
-                                                    <input type="file" name="file" class="form-control form-control-sm form-control-solid">
-                                                    <span class="text-danger">csv, xlsx, xls allowed.</span>
-                                                    @if ($errors->has('file'))
-                                                        <span class="text-danger">{{ $errors->first('file') }}</span>
-                                                    @endif
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">Mobile No.<span class="text-danger">*</span></label>
+                                                        <input type="file" name="file" class="form-control form-control-sm form-control-solid">
+                                                        <span class="text-danger">csv, xlsx, xls allowed.</span>
+                                                        @if ($errors->has('file'))
+                                                            <span class="text-danger">{{ $errors->first('file') }}</span>
+                                                        @endif
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">SMS Template</label>
-                                                    <select class=" form-control form-control-sm form-control-solid" name="template_id" id="template_id" aria-label="Default select example">
-                                                        <option value=''>Select</option>
-                                                        @foreach($templates as $template)
-                                                        <option value="{{$template->id}}" {{ old('template_id') == $template->id ? 'selected' : '' }}>{{ $template->title }}</option>
-                                                        @endforeach
-                                                    </select>
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">SMS Template</label>
+                                                        <select class=" form-control form-control-sm form-control-solid" name="template_id" id="template_id" aria-label="Default select example">
+                                                            <option value=''>Select</option>
+                                                            @foreach($templates as $template)
+                                                            <option value="{{$template->id}}" {{ old('template_id') == $template->id ? 'selected' : '' }}>{{ $template->title }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                           <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="sms_text" id="sms_text" rows="3">{{ old('sms_text') }}</textarea>
-                                                    @if ($errors->has('sms_text'))
-                                                        <span class="text-danger">{{ $errors->first('sms_text') }}</span>
-                                                    @endif
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
+                                                        <textarea class="form-control form-control-sm  form-control-solid" name="sms_text" id="sms_text" rows="5">{{ old('sms_text') }}</textarea>
+                                                        @if ($errors->has('sms_text'))
+                                                            <span class="text-danger">{{ $errors->first('sms_text') }}</span>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
                                         <!--End Row-->

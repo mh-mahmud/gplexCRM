@@ -51,7 +51,8 @@
 
                                     <form class="g-form w-100" action="{{ route('send-bulk-email-process') }}"  method="POST" enctype="multipart/form-data">
                                          @csrf
-                                         <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Email<span class="text-danger">*</span></label>
                                                     <input type="file" name="file" class="form-control form-control-sm form-control-solid">
@@ -73,17 +74,17 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Email Subject<span class="text-danger">*</span></label>
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" id="email_subject" name="email_subject" autocomplete="off" value="{{ old('email_subject') }}"/>
+                                                        type="text" id="email_subject" name="email_subject" autocomplete="off" value="{{ old('email_subject') }}"/>
                                                     @if ($errors->has('email_subject'))
                                                         <span class="text-danger">{{ $errors->first('email_subject') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
-                                           <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
                                                     <textarea class="form-control form-control-sm  form-control-solid editor" id="email_content" name="email_content" rows="3">{{ old('email_content') }}</textarea>
@@ -92,9 +93,9 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                        <!--End Row-->
+                                        </div>
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                            <input type="reset" value="Reset" class="btn btn-light me-2">
+                                            <input type="reset" id="resetButton" value="Reset" class="btn btn-light me-2">
                                             <button type="submit" class="btn btn-primary"
                                                     id="kt_account_profile_details_submit">Send
                                             </button>
@@ -164,6 +165,11 @@
                 $('.editor').summernote('code', '');
 
             }
+        });
+
+        var summernoteElement = document.querySelectorAll('.editor');         
+        document.getElementById('resetButton').addEventListener('click', function() {
+            $(summernoteElement).summernote('code', ''); // Clear the content of Summernote
         });
     });
 </script>

@@ -97,7 +97,7 @@
 							</svg>
 						</span>
 						<!--end::Svg Icon-->
-						<input type="text" name="search" class="form-control form-control-sm form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by Email Template Subject">
+						<input type="text" name="search" class="form-control form-control-sm form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by Email Subject">
 					</div>
 					<!--end::Input group-->
 					<button type="submit" class="btn btn-primary btn-sm ms-2">Search</button>
@@ -120,7 +120,6 @@
 						<tr class="fw-bolder text-muted bg-light bd-cyan">
 						    <th class="ps-4 min-w-150px">SL</th>
 							<th class="min-w-150px">Email Subject</th>
-							<th class="min-w-140px">Email Content</th>
 							<th class="min-w-120px">Status</th>
 							<th class="min-w-100px text-end-new">Actions</th>
 						</tr>
@@ -133,7 +132,6 @@
 
 							<td class="ps-5 text-dark fs-6">{{($templates->currentPage() - 1) * $templates->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{ $template->email_subject }}</td>
-							<td class="text-dark fs-6 w-400px">{!! $template->email_content !!}</td>
 		                    <td>
 								@if ($template->status == 1)
 									<span class="badge badge-light-success">Active</span>

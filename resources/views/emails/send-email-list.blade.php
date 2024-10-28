@@ -124,7 +124,6 @@
 						    <th class="ps-4 rounded-start min-w-50px">SL</th>
 						    <th class="min-w-150px">To</th>
 							<th class="min-w-150px">Email Subject</th>
-							<th class="min-w-140px">Email Content</th>
 							<th class="min-w-140px">Time</th>
 							<th class="rounded-end min-w-50px">Status</th>
 						</tr>
@@ -137,10 +136,9 @@
 							<td class="ps-5 text-dark fs-6">{{($emails->currentPage() - 1) * $emails->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{ $email->email_to }}</td>
 							<td class="text-dark fs-6">{{ $email->email_subject }}</td>
-							<td class="text-dark fs-6 w-400px">{!! $email->email_content !!}</td>
 							<td class="text-dark fs-6">{{ Carbon::parse($email->log_time)->format('d-m-Y h:i A') }}</td>
 		                    <td class="text-dark fs-6">
-								@if ($email->send_status == 1)
+								@if ($email->send_status == config('constants.campaign_status')["Success"])
 									<span class="badge badge-light-success">Success</span>
 								@elseif ($email->status == 0)
 									<span class="badge badge-light-danger">Fail</span>

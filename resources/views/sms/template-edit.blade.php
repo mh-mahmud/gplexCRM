@@ -40,7 +40,7 @@
                   ***********************************-->
                 <div class="container-xxl">
                     <div class="row">
-                        <div class="col-xxl-12">
+                        <div class="col-xxl-8 mx-auto">
                             <div class="card card-xxl-stretch mt-4">
                                 <div class="card-header bg-light bd-cyan">
                                     <!--begin::Card title-->
@@ -58,7 +58,9 @@
                                     <form class="g-form w-100" action="{{ route('sms-template-update', $template->id) }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
-                                            <div class="col-md-6">
+                                         <div class="row">
+
+                                            <div class="col-12">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Title<span class="text-danger">*</span></label>
@@ -73,7 +75,7 @@
                                                 </div>
                                             </div>
 
-                                           <div class="col-md-6">
+                                            <div class="col-12">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
                                                     <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{$template->description}}</textarea>
@@ -83,16 +85,16 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <div class="col-12">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Status</label>
+                                                    <label class="form-label fw-bolder text-dark">Status5656</label>
                                                     <select class="form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
                                                         <option value="1" {{ $template->status == 1 ? 'selected' : '' }}>Active</option>
                                                         <option value="0" {{ $template->status == 0 ? 'selected' : '' }}>Inactive</option>
                                                     </select>
                                                 </div>
                                             </div>
-
+                                         </div>
                                         <!--End Row-->
 
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
@@ -123,3 +125,4 @@
             <!--end::Content-->
 
 @endsection
+
