@@ -317,7 +317,7 @@
                                                 <table class="table table-rounded table-sm table-striped border align-middle gs-2">
                                                     <thead>
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
-                                                        <th>Item Name</th>
+                                                        <th>Item details</th>
                                                         <th>Description</th>
                                                         <th>Price</th>
                                                         <th>Offer Price</th>
