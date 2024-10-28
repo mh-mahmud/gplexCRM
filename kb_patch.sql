@@ -321,3 +321,6 @@ CREATE TABLE `currencies` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+ALTER TABLE `products` CHANGE `product_cost` `product_cost` DECIMAL(15,2) NULL DEFAULT NULL, CHANGE `product_value` `product_value` DECIMAL(15,2) NULL DEFAULT NULL;
+
+ALTER TABLE `logs` ADD `lead_id` INT NULL DEFAULT NULL AFTER `user_id`;
