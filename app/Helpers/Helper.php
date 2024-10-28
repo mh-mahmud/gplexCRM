@@ -53,4 +53,21 @@ class Helper
         return [];
     }
 
+    public static function getLeads() 
+    {
+        if (Auth::user()->user_type === 'admin') {
+            return DB::table('leads')
+                    ->select('id', 'first_name', 'last_name', 'email', 'phone')
+                    ->where('lead_status', 1)
+                    ->get();
+        } else {
+            return DB::table('leads')
+                    ->select('id', 'first_name', 'last_name', 'email', 'phone')
+                    ->where('lead_status', 1)
+                    ->where('created_by', Auth::user()->id)
+                    ->get();
+        }
+
+    }
+
 }

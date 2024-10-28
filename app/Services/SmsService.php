@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use App\Helpers\Helper;
 class SmsService
 {
     public function smsTemplateList($request)
@@ -134,11 +135,13 @@ class SmsService
         try {
             $dataObj->send_status       = 1;
             $dataObj->save();
-            
-            
+            Helper::storeLog("SMS send successfully to " .$data['sms_to'], "SMS Module", "Send SMS", "Send SMS", $data['lead_id']);
+           
         } catch (\Exception $e) {
             $dataObj->send_status       = 0;
             $dataObj->save();
+            Helper::storeLog("SMS send fail to " .$data['sms_to'], "SMS Module", "Send SMS", "Send SMS", $data['lead_id']);
+
             return (object)[
                 'status'                 => 401,
                 'message'                => $e->getMessage()

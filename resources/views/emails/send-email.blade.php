@@ -62,6 +62,21 @@
                                     @csrf
 
                                     <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="fv-row mb-3">
+                                                <label class="form-label fw-bolder text-dark">Lead</label>
+                                                <select class=" form-control form-control-sm form-control-solid"
+                                                        id="lead_id"
+                                                        name="lead_id"
+                                                        aria-label="Default select example">
+                                                    <option value=''>Select</option>
+                                                    @foreach($leads as $lead)
+                                                        <option
+                                                            value="{{$lead->id}}" {{ old('lead_id') == $lead->id ? 'selected' : '' }}>{{ $lead->first_name }} {{ $lead->last_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="col-md-6">
                                             <div class="fv-row mb-3">
                                                 <label class="form-label fw-bolder text-dark">To<span
@@ -186,6 +201,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const templates = @json($templates);
+            const leads     = @json($leads);
 
             document.getElementById('template_id').addEventListener('change', function () {
                 const selectedId = this.value;
@@ -197,6 +213,18 @@
                 } else {
                     document.getElementById('email_subject').value = '';
                     $('.editor').summernote('code', '');
+
+                }
+            });
+
+            document.getElementById('lead_id').addEventListener('change', function () {
+                const selectedLeadId = this.value;
+                const selectedLead = leads.find(lead => lead.id == selectedLeadId);
+                if (selectedLead) {
+                    document.getElementById('to_email').value = selectedLead.email;
+
+                } else {
+                    document.getElementById('to_email').value = '';
 
                 }
             });

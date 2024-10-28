@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\SmsService;
 use App\Models\smsTemplate;
-
+use App\Helpers\Helper;
 
 class smsController extends Controller {
 
@@ -85,7 +85,8 @@ class smsController extends Controller {
     {   
         $request->merge(['paginate' => false]);   
         $templates = $this->smsService->smsTemplateList($request);
-        return view('sms.send-sms', compact('templates'));
+        $leads = Helper::getLeads();
+        return view('sms.send-sms', compact('templates', 'leads'));
     }
 
 

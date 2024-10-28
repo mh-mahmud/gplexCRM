@@ -142,11 +142,13 @@ class EmailService
             $dataObj->email_to              = $data['to_email'];
             $dataObj->email_subject         = $data['email_subject'];
             $dataObj->email_content         = $data['email_content'];
+            $dataObj->lead_id               = $data['lead_id'];
             $dataObj->log_time              = Carbon::now();
             $dataObj->delivery_time         = Carbon::now();
             $dataObj->send_status           = config('constants.campaign_status')["Success"];
             $dataObj->save();
             
+            Helper::storeLog("Email send successfully to " .$data['to_email'], "Email Module", "Send an Email", "Send Email", $data['lead_id']);
 
         } catch (Exception $e) {
             $dataObj                        = new EmailLog();
@@ -158,6 +160,8 @@ class EmailService
             $dataObj->delivery_time         = Carbon::now();
             $dataObj->send_status           = config('constants.campaign_status')["Failed"];
             $dataObj->save();
+
+            Helper::storeLog("Email send fail to " .$data['to_email'], "Email Module", "Send an Email", "Send Email", $data['lead_id']);
 
             return (object)[
                 'status'                 => 401,

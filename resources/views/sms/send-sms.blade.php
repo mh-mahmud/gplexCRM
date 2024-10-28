@@ -59,13 +59,27 @@
                                                     </select>
                                                 </div>
                                             </div> --}}
-
+                                            <div class="col-md-12">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Lead</label>
+                                                    <select class=" form-control form-control-sm form-control-solid"
+                                                            id="lead_id"
+                                                            name="lead_id"
+                                                            aria-label="Default select example">
+                                                        <option value=''>Select</option>
+                                                        @foreach($leads as $lead)
+                                                            <option
+                                                                value="{{$lead->id}}" {{ old('lead_id') == $lead->id ? 'selected' : '' }}>{{ $lead->first_name }} {{ $lead->last_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Mobile No.<span class="text-danger">*</span></label>
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="sms_to" autocomplete="off" value="{{ old('sms_to') }}"/>
+                                                           type="text" name="sms_to" id="sms_to" autocomplete="off" value="{{ old('sms_to') }}"/>
                                                     @if ($errors->has('sms_to'))
                                                         <span class="text-danger">{{ $errors->first('sms_to') }}</span>
                                                     @endif
@@ -154,6 +168,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const templates = @json($templates);
+        const leads     = @json($leads);
 
         document.getElementById('template_id').addEventListener('change', function() {
             const selectedId = this.value;
@@ -162,6 +177,18 @@
                 document.getElementById('sms_text').innerText = selectedTemplate.description;
             } else {
                 document.getElementById('sms_text').innerText = '';
+            }
+        });
+
+        document.getElementById('lead_id').addEventListener('change', function () {
+            const selectedLeadId = this.value;
+            const selectedLead = leads.find(lead => lead.id == selectedLeadId);
+            if (selectedLead) {
+                document.getElementById('sms_to').value = selectedLead.phone;
+
+            } else {
+                document.getElementById('sms_to').value = '';
+
             }
         });
     });
