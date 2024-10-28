@@ -162,55 +162,14 @@ use Carbon\Carbon;
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Phone</span>
                                     <span>{{ $lead->phone }}</span>
                                 </div>
-                                <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Title</span>
-                                    <span>{{ $lead->title }}</span>
-                                </div>
 
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Alternative Number</span>
                                     <span>{{ $lead->alternative_number }}</span>
                                 </div>
-                                <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Gender</span>
-                                    @if ($lead->gender === 'Male')
-                                    <span>Male</span>
-                                    @elseif ($lead->gender === 'Female')
-                                    <span>Female</span>
-                                    @elseif ($lead->gender === 'Other')
-                                    <span>Other</span>
-                                    @else
-                                    <span></span>
-                                    @endif
-                                </div>
-                                <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Date of Birth</span>
-                                    <span>
-                                        @if($lead->dob)
-                                        {{ \Carbon\Carbon::parse($lead->dob)->format('d-m-Y') }}
-                                        @endif
-                                    </span>
-                                </div>
-                                <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Age</span>
-                                    <span>{{ $lead->age }}</span>
-                                </div>
-                                <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Marital Status</span>
-                                    <span>
-                                        @if(in_array($lead->marital_status, config('constants.marital_status')))
-                                        {{ $lead->marital_status }}
-                                        @else
 
-                                        @endif
-                                    </span>
-                                </div>
+
                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Address</span>
