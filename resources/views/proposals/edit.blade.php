@@ -170,7 +170,7 @@
                                             <div class="col-md-12">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label  fw-bolder text-dark">Upload PDF, xcel or Word</label>
-                                                    <input class="form-control form-control-sm form-control-solid" accept=".csv,.xls,.xlsx,.docx" type="file" name="upload_file" />
+                                                    <input class="form-control form-control-sm form-control-solid" accept=".csv,.xls,.xlsx,.docx,.pdf" type="file" name="upload_file" />
                                                     @if ($errors->has('upload_file'))
                                                         <span class="text-danger">{{ $errors->first('upload_file') }}</span>
                                                     @endif
