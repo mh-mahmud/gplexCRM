@@ -76,7 +76,7 @@
     <div class="inv-main">
         <div>
 
-            <img src="{{ getcwd() . '/uploads/logo.svg' }}" class="h-12" alt="Logo" />
+            <!-- <img src="{{ getcwd() . '/uploads/logo.svg' }}" class="h-12" alt="Logo" /> -->
 
 
         </div>
