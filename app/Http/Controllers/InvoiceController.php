@@ -197,13 +197,10 @@ class InvoiceController extends Controller
 
     public function downloadInvoice($invoiceId)
     {
-        // Fetch your invoice data and related items
+        
         $invoice = Invoice::findOrFail($invoiceId);
         $invoiceItems = json_decode($invoice->item_description, true);
-        // Generate the PDF from the view
         $pdf = PDF::loadView('invoices.invoice_pdf', compact('invoice', 'invoiceItems'));
-
-        // Download the PDF
         return $pdf->download('invoice_' . $invoice->invoice_number . '.pdf');
     }
 }

@@ -153,78 +153,6 @@
                             <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Gender</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <select class="form-control form-control-sm form-control-solid" name="gender">
-                                        <option value="" disabled selected>Select Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                    <!--end::Input-->
-                                    @if ($errors->has('gender'))
-                                    <span class="text-danger">{{ $errors->first('gender') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-md-3">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Date of Birth</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <div class="position-relative">
-                                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr" placeholder="" name="dob">
-                                    </div>
-                                    <!--end::Input-->
-                                    @if ($errors->has('dob'))
-                                    <span class="text-danger">{{ $errors->first('dob') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Age</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <div class="position-relative">
-                                        <input type="number" class="form-control form-control-sm form-control-solid flatpickr" placeholder="" name="age">
-                                    </div>
-                                    <!--end::Input-->
-                                    @if ($errors->has('age'))
-                                    <span class="text-danger">{{ $errors->first('age') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Marital Status</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <select class="form-control form-control-sm form-control-solid" name="marital_status">
-                                        <option value="" disabled selected>Select Marital Status</option>
-                                        @foreach(config('constants.marital_status') as $status)
-                                        <option value="{{ $status }}">{{ $status }}</option>
-                                        @endforeach
-                                    </select>
-                                    <!--end::Input-->
-                                    @if ($errors->has('marital_status'))
-                                    <span class="text-danger">{{ $errors->first('marital_status') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Address</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
@@ -259,20 +187,6 @@
                                     </select>
                                     @if ($errors->has('lead_status'))
                                     <span class="text-danger">{{ $errors->first('lead_status') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Title</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="title" autocomplete="off" />
-                                    <!--end::Input-->
-                                    @if ($errors->has('title'))
-                                    <span class="text-danger">{{ $errors->first('title') }}</span>
                                     @endif
                                 </div>
                             </div>

@@ -65,6 +65,7 @@
                         <input type="hidden" name="sub_total" id="subtotal-hidden" value="0.00">
                         <input type="hidden" name="total_amount" id="total-hidden" value="0.00">
                         <input type="hidden" name="total_tax" id="totaltax-hidden" value="0.00">
+                        <input type="hidden" name="total_discount" id="totaldiscount-hidden" value="0.00">
                         @csrf
                         @method('PUT')
                         <div class="row">
@@ -286,10 +287,10 @@
                         </div>
                         <!--End Row-->
 
-                        <div class="container-fluid mt-2 overflow-hidden">
+                        <div class="my-3 overflow-hidden">
 
                             <div class="card">
-                                <div class="card-header">
+                                <div class="card-header p-0">
                                     <div
                                         class="g-proposal-add-item d-flex flex-wrap justify-content-between align-items-center w-100 gap-3">
                                         <div>
@@ -514,7 +515,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th><strong>Discount :</strong>
-                                                        <div class="input-group">
+                                                        <div class="input-group flex-nowrap">
                                                             <div class="flex-grow-1">
                                                                 <input class="form-control form-control-sm rounded-end-0 border-end" type="number" name="discount" placeholder="Discount">
                                                             </div>
@@ -726,6 +727,7 @@
             $('#subtotal-hidden').val(subtotal.toFixed(2));
             $('#total-hidden').val(total.toFixed(2));
             $('#totaltax-hidden').val(totalTax.toFixed(2));
+            $('#totaldiscount-hidden').val(discountValue.toFixed(2));
         }
 
         //add new row logic
@@ -776,7 +778,7 @@
                 //append the new row to the table body
                 $('#table-body').append(newRow);
 
-                // clear the product selection
+                //clear the product selection
                 $('#product-select').val('').trigger('change');
             } else {
                 //alert user if any field in the last row is not filled
@@ -787,7 +789,7 @@
         //remove row logic
         $(document).on('click', '.remove-row', function() {
             $(this).closest('tr').remove();
-            updateTotal(); // recalculate total after row removal
+            updateTotal(); //recalculate total after row removal
         });
 
         //handle product selection and populate only the last row
@@ -812,14 +814,14 @@
             }
         });
 
-        //listen for changes in the quantity, rate, or tax fields to update the row amount
+        //changes in the quantity, rate, or tax fields to update the row amount
         $(document).on('input change', 'input[name="items[quantity][]"], input[name="items[rate][]"], select[name="items[tax][]"]', function() {
             var row = $(this).closest('tr');
             calculateRowAmount(row);
             updateTotal();
         });
 
-        // listen for changes in the discount or adjustment inputs
+        //changes in the discount or adjustment inputs
         $('input[name="discount"], select[name="discount_type"], input[name="adjustment"]').on('input change', function() {
             updateTotal();
         });

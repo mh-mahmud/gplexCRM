@@ -65,6 +65,7 @@
                         <input type="hidden" name="sub_total" id="subtotal-hidden" value="0.00">
                         <input type="hidden" name="total_amount" id="total-hidden" value="0.00">
                         <input type="hidden" name="total_tax" id="totaltax-hidden" value="0.00">
+                        <input type="hidden" name="total_discount" id="totaldiscount-hidden" value="0.00">
                         @csrf
                         <div class="row">
                             <!--Left Part-->
@@ -287,10 +288,10 @@
                         </div>
                         <!--End Row-->
 
-                        <div class="container-fluid mt-2 overflow-hidden">
+                        <div class="my-3 overflow-hidden">
 
                             <div class="card">
-                                <div class="card-header">
+                                <div class="card-header p-0">
                                     <div
                                         class="g-proposal-add-item d-flex flex-wrap justify-content-between align-items-center w-100 gap-3">
                                         <div>
@@ -455,8 +456,8 @@
 
 
                                                 <td>
-                                                    <button type="button" class="btn btn-sm btn-primary py-2 px-2 add-row">
-                                                        <i class="bi bi-check"></i>
+                                                    <button type="button" class="btn btn-sm btn-primary py-2 px-3 add-row">
+                                                        <i class="bi bi-plus-lg pe-0"></i>
                                                     </button>
                                                 </td>
                                             </tr>
@@ -480,7 +481,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th><strong>Discount :</strong>
-                                                        <div class="input-group">
+                                                        <div class="input-group flex-nowrap">
                                                             <div class="flex-grow-1">
                                                                 <input class="form-control form-control-sm rounded-end-0 border-end" type="number" name="discount" placeholder="Discount">
                                                             </div>
@@ -692,6 +693,7 @@
             $('#subtotal-hidden').val(subtotal.toFixed(2));
             $('#total-hidden').val(total.toFixed(2));
             $('#totaltax-hidden').val(totalTax.toFixed(2));
+            $('#totaldiscount-hidden').val(discountValue.toFixed(2));
         }
 
         //add new row logic
@@ -732,8 +734,8 @@
                    </td>
                    <td class="item-amount">0.00</td>
                    <td>
-                       <button type="button" class="btn btn-sm btn-danger py-2 px-2 remove-row">
-                           <i class="bi bi-trash"></i>
+                       <button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
+                           <i class="bi bi-trash pe-0"></i>
                        </button>
                    </td>
                </tr>`;
@@ -755,7 +757,7 @@
             // clear any previous error messages and highlights
             lastRow.find('.error-message').remove(); // remove any existing error messages
             lastRow.find('textarea, input').removeClass('is-invalid'); // remove error highlight
-           // get the values from the last row
+           //get the values from the last row
             var itemName = lastRow.find('textarea[name="items[item_name][]"]').val();
             var description = lastRow.find('textarea[name="items[description][]"]').val();
             var quantity = lastRow.find('input[name="items[quantity][]"]').val();
@@ -763,7 +765,7 @@
 
             var isValid = true;
 
-            // Validate Item Name
+            //validate Item Name,Description,Quantity,Rate
             if (itemName == "") {
                 alert('asdsd');
                 lastRow.find('textarea[name="items[item_name][]"]').addClass('is-invalid'); // highlight field
@@ -771,28 +773,28 @@
                 isValid = false;
             }
 
-            // Validate Description
+            
             if (description === "") {
                 lastRow.find('textarea[name="items[description][]"]').addClass('is-invalid');
                 lastRow.find('textarea[name="items[description][]"]').after('<div class="error-message text-danger">Description is required</div>');
                 isValid = false;
             }
 
-            // Validate Quantity
+            
             if (quantity === "" || quantity <= 0) {
                 lastRow.find('input[name="items[quantity][]"]').addClass('is-invalid');
                 lastRow.find('input[name="items[quantity][]"]').after('<div class="error-message text-danger">Quantity must be greater than 0</div>');
                 isValid = false;
             }
 
-            // Validate Rate
+           
             if (rate === "" || rate <= 0) {
                 lastRow.find('input[name="items[rate][]"]').addClass('is-invalid');
                 lastRow.find('input[name="items[rate][]"]').after('<div class="error-message text-danger">Rate must be greater than 0</div>');
                 isValid = false;
             }
 
-            // If all fields are valid, add a new row
+            //all fields are valid, add a new row
             if (isValid) {
                 var newRow = `<tr>
             <td>
@@ -827,10 +829,10 @@
             </td>
         </tr>`;
 
-                // Append the new row to the table body
+                //append the new row to the table body
                 $('#table-body').append(newRow);
 
-                // Clear the product selection if there is any dropdown or selection mechanism
+                //clear the product selection if there is any dropdown or selection mechanism
                 $('#product-select').val('').trigger('change');
             }
         });
@@ -864,14 +866,14 @@
             }
         });
 
-        //listen for changes in the quantity, rate, or tax fields to update the row amount
+        //changes in the quantity, rate, or tax fields to update the row amount
         $(document).on('input change', 'input[name="items[quantity][]"], input[name="items[rate][]"], select[name="items[tax][]"]', function() {
             var row = $(this).closest('tr');
             calculateRowAmount(row);
             updateTotal();
         });
 
-        // listen for changes in the discount or adjustment inputs
+        //changes in the discount or adjustment inputs
         $('input[name="discount"], select[name="discount_type"], input[name="adjustment"]').on('input change', function() {
             updateTotal();
         });
