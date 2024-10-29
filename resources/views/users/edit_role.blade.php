@@ -189,9 +189,7 @@
                                         </div>
                                         <!--End Row-->
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <a href="{{ route('create-user') }}" class="btn btn-light btn-active-light-primary me-2">Reset</a>
-                                            <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Submit
+                                            <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Submit
                                             </button>
                                         </div>
 
