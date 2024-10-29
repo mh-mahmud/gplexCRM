@@ -91,11 +91,11 @@
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Type<span class="text-danger">*</span></label>
-                                                    <select class=" form-control form-control-sm form-control-solid"
+                                                    <select class="form-control form-control-sm form-control-solid"
                                                         id="assigned_to" name="product_type" aria-label="Default select example">
-                                                        <option value=''>Select</option>
+                                                        <option value='' {{ old('product_type', '') === '' ? 'selected' : '' }}>Select</option>
                                                         @foreach (config('constants.PRODUCT_TYPE') as $key => $type)
-                                                            <option value="{{ $key }}">
+                                                            <option value="{{ $key }}" {{ old('product_type') === (string)$key ? 'selected' : '' }}>
                                                                 {{ $type }}
                                                             </option>
                                                         @endforeach
@@ -105,12 +105,16 @@
                                                     @endif
                                                 </div>
                                             </div>
-
+                                                                                                                             
+                                          
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Cost</label>
                                                     <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="product_cost" autocomplete="off" value="{{ old('product_cost') }}" />
+                                                    @if ($errors->has('product_cost'))
+                                                        <span class="text-danger">{{ $errors->first('product_cost') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -119,6 +123,9 @@
                                                     <label class="form-label fw-bolder text-dark">Value</label>
                                                     <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="product_value" autocomplete="off" value="{{ old('product_value') }}" />
+                                                    @if ($errors->has('product_value'))
+                                                        <span class="text-danger">{{ $errors->first('product_value') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 

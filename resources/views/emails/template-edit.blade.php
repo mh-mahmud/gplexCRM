@@ -58,6 +58,8 @@
                                     <form class="g-form w-100" action="{{ route('email-template-update', $template->id) }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
+                                         <div class="row">
+                                            
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
@@ -83,9 +85,7 @@
                                                 </div>
                                             </div>
 
-
-
-                                           <div class="col-md-6">
+                                           <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
                                                     <textarea class="form-control form-control-sm  form-control-solid editor" id="email_content"  name="email_content" rows="3">{{$template->email_content}}</textarea>
@@ -93,14 +93,12 @@
                                                         <span class="text-danger">{{ $errors->first('email_content') }}</span>
                                                     @endif
                                                 </div>
-
-
-
-                                     </div>
+                                            </div>
+                                         </div>
                                         <!--End Row-->
 
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                            <input type="reset" value="Reset" class="btn btn-light me-2">
+                                            <input type="reset" id="resetButton" value="Reset" class="btn btn-light me-2">
                                             <button type="submit" class="btn btn-primary"
                                                     id="kt_account_profile_details_submit">Save Changes
                                             </button>

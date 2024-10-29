@@ -120,7 +120,6 @@
 						<tr class="fw-bolder text-muted bg-light bd-cyan">
 						    <th class="ps-4 min-w-150px">SL</th>
 							<th class="min-w-150px">SMS Title</th>
-							<th class="min-w-140px">SMS Content</th>
 							<th class="min-w-120px">Status</th>
 							<th class="min-w-100px text-end-new">Actions</th>
 						</tr>
@@ -133,7 +132,6 @@
 
 							<td class="ps-5 text-dark fs-6">{{($templates->currentPage() - 1) * $templates->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{ $template->title }}</td>
-							<td class="text-dark fs-6 w-400px">{{ $template->description }}</td>
 		                    <td>
 								@if ($template->status == 1)
 									<span class="badge badge-light-success">Active</span>

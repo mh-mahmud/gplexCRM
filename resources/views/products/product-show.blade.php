@@ -86,12 +86,14 @@
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Image</span>
-                        <span>
-                            @if ($product->img_path)
-                            <img src="{{ asset('uploads/products/' . $product->img_path) }}" alt="Product Image"/>
-                            @endif
-                        </span>
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Image</span>
+                        <div class="me-7 mb-4">
+                            <div class="symbol symbol-100px symbol-lg-140px symbol-fixed position-relative">
+                                @if ($product->img_path)
+                                <img src="{{ asset('uploads/products/' . $product->img_path) }}" alt="Product Image"/>
+                                @endif
+                            </div>
+                        </div>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">

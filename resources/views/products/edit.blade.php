@@ -111,6 +111,9 @@
                                                     <label class="form-label fw-bolder text-dark">Cost</label>
                                                     <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="product_cost" autocomplete="off" value="{{ $product->product_cost }}" />
+                                                    @if ($errors->has('product_cost'))
+                                                        <span class="text-danger">{{ $errors->first('product_cost') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -119,6 +122,9 @@
                                                     <label class="form-label fw-bolder text-dark">Value</label>
                                                     <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="product_value" autocomplete="off" value="{{ $product->product_value }}" />
+                                                     @if ($errors->has('product_value'))
+                                                        <span class="text-danger">{{ $errors->first('product_value') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 

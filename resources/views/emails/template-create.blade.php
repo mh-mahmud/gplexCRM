@@ -56,6 +56,7 @@
 
                                     <form class="g-form w-100" action="{{ route('email-template-store') }}"  method="POST">
                                          @csrf
+                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
@@ -84,7 +85,7 @@
                                                 </div>
                                             </div>
 
-                                           <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
                                                     <textarea class="form-control form-control-sm  form-control-solid editor" id="email_content"  name="email_content" rows="3"></textarea>
@@ -93,14 +94,14 @@
                                                     @endif
                                                 </div>
                                             </div>
-
+                                         </div>
 
 
                                         <!--End Row-->
-                                      <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                            <input type="reset" value="Reset" class="btn btn-light me-2">
+                                        <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                            <input type="reset" id="resetButton" value="Reset" class="btn btn-light me-2">
                                             <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Save Changes
+                                                    id="form_submit">Save Changes
                                             </button>
                                         </div>
 
@@ -127,4 +128,14 @@
 
 @endsection
 
+@section('endScript')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var summernoteElement = document.querySelectorAll('.editor');         
+        document.getElementById('resetButton').addEventListener('click', function() {
+            $(summernoteElement).summernote('code', ''); // Clear the content of Summernote
+        });
+    });
+</script>
+@endsection
 

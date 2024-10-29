@@ -103,9 +103,7 @@
 
                                             <div class="col-md-12">
                                                 <div class="fv-row mb-5">
-                                                    <label class="form-label fw-bolder text-dark">Lead ID
-                                                        <sup><i class="bi bi-asterisk text-danger"></i></sup>
-                                                    </label>
+                                                    <label class="form-label fw-bolder text-dark">Lead ID<span class="text-danger">*</span></label>
                                                     <select name="lead_id" class=" form-control form-control-sm form-control-solid" aria-label="Default select example">
                                                         <option value="">Select Lead</option>
                                                         @foreach($leads as $lead)
@@ -172,7 +170,7 @@
                                             <div class="col-md-12">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label  fw-bolder text-dark">Upload PDF, xcel or Word</label>
-                                                    <input class="form-control form-control-sm form-control-solid" accept=".csv,.xls,.xlsx,.docx" type="file" name="upload_file" />
+                                                    <input class="form-control form-control-sm form-control-solid" accept=".csv,.xls,.xlsx,.docx,.pdf" type="file" name="upload_file" />
                                                     @if ($errors->has('upload_file'))
                                                         <span class="text-danger">{{ $errors->first('upload_file') }}</span>
                                                     @endif
@@ -330,7 +328,7 @@
                                                 <table class="table table-rounded table-sm table-striped border align-middle gs-2">
                                                     <thead>
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
-                                                        <th>Item Name</th>
+                                                        <th>Item details</th>
                                                         <th>Description</th>
                                                         <th>Price</th>
                                                         <th>Offer Price</th>

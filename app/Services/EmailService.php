@@ -25,7 +25,7 @@ class EmailService
 
         }
         if (isset($data['paginate']) && $data['paginate'] == false) {
-            return  $sql->orderBy('id', 'DESC')->get();
+            return  $sql->where('status', 1)->orderBy('id', 'DESC')->get();
 
         } else {
             return  $sql->orderBy('id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
@@ -135,16 +135,6 @@ class EmailService
         $to_email = $data["to_email"];
 
         try {
-            $queue                        = new EmailQueue();
-            $queue->email_from            = "Genuity";
-            $queue->email_to              = $data['to_email'];
-            $queue->email_subject         = $data['email_subject'];
-            $queue->email_content         = $data['email_content'];
-            $queue->log_time              = Carbon::now();
-            $queue->send_status           = config('constants.campaign_status')["Pending"];
-            $queue->status                = config('constants.campaign_status')["Pending"];
-            $queue->save();
-
             Mail::to($to_email)->send(new SingleMail($subject, $body));
 
             $dataObj                        = new EmailLog();
@@ -152,11 +142,13 @@ class EmailService
             $dataObj->email_to              = $data['to_email'];
             $dataObj->email_subject         = $data['email_subject'];
             $dataObj->email_content         = $data['email_content'];
+            $dataObj->lead_id               = $data['lead_id'];
             $dataObj->log_time              = Carbon::now();
             $dataObj->delivery_time         = Carbon::now();
             $dataObj->send_status           = config('constants.campaign_status')["Success"];
             $dataObj->save();
             
+            Helper::storeLog("Email send successfully to " .$data['to_email'], "Email Module", "Send an Email", "Send Email", $data['lead_id']);
 
         } catch (Exception $e) {
             $dataObj                        = new EmailLog();
@@ -168,6 +160,8 @@ class EmailService
             $dataObj->delivery_time         = Carbon::now();
             $dataObj->send_status           = config('constants.campaign_status')["Failed"];
             $dataObj->save();
+
+            Helper::storeLog("Email send fail to " .$data['to_email'], "Email Module", "Send an Email", "Send Email", $data['lead_id']);
 
             return (object)[
                 'status'                 => 401,
@@ -234,9 +228,7 @@ class EmailService
             if (!isset($row[0]) || empty($row[0])) {
                 continue;
             }
-
-
-            
+       
             Mail::to($row[0])->queue(new BulkEmail($data['email_subject'], $data['email_content']));
 
             $dataObj                    = new EmailLog();
@@ -246,7 +238,7 @@ class EmailService
             $dataObj->email_content     = $data['email_content'];
             $dataObj->log_time          = Carbon::now();
             $dataObj->delivery_time     = Carbon::now();
-            $dataObj->send_status       = 1;
+            $dataObj->send_status       = config('constants.campaign_status')["Success"];
             $dataObj->save();
 
         }
