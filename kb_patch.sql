@@ -168,6 +168,8 @@ ALTER TABLE `products` CHANGE `product_cost` `product_cost` DOUBLE(20,2) NULL DE
 
 ALTER TABLE `products` CHANGE `product_value` `product_value` DOUBLE(20,2) NULL DEFAULT NULL;
 
+ALTER TABLE `sms_queue` ADD `lead_id` BIGINT NULL AFTER `send_status`;
+
 ---Ishtiak SQL end
 
 CREATE TABLE customers LIKE leads;
