@@ -19,7 +19,7 @@ class InvoiceService
         //prepare items array by iterating
         //dd($data);die();
         $items = [];
-        $itemCount = count($data['items']['item_name']); //assuming all arrays have the same length
+        $itemCount = count($data['items']['item_name']); //all arrays have the same length
 
         for ($i = 0; $i < $itemCount; $i++) {
             $items[] = [
@@ -28,7 +28,7 @@ class InvoiceService
                 'Qty' => $data['items']['quantity'][$i] ?? 0,
                 'Rate' => $data['items']['rate'][$i] ?? 0,
                 'Tax' => $data['items']['tax'][$i] ?? 0,
-                'Amount' => ($data['items']['quantity'][$i] ?? 0) * ($data['items']['rate'][$i] ?? 0) // Calculate Amount (Qty * Rate)
+                'Amount' => ($data['items']['quantity'][$i] ?? 0) * ($data['items']['rate'][$i] ?? 0) //calculate Amount (Qty * Rate)
             ];
         }
         //array as JSON
@@ -43,7 +43,7 @@ class InvoiceService
             'total_amount' => $data['total_amount'],
             'total_tax' => $data['total_tax'],
             'sub_total' => $data['sub_total'],
-            'discount' => $data['discount'],
+            'discount' => $data['total_discount'],
             'discount_type' => $data['discount_type_name'],
             'admin_note' => $data['admin_note'],
             'client_note' => $data['client_note'],
@@ -73,7 +73,7 @@ class InvoiceService
         $invoice->sub_total = $data['sub_total'];
         $invoice->total_amount = $data['total_amount'];
         $invoice->total_tax = $data['total_tax']?? null;
-        $invoice->discount = $data['discount'] ?? null;
+        $invoice->discount = $data['total_discount'] ?? null;
         $invoice->discount_type = $data['discount_type_name'] ?? null;
         $invoice->adjustment = $data['adjustment'] ?? null;
         $invoice->admin_note = $data['admin_note'];
