@@ -589,3 +589,7 @@ body.swal2-height-auto {
     font-size: 0.875rem; /* Smaller text for error message */
     color: #dc3545; /* Red color for error message */
 }
+
+.h-18px{
+    height:18px;
+}
