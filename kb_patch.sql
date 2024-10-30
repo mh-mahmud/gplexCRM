@@ -168,6 +168,8 @@ ALTER TABLE `products` CHANGE `product_cost` `product_cost` DOUBLE(20,2) NULL DE
 
 ALTER TABLE `products` CHANGE `product_value` `product_value` DOUBLE(20,2) NULL DEFAULT NULL;
 
+ALTER TABLE `sms_queue` ADD `lead_id` BIGINT NULL AFTER `send_status`;
+
 ---Ishtiak SQL end
 
 CREATE TABLE customers LIKE leads;
@@ -322,3 +324,18 @@ CREATE TABLE `currencies` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 ALTER TABLE `logs` ADD `lead_id` INT NULL DEFAULT NULL AFTER `user_id`;
+
+
+--not update in live server
+CREATE TABLE invoice_custom_form (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    invoice_name VARCHAR(255) NOT NULL,
+    field_details TEXT,
+    footer_details TEXT,
+    total_in_word VARCHAR(255),
+    bank_details TEXT,
+    issued_by TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+

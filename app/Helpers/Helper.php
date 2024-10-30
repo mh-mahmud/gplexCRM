@@ -33,8 +33,6 @@ class Helper
         $log->save();
     }
 
-
-
     public static function getEnumValues($table, $column)
     {
         $query = "SHOW COLUMNS FROM `{$table}` WHERE Field = '{$column}'";

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\SmsTemplate;
 use App\Models\SmsLog;
+use App\Models\Logs;
 use App\Models\SmsQueue;
 use Exception;
 use Carbon\Carbon;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Helpers\Helper;
+use App\Models\Lead;
 class SmsService
 {
     public function smsTemplateList($request)
@@ -127,6 +129,7 @@ class SmsService
 
         $dataObj                        = new SmsQueue();
         $dataObj->sms_from              = config('constants.SMS_SEND_MOBILE_NO');
+        $dataObj->lead_id               = $data['lead_id'];
         $dataObj->sms_to                = $data['sms_to'];
         $dataObj->sms_text              = $data['sms_text'];
         $dataObj->log_time              = Carbon::now();
@@ -202,15 +205,33 @@ class SmsService
                     continue;
                 }
 
-                $dataObj = new SmsQueue();
-                $dataObj->sms_from = config('constants.SMS_SEND_MOBILE_NO');
-                $dataObj->sms_to = "0".$row[0];
-                $dataObj->sms_text = $data['sms_text'];
-                $dataObj->log_time = Carbon::now();
-                $dataObj->user_id = Auth::id();
-                $dataObj->send_status = 1;
-                $dataObj->save();
+                $mobile_no = "0".$row[0];
+                $lead = Lead::where('phone', $mobile_no)
+                              ->select('id')
+                              ->first();
+                $smsLogs[] = [
+                    'sms_from'      => config('constants.SMS_SEND_MOBILE_NO'),
+                    'sms_to'        => $mobile_no,
+                    'lead_id'       => $lead->id ?? null,
+                    'sms_text'      => $data['sms_text'],
+                    'user_id'       => Auth::id(),
+                    'log_time'      => Carbon::now(),
+                    'send_status'   => 1
+                ];
+
+                $logs[] = [
+                    'log_message'   => "SMS send successfully to " .$mobile_no." => SMS Module  => Send Bulk SMS",
+                    'module'        => "SMS Module",
+                    'sub_module'    => "Send Bulk SMS",
+                    'user_id'       => Auth::id(),
+                    'lead_id'       => $lead->id ?? null,
+                    'status'        => 1
+                    ];
+
+
             }
+            SmsQueue::insert($smsLogs);
+            Logs::insert($logs);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -223,7 +244,6 @@ class SmsService
 
         return (object)[
             'status'                 => 201,
-            'info'                   => $dataObj->id
         ];
     }
    

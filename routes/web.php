@@ -21,6 +21,7 @@ use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\InvoiceCustomFormController;
 
 
 use App\Models\Promotion;
@@ -154,6 +155,17 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::delete('/invoice/{id?}', [InvoiceController::class, 'destroy'])->name('invoice-destroy');
 	Route::post('/invoice/search', [InvoiceController::class, 'search'])->name('invoice-search');
 	Route::get('/invoice/{invoiceId}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoice-download');
+
+	// invoice custom form route
+	Route::get('/invoice-custom', [InvoiceCustomFormController::class, 'index'])->name('invoice-custom-index')->middleware(['check-permission']);
+	Route::get('/invoice-custom/create', [InvoiceCustomFormController::class, 'create'])->name('invoice-custom-create')->middleware(['check-permission']);
+	Route::post('/invoice-custom', [InvoiceCustomFormController::class, 'store'])->name('invoice-custom-store');
+	Route::get('/invoice-custom/{id?}', [InvoiceCustomFormController::class, 'show'])->name('invoice-custom-show')->middleware(['check-permission']);
+	Route::get('/invoice-custom/{id?}/edit', [InvoiceCustomFormController::class, 'edit'])->name('invoice-custom-edit')->middleware(['check-permission']);
+	Route::put('/invoice-custom/{id}', [InvoiceCustomFormController::class, 'update'])->name('invoice-custom-update');
+	Route::delete('/invoice-custom/{id?}', [InvoiceCustomFormController::class, 'destroy'])->name('invoice-custom-destroy');
+	Route::post('/invoice-custom/search', [InvoiceCustomFormController::class, 'search'])->name('invoice-custom-search');
+	Route::get('/invoice-custom/{invoiceId}/download', [InvoiceCustomFormController::class, 'downloadInvoice'])->name('invoice-custom-download');
 	
 	// users route
     Route::get('user-list',        [UserController::class, 'index'])->name('users.index')->middleware(['check-permission']);
