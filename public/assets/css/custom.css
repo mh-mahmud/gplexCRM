@@ -275,7 +275,7 @@
 }
 
 .g-login-left-header {
-    font-size: 3rem;
+    font-size: 2.5rem;
 }
 
 .g-login-right {
@@ -507,7 +507,7 @@ body.swal2-height-auto {
       height: 3rem;
     }
   }
-  
+
   .star-shape {
     background-color: gold;
     width: 80%;
@@ -527,12 +527,12 @@ body.swal2-height-auto {
       39% 35%
     );
   }
-  
+
   /* make stars *after* the checked radio gray*/
   .star:checked + .star-label ~ .star-label .star-shape {
     background-color: lightgray;
   }
-  
+
   /*hide away the actual radio inputs*/
   .star {
     position: fixed;
@@ -540,7 +540,7 @@ body.swal2-height-auto {
     /*top: -90000px;*/
     left: -90000px;
   }
-  
+
   .star:focus + .star-label {
     outline: 2px dotted black;
   }
@@ -576,7 +576,7 @@ body.swal2-height-auto {
     color: lightgray;
     text-decoration:underline;
   }
-  
+
 
   /* end meeting module rating design CSS*/
 
