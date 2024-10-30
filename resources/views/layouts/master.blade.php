@@ -715,7 +715,9 @@
 						<!--begin::Copyright-->
 						<div class="text-dark order-2 order-md-1">
 							<span class="text-muted fw-bold me-1">2024©</span>
-							<a href="https://www.gplex.com/" target="_blank" class="text-gray-800 text-hover-primary">Powered by <span class="text-danger">g</span>Plex</a>
+                            <a href="/"> Powered by
+                                <img height="18px" alt="Logo" src="{{url('/')}}/assets/media/logos/logo-1-light.svg"  />
+                            </a>
 						</div>
 						<!--end::Copyright-->
 						<!--begin::Menu-->
