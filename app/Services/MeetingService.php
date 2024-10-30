@@ -9,13 +9,14 @@ use App\Models\Lead;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Models\SmsQueue;
+use Illuminate\Support\Facades\Auth;
 
 class MeetingService
 {
     
     public function getAllMeetings()
     {
-        return Meeting::orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
+        return Meeting::where('created_by', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
     }
 
     

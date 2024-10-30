@@ -213,10 +213,11 @@
 
             <div class="px-14 text-sm text-neutral-700 py-3">
                 <p class="text-main font-bold">PAYMENT DETAILS</p>
-                <p>Banks of Banks</p>
-                <p>Bank/Sort Code: 1234567</p>
-                <p>Account Number: 123456678</p>
-                <p>Payment Reference: BRA-00335</p>
+                <p>Bank Information Details:</p>
+                <p>Account Name: Genuity Systems Ltd</p>
+                <p>Bank Name: Eastern Bank Ltd</p>
+                <p>Account Number: 1071060004253</p>
+                <p>Routing Number: 095262987</p>
             </div>
 
             <div class="px-14 py-3 text-sm text-neutral-700 payment-area">
