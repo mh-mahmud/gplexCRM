@@ -118,12 +118,12 @@ class InvoiceService
 
     public function addPaymentInvoice($invoice, $paymentDetails)
     {
-        $existingPayments = json_decode($invoice->payment_details, true) ?? [];
+        //directly push to the array if it's already cast
+        $existingPayments = $invoice->payment_details ?? [];
         $existingPayments[] = $paymentDetails;
-
-        $invoice->payment_details = json_encode($existingPayments);
+        $invoice->payment_details = $existingPayments;
         $invoice->save();
-
         return $invoice;
     }
+    
 }

@@ -24,7 +24,7 @@
                 </svg>
                 Download
             </button>
-            <button>Pay Now</button>
+            <!-- <button>Pay Now</button> -->
         </div>
     </div>
     <div class="inv-main">
@@ -254,15 +254,24 @@
 
             </div> -->
 
-            <form action="{{ route('invoices.payment', $invoice->id) }}" method="POST">
+            <form action="{{ route('invoice-payment', $invoice->id) }}" method="POST">
                 @csrf
                 <div class="px-14 py-3 text-sm text-neutral-700">
                     <div>
-                        <label for="payment-amount" class="text-main font-bold">Amount (TK)
-                            <input type="text" name="payment_amount" id="payment-amount" required>
+                        <label for="payment-amount" class="text-main font-bold">Amount
+                            <span class="">
+                                <input type="text" name="payment_amount" id="payment-amount">
+                                <span class="font-bold">TK</span>
+                            </span>
+                            @if ($errors->has('payment_amount'))
+                            <span class="text-danger" style="color:#F1416C">{{ $errors->first('payment_amount') }}</span>
+                            @endif
                         </label>
                     </div>
+
                 </div>
+
+
 
                 <div class="px-14 text-sm text-neutral-700">
                     <button type="submit" class="pay-now">Pay Now</button>

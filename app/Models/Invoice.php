@@ -30,6 +30,7 @@ class Invoice extends Model
         'client_note',
         'terms_conditions',
         'item_description',
+        'payment_details',
         'prevent_reminders',
         'invoice_status',
         'is_recurring',
@@ -40,6 +41,10 @@ class Invoice extends Model
 
     // Dates to handle date and soft delete functionality
     protected $dates = ['invoice_date', 'due_date', 'deleted_at'];
+
+    protected $casts = [
+        'payment_details' => 'array',
+    ];
 
     /**
      * Get the customer that owns the invoice.

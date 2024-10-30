@@ -12,6 +12,7 @@ use PHPUnit\TextUI\Help;
 use App\Helpers\Helper;
 use App\Models\Agent;
 use App\Models\Product;
+use Carbon\Carbon;
 use PDF;
 
 class InvoiceController extends Controller
@@ -208,20 +209,21 @@ class InvoiceController extends Controller
     public function storePayment(Request $request, $invoiceId)
     {
         $request->validate([
-            'payment_amount' => 'required|numeric|min:0', 
+            'payment_amount' => 'required|numeric|min:0',
         ]);
 
         $invoice = Invoice::findOrFail($invoiceId);
-
+        $existingPayments = $invoice->payment_details ?? [];
+        $totalPayments = array_sum(array_column($existingPayments, 'payment'));
+        $newDueAmount = max(0, $invoice->total_amount - ($totalPayments + $request->input('payment_amount')));
         $paymentDetails = [
             'invoice_id' => $invoice->id,
             'payment' => $request->input('payment_amount'),
-            'date' => $request->input('payment_date'),
-            'due' => max(0, $invoice->total_amount - $request->input('payment_amount'))
+            'payment_date' => Carbon::now()->toDateString(),
+            //'due' => max(0, $invoice->total_amount - $request->input('payment_amount'))
+            'due' => $newDueAmount
         ];
-
         $this->invoiceService->addPaymentInvoice($invoice, $paymentDetails);
-
         return redirect()->route('invoice-index')->with('success', 'Payment recorded successfully!');
     }
 }
