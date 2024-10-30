@@ -715,7 +715,7 @@
 						<!--begin::Copyright-->
 						<div class="text-dark order-2 order-md-1">
 							<span class="text-muted fw-bold me-1">2024©</span>
-							<a href="https://www.genuitysystems.com/" target="_blank" class="text-gray-800 text-hover-primary">Genuity Sytems Ltd</a>
+							<a href="https://www.gplex.com/" target="_blank" class="text-gray-800 text-hover-primary">Powered by <span class="text-danger">g</span>Plex</a>
 						</div>
 						<!--end::Copyright-->
 						<!--begin::Menu-->

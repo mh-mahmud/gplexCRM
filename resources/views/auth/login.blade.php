@@ -41,7 +41,7 @@
         <div class="d-flex flex-center flex-column flex-column-fluid px-3">
             <!--begin::Logo-->
             <a href="../../demo1/dist/index.html" class="mb-12">
-                <img alt="Logo" src="assets/media/logos/logo-1.svg" class="h-40px"/>
+                <img alt="Logo" src="assets/media/logos/logo-1-light.svg" class="h-60px"/>
             </a>
             <!--end::Logo-->
             <!--begin::Wrapper-->
@@ -144,7 +144,7 @@
 
 
                 <div class="g-login-right">
-                    <h2>gPlex CRM</h2>
+                    <h2>CRM</h2>
                 </div>
 
                 <!--end::Form-->
@@ -158,7 +158,7 @@
             <div class="d-flex align-items-center fw-bold fs-6">
                 <a href="" class="text-muted text-hover-primary px-2">About</a>
                 <a href="" class="text-muted text-hover-primary px-2">Contact</a>
-                <a href="" class="text-muted text-hover-primary px-2">Powered by gPlex</a>
+                <a href="https://gplex.com" class="text-muted text-hover-primary px-2">Powered by <span style="color: crimson">g</span>Plex</a>
             </div>
             <!--end::Links-->
         </div>
