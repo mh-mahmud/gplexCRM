@@ -107,8 +107,11 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::findOrFail($id);
         $invoiceItems = json_decode($invoice->item_description, true);
+        $existingPayments = $invoice->payment_details ?? [];
+        $totalPayments = array_sum(array_column($existingPayments, 'payment'));
+        $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
         $products = Product::select('id', 'name', 'description', 'product_value')->get();
-        return view('invoices.show', compact('invoice', 'products', 'invoiceItems'));
+        return view('invoices.show', compact('invoice', 'products', 'invoiceItems','newDueAmount'));
     }
 
     public function edit($id, Request $request)

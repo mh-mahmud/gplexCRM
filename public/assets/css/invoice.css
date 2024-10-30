@@ -645,6 +645,22 @@ video {
     color: #ffffff;
 }
 
+.g-paid button {
+    border: 1px solid #5cb85c;
+    padding: 0.2rem 1rem;
+    border-radius: 0.2rem;
+    background-color: #5cb85c;
+    color: #ffffff;
+}
+
+.g-partial-paid button {
+    border: 1px solid #f0ad4e;
+    padding: 0.2rem 1rem;
+    border-radius: 0.2rem;
+    background-color: #f0ad4e;
+    color: #ffffff;
+}
+
 
 .status-btn-group {
     display: flex;

@@ -9,11 +9,24 @@
 </head>
 
 <body>
+@php
+    // Determine the payment status based on $newDueAmount
+    if ($newDueAmount == 0) {
+        $statusClass = 'g-paid';
+        $statusText = 'Paid';
+    } elseif ($newDueAmount > 0 && $newDueAmount < $invoice->total_amount) {
+        $statusClass = 'g-partial-paid';
+        $statusText = 'Partial Paid';
+    } elseif ($newDueAmount == $invoice->total_amount) {
+        $statusClass = 'g-unpaid';
+        $statusText = 'Unpaid';
+    }
+@endphp
 
     <div class="status">
-        <div class="g-unpaid">
+        <div class="{{ $statusClass }}">
             <button>
-                Unpaid
+            {{ $statusText }}
             </button>
         </div>
         <div class="status-btn-group">
@@ -181,6 +194,15 @@
                                                             </td>
                                                             <td class="bg-main p-3 text-right">
                                                                 <div class="whitespace-nowrap font-bold text-white">TK{{$invoice->total_amount}}</div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="bg-main p-3">
+                                                                <div class="whitespace-nowrap font-bold text-white">Total Due Amount:</div>
+                                                            </td>
+                                                            <td class="bg-main p-3 text-right">
+                                                                <div class="whitespace-nowrap font-bold text-white">TK{{$newDueAmount}}</div>
                                                             </td>
                                                         </tr>
                                                     </tbody>
