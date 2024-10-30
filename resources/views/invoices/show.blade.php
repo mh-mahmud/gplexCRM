@@ -235,7 +235,7 @@
                 </div>
             </div>
 
-            <div class="px-14 py-3 text-sm text-neutral-700">
+            <!-- <div class="px-14 py-3 text-sm text-neutral-700">
                 <div>
                     <label for="payment-amount" class="text-main font-bold">Amount
                         <span class="">
@@ -252,7 +252,23 @@
                     Pay Now
                 </button>
 
-            </div>
+            </div> -->
+
+            <form action="{{ route('invoices.payment', $invoice->id) }}" method="POST">
+                @csrf
+                <div class="px-14 py-3 text-sm text-neutral-700">
+                    <div>
+                        <label for="payment-amount" class="text-main font-bold">Amount (TK)
+                            <input type="text" name="payment_amount" id="payment-amount" required>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="px-14 text-sm text-neutral-700">
+                    <button type="submit" class="pay-now">Pay Now</button>
+                </div>
+            </form>
+
 
         </div>
     </div>

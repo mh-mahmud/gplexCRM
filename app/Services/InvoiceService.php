@@ -72,7 +72,7 @@ class InvoiceService
         $invoice->due_date = $data['due_date'];
         $invoice->sub_total = $data['sub_total'];
         $invoice->total_amount = $data['total_amount'];
-        $invoice->total_tax = $data['total_tax']?? null;
+        $invoice->total_tax = $data['total_tax'] ?? null;
         $invoice->discount = $data['total_discount'] ?? null;
         $invoice->discount_type = $data['discount_type_name'] ?? null;
         $invoice->adjustment = $data['adjustment'] ?? null;
@@ -114,5 +114,16 @@ class InvoiceService
             ->orWhere('due_date', 'LIKE', "%{$searchTerm}%")
             ->orderBy('created_at', 'desc')
             ->paginate(config('constants.ROW_PER_PAGE'));
+    }
+
+    public function addPaymentInvoice($invoice, $paymentDetails)
+    {
+        $existingPayments = json_decode($invoice->payment_details, true) ?? [];
+        $existingPayments[] = $paymentDetails;
+
+        $invoice->payment_details = json_encode($existingPayments);
+        $invoice->save();
+
+        return $invoice;
     }
 }
