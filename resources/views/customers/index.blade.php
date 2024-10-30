@@ -171,10 +171,10 @@
                                         <tr>
 							                <td class="ps-5 text-dark fs-6">{{($customers->currentPage() - 1) * $customers->perPage() + $loop->iteration}}</td>
                                             <td class="text-dark fs-6">{{$customer->customer_id}}</td>
-                                            <td class="text-dark fs-6 w-200px">{{$customer->lead_data->first_name }}</td>
-                                            <td class="text-dark fs-6 w-200px">{{$customer->lead_data->last_name }}</td>
-                                            <td class="text-dark fs-6">{{$customer->lead_data->email}}</td>
-                                            <td class="text-dark fs-6">{{$customer->lead_data->phone}}</td>
+                                            <td class="text-dark fs-6 w-200px">{{ $customer->lead_data?->first_name ?? '' }}</td>
+                                            <td class="text-dark fs-6 w-200px">{{ $customer->lead_data?->last_name ?? '' }}</td>
+                                            <td class="text-dark fs-6">{{ $customer->lead_data?->email ?? '' }}</td>
+                                            <td class="text-dark fs-6">{{ $customer->lead_data?->phone ?? '' }}</td>
                                             <td class="text-dark fs-6">{{$customer->customer_group}}</td>
                                             <td class="text-dark fs-6">{{$customer->customer_notes}}</td>
                                             <td>

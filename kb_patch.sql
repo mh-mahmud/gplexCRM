@@ -339,3 +339,5 @@ CREATE TABLE invoice_custom_form (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+ALTER TABLE `invoices` ADD COLUMN `payment_details` TEXT NULL AFTER `item_description`;
+
