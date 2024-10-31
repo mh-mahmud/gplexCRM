@@ -108,7 +108,7 @@ class smsController extends Controller {
         return view('sms.send-bulk-sms', compact('templates'));
     }
 
-    // For export excel sheet, zip and gd extension have to install
+    
     public function sendBulkSmsPro(Request $request)
     {
         $result = $this->smsService->sendBulkSmsPro($request);
@@ -122,6 +122,11 @@ class smsController extends Controller {
         }
     }
 
+    public function getSmsSendById($id)
+    {
+        $sms = $this->smsService->getSmsSendById($id);
+        return view('sms.send-sms-show', compact('sms'));
+    }
 
     public function sms_queue_list() {
         return $this->smsService->get_queue_list();

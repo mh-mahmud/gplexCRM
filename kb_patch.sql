@@ -170,6 +170,16 @@ ALTER TABLE `products` CHANGE `product_value` `product_value` DOUBLE(20,2) NULL 
 
 ALTER TABLE `sms_queue` ADD `lead_id` BIGINT NULL AFTER `send_status`;
 
+
+-- New sql statement which have to add in db server start
+ALTER TABLE `email_templates` ADD `created_by` BIGINT NULL DEFAULT NULL AFTER `status`;
+
+ALTER TABLE `email_templates` ADD `updated_by` BIGINT NULL DEFAULT NULL AFTER `created_by`;
+
+ALTER TABLE `sms_templates` ADD `created_by` BIGINT NULL DEFAULT NULL AFTER `status`, ADD `updated_by` BIGINT NULL DEFAULT NULL AFTER `created_by`;
+ALTER TABLE `products` ADD `created_by` BIGINT NULL DEFAULT NULL AFTER `status`, ADD `updated_by` BIGINT NULL DEFAULT NULL AFTER `created_by`;
+-- New sql statement which have to add in db server end
+
 ---Ishtiak SQL end
 
 CREATE TABLE customers LIKE leads;

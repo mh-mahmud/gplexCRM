@@ -20,17 +20,27 @@ class EmailService
 {
     public function emailTemplateList($request)
     {
-        $sql = EmailTemplate::query();
+        $sql = EmailTemplate::query()
+                            ->select('email_templates.*', 'users.first_name', 'users.last_name', 'users.user_type')
+                            ->join('users', 'users.id', '=', 'email_templates.created_by');
+
         $data = $request->all();
+
+        if (Auth::user()->user_type === 'agent') {
+            $sql->where(function($query) {
+                $query->where('email_templates.created_by', Auth::id()) 
+                      ->orWhere('users.user_type', '!=', 'agent');    
+            });
+        }
         if(!empty($data["search"])) {
             $sql->where('email_subject','like', '%' . $data["search"] . '%');
 
         }
         if (isset($data['paginate']) && $data['paginate'] == false) {
-            return  $sql->where('status', 1)->orderBy('id', 'DESC')->get();
+            return  $sql->where('email_templates.status', 1)->orderBy('email_templates.id', 'DESC')->get();
 
         } else {
-            return  $sql->orderBy('id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
+            return  $sql->orderBy('email_templates.id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
 
         }
     }
@@ -49,6 +59,7 @@ class EmailService
                 $dataObj                        = new EmailTemplate();
                 $dataObj->email_subject         = $data['email_subject'];
                 $dataObj->email_content         = $data['email_content'];
+                $dataObj->created_by            = Auth::id();
                 $dataObj->status                = $data['status'];
                 $dataObj->save();
 
@@ -81,9 +92,9 @@ class EmailService
     public function templateDelete($id)
     {
         return  DB::transaction(function () use ($id) {
-            $promotion = EmailTemplate::findOrFail($id);
-            $promotion->delete();
-            Helper::storeLog($promotion->email_subject, "Email Template", "Email Template Delete",  "Deleted");
+            $data = EmailTemplate::findOrFail($id);
+            $data->delete();
+            Helper::storeLog($data->email_subject, "Email Template", "Email Template Delete",  "Deleted");
         });
     }
 
@@ -102,7 +113,7 @@ class EmailService
                 $dataObj->email_subject         = $data['email_subject'];
                 $dataObj->email_content         = $data['email_content'];
                 $dataObj->status                = $data['status'];
-
+                $dataObj->updated_by            = Auth::id();
                 $dataObj->save();
 
                 Helper::storeLog($data['email_subject'], "Email Template", "Email Template Update", "Updated");
@@ -183,7 +194,9 @@ class EmailService
 
     public function sendEmailList($request)
     {
-        $sql = EmailLog::query();
+        $sql = EmailLog::query()
+                    ->select('email_log.*', 'leads.first_name', 'leads.last_name')
+                    ->leftJoin('leads', 'email_log.lead_id', '=', 'leads.id');
         $data = $request->all();
         if(!empty($data["search"])) {
             $sql->where('email_to','like', '%' . $data["search"] . '%');
@@ -277,6 +290,14 @@ class EmailService
         return (object)[
             'status'                 => 201,
         ];
+    }
+
+    public function getEmailSendById($id)
+    {
+        return EmailLog::where('email_log.id', $id)
+                        ->select('email_log.*', 'leads.first_name', 'leads.last_name')
+                        ->leftJoin('leads', 'email_log.lead_id', '=', 'leads.id')
+                        ->first();
     }
    
 
