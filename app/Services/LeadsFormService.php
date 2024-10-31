@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\LeadsForm;
 use Illuminate\Support\Facades\DB;
 use App\Models\LeadFormDetail;
+use App\Models\Lead;
 
 class LeadsFormService
 {
@@ -123,6 +124,7 @@ class LeadsFormService
     public function deleteLeadsForm($id)
     {
         $leadsForm = LeadsForm::findOrFail($id);
+        Lead::where('form_id', $id)->delete();
         $leadsForm->delete();
     }
 }
