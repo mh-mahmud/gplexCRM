@@ -47,7 +47,7 @@
 				<!--begin::Brand-->
 				<div class="aside-logo flex-column-auto" id="kt_aside_logo">
 					<!--begin::Logo-->
-					<a href="/">
+					<a href="{{ route('login') }}">
 						<img alt="Logo" src="{{url('/')}}/assets/media/logos/logo-1-dark.svg" class="h-50px logo" />
 					</a>
 					<!--end::Logo-->
@@ -715,7 +715,7 @@
 						<!--begin::Copyright-->
 						<div class="text-dark order-2 order-md-1">
 							<span class="text-muted fw-bold me-1">2024©</span>
-                            <a href="/" class="text-muted text-hover-primary px-2"> Powered by
+                            <a href="{{ route('login') }}" class="text-muted text-hover-primary px-2"> Powered by
                                 <img height="18px" alt="Logo" src="{{url('/')}}/assets/media/logos/logo-1-light.svg"  />
                             </a>
 						</div>

@@ -40,7 +40,7 @@
         <!--begin::Content-->
         <div class="d-flex flex-center flex-column flex-column-fluid px-3">
             <!--begin::Logo-->
-            <a href="../../demo1/dist/index.html" class="mb-12">
+            <a href="{{ route('login') }}" class="mb-12">
                 <img alt="Logo" src="assets/media/logos/logo-1-light.svg" class="h-60px"/>
             </a>
             <!--end::Logo-->
@@ -156,7 +156,7 @@
         <div class="d-flex flex-center flex-column-auto p-10">
             <!--begin::Links-->
             <div class="d-flex align-items-center fw-bold fs-6">
-                <a href="/" class="text-muted text-hover-primary px-2"> Powered by
+                <a href="{{ route('login') }}" class="text-muted text-hover-primary px-2"> Powered by
                     <img height="18px" alt="Logo" src="{{url('/')}}/assets/media/logos/logo-1-light.svg"  />
                 </a>
             </div>
