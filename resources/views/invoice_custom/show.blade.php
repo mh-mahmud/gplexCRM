@@ -9,24 +9,11 @@
 </head>
 
 <body>
-@php
-    // Determine the payment status based on $newDueAmount
-    if ($newDueAmount == 0) {
-        $statusClass = 'g-paid';
-        $statusText = 'Paid';
-    } elseif ($newDueAmount > 0 && $newDueAmount < $invoice->total_amount) {
-        $statusClass = 'g-partial-paid';
-        $statusText = 'Partial Paid';
-    } elseif ($newDueAmount == $invoice->total_amount) {
-        $statusClass = 'g-unpaid';
-        $statusText = 'Unpaid';
-    }
-@endphp
 
     <div class="status">
-        <div class="{{ $statusClass }}">
+        <div class="g-unpaid">
             <button>
-            {{ $statusText }}
+                Unpaid
             </button>
         </div>
         <div class="status-btn-group">
@@ -37,7 +24,7 @@
                 </svg>
                 Download
             </button>
-            <!-- <button>Pay Now</button> -->
+            <button>Pay Now</button>
         </div>
     </div>
     <div class="inv-main">
@@ -196,15 +183,6 @@
                                                                 <div class="whitespace-nowrap font-bold text-white">TK{{$invoice->total_amount}}</div>
                                                             </td>
                                                         </tr>
-
-                                                        <tr>
-                                                            <td class="bg-main p-3">
-                                                                <div class="whitespace-nowrap font-bold text-white">Total Due Amount:</div>
-                                                            </td>
-                                                            <td class="bg-main p-3 text-right">
-                                                                <div class="whitespace-nowrap font-bold text-white">TK{{$newDueAmount}}</div>
-                                                            </td>
-                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </td>
@@ -235,11 +213,10 @@
 
             <div class="px-14 text-sm text-neutral-700 py-3">
                 <p class="text-main font-bold">PAYMENT DETAILS</p>
-                <p>Bank Information Details:</p>
-                <p>Account Name: Genuity Systems Ltd</p>
-                <p>Bank Name: Eastern Bank Ltd</p>
-                <p>Account Number: 1071060004253</p>
-                <p>Routing Number: 095262987</p>
+                <p>Banks of Banks</p>
+                <p>Bank/Sort Code: 1234567</p>
+                <p>Account Number: 123456678</p>
+                <p>Payment Reference: BRA-00335</p>
             </div>
 
             <div class="px-14 py-3 text-sm text-neutral-700 payment-area">
@@ -257,7 +234,7 @@
                 </div>
             </div>
 
-            <!-- <div class="px-14 py-3 text-sm text-neutral-700">
+            <div class="px-14 py-3 text-sm text-neutral-700">
                 <div>
                     <label for="payment-amount" class="text-main font-bold">Amount
                         <span class="">
@@ -274,32 +251,7 @@
                     Pay Now
                 </button>
 
-            </div> -->
-
-            <form action="{{ route('invoice-payment', $invoice->id) }}" method="POST">
-                @csrf
-                <div class="px-14 py-3 text-sm text-neutral-700">
-                    <div>
-                        <label for="payment-amount" class="text-main font-bold">Amount
-                            <span class="">
-                                <input type="text" name="payment_amount" id="payment-amount">
-                                <span class="font-bold">TK</span>
-                            </span>
-                            @if ($errors->has('payment_amount'))
-                            <span class="text-danger" style="color:#F1416C">{{ $errors->first('payment_amount') }}</span>
-                            @endif
-                        </label>
-                    </div>
-
-                </div>
-
-
-
-                <div class="px-14 text-sm text-neutral-700">
-                    <button type="submit" class="pay-now">Pay Now</button>
-                </div>
-            </form>
-
+            </div>
 
         </div>
     </div>

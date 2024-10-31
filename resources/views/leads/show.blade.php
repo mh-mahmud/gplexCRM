@@ -31,8 +31,14 @@ use Carbon\Carbon;
         <!--begin::Actions-->
         <div class="d-flex align-items-center py-1">
 
-            <a href="{{ route('lead-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Lead
-                List</a>
+            @if($customer_id==null)
+                <a href="{{ route('add-customer', $lead->id) }}" class="btn btn-sm btn-danger" id="kt_toolbar_primary_button">Add as Customer</a>
+            @else
+                <span style="border: 1px solid #14A44D;padding:6px;color:#FFF;background-color:#14A44D;border-radius:5px;">Customer ID: {{ $customer_id }}</span>
+            @endif
+            
+            &nbsp;
+            <a href="{{ route('lead-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Lead List</a>
             <!--end::Button-->
         </div>
         <!--end::Actions-->
@@ -111,7 +117,9 @@ use Carbon\Carbon;
                             <a class="nav-link @if(session('success') || session('error')) active @endif" data-bs-toggle="tab" href="#g_lead_activity_log">Activity Logs</a>
                         </li>
 
+
                     </ul>
+
                 </div>
             </div>
 

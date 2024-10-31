@@ -12,6 +12,7 @@ use PHPUnit\TextUI\Help;
 use App\Helpers\Helper;
 use App\Models\Agent;
 use App\Models\Product;
+use Carbon\Carbon;
 use PDF;
 
 class InvoiceController extends Controller
@@ -86,28 +87,31 @@ class InvoiceController extends Controller
             //'invoice_number.unique' => 'This invoice number is already in use by another invoice',
         ]);
         try {
-           
+
             $invoice = $this->invoiceService->createInvoice($request->all());
             return redirect()->route('invoice-index')->with('success', 'Invoice Created Successfully!');
         } catch (\Illuminate\Database\QueryException $e) {
-            
-            if ($e->getCode() === '23000') { 
+
+            if ($e->getCode() === '23000') {
                 return back()->withErrors(['invoice_number' => 'This invoice number exists'])->withInput();
             }
-    
+
             // Handle other database errors
             return back()->withErrors(['error' => 'There was an error creating the invoice. Please try again later.'])->withInput();
         }
     }
-    
+
 
 
     public function show($id)
     {
         $invoice = Invoice::findOrFail($id);
         $invoiceItems = json_decode($invoice->item_description, true);
+        $existingPayments = $invoice->payment_details ?? [];
+        $totalPayments = array_sum(array_column($existingPayments, 'payment'));
+        $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
         $products = Product::select('id', 'name', 'description', 'product_value')->get();
-        return view('invoices.show', compact('invoice', 'products', 'invoiceItems'));
+        return view('invoices.show', compact('invoice', 'products', 'invoiceItems','newDueAmount'));
     }
 
     public function edit($id, Request $request)
@@ -135,15 +139,15 @@ class InvoiceController extends Controller
             'due_date' => 'nullable|date|after_or_equal:invoice_date',
         ]);
 
-       try {
+        try {
             $invoice = $this->invoiceService->updateInvoice($request->all(), $id);
             return redirect()->route('invoice-index')->with('success', 'Invoice Updated Successfully!');
         } catch (\Illuminate\Database\QueryException $e) {
-            
-            if ($e->getCode() === '23000') { 
+
+            if ($e->getCode() === '23000') {
                 return back()->withErrors(['invoice_number' => 'This invoice number exists'])->withInput();
             }
-    
+
             // Handle other database errors
             return back()->withErrors(['error' => 'There was an error creating the invoice. Please try again later.'])->withInput();
         }
@@ -157,7 +161,7 @@ class InvoiceController extends Controller
             //'invoice_number' => 'required|unique:invoices,invoice_number,' . $id,
             'invoice_date' => 'required|date',
             'due_date' => 'nullable|date|after_or_equal:invoice_date',
-             //item validation - maintaining the same structure as store
+            //item validation - maintaining the same structure as store
             'items.item_name.*' => 'required|string',
             'items.quantity.*' => 'required|integer|min:1',
             'items.rate.*' => 'required|numeric|min:0',
@@ -197,10 +201,32 @@ class InvoiceController extends Controller
 
     public function downloadInvoice($invoiceId)
     {
-        
+
         $invoice = Invoice::findOrFail($invoiceId);
         $invoiceItems = json_decode($invoice->item_description, true);
         $pdf = PDF::loadView('invoices.invoice_pdf', compact('invoice', 'invoiceItems'));
         return $pdf->download('invoice_' . $invoice->invoice_number . '.pdf');
+    }
+
+
+    public function storePayment(Request $request, $invoiceId)
+    {
+        $request->validate([
+            'payment_amount' => 'required|numeric|min:0',
+        ]);
+
+        $invoice = Invoice::findOrFail($invoiceId);
+        $existingPayments = $invoice->payment_details ?? [];
+        $totalPayments = array_sum(array_column($existingPayments, 'payment'));
+        $newDueAmount = max(0, $invoice->total_amount - ($totalPayments + $request->input('payment_amount')));
+        $paymentDetails = [
+            'invoice_id' => $invoice->id,
+            'payment' => $request->input('payment_amount'),
+            'payment_date' => Carbon::now()->toDateString(),
+            //'due' => max(0, $invoice->total_amount - $request->input('payment_amount'))
+            'due' => $newDueAmount
+        ];
+        $this->invoiceService->addPaymentInvoice($invoice, $paymentDetails);
+        return redirect()->route('invoice-index')->with('success', 'Payment recorded successfully!');
     }
 }

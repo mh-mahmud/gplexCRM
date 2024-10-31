@@ -146,8 +146,7 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: '{{ session('
-            success ')}}',
+            text: '{{ session('success')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -159,8 +158,7 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: '{{ session('
-            error ')}}',
+            text: '{{ session('error')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -231,8 +229,6 @@ use Carbon\Carbon;
                                     <th class="min-w-120px">Customer</th>
                                     <th class="min-w-120px">Due Date</th>
                                     <th class="min-w-120px">Status</th>
-                                    <th class="min-w-140px text-center">Payment</th>
-                                    <th class="min-w-140px text-center">Due</th>
                                     <th class="min-w-100px text-end text-end-new">Actions</th>
                                 </tr>
                             </thead>
@@ -247,13 +243,13 @@ use Carbon\Carbon;
                                     <td class="text-dark fs-6 w-200px">{{$invoice->total_amount}}</td>
                                     <td class="text-dark fs-6 w-200px">{{$invoice->total_tax }}</td>
                                     <td class="text-dark fs-6 w-200px">{{ $invoice->discount ?? '0.00' }}</td>
-                                    <td class="text-dark fs-6 w-200px">
+                                    <td class="text-dark fs-6 w-200px">  
                                         @if($invoice->invoice_date)
                                         {{ \Carbon\Carbon::parse($invoice->invoice_date)->format('d-m-Y') }}
                                         @endif
                                     </td>
                                     <td class="text-dark fs-6">{{$invoice->customer->customer_group}}</td>
-                                    <td class="text-dark fs-6">
+                                    <td class="text-dark fs-6"> 
                                         @if($invoice->due_date)
                                         {{ \Carbon\Carbon::parse($invoice->due_date)->format('d-m-Y') }}
                                         @endif
@@ -261,24 +257,10 @@ use Carbon\Carbon;
 
 
                                     <td>
-
+                                       
                                         <span class="badge badge-light-success">{{$invoice->invoice_status}}</span>
-
+                                       
                                     </td>
-
-                                    <!-- Display Payment and Due from payment_details -->
-                                    @php
-                                    //payment_details to a collection and calculate total payments
-                                    $paymentDetails = collect($invoice->payment_details);
-                                    $totalPayments = $paymentDetails->sum('payment');
-                                    //last entry
-                                    $lastPayment = $paymentDetails->last();
-                                    $paymentAmount = $lastPayment['payment'] ?? '0.00';
-                                    $dueAmount = $lastPayment['due'] ?? $invoice->total_amount;
-                                    @endphp
-
-                                    <td class="text-dark fs-6 w-200px text-center">{{ $totalPayments}}</td>
-                                    <td class="text-dark fs-6 w-200px text-center">{{ $dueAmount }}</td>
                                     <td>
                                         <div
                                             class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">

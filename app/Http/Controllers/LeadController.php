@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\LeadsForm;
+use App\Models\Customer;
 use App\Models\LeadFormDetail;
 use App\Models\Lead;
 use App\Services\LeadService;
@@ -155,6 +156,11 @@ class LeadController  extends Controller
     public function show($id)
     {
         $lead = $this->leadService->getLeadById($id);
+        $is_customer = Customer::where('lead_id', $id)->first();
+        $customer_id = null;
+        if(!empty($is_customer)) {
+            $customer_id = $is_customer->customer_id;
+        }
 
         // Fetch dynamic fields data based on lead_id
         $fields = LeadFormDetail::where('form_id', $lead->form_id)->get();
@@ -164,7 +170,7 @@ class LeadController  extends Controller
             $tableData[$tableName] = DB::table($tableName)->where('lead_id', $lead->id)->orderBy('id', 'desc')->get();
         }
 
-        return view('leads.show', compact('lead', 'tableData','fields'));
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id'));
     }
 
 
