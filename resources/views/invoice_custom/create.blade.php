@@ -77,19 +77,19 @@
                             </div>
                         </div>
 
-                        <!-- Add Field button -->
+                        <!-- Item Section Add Field button -->
                         <div class="row justify-content-center align-items-center mb-3">
                             <div class="col-md-6">
                                 <h3>Item Section</h3>
                             </div>
                             <div class="col-md-6 text-end">
-                                <button type="button" class="btn btn-sm btn-success" onclick="addField()"><i class="bi bi-plus-lg"></i> Add Field</button>
+                                <button type="button" class="btn btn-sm btn-success" onclick="addItemField()"><i class="bi bi-plus-lg"></i> Add Field</button>
                             </div>
                         </div>
 
-                        <!-- Field Group Container -->
-                        <div id="field-group-container">
-                            <div class="row mb-3 field-group">
+                        <!-- Item Field Group Container -->
+                        <div id="item-field-group-container">
+                            <div class="row mb-3 item-field-group">
                                 <div class="col-md-4">
                                     <div class="fv-row">
                                         <label class="form-label fw-bolder text-dark">Field Name</label>
@@ -105,11 +105,12 @@
                                 </div>
 
                                 <div class="col-md-4 text-center" style="padding-top: 1.5rem;">
-                                    <button type="button" class="btn btn-sm btn-danger" onclick="removeField(this)"><i class="bi bi-x"></i></button>
+                                    <button type="button" class="btn btn-sm btn-danger" onclick="removeItemField(this)"><i class="bi bi-x"></i></button>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- Footer Section Add Field button -->
                         <div class="row justify-content-center align-items-center mb-3">
                             <div class="col-md-6">
                                 <h3>Footer Section</h3>
@@ -119,9 +120,9 @@
                             </div>
                         </div>
 
-                        <!-- Field Group Container -->
-                        <div id="field-group-container">
-                            <div class="row mb-3 field-group">
+                        <!-- Footer Field Group Container -->
+                        <div id="footer-field-group-container">
+                            <div class="row mb-3 footer-field-group">
                                 <div class="col-md-4">
                                     <div class="fv-row">
                                         <label class="form-label fw-bolder text-dark">Field Name</label>
@@ -142,9 +143,9 @@
                             </div>
                         </div>
 
+                        <!-- Total in Words Section -->
                         <div class="row">
-
-                        <div class="col-md-6">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label fw-bolder text-dark">Total in Words</label>
                                     <div class="form-check">
@@ -162,9 +163,8 @@
                             </div>
                         </div>
 
-                        <!-- Other form fields for Bank Details and Issued By -->
+                        <!-- Bank Details and Issued By -->
                         <div class="row">
-                            
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label fw-bolder text-dark">Bank Details</label>
@@ -208,39 +208,78 @@
 
 
 <script>
-    let fieldIndex = 1;
+    let itemFieldIndex = 1;
+    let footerFieldIndex = 1;
 
-    function addField() {
-        const container = document.getElementById('field-group-container');
-        const newFieldGroup = document.createElement('div');
-        newFieldGroup.className = 'row mb-3 field-group';
+    // Function to add new item field
+    function addItemField() {
+        const container = document.getElementById('item-field-group-container');
+        const newItemFieldGroup = document.createElement('div');
+        newItemFieldGroup.className = 'row mb-3 item-field-group';
 
-        newFieldGroup.innerHTML = `
+        newItemFieldGroup.innerHTML = `
             <div class="col-md-4">
                 <div class="fv-row">
                     <label class="form-label fw-bolder text-dark">Field Name</label>
-                    <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[${fieldIndex}][field_name]" autocomplete="off" />
+                    <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[${itemFieldIndex}][field_name]" autocomplete="off" />
                 </div>
             </div>
 
             <div class="col-md-4">
                 <div class="fv-row">
                     <label class="form-label fw-bolder text-dark">Field Value</label>
-                    <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[${fieldIndex}][field_value]" autocomplete="off" />
+                    <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[${itemFieldIndex}][field_value]" autocomplete="off" />
                 </div>
             </div>
 
             <div class="col-md-4 text-center" style="padding-top: 1.5rem;">
-                <button type="button" class="btn btn-sm btn-danger" onclick="removeField(this)"><i class="bi bi-x"></i></button>
+                <button type="button" class="btn btn-sm btn-danger" onclick="removeItemField(this)"><i class="bi bi-x"></i></button>
             </div>
         `;
 
-        container.appendChild(newFieldGroup);
-        fieldIndex++;
+        container.appendChild(newItemFieldGroup);
+        itemFieldIndex++;
     }
 
-    function removeField(button) {
-        const fieldGroup = button.closest('.field-group');
+    // Function to remove item field
+    function removeItemField(button) {
+        const fieldGroup = button.closest('.item-field-group');
+        fieldGroup.remove();
+    }
+
+    // Function to add new footer field
+    function addFooterField() {
+        const container = document.getElementById('footer-field-group-container');
+        const newFooterFieldGroup = document.createElement('div');
+        newFooterFieldGroup.className = 'row mb-3 footer-field-group';
+
+        newFooterFieldGroup.innerHTML = `
+            <div class="col-md-4">
+                <div class="fv-row">
+                    <label class="form-label fw-bolder text-dark">Field Name</label>
+                    <input class="form-control form-control-sm form-control-solid" type="text" name="footer_details[${footerFieldIndex}][field_name]" autocomplete="off" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="fv-row">
+                    <label class="form-label fw-bolder text-dark">Field Value</label>
+                    <input class="form-control form-control-sm form-control-solid" type="text" name="footer_details[${footerFieldIndex}][field_value]" autocomplete="off" />
+                </div>
+            </div>
+
+            <div class="col-md-4 text-center" style="padding-top: 1.5rem;">
+                <button type="button" class="btn btn-sm btn-danger" onclick="removeFooterField(this)"><i class="bi bi-x"></i></button>
+            </div>
+        `;
+
+        container.appendChild(newFooterFieldGroup);
+        footerFieldIndex++;
+    }
+
+    // Function to remove footer field
+    function removeFooterField(button) {
+        const fieldGroup = button.closest('.footer-field-group');
         fieldGroup.remove();
     }
 </script>
