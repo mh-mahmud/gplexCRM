@@ -30,7 +30,7 @@
 
             <!--end::Wrapper-->
             <!--begin::Button-->
-            <a href="{{ route('invoice-custom-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Custom Invoice Form List</a>
+            <a href="{{ route('invoice-custom-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Invoice Form List</a>
             <!--end::Button-->
         </div>
         <!--end::Actions-->
@@ -65,37 +65,35 @@
                     <form class="g-form w-100" action="{{ route('invoice-custom-store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
 
-
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
-                                    <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Invoice Name</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid"
-                                        type="text" name="invoice_name" value="{{ old('invoice_name') }}" autocomplete="off" />
-                                    <!--end::Input-->
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="invoice_name" value="{{ old('invoice_name') }}" autocomplete="off" />
                                     @if ($errors->has('invoice_name'))
                                     <span class="text-danger">{{ $errors->first('invoice_name') }}</span>
                                     @endif
                                 </div>
                             </div>
-                            <div class="row justify-content-center align-items-center mb-3">
+                        </div>
 
-                                <div class="col-md-6" style="text-align: right;">
-                                    <button type="button" class="btn btn-sm btn-success" onclick="addField()"><i
-                                            class="bi bi-plus-lg"></i> Add Field
-                                    </button>
-                                </div>
+                        <!-- Add Field button -->
+                        <div class="row justify-content-center align-items-center mb-3">
+                            <div class="col-md-6">
+                                <h3>Item Section</h3>
                             </div>
+                            <div class="col-md-6 text-end">
+                                <button type="button" class="btn btn-sm btn-success" onclick="addField()"><i class="bi bi-plus-lg"></i> Add Field</button>
+                            </div>
+                        </div>
 
+                        <!-- Field Group Container -->
+                        <div id="field-group-container">
                             <div class="row mb-3 field-group">
                                 <div class="col-md-4">
                                     <div class="fv-row">
                                         <label class="form-label fw-bolder text-dark">Field Name</label>
                                         <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[0][field_name]" autocomplete="off" />
-
                                     </div>
                                 </div>
 
@@ -103,26 +101,74 @@
                                     <div class="fv-row">
                                         <label class="form-label fw-bolder text-dark">Field Value</label>
                                         <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[0][field_value]" autocomplete="off" />
-
                                     </div>
                                 </div>
 
-
-                                <div class="col-md-4">
-                                    <div class="fv-row mt-8 text-center" style="padding-left:34px">
-                                        <button type="button" class="btn btn-sm btn-danger py-1 py-0" onclick="removeField(this)"><i class="bi bi-x pe-0 pb-1"></i></button>
-                                    </div>
-                                    <!--end::Input-->
+                                <div class="col-md-4 text-center" style="padding-top: 1.5rem;">
+                                    <button type="button" class="btn btn-sm btn-danger" onclick="removeField(this)"><i class="bi bi-x"></i></button>
                                 </div>
                             </div>
+                        </div>
 
+                        <div class="row justify-content-center align-items-center mb-3">
+                            <div class="col-md-6">
+                                <h3>Footer Section</h3>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <button type="button" class="btn btn-sm btn-success" onclick="addFooterField()"><i class="bi bi-plus-lg"></i> Add Field</button>
+                            </div>
+                        </div>
 
+                        <!-- Field Group Container -->
+                        <div id="field-group-container">
+                            <div class="row mb-3 field-group">
+                                <div class="col-md-4">
+                                    <div class="fv-row">
+                                        <label class="form-label fw-bolder text-dark">Field Name</label>
+                                        <input class="form-control form-control-sm form-control-solid" type="text" name="footer_details[0][field_name]" autocomplete="off" />
+                                    </div>
+                                </div>
 
+                                <div class="col-md-4">
+                                    <div class="fv-row">
+                                        <label class="form-label fw-bolder text-dark">Field Value</label>
+                                        <input class="form-control form-control-sm form-control-solid" type="text" name="footer_details[0][field_value]" autocomplete="off" />
+                                    </div>
+                                </div>
 
+                                <div class="col-md-4 text-center" style="padding-top: 1.5rem;">
+                                    <button type="button" class="btn btn-sm btn-danger" onclick="removeFooterField(this)"><i class="bi bi-x"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label fw-bolder text-dark">Total in Words</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="total_in_words" value="Yes" id="total-in-words-yes" {{ old('total_in_words') == 'Yes' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="total-in-words-yes">Yes</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="total_in_words" value="No" id="total-in-words-no" {{ old('total_in_words') == 'No' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="total-in-words-no">No</label>
+                                    </div>
+                                    @if ($errors->has('total_in_words'))
+                                    <span class="text-danger">{{ $errors->first('total_in_words') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Other form fields for Bank Details and Issued By -->
+                        <div class="row">
+                            
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label fw-bolder text-dark" for="textarea">Bank Details</label>
-                                    <textarea class="form-control form-control-sm  form-control-solid" name="bank_details" rows="3">{{ old('bank_details') }}</textarea>
+                                    <label class="form-label fw-bolder text-dark">Bank Details</label>
+                                    <textarea class="form-control form-control-sm form-control-solid" name="bank_details" rows="3">{{ old('bank_details') }}</textarea>
                                     @if ($errors->has('bank_details'))
                                     <span class="text-danger">{{ $errors->first('bank_details') }}</span>
                                     @endif
@@ -131,24 +177,19 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label fw-bolder text-dark" for="textarea">Issued By</label>
-                                    <textarea class="form-control form-control-sm  form-control-solid" name="issued_by" rows="3">{{ old('issued_by') }}</textarea>
+                                    <label class="form-label fw-bolder text-dark">Issued By</label>
+                                    <textarea class="form-control form-control-sm form-control-solid" name="issued_by" rows="3">{{ old('issued_by') }}</textarea>
                                     @if ($errors->has('issued_by'))
                                     <span class="text-danger">{{ $errors->first('issued_by') }}</span>
                                     @endif
                                 </div>
                             </div>
-
-
                         </div>
-                        <!--End Row-->
+
                         <div class="card-footer d-flex justify-content-end py-6 px-9">
                             <a href="{{ route('agents-create') }}" class="btn btn-light me-2">Reset</a>
-                            <button type="submit" class="btn btn-primary"
-                                id="kt_account_profile_details_submit">Save Changes
-                            </button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
                         </div>
-
                     </form>
 
                     <!-- End Form-->
@@ -167,7 +208,41 @@
 
 
 <script>
+    let fieldIndex = 1;
 
+    function addField() {
+        const container = document.getElementById('field-group-container');
+        const newFieldGroup = document.createElement('div');
+        newFieldGroup.className = 'row mb-3 field-group';
+
+        newFieldGroup.innerHTML = `
+            <div class="col-md-4">
+                <div class="fv-row">
+                    <label class="form-label fw-bolder text-dark">Field Name</label>
+                    <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[${fieldIndex}][field_name]" autocomplete="off" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="fv-row">
+                    <label class="form-label fw-bolder text-dark">Field Value</label>
+                    <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[${fieldIndex}][field_value]" autocomplete="off" />
+                </div>
+            </div>
+
+            <div class="col-md-4 text-center" style="padding-top: 1.5rem;">
+                <button type="button" class="btn btn-sm btn-danger" onclick="removeField(this)"><i class="bi bi-x"></i></button>
+            </div>
+        `;
+
+        container.appendChild(newFieldGroup);
+        fieldIndex++;
+    }
+
+    function removeField(button) {
+        const fieldGroup = button.closest('.field-group');
+        fieldGroup.remove();
+    }
 </script>
 
 <!-- End Forms-->

@@ -124,7 +124,7 @@ class LeadsFormService
     public function deleteLeadsForm($id)
     {
         $leadsForm = LeadsForm::findOrFail($id);
-        Lead::where('form_id', $id)->delete();
+        Lead::where('form_id',$leadsForm->form_id)->delete();
         $leadsForm->delete();
     }
 }
