@@ -94,6 +94,9 @@
                                     <div class="fv-row">
                                         <label class="form-label fw-bolder text-dark">Field Name</label>
                                         <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[0][field_name]" autocomplete="off" />
+                                        @error('field_details.0.field_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -101,6 +104,9 @@
                                     <div class="fv-row">
                                         <label class="form-label fw-bolder text-dark">Field Value</label>
                                         <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[0][field_value]" autocomplete="off" />
+                                        @error('field_details.0.field_value')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -127,6 +133,9 @@
                                     <div class="fv-row">
                                         <label class="form-label fw-bolder text-dark">Field Name</label>
                                         <input class="form-control form-control-sm form-control-solid" type="text" name="footer_details[0][field_name]" autocomplete="off" />
+                                        @error('footer_details.0.field_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -134,6 +143,9 @@
                                     <div class="fv-row">
                                         <label class="form-label fw-bolder text-dark">Field Value</label>
                                         <input class="form-control form-control-sm form-control-solid" type="text" name="footer_details[0][field_value]" autocomplete="off" />
+                                        @error('footer_details.0.field_value')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -187,7 +199,7 @@
                         </div>
 
                         <div class="card-footer d-flex justify-content-end py-6 px-9">
-                            <a href="{{ route('agents-create') }}" class="btn btn-light me-2">Reset</a>
+                            <a href="{{ route('invoice-custom-create') }}" class="btn btn-light me-2">Reset</a>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                         </div>
                     </form>
