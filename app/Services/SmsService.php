@@ -17,14 +17,23 @@ class SmsService
 {
     public function smsTemplateList($request)
     {
-        $sql = SmsTemplate::query();
+        $sql = SmsTemplate::query()
+                        ->select('sms_templates.*', 'users.first_name', 'users.last_name', 'users.user_type')
+                        ->join('users', 'users.id', '=', 'sms_templates.created_by');;
         $data = $request->all();
+
+        if (Auth::user()->user_type === 'agent') {
+            $sql->where(function($query) {
+                $query->where('sms_templates.created_by', Auth::id()) 
+                      ->orWhere('users.user_type', '!=', 'agent');    
+            });
+        }
         if(!empty($data["search"])) {
             $sql->where('title','like', '%' . $data["search"] . '%');
 
         }
         if (isset($data['paginate']) && $data['paginate'] == false) {
-            return  $sql->where('status', 1)->orderBy('id', 'DESC')->get();
+            return  $sql->where('sms_templates.status', 1)->orderBy('id', 'DESC')->get();
 
         } else {
             return  $sql->orderBy('id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
@@ -42,12 +51,21 @@ class SmsService
         $data = $request->all();
 
         try {
-            $dataObj                        = new SmsTemplate();
-            $dataObj->title                 = $data['title'];
-            $dataObj->description           = $data['description'];
-            $dataObj->status                = $data['status'];
+            return  DB::transaction(function () use ($data) {
+                $dataObj                        = new SmsTemplate();
+                $dataObj->title                 = $data['title'];
+                $dataObj->description           = $data['description'];
+                $dataObj->created_by            = Auth::id();
+                $dataObj->status                = $data['status'];
+                $dataObj->save();
 
-            $dataObj->save();
+                Helper::storeLog($data['title'], "SMS Template", "SMS Template Create", "Created");
+
+                return (object)[
+                    'status'                 => 201,
+                    'info'                   => $dataObj->id
+                ];
+            });
 
         } catch (Exception $e) {
             return (object)[
@@ -56,10 +74,7 @@ class SmsService
             ];
         }
 
-        return (object)[
-            'status'                 => 201,
-            'info'                   => $dataObj->id
-        ];
+       
 
     }
 
@@ -70,8 +85,11 @@ class SmsService
 
     public function templateDelete($id)
     {
-        $promotion = SmsTemplate::findOrFail($id);
-        $promotion->delete();
+        return  DB::transaction(function () use ($id) {
+            $data = SmsTemplate::findOrFail($id);
+            $data->delete();
+            Helper::storeLog($data->title, "SMS Template", "SMS Template Delete", "Deleted");
+        });
     }
 
     public function templateUpdate($request, $id)
@@ -84,12 +102,21 @@ class SmsService
         $data = $request->all();
 
         try {
-            $dataObj                        = SmsTemplate::findOrFail($id);
-            $dataObj->title                 = $data['title'];
-            $dataObj->description           = $data['description'];
-            $dataObj->status                = $data['status'];
+            return  DB::transaction(function () use ($data, $id) {
+                $dataObj                        = SmsTemplate::findOrFail($id);
+                $dataObj->title                 = $data['title'];
+                $dataObj->description           = $data['description'];
+                $dataObj->updated_by            = Auth::id();
+                $dataObj->status                = $data['status'];
+                $dataObj->save();
 
-            $dataObj->save();
+                Helper::storeLog($data['title'], "SMS Template", "SMS Template Update", "Updated");
+
+                return (object)[
+                    'status'                 => 208,
+                    'info'                   => $dataObj->id
+                ];
+            });
 
         } catch (Exception $e) {
             return (object)[
@@ -97,11 +124,6 @@ class SmsService
                 'error'              => $e->getMessage()
             ];
         }
-
-        return (object)[
-            'status'                 => 208,
-            'info'                   => $dataObj->id
-        ];
 
     }
 
@@ -159,7 +181,9 @@ class SmsService
 
     public function sendSMSList($request)
     {
-        $sql = SmsQueue::query();
+        $sql = SmsQueue::query()
+                    ->select('sms_queue.*', 'leads.first_name', 'leads.last_name')
+                    ->leftJoin('leads', 'sms_queue.lead_id', '=', 'leads.id');
         $data = $request->all();
         if(!empty($data["search"])) {
             $sql->where('sms_to','like', '%' . $data["search"] . '%');
@@ -245,6 +269,14 @@ class SmsService
         return (object)[
             'status'                 => 201,
         ];
+    }
+
+    public function getSmsSendById($id)
+    {
+        return SmsQueue::where('sms_queue.id', $id)
+                        ->select('sms_queue.*', 'leads.first_name', 'leads.last_name')
+                        ->leftJoin('leads', 'sms_queue.lead_id', '=', 'leads.id')
+                        ->first();
     }
    
     public function get_queue_list() {

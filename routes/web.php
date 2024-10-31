@@ -221,6 +221,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('send-email-list', [EmailController::class, 'sendEmailList'])->name('send-email-list')->middleware(['check-permission']);
 	Route::get('send-bulk-email', [EmailController::class, 'sendBulkEmail'])->name('send-bulk-email')->middleware(['check-permission']);
 	Route::post('send-bulk-email-process', [EmailController::class, 'sendBulkEmailPro'])->name('send-bulk-email-process');
+	Route::get('send-email/show/{id?}', [EmailController::class, 'getEmailSendById'])->name('send-email-show')->middleware(['check-permission']);
 
 
 	// Send email routes end
@@ -238,11 +239,12 @@ Route::group(['middleware' => ['auth']], function () {
 	// SMS template routes end
 
 	// Send SMS routes start
-	Route::get('send-sms', [smsController::class, 'sendSms'])->name('send-sms')->middleware(['check-permission'])->middleware(['check-permission']);
+	Route::get('send-sms', [smsController::class, 'sendSms'])->name('send-sms')->middleware(['check-permission']);
 	Route::post('send-sms-process', [smsController::class, 'sendSmsPro'])->name('send-sms-pro');
-	Route::get('send-sms-list', [smsController::class, 'sendSmsList'])->name('send-sms-list')->middleware(['check-permission'])->middleware(['check-permission']);
-	Route::get('send-bulk-sms', [smsController::class, 'sendBulkSms'])->name('send-bulk-sms')->middleware(['check-permission'])->middleware(['check-permission']);
+	Route::get('send-sms-list', [smsController::class, 'sendSmsList'])->name('send-sms-list')->middleware(['check-permission']);
+	Route::get('send-bulk-sms', [smsController::class, 'sendBulkSms'])->name('send-bulk-sms')->middleware(['check-permission']);
 	Route::post('send-bulk-sms-process', [smsController::class, 'sendBulkSmsPro'])->name('send-bulk-sms-pro');
+	Route::get('send-sms/show/{id?}', [SmsController::class, 'getSmsSendById'])->name('send-sms-show')->middleware(['check-permission']);
 
 	// Send SMS routes end
 

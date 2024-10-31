@@ -70,6 +70,7 @@
                                                             <th class="min-w-150px">Module</th>
                                                             <th class="min-w-140px">Sub Module</th>
                                                             <th class="min-w-140px">Log Message</th>
+                                                            <th class="min-w-140px">Lead</th>
                                                             <th class="min-w-140px">Created By</th>
                                                             <th class="min-w-120px">Created At</th>
                                                         </tr>
@@ -83,6 +84,7 @@
                                                             <td class="text-dark fs-6">{{ $log->module }}</td>
                                                             <td class="text-dark fs-6">{{ $log->sub_module }}</td>
                                                             <td class="text-dark fs-6">{{ $log->log_message }}</td>
+                                                            <td class="text-dark fs-6">{{ $log->lead_first_name }} {{ $log->lead_last_name }}</td>
                                                             <td class="text-dark fs-6">{{ $log->first_name }} {{ $log->last_name }}</td>
                                                             <td>
                                                                 {{ Carbon::parse($log->created_at)->format('d-m-Y h:i:s A') }}

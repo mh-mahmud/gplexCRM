@@ -121,4 +121,11 @@ class EmailController extends Controller {
         }
 
     }
+
+    public function getEmailSendById($id)
+    {
+        $email = $this->emailService->getEmailSendById($id);
+        return view('emails.send-email-show', compact('email'));
+    }
+
 }

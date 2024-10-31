@@ -4,6 +4,8 @@ namespace App\Services;
 use App\Models\Product;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\Helper;
+use DB;
 
 class ProductService
 {
@@ -57,30 +59,32 @@ class ProductService
         } 
 
         try {
-            $dataObj                        = new Product();
-            $dataObj->name                  = $data['name'];
-            $dataObj->product_type          = $data['product_type'];
-            $dataObj->product_cost          = $data['product_cost'];
-            $dataObj->product_value         = $data['product_value'];
-            $dataObj->product_code          = $data['product_code'];
-            $dataObj->description           = $data['description'];
-            $dataObj->status                = $data['status'];
-            $dataObj->img_path              = $fileNameToStore;
+            return  DB::transaction(function () use ($data, $fileNameToStore) {
+                $dataObj                        = new Product();
+                $dataObj->name                  = $data['name'];
+                $dataObj->product_type          = $data['product_type'];
+                $dataObj->product_cost          = $data['product_cost'];
+                $dataObj->product_value         = $data['product_value'];
+                $dataObj->product_code          = $data['product_code'];
+                $dataObj->description           = $data['description'];
+                $dataObj->status                = $data['status'];
+                $dataObj->img_path              = $fileNameToStore;
+                $dataObj->created_by            = Auth::id();
+                $dataObj->save();
 
-            $dataObj->save();
+                Helper::storeLog($data['name'], "Products", "Add Product", "Added");
 
+                return (object)[
+                    'status'                 => 201,
+                    'info'                   => $dataObj->id
+                ];
+            });
         } catch (Exception $e) {
             return (object)[
                 'status'             => 424,
                 'error'              => $e->getMessage()
             ];
         }
-
-        return (object)[
-            'status'                 => 201,
-            'info'                   => $dataObj->id
-        ];
-
     }
 
     public function productUpdate($request, $id)
@@ -115,17 +119,27 @@ class ProductService
         } 
 
         try {
-            $dataObj                        = Product::findOrFail($id);;
-            $dataObj->name                  = $data['name'];
-            $dataObj->product_type          = $data['product_type'];
-            $dataObj->product_cost          = $data['product_cost'];
-            $dataObj->product_value         = $data['product_value'];
-            $dataObj->product_code          = $data['product_code'];
-            $dataObj->description           = $data['description'];
-            $dataObj->status                = $data['status'];
-            $dataObj->img_path              = $fileNameToStore;
+            return  DB::transaction(function () use ($data, $fileNameToStore, $request, $id) {
+                $dataObj                        = Product::findOrFail($id);;
+                $dataObj->name                  = $data['name'];
+                $dataObj->product_type          = $data['product_type'];
+                $dataObj->product_cost          = $data['product_cost'];
+                $dataObj->product_value         = $data['product_value'];
+                $dataObj->product_code          = $data['product_code'];
+                $dataObj->description           = $data['description'];
+                $dataObj->status                = $data['status'];
+                $dataObj->img_path              = $request->hasFile('img_path') ? $fileNameToStore : $dataObj->img_path;
+                $dataObj->updated_by            = Auth::id();
+                $dataObj->save();
 
-            $dataObj->save();
+                Helper::storeLog($data['name'], "Products", "Update Product", "Updated");
+
+                return (object)[
+                    'status'                 => 208,
+                    'info'                   => $dataObj->id
+                ];
+            });
+
 
         } catch (Exception $e) {
             return (object)[
@@ -133,11 +147,6 @@ class ProductService
                 'error'              => $e->getMessage()
             ];
         }
-
-        return (object)[
-            'status'                 => 208,
-            'info'                   => $dataObj->id
-        ];
 
     }
 
@@ -149,17 +158,22 @@ class ProductService
     public function productDelete($id)
     {
         try {
-            $data = Product::findOrFail($id);
-            $data->delete();
+            return  DB::transaction(function () use ($id) {
+                $data = Product::findOrFail($id);
+                $data->delete();
+
+                Helper::storeLog($data->name, "Products", "Delete Product", "Deleted");
+
+                return (object)[
+                    'status'                 => 200,
+                ];
+
+            });
         } catch (Exception $e) {
             return (object)[
                 'status'             => 424,
                 'error'              => $e->getMessage()
             ];
         }
-
-        return (object)[
-            'status'                 => 200,
-        ];
     }
 }

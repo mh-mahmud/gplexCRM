@@ -123,9 +123,11 @@
 						<tr class="fw-bolder text-muted bg-light bd-cyan">
 						    <th class="ps-4 rounded-start min-w-50px">SL</th>
 						    <th class="min-w-150px">To</th>
+						    <th class="min-w-150px">Lead</th>
 							<th class="min-w-150px">Email Subject</th>
 							<th class="min-w-140px">Time</th>
 							<th class="rounded-end min-w-50px">Status</th>
+							<th class="min-w-100px text-end-new">Actions</th>
 						</tr>
 						</thead>
 						<!--end::Table head-->
@@ -135,6 +137,7 @@
 						<tr>
 							<td class="ps-5 text-dark fs-6">{{($emails->currentPage() - 1) * $emails->perPage() + $loop->iteration}}</td>
 							<td class="text-dark fs-6">{{ $email->email_to }}</td>
+							<td class="text-dark fs-6">{{ $email->first_name }} {{ $email->last_name }}</td>
 							<td class="text-dark fs-6">{{ $email->email_subject }}</td>
 							<td class="text-dark fs-6">{{ Carbon::parse($email->log_time)->format('d-m-Y h:i A') }}</td>
 		                    <td class="text-dark fs-6">
@@ -144,6 +147,33 @@
 									<span class="badge badge-light-danger">Fail</span>
 								@endif
                             </td>
+							<td>
+								<div
+								class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
+									<a href="{{ route('send-email-show', $email->id) }}"
+									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+										<!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+										<span class="svg-icon svg-icon-3">
+													<svg xmlns="http://www.w3.org/2000/svg"
+														width="24px" height="24px" viewBox="0 0 24 24">
+															<g stroke="none" stroke-width="1"
+															fill="none" fill-rule="evenodd">
+																<rect x="0" y="0" width="24"
+																	height="24"/>
+																<path
+																	d="M3,12 C3,12 5.45454545,6 12,6 C16.9090909,6 21,12 21,12 C21,12 16.9090909,18 12,18 C5.45454545,18 3,12 3,12 Z"
+																	fill="black" fill-rule="nonzero"
+																	opacity="0.7"/>
+																<path
+																	d="M12,15 C10.3431458,15 9,13.6568542 9,12 C9,10.3431458 10.3431458,9 12,9 C13.6568542,9 15,10.3431458 15,12 C15,13.6568542 13.6568542,15 12,15 Z"
+																	fill="black" opacity="0.7"/>
+															</g>
+														</svg>
+												</span>
+										<!--end::Svg Icon-->
+									</a>
+								</div>
+							</td>
 						</tr>
 						@endforeach
 
