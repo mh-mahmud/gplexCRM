@@ -5,7 +5,8 @@ namespace App\Helpers;
 use App\Models\Logs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 class Helper
 {
     public static function generateTableId() 
@@ -66,6 +67,25 @@ class Helper
                     ->get();
         }
 
+    }
+
+    /**
+     * If date is valid then return ture otherwise false
+     * @return Bool
+     */
+    public static function isDateValid($date, $format)
+    {
+        $validator = Validator::make(['date' => $date], ['date' => "date|date_format:{$format}"]);
+        return !$validator->fails();
+    }
+
+    public static function isDateRangeValid($startDate, $endDate):bool{
+        if(strtotime($startDate) > strtotime($endDate)){// Start date is after end date
+            return false;
+        }
+        $startDate  = Carbon::parse($startDate);
+        $endDate    = Carbon::parse($endDate);
+        return config('constants.MAX_REPORT_DAYS') >= $startDate->diffInDays($endDate);
     }
 
 }

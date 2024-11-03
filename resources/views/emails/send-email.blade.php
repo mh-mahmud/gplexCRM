@@ -207,11 +207,11 @@
                 const selectedId = this.value;
                 const selectedTemplate = templates.find(template => template.id == selectedId);
                 if (selectedTemplate) {
-                    document.getElementById('email_subject').value = selectedTemplate.email_subject;
+                    // document.getElementById('email_subject').value = selectedTemplate.email_subject;
                     $('.editor').summernote('code', selectedTemplate.email_content);
 
                 } else {
-                    document.getElementById('email_subject').value = '';
+                    // document.getElementById('email_subject').value = '';
                     $('.editor').summernote('code', '');
 
                 }
