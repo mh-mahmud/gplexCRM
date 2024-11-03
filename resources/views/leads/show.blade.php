@@ -503,7 +503,60 @@ use Carbon\Carbon;
                     <div class="card">
                         <div class="card-body">
 
-                            Email Section
+                            <!--begin::Body-->
+                             <div class="card-body p-1">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <strong class="fs-3">Emails</strong>
+                                    <a class="btn btn-success btn-sm" target="_blank" href="{{ route('send-email') }}">
+                                        <i class="bi bi-plus-lg"></i>
+                                        Send Email
+                                    </a>
+                                </div>
+                                <div class="table-responsive">
+                                    @if($emails->isNotEmpty())
+                                    <table class="table table-sm table-condensed table-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                                        <thead>
+                                        <tr class="fw-bolder text-muted bg-light bd-cyan">
+                                            <th class="ps-4 rounded-start min-w-50px">SL</th>
+                                            <th class="min-w-150px">To</th>
+                                            <th class="min-w-150px">Lead</th>
+                                            <th class="min-w-150px">Email Subject</th>
+                                            <th class="min-w-140px">Time</th>
+                                            <th class="rounded-end min-w-50px">Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @php
+                                            $i=1;
+                                        @endphp
+                                        @foreach ($emails as $email)
+                                        <tr>
+                                            <td class="ps-5 text-dark fs-6">{{ $i }}</td>
+                                            <td class="text-dark fs-6">{{ $email->email_to }}</td>
+                                            <td class="text-dark fs-6">{{ $lead->first_name }} {{ $lead->last_name }}</td>
+                                            <td class="text-dark fs-6">{{ $email->email_subject }}</td>
+                                            <td class="text-dark fs-6">{{ Carbon::parse($email->log_time)->format('d-m-Y h:i A') }}</td>
+                                            <td class="text-dark fs-6">
+                                                @if ($email->send_status == config('constants.campaign_status')["Success"])
+                                                    <span class="badge badge-light-success">Success</span>
+                                                @elseif ($email->status == 0)
+                                                    <span class="badge badge-light-danger">Fail</span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @php
+                                            $i++;
+                                        @endphp
+                                        @endforeach
+
+                                        </tbody>
+                                    </table>
+                                    @else
+                                        <p>No results found.</p>
+                                    @endif
+                                </div>
+                            </div>
+                            <!--end::Body-->
 
                         </div>
                     </div>
@@ -513,7 +566,73 @@ use Carbon\Carbon;
                     <div class="card">
                         <div class="card-body">
 
-                            SMS Section
+                            <!--begin::Body-->
+                             <div class="card-body p-1">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <strong class="fs-3">SMS List</strong>
+                                    <a class="btn btn-success btn-sm" target="_blank" href="{{ route('send-sms') }}">
+                                        <i class="bi bi-plus-lg"></i>
+                                        Send SMS
+                                    </a>
+                                </div>
+
+
+
+                                <div class="table-responsive">
+                                    @if($sms->isNotEmpty())
+                                        <!--begin::Table-->
+                                        <table
+                                            class="table table-sm table-condensed table-row-gray-100 align-middle gs-0 gy-3 table-row-bordered">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                            <tr class="fw-bolder text-muted bg-light bd-cyan">
+                                                <th class="ps-4">SL</th>
+                                                <th class="min-w-150px">To</th>
+                                                <th class="min-w-150px">Lead</th>
+                                                <th class="min-w-150px">SMS Body</th>
+                                                <th class="min-w-140px">Send Time</th>
+                                                <th class=" min-w-120px">Status</th>
+                                            </tr>
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody>
+                                            @php
+                                                $i=1;
+                                            @endphp
+                                            @foreach ($sms as $value)
+                                                <tr>
+                                                    <td class="ps-5 text-dark fs-6">{{ $i }}</td>
+                                                    <td class="text-dark fs-6">{{ $value->sms_to }}</td>
+                                                    <td class="text-dark fs-6">{{ $lead->first_name }} {{ $lead->last_name }}</td>
+                                                    <td class="text-dark fs-6">{{ $value->sms_text }}</td>
+                                                    <td class="text-dark fs-6">{{ Carbon::parse($value->log_time)->format('d-m-Y h:i A') }}</td>
+                                                    <td>
+                                                        @if ($value->send_status == 1)
+                                                            <span class="badge badge-light-success">Success</span>
+                                                        @elseif ($value->status == 0)
+                                                            <span class="badge badge-light-danger">Fail</span>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @php
+                                                $i++;
+                                            @endphp
+                                            @endforeach
+
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                    @else
+                                        <p>No results found.</p>
+                                    @endif
+                                    <!--end::Table-->
+                                </div>
+
+
+
+                            </div>
+                            <!--end::Body-->
 
                         </div>
                     </div>

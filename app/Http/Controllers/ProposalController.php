@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Services\ProposalService;
 use App\Services\CountryService;
 use App\Services\CurrencyService;
+use App\Helpers\Helper;
 
 use Illuminate\Http\Request;
 
@@ -54,9 +55,8 @@ class ProposalController extends Controller {
         ]);
 
         $entry = $this->proposalService->save_proposal($request);
+        Helper::storeLog("proposal sent successfully", "proposal", "save proposal", null, $request->lead_id);
         return redirect()->route('proposal-list')->with('success', 'Proposal created successfully.');
-
-        // dd($request->all());
     }
 
     public function show($id) {
@@ -89,11 +89,13 @@ class ProposalController extends Controller {
         ]);
 
         $entry = $this->proposalService->update_proposal($request, $id);
+        Helper::storeLog("proposal edited", "proposal", "edit proposal", null, $request->lead_id);
         return redirect()->back()->with('success', 'Proposal updated successfully.');
     }
 
     public function delete_proposal($id) {
         $this->proposalService->delete_proposal($id);
+        Helper::storeLog("proposal deleted successfully", "proposal", "delete proposal", null, $request->lead_id);
         return redirect()->back()->with('success', 'Proposal deleted successfully.');
     }
     

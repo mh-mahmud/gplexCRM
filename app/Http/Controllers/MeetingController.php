@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Lead;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\Helper;
 
 class MeetingController extends Controller
 {
@@ -71,6 +72,7 @@ class MeetingController extends Controller
         }
 
         $this->meetingService->createMeeting($request);
+        Helper::storeLog("Meeting created successfully", "Meeting", "Create Meeting", null, $request->lead_id);
         return redirect()->route('meeting-index')->with('success', 'Meeting created successfully.');
     }
 
@@ -88,7 +90,7 @@ class MeetingController extends Controller
         if ($meeting->recipients) {
             $recipientIds = explode(',', $meeting->recipients); // Assuming recipients are stored as comma-separated IDs
             $users = User::whereIn('id', $recipientIds)->get();
-    }
+        }
         return view('meetings.show', compact('meeting','lead','users'));
     }
 
@@ -138,6 +140,7 @@ class MeetingController extends Controller
         }
 
         $this->meetingService->updateMeeting($request, $id);
+        Helper::storeLog("Meeting edited successfully", "Meeting", "Edit Meeting", null, $request->lead_id);
         return redirect()->route('meeting-index')->with('success', 'Meeting updated successfully.');
     }
 
@@ -145,6 +148,7 @@ class MeetingController extends Controller
     public function destroy($id)
     {
         $this->meetingService->deleteMeeting($id);
+        Helper::storeLog("Meeting deleted successfully", "Meeting", "delete Meeting", null, $request->lead_id);
         return redirect()->route('meeting-index')->with('success', 'Meeting deleted successfully.');
     }
 
@@ -197,8 +201,10 @@ class MeetingController extends Controller
         $result = $this->meetingService->updateFeedback($id, $request->input('meeting_feedback'), $request->input('rating'));
 
         if ($result) {
+            Helper::storeLog("Meeting feedback updated successfully", "Meeting", "updateFeedback", null);
             return redirect()->route('meeting-index')->with('success', 'Meeting feedback updated successfully.');
         } else {
+            Helper::storeLog("Failed to update the meeting feedback", "Meeting", "updateFeedback", null);
             return back()->withErrors(['error' => 'Failed to update the meeting.']);
         }
     }

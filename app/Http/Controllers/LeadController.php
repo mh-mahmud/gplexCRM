@@ -16,6 +16,10 @@ use App\Models\LeadsForm;
 use App\Models\Customer;
 use App\Models\LeadFormDetail;
 use App\Models\Lead;
+use App\Models\EmailLog;
+use App\Models\SmsQueue;
+use App\Models\Meeting;
+use App\Models\Proposal;
 use App\Services\LeadService;
 use Illuminate\Support\Facades\Schema;
 use DateTime;
@@ -170,7 +174,12 @@ class LeadController  extends Controller
             $tableData[$tableName] = DB::table($tableName)->where('lead_id', $lead->id)->orderBy('id', 'desc')->get();
         }
 
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id'));
+        $emails = EmailLog::where('lead_id', $id)->get();
+        $sms = SmsQueue::where('lead_id', $id)->get();
+        $meetings = Meeting::where('lead_id', $id)->get();
+        $proposals = Proposal::where('lead_id', $id)->get();
+
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals'));
     }
 
 

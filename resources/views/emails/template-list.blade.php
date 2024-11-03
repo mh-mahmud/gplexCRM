@@ -119,7 +119,7 @@
 						<thead>
 						<tr class="fw-bolder text-muted bg-light bd-cyan">
 						    <th class="ps-4 min-w-150px">SL</th>
-							<th class="min-w-150px">Email Subject</th>
+							<th class="min-w-150px">Template Title</th>
 							<th class="min-w-120px">Status</th>
 							<th class="min-w-100px text-end-new">Actions</th>
 						</tr>
