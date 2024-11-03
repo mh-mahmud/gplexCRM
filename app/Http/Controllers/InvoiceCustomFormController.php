@@ -14,6 +14,13 @@ class InvoiceCustomFormController extends Controller
     {
         $this->invoiceCustomFormService = $invoiceCustomFormService;
     }
+
+    public function index()
+    {
+        //$invoices = Invoice::all();
+        $invoices = $this->invoiceCustomFormService->getAllCustomInvoice();
+        return view('invoice_custom.index', compact('invoices'));
+    }
     public function create()
     {
         return view('invoice_custom.create');
@@ -45,10 +52,35 @@ class InvoiceCustomFormController extends Controller
 
         return redirect()->route('invoice-custom-index')->with('success', 'Invoice Form created successfully.');
     }
-    
 
-    public function show(InvoiceCustomForm $invoiceCustomForm)
+    
+    public function show($id)
     {
-        return view('invoice_custom_form.show', compact('invoiceCustomForm'));
+        $invoice = InvoiceCustomForm::findOrFail($id);
+        //directly access field_details as an array and show field name
+        $fieldNames = collect($invoice->field_details)->pluck('field_name')->implode(', ');
+        $footerFieldNames = collect($invoice->footer_details)->pluck('field_name')->implode(', ');
+        return view('invoice_custom.show', compact('invoice','fieldNames','footerFieldNames'));
     }
+
+
+    public function destroy($id)
+    {
+        InvoiceCustomForm::destroy($id);
+        return redirect()->route('invoice-custom-index')->with('success', 'Invoice Deleted Successfully!');
+    }
+
+    // searech for invoice
+    public function search(Request $request)
+    {
+        $searchTerm = trim($request->input('search'));
+
+        if (empty($searchTerm)) {
+            return redirect()->route('invoice-custom-index')->with('error', 'Search field cannot be blank.');
+        }
+
+        $invoices = $this->invoiceCustomFormService->searchCustomInvoice($request);
+        return view('invoice_custom.index', compact('invoices'));
+    }
+
 }

@@ -30,7 +30,7 @@
 
             <!--end::Wrapper-->
             <!--begin::Button-->
-            <a href="{{ route('invoice-custom-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Invoice Form List</a>
+            <a href="{{ route('invoice-custom-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Custom Invoice List</a>
             <!--end::Button-->
         </div>
         <!--end::Actions-->
@@ -161,15 +161,15 @@
                                 <div class="form-group">
                                     <label class="form-label fw-bolder text-dark">Total in Words</label>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="total_in_words" value="Yes" id="total-in-words-yes" {{ old('total_in_words') == 'Yes' ? 'checked' : '' }}>
+                                        <input class="form-check-input" type="radio" name="total_in_word" value="Yes" id="total-in-words-yes" {{ old('total_in_word') == 'Yes' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="total-in-words-yes">Yes</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="total_in_words" value="No" id="total-in-words-no" {{ old('total_in_words') == 'No' ? 'checked' : '' }}>
+                                        <input class="form-check-input" type="radio" name="total_in_word" value="No" id="total-in-words-no" {{ old('total_in_word') == 'No' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="total-in-words-no">No</label>
                                     </div>
-                                    @if ($errors->has('total_in_words'))
-                                    <span class="text-danger">{{ $errors->first('total_in_words') }}</span>
+                                    @if ($errors->has('total_in_word'))
+                                    <span class="text-danger">{{ $errors->first('total_in_word') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -180,17 +180,19 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label fw-bolder text-dark">Bank Details</label>
-                                    <textarea class="form-control form-control-sm form-control-solid" name="bank_details" rows="3">{{ old('bank_details') }}</textarea>
+                                    <textarea class="form-control form-control-sm form-control-solid editor" name="bank_details" rows="3">{{ old('bank_details') }}</textarea>
                                     @if ($errors->has('bank_details'))
                                     <span class="text-danger">{{ $errors->first('bank_details') }}</span>
                                     @endif
                                 </div>
                             </div>
 
+
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label fw-bolder text-dark">Issued By</label>
-                                    <textarea class="form-control form-control-sm form-control-solid" name="issued_by" rows="3">{{ old('issued_by') }}</textarea>
+                                    <textarea class="form-control form-control-sm form-control-solid editor" name="issued_by" rows="3">{{ old('issued_by') }}</textarea>
                                     @if ($errors->has('issued_by'))
                                     <span class="text-danger">{{ $errors->first('issued_by') }}</span>
                                     @endif
@@ -294,6 +296,22 @@
         const fieldGroup = button.closest('.footer-field-group');
         fieldGroup.remove();
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('.editor').summernote({
+            height: 0, // set the height to 200px
+            toolbar: [
+                // customize toolbar options as needed
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']]
+            ]
+        });
+    });
 </script>
 
 <!-- End Forms-->

@@ -7,6 +7,14 @@ use App\Models\InvoiceCustomForm;
 
 class InvoiceCustomFormService
 {
+
+
+    
+    public function getAllCustomInvoice()
+    {
+        return InvoiceCustomForm::orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
+    }
+
     public function createInvoiceCustomForm(array $data)
     {   //store json
         return InvoiceCustomForm::create([
@@ -18,5 +26,16 @@ class InvoiceCustomFormService
             'issued_by' => $data['issued_by'] ?? null,
         ]);
     }
+
+
+    public function searchCustomInvoice($request)
+    {
+        $searchTerm = trim($request->input('search'));
+
+        return InvoiceCustomForm::where('invoice_name', 'LIKE', "%{$searchTerm}%")
+        ->orderBy('created_at', 'desc')
+        ->paginate(config('constants.ROW_PER_PAGE'));
+    }
+    
 
 }

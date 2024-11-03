@@ -24,7 +24,7 @@ class LeadsFormService
                     ->paginate(config('constants.ROW_PER_PAGE'));*/
     }
 
-    public function getAllLeadsForms()
+    public function getAllLeadsForms_live_server_problem()
     {
         return LeadsForm::leftJoin('leads_form as parents', 'leads_form.parent_id', '=', 'parents.form_id')
             ->leftJoin('lead_form_details', 'leads_form.form_id', '=', 'lead_form_details.form_id')
@@ -48,6 +48,42 @@ class LeadsFormService
             ->orderBy('leads_form.id', 'asc')
             ->paginate(config('constants.ROW_PER_PAGE'));
     }
+
+
+    public function getAllLeadsForms()
+    {
+        $leadsForms = LeadsForm::with(['leadFormDetail' => function($query) {
+                $query->select('form_id', 'table_name'); // only required columns
+            }])
+            ->leftJoin('leads_form as parents', 'leads_form.parent_id', '=', 'parents.form_id')
+            ->select(
+                'leads_form.id',
+                'leads_form.form_id',
+                'leads_form.form_name',
+                'leads_form.form_status',
+                'leads_form.parent_id',
+                'parents.form_name as parent_name'
+            )
+            ->groupBy(
+                'leads_form.id',
+                'leads_form.form_id',
+                'leads_form.form_name',
+                'leads_form.form_status',
+                'leads_form.parent_id',
+                'parents.form_name'
+            )
+            ->orderBy('leads_form.id', 'asc')
+            ->paginate(config('constants.ROW_PER_PAGE'));
+    
+        //process the `table_names` in PHP
+        foreach ($leadsForms as $form) {
+            $form->table_names = $form->leadFormDetail->pluck('table_name')->unique()->implode(', ');
+        }
+    
+        return $leadsForms;
+    }
+    
+
     
     
     public function createLeadsForm($data)
@@ -89,7 +125,7 @@ class LeadsFormService
         return $query->paginate(config('constants.ROW_PER_PAGE'));
     }
 
-    public function searchLeadForm($request)
+    public function searchLeadForm_live_server_problem($request)
     {
         $searchTerm = trim($request->input('search'));
 
@@ -119,6 +155,46 @@ class LeadsFormService
 
         return $query->paginate(config('constants.ROW_PER_PAGE'));
     }
+
+    public function searchLeadForm($request)
+    {
+        $searchTerm = trim($request->input('search'));
+
+        // fetch leads forms with parent and leadFormDetail relationships
+        $query = LeadsForm::with(['leadFormDetail' => function ($query) {
+            $query->select('form_id', 'table_name'); // Load only required columns
+        }])
+            ->leftJoin('leads_form as parents', 'leads_form.parent_id', '=', 'parents.form_id')
+            ->select(
+                'leads_form.id',
+                'leads_form.form_id',
+                'leads_form.form_name',
+                'leads_form.form_status',
+                'leads_form.parent_id',
+                'parents.form_name as parent_name'
+            )
+            ->groupBy(
+                'leads_form.id',
+                'leads_form.form_id',
+                'leads_form.form_name',
+                'leads_form.form_status',
+                'leads_form.parent_id',
+                'parents.form_name'
+            );
+
+        //search filter
+        $query->where(function ($q) use ($searchTerm) {
+            $q->where('leads_form.form_name', 'LIKE', '%' . $searchTerm . '%');
+        });
+        //paginated result
+        $leadsForms = $query->paginate(config('constants.ROW_PER_PAGE'));
+        //table names in PHP
+        foreach ($leadsForms as $form) {
+            $form->table_names = $form->leadFormDetail->pluck('table_name')->unique()->implode(', ');
+        }
+        return $leadsForms;
+    }
+
 
 
     public function deleteLeadsForm($id)

@@ -14,12 +14,12 @@ use Carbon\Carbon;
             data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
             class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
             <!--begin::Title-->
-            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Invoice
+            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Custom Invoice
                 <!--begin::Separator-->
                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                 <!--end::Separator-->
                 <!--begin::Description-->
-                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Invoice List</small>
+                <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Custom Invoice List</small>
                 <!--end::Description-->
             </h1>
             <!--end::Title-->
@@ -125,7 +125,7 @@ use Carbon\Carbon;
             </div>
             <!--end::Wrapper-->
             <!--begin::Button-->
-            <a href="{{ route('invoice-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
+            <a href="{{ route('invoice-custom-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
 
             <!--end::Button-->
         </div>
@@ -146,7 +146,8 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: '{{ session('success')}}',
+            text: '{{ session('
+            success ')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -158,7 +159,8 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: '{{ session('error')}}',
+            text: '{{ session('
+            error ')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -175,12 +177,12 @@ use Carbon\Carbon;
                 <!--begin::Header-->
                 <div class="d-flex justify-content-between align-items-start card-header border-0 p-1">
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bolder fs-3 mb-1">Invoice List</span>
+                        <span class="card-label fw-bolder fs-3 mb-1">Custom Invoice List</span>
                         <!-- <span class="text-muted mt-1 fw-bold fs-7">Agent data here</span> -->
                     </h3>
 
                     <div class="d-flex flex-wrap gap-2">
-                        <form action="{{ route('invoice-search') }}" method="POST" class="d-flex">
+                        <form action="{{ route('invoice-custom-search') }}" method="POST" class="d-flex">
                             @csrf
                             <!--begin::Input group-->
                             <div class="d-flex align-items-center position-relative">
@@ -221,14 +223,10 @@ use Carbon\Carbon;
                             <thead>
                                 <tr class="fw-bolder text-muted bg-light bd-cyan">
                                     <th class="ps-4 min-w-50px">SL</th>
-                                    <th class="min-w-150px">Invoice No</th>
-                                    <th class="min-w-140px">Amount</th>
-                                    <th class="min-w-140px">Total Tax</th>
-                                    <th class="min-w-140px">Discount</th>
-                                    <th class="min-w-140px">Date</th>
-                                    <th class="min-w-120px">Customer</th>
-                                    <th class="min-w-120px">Due Date</th>
-                                    <th class="min-w-120px">Status</th>
+                                    <th class="min-w-150px">Invoice Name</th>
+                                    <th class="min-w-400px">Item Field Name</th>
+                                    <th class="min-w-400px">Footer Field Name</th>
+                                    <th class="min-w-140px">Total In Word</th>
                                     <th class="min-w-100px text-end text-end-new">Actions</th>
                                 </tr>
                             </thead>
@@ -239,32 +237,25 @@ use Carbon\Carbon;
                                 <tr>
 
                                     <td class="ps-5 text-dark fs-6">{{($invoices->currentPage() - 1) * $invoices->perPage() + $loop->iteration}}</td>
-                                    <td class="text-dark fs-6">{{$invoice->invoice_number}}</td>
-                                    <td class="text-dark fs-6 w-200px">{{$invoice->total_amount}}</td>
-                                    <td class="text-dark fs-6 w-200px">{{$invoice->total_tax }}</td>
-                                    <td class="text-dark fs-6 w-200px">{{ $invoice->discount ?? '0.00' }}</td>
-                                    <td class="text-dark fs-6 w-200px">  
-                                        @if($invoice->invoice_date)
-                                        {{ \Carbon\Carbon::parse($invoice->invoice_date)->format('d-m-Y') }}
-                                        @endif
+                                    <td class="text-dark fs-6">{{$invoice->invoice_name}}</td>
+                                    <td class="text-dark fs-6 w-400px"> 
+                                        @php
+                                        $fieldNames = collect($invoice->field_details)->pluck('field_name')->implode(', ');
+                                        @endphp
+                                        {{ $fieldNames }}
                                     </td>
-                                    <td class="text-dark fs-6">{{$invoice->customer->customer_group}}</td>
-                                    <td class="text-dark fs-6"> 
-                                        @if($invoice->due_date)
-                                        {{ \Carbon\Carbon::parse($invoice->due_date)->format('d-m-Y') }}
-                                        @endif
+                                    <td class="text-dark fs-6 w-400px">
+                                         @php
+                                        $footerFieldNames = collect($invoice->footer_details)->pluck('field_name')->implode(', ');
+                                        @endphp
+                                        {{ $footerFieldNames }}
                                     </td>
+                                    <td class="text-dark fs-6 w-200px">{{$invoice->total_in_word}}</td>
 
-
-                                    <td>
-                                       
-                                        <span class="badge badge-light-success">{{$invoice->invoice_status}}</span>
-                                       
-                                    </td>
                                     <td>
                                         <div
                                             class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
-                                            <a href="{{ route('invoice-show', $invoice->id) }}" target="_blank"
+                                            <a href="{{ route('invoice-custom-show', $invoice->id) }}"
                                                 class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                                                 <span class="svg-icon svg-icon-3">
@@ -286,7 +277,7 @@ use Carbon\Carbon;
                                                 </span>
                                                 <!--end::Svg Icon-->
                                             </a>
-                                            <a href="{{ route('invoice-edit', $invoice->id) }}"
+                                            <a href="{{ route('invoice-custom-edit', $invoice->id) }}"
                                                 class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                                 <span class="svg-icon svg-icon-3">
@@ -302,7 +293,7 @@ use Carbon\Carbon;
                                                 </span>
                                                 <!--end::Svg Icon-->
                                             </a>
-                                            <form action="{{ route('invoice-destroy', $invoice->id) }}"
+                                            <form action="{{ route('invoice-custom-destroy', $invoice->id) }}"
                                                 method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
@@ -357,7 +348,7 @@ use Carbon\Carbon;
 
 <script>
     function confirmDelete() {
-        if (confirm("Are you sure you want to delete Invoice?")) {
+        if (confirm("Are you sure you want to delete Custom Invoice?")) {
             document.getElementById('deleteForm').submit();
         }
         return false;

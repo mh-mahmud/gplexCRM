@@ -1,261 +1,201 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.master')
+@php
+    use Carbon\Carbon;
+@endphp
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice</title>
-    <link href="{{url('/')}}/assets/css/invoice.css" rel="stylesheet" type="text/css" />
-</head>
+@section('content')
 
-<body>
+    <!-- <div class="content d-flex flex-column flex-column-fluid" id="kt_content"> -->
 
-    <div class="status">
-        <div class="g-unpaid">
-            <button>
-                Unpaid
-            </button>
-        </div>
-        <div class="status-btn-group">
-            <button onclick="window.location.href='{{ route('invoice-download', $invoice->id) }}'">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-pdf" viewBox="0 0 16 16">
-                    <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1" />
-                    <path d="M4.603 12.087a.8.8 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.7 7.7 0 0 1 1.482-.645 20 20 0 0 0 1.062-2.227 7.3 7.3 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.187-.012.395-.047.614-.084.51-.27 1.134-.52 1.794a11 11 0 0 0 .98 1.686 5.8 5.8 0 0 1 1.334.05c.364.065.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.86.86 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.7 5.7 0 0 1-.911-.95 11.6 11.6 0 0 0-1.997.406 11.3 11.3 0 0 1-1.021 1.51c-.29.35-.608.655-.926.787a.8.8 0 0 1-.58.029m1.379-1.901q-.25.115-.459.238c-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361q.016.032.026.044l.035-.012c.137-.056.355-.235.635-.572a8 8 0 0 0 .45-.606m1.64-1.33a13 13 0 0 1 1.01-.193 12 12 0 0 1-.51-.858 21 21 0 0 1-.5 1.05zm2.446.45q.226.244.435.41c.24.19.407.253.498.256a.1.1 0 0 0 .07-.015.3.3 0 0 0 .094-.125.44.44 0 0 0 .059-.2.1.1 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a4 4 0 0 0-.612-.053zM8.078 5.8a7 7 0 0 0 .2-.828q.046-.282.038-.465a.6.6 0 0 0-.032-.198.5.5 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822q.036.167.09.346z" />
-                </svg>
-                Download
-            </button>
-            <button>Pay Now</button>
-        </div>
-    </div>
-    <div class="inv-main">
+    <!--begin::Toolbar-->
+    <div class="toolbar" id="kt_toolbar">
+        <!--begin::Container-->
+        <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+            <!--begin::Page title-->
+            <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
+                 data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
+                 class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                <!--begin::Title-->
+                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Custom Invoice Details
+                    <!--begin::Separator-->
+                    <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
+                    <!--end::Separator-->
+                    <!--begin::Description-->
+                    <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Custom Invoice Details</small>
+                    <!--end::Description--></h1>
+                <!--end::Title-->
+            </div>
+            <!--end::Page title-->
+            <!--begin::Actions-->
+            <div class="d-flex align-items-center py-1">
+                <!--begin::Wrapper-->
+                <div class="me-4">
+                    <!--begin::Menu-->
 
-        <div class="py-4">
-            <div class="px-14 py-6">
-                <table class="w-full border-collapse border-spacing-0">
-                    <tbody>
-                        <tr>
-                            <td class="w-full align-top">
+                    <!--begin::Menu 1-->
+                    <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
+                         id="kt_menu_61484bf44d957">
+                        <!--begin::Header-->
+                        <div class="px-7 py-5">
+                            <div class="fs-5 text-dark fw-bolder">Filter Options</div>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Menu separator-->
+                        <div class="separator border-gray-200"></div>
+                        <!--end::Menu separator-->
+                        <!--begin::Form-->
+                        <div class="px-7 py-5">
+                            <!--begin::Input group-->
+                            <div class="mb-10">
+                                <!--begin::Label-->
+                                <label class="form-label fw-bold">Status:</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
                                 <div>
-                                    <img src="{{ asset('uploads/logo.svg') }}" class="h-12" />
+                                    <select class="form-select form-select-solid" data-kt-select2="true"
+                                            data-placeholder="Select option"
+                                            data-dropdown-parent="#kt_menu_61484bf44d957"
+                                            data-allow-clear="true">
+                                        <option></option>
+                                        <option value="1">Approved</option>
+                                        <option value="2">Pending</option>
+                                        <option value="2">In Process</option>
+                                        <option value="2">Rejected</option>
+                                    </select>
                                 </div>
-                            </td>
-
-                            <td class="align-top">
-                                <div class="text-sm">
-                                    <table class="border-collapse border-spacing-0">
-                                        <tbody>
-                                            <tr>
-                                                <td class="border-r pr-4">
-                                                    <div>
-                                                        <p class="whitespace-nowrap text-slate-400 text-right">Date</p>
-                                                        <p class="whitespace-nowrap font-bold text-main text-right">{{ \Carbon\Carbon::parse($invoice->invoice_date)->format('F j, Y') }}</p>
-                                                    </div>
-                                                </td>
-                                                <td class="border-r pr-4">
-                                                    <div>
-                                                        <p class="whitespace-nowrap text-slate-400 text-right">Due Date</p>
-                                                        <p class="whitespace-nowrap font-bold text-main text-right">{{ \Carbon\Carbon::parse($invoice->due_date)->format('F j, Y') }}</p>
-                                                    </div>
-                                                </td>
-                                                <td class="pl-4">
-                                                    <div>
-                                                        <p class="whitespace-nowrap text-slate-400 text-right">Invoice #</p>
-                                                        <p class="whitespace-nowrap font-bold text-main text-right">{{$invoice->invoice_number}}</p>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="mb-10">
+                                <!--begin::Label-->
+                                <label class="form-label fw-bold">Member Type:</label>
+                                <!--end::Label-->
+                                <!--begin::Options-->
+                                <div class="d-flex">
+                                    <!--begin::Options-->
+                                    <label
+                                        class="form-check form-check-sm form-check-custom form-check-solid me-5">
+                                        <input class="form-check-input" type="checkbox" value="1"/>
+                                        <span class="form-check-label">Author</span>
+                                    </label>
+                                    <!--end::Options-->
+                                    <!--begin::Options-->
+                                    <label
+                                        class="form-check form-check-sm form-check-custom form-check-solid">
+                                        <input class="form-check-input" type="checkbox" value="2"
+                                               checked="checked"/>
+                                        <span class="form-check-label">Customer</span>
+                                    </label>
+                                    <!--end::Options-->
                                 </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="bg-slate-100 px-14 py-6 text-sm">
-                <table class="w-full border-collapse border-spacing-0">
-                    <tbody>
-                        <tr>
-                            <td class="w-1/2 align-top">
-                                <div class="text-sm text-neutral-600">
-                                    <p class="font-bold">Supplier Company INC</p>
-                                    <p>Number: 23456789</p>
-                                    <p>VAT: 23456789</p>
-                                    <p>6622 Abshire Mills</p>
-                                    <p>Port Orlofurt, 05820</p>
-                                    <p>United States</p>
+                                <!--end::Options-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="mb-10">
+                                <!--begin::Label-->
+                                <label class="form-label fw-bold">Notifications:</label>
+                                <!--end::Label-->
+                                <!--begin::Switch-->
+                                <div
+                                    class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" value=""
+                                           name="notifications" checked="checked"/>
+                                    <label class="form-check-label">Enabled</label>
                                 </div>
-                            </td>
-                            <td class="w-1/2 align-top text-right">
-                                <div class="text-sm text-neutral-600">
-                                    <p class="font-bold">Bill To</p>
-                                    <p>{{$invoice->customer?->customer_group}}</p>
-                                    <p>{{$invoice->address}}</p>
-                                    <p>Sale Agent: {{$invoice->saleAgent?->first_name}} {{$invoice->saleAgent?->last_name}}</p>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="px-14 py-10 text-sm text-neutral-700">
-                <table class="w-full border-collapse border-spacing-0">
-                    <thead>
-                        <tr>
-                            <td class="border-b-2 border-main pb-3 pl-3 text-center font-bold text-main">#</td>
-                            <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Item</td>
-                            <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Description</td>
-                            <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Qty.</td>
-                            <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Rate</td>
-                            <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Tax</td>
-                            <td class="border-b-2 border-main pb-3 pl-2 text-right font-bold text-main">Amount</td>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($invoiceItems as $item)
-                        <tr>
-                            <td class="border-b py-3 pl-3 text-center">{{$loop->iteration }}.</td>
-                            <td class="border-b py-3 pl-2 text-center">{{$item['Item']}}</td>
-                            <td class="border-b py-3 pl-2 text-center">{{$item['Description']}}</td>
-                            <td class="border-b py-3 pl-2 text-center">{{$item['Qty']}}</td>
-                            <td class="border-b py-3 pl-2 text-center">{{$item['Rate']}}</td>
-                            <td class="border-b py-3 pl-2 text-center">{{$item['Tax']}}%</td>
-                            <td class="border-b py-3 pl-2 text-right">{{$item['Amount']}}</td>
-                        </tr>
-                        @endforeach
-                        <tr>
-                            <td colspan="7">
-                                <table class="w-full border-collapse border-spacing-0">
-                                    <tbody>
-                                        <tr>
-                                            <td class="w-full"></td>
-                                            <td>
-                                                <table class="w-full border-collapse border-spacing-0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="border-b p-3">
-                                                                <div class="whitespace-nowrap text-slate-400">Sub Total:</div>
-                                                            </td>
-                                                            <td class="border-b p-3 text-right">
-                                                                <div class="whitespace-nowrap font-bold text-main">TK{{$invoice->sub_total}}</div>
-                                                            </td>
-                                                        </tr>
-                                                        @if(!empty($invoice->discount))
-                                                        <tr>
-                                                            <td class="p-3">
-                                                                <div class="whitespace-nowrap text-slate-400">Discount:</div>
-                                                            </td>
-                                                            <td class="p-3 text-right">
-                                                                <div class="whitespace-nowrap font-bold text-main">TK-{{$invoice->discount}}</div>
-                                                            </td>
-                                                        </tr>
-                                                        @endif
-
-                                                        @if($invoice->total_tax>0)
-                                                        <tr>
-                                                            <td class="p-3">
-                                                                <div class="whitespace-nowrap text-slate-400">Tax Total:</div>
-                                                            </td>
-                                                            <td class="p-3 text-right">
-                                                                <div class="whitespace-nowrap font-bold text-main">TK{{$invoice->total_tax}}</div>
-                                                            </td>
-                                                        </tr>
-                                                        @endif
-
-                                                        @if(!empty($invoice->adjustment))
-                                                        <tr>
-                                                            <td class="p-3">
-                                                                <div class="whitespace-nowrap text-slate-400">Adjustment:</div>
-                                                            </td>
-                                                            <td class="p-3 text-right">
-                                                                <div class="whitespace-nowrap font-bold text-main">TK{{$invoice->adjustment}}</div>
-                                                            </td>
-                                                        </tr>
-                                                        @endif
-                                                        <tr>
-                                                            <td class="bg-main p-3">
-                                                                <div class="whitespace-nowrap font-bold text-white">Total Amount:</div>
-                                                            </td>
-                                                            <td class="bg-main p-3 text-right">
-                                                                <div class="whitespace-nowrap font-bold text-white">TK{{$invoice->total_amount}}</div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="px-14 text-sm text-neutral-700 border-b py-3">
-                <p class="text-main font-bold">Terms And Condition</p>
-                <p>{{$invoice->terms_conditions}}</p>
-
-            </div>
-
-
-            <div class="px-14 text-sm text-neutral-700 border-b py-3">
-                <p class="text-main font-bold">Transactions</p>
-                <p>No payments found for this invoice
-
-                </p>
-
-            </div>
-
-
-            <div class="px-14 text-sm text-neutral-700 py-3">
-                <p class="text-main font-bold">PAYMENT DETAILS</p>
-                <p>Banks of Banks</p>
-                <p>Bank/Sort Code: 1234567</p>
-                <p>Account Number: 123456678</p>
-                <p>Payment Reference: BRA-00335</p>
-            </div>
-
-            <div class="px-14 py-3 text-sm text-neutral-700 payment-area">
-                <div>
-                    <p class="text-main font-bold">Online Payment</p>
-                    <label for="payment-method">
-                        <input type="radio" id="payment-method" name="payment-method">
-                        Stripe Checkout
-                    </label>
+                                <!--end::Switch-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Actions-->
+                            <div class="d-flex justify-content-end">
+                                <button type="reset"
+                                        class="btn btn-sm btn-light btn-active-light-primary me-2"
+                                        data-kt-menu-dismiss="true">Reset
+                                </button>
+                                <button type="submit" class="btn btn-sm btn-primary"
+                                        data-kt-menu-dismiss="true">Apply
+                                </button>
+                            </div>
+                            <!--end::Actions-->
+                        </div>
+                        <!--end::Form-->
+                    </div>
+                    <!--end::Menu 1-->
+                    <!--end::Menu-->
                 </div>
-
-                <div>
-                    <p class="text-main font-bold">Offline Payment</p>
-                    <p>Bank</p>
-                </div>
+                <!--end::Wrapper-->
+                <!--begin::Button-->
+                <a href="{{ route('invoice-custom-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Custom Invoice
+                    List</a>
+                <!--end::Button-->
             </div>
+            <!--end::Actions-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Toolbar-->
 
-            <div class="px-14 py-3 text-sm text-neutral-700">
-                <div>
-                    <label for="payment-amount" class="text-main font-bold">Amount
-                        <span class="">
-                            <input type="text" name="" id="payment-amount">
-                            <span class="font-bold">TK</span>
-                        </span>
-                    </label>
+    <!--**********************************
+                             Tables View
+               ***********************************-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xxl-8 mx-auto">
+                <!-- <div class="card mb-5"> -->
+                <div class="card mt-4">
+                    <div class="card-header bg-light bd-cyan">
+                        <div class="card-title">
+                            <h2>Custom Invoice Details</h2>
+                        </div>
+                    </div>
+                    <!--begin::Body-->
+                    <div class="card-body p-1">
+
+                        <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                            <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Invoice Name</span>
+                            <span>{{ $invoice->invoice_name}}</span>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                            <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Item Field Name</span>
+                            <span>{{$fieldNames}}</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                            <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Footer Field Name</span>
+                            <span>{{$footerFieldNames}}</span>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                            <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Total In Word</span>
+                            <span>{{ $invoice->total_in_word }}</span>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                            <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Bank Details</span>
+                            <span>{{ $invoice->bank_details }}</span>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                            <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Issued By</span>
+                            <span>{{ $invoice->issued_by }}</span>
+                        </div>
+
+
+                    </div>
+
+
                 </div>
 
             </div>
-
-            <div class="px-14 text-sm text-neutral-700">
-                <button class="pay-now">
-                    Pay Now
-                </button>
-
-            </div>
-
         </div>
     </div>
 
-</body>
 
-</html>
+    <!-- End Tables View-->
+
+
+    <!-- </div> -->
+    <!--end::Content-->
+
+@endsection
