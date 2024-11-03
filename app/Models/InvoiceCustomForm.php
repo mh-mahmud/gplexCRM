@@ -9,6 +9,8 @@ class InvoiceCustomForm extends Model
 {
     use HasFactory;
 
+    protected $table = 'invoice_custom_form';
+
     protected $fillable = [
         'invoice_name',
         'field_details',

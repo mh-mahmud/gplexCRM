@@ -351,3 +351,5 @@ CREATE TABLE invoice_custom_form (
 
 ALTER TABLE `invoices` ADD COLUMN `payment_details` TEXT NULL AFTER `item_description`;
 
+-- 31-10-2024
+ALTER TABLE `email_queue` CHANGE `customer_id` `lead_id` BIGINT NULL DEFAULT NULL;
