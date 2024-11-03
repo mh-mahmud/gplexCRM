@@ -32,6 +32,7 @@ class SmsService
             $sql->where('title','like', '%' . $data["search"] . '%');
 
         }
+       
         if (isset($data['paginate']) && $data['paginate'] == false) {
             return  $sql->where('sms_templates.status', 1)->orderBy('id', 'DESC')->get();
 
@@ -184,6 +185,10 @@ class SmsService
         $sql = SmsQueue::query()
                     ->select('sms_queue.*', 'leads.first_name', 'leads.last_name')
                     ->leftJoin('leads', 'sms_queue.lead_id', '=', 'leads.id');
+        if (Auth::user()->user_type === 'agent') {
+            $sql->where('user_id',Auth::id());
+
+        }
         $data = $request->all();
         if(!empty($data["search"])) {
             $sql->where('sms_to','like', '%' . $data["search"] . '%');
@@ -249,7 +254,8 @@ class SmsService
                     'sub_module'    => "Send Bulk SMS",
                     'user_id'       => Auth::id(),
                     'lead_id'       => $lead->id ?? null,
-                    'status'        => 1
+                    'status'        => 1,
+                    'created_at'    => Carbon::now()
                     ];
 
 
