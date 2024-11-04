@@ -20,6 +20,7 @@ use App\Models\EmailLog;
 use App\Models\SmsQueue;
 use App\Models\Meeting;
 use App\Models\Proposal;
+use App\Models\Logs;
 use App\Services\LeadService;
 use Illuminate\Support\Facades\Schema;
 use DateTime;
@@ -178,9 +179,9 @@ class LeadController  extends Controller
         $sms = SmsQueue::where('lead_id', $id)->get();
         $meetings = Meeting::where('lead_id', $id)->get();
         $proposals = Proposal::where('lead_id', $id)->get();
-        
+        $logs = Logs::where('lead_id', $id)->get();
 
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals'));
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs'));
     }
 
 
