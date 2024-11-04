@@ -933,24 +933,24 @@ document.addEventListener('DOMContentLoaded', function() {
         const fieldDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.fields) : null;
 
         if (fieldDetails && fieldDetails.length > 0) {
-            // Hide default table, show custom table
+            
             defaultInvoice.style.display = 'none';
             proposalTable.style.display = 'table';
 
             populateCustomInvoiceFields(fieldDetails);
         } else {
-            // Show default table and hide custom table if no valid custom invoice is selected
+            
             defaultInvoice.style.display = 'block';
             proposalTable.style.display = 'none';
         }
     });
 
-    // Populate custom invoice table fields based on selected option
+    
     function populateCustomInvoiceFields(fields) {
         // Set headers in custom invoice table
         customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Action</th>';
 
-        // Add the first row with inputs and the "Add More" button
+        
         customInvoiceBody.innerHTML = `
             <tr>
                 ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
@@ -963,7 +963,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </tr>
         `;
 
-        // Initialize functionality for the "Add More" button and remove buttons
+        //"add More" button and remove buttons
         addRemoveFunctionality();
 
         // Add event listener for the "Add More" button
@@ -978,11 +978,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tr>
             `);
 
-            addRemoveFunctionality(); // Reapply remove functionality to new row
+            addRemoveFunctionality(); // reapply remove functionality to new row
         });
     }
 
-    // Add functionality to remove row button
+    //remove row button
     function addRemoveFunctionality() {
         document.querySelectorAll('.remove-row').forEach(button => {
             button.addEventListener('click', function() {
@@ -991,7 +991,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Trigger the change event on page load to set up the correct layout
+    // Trigger the change event on page load
     customInvoiceSelect.dispatchEvent(new Event('change'));
 });
 
