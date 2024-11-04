@@ -229,9 +229,7 @@
                 </div>
 
                 <!--Table Pagination-->
-
                 @include('components.pagination', ['paginator' => $proposals])
-
                 <!--End Table Pagination-->
 
             </div>
