@@ -77,7 +77,7 @@
                             </div>
                         </div>
 
-                        <!-- Item Section Add Field button -->
+                        
                         <div class="row justify-content-center align-items-center mb-3">
                             <div class="col-md-6">
                                 <h3>Item Section</h3>
@@ -87,7 +87,7 @@
                             </div>
                         </div>
 
-                        <!-- Item Field Group Container -->
+                        
                         <div id="item-field-group-container">
                             <div class="row mb-3 item-field-group">
                                 <div class="col-md-4">
@@ -116,7 +116,7 @@
                             </div>
                         </div>
 
-                        <!-- Footer Section Add Field button -->
+                       
                         <div class="row justify-content-center align-items-center mb-3">
                             <div class="col-md-6">
                                 <h3>Footer Section</h3>
@@ -126,7 +126,7 @@
                             </div>
                         </div>
 
-                        <!-- Footer Field Group Container -->
+                       
                         <div id="footer-field-group-container">
                             <div class="row mb-3 footer-field-group">
                                 <div class="col-md-4">
@@ -155,7 +155,7 @@
                             </div>
                         </div>
 
-                        <!-- Total in Words Section -->
+                        
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -175,7 +175,7 @@
                             </div>
                         </div>
 
-                        <!-- Bank Details and Issued By -->
+                        
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
