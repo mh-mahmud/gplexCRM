@@ -178,6 +178,7 @@ class LeadController  extends Controller
         $sms = SmsQueue::where('lead_id', $id)->get();
         $meetings = Meeting::where('lead_id', $id)->get();
         $proposals = Proposal::where('lead_id', $id)->get();
+        
 
         return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals'));
     }
