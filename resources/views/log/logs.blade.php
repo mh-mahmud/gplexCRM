@@ -21,7 +21,6 @@
             {{--<a href="{{ route('meeting-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>--}}
         </div>
     </div>
-    
 </div>
 <!--end::Toolbar-->
 
@@ -138,31 +137,14 @@
                                     </tbody>
                                     <!--end::Table body-->
                                 </table>
+                                @else
+                                    <p>No results found.</p>
+                                @endif
                                 <!--end::Table-->
-                            </div>
+                        </div>
                             <!--end::Table container-->
-                                            </div>
-                                            <!--end::Tab Logs-->
-
-                                        </div>
-                                        <!--End Card body-->
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                                            <!-- End Forms-->
-
-
-                                    </div>
-                            @else
-                                <p>No results found.</p>
-                            @endif
-                            <!--end::Table-->
-                        </div>
-                        <!--end::Table container-->
                     </div>
-                    <!--begin::Body-->
+                                            <!--end::Tab Logs-->
 
                 </div>
 
@@ -175,6 +157,8 @@
             </div>
         </div>
     </div>
+
+
     @if (session('error'))
     <script>
         Swal.fire({
