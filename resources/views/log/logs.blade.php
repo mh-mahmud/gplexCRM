@@ -5,12 +5,31 @@
 
 @section('content')
 
-    <!--begin::Toolbar-->
 
-    <!--end::Toolbar-->
+
+<!--begin::Toolbar-->
+<div class="toolbar" id="kt_toolbar">
+    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Logs
+                <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
+                <small class="text-muted fs-7 fw-bold my-1 ms-1">Log List</small>
+            </h1>
+        </div>
+
+        <div class="d-flex align-items-center py-1">
+            {{--<a href="{{ route('meeting-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>--}}
+        </div>
+    </div>
+    
+</div>
+<!--end::Toolbar-->
+
+
+
     <!--**********************************
-                                    Tables
-                      ***********************************-->
+        Tables
+    ***********************************-->
     <div class="container-fluid">
 
         <!--Table Alert Message-->
