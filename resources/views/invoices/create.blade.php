@@ -165,12 +165,14 @@
                                             <select id="custom-invoice-select" class="form-control form-control-sm form-control-solid" name="custom_invoice_id" aria-label="Default select example">
                                                 <option value="" {{ old('custom_invoice_id') === null ? 'selected' : '' }}>Nothing Selected</option>
                                                 @foreach($custom_invoice as $custom_invoices)
-                                                <option value="{{ $custom_invoices->id }}"  data-fields="{{ htmlspecialchars($custom_invoices->field_details) }}" {{ old('custom_invoice_id') == $custom_invoices->id ? 'selected' : '' }}>
+                                                <option
+                                                    value="{{ $custom_invoices->id }}"
+                                                    data-fields="{{ htmlspecialchars($custom_invoices->field_details) }}"
+                                                    {{ old('custom_invoice_id') == $custom_invoices->id ? 'selected' : '' }}>
                                                     {{ $custom_invoices->invoice_name }}
                                                 </option>
                                                 @endforeach
                                             </select>
-
                                             @if ($errors->has('custom_invoice_id'))
                                             <span class="text-danger">{{ $errors->first('custom_invoice_id') }}</span>
                                             @endif
@@ -309,85 +311,85 @@
                         <div class="my-3 overflow-hidden">
 
                             <div class="card">
-                            <div id="default-invoice" style="display: block;">
-                                <div class="card-header p-0">
-                                    <div
-                                        class="g-proposal-add-item d-flex flex-wrap justify-content-between align-items-center w-100 gap-3">
-                                        <div>
-                                            <!--begin::Both add-ons-->
-                                            <div class="input-group input-group-sm min-w-300px w-100 w-md-500px">
-                                                <div class="flex-grow-1">
-                                                    <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2"
-                                                        name="product_id" data-placeholder="Add an item" id="product-select">
-                                                        <option value="" {{ old('product_id') == '' ? 'selected' : '' }}>Nothing Selected</option>
-                                                        @foreach($products as $product)
-                                                        <option value="{{ $product->id }}"
-                                                            data-name="{{ $product->name }}"
-                                                            data-description="{{ $product->description }}"
-                                                            data-rate="{{ $product->product_value }}"
-                                                            {{ old('product_id') == $product->id ? 'selected' : '' }}>
-                                                            {{ $product->name }}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                    @if ($errors->has('product_id'))
-                                                    <span class="text-danger">{{ $errors->first('product_id') }}</span>
-                                                    @endif
+                                <div id="default-invoice" style="display: block;">
+                                    <div class="card-header p-0">
+                                        <div
+                                            class="g-proposal-add-item d-flex flex-wrap justify-content-between align-items-center w-100 gap-3">
+                                            <div>
+                                                <!--begin::Both add-ons-->
+                                                <div class="input-group input-group-sm min-w-300px w-100 w-md-500px">
+                                                    <div class="flex-grow-1">
+                                                        <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2"
+                                                            name="product_id" data-placeholder="Add an item" id="product-select">
+                                                            <option value="" {{ old('product_id') == '' ? 'selected' : '' }}>Nothing Selected</option>
+                                                            @foreach($products as $product)
+                                                            <option value="{{ $product->id }}"
+                                                                data-name="{{ $product->name }}"
+                                                                data-description="{{ $product->description }}"
+                                                                data-rate="{{ $product->product_value }}"
+                                                                {{ old('product_id') == $product->id ? 'selected' : '' }}>
+                                                                {{ $product->name }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->has('product_id'))
+                                                        <span class="text-danger">{{ $errors->first('product_id') }}</span>
+                                                        @endif
+                                                    </div>
+                                                    <span class="input-group-sm input-group-text"><i class="bi bi-plus fs-4"></i></span>
                                                 </div>
-                                                <span class="input-group-sm input-group-text"><i class="bi bi-plus fs-4"></i></span>
+                                                <!--end::Both add-ons-->
                                             </div>
-                                            <!--end::Both add-ons-->
+
+
+                                            <div class="g-right-proposal-table-header d-flex align-items-center gap-3">
+
+                                                <div class="min-w-sm-100px">
+                                                    <strong>Show quantity as: </strong>
+                                                </div>
+
+                                                <div class="form-check form-check-custom form-check-solid">
+                                                    <input class="form-check-input" type="radio" value="" id="g-qty" name="quantity" />
+                                                    <label class="form-check-label" for="g-qty">
+                                                        qty
+                                                    </label>
+                                                </div>
+                                                <div class="form-check form-check-custom form-check-solid">
+                                                    <input class="form-check-input" type="radio" value="" id="g-hours" name="quantity" />
+                                                    <label class="form-check-label" for="g-hours">
+                                                        hours
+                                                    </label>
+                                                </div>
+                                                <div class="form-check form-check-custom form-check-solid">
+                                                    <input class="form-check-input" type="radio" value="" id="g-qty-hours" name="quantity" />
+                                                    <label class="form-check-label" for="g-qty-hours">
+                                                        qty/hours
+                                                    </label>
+                                                </div>
+
+                                            </div>
+
                                         </div>
-
-
-                                        <div class="g-right-proposal-table-header d-flex align-items-center gap-3">
-
-                                            <div class="min-w-sm-100px">
-                                                <strong>Show quantity as: </strong>
-                                            </div>
-
-                                            <div class="form-check form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="radio" value="" id="g-qty" name="quantity" />
-                                                <label class="form-check-label" for="g-qty">
-                                                    qty
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="radio" value="" id="g-hours" name="quantity" />
-                                                <label class="form-check-label" for="g-hours">
-                                                    hours
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="radio" value="" id="g-qty-hours" name="quantity" />
-                                                <label class="form-check-label" for="g-qty-hours">
-                                                    qty/hours
-                                                </label>
-                                            </div>
-
-                                        </div>
-
                                     </div>
-                                </div>
 
 
-                                <div class="table-responsive">
-                                    <!--Invoice Table Preview-->
-                                    <table class="table table-rounded table-sm table-striped border align-middle gs-2" id="proposal-table">
-                                        <thead>
-                                            <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
-                                                <th>Item</th>
-                                                <th>Description</th>
-                                                <th>Qty</th>
-                                                <th>Rate</th>
-                                                <th>Tax</th>
-                                                <th>Amount</th>
-                                                <th><i class="bi bi-gear-fill"></i></th>
-                                            </tr>
-                                        </thead>
+                                    <div class="table-responsive">
+                                        <!--Invoice Table Preview-->
+                                        <table class="table table-rounded table-sm table-striped border align-middle gs-2" id="proposal-table">
+                                            <thead>
+                                                <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
+                                                    <th>Item</th>
+                                                    <th>Description</th>
+                                                    <th>Qty</th>
+                                                    <th>Rate</th>
+                                                    <th>Tax</th>
+                                                    <th>Amount</th>
+                                                    <th><i class="bi bi-gear-fill"></i></th>
+                                                </tr>
+                                            </thead>
 
 
-                                        <!-- <tbody id="table-body">
+                                            <!-- <tbody id="table-body">
                                             <tr>
                                                 <td>
                                                     <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
@@ -423,123 +425,123 @@
                                             </tr>
                                         </tbody> -->
 
-                                        <tbody id="table-body">
-                                            <tr>
-
-                                                <td>
-                                                    <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2" id="item-name" placeholder="Item Name" readonly>{{ old('items.item_name.0') }}</textarea>
-                                                    @error('items.item_name.0')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </td>
-
-
-                                                <td>
-                                                    <textarea class="form-control form-control-sm min-w-250px" name="items[description][]" cols="30" rows="2" id="item-description" placeholder="Description">{{ old('items.description.0') }}</textarea>
-                                                    @error('items.description.0')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </td>
-
-
-                                                <td>
-                                                    <input class="form-control form-control-sm" type="number" name="items[quantity][]" id="item-quantity" placeholder="Quantity" value="{{ old('items.quantity.0') }}">
-                                                    @error('items.quantity.0')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </td>
-
-
-                                                <td>
-                                                    <input class="form-control form-control-sm" type="number" name="items[rate][]" id="item-rate" placeholder="Rate" value="{{ old('items.rate.0') }}">
-                                                    @error('items.rate.0')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </td>
-
-
-                                                <td>
-                                                    <select class="form-select form-select-sm" name="items[tax][]">
-                                                        <option value="0.00" {{ old('items.tax.0') == '0.00' ? 'selected' : '' }}>No Tax (0.00%)</option>
-                                                        <option value="5.00" {{ old('items.tax.0') == '5.00' ? 'selected' : '' }}>5.00%</option>
-                                                        <option value="10.00" {{ old('items.tax.0') == '10.00' ? 'selected' : '' }}>10.00%</option>
-                                                        <option value="15.00" {{ old('items.tax.0') == '15.00' ? 'selected' : '' }}>15.00%</option>
-                                                    </select>
-                                                    @error('items.tax.0')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </td>
-
-
-                                                <td class="item-amount">0.00</td>
-
-
-                                                <td>
-                                                    <button type="button" class="btn btn-sm btn-primary py-2 px-3 add-row">
-                                                        <i class="bi bi-plus-lg pe-0"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-
-
-                                    </table>
-                                    <!--End Proposal Table Preview-->
-                                </div>
-
-
-
-                                <div class="row">
-                                    <div class="col-md-4 ms-auto ">
-                                        <!-- Proposal Calculations-->
-                                        <div class="table-responsive bg-light-warning rounded-2 p-3">
-                                            <table class="table table-sm table-row-bordered align-middle">
+                                            <tbody id="table-body">
                                                 <tr>
-                                                    <th class="text-end"><strong>Sub Total:</strong></th>
-                                                    <td class="text-end"><strong>BDT</strong> <span id="subtotal-amount">0.00</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <th><strong>Discount :</strong>
-                                                        <div class="input-group flex-nowrap">
-                                                            <div class="flex-grow-1">
-                                                                <input class="form-control form-control-sm rounded-end-0 border-end" type="number" name="discount" placeholder="Discount">
-                                                            </div>
-                                                            <select class="form-select form-select-sm form-control-sm" name="discount_type">
-                                                                <option value="fixed">Fixed Amount</option>
-                                                                <option value="percentage">%</option>
-                                                            </select>
-                                                        </div>
-                                                    </th>
-                                                    <td class="text-end"><strong>BDT</strong> <span id="discount-amount">-0.00</span></td>
-                                                </tr>
-                                                <!-- New Tax Row -->
-                                                <tr>
-                                                    <th class="text-end"><strong>Total Tax:</strong></th>
-                                                    <td class="text-end"><strong>BDT</strong> <span id="total-tax-amount">0.00</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <th><strong>Adjustment :</strong>
-                                                        <input class="form-control form-control-sm" type="number" name="adjustment" placeholder="Adjustment">
-                                                    </th>
-                                                    <td class="text-end"><strong>BDT</strong> <span id="adjustment-amount">0.00</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <th class="text-end"><strong>Total</strong></th>
-                                                    <td class="text-end">
-                                                        <strong>BDT</strong> <span id="total-amount">0.00</span>
+
+                                                    <td>
+                                                        <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2" id="item-name" placeholder="Item Name" readonly>{{ old('items.item_name.0') }}</textarea>
+                                                        @error('items.item_name.0')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </td>
+
+
+                                                    <td>
+                                                        <textarea class="form-control form-control-sm min-w-250px" name="items[description][]" cols="30" rows="2" id="item-description" placeholder="Description">{{ old('items.description.0') }}</textarea>
+                                                        @error('items.description.0')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </td>
+
+
+                                                    <td>
+                                                        <input class="form-control form-control-sm" type="number" name="items[quantity][]" id="item-quantity" placeholder="Quantity" value="{{ old('items.quantity.0') }}">
+                                                        @error('items.quantity.0')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </td>
+
+
+                                                    <td>
+                                                        <input class="form-control form-control-sm" type="number" name="items[rate][]" id="item-rate" placeholder="Rate" value="{{ old('items.rate.0') }}">
+                                                        @error('items.rate.0')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </td>
+
+
+                                                    <td>
+                                                        <select class="form-select form-select-sm" name="items[tax][]">
+                                                            <option value="0.00" {{ old('items.tax.0') == '0.00' ? 'selected' : '' }}>No Tax (0.00%)</option>
+                                                            <option value="5.00" {{ old('items.tax.0') == '5.00' ? 'selected' : '' }}>5.00%</option>
+                                                            <option value="10.00" {{ old('items.tax.0') == '10.00' ? 'selected' : '' }}>10.00%</option>
+                                                            <option value="15.00" {{ old('items.tax.0') == '15.00' ? 'selected' : '' }}>15.00%</option>
+                                                        </select>
+                                                        @error('items.tax.0')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </td>
+
+
+                                                    <td class="item-amount">0.00</td>
+
+
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-primary py-2 px-3 add-row">
+                                                            <i class="bi bi-plus-lg pe-0"></i>
+                                                        </button>
                                                     </td>
                                                 </tr>
-                                            </table>
-                                        </div>
+                                            </tbody>
 
-                                        <!--End Proposal Calculations-->
+
+                                        </table>
+                                        <!--End Proposal Table Preview-->
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-4 ms-auto ">
+                                            <!-- Proposal Calculations-->
+                                            <div class="table-responsive bg-light-warning rounded-2 p-3">
+                                                <table class="table table-sm table-row-bordered align-middle">
+                                                    <tr>
+                                                        <th class="text-end"><strong>Sub Total:</strong></th>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="subtotal-amount">0.00</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><strong>Discount :</strong>
+                                                            <div class="input-group flex-nowrap">
+                                                                <div class="flex-grow-1">
+                                                                    <input class="form-control form-control-sm rounded-end-0 border-end" type="number" name="discount" placeholder="Discount">
+                                                                </div>
+                                                                <select class="form-select form-select-sm form-control-sm" name="discount_type">
+                                                                    <option value="fixed">Fixed Amount</option>
+                                                                    <option value="percentage">%</option>
+                                                                </select>
+                                                            </div>
+                                                        </th>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="discount-amount">-0.00</span></td>
+                                                    </tr>
+                                                    <!-- New Tax Row -->
+                                                    <tr>
+                                                        <th class="text-end"><strong>Total Tax:</strong></th>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="total-tax-amount">0.00</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><strong>Adjustment :</strong>
+                                                            <input class="form-control form-control-sm" type="number" name="adjustment" placeholder="Adjustment">
+                                                        </th>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="adjustment-amount">0.00</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="text-end"><strong>Total</strong></th>
+                                                        <td class="text-end">
+                                                            <strong>BDT</strong> <span id="total-amount">0.00</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <!--End Proposal Calculations-->
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <table id="proposal-table" class="table table-bordered" style="display: none;">
-                                <!-- Custom fields will be inserted here -->
-                           </table>
+                                <table id="proposal-table" class="table table-bordered" style="display: none;">
+                                    <!-- Custom fields will be inserted here -->
+                                </table>
 
                                 <div class="row">
                                     <div class="col-md-12">
@@ -781,7 +783,7 @@
             // clear any previous error messages and highlights
             lastRow.find('.error-message').remove(); // remove any existing error messages
             lastRow.find('textarea, input').removeClass('is-invalid'); // remove error highlight
-           //get the values from the last row
+            //get the values from the last row
             var itemName = lastRow.find('textarea[name="items[item_name][]"]').val();
             var description = lastRow.find('textarea[name="items[description][]"]').val();
             var quantity = lastRow.find('input[name="items[quantity][]"]').val();
@@ -797,21 +799,21 @@
                 isValid = false;
             }
 
-            
+
             if (description === "") {
                 lastRow.find('textarea[name="items[description][]"]').addClass('is-invalid');
                 lastRow.find('textarea[name="items[description][]"]').after('<div class="error-message text-danger">Description is required</div>');
                 isValid = false;
             }
 
-            
+
             if (quantity === "" || quantity <= 0) {
                 lastRow.find('input[name="items[quantity][]"]').addClass('is-invalid');
                 lastRow.find('input[name="items[quantity][]"]').after('<div class="error-message text-danger">Quantity must be greater than 0</div>');
                 isValid = false;
             }
 
-           
+
             if (rate === "" || rate <= 0) {
                 lastRow.find('input[name="items[rate][]"]').addClass('is-invalid');
                 lastRow.find('input[name="items[rate][]"]').after('<div class="error-message text-danger">Rate must be greater than 0</div>');
@@ -906,54 +908,56 @@
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const customInvoiceSelect = document.getElementById('custom-invoice-select');
-    const defaultInvoice = document.getElementById('default-invoice');
-    const proposalTable = document.getElementById('proposal-table');
+    document.addEventListener('DOMContentLoaded', function() {
+        const customInvoiceSelect = document.getElementById('custom-invoice-select');
+        const defaultInvoice = document.getElementById('default-invoice');
+        const proposalTable = document.getElementById('proposal-table');
 
-    customInvoiceSelect.addEventListener('change', function () {
-        const selectedOption = this.options[this.selectedIndex];
-        const fieldDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.fields) : null;
+        //alert(customInvoiceSelect);
 
-        // Display custom invoice fields if fieldDetails has a valid value
-        if (fieldDetails && fieldDetails.length > 0) {
-            defaultInvoice.style.display = 'none';
-            proposalTable.style.display = 'table';
-            renderCustomInvoiceTable(fieldDetails);
+        customInvoiceSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const fieldDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.fields) : null;
 
-            // Show alert when a custom invoice is selected
-            alert(`Custom Invoice Selected: ${selectedOption.text}`);
-        } else {
-            // Show default invoice and clear the proposalTable if no valid custom invoice is selected
-            defaultInvoice.style.display = 'block';
-            proposalTable.style.display = 'none';
-            proposalTable.innerHTML = ''; // Clear custom fields
-            alert(`Custom Invoice Selected: `);
-        }
-    });
+            // Display custom invoice fields if fieldDetails has a valid value
+            if (fieldDetails && fieldDetails.length > 0) {
+                defaultInvoice.style.display = 'none';
+                proposalTable.style.display = 'table';
+                renderCustomInvoiceTable(fieldDetails);
 
-    // Render custom invoice fields into the table
-    function renderCustomInvoiceTable(fields) {
-        // Map field details to create table headers and input fields
-        const theadContent = fields.map(field => `<th>${field.field_name}</th>`).join('');
-        const tbodyRow = fields.map(field => `
+                // Show alert when a custom invoice is selected
+                //alert(`Custom Invoice Selected: ${selectedOption.text}`);
+            } else {
+                // Show default invoice and clear the proposalTable if no valid custom invoice is selected
+                //defaultInvoice.style.display = 'block';
+               // proposalTable.style.display = 'none';
+                //proposalTable.innerHTML = ''; // Clear custom fields
+                //alert(`Custom Invoice Selected: `);
+            }
+        });
+
+        // Render custom invoice fields into the table
+        function renderCustomInvoiceTable(fields) {
+            // Map field details to create table headers and input fields
+            const theadContent = fields.map(field => `<th>${field.field_name}</th>`).join('');
+            const tbodyRow = fields.map(field => `
             <td>
                 <input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" />
             </td>`).join('');
 
-        // Populate proposal table
-        proposalTable.innerHTML = `
+            // Populate proposal table
+            proposalTable.innerHTML = `
             <thead>
                 <tr>${theadContent}<th>Action</th></tr>
             </thead>
             <tbody>
                 <tr>${tbodyRow}<td><button type="button" class="btn btn-sm btn-danger remove-row">Remove</button></td></tr>
             </tbody>`;
-    }
+        }
 
-    // Trigger the change event to set up the correct layout on page load
-    customInvoiceSelect.dispatchEvent(new Event('change'));
-});
+        // Trigger the change event to set up the correct layout on page load
+        customInvoiceSelect.dispatchEvent(new Event('change'));
+    });
 </script>
 
 
