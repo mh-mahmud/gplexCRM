@@ -243,7 +243,7 @@ use Carbon\Carbon;
                                         {{ $fieldNames }}
                                     </td>
                                     <td class="text-dark fs-6 w-400px">
-                                         @php
+                                        @php
                                         $footerFieldNames = collect($invoice->footer_details)->pluck('field_name')->implode(', ');
                                         @endphp
                                         {{ $footerFieldNames }}

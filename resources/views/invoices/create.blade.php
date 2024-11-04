@@ -162,17 +162,17 @@
                                     <div class="col-xl-6">
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark">Custom Invoice</label>
-                                            <select class="form-control form-control-sm form-control-solid" name="sale_agent_id" aria-label="Default select example">
-                                                <option value="" {{ old('sale_agent_id') === null ? 'selected' : '' }}>Nothing Selected</option>
-                                                @foreach($agents as $agent)
-                                                <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : '' }}>
-                                                    {{ $agent->first_name }} {{ $agent->last_name }}
+                                            <select id="custom-invoice-select" class="form-control form-control-sm form-control-solid" name="custom_invoice_id" aria-label="Default select example">
+                                                <option value="" {{ old('custom_invoice_id') === null ? 'selected' : '' }}>Nothing Selected</option>
+                                                @foreach($custom_invoice as $custom_invoices)
+                                                <option value="{{ $custom_invoices->id }}"  data-fields="{{ htmlspecialchars($custom_invoices->field_details) }}" {{ old('custom_invoice_id') == $custom_invoices->id ? 'selected' : '' }}>
+                                                    {{ $custom_invoices->invoice_name }}
                                                 </option>
                                                 @endforeach
                                             </select>
 
-                                            @if ($errors->has('sale_agent_id'))
-                                            <span class="text-danger">{{ $errors->first('sale_agent_id') }}</span>
+                                            @if ($errors->has('custom_invoice_id'))
+                                            <span class="text-danger">{{ $errors->first('custom_invoice_id') }}</span>
                                             @endif
                                         </div>
                                     </div>
@@ -309,6 +309,7 @@
                         <div class="my-3 overflow-hidden">
 
                             <div class="card">
+                            <div id="default-invoice" style="display: block;">
                                 <div class="card-header p-0">
                                     <div
                                         class="g-proposal-add-item d-flex flex-wrap justify-content-between align-items-center w-100 gap-3">
@@ -534,6 +535,11 @@
                                         <!--End Proposal Calculations-->
                                     </div>
                                 </div>
+                            </div>
+
+                            <table id="proposal-table" class="table table-bordered" style="display: none;">
+                                <!-- Custom fields will be inserted here -->
+                           </table>
 
                                 <div class="row">
                                     <div class="col-md-12">
@@ -897,6 +903,61 @@
         });
     });
 </script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const customInvoiceSelect = document.getElementById('custom-invoice-select');
+    const defaultInvoice = document.getElementById('default-invoice');
+    const proposalTable = document.getElementById('proposal-table');
+
+    customInvoiceSelect.addEventListener('change', function () {
+        const selectedOption = this.options[this.selectedIndex];
+        const fieldDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.fields) : null;
+
+        // Display custom invoice fields if fieldDetails has a valid value
+        if (fieldDetails && fieldDetails.length > 0) {
+            defaultInvoice.style.display = 'none';
+            proposalTable.style.display = 'table';
+            renderCustomInvoiceTable(fieldDetails);
+
+            // Show alert when a custom invoice is selected
+            alert(`Custom Invoice Selected: ${selectedOption.text}`);
+        } else {
+            // Show default invoice and clear the proposalTable if no valid custom invoice is selected
+            defaultInvoice.style.display = 'block';
+            proposalTable.style.display = 'none';
+            proposalTable.innerHTML = ''; // Clear custom fields
+            alert(`Custom Invoice Selected: `);
+        }
+    });
+
+    // Render custom invoice fields into the table
+    function renderCustomInvoiceTable(fields) {
+        // Map field details to create table headers and input fields
+        const theadContent = fields.map(field => `<th>${field.field_name}</th>`).join('');
+        const tbodyRow = fields.map(field => `
+            <td>
+                <input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" />
+            </td>`).join('');
+
+        // Populate proposal table
+        proposalTable.innerHTML = `
+            <thead>
+                <tr>${theadContent}<th>Action</th></tr>
+            </thead>
+            <tbody>
+                <tr>${tbodyRow}<td><button type="button" class="btn btn-sm btn-danger remove-row">Remove</button></td></tr>
+            </tbody>`;
+    }
+
+    // Trigger the change event to set up the correct layout on page load
+    customInvoiceSelect.dispatchEvent(new Event('change'));
+});
+</script>
+
+
+
 
 <!-- End Forms-->
 

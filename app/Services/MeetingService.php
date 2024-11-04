@@ -232,14 +232,14 @@ class MeetingService
 
     public function updateFeedback($id, $meeting_feedback, $rating)
     {
-        // Find the meeting by ID
+        // find the meeting by ID
         $meeting = Meeting::find($id);
         
         if (!$meeting) {
             return false;
         }
 
-        // Update feedback and rating
+        // update feedback and rating
         $meeting->meeting_feedback = $meeting_feedback;
         $meeting->rating = $rating;
 

@@ -147,12 +147,12 @@
                 </div>
 
                 <div class="card-body">
-                    <!-- Start Form-->
+                    
                     <form class="g-form w-100" action="{{ route('invoice-custom-update', $invoice->id) }}" enctype="multipart/form-data" method="POST">
                         @csrf
-                        @method('PUT') <!-- Use PUT method for update -->
+                        @method('PUT') 
 
-                        <!-- Invoice Name -->
+                       
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
@@ -165,7 +165,7 @@
                             </div>
                         </div>
 
-                        <!-- Item Section -->
+                       
                         <div class="row justify-content-center align-items-center mb-3">
                             <div class="col-md-6">
                                 <h3>Item Section</h3>
@@ -175,7 +175,7 @@
                             </div>
                         </div>
 
-                        <!-- Item Field Group Container -->
+                        
                         <div id="item-field-group-container">
                             @foreach ($invoice->field_details as $index => $field)
                             <div class="row mb-3 item-field-group">
@@ -206,7 +206,7 @@
                             @endforeach
                         </div>
 
-                        <!-- Footer Section -->
+                        
                         <div class="row justify-content-center align-items-center mb-3">
                             <div class="col-md-6">
                                 <h3>Footer Section</h3>
@@ -216,7 +216,7 @@
                             </div>
                         </div>
 
-                        <!-- Footer Field Group Container -->
+                        
                         <div id="footer-field-group-container">
                             @foreach ($invoice->footer_details as $index => $footer)
                             <div class="row mb-3 footer-field-group">
@@ -247,7 +247,7 @@
                             @endforeach
                         </div>
 
-                        <!-- Total in Words -->
+                        
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -267,7 +267,7 @@
                             </div>
                         </div>
 
-                        <!-- Bank Details and Issued By -->
+                        
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -290,7 +290,7 @@
                             </div>
                         </div>
 
-                        <!-- Submit Button -->
+                       
                         <div class="card-footer d-flex justify-content-end py-6 px-9">
                             <a href="{{ route('invoice-custom-edit', $invoice->id) }}" class="btn btn-light me-2">Reset</a>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -306,7 +306,7 @@
     let itemFieldIndex = 1;
     let footerFieldIndex = 1;
 
-    // Function to add new item field
+    
     function addItemField() {
         const container = document.getElementById('item-field-group-container');
         const newItemFieldGroup = document.createElement('div');
@@ -336,13 +336,13 @@
         itemFieldIndex++;
     }
 
-    // Function to remove item field
+   
     function removeItemField(button) {
         const fieldGroup = button.closest('.item-field-group');
         fieldGroup.remove();
     }
 
-    // Function to add new footer field
+   
     function addFooterField() {
         const container = document.getElementById('footer-field-group-container');
         const newFooterFieldGroup = document.createElement('div');
@@ -372,7 +372,7 @@
         footerFieldIndex++;
     }
 
-    // Function to remove footer field
+   
     function removeFooterField(button) {
         const fieldGroup = button.closest('.footer-field-group');
         fieldGroup.remove();
