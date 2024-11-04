@@ -52,7 +52,7 @@ class LogService
         }
 
         if ($request->start_date && $request->end_date) {
-            $startDate = $request->start_date . ' 00:00:00';
+            $startDate = $request->start_date . ' 00:00:00';           
             $endDate = $request->end_date . ' 23:59:59';
             $query->whereBetween('logs.created_at', [$startDate, $endDate]);
         }
