@@ -159,6 +159,24 @@
 
                                     </div>
 
+                                    <div class="col-xl-6">
+                                        <div class="fv-row mb-5">
+                                            <label class="form-label fw-bolder text-dark">Custom Invoice</label>
+                                            <select class="form-control form-control-sm form-control-solid" name="sale_agent_id" aria-label="Default select example">
+                                                <option value="" {{ old('sale_agent_id') === null ? 'selected' : '' }}>Nothing Selected</option>
+                                                @foreach($agents as $agent)
+                                                <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : '' }}>
+                                                    {{ $agent->first_name }} {{ $agent->last_name }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+
+                                            @if ($errors->has('sale_agent_id'))
+                                            <span class="text-danger">{{ $errors->first('sale_agent_id') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
 
                                     {{-- <div class="col-md-6">
                                                 <div class="form-check form-switch form-check-light">

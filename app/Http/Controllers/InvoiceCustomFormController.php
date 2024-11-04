@@ -48,9 +48,9 @@ class InvoiceCustomFormController extends Controller
             'invoice_name.required' => 'The Invoice Name is required.',
             'total_in_word.max' => 'The Total in Words field should not exceed 255 characters.',
         ]);
-        $this->invoiceCustomFormService->createInvoiceCustomForm($data);
+        $this->invoiceCustomFormService->createCustomInvoice($data);
 
-        return redirect()->route('invoice-custom-index')->with('success', 'Invoice Form created successfully.');
+        return redirect()->route('invoice-custom-index')->with('success', 'Custom Invoice created successfully.');
     }
 
     
@@ -64,10 +64,45 @@ class InvoiceCustomFormController extends Controller
     }
 
 
+    public function edit($id)
+    {
+        $invoice = InvoiceCustomForm::findOrFail($id);
+        return view('invoice_custom.edit', compact('invoice'));
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'invoice_name' => 'required|string|max:255',
+            'field_details' => 'array',
+            'field_details.*.field_name' => 'required|string',
+            'field_details.*.field_value' => 'required|string',
+            'footer_details' => 'array',
+            'footer_details.*.field_name' => 'required|string',
+            'footer_details.*.field_value' => 'required|string',
+            'total_in_word' => 'nullable|string|max:255',
+            'bank_details' => 'nullable|string',
+            'issued_by' => 'nullable|string',
+        ], [
+            'field_details.*.field_name.required' => 'Each Item Field Name is required.',
+            'field_details.*.field_value.required' => 'Each Item Field Value is required.',
+            'footer_details.*.field_name.required' => 'Each Footer Field Name is required.',
+            'footer_details.*.field_value.required' => 'Each Footer Field Value is required.',
+            'invoice_name.required' => 'The Invoice Name is required.',
+            'total_in_word.max' => 'The Total in Words field should not exceed 255 characters.',
+        ]);
+        //$this->leadsFormService->updateLeadsForm($id, $request->all());
+        $this->invoiceCustomFormService->updateCustomInvoice($id, $request->all());
+
+        return redirect()->route('invoice-custom-index')->with('success', 'Custom Invoice updated successfully.');
+    }
+
+
     public function destroy($id)
     {
         InvoiceCustomForm::destroy($id);
-        return redirect()->route('invoice-custom-index')->with('success', 'Invoice Deleted Successfully!');
+        return redirect()->route('invoice-custom-index')->with('success', 'Custom Invoice Deleted Successfully!');
     }
 
     // searech for invoice

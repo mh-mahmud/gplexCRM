@@ -12,6 +12,7 @@ use PHPUnit\TextUI\Help;
 use App\Helpers\Helper;
 use App\Models\Agent;
 use App\Models\Product;
+use App\Models\InvoiceCustomForm;
 use Carbon\Carbon;
 use PDF;
 
@@ -44,6 +45,7 @@ class InvoiceController extends Controller
         $nextInvoiceNumber = $lastInvoice ? $lastInvoice->id + 1 : 1;
         $discountTypes = Helper::getEnumValues('invoices', 'discount_type');
         $agents = Agent::select('agent_id', 'first_name', 'last_name')->get();
+        $custom_invoice = InvoiceCustomForm::select('agent_id', 'first_name')->get();
         $products = Product::select('id', 'name', 'description', 'product_value')->get();
         return view('invoices.create', compact('customers', 'countries', 'currencies', 'nextInvoiceNumber', 'discountTypes', 'agents', 'products'));
     }
