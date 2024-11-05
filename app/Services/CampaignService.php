@@ -40,7 +40,7 @@ class CampaignService
 
     public function createCampaign($data)
     {
-        
+        $data['created_by'] = auth()->id();
         return Campaign::create($data);
     }
 
@@ -67,6 +67,7 @@ class CampaignService
     public function updateCampaign($id, $data)
     {
         $campaign = Campaign::findOrFail($id);
+        $data['created_by'] = auth()->id();
         $campaign->update($data);
         return $campaign;
     }

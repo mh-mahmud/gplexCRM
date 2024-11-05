@@ -353,3 +353,6 @@ ALTER TABLE `invoices` ADD COLUMN `payment_details` TEXT NULL AFTER `item_descri
 
 -- 31-10-2024
 ALTER TABLE `email_queue` CHANGE `customer_id` `lead_id` BIGINT NULL DEFAULT NULL;
+
+--05-11-2024
+ALTER TABLE `campaigns` ADD COLUMN `created_by` INT(11) UNSIGNED NULL AFTER `promotion_id`;
