@@ -8,10 +8,20 @@ class InvoiceService
 {
 
 
-    public function getAllInvoices()
+    public function getAllInvoices_backup()
     {
         return Invoice::orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
     }
+
+    public function getAllInvoices()
+    {
+        return Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
+        ->join('leads', 'customers.lead_id', '=', 'leads.id')
+        ->select('invoices.*', 'customers.*', 'leads.first_name', 'leads.last_name')
+        ->orderBy('invoices.created_at', 'desc')
+        ->paginate(config('constants.ROW_PER_PAGE'));
+    }
+
 
 
     public function createInvoice($data)

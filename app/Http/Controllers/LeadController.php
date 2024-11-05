@@ -118,7 +118,7 @@ class LeadController  extends Controller
             'last_name' => 'required|string|max:191',
             'email' => 'nullable|string|email|max:191|unique:leads,email',
             'phone' => 'required|string|max:191',
-            'form_id' => 'required|exists:leads_form,form_id',
+            //'form_id' => 'required|exists:leads_form,form_id',
             'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         //dd($request);die();
@@ -326,7 +326,7 @@ class LeadController  extends Controller
             'last_name' => 'required|string|max:191',
             'email' => 'nullable|string|email|max:191|unique:leads,email,' . $id,
             'phone' => 'required|string|max:191',
-            'form_id' => 'required|exists:leads_form,form_id',
+            //'form_id' => 'required|exists:leads_form,form_id',
             'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -485,7 +485,8 @@ class LeadController  extends Controller
         // Get columns from Lead table
         //$leadColumns = (new Lead)->getFillable();
         $lead = new Lead;
-        $leadColumns = array_diff($lead->getFillable(), ['lead_status', 'no_of_employee']);
+        //$leadColumns = array_diff($lead->getFillable(), ['lead_status', 'no_of_employee',]);
+        $leadColumns = array_diff($lead->getFillable(), ['lead_status', 'no_of_employee','title','profile_image','gender','dob','marital_status','lead_source','age','created_by']);
 
         //Merge columns ensuring no duplicates
         $columns = array_unique(array_merge($leadColumns, $leadFormDetailsColumns));
@@ -698,7 +699,7 @@ class LeadController  extends Controller
                     //dd($header);die();
                     $csvData = array_combine($dbHeader, $data);
                     //dd($csvData['dob']);die();
-                    $csvData['dob'] = $this->convertDate($csvData['dob']);
+                    //$csvData['dob'] = $this->convertDate($csvData['dob']);
                     foreach ($fieldsConfig as $tableFields) {
                         foreach ($tableFields as $field) {
                             if ($field->field_value === 'date' && isset($csvData[$field->field_name])) {
@@ -741,7 +742,7 @@ class LeadController  extends Controller
                     $fieldValidations = array_merge($fieldValidations, [
                         'first_name' => 'required|string|max:191',
                         'last_name' => 'required|string|max:191',
-                        'title' => 'required|string|max:191',
+                        //'title' => 'required|string|max:191',
                         'email' => 'nullable|string|email|max:191|unique:leads,email',
                         'phone' => 'required|string|max:191',
                     ]);
@@ -789,6 +790,7 @@ class LeadController  extends Controller
 
                         $leadData['form_id'] = $formId;
                         $leadData['lead_status'] = '1';
+                        $leadData['created_by'] = auth()->id();
                         $phone=$leadData['phone'];
                         //ensure the phone number starts with '0'
                         if (substr($leadData['phone'], 0, 1) !== '0') {

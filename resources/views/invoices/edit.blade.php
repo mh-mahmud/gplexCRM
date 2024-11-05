@@ -83,7 +83,7 @@
                                                 <option value="" {{ old('customer_id', $invoice->customer_id) == '' ? 'selected' : '' }}>Select Customer</option>
                                                 @foreach($customers as $customer)
                                                 <option value="{{ $customer->id }}" {{ old('customer_id', $invoice->customer_id) == $customer->id ? 'selected' : '' }}>
-                                                    {{ $customer->customer_group }}
+                                                {{ $customer->first_name }} {{ $customer->last_name }}
                                                 </option>
                                                 @endforeach
                                             </select>
@@ -780,6 +780,9 @@
 
                 //clear the product selection
                 $('#product-select').val('').trigger('change');
+                //when add more row click this input hide
+                $('input[name="discount"]').val('');
+                $('input[name="adjustment"]').val('');
             } else {
                 //alert user if any field in the last row is not filled
                 alert('Please fill all fields in the last row before adding a new one.');

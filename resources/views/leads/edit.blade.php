@@ -81,22 +81,39 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
-
                             <div class="col-md-3">
-                                <div class="fv-row mb-3">
-                                    <label class="form-label fw-bolder text-dark">Form Name</label>
-                                    <select class="form-control form-control-sm form-control-solid" name="form_id" aria-label="Default select example" disabled>
-                                        <option value="">Select Form Name</option>
-                                        @foreach($formName as $id => $name)
-                                        <option value="{{ $id }}" {{ $lead->form_id == $id ? 'selected' : '' }}>{{$name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('form_id'))
-                                    <span class="text-danger">{{ $errors->first('form_id') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <input type="hidden" name="form_id" value="{{ $lead->form_id }}">
+								<div class="fv-row mb-3">
+									<label class="form-label fw-bolder text-dark">Form Name</label>
+									
+									@if(isset($lead->form_id) && $lead->form_id)
+										<!-- Form dropdown with 'disabled' attribute if form_id is set -->
+										<select class="form-control form-control-sm form-control-solid" name="form_id" aria-label="Default select example" disabled>
+											<option value="">Select Form Name</option>
+											@foreach($formName as $id => $name)
+												<option value="{{ $id }}" {{ $lead->form_id == $id ? 'selected' : '' }}>{{ $name }}</option>
+											@endforeach
+										</select>
+										@if ($errors->has('form_id'))
+										<span class="text-danger">{{ $errors->first('form_id') }}</span>
+									    @endif
+										<!-- hidden input when form is submitted -->
+										<input type="hidden" name="form_id" value="{{ $lead->form_id }}">
+									@else
+										<!-- without 'disabled' attribute if form_id is not set -->
+										<select class="form-control form-control-sm form-control-solid" name="form_id" aria-label="Default select example">
+											<option value="">Select Form Name</option>
+											@foreach($formName as $id => $name)
+												<option value="{{ $id }}" {{ $lead->form_id == $id ? 'selected' : '' }}>{{ $name }}</option>
+											@endforeach
+										</select>
+									@endif
+
+									@if ($errors->has('form_id'))
+										<span class="text-danger">{{ $errors->first('form_id') }}</span>
+									@endif
+								</div>
+							</div>
+
 
 
 
