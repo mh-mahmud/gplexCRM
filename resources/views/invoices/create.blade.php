@@ -924,7 +924,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const customInvoiceSelect = document.getElementById('custom-invoice-select');
     const defaultInvoice = document.getElementById('default-invoice');
-    const proposalTable = document.getElementById('custom-invoice-table'); // Custom table container
+    const proposalTable = document.getElementById('custom-invoice-table'); // custom table id
     const customInvoiceHeader = document.getElementById('custom-invoice-header');
     const customInvoiceBody = document.getElementById('custom-invoice-body');
 
@@ -947,7 +947,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     function populateCustomInvoiceFields(fields) {
-        // Set headers in custom invoice table
+        // headers in custom invoice table
         customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Action</th>';
 
         
@@ -968,7 +968,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Add event listener for the "Add More" button
         document.getElementById('add-row').addEventListener('click', function() {
-            // Insert new row without checking for filled fields
+            // insert new row
             customInvoiceBody.insertAdjacentHTML('beforeend', `
                 <tr>
                     ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}

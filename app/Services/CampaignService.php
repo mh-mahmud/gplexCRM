@@ -11,6 +11,7 @@ use App\Models\SmsTemplate;
 use App\Models\EmailQueue;
 use App\Models\SmsQueue;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 
 class CampaignService
@@ -24,7 +25,15 @@ class CampaignService
 
     public function getAllCampaign()
     {
-        return Campaign::paginate(config('constants.ROW_PER_PAGE'));
+        
+        //return Campaign::paginate(config('constants.ROW_PER_PAGE'));
+        if (Auth::user()->user_type !== 'admin') {
+            return Campaign::where('created_by', Auth::user()->id)->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
+            
+        } else {
+            return Campaign::paginate(config('constants.ROW_PER_PAGE'));
+          
+        }
     }
 
 

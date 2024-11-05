@@ -16,7 +16,14 @@ class MeetingService
     
     public function getAllMeetings()
     {
-        return Meeting::where('created_by', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
+        //return Meeting::where('created_by', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
+        if (Auth::user()->user_type !== 'admin') {
+            return Meeting::where('created_by', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
+            
+        } else {
+            return Meeting::orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
+          
+        }
     }
 
     
