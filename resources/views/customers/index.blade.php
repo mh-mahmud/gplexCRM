@@ -71,7 +71,7 @@
                     </div>
 
                 </div>
-                <a href="{{ route('agents-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
+                <a href="#" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
             </div>
 
         </div>
@@ -123,7 +123,7 @@
                         </h3>
 
                         <div class="d-flex flex-wrap gap-2">
-                            <form action="{{ route('agents-search') }}" method="POST" class="d-flex">
+                            <form action="" method="POST" class="d-flex">
                                 @csrf
                                 <div class="d-flex align-items-center position-relative">
                                     <span class="svg-icon svg-icon-1 position-absolute ms-6">
