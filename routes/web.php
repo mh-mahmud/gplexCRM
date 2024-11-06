@@ -222,7 +222,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('send-bulk-email', [EmailController::class, 'sendBulkEmail'])->name('send-bulk-email')->middleware(['check-permission']);
 	Route::post('send-bulk-email-process', [EmailController::class, 'sendBulkEmailPro'])->name('send-bulk-email-process');
 	Route::get('send-email/show/{id?}', [EmailController::class, 'getEmailSendById'])->name('send-email-show')->middleware(['check-permission']);
-
+	Route::get('send-pending-email', [EmailController::class, 'sendPendingEmail'])->name('send-pending-email');
 
 	// Send email routes end
 
