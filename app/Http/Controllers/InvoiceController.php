@@ -38,7 +38,10 @@ class InvoiceController extends Controller
 
     public function create(Request $request)
     {
-        $customers = Customer::all();
+        //$customers = Customer::all();
+        $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
+        ->select('customers.*', 'leads.first_name', 'leads.last_name')
+        ->get();
         $countries = $this->countryService->countryList($request);
         $currencies = $this->currencyService->currencyList($request);
         $lastInvoice = Invoice::latest()->first();
@@ -121,7 +124,10 @@ class InvoiceController extends Controller
         $invoice = Invoice::findOrFail($id);
         $invoiceItems = json_decode($invoice->item_description, true);
         //dd($items);die();
-        $customers = Customer::all();
+        //$customers = Customer::all();
+        $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
+        ->select('customers.*', 'leads.first_name', 'leads.last_name')
+        ->get();
         $countries = $this->countryService->countryList($request);
         $currencies = $this->currencyService->currencyList($request);
         $discountTypes = Helper::getEnumValues('invoices', 'discount_type');

@@ -63,6 +63,16 @@
                                     </div>
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Send By</span>
+                                        <span>{{ $sms->send_by_fname }}  {{ $sms->send_by_lname }}</span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Time</span>
+                                        <span>{{ Carbon::parse($sms->log_time)->format('d-m-Y h:i A') }}</span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                                         <span
                                             class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">SMS Content</span>
                                         <span>{{ $sms->sms_text }}</span>

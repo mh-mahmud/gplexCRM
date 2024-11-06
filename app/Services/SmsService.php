@@ -183,8 +183,9 @@ class SmsService
     public function sendSMSList($request)
     {
         $sql = SmsQueue::query()
-                    ->select('sms_queue.*', 'leads.first_name', 'leads.last_name')
-                    ->leftJoin('leads', 'sms_queue.lead_id', '=', 'leads.id');
+                    ->select('sms_queue.*', 'leads.first_name', 'leads.last_name', 'users.first_name as send_by_fname', 'users.last_name as send_by_lname')
+                    ->leftJoin('leads', 'sms_queue.lead_id', '=', 'leads.id')
+                    ->join('users', 'users.id', '=', 'sms_queue.user_id');
         if (Auth::user()->user_type === 'agent') {
             $sql->where('user_id',Auth::id());
 
@@ -280,8 +281,9 @@ class SmsService
     public function getSmsSendById($id)
     {
         return SmsQueue::where('sms_queue.id', $id)
-                        ->select('sms_queue.*', 'leads.first_name', 'leads.last_name')
+                        ->select('sms_queue.*', 'leads.first_name', 'leads.last_name', 'users.first_name as send_by_fname', 'users.last_name as send_by_lname')
                         ->leftJoin('leads', 'sms_queue.lead_id', '=', 'leads.id')
+                        ->join('users', 'users.id', '=', 'sms_queue.user_id')
                         ->first();
     }
    

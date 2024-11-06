@@ -123,6 +123,7 @@
                                         <th class="ps-4 min-w-150px">SL</th>
                                         <th class="min-w-150px">To</th>
                                         <th class="min-w-150px">Lead</th>
+                                        <th class="min-w-140px">Send By</th>
                                         <th class="min-w-140px">Send Time</th>
                                         <th class=" min-w-120px">Status</th>
 							            <th class="min-w-100px text-end-new">Actions</th>
@@ -136,6 +137,7 @@
                                             <td class="ps-5 text-dark fs-6">{{($sms->currentPage() - 1) * $sms->perPage() + $loop->iteration}}</td>
                                             <td class="text-dark fs-6">{{ $value->sms_to }}</td>
                                             <td class="text-dark fs-6">{{ $value->first_name }} {{ $value->last_name }}</td>
+                                            <td class="text-dark fs-6">{{ $value->send_by_fname }} {{ $value->send_by_lname }}</td>
                                             <td class="text-dark fs-6">{{ Carbon::parse($value->log_time)->format('d-m-Y h:i A') }}</td>
                                             <td>
                                                 @if ($value->send_status == 1)

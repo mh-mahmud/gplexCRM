@@ -125,6 +125,7 @@
 						    <th class="min-w-150px">To</th>
 						    <th class="min-w-150px">Lead</th>
 							<th class="min-w-150px">Email Subject</th>
+						    <th class="min-w-150px">Send By</th>
 							<th class="min-w-140px">Time</th>
 							<th class="rounded-end min-w-50px">Status</th>
 							<th class="min-w-100px text-end-new">Actions</th>
@@ -139,6 +140,7 @@
 							<td class="text-dark fs-6">{{ $email->email_to }}</td>
 							<td class="text-dark fs-6">{{ $email->first_name }} {{ $email->last_name }}</td>
 							<td class="text-dark fs-6">{{ $email->email_subject }}</td>
+							<td class="text-dark fs-6">{{ $email->send_by_fname }} {{ $email->send_by_lname }}</td>
 							<td class="text-dark fs-6">{{ Carbon::parse($email->log_time)->format('d-m-Y h:i A') }}</td>
 		                    <td class="text-dark fs-6">
 								@if ($email->send_status == config('constants.campaign_status')["Success"])
