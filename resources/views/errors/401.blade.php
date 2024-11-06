@@ -157,5 +157,5 @@ a.more-link {
   <span class="four"><span class="screen-reader-text">4</span></span>
 </section>
 <div class="link-container">
-  <a href="/dashboard" class="more-link">Go Home</a>
+  <a href="{{ route('dashboard') }}" class="more-link">Go Home</a>
 </div>

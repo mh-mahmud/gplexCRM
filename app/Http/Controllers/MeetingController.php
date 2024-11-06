@@ -148,7 +148,7 @@ class MeetingController extends Controller
     public function destroy($id)
     {
         $this->meetingService->deleteMeeting($id);
-        Helper::storeLog("Meeting deleted successfully", "Meeting", "delete Meeting", null, $request->lead_id);
+        Helper::storeLog("Meeting deleted successfully", "Meeting", "delete Meeting", null,null);
         return redirect()->route('meeting-index')->with('success', 'Meeting deleted successfully.');
     }
 

@@ -146,8 +146,7 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: '{{ session('
-            success ')}}',
+            text: '{{ session('success')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -159,8 +158,7 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: '{{ session('
-            error ')}}',
+            text: '{{ session('error')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -252,7 +250,7 @@ use Carbon\Carbon;
                                         {{ \Carbon\Carbon::parse($invoice->invoice_date)->format('d-m-Y') }}
                                         @endif
                                     </td>
-                                    <td class="text-dark fs-6">{{$invoice->customer->customer_group}}</td>
+                                    <td class="text-dark fs-6">{{$invoice->first_name}} {{$invoice->last_name}}</td>
                                     <td class="text-dark fs-6">
                                         @if($invoice->due_date)
                                         {{ \Carbon\Carbon::parse($invoice->due_date)->format('d-m-Y') }}

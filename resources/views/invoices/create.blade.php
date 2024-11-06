@@ -82,7 +82,7 @@
                                                 <option value="" {{ old('customer_id') == '' ? 'selected' : '' }}>Select Customer</option>
                                                 @foreach($customers as $customer)
                                                 <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
-                                                    {{ $customer->customer_group }}
+                                                    {{ $customer->first_name }} {{ $customer->last_name }}
                                                 </option>
                                                 @endforeach
                                             </select>
@@ -167,7 +167,7 @@
                                                 @foreach($custom_invoice as $custom_invoices)
                                                 <option
                                                     value="{{ $custom_invoices->id }}"
-                                                    data-fields="{{ htmlspecialchars($custom_invoices->field_details) }}"
+                                                    data-fields="{{ json_encode($custom_invoices->field_details) }}"
                                                     {{ old('custom_invoice_id') == $custom_invoices->id ? 'selected' : '' }}>
                                                     {{ $custom_invoices->invoice_name }}
                                                 </option>
@@ -539,9 +539,22 @@
                                     </div>
                                 </div>
 
-                                <table id="proposal-table" class="table table-bordered" style="display: none;">
-                                    <!-- Custom fields will be inserted here -->
+                                <!-- <table id="custom-invoice-table" class="table table-rounded table-sm table-striped border align-middle gs-2" style="display: none;">
+                                   
+                                </table> -->
+
+
+                                <table id="custom-invoice-table" class="table table-rounded table-sm table-striped border align-middle gs-2" style="display: none;">
+                                    <thead>
+                                        <tr id="custom-invoice-header" class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200"></tr>
+                                    </thead>
+                                    <tbody id="custom-invoice-body">
+                                        <tr>
+                                            <!-- Placeholder for dynamic input fields, populated by JS below -->
+                                        </tr>
+                                    </tbody>
                                 </table>
+
 
                                 <div class="row">
                                     <div class="col-md-12">
@@ -770,6 +783,9 @@
                 $('#table-body').append(newRow);
                 // clear the product selection
                 $('#product-select').val('').trigger('change');
+                //when add more row click this input hide
+                $('input[name="discount"]').val('');
+                $('input[name="adjustment"]').val('');
             } else {
                 //alert user if any field in the last row is not filled
                 alert('Please fill all fields in the last row before adding a new one.');
@@ -908,58 +924,81 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const customInvoiceSelect = document.getElementById('custom-invoice-select');
-        const defaultInvoice = document.getElementById('default-invoice');
-        const proposalTable = document.getElementById('proposal-table');
+document.addEventListener('DOMContentLoaded', function() {
+    const customInvoiceSelect = document.getElementById('custom-invoice-select');
+    const defaultInvoice = document.getElementById('default-invoice');
+    const proposalTable = document.getElementById('custom-invoice-table'); // custom table id
+    const customInvoiceHeader = document.getElementById('custom-invoice-header');
+    const customInvoiceBody = document.getElementById('custom-invoice-body');
 
-        //alert(customInvoiceSelect);
+    customInvoiceSelect.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const fieldDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.fields) : null;
 
-        customInvoiceSelect.addEventListener('change', function() {
-            const selectedOption = this.options[this.selectedIndex];
-            const fieldDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.fields) : null;
+        if (fieldDetails && fieldDetails.length > 0) {
+            
+            defaultInvoice.style.display = 'none';
+            proposalTable.style.display = 'table';
 
-            // Display custom invoice fields if fieldDetails has a valid value
-            if (fieldDetails && fieldDetails.length > 0) {
-                defaultInvoice.style.display = 'none';
-                proposalTable.style.display = 'table';
-                renderCustomInvoiceTable(fieldDetails);
-
-                // Show alert when a custom invoice is selected
-                //alert(`Custom Invoice Selected: ${selectedOption.text}`);
-            } else {
-                // Show default invoice and clear the proposalTable if no valid custom invoice is selected
-                //defaultInvoice.style.display = 'block';
-               // proposalTable.style.display = 'none';
-                //proposalTable.innerHTML = ''; // Clear custom fields
-                //alert(`Custom Invoice Selected: `);
-            }
-        });
-
-        // Render custom invoice fields into the table
-        function renderCustomInvoiceTable(fields) {
-            // Map field details to create table headers and input fields
-            const theadContent = fields.map(field => `<th>${field.field_name}</th>`).join('');
-            const tbodyRow = fields.map(field => `
-            <td>
-                <input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" />
-            </td>`).join('');
-
-            // Populate proposal table
-            proposalTable.innerHTML = `
-            <thead>
-                <tr>${theadContent}<th>Action</th></tr>
-            </thead>
-            <tbody>
-                <tr>${tbodyRow}<td><button type="button" class="btn btn-sm btn-danger remove-row">Remove</button></td></tr>
-            </tbody>`;
+            populateCustomInvoiceFields(fieldDetails);
+        } else {
+            
+            defaultInvoice.style.display = 'block';
+            proposalTable.style.display = 'none';
         }
-
-        // Trigger the change event to set up the correct layout on page load
-        customInvoiceSelect.dispatchEvent(new Event('change'));
     });
-</script>
 
+    
+    function populateCustomInvoiceFields(fields) {
+        // headers in custom invoice table
+        customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Action</th>';
+
+        
+        customInvoiceBody.innerHTML = `
+            <tr>
+                ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
+                <td>
+                    
+                    <button type="button" class="btn btn-sm btn-primary py-2 px-3" id="add-row">
+                                                            <i class="bi bi-plus-lg pe-0"></i>
+                                                        </button>
+                </td>
+            </tr>
+        `;
+
+        //"add More" button and remove buttons
+        addRemoveFunctionality();
+
+        // Add event listener for the "Add More" button
+        document.getElementById('add-row').addEventListener('click', function() {
+            // insert new row
+            customInvoiceBody.insertAdjacentHTML('beforeend', `
+                <tr>
+                    ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
+                    <td><button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
+                           <i class="bi bi-trash pe-0"></i>
+                       </button>
+                </tr>
+            `);
+
+            addRemoveFunctionality(); // reapply remove functionality to new row
+        });
+    }
+
+    //remove row button
+    function addRemoveFunctionality() {
+        document.querySelectorAll('.remove-row').forEach(button => {
+            button.addEventListener('click', function() {
+                this.closest('tr').remove();
+            });
+        });
+    }
+
+    // Trigger the change event on page load
+    customInvoiceSelect.dispatchEvent(new Event('change'));
+});
+
+</script>
 
 
 

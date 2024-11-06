@@ -9,8 +9,8 @@
 
         <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
             <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Agent<span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
-                    <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Agent List</small>
+                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Customers<span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
+                    <small class="text-muted fs-7 fw-bold my-1 ms-1">Show Customers List</small>
                 </h1>
             </div>
             <div class="d-flex align-items-center py-1">
@@ -71,7 +71,7 @@
                     </div>
 
                 </div>
-                <a href="{{ route('agents-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
+                <a href="#" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
             </div>
 
         </div>
@@ -123,7 +123,7 @@
                         </h3>
 
                         <div class="d-flex flex-wrap gap-2">
-                            <form action="{{ route('agents-search') }}" method="POST" class="d-flex">
+                            <form action="" method="POST" class="d-flex">
                                 @csrf
                                 <div class="d-flex align-items-center position-relative">
                                     <span class="svg-icon svg-icon-1 position-absolute ms-6">

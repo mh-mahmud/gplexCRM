@@ -4,6 +4,7 @@ use App\Services\ProposalService;
 use App\Services\CountryService;
 use App\Services\CurrencyService;
 use App\Helpers\Helper;
+use App\Models\Proposal;
 
 use Illuminate\Http\Request;
 
@@ -94,8 +95,10 @@ class ProposalController extends Controller {
     }
 
     public function delete_proposal($id) {
+        $proposal = Proposal::findOrFail($id);
+        $leadId = $proposal->lead_id;
         $this->proposalService->delete_proposal($id);
-        Helper::storeLog("proposal deleted successfully", "proposal", "delete proposal", null, $request->lead_id);
+        Helper::storeLog("proposal deleted successfully", "proposal", "delete proposal", null,$leadId);
         return redirect()->back()->with('success', 'Proposal deleted successfully.');
     }
     
