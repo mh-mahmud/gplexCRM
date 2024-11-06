@@ -195,8 +195,9 @@ class EmailService
     public function sendEmailList($request)
     {
         $sql = EmailLog::query()
-                    ->select('email_log.*', 'leads.first_name', 'leads.last_name')
-                    ->leftJoin('leads', 'email_log.lead_id', '=', 'leads.id');
+                    ->select('email_log.*', 'leads.first_name', 'leads.last_name', 'users.first_name as send_by_fname', 'users.last_name as send_by_lname')
+                    ->leftJoin('leads', 'email_log.lead_id', '=', 'leads.id')
+                    ->join('users', 'users.id', '=', 'email_log.user_id');
         $data = $request->all();
         if(!empty($data["search"])) {
             $sql->where('email_to','like', '%' . $data["search"] . '%');
@@ -300,8 +301,9 @@ class EmailService
     public function getEmailSendById($id)
     {
         return EmailLog::where('email_log.id', $id)
-                        ->select('email_log.*', 'leads.first_name', 'leads.last_name')
+                        ->select('email_log.*', 'leads.first_name', 'leads.last_name', 'users.first_name as send_by_fname', 'users.last_name as send_by_lname')
                         ->leftJoin('leads', 'email_log.lead_id', '=', 'leads.id')
+                        ->join('users', 'users.id', '=', 'email_log.user_id')
                         ->first();
     }
    

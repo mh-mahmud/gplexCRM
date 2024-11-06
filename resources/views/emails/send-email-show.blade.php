@@ -77,6 +77,16 @@
                         </div>
 
                         <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                            <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Send By</span>
+                            {{ $email->send_by_fname }} {{ $email->send_by_lname }}
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                            <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Time</span>
+                            {{ Carbon::parse($email->log_time)->format('d-m-Y h:i A') }}
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                             <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Status</span>
                             @if ($email->send_status == config('constants.campaign_status')["Success"])
                                 <span class="badge badge-light-success">Success</span>

@@ -5,7 +5,8 @@ use App\Models\User;
 use App\Models\Task;
 use Exception;
 use Illuminate\Support\Facades\Auth;
-
+use App\Helpers\Helper;
+use DB;
 class TaskService
 {
     public function getTaskList()
@@ -44,30 +45,31 @@ class TaskService
         }
        
         $data = $request->all();
-// dd(config('constants.TASK_TO_DO'));
         try {
-            $dataObj                        = new Task();
-            $dataObj->task_name             = $data['task_name'];
-            $dataObj->assigned_to           = Auth::user()->user_type == 'admin' ? $data['assigned_to'] : Auth::id();
-            $dataObj->description           = $data['description'];
-            $dataObj->due_date              = $data['due_date'];
-            // $dataObj->status                = config('constants.TASK_TO_DO');
-            $dataObj->status                = 0;
-            $dataObj->created_by            = Auth::id();
-
-            $dataObj->save();
-
+            return  DB::transaction(function () use ($data) {
+                $dataObj                        = new Task();
+                $dataObj->task_name             = $data['task_name'];
+                $dataObj->assigned_to           = Auth::user()->user_type == 'admin' ? $data['assigned_to'] : Auth::id();
+                $dataObj->description           = $data['description'];
+                $dataObj->due_date              = $data['due_date'];
+                // $dataObj->status                = config('constants.TASK_TO_DO');
+                $dataObj->status                = 0;
+                $dataObj->created_by            = Auth::id();
+                $dataObj->save();   
+                
+                Helper::storeLog("New task added, ".$data['task_name'], "Tasks", "Add Task", "Created");
+                
+                return (object)[
+                    'status'                 => 201,
+                    'info'                   => $dataObj->id
+                ];
+            });
         } catch (Exception $e) {
             return (object)[
                 'status'             => 424,
                 'error'              => $e->getMessage()
             ];
         }
-
-        return (object)[
-            'status'                 => 201,
-            'info'                   => $dataObj->id
-        ];
     }
 
     public function changeStatus($request, $id)
@@ -75,10 +77,18 @@ class TaskService
         $data = $request->all();
 
         try {
-            $dataObj                        = Task::findOrFail($id);
-            $dataObj->status                = $data['status'];
+            return  DB::transaction(function () use ($data, $id) {
+                $dataObj                        = Task::findOrFail($id);
+                $dataObj->status                = $data['status'];
+                $dataObj->save();
 
-            $dataObj->save();
+                Helper::storeLog("Status Change of task, ".$dataObj['task_name'], "Tasks", "Task Status Change", "Updated");
+               
+                return (object)[
+                    'status'                 => 208,
+                    'info'                   => $dataObj->id
+                ];
+            });
 
         } catch (Exception $e) {
             return (object)[
@@ -86,30 +96,27 @@ class TaskService
                 'error'              => $e->getMessage()
             ];
         }
-
-        return (object)[
-            'status'                 => 208,
-            'info'                   => $dataObj->id
-        ];
-
     }
 
     public function taskDelete($id)
     {
         try {
-            $task = Task::findOrFail($id);
-            $task->delete();
+            return  DB::transaction(function () use ($id) {
+                $task = Task::findOrFail($id);
+                $task->delete();
 
+                Helper::storeLog("Delete task, ".$task['task_name'], "Tasks", "Task Delete", "Deleted");
+                
+                return (object)[
+                    'status'                 => 200,
+                ];
+            });
         } catch (Exception $e) {
             return (object)[
                 'status'             => 424,
                 'error'              => $e->getMessage()
             ];
         }
-
-        return (object)[
-            'status'                 => 200,
-        ];
 
     }
 }
