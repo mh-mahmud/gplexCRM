@@ -5,6 +5,8 @@ use App\Services\CountryService;
 use App\Services\CurrencyService;
 use App\Helpers\Helper;
 use App\Models\Proposal;
+use App\Models\Country;
+use App\Models\Currency;
 
 use Illuminate\Http\Request;
 
@@ -31,8 +33,8 @@ class ProposalController extends Controller {
 
     public function addProposal(Request $request)
     {      
-        $countries = $this->countryService->countryList($request);
-        $currencies = $this->currencyService->currencyList($request);
+        $countries = Country::where('status', 1)->get();
+        $currencies = Currency::where('status', 1)->get();
         $leads = $this->proposalService->getLeadsData();
 
         return view('proposals.add-proposal', compact('countries', 'currencies', 'leads'));
