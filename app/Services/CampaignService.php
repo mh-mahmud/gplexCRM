@@ -253,6 +253,7 @@ class CampaignService
                         $dataObj->email_subject     = $email_template->email_subject;
                         $dataObj->email_content     = $email_template->email_content;
                         $dataObj->log_time          = Carbon::now();
+                        $dataObj->user_id           = auth()->id();
                         //$dataObj->delivery_time     = Carbon::now();
                         $dataObj->send_status       = config('constants.campaign_status.Pending');
                         $dataObj->save();
@@ -280,6 +281,7 @@ class CampaignService
                         $dataObj->csv_id = $phones->csv_id;
                         $dataObj->sms_text = $sms_template->description;
                         $dataObj->log_time = Carbon::now();
+                        $dataObj->user_id           = auth()->id();
                         //$dataObj->user_id = Auth::id();
                         $dataObj->send_status = config('constants.campaign_status.Pending');
                         $dataObj->save();
