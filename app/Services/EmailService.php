@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use DB;
 use App\Helpers\Helper;
+use App\Models\EmailQueue;
 use Illuminate\Support\Facades\Auth;
 
 class EmailService
@@ -142,15 +143,10 @@ class EmailService
         ]);
        
         $data = $request->all();
-
-        $subject = $data["email_subject"];
-        $body = $data["email_content"];
-        $to_email = $data["to_email"];
-
         try {
-            Mail::to($to_email)->send(new SingleMail($subject, $body));
+            // Mail::to($to_email)->send(new SingleMail($subject, $body));
 
-            $dataObj                        = new EmailLog();
+            $dataObj                        = new EmailQueue();
             $dataObj->email_from            = "Genuity";
             $dataObj->email_to              = $data['to_email'];
             $dataObj->email_subject         = $data['email_subject'];
@@ -158,26 +154,10 @@ class EmailService
             $dataObj->lead_id               = $data['lead_id'];
             $dataObj->user_id               = Auth::id();
             $dataObj->log_time              = Carbon::now();
-            $dataObj->delivery_time         = Carbon::now();
-            $dataObj->send_status           = config('constants.campaign_status')["Success"];
+            $dataObj->send_status           = config('constants.campaign_status')["Pending"];
             $dataObj->save();
             
-            Helper::storeLog("Email send successfully to " .$data['to_email'], "Email Module", "Send an Email", "Send Email", $data['lead_id']);
-
         } catch (Exception $e) {
-            $dataObj                        = new EmailLog();
-            $dataObj->email_from            = "Genuity";
-            $dataObj->email_to              = $data['to_email'];
-            $dataObj->email_subject         = $data['email_subject'];
-            $dataObj->email_content         = $data['email_content'];
-            $dataObj->user_id               = Auth::id();
-            $dataObj->log_time              = Carbon::now();
-            $dataObj->delivery_time         = Carbon::now();
-            $dataObj->send_status           = config('constants.campaign_status')["Failed"];
-            $dataObj->save();
-
-            Helper::storeLog("Email send fail to " .$data['to_email'], "Email Module", "Send an Email", "Send Email", $data['lead_id']);
-
             return (object)[
                 'status'                 => 401,
                 'message'                => $e->getMessage()
@@ -228,7 +208,6 @@ class EmailService
         $file = $request->file('file');
         $data = $request->all();
         $emailLogs = [];
-        $logs = [];
         try {
             // Check if the file is an Excel file
             if ($file->getClientOriginalExtension() == 'csv') {
@@ -251,7 +230,7 @@ class EmailService
                     continue;
                 }
         
-                Mail::to($row[0])->queue(new BulkEmail($data['email_subject'], $data['email_content']));
+                // Mail::to($row[0])->queue(new BulkEmail($data['email_subject'], $data['email_content']));
 
                 $lead = Lead::where('email', $row[0])
                               ->select('id')
@@ -263,25 +242,13 @@ class EmailService
                     'email_subject' => $data['email_subject'],
                     'email_content' => $data['email_content'],
                     'log_time'      => Carbon::now(),
-                    'delivery_time' => Carbon::now(),
                     'user_id'       => Auth::id(),
-                    'send_status'   => config('constants.campaign_status')["Success"]
-                ];
-
-                $logs[] = [
-                        'log_message'   => "Email send successfully to " .$row[0]." => Email Module  => Send Bulk Email",
-                        'module'        => "Email Module",
-                        'sub_module'    => "Send Bulk Email",
-                        'user_id'       => Auth::id(),
-                        'lead_id'       => $lead->id ?? null,
-                        'status'        => 1,
-                        'created_at'    => Carbon::now()
+                    'send_status'   => config('constants.campaign_status')["Pending"]
                 ];
             }
 
-            return  DB::transaction(function () use ($emailLogs, $logs) {
-                EmailLog::insert($emailLogs);
-                Logs::insert($logs);
+            return  DB::transaction(function () use ($emailLogs) {
+                EmailQueue::insert($emailLogs);
                 return (object)[
                     'status'                 => 201,
                 ];
@@ -306,6 +273,53 @@ class EmailService
                         ->join('users', 'users.id', '=', 'email_log.user_id')
                         ->first();
     }
-   
+
+    public function sendPendingEmail($request) 
+    {
+        $pending_emails = EmailQueue::where('send_status', config('constants.campaign_status')["Pending"])
+                                    ->orderBy('id', 'asc')
+                                    ->limit(15)
+                                    ->get();
+
+        DB::transaction(function () use ($pending_emails) {
+            foreach($pending_emails as $email) {
+                try {
+                    Mail::to($email->email_to)->send(new SingleMail($email->email_subject, $email->email_content));
+
+                    $this->logEmail($email, "Success");
+
+                    Helper::storeLog("Email sent successfully to " . $email->email_to, "Email Module", "Send an Email", "Send Email", $email->lead_id);
+
+                    EmailQueue::where('id', $email->id)->delete();
+
+                } catch (\Exception $e) {
+                    $this->logEmail($email, "Failed");
+
+                    Helper::storeLog("Email failed to send to " . $email->email_to, "Email Module", "Send an Email", "Send Email", $email->lead_id);
+
+                    EmailQueue::where('id', $email->id)->delete();
+
+                }
+            }
+        });
+    }
+
+    private function logEmail($email, $status)
+    {
+        $dataObj = new EmailLog();
+        $dataObj->email_from = "Genuity";
+        $dataObj->email_to = $email->email_to;
+        $dataObj->email_subject = $email->email_subject;
+        $dataObj->email_content = $email->email_content;
+        $dataObj->lead_id = $email->lead_id;
+        $dataObj->meeting_id = $email->meeting_id;
+        $dataObj->campaign_id = $email->campaign_id;
+        $dataObj->csv_id = $email->csv_id;
+        $dataObj->user_id = Auth::id();
+        $dataObj->log_time = Carbon::now();
+        $dataObj->delivery_time = Carbon::now();
+        $dataObj->send_status = config('constants.campaign_status')[$status];
+        $dataObj->save();
+    }
 
 }

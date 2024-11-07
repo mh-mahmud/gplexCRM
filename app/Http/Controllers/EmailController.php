@@ -128,4 +128,10 @@ class EmailController extends Controller {
         return view('emails.send-email-show', compact('email'));
     }
 
+    public function sendPendingEmail(Request $request)
+    {
+        $this->emailService->sendPendingEmail($request);
+
+    }
+
 }
