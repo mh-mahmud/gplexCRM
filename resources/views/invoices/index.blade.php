@@ -242,7 +242,7 @@ use Carbon\Carbon;
 
                                     <td class="ps-5 text-dark fs-6">{{($invoices->currentPage() - 1) * $invoices->perPage() + $loop->iteration}}</td>
                                     <td class="text-dark fs-6">{{$invoice->invoice_number}}</td>
-                                    <td class="text-dark fs-6 w-200px">{{$invoice->total_amount}}</td>
+                                    <td class="text-dark fs-6 w-100px">{{$invoice->total_amount}}</td>
                                     <td class="text-dark fs-6 w-200px">{{$invoice->total_tax }}</td>
                                     <td class="text-dark fs-6 w-200px">{{ $invoice->discount ?? '0.00' }}</td>
                                     <td class="text-dark fs-6 w-200px">
@@ -250,8 +250,8 @@ use Carbon\Carbon;
                                         {{ \Carbon\Carbon::parse($invoice->invoice_date)->format('d-m-Y') }}
                                         @endif
                                     </td>
-                                    <td class="text-dark fs-6">{{$invoice->first_name}} {{$invoice->last_name}}</td>
-                                    <td class="text-dark fs-6">
+                                    <td class="text-dark fs-6 w-200px">{{$invoice->first_name}} {{$invoice->last_name}}</td>
+                                    <td class="text-dark fs-6 w-200px">
                                         @if($invoice->due_date)
                                         {{ \Carbon\Carbon::parse($invoice->due_date)->format('d-m-Y') }}
                                         @endif

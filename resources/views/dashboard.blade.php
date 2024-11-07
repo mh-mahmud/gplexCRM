@@ -264,8 +264,7 @@
                                                   style="color: red !important;font-size:10px;">Due Date: {{substr($val->due_date, 0, 10)}}</span>
                                         </div>
                                         <!--end::Description-->
-                                        <span
-                                            class="badge badge-light-successconst_task fs-8 fw-bolder">{{@$const_task[$val->status]}}</span>
+                                        <span class="" style="text-align:center;width:70px !important;font-size:9px;color:#fff;background-color:#3B71CA;padding:5px; border-radius:5px;">{{@$const_task[$val->status]}}</span>
                                     </div>
                                     @php
                                         $i++;
@@ -432,7 +431,7 @@
                                     <div class="d-flex align-items-center mb-7">
                                         <!--begin::Avatar-->
                                         <div class="symbol symbol-50px me-5">
-                                            @if($val->user->profile_image)
+                                            @if($val->user->profile_image && file_exists("uploads/agents/".$val->user->profile_image))
                                                 <img src="uploads/agents/{{$val->user->profile_image}}" class="" alt=""/>
                                             @else
                                                 <img src="assets/media/avatars/blank.png" class="" alt=""/>

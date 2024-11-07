@@ -33,7 +33,7 @@ class DashboardController extends Controller {
             $data['lead_list'] = Lead::where('lead_status', 1)->where('created_by', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
         }
         $data['camp_list'] = Campaign::where('status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'campaign_title', 'start_date', 'end_date', 'campaign_type', 'campaign_limit']);
-        $data['agent_list'] = Agent::with('user')->where('status', 1)->limit(5)->get();
+        $data['agent_list'] = Agent::with('user')->where('status', 1)->orderBy('agent_id', 'desc')->limit(5)->get();
         $data['todo_list'] = (Auth()->user()->user_type=='admin') ? Task::where('status', '!=', 9)->limit(6)->get(['task_name', 'description', 'due_date', 'status']) : Task::where('created_by', $user_id)->orWhere('assigned_to', $user_id)->limit(6)->get(['task_name', 'description', 'due_date', 'status']);
         $data['formName'] = $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
 

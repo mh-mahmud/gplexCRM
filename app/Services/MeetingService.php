@@ -103,6 +103,7 @@ class MeetingService
                 'email_subject' => $request->meeting_subject,
                 'email_content' => $request->meeting_description . ' Meeting Link: ' . $request->meeting_link,
                 'log_time' => Carbon::now(),
+                'user_id' => auth()->id(),
                 'send_status' => config('constants.meeting_status.Pending'),
             ]);
         }
@@ -143,6 +144,7 @@ class MeetingService
                 'sms_to' => $recipient['phone_number'],
                 'sms_text' => $request->meeting_description . ' Meeting Link: ' . $request->meeting_link,
                 'log_time' => Carbon::now(),
+                'user_id' => auth()->id(),
                 'send_status' => config('constants.meeting_status.Pending'),
             ]);
         }
