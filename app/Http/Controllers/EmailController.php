@@ -19,7 +19,7 @@ class EmailController extends Controller {
     public function __construct(EmailService $emailService)
     {
         $this->emailService = $emailService;
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
 	public function emailTemplateList(Request $request)

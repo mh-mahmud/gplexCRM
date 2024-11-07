@@ -41,7 +41,7 @@ use App\Models\Promotion;
 Route::get('/', [AuthController::class, 'index'])->name('login_index');
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/post_login', [AuthController::class, 'postLogin'])->name('login.post');
-
+Route::get('send-pending-email', [EmailController::class, 'sendPendingEmail'])->name('send-pending-email');
 
 Route::group(['middleware' => ['auth']], function () {
 	Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -222,7 +222,6 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('send-bulk-email', [EmailController::class, 'sendBulkEmail'])->name('send-bulk-email')->middleware(['check-permission']);
 	Route::post('send-bulk-email-process', [EmailController::class, 'sendBulkEmailPro'])->name('send-bulk-email-process');
 	Route::get('send-email/show/{id?}', [EmailController::class, 'getEmailSendById'])->name('send-email-show')->middleware(['check-permission']);
-	Route::get('send-pending-email', [EmailController::class, 'sendPendingEmail'])->name('send-pending-email');
 
 	// Send email routes end
 
