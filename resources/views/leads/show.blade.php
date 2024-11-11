@@ -1033,10 +1033,7 @@ use Carbon\Carbon;
         fetch(ticketUrl)
             .then(response => response.json())
             .then(data => {
-                // Assuming data contains [{"iframe": "<iframe ...>"}]
                 const iframeHtml = data[0].iframe;
-
-                // Insert the iframe HTML into the container and display it
                 const iframeContainer = document.getElementById('ticketIframeContainer');
                 iframeContainer.innerHTML = iframeHtml;
                 iframeContainer.style.display = 'block';
