@@ -144,7 +144,7 @@
 
 
                 <div class="g-login-right">
-                    <h2>CRM</h2>
+                    <img width="280px" alt="Logo" src="{{url('/')}}/assets/media/logos/login-r-logo.svg"/>
                 </div>
 
                 <!--end::Form-->
