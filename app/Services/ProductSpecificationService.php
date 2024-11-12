@@ -40,7 +40,8 @@ class ProductSpecificationService
             if ($data->hasFile($field)) {
                 $file = $data->file($field);
                 $fileName = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('uploads/product_specification'), $fileName);
+                //$file->move(public_path('uploads/product_specification'), $fileName);
+                $file->move(getcwd().'/uploads/product_specification', $fileName);
                 $specificationData[$field] = $fileName;
             }
         }
@@ -88,18 +89,26 @@ class ProductSpecificationService
 
     public function deleteProductSpecification($id)
     {
+        
         $productSpecification = ProductSpecification::findOrFail($id);
-
-        // Delete file if exists
-        if ($productSpecification->work_order_file ) {
-            //$existingFilePath = public_path('uploads/meetings/'.$meeting->attachments);
-            $existingFilePath = getcwd() . '/uploads/product_specification/' . $productSpecification->work_order_file;
-            if (file_exists($existingFilePath)) {
-                unlink($existingFilePath);
+        $fileFields = [
+            'work_order_file',
+            'purchase_order_file',
+            'amc_agreement_documents',
+            'invoice_mushak_file',
+            'tax_exemption_certificate'
+        ];
+        foreach ($fileFields as $field) {
+            if ($productSpecification->$field) {
+                // construct the file path
+                $existingFilePath = getcwd() . '/uploads/product_specification/' . $productSpecification->$field;
+              if (file_exists($existingFilePath)) {
+                    unlink($existingFilePath);
+                }
             }
         }
-
-        $productSpecification->delete();
+       $productSpecification->delete();
     }
+    
     
 }

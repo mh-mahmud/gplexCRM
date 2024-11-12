@@ -36,7 +36,11 @@ class ProductSpecificationController extends Controller
             'work_order_value' => 'required|numeric',
             'amc_start_date' => 'nullable|date',
             'amc_renewal_date' => 'nullable|date',
-            'work_order_file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'work_order_file' => 'nullable|file|max:10048',
+            'purchase_order_file' => 'nullable|file|max:10048',
+            'amc_agreement_documents' => 'nullable|file|max:10048',
+            'invoice_mushak_file' => 'nullable|file|max:10048',
+            'tax_exemption_certificate' => 'nullable|file|max:10048',
             // Add other validation rules as necessary
         ]);
 
@@ -45,7 +49,7 @@ class ProductSpecificationController extends Controller
         }
 
         $this->productSpecificationService->createProductSpecification($request);
-        return redirect()->route('product_specifications.index')->with('success', 'Product Specification created successfully.');
+        return redirect()->route('product-specification-index')->with('success', 'Product Specification created successfully.');
     }
 
     public function show($id)
@@ -74,8 +78,8 @@ class ProductSpecificationController extends Controller
             'search' => 'required|string',
         ]);
        
-        $agents = $this->productSpecificationService->searchAgents($request);
-        return view('agents.index', compact('agents'));
+        $productSpecifications = $this->productSpecificationService->searchroductSpecification($request);
+        return view('product_specifications.index', compact('productSpecifications'));
     }
 
     public function update(Request $request, $id)
@@ -94,7 +98,7 @@ class ProductSpecificationController extends Controller
         }
 
         $this->productSpecificationService->updateProductSpecification($request, $id);
-        return redirect()->route('product_specifications.index')->with('success', 'Product Specification updated successfully.');
+        return redirect()->route('product-specification-index')->with('success', 'Product Specification updated successfully.');
     }
 
     public function destroy($id)
