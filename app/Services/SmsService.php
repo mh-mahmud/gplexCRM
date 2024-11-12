@@ -187,7 +187,7 @@ class SmsService
                     ->leftJoin('leads', 'sms_queue.lead_id', '=', 'leads.id')
                     ->join('users', 'users.id', '=', 'sms_queue.user_id');
         if (Auth::user()->user_type === 'agent') {
-            $sql->where('user_id',Auth::id());
+            $sql->where('sms_queue.user_id',Auth::id());
 
         }
         $data = $request->all();
