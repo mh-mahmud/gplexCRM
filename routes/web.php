@@ -22,6 +22,7 @@ use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\InvoiceCustomFormController;
+use App\Http\Controllers\ProductSpecificationController;
 
 
 use App\Models\Promotion;
@@ -267,6 +268,16 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('product-edit/{id?}', [ProductController::class, 'productEdit'])->name('product-edit')->middleware(['check-permission']);
 	Route::put('product-update-pro/{id}', [ProductController::class, 'productUpdate'])->name('product-update-pro');
 	// Product routes end
+
+    // Product Specification routes start
+	Route::get('/product-specification', [ProductSpecificationController::class, 'index'])->name('product-specification-index')->middleware(['check-permission']);
+    Route::get('/product-specification/create', [ProductSpecificationController::class, 'create'])->name('product-specification-create')->middleware(['check-permission']);
+    Route::post('/product-specification', [ProductSpecificationController::class, 'store'])->name('product-specification-store');
+    Route::get('/product-specification/{id}', [ProductSpecificationController::class, 'show'])->name('product-specification-show')->middleware(['check-permission']);
+    Route::get('/product-specification/{id}/edit', [ProductSpecificationController::class, 'edit'])->name('product-specification-edit')->middleware(['check-permission']);
+    Route::put('/product-specification/{id}', [ProductSpecificationController::class, 'update'])->name('product-specification-update');
+    Route::delete('/product-specification/{id}', [ProductSpecificationController::class, 'destroy'])->name('product-specification-destroy')->middleware(['check-permission']);
+	Route::post('/product-specification/search', [ProductSpecificationController::class, 'search'])->name('product-specification-search');
 
 
 	// Country routes start
