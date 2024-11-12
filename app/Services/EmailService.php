@@ -184,7 +184,7 @@ class EmailService
 
         }
         if (Auth::user()->user_type === 'agent') {
-            $sql->where('user_id', Auth::id());
+            $sql->where('email_log.user_id', Auth::id());
 
         }
         return $sql->orderBy('id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
