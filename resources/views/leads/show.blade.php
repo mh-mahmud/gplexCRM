@@ -935,35 +935,15 @@ use Carbon\Carbon;
                         <div class="card-body">
 
                             Ticket Section
-                            {{-- <div class="d-flex align-items-center py-1">
-                                <!--begin::Wrapper-->
-                                <div class="me-4">
-                                    <!--begin::Menu-->
-    
-                                    <!--begin::Menu 1-->
-                                    <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
-                                         id="kt_menu_61484bf44d957">
-                                        <!--begin::Header-->
-                                        <div class="px-7 py-5">
-                                            <div class="fs-5 text-dark fw-bolder">Filter Options</div>
-                                        </div>
-                                        <!--end::Header-->
-                                        <!--begin::Menu separator-->
-                                        <div class="separator border-gray-200"></div>
-                                        <!--end::Menu separator-->
-                                        <!--begin::Form-->
-    
-                                        <!--end::Form-->
-                                    </div>
-                                    <!--end::Menu 1-->
-                                    <!--end::Menu-->
-                                </div>
-                                <!--end::Wrapper-->
-                                <!--begin::Button-->
-                                <a href="http://192.168.11.220/ticket_crm/ticket_crm_api.php?TYPE=TICKET_CREATE&CLI=01829208431" class="btn btn-sm btn-primary">Create Ticket</a>
-                                <!--end::Button-->
-                            </div> --}}
-
+                            <button class="btn btn-primary" id="createTicketButton">Create Ticket</button>
+                            <div id="ticketIframeContainer" style="margin-top: 20px; display: none;">
+                                <iframe 
+                                    id="ticketIframe" 
+                                    src="" 
+                                    style="width: 100%; height: 600px; border: none;" 
+                                    title="Create Ticket">
+                                </iframe>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1043,4 +1023,25 @@ use Carbon\Carbon;
 <!-- </div> -->
 <!--end::Content-->
 
+@endsection
+
+@section('endScript')
+<script>
+    document.getElementById('createTicketButton').addEventListener('click', function() {
+        const ticketUrl = "http://192.168.11.220/ticket_crm/ticket_crm_api.php?TYPE=TICKET_CREATE&CLI=01829208431";
+
+        fetch(ticketUrl)
+            .then(response => response.json())
+            .then(data => {
+                const iframeHtml = data[0].iframe;
+                const iframeContainer = document.getElementById('ticketIframeContainer');
+                iframeContainer.innerHTML = iframeHtml;
+                iframeContainer.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error fetching iframe data:', error);
+                alert('Failed to load the ticket creation form. Please try again.');
+            });
+    });
+</script>
 @endsection
