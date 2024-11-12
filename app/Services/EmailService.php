@@ -288,14 +288,14 @@ class EmailService
 
                     $this->logEmail($email, "Success");
 
-                    Helper::storeLog("Email sent successfully to " . $email->email_to, "Email Module", "Send an Email", "Send Email", $email->lead_id);
+                    Helper::storeLog("Email sent successfully to " . $email->email_to, "Email Module", "Send an Email", "Send Email", $email->lead_id, $email->user_id);
 
                     EmailQueue::where('id', $email->id)->delete();
 
                 } catch (\Exception $e) {
                     $this->logEmail($email, "Failed");
 
-                    Helper::storeLog("Email failed to send to " . $email->email_to, "Email Module", "Send an Email", "Send Email", $email->lead_id);
+                    Helper::storeLog("Email failed to send to " . $email->email_to, "Email Module", "Send an Email", "Send Email", $email->lead_id, $email->user_id);
 
                     EmailQueue::where('id', $email->id)->delete();
 
@@ -315,7 +315,7 @@ class EmailService
         $dataObj->meeting_id = $email->meeting_id;
         $dataObj->campaign_id = $email->campaign_id;
         $dataObj->csv_id = $email->csv_id;
-        $dataObj->user_id = Auth::id();
+        $dataObj->user_id = $email->user_id;
         $dataObj->log_time = Carbon::now();
         $dataObj->delivery_time = Carbon::now();
         $dataObj->send_status = config('constants.campaign_status')[$status];

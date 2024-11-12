@@ -935,7 +935,15 @@ use Carbon\Carbon;
                         <div class="card-body">
 
                             Ticket Section
-
+                            <button class="btn btn-primary" id="createTicketButton">Create Ticket</button>
+                            <div id="ticketIframeContainer" style="margin-top: 20px; display: none;">
+                                <iframe 
+                                    id="ticketIframe" 
+                                    src="" 
+                                    style="width: 100%; height: 600px; border: none;" 
+                                    title="Create Ticket">
+                                </iframe>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -976,7 +984,7 @@ use Carbon\Carbon;
                                             <td class="text-dark fs-6">{{ $log->module }}</td>
                                             <td class="text-dark fs-6">{{ $log->sub_module }}</td>
                                             <td class="text-dark fs-6">{{ $log->log_message }}</td>
-                                            <td class="text-dark fs-6">{{ $log->lead_first_name }} {{ $log->lead_last_name }}</td>
+                                            <td class="text-dark fs-6">{{ $lead->first_name }} {{ $lead->last_name }}</td>
                                             <td class="text-dark fs-6">{{ $log->first_name }} {{ $log->last_name }}</td>
                                             <td>
                                                 {{ Carbon::parse($log->created_at)->format('d-m-Y h:i:s A') }}
@@ -1015,4 +1023,25 @@ use Carbon\Carbon;
 <!-- </div> -->
 <!--end::Content-->
 
+@endsection
+
+@section('endScript')
+<script>
+    document.getElementById('createTicketButton').addEventListener('click', function() {
+        const ticketUrl = "http://192.168.11.220/ticket_crm/ticket_crm_api.php?TYPE=TICKET_CREATE&CLI=01829208431";
+
+        fetch(ticketUrl)
+            .then(response => response.json())
+            .then(data => {
+                const iframeHtml = data[0].iframe;
+                const iframeContainer = document.getElementById('ticketIframeContainer');
+                iframeContainer.innerHTML = iframeHtml;
+                iframeContainer.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error fetching iframe data:', error);
+                alert('Failed to load the ticket creation form. Please try again.');
+            });
+    });
+</script>
 @endsection

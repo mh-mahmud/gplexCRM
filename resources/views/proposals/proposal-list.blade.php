@@ -22,7 +22,7 @@
 
             <div class="d-flex align-items-center py-1">
 
-                <a href="{{ route('add-proposal') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Add Prposal</a>
+                <a href="{{ route('add-proposal') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Add Proposal</a>
 
             </div>
         </div>
@@ -71,7 +71,7 @@
                 <div class="card mt-4">
                     <div class="d-flex justify-content-between align-items-start card-header border-0 p-1">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder fs-3 mb-1">Prposal List</span>
+                            <span class="card-label fw-bolder fs-3 mb-1">Proposal List</span>
                         </h3>
 
                         {{-- <div class="d-flex flex-wrap gap-2">
