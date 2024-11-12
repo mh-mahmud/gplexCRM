@@ -21,6 +21,7 @@ use App\Models\SmsQueue;
 use App\Models\Meeting;
 use App\Models\Proposal;
 use App\Models\Logs;
+use App\Models\Invoice;
 use App\Services\LeadService;
 use Illuminate\Support\Facades\Schema;
 use DateTime;
@@ -180,8 +181,13 @@ class LeadController  extends Controller
         $meetings = Meeting::where('lead_id', $id)->get();
         $proposals = Proposal::where('lead_id', $id)->get();
         $logs = Logs::where('lead_id', $id)->get();
+        $invoices = Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id')
+            ->select('invoices.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
+            ->where('lead_id', $id)
+            ->orderBy('invoices.created_at', 'desc')->get();
 
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs'));
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices'));
     }
 
 
