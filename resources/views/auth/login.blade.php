@@ -142,7 +142,6 @@
                     </form>
                 </div>
 
-
                 <div class="g-login-right">
                     <img width="280px" alt="Logo" src="{{url('/')}}/assets/media/logos/login-r-logo.svg"/>
                 </div>
