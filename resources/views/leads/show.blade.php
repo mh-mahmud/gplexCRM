@@ -941,6 +941,21 @@ use Carbon\Carbon;
                                     title="Create Ticket">
                                 </iframe>
                             </div>
+                            <table id="ticketTable" class="table table-sm table-condensed table-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                                <!--begin::Table head-->
+                                <thead>
+                                <tr class="fw-bolder text-muted bg-light bd-cyan">
+                                    <th class="min-w-150px">Ticket ID</th>
+                                    <th class="min-w-150px"> Title</th>
+                                    <th class="min-w-150px"> Group</th>
+                                    <th class="min-w-150px"> Status</th>
+
+                                </tr>
+                                </thead>
+                               
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -1024,8 +1039,45 @@ use Carbon\Carbon;
 
 @section('endScript')
 <script>
+    var phone_no = @json($lead->phone); 
+    function getTickets(phone_no) {
+        const ticketListUrl = "http://192.168.11.220/ticket_crm/ticket_crm_api.php?TYPE=TICKET_LIST_BY_MOBILE&CLI="+phone_no;
+
+        fetch(ticketListUrl)
+            .then(response => response.json())
+            .then(data => {
+                console.log('data', data)
+                populateTable(data);
+            })
+            .catch(error => {
+                console.error('Error fetching iframe data:', error);
+                alert('Failed to load the ticket creation form. Please try again.');
+            });
+    }
+
+    function populateTable(data) {
+        const tableBody = document.getElementById('ticketTable').getElementsByTagName('tbody')[0];
+
+        tableBody.innerHTML = '';
+
+        data.forEach(ticket => {
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${ticket.ticket_id || 'N/A'}</td>
+                <td>${ticket.subject || 'N/A'}</td>
+                <td>${ticket.group_name || 'N/A'}</td>
+                <td>${ticket.status_name || 'N/A'}</td>
+                `;
+
+            tableBody.appendChild(row);
+        });
+    }
+
+    let tickets = getTickets(phone_no);
+
     document.getElementById('createTicketButton').addEventListener('click', function() {
-        const ticketUrl = "http://192.168.11.220/ticket_crm/ticket_crm_api.php?TYPE=TICKET_CREATE&CLI=01829208431";
+        const ticketUrl = "http://192.168.11.220/ticket_crm/ticket_crm_api.php?TYPE=TICKET_CREATE&CLI="+phone_no;
 
         fetch(ticketUrl)
             .then(response => response.json())

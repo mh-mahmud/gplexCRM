@@ -364,3 +364,6 @@ ALTER TABLE `email_queue` CHANGE `customer_id` `lead_id` BIGINT NULL DEFAULT NUL
 
 --05-11-2024
 ALTER TABLE `campaigns` ADD COLUMN `created_by` INT(11) UNSIGNED NULL AFTER `promotion_id`;
+--12-11-2024
+ALTER TABLE `menus` CHANGE `sub_name` `sub_name` CHAR(50) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
+ALTER TABLE `menus` CHANGE `name` `name` CHAR(50) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
