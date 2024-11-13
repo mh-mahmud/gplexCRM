@@ -32,6 +32,7 @@ class ProductSpecificationController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            //'product_id' => 'required|integer',
             'work_order_number' => 'required|string|max:50',
             'work_order_value' => 'required|numeric',
             'amc_start_date' => 'nullable|date',
@@ -59,9 +60,10 @@ class ProductSpecificationController extends Controller
     }
 
     public function edit($id)
-    {
+    {   
+        $products = Product::all();
         $productSpecification = $this->productSpecificationService->getProductSpecificationById($id);
-        return view('product_specifications.edit', compact('productSpecification'));
+        return view('product_specifications.edit', compact('productSpecification','products'));
     }
 
 
@@ -85,11 +87,16 @@ class ProductSpecificationController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
+            //'product_id' => 'required|integer',
             'work_order_number' => 'required|string|max:50',
             'work_order_value' => 'required|numeric',
             'amc_start_date' => 'nullable|date',
             'amc_renewal_date' => 'nullable|date',
-            'work_order_file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'work_order_file' => 'nullable|file|max:10048',
+            'purchase_order_file' => 'nullable|file|max:10048',
+            'amc_agreement_documents' => 'nullable|file|max:10048',
+            'invoice_mushak_file' => 'nullable|file|max:10048',
+            'tax_exemption_certificate' => 'nullable|file|max:10048',
             // Add other validation rules as necessary
         ]);
 
@@ -110,6 +117,40 @@ class ProductSpecificationController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+
+    public function updateSpecificationFile(Request $request, $id)
+    {
+        $specification = ProductSpecification::findOrFail($id);
+        $fileType = $request->input('type');
+    
+        // file type to the database field
+        $fileFields = [
+            'work_order_file' => 'work_order_file',
+            'purchase_order_file' => 'purchase_order_file',
+            'amc_agreement_documents' => 'amc_agreement_documents',
+            'invoice_mushak_file' => 'invoice_mushak_file',
+            'tax_exemption_certificate' => 'tax_exemption_certificate',
+        ];
+    
+       
+        if (isset($fileFields[$fileType]) && $specification->{$fileFields[$fileType]}) {
+            $filePath = public_path('uploads/product_specification/' . $specification->{$fileFields[$fileType]});
+            if (file_exists($filePath)) {
+                unlink($filePath); 
+            }
+    
+            //update the database to remove the file reference
+            $specification->{$fileFields[$fileType]} = null;
+            $specification->save();
+    
+            return response()->json(['success' => true]);
+        }
+    
+        return response()->json(['success' => false, 'message' => 'No file found']);
+    }
+    
+
 
 
 

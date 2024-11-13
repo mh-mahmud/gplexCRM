@@ -53,24 +53,43 @@ class ProductSpecificationService
     public function updateProductSpecification($data, $id)
     {
         $productSpecification = ProductSpecification::findOrFail($id);
-        $specificationData = $data->except(['work_order_file']);
 
-        // Handle file update if a new file is provided
-        if ($data->hasFile('work_order_file')) {
-            // Delete old file if exists
-            if ($productSpecification->work_order_file && file_exists(public_path('uploads/product_specification/' . $productSpecification->work_order_file))) {
-                unlink(public_path('uploads/product_specification/' . $productSpecification->work_order_file));
+        //exclude file fields for initial update
+        $specificationData = $data->except([
+            'work_order_file',
+            'purchase_order_file',
+            'amc_agreement_documents',
+            'invoice_mushak_file',
+            'tax_exemption_certificate'
+        ]);
+
+        //handle file uploads
+        $fileFields = [
+            'work_order_file',
+            'purchase_order_file',
+            'amc_agreement_documents',
+            'invoice_mushak_file',
+            'tax_exemption_certificate'
+        ];
+
+        foreach ($fileFields as $field) {
+            if ($data->hasFile($field)) {
+                //delete old file
+                if ($productSpecification->$field && file_exists(getcwd() . '/uploads/product_specification/' . $productSpecification->$field)) {
+                    unlink(getcwd() . '/uploads/product_specification/' . $productSpecification->$field);
+                }
+
+                //upload new file
+                $file = $data->file($field);
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->move(getcwd() . '/uploads/product_specification', $fileName);
+                $specificationData[$field] = $fileName;
             }
-            
-            // Upload new file
-            $file = $data->file('work_order_file');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/product_specification'), $fileName);
-            $specificationData['work_order_file'] = $fileName;
         }
 
         return $productSpecification->update($specificationData);
     }
+
 
 
     public function searchroductSpecification($request)

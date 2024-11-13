@@ -277,6 +277,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/product-specification/{id}', [ProductSpecificationController::class, 'update'])->name('product-specification-update');
     Route::delete('/product-specification/{id}', [ProductSpecificationController::class, 'destroy'])->name('product-specification-destroy')->middleware(['check-permission']);
 	Route::post('/product-specification/search', [ProductSpecificationController::class, 'search'])->name('product-specification-search');
+	Route::put('/product-specification/update-specification-file/{id}', [ProductSpecificationController::class, 'updateSpecificationFile'])->name('update-specification-file');
+
+
 
 
 	// Country routes start

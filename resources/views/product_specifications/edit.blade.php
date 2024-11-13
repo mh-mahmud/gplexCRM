@@ -13,12 +13,12 @@
             data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
             class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
             <!--begin::Title-->
-            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Agent Edit Forms
+            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Product Specification Edit Forms
                 <!--begin::Separator-->
                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                 <!--end::Separator-->
                 <!--begin::Description-->
-                <small class="text-muted fs-7 fw-bold my-1 ms-1">Fill up the Agent Edit form</small>
+                <small class="text-muted fs-7 fw-bold my-1 ms-1">Fill up the Product Specification Edit form</small>
                 <!--end::Description-->
             </h1>
             <!--end::Title-->
@@ -124,7 +124,7 @@
             </div>
             <!--end::Wrapper-->
             <!--begin::Button-->
-            <a href="{{ route('agents-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Agent List</a>
+            <a href="{{ route('product-specification-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Product Specification List</a>
             <!--end::Button-->
         </div>
         <!--end::Actions-->
@@ -144,7 +144,7 @@
                 <div class="card-header bg-light bd-cyan">
                     <!--begin::Card title-->
                     <div class="card-title m-0">
-                        <h3 class="fw-bolder m-0">Agent Edit</h3>
+                        <h3 class="fw-bolder m-0">Product Specification Edit</h3>
                     </div>
                     <!--end::Card title-->
                 </div>
@@ -154,210 +154,224 @@
 
                     <!-- Start Form-->
 
-                    <form class="g-form w-100" action="{{ route('agents-update', $agent->agent_id) }}" method="POST" enctype="multipart/form-data">
+                    <form class="g-form w-100" action="{{ route('product-specification-update', $productSpecification->id) }}" enctype="multipart/form-data" method="POST">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" name="id" value="{{ $user->id }}">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Email</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid"
-                                        type="email" name="email" value="{{ old('email', $user->email) }}" autocomplete="off" />
-                                    <!--end::Input-->
-                                    @if ($errors->has('email'))
-                                    <span class="text-danger">{{ $errors->first('email') }}</span>
-                                    @endif
-                                </div>
+                            <!-- Product Dropdown -->
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Product</label>
+                                <select class="form-control form-control-sm form-control-solid" name="product_id" required>
+                                    <option value="">Select Product</option>
+                                    @foreach ($products as $product)
+                                    <option value="{{ $product->id }}" {{ $productSpecification->product_id == $product->id ? 'selected' : '' }}>
+                                        {{ $product->name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @error('product_id')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">
-                                        First Name</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid"
-                                        type="text" name="first_name" value="{{ $agent->first_name }}" autocomplete="off" />
-                                    <!--end::Input-->
-                                    @if ($errors->has('first_name'))
-                                    <span class="text-danger">{{ $errors->first('first_name') }}</span>
-                                    @endif
 
-                                </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Work Order Number</label>
+                                <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number', $productSpecification->work_order_number) }}" required />
+                                @error('work_order_number')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">
-                                        Last Name</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid"
-                                        type="text" name="last_name" value="{{ $agent->last_name }}" autocomplete="off" />
-                                    <!--end::Input-->
-                                    @if ($errors->has('last_name'))
-                                    <span class="text-danger">{{ $errors->first('last_name') }}</span>
-                                    @endif
 
-                                </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Work Order Value</label>
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_value" value="{{ old('work_order_value', $productSpecification->work_order_value) }}" step="0.01" required />
+                                @error('work_order_value')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">
-                                        Username</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid"
-                                        type="text" name="username" value="{{$user->username }}" autocomplete="off" />
-                                    <!--end::Input-->
-                                    @if ($errors->has('username'))
-                                    <span class="text-danger">{{ $errors->first('username') }}</span>
-                                    @endif
 
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">
-                                        Phone Number</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid"
-                                        type="text" name="phone_number" value="{{ $agent->phone_number }}" autocomplete="off" />
-                                    <!--end::Input-->
-                                </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Work Order File</label>
+                                <input class="form-control form-control-sm form-control-solid" type="file" name="work_order_file" />
+                                @if ($productSpecification->work_order_file)
+                                <div id="work_order_file-file-container">
+                                <a href="{{ asset('uploads/product_specification/' . $productSpecification->work_order_file) }}" target="_blank">View Current File</a>
+                                <button type="button" class="btn btn-danger btn-sm p-2 delete-file-btn" data-type="work_order_file">
+                                    <i class="fas fa-trash-alt pe-0"></i>
+                                </button>
+                               </div>
+                                @endif
+                                @error('work_order_file')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
 
 
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Password</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid"
-                                        type="password" name="password" autocomplete="off" />
-                                    <!--end::Input-->
-                                    @if ($errors->has('password'))
-                                    <span class="text-danger">{{ $errors->first('password') }}</span>
-                                    @endif
-                                </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Work Order Rate</label>
+                                <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_rate" value="{{ old('work_order_rate', $productSpecification->work_order_rate) }}" />
+                                @error('work_order_rate')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <label class="form-label fw-bolder text-dark">Gender</label>
-                                    <select class="form-control form-control-sm form-control-solid" name="gender" aria-label="Default select example">
-                                        <option value="">Select Gender</option>
-                                        <option value="Male" {{ $agent->gender === 'Male' ? 'selected' : '' }}>Male</option>
-                                        <option value="Female" {{ $agent->gender === 'Female' ? 'selected' : '' }}>Female</option>
-                                        <option value="Other" {{ $agent->gender === 'Other' ? 'selected' : '' }}>Other</option>
-                                    </select>
-                                </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Purchase Order Value</label>
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="purchase_order_value" value="{{ old('purchase_order_value', $productSpecification->purchase_order_value) }}" step="0.01" />
+                                @error('purchase_order_value')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
-
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">
-                                        Date Of Birth</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <div class="position-relative">
-                                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr"
-                                            placeholder="Date Of Birth" name="birth_day" value="{{ $agent->birth_day }}">
-                                    </div>
-                                    <!-- <input class="form-control form-control-lg form-control-solid"
-                                                           type="date" name="birth_day" value="{{ $agent->birth_day }}" autocomplete="off"/> -->
-                                    <!--end::Input-->
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Purchase Order File</label>
+                                <input class="form-control form-control-sm form-control-solid" type="file" name="purchase_order_file" />
+                                @if ($productSpecification->purchase_order_file)
+                                <div id="purchase_order_file-file-container">
+                                <a href="{{ asset('uploads/product_specification/' . $productSpecification->purchase_order_file) }}" target="_blank">View Current File</a>
+                                <button type="button" class="btn btn-danger btn-sm p-2 delete-file-btn" data-type="purchase_order_file">
+                                    <i class="fas fa-trash-alt pe-0"></i>
+                                </button>
                                 </div>
+                                @endif
+                                @if ($errors->has('purchase_order_file'))
+                                <div class="text-danger">{{ $errors->first('purchase_order_file') }}</div>
+                                @endif
                             </div>
 
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">AMC Start Date</label>
+                                <input class="form-control form-control-sm form-control-solid flatpickr" type="text" name="amc_start_date" value="{{ old('amc_start_date', $productSpecification->amc_start_date) }}" />
+                                @error('amc_start_date')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
 
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">AMC Renewal Date</label>
+                                <input class="form-control form-control-sm form-control-solid flatpickr" type="text" name="amc_renewal_date" value="{{ old('amc_renewal_date', $productSpecification->amc_renewal_date) }}" />
+                                @error('amc_renewal_date')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                            {{--<div class="col-md-6">
-                                <div class="fv-row mb-3">
-
-                                    <label class="form-label  fw-bolder text-dark">Image
-                                        Upload</label>
-
-                                    <input class="form-control form-control-sm form-control-solid"
-                                        type="file" name="profile_image" autocomplete="off" />
-
-                                </div>
-                            </div>--}}
-
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label  fw-bolder text-dark">Image Upload</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="file" name="profile_image" autocomplete="off" />
-
-                                    @if ($user->profile_image)
-                                    <div class="mt-3" id="profile-image-container">
-                                        <img src="{{ asset('uploads/agents/' . $user->profile_image) }}" alt="Profile Image" width="100px">
-                                        <button type="button" class="btn btn-danger btn-sm p-2" id="delete-profile-image">
-                                            <i class="fas fa-trash-alt pe-0"></i>
-                                        </button>
-                                    </div>
-
-                                    @else
-                                        <img alt="Logo" src="{{ asset('uploads/noimage.jpg') }}" width="100px"/>
-                                    @endif
-
-                                    <!--end::Input-->
-                                </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">AMC Rate</label>
+                                <input class="form-control form-control-sm form-control-solid" type="text" name="amc_rate" value="{{ old('amc_rate', $productSpecification->amc_rate) }}" />
+                                @error('amc_rate')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
 
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <label class="form-label fw-bolder text-dark">Status</label>
-                                    <select class="form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
-                                        <option value="1" {{ $agent->status == 1 ? 'selected' : '' }}>Active</option>
-                                        <option value="0" {{ $agent->status == 0 ? 'selected' : '' }}>Inactive</option>
-                                    </select>
-                                </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">AMC Effective Amount</label>
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="amc_effective_amount" value="{{ old('amc_effective_amount', $productSpecification->amc_effective_amount) }}" step="0.01" />
+                                @if ($errors->has('amc_effective_amount'))
+                                <div class="text-danger">{{ $errors->first('amc_effective_amount') }}</div>
+                                @endif
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label fw-bolder text-dark" for="textarea">Address</label>
-                                    <textarea class="form-control form-control-sm  form-control-solid" name="address" rows="3">{{ $agent->address }}</textarea>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">AMC Agreement Documents</label>
+                                <input class="form-control form-control-sm form-control-solid" type="file" name="amc_agreement_documents" />
+                                @if ($errors->has('amc_agreement_documents'))
+                                <div class="text-danger">{{ $errors->first('amc_agreement_documents') }}</div>
+                                @endif
+                                @if (!empty($productSpecification->amc_agreement_documents))
+                                <div id="amc_agreement_documents-file-container">
+                                <a href="{{ asset('uploads/product_specification/' . $productSpecification->amc_agreement_documents) }}" target="_blank">View Current Document</a>
+                                <button type="button" class="btn btn-danger btn-sm p-2 delete-file-btn" data-type="amc_agreement_documents">
+                                    <i class="fas fa-trash-alt pe-0"></i>
+                                </button>
                                 </div>
+                                @endif
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label fw-bolder text-dark" for="textarea">Note</label>
-                                    <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{ $agent->description }}</textarea>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Service Type</label>
+                                <input class="form-control form-control-sm form-control-solid" type="text" name="service_type" value="{{ old('service_type', $productSpecification->service_type) }}" />
+                                @if ($errors->has('service_type'))
+                                <div class="text-danger">{{ $errors->first('service_type') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Software Value</label>
+                                <textarea class="form-control form-control-sm form-control-solid" name="software_value" rows="3">{{ old('software_value', $productSpecification->software_value) }}</textarea>
+                                @if ($errors->has('software_value'))
+                                <div class="text-danger">{{ $errors->first('software_value') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Hardware Value</label>
+                                <textarea class="form-control form-control-sm form-control-solid" name="hardware_value" rows="3">{{ old('hardware_value', $productSpecification->hardware_value) }}</textarea>
+                                @if ($errors->has('hardware_value'))
+                                <div class="text-danger">{{ $errors->first('hardware_value') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Implementation Value</label>
+                                <textarea class="form-control form-control-sm form-control-solid" name="implementation_value" rows="3">{{ old('implementation_value', $productSpecification->implementation_value) }}</textarea>
+                                @if ($errors->has('implementation_value'))
+                                <div class="text-danger">{{ $errors->first('implementation_value') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Invoice Mushak File</label>
+                                <input class="form-control form-control-sm form-control-solid" type="file" name="invoice_mushak_file" />
+                                @if ($errors->has('invoice_mushak_file'))
+                                <div class="text-danger">{{ $errors->first('invoice_mushak_file') }}</div>
+                                @endif
+                                @if (!empty($productSpecification->invoice_mushak_file))
+                                <div id="invoice_mushak_file-file-container">
+                                <a href="{{ asset('uploads/product_specification/' . $productSpecification->invoice_mushak_file) }}" target="_blank">View Current File</a>
+                                <button type="button" class="btn btn-danger btn-sm p-2 delete-file-btn" data-type="invoice_mushak_file">
+                                    <i class="fas fa-trash-alt pe-0"></i>
+                                </button>
                                 </div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Tax Exemption Certificate</label>
+                                <input class="form-control form-control-sm form-control-solid" type="file" name="tax_exemption_certificate" />
+                                @if ($errors->has('tax_exemption_certificate'))
+                                <div class="text-danger">{{ $errors->first('tax_exemption_certificate') }}</div>
+                                @endif
+                                @if (!empty($productSpecification->tax_exemption_certificate))
+                                <div id="tax_exemption_certificate-file-container">
+                                <a href="{{ asset('uploads/product_specification/' . $productSpecification->tax_exemption_certificate) }}" target="_blank">View Current Certificate</a>
+                                <button type="button" class="btn btn-danger btn-sm p-2 delete-file-btn" data-type="tax_exemption_certificate">
+                                    <i class="fas fa-trash-alt pe-0"></i>
+                                </button>
+                                </div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Note</label>
+                                <textarea class="form-control form-control-sm form-control-solid" name="note" rows="3">{{ old('note', $productSpecification->note) }}</textarea>
+                                @if ($errors->has('note'))
+                                <div class="text-danger">{{ $errors->first('note') }}</div>
+                                @endif
                             </div>
 
 
+                            <!-- Submit and Reset buttons -->
+                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                <a href="{{ route('product-specification-create') }}" class="btn btn-light me-2">Reset</a>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
                         </div>
-                        <!--End Row-->
-                        <div class="card-footer d-flex justify-content-end py-6 px-9">
-                            <a href="{{ route('agents-edit', $agent->agent_id) }}" class="btn btn-light me-2">Reset</a>
-                            <button type="submit" class="btn btn-primary"
-                                id="kt_account_profile_details_submit">Update Changes
-                            </button>
-                        </div>
-
                     </form>
 
                     <!-- End Form-->
@@ -379,32 +393,39 @@
 <!--end::Content-->
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-    $(document).ready(function() {
-        $('#delete-profile-image').click(function() {
-            if (confirm('Are you sure you want to delete your profile image?')) {
-                $.ajax({
-                    url: '{{ route('update-profile-image', $user->id) }}', // Using the correct route
-                    type: 'PUT', // Correct HTTP method
-                    data: {
-                        _token: '{{ csrf_token() }}' // Include CSRF token
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            $('#profile-image-container').remove();
-                           // alert('Profile image deleted successfully');
-                        } else {
-                            alert('Error deleting profile image');
-                        }
-                    },
-                    error: function() {
-                        alert('Error deleting profile image');
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.delete-file-btn').click(function() {
+        const fileType = $(this).data('type');
+        const containerId = `#${fileType}-file-container`;
+
+        if (confirm('Are you sure you want to delete this file?')) {
+            $.ajax({
+                url: '{{ route('update-specification-file', ['id' => $productSpecification->id]) }}',
+                type: 'PUT',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    type: fileType
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $(containerId).remove();
+                    } else {
+                        alert(response.message || 'Error deleting the file');
                     }
-                });
-            }
-        });
+                },
+                error: function() {
+                    alert('Error deleting the file');
+                }
+            });
+        }
     });
-    </script>
+});
+</script>
+
+
+
+
 
 @endsection

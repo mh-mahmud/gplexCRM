@@ -157,11 +157,12 @@
                     <form class="g-form w-100" action="{{ route('product-specification-store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
                         <div class="row">
-                           
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Product</label>
                                 <select class="form-control form-control-sm form-control-solid" name="product_id" required>
-                                    <option value="">Select Product</option>
+                                    <!-- The default option will be selected when no product is selected -->
+                                    <option value="" {{ old('product_id') == '' ? 'selected' : '' }}>Select Product</option>
                                     @foreach ($products as $product)
                                     <option value="{{ $product->id }}" {{ old('product_id') == $product->id ? 'selected' : '' }}>
                                         {{ $product->name }}
@@ -173,7 +174,8 @@
                                 @endif
                             </div>
 
-                            
+
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Work Order Number</label>
                                 <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" required />
@@ -182,7 +184,7 @@
                                 @endif
                             </div>
 
-                         
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Work Order Value</label>
                                 <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_value" value="{{ old('work_order_value') }}" step="0.01" required />
@@ -191,7 +193,7 @@
                                 @endif
                             </div>
 
-                           
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Work Order File</label>
                                 <input class="form-control form-control-sm form-control-solid" type="file" name="work_order_file" />
@@ -200,7 +202,7 @@
                                 @endif
                             </div>
 
-                          
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Work Order Rate</label>
                                 <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_rate" value="{{ old('work_order_rate') }}" />
@@ -209,7 +211,7 @@
                                 @endif
                             </div>
 
-                            
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Purchase Order Value</label>
                                 <input class="form-control form-control-sm form-control-solid" type="number" name="purchase_order_value" value="{{ old('purchase_order_value') }}" step="0.01" />
@@ -218,7 +220,7 @@
                                 @endif
                             </div>
 
-                          
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Purchase Order File</label>
                                 <input class="form-control form-control-sm form-control-solid" type="file" name="purchase_order_file" />
@@ -227,7 +229,7 @@
                                 @endif
                             </div>
 
-                           
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">AMC Start Date</label>
                                 <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="amc_start_date" value="{{ old('amc_start_date') }}" />
@@ -236,7 +238,7 @@
                                 @endif
                             </div>
 
-                            
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">AMC Renewal Date</label>
                                 <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="amc_renewal_date" value="{{ old('amc_renewal_date') }}" />
@@ -245,7 +247,7 @@
                                 @endif
                             </div>
 
-                           
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">AMC Rate</label>
                                 <input class="form-control form-control-sm form-control-solid" type="text" name="amc_rate" value="{{ old('amc_rate') }}" />
@@ -254,7 +256,7 @@
                                 @endif
                             </div>
 
-                          
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">AMC Effective Amount</label>
                                 <input class="form-control form-control-sm form-control-solid" type="number" name="amc_effective_amount" value="{{ old('amc_effective_amount') }}" step="0.01" />
@@ -263,7 +265,7 @@
                                 @endif
                             </div>
 
-                            
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">AMC Agreement Documents</label>
                                 <input class="form-control form-control-sm form-control-solid" type="file" name="amc_agreement_documents" />
@@ -272,7 +274,7 @@
                                 @endif
                             </div>
 
-                          
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Service Type</label>
                                 <input class="form-control form-control-sm form-control-solid" type="text" name="service_type" value="{{ old('service_type') }}" />
@@ -281,7 +283,7 @@
                                 @endif
                             </div>
 
-                           
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Software Value</label>
                                 <textarea class="form-control form-control-sm form-control-solid" name="software_value" rows="3">{{ old('software_value') }}</textarea>
@@ -290,7 +292,7 @@
                                 @endif
                             </div>
 
-                           
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Hardware Value</label>
                                 <textarea class="form-control form-control-sm form-control-solid" name="hardware_value" rows="3">{{ old('hardware_value') }}</textarea>
@@ -299,7 +301,7 @@
                                 @endif
                             </div>
 
-                          
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Implementation Value</label>
                                 <textarea class="form-control form-control-sm form-control-solid" name="implementation_value" rows="3">{{ old('implementation_value') }}</textarea>
@@ -308,7 +310,7 @@
                                 @endif
                             </div>
 
-                           
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Invoice Mushak File</label>
                                 <input class="form-control form-control-sm form-control-solid" type="file" name="invoice_mushak_file" />
@@ -317,7 +319,7 @@
                                 @endif
                             </div>
 
-                            
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Tax Exemption Certificate</label>
                                 <input class="form-control form-control-sm form-control-solid" type="file" name="tax_exemption_certificate" />
@@ -326,7 +328,7 @@
                                 @endif
                             </div>
 
-                           
+
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Note</label>
                                 <textarea class="form-control form-control-sm form-control-solid" name="note" rows="3">{{ old('note') }}</textarea>
@@ -335,7 +337,7 @@
                                 @endif
                             </div>
 
-                        
+
                             <div class="card-footer d-flex justify-content-end py-6 px-9">
                                 <a href="{{ route('product-specification-create') }}" class="btn btn-light me-2">Reset</a>
                                 <button type="submit" class="btn btn-primary">Save Changes</button>
