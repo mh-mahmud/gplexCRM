@@ -402,11 +402,11 @@
                                                             </tr> -->
                                                             <tr>
                                                                 <th><strong>Tax :</strong>
-                                                                    <div class="input-group">
+                                                                    <div class="input-group flex-nowrap">
                                                                         <div class="flex-grow-1">
                                                                             <input id="tax_amount" class="form-control form-control-sm rounded-end-0 border-end" type="text" name="tax_percent">
                                                                         </div>
-                                                                        <select class="form-select form-select-sm form-control-sm" name="tax_type" id="tax_type">
+                                                                        <select class="form-select form-select-sm form-control-sm" name="tax_type" id="tax_type" style="width:40%">
                                                                             <!-- <option value="fixed">Fixed Amount</option> -->
                                                                             <option value="percentage">%</option>
                                                                         </select>
