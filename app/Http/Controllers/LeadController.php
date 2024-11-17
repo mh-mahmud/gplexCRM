@@ -389,8 +389,7 @@ class LeadController  extends Controller
         $formId = $request->input('form_id');
         $leadTableId = $request->input('lead_table_id');
         $lastFourDigits = $request->input('last_four_digit');
-        $formData = $request->except(['_token', 'tableName', 'lead_id', 'form_id', 'lead_table_id','last_four_digit','active_tab']);
-        $activeTab = $request->input('active_tab', 'g_lead_details_tab'); // default tab
+        $formData = $request->except(['_token', 'tableName', 'lead_id', 'form_id', 'lead_table_id','last_four_digit']);
      
         try {
             DB::beginTransaction();
@@ -399,7 +398,6 @@ class LeadController  extends Controller
             $this->leadService->updateTableData($request, $tableName, $leadId, $formId, $formData);
     
             DB::commit();
-            session()->flash('active_tab', $activeTab);
 
             //return redirect()->route('lead-edit', ['id' => $leadTableId])->with('success', 'Data updated successfully');
             // Conditional redirection based on the value of $lastFourDigits

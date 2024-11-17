@@ -86,7 +86,6 @@
                         <input type="hidden" name="lead_id" value="{{ $leads->id }}">
                         <input type="hidden" name="last_four_digit" value="{{$lastFourDigits }}">
                         <input type="hidden" name="lead_table_id" value="{{ $leads->lead_id }}">
-                        <input type="hidden" name="active_tab" value="g_lead_table_tab">
 
                         @csrf
                         <div class="row">
