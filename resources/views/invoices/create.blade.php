@@ -249,16 +249,33 @@
                                     </div>
 
                                     <div class="col-md-6">
+                                        @php
+                                        $isAdmin = Auth::user()->user_type === 'admin';
+                                        @endphp
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark">Sale Agent</label>
-                                            <select class="form-control form-control-sm form-control-solid" name="sale_agent_id" aria-label="Default select example">
+                                            <select class="form-control form-control-sm form-control-solid"
+                                                name="sale_agent_id"
+                                                aria-label="Default select example"
+                                                {{ !$isAdmin ? 'disabled' : '' }}>
+                                                <!-- Default option -->
                                                 <option value="" {{ old('sale_agent_id') === null ? 'selected' : '' }}>Nothing Selected</option>
+
                                                 @foreach($agents as $agent)
-                                                <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : '' }}>
+                                                @if($isAdmin)
+                                               <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : '' }}>
                                                     {{ $agent->first_name }} {{ $agent->last_name }}
                                                 </option>
+                                                @elseif($agent->user_id == Auth::user()->id)
+                                               <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : 'selected' }}>
+                                                    {{ $agent->first_name }} {{ $agent->last_name }}
+                                                </option>
+                                                @endif
                                                 @endforeach
                                             </select>
+                                            @if(!$isAdmin)
+                                            <input type="hidden" name="sale_agent_id" value="{{ $agent->agent_id }}">
+                                            @endif
 
                                             @if ($errors->has('sale_agent_id'))
                                             <span class="text-danger">{{ $errors->first('sale_agent_id') }}</span>
@@ -924,37 +941,37 @@
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const customInvoiceSelect = document.getElementById('custom-invoice-select');
-    const defaultInvoice = document.getElementById('default-invoice');
-    const proposalTable = document.getElementById('custom-invoice-table'); // custom table id
-    const customInvoiceHeader = document.getElementById('custom-invoice-header');
-    const customInvoiceBody = document.getElementById('custom-invoice-body');
+    document.addEventListener('DOMContentLoaded', function() {
+        const customInvoiceSelect = document.getElementById('custom-invoice-select');
+        const defaultInvoice = document.getElementById('default-invoice');
+        const proposalTable = document.getElementById('custom-invoice-table'); // custom table id
+        const customInvoiceHeader = document.getElementById('custom-invoice-header');
+        const customInvoiceBody = document.getElementById('custom-invoice-body');
 
-    customInvoiceSelect.addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        const fieldDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.fields) : null;
+        customInvoiceSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const fieldDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.fields) : null;
 
-        if (fieldDetails && fieldDetails.length > 0) {
-            
-            defaultInvoice.style.display = 'none';
-            proposalTable.style.display = 'table';
+            if (fieldDetails && fieldDetails.length > 0) {
 
-            populateCustomInvoiceFields(fieldDetails);
-        } else {
-            
-            defaultInvoice.style.display = 'block';
-            proposalTable.style.display = 'none';
-        }
-    });
+                defaultInvoice.style.display = 'none';
+                proposalTable.style.display = 'table';
 
-    
-    function populateCustomInvoiceFields(fields) {
-        // headers in custom invoice table
-        customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Action</th>';
+                populateCustomInvoiceFields(fieldDetails);
+            } else {
 
-        
-        customInvoiceBody.innerHTML = `
+                defaultInvoice.style.display = 'block';
+                proposalTable.style.display = 'none';
+            }
+        });
+
+
+        function populateCustomInvoiceFields(fields) {
+            // headers in custom invoice table
+            customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Action</th>';
+
+
+            customInvoiceBody.innerHTML = `
             <tr>
                 ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
                 <td>
@@ -966,13 +983,13 @@ document.addEventListener('DOMContentLoaded', function() {
             </tr>
         `;
 
-        //"add More" button and remove buttons
-        addRemoveFunctionality();
+            //"add More" button and remove buttons
+            addRemoveFunctionality();
 
-        // Add event listener for the "Add More" button
-        document.getElementById('add-row').addEventListener('click', function() {
-            // insert new row
-            customInvoiceBody.insertAdjacentHTML('beforeend', `
+            // Add event listener for the "Add More" button
+            document.getElementById('add-row').addEventListener('click', function() {
+                // insert new row
+                customInvoiceBody.insertAdjacentHTML('beforeend', `
                 <tr>
                     ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
                     <td><button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
@@ -981,23 +998,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tr>
             `);
 
-            addRemoveFunctionality(); // reapply remove functionality to new row
-        });
-    }
-
-    //remove row button
-    function addRemoveFunctionality() {
-        document.querySelectorAll('.remove-row').forEach(button => {
-            button.addEventListener('click', function() {
-                this.closest('tr').remove();
+                addRemoveFunctionality(); // reapply remove functionality to new row
             });
-        });
-    }
+        }
 
-    // Trigger the change event on page load
-    customInvoiceSelect.dispatchEvent(new Event('change'));
-});
+        //remove row button
+        function addRemoveFunctionality() {
+            document.querySelectorAll('.remove-row').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.closest('tr').remove();
+                });
+            });
+        }
 
+        // Trigger the change event on page load
+        customInvoiceSelect.dispatchEvent(new Event('change'));
+    });
 </script>
 
 

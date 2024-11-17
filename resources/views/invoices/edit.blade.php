@@ -83,7 +83,7 @@
                                                 <option value="" {{ old('customer_id', $invoice->customer_id) == '' ? 'selected' : '' }}>Select Customer</option>
                                                 @foreach($customers as $customer)
                                                 <option value="{{ $customer->id }}" {{ old('customer_id', $invoice->customer_id) == $customer->id ? 'selected' : '' }}>
-                                                {{ $customer->first_name }} {{ $customer->last_name }}
+                                                    {{ $customer->first_name }} {{ $customer->last_name }}
                                                 </option>
                                                 @endforeach
                                             </select>
@@ -230,22 +230,40 @@
                                     </div>
 
                                     <div class="col-md-6">
+                                        @php
+                                        $isAdmin = Auth::user()->user_type === 'admin';
+                                        @endphp
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark">Sale Agent</label>
-                                            <select class="form-control form-control-sm form-control-solid" name="sale_agent_id">
+
+                                            <select class="form-control form-control-sm form-control-solid"
+                                                name="sale_agent_id"
+                                                aria-label="Default select example"
+                                                {{ !$isAdmin ? 'disabled' : '' }}>
                                                 <option value="" {{ old('sale_agent_id', $invoice->sale_agent_id) === null ? 'selected' : '' }}>Nothing Selected</option>
-                                                @foreach($agents as $agent)
-                                                <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id', $invoice->sale_agent_id) == $agent->agent_id ? 'selected' : '' }}>
+                                           @foreach($agents as $agent)
+                                                @if($isAdmin)
+                                                <option value="{{ $agent->agent_id }}"
+                                                    {{ old('sale_agent_id', $invoice->sale_agent_id) == $agent->agent_id ? 'selected' : '' }}>
                                                     {{ $agent->first_name }} {{ $agent->last_name }}
                                                 </option>
+                                                @elseif($agent->user_id == Auth::user()->id)
+                                                <option value="{{ $agent->agent_id }}"
+                                                    {{ old('sale_agent_id', $invoice->sale_agent_id) == $agent->agent_id ? 'selected' : '' }}>
+                                                    {{ $agent->first_name }} {{ $agent->last_name }}
+                                                </option>
+                                                @endif
                                                 @endforeach
                                             </select>
-
+                                            @if(!$isAdmin)
+                                            <input type="hidden" name="sale_agent_id" value="{{ $invoice->sale_agent_id }}">
+                                            @endif
                                             @if ($errors->has('sale_agent_id'))
                                             <span class="text-danger">{{ $errors->first('sale_agent_id') }}</span>
                                             @endif
                                         </div>
                                     </div>
+
 
 
 
@@ -373,7 +391,7 @@
                                                 <td>
                                                     <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
                                                         id="item-name" placeholder="Item Name" readonly>{{ $item['Item'] }}</textarea>
-                                                        @error('items.*.item_name')
+                                                    @error('items.*.item_name')
                                                     <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </td>
@@ -440,7 +458,7 @@
                                                 </td>
                                             </tr>
 
-                                             <!-- <tr>
+                                            <!-- <tr>
 
                                                 <td>
                                                     <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2" id="item-name" placeholder="Item Name">{{ old('items.item_name.0') }}</textarea>

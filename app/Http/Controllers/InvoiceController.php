@@ -15,6 +15,7 @@ use App\Models\Product;
 use App\Models\InvoiceCustomForm;
 use Carbon\Carbon;
 use PDF;
+use Illuminate\Support\Facades\Auth;
 
 class InvoiceController extends Controller
 {
@@ -47,7 +48,7 @@ class InvoiceController extends Controller
         $lastInvoice = Invoice::latest()->first();
         $nextInvoiceNumber = $lastInvoice ? $lastInvoice->id + 1 : 1;
         $discountTypes = Helper::getEnumValues('invoices', 'discount_type');
-        $agents = Agent::select('agent_id', 'first_name', 'last_name')->get();
+        $agents = Agent::select('agent_id', 'first_name', 'last_name','user_id')->get();
         $custom_invoice = InvoiceCustomForm::select('id', 'invoice_name','field_details')->get();
         $products = Product::select('id', 'name', 'description', 'product_value')->get();
         return view('invoices.create', compact('customers', 'countries', 'currencies', 'nextInvoiceNumber', 'discountTypes', 'agents', 'products','custom_invoice'));
@@ -131,7 +132,7 @@ class InvoiceController extends Controller
         $countries = $this->countryService->countryList($request);
         $currencies = $this->currencyService->currencyList($request);
         $discountTypes = Helper::getEnumValues('invoices', 'discount_type');
-        $agents = Agent::select('agent_id', 'first_name', 'last_name')->get();
+        $agents = Agent::select('agent_id', 'first_name', 'last_name','user_id')->get();
         $products = Product::select('id', 'name', 'description', 'product_value')->get();
         return view('invoices.edit', compact('invoice', 'customers', 'countries', 'currencies', 'discountTypes', 'agents', 'products', 'invoiceItems'));
     }
@@ -217,7 +218,7 @@ class InvoiceController extends Controller
     }
 
 
-    public function storePayment(Request $request, $invoiceId)
+    public function storePayment_backup(Request $request, $invoiceId)
     {
         $request->validate([
             'payment_amount' => 'required|numeric|min:0',
@@ -237,4 +238,37 @@ class InvoiceController extends Controller
         $this->invoiceService->addPaymentInvoice($invoice, $paymentDetails);
         return redirect()->route('invoice-index')->with('success', 'Payment recorded successfully!');
     }
+
+    public function storePayment(Request $request, $invoiceId)
+    {
+        $invoice = Invoice::findOrFail($invoiceId);
+        $existingPayments = $invoice->payment_details ?? [];
+        $totalPayments = array_sum(array_column($existingPayments, 'payment'));
+        $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
+
+        $request->validate([
+            'payment_amount' => [
+                'required',
+                'numeric',
+                'min:0',
+                function ($attribute, $value, $fail) use ($newDueAmount) {
+                    if ($value > $newDueAmount) {
+                        $fail("The payment amount cannot exceed the due amount of $newDueAmount.");
+                    }
+                },
+            ],
+        ]);
+
+        $paymentDetails = [
+            'invoice_id' => $invoice->id,
+            'payment' => $request->input('payment_amount'),
+            'payment_date' => Carbon::now()->toDateString(),
+            'due' => max(0, $newDueAmount - $request->input('payment_amount'))
+        ];
+
+        $this->invoiceService->addPaymentInvoice($invoice, $paymentDetails);
+
+        return redirect()->route('invoice-index')->with('success', 'Payment recorded successfully!');
+    }
+
 }
