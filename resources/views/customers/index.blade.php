@@ -71,7 +71,7 @@
                     </div>
 
                 </div>
-                <a href="#" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
+                
             </div>
 
         </div>
