@@ -82,38 +82,54 @@ use Carbon\Carbon;
                 <div class="card-header">
                     <ul class="nav nav-tabs nav-stretch fs-6 border-0">
                         <li class="nav-item">
-                            <a class="nav-link @if(session('success') || session('error')) @else  @endif"
-                                data-bs-toggle="tab" href="#g_lead_details" id="g_lead_details_tab" data-bs-target="#g_lead_details" role="tab" aria-controls="g_lead_details" aria-selected="true">Lead Details</a>
+                            <a class="nav-link @if(session('success') || session('error')) @else active @endif"
+                                data-bs-toggle="tab" href="#g_lead_details" data-tab="g_lead_details" id="g_lead_details_tab" 
+                                data-bs-target="#g_lead_details" role="tab" aria-controls="g_lead_details" aria-selected="true">Lead Details</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @if(session('success') || session('error'))  @endif"
-                                data-bs-toggle="tab" href="#g_lead_table" id="g_lead_table_tab" data-bs-target="#g_lead_table" role="tab" aria-controls="g_lead_table" aria-selected="true">Lead Table</a>
-                        </li>
-
-                        <!-- new tables added by customer panel -->
-                        <li class="nav-item">
-                            <a class="nav-link @if(session('success') || session('error'))  @endif" data-bs-toggle="tab" href="#g_lead_email" id="g_lead_email_tab" data-bs-target="#g_lead_email" role="tab" aria-controls="g_lead_email" aria-selected="true">Email</a>
+                            <a class="nav-link @if(session('success') || session('error')) active @endif"
+                                data-bs-toggle="tab" href="#g_lead_table" data-tab="g_lead_table" id="g_lead_table_tab" 
+                                data-bs-target="#g_lead_table" role="tab" aria-controls="g_lead_table" aria-selected="true">Lead Table</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @if(session('success') || session('error'))  @endif" data-bs-toggle="tab" href="#g_lead_sms" id="g_lead_sms_tab" data-bs-target="#g_lead_sms" role="tab" aria-controls="g_lead_sms" aria-selected="true">SMS</a>
+                            <a class="nav-link {{ session('active_tab') === 'g_lead_email_tab' ? 'active' : '' }}"
+                                data-bs-toggle="tab" href="#g_lead_email" data-tab="g_lead_email" id="g_lead_email_tab" 
+                                data-bs-target="#g_lead_email" role="tab" aria-controls="g_lead_email" aria-selected="true">Email</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @if(session('success') || session('error'))  @endif" data-bs-toggle="tab" href="#g_lead_meeting" id="g_lead_meeting_tab" data-bs-target="#g_lead_meeting" role="tab" aria-controls="g_lead_meeting" aria-selected="true">Meetings</a>
+                            <a class="nav-link {{ session('active_tab') === 'g_lead_sms_tab' ? 'active' : '' }}"
+                                data-bs-toggle="tab" href="#g_lead_sms" data-tab="g_lead_sms" id="g_lead_sms_tab" 
+                                data-bs-target="#g_lead_sms" role="tab" aria-controls="g_lead_sms" aria-selected="true">SMS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @if(session('success') || session('error'))  @endif" data-bs-toggle="tab" href="#g_lead_proposals" id="g_lead_proposals_tab" data-bs-target="#g_lead_proposals" role="tab" aria-controls="g_lead_proposals" aria-selected="true">Proposals</a>
+                            <a class="nav-link {{ session('active_tab') === 'g_lead_meeting_tab' ? 'active' : '' }}"
+                                data-bs-toggle="tab" href="#g_lead_meeting" data-tab="g_lead_meeting" id="g_lead_meeting_tab" 
+                                data-bs-target="#g_lead_meeting" role="tab" aria-controls="g_lead_meeting" aria-selected="true">Meetings</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @if(session('success') || session('error'))  @endif" data-bs-toggle="tab" href="#g_lead_products" id="g_lead_products_tab" data-bs-target="#g_lead_products" role="tab" aria-controls="g_lead_products" aria-selected="true">Products</a>
+                            <a class="nav-link {{ session('active_tab') === 'g_lead_proposals_tab' ? 'active' : '' }}"
+                                data-bs-toggle="tab" href="#g_lead_proposals" data-tab="g_lead_proposals" id="g_lead_proposals_tab" 
+                                data-bs-target="#g_lead_proposals" role="tab" aria-controls="g_lead_proposals" aria-selected="true">Proposals</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @if(session('success') || session('error'))  @endif" data-bs-toggle="tab" href="#g_lead_invoice" id="g_lead_invoice_tab" data-bs-target="#g_lead_invoice" role="tab" aria-controls="g_lead_invoice" aria-selected="true">Invoice</a>
+                            <a class="nav-link {{ session('active_tab') === 'g_lead_products_tab' ? 'active' : '' }}"
+                                data-bs-toggle="tab" href="#g_lead_products" data-tab="g_lead_products" id="g_lead_products_tab" 
+                                data-bs-target="#g_lead_products" role="tab" aria-controls="g_lead_products" aria-selected="true">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @if(session('success') || session('error'))  @endif" data-bs-toggle="tab" href="#g_lead_tickets" id="g_lead_tickets_tab" data-bs-target="#g_lead_tickets" role="tab" aria-controls="g_lead_tickets" aria-selected="true">Tickets</a>
+                            <a class="nav-link {{ session('active_tab') === 'g_lead_invoice_tab' ? 'active' : '' }}"
+                                data-bs-toggle="tab" href="#g_lead_invoice" data-tab="g_lead_invoice" id="g_lead_invoice_tab" 
+                                data-bs-target="#g_lead_invoice" role="tab" aria-controls="g_lead_invoice" aria-selected="true">Invoice</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @if(session('success') || session('error'))  @endif" data-bs-toggle="tab" href="#g_lead_activity_log" id="g_lead_activity_log_tab" data-bs-target="#g_lead_activity_log" role="tab" aria-controls="g_lead_activity_log" aria-selected="true">Activity Logs</a>
+                            <a class="nav-link {{ session('active_tab') === 'g_lead_tickets_tab' ? 'active' : '' }}"
+                                data-bs-toggle="tab" href="#g_lead_tickets" data-tab="g_lead_tickets" id="g_lead_tickets_tab" 
+                                data-bs-target="#g_lead_tickets" role="tab" aria-controls="g_lead_tickets" aria-selected="true">Tickets</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ session('active_tab') === 'g_lead_activity_log_tab' ? 'active' : '' }}"
+                                data-bs-toggle="tab" href="#g_lead_activity_log" data-tab="g_lead_activity_log" id="g_lead_activity_log_tab" 
+                                data-bs-target="#g_lead_activity_log" role="tab" aria-controls="g_lead_activity_log" aria-selected="true">Activity Logs</a>
                         </li>
 
 
@@ -498,7 +514,7 @@ use Carbon\Carbon;
                     </div>
                 </div>
 
-                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_email" role="tabpanel" aria-labelledby="g_lead_email_tab">
+                <div class="tab-pane fade {{ session('active_tab') === 'g_lead_email_tab' ? 'active show' : '' }}" id="g_lead_email" role="tabpanel" aria-labelledby="g_lead_email_tab">
                     <div class="card">
                         <div class="card-body">
 
@@ -561,7 +577,7 @@ use Carbon\Carbon;
                     </div>
                 </div>
 
-                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_sms" role="tabpanel" aria-labelledby="g_lead_sms_tab">
+                <div class="tab-pane fade {{ session('active_tab') === 'g_lead_sms_tab' ? 'active show' : '' }}" id="g_lead_sms" role="tabpanel" aria-labelledby="g_lead_sms_tab">
                     <div class="card">
                         <div class="card-body">
 
@@ -637,7 +653,7 @@ use Carbon\Carbon;
                     </div>
                 </div>
 
-                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_meeting" role="tabpanel" aria-labelledby="g_lead_meeting_tab">
+                <div class="tab-pane fade {{ session('active_tab') === 'g_lead_meeting_tab' ? 'active show' : '' }}" id="g_lead_meeting" role="tabpanel" aria-labelledby="g_lead_meeting_tab">
                     <div class="card">
                         <div class="card-body">
 
@@ -777,7 +793,7 @@ use Carbon\Carbon;
                     </div>
                 </div>
 
-                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_proposals" role="tabpanel" aria-labelledby="g_lead_proposals_tab">
+                <div class="tab-pane fade {{ session('active_tab') === 'g_lead_proposals_tab' ? 'active' : '' }}" id="g_lead_proposals" role="tabpanel" aria-labelledby="g_lead_proposals_tab">
                     <div class="card">
                         <div class="card-body">
 
@@ -909,7 +925,7 @@ use Carbon\Carbon;
                     </div>
                 </div>
 
-                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_products" role="tabpanel" aria-labelledby="g_lead_products_tab">
+                <div class="tab-pane fade {{ session('active_tab') === 'g_lead_products_tab' ? 'active show' : '' }}" id="g_lead_products" role="tabpanel" aria-labelledby="g_lead_products_tab">
                     <div class="card">
                         <div class="card-body">
 
@@ -919,7 +935,7 @@ use Carbon\Carbon;
                     </div>
                 </div>
 
-                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_invoice" role="tabpanel" aria-labelledby="g_lead_invoice_tab">
+                <div class="tab-pane fade {{ session('active_tab') === 'g_lead_invoice_tab' ? 'active show' : '' }}" id="g_lead_invoice" role="tabpanel" aria-labelledby="g_lead_invoice_tab">
 
                     <div class="card">
                         <div class="card-body">
@@ -1088,7 +1104,7 @@ use Carbon\Carbon;
 
                 </div>
 
-                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_tickets" role="tabpanel" aria-labelledby="g_lead_tickets_tab">
+                <div class="tab-pane fade {{ session('active_tab') === 'g_lead_tickets_tab' ? 'active show' : '' }}" id="g_lead_tickets" role="tabpanel" aria-labelledby="g_lead_tickets_tab">
                     <div class="card">
                         <div class="card-body">
 
@@ -1121,7 +1137,7 @@ use Carbon\Carbon;
                     </div>
                 </div>
 
-                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_activity_log" role="tabpanel" aria-labelledby="g_lead_activity_log_tab">
+                <div class="tab-pane fade {{ session('active_tab') === 'g_lead_activity_log_tab' ? 'active show' : '' }}" id="g_lead_activity_log" role="tabpanel" aria-labelledby="g_lead_activity_log_tab">
                     <div class="card">
                         <div class="card-body">
 
@@ -1199,6 +1215,30 @@ use Carbon\Carbon;
 @endsection
 
 @section('endScript')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        //alert('sdsds');
+        // Get the last active tab from local storage
+        const activeTab = localStorage.getItem('activeTab');
+
+        if (activeTab) {
+            // Activate the stored tab
+            const tabElement = document.querySelector(`a[data-tab="${activeTab}"]`);
+            if (tabElement) {
+                new bootstrap.Tab(tabElement).show();
+            }
+        }
+
+        // Add event listeners to save the active tab
+        document.querySelectorAll('.nav-link').forEach(tab => {
+            //alert('sdsds');
+            tab.addEventListener('click', function () {
+                const selectedTab = this.getAttribute('data-tab');
+                localStorage.setItem('activeTab', selectedTab);
+            });
+        });
+    });
+</script>
 <script>
     var phone_no = @json($lead->phone); 
     function getTickets(phone_no) {
