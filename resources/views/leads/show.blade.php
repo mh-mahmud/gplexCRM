@@ -1104,12 +1104,19 @@ use Carbon\Carbon;
 
                 </div>
 
+                <div id="fullPageLoader" style="display: none;">
+                    <svg class="loader" width="100" height="100" viewBox="0 0 50 50">
+                        <circle class="loader-circle" cx="25" cy="25" r="20" fill="none" stroke-width="4"></circle>
+                    </svg>
+                </div>
+
                 <div class="tab-pane fade {{ session('active_tab') === 'g_lead_tickets_tab' ? 'active show' : '' }}" id="g_lead_tickets" role="tabpanel" aria-labelledby="g_lead_tickets_tab">
                     <div class="card">
                         <div class="card-body">
 
                             Ticket Section
                             <button class="btn btn-primary" id="createTicketButton">Create Ticket</button>
+                            <button class="btn btn-primary" id="ticketListBtn">Ticket List</button>
                             <div id="ticketIframeContainer" style="margin-top: 20px; display: none;">
                                 <iframe
                                     id="ticketIframe"
@@ -1118,7 +1125,7 @@ use Carbon\Carbon;
                                     title="Create Ticket">
                                 </iframe>
                             </div>
-                            <table id="ticketTable" class="table table-sm table-condensed table-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                            <table id="ticketTable" class="table table-sm table-condensed table-bordered table-row-gray-100 align-middle gs-0 gy-3 mt-1">
                                 <!--begin::Table head-->
                                 <thead>
                                 <tr class="fw-bolder text-muted bg-light bd-cyan">
@@ -1240,18 +1247,31 @@ use Carbon\Carbon;
     });
 </script>
 <script>
-    var phone_no = @json($lead->phone); 
+    var phone_no = @json($lead->phone);
+    const ticketUrl = "http://192.168.11.220/";
+    document.getElementById("ticketListBtn").style.display = 'none';
+
+    function showLoader() {
+        document.getElementById('fullPageLoader').style.display = 'flex';
+    }
+
+    // Hide the full-page loader
+    function hideLoader() {
+        document.getElementById('fullPageLoader').style.display = 'none';
+    }
+
     function getTickets(phone_no) {
-        const ticketListUrl = "http://192.168.11.220/ticket_crm/ticket_crm_api.php?TYPE=TICKET_LIST_BY_MOBILE&CLI="+phone_no;
+        showLoader();
+        const ticketListUrl = ticketUrl+"ticket_crm/ticket_crm_api.php?TYPE=TICKET_LIST_BY_MOBILE&CLI="+phone_no;
 
         fetch(ticketListUrl)
             .then(response => response.json())
             .then(data => {
-                console.log('data', data)
                 populateTable(data);
+                hideLoader();
             })
             .catch(error => {
-                console.error('Error fetching iframe data:', error);
+                console.error('Error fetching data:', error);
                 alert('Failed to load the ticket creation form. Please try again.');
             });
     }
@@ -1263,9 +1283,8 @@ use Carbon\Carbon;
 
         data.forEach(ticket => {
             const row = document.createElement('tr');
-
             row.innerHTML = `
-                <td>${ticket.ticket_id || 'N/A'}</td>
+                <td><a href="#" onclick="getTicketReplyFrame(${ticket.ticket_id})">${ticket.ticket_id || 'N/A'}</a></td>
                 <td>${ticket.subject || 'N/A'}</td>
                 <td>${ticket.group_name || 'N/A'}</td>
                 <td>${ticket.status_name || 'N/A'}</td>
@@ -1275,23 +1294,93 @@ use Carbon\Carbon;
         });
     }
 
-    let tickets = getTickets(phone_no);
+    document.getElementById('g_lead_tickets_tab').addEventListener('click', function() {
+        getTickets(phone_no);
+    });
 
-    document.getElementById('createTicketButton').addEventListener('click', function() {
-        const ticketUrl = "http://192.168.11.220/ticket_crm/ticket_crm_api.php?TYPE=TICKET_CREATE&CLI="+phone_no;
-
-        fetch(ticketUrl)
+    function getTicketReplyFrame(ticket_id)
+    {
+        const ticketReplyUrl = ticketUrl+"ticket_crm/ticket_crm_api.php?TYPE=TICKET_REPLY&TICKET_ID="+ticket_id;
+        showLoader();
+        document.getElementById("ticketListBtn").style.display = '';
+        document.getElementById("createTicketButton").style.display = 'none';
+        document.getElementById("ticketTable").style.display = 'none';
+        fetch(ticketReplyUrl)
             .then(response => response.json())
             .then(data => {
                 const iframeHtml = data[0].iframe;
                 const iframeContainer = document.getElementById('ticketIframeContainer');
                 iframeContainer.innerHTML = iframeHtml;
                 iframeContainer.style.display = 'block';
+                hideLoader();
             })
             .catch(error => {
-                console.error('Error fetching iframe data:', error);
+                console.error('Error fetching data:', error);
+                alert('Failed to load the ticket creation form. Please try again.');
+            });
+    }
+
+    document.getElementById('createTicketButton').addEventListener('click', function() {
+        document.getElementById("ticketListBtn").style.display = '';
+        document.getElementById("createTicketButton").style.display = 'none';
+        document.getElementById("ticketTable").style.display = 'none';
+        const ticketListUrl = ticketUrl+"ticket_crm/ticket_crm_api.php?TYPE=TICKET_CREATE&CLI="+phone_no;
+        showLoader();
+
+        fetch(ticketListUrl)
+            .then(response => response.json())
+            .then(data => {
+                const iframeHtml = data[0].iframe;
+                const iframeContainer = document.getElementById('ticketIframeContainer');
+                iframeContainer.innerHTML = iframeHtml;
+                iframeContainer.style.display = 'block';
+                hideLoader();
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
                 alert('Failed to load the ticket creation form. Please try again.');
             });
     });
+
+    document.getElementById('ticketListBtn').addEventListener('click', function() {
+        document.getElementById("ticketIframeContainer").style.display = 'none';
+        document.getElementById("ticketListBtn").style.display = 'none';
+        document.getElementById("createTicketButton").style.display = '';
+        document.getElementById("ticketTable").style.display = '';
+        getTickets(phone_no);
+    });
+    
 </script>
 @endsection
+<style>
+    #fullPageLoader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8); 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999; 
+    }
+
+    .loader-circle {
+        stroke: #007bff; 
+        stroke-dasharray: 150;
+        stroke-dashoffset: 0;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            stroke-dashoffset: 150;
+            transform: rotate(0);
+        }
+        100% {
+            stroke-dashoffset: 0;
+            transform: rotate(360deg);
+        }
+    }
+</style>
