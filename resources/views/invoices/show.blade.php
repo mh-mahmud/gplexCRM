@@ -244,7 +244,7 @@
                 </div>
 
                 
-                <div class="px-14 py-3 text-sm text-neutral-700 payment-area">
+                <!-- <div class="px-14 py-3 text-sm text-neutral-700 payment-area">
                     <div>
                         <p class="text-main font-bold">Online Payment</p>
                         <label for="payment-method">
@@ -257,7 +257,7 @@
                         <p class="text-main font-bold">Offline Payment</p>
                         <p>Bank</p>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Payment Form -->
                 <form action="{{ route('invoice-payment', $invoice->id) }}" method="POST">
