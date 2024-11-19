@@ -213,7 +213,11 @@ class InvoiceController extends Controller
 
         $invoice = Invoice::findOrFail($invoiceId);
         $invoiceItems = json_decode($invoice->item_description, true);
-        $pdf = PDF::loadView('invoices.invoice_pdf', compact('invoice', 'invoiceItems'));
+        $existingPayments = $invoice->payment_details ?? [];
+        $totalPayments = array_sum(array_column($existingPayments, 'payment'));
+        $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
+        $products = Product::select('id', 'name', 'description', 'product_value')->get();
+        $pdf = PDF::loadView('invoices.invoice_pdf', compact('invoice', 'products', 'invoiceItems','newDueAmount'));
         return $pdf->download('invoice_' . $invoice->invoice_number . '.pdf');
     }
 

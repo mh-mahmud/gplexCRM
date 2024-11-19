@@ -1225,18 +1225,18 @@ use Carbon\Carbon;
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         //alert('sdsds');
-        // Get the last active tab from local storage
+        //active tab from local storage
         const activeTab = localStorage.getItem('activeTab');
 
         if (activeTab) {
-            // Activate the stored tab
+            // activate the stored tab
             const tabElement = document.querySelector(`a[data-tab="${activeTab}"]`);
             if (tabElement) {
                 new bootstrap.Tab(tabElement).show();
             }
         }
 
-        // Add event listeners to save the active tab
+        // add event to save the active tab
         document.querySelectorAll('.nav-link').forEach(tab => {
             //alert('sdsds');
             tab.addEventListener('click', function () {

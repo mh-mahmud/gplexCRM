@@ -68,10 +68,26 @@
 </head>
 
 <body>
+@php
+    // Determine the payment status based on $newDueAmount
+    if ($newDueAmount == 0) {
+    $statusClass = 'g-paid';
+    $statusText = 'Paid';
+    } elseif ($newDueAmount > 0 && $newDueAmount < $invoice->total_amount) {
+        $statusClass = 'g-partial-paid';
+        $statusText = 'Partial Paid';
+        } elseif ($newDueAmount == $invoice->total_amount) {
+        $statusClass = 'g-unpaid';
+        $statusText = 'Unpaid';
+        }
+        @endphp
 
-    <div class="status">
-        <button>Unpaid</button>
-    </div>
+
+        <div class="{{ $statusClass }}">
+                <button>
+                    {{ $statusText }}
+                </button>
+            </div>
 
     <div class="inv-main">
         <div>
@@ -147,6 +163,7 @@
         <div class="text-right font-bold">Adjustment: TK{{ $invoice->adjustment }}</div>
         @endif
         <div class="text-right font-bold">Total Amount: TK{{ $invoice->total_amount }}</div>
+        <div class="text-right font-bold">Total Due Amount: TK{{$newDueAmount}}</div>
         <div class="terms_conditions">
             <h3>Terms & Conditions</h3>
             <p>{{ $invoice->terms_conditions }}</p>
