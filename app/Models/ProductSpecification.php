@@ -12,6 +12,7 @@ class ProductSpecification extends Model
 
     protected $fillable = [
         'product_id',
+        'customer_id',
         'work_order_number',
         'work_order_value',
         'work_order_file',

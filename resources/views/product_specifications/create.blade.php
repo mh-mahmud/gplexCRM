@@ -157,6 +157,25 @@
                     <form class="g-form w-100" action="{{ route('product-specification-store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
                         <div class="row">
+                            <div class="col-md-4">
+                                <div class="fv-row mb-5">
+                                    <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
+
+                                    </label>
+                                    <select class="form-control form-control-sm form-control-solid" name="customer_id" aria-label="Default select example">
+                                        <option value="" {{ old('customer_id') == '' ? 'selected' : '' }}>Select Customer</option>
+                                        @foreach($customers as $customer)
+                                        <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
+                                            {{ $customer->first_name }} {{ $customer->last_name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('customer_id'))
+                                    <span class="text-danger">{{ $errors->first('customer_id') }}</span>
+                                    @endif
+
+                                </div>
+                            </div>
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Product</label>
@@ -178,7 +197,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Work Order Number</label>
-                                <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" required />
+                                <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" />
                                 @if ($errors->has('work_order_number'))
                                 <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
                                 @endif
@@ -187,7 +206,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Work Order Value</label>
-                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_value" value="{{ old('work_order_value') }}" step="0.01" required />
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_value" value="{{ old('work_order_value') }}" step="0.01" />
                                 @if ($errors->has('work_order_value'))
                                 <div class="text-danger">{{ $errors->first('work_order_value') }}</div>
                                 @endif

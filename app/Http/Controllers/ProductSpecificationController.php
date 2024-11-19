@@ -7,6 +7,7 @@ use App\Models\ProductSpecification;
 use App\Services\ProductSpecificationService;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
+use App\Models\Customer;
 
 class ProductSpecificationController extends Controller
 {
@@ -26,12 +27,16 @@ class ProductSpecificationController extends Controller
     public function create()
     {   
         $products = Product::all();
-        return view('product_specifications.create', compact('products'));
+        $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
+        ->select('customers.*', 'leads.first_name', 'leads.last_name')
+        ->get();
+        return view('product_specifications.create', compact('products','customers'));
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'customer_id' => 'required|exists:customers,id',
             //'product_id' => 'required|integer',
             'work_order_number' => 'required|string|max:50',
             'work_order_value' => 'required|numeric',
@@ -62,8 +67,11 @@ class ProductSpecificationController extends Controller
     public function edit($id)
     {   
         $products = Product::all();
+        $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
+        ->select('customers.*', 'leads.first_name', 'leads.last_name')
+        ->get();
         $productSpecification = $this->productSpecificationService->getProductSpecificationById($id);
-        return view('product_specifications.edit', compact('productSpecification','products'));
+        return view('product_specifications.edit', compact('productSpecification','products','customers'));
     }
 
 
@@ -87,6 +95,7 @@ class ProductSpecificationController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
+            'customer_id' => 'required|exists:customers,id',
             //'product_id' => 'required|integer',
             'work_order_number' => 'required|string|max:50',
             'work_order_value' => 'required|numeric',

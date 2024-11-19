@@ -159,9 +159,29 @@
                         @method('PUT')
                         <div class="row">
                             <!-- Product Dropdown -->
+
+                            <div class="col-md-4">
+                                        <div class="fv-row mb-5">
+                                            <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
+
+                                            </label>
+                                            <select class="form-control form-control-sm form-control-solid" name="customer_id">
+                                                <option value="" {{ old('customer_id', $productSpecification->customer_id) == '' ? 'selected' : '' }}>Select Customer</option>
+                                                @foreach($customers as $customer)
+                                                <option value="{{ $customer->id }}" {{ old('customer_id', $productSpecification->customer_id) == $customer->id ? 'selected' : '' }}>
+                                                    {{ $customer->first_name }} {{ $customer->last_name }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('customer_id'))
+                                            <span class="text-danger">{{ $errors->first('customer_id') }}</span>
+                                            @endif
+
+                                        </div>
+                                    </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Product</label>
-                                <select class="form-control form-control-sm form-control-solid" name="product_id" required>
+                                <select class="form-control form-control-sm form-control-solid" name="product_id">
                                     <option value="">Select Product</option>
                                     @foreach ($products as $product)
                                     <option value="{{ $product->id }}" {{ $productSpecification->product_id == $product->id ? 'selected' : '' }}>
@@ -177,7 +197,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Work Order Number</label>
-                                <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number', $productSpecification->work_order_number) }}" required />
+                                <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number', $productSpecification->work_order_number) }}" />
                                 @error('work_order_number')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -186,7 +206,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Work Order Value</label>
-                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_value" value="{{ old('work_order_value', $productSpecification->work_order_value) }}" step="0.01" required />
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_value" value="{{ old('work_order_value', $productSpecification->work_order_value) }}" step="0.01" />
                                 @error('work_order_value')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
