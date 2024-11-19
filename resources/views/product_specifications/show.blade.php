@@ -196,12 +196,13 @@ use Carbon\Carbon;
                    
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                         <span class="fw-bold w-lg-150px">AMC Start Date:</span>
-                        <span>{{ \Carbon\Carbon::parse($productSpecification->amc_start_date)->format('d-m-Y') }}</span>
+                        <span>{{ $productSpecification->amc_start_date ? \Carbon\Carbon::parse($productSpecification->amc_start_date)->format('d-m-Y') : '' }}
+                        </span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                         <span class="fw-bold w-lg-150px">AMC Renewal Date:</span>
-                        <span>{{ \Carbon\Carbon::parse($productSpecification->amc_renewal_date)->format('d-m-Y') }}</span>
+                        <span>{{ $productSpecification->amc_renewal_date ? \Carbon\Carbon::parse($productSpecification->amc_renewal_date)->format('d-m-Y') : '' }}</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
