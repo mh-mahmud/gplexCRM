@@ -1104,19 +1104,16 @@ use Carbon\Carbon;
 
                 </div>
 
-                <div id="fullPageLoader" style="display: none;">
-                    <svg class="loader" width="100" height="100" viewBox="0 0 50 50">
-                        <circle class="loader-circle" cx="25" cy="25" r="20" fill="none" stroke-width="4"></circle>
-                    </svg>
-                </div>
-
                 <div class="tab-pane fade {{ session('active_tab') === 'g_lead_tickets_tab' ? 'active show' : '' }}" id="g_lead_tickets" role="tabpanel" aria-labelledby="g_lead_tickets_tab">
                     <div class="card">
                         <div class="card-body">
-
-                            Ticket Section
-                            <button class="btn btn-primary" id="createTicketButton">Create Ticket</button>
-                            <button class="btn btn-primary" id="ticketListBtn">Ticket List</button>
+                            <div id="loader" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.8); display: none; justify-content: center; align-items: center; z-index: 10;">
+                                <svg class="loader" width="50" height="50" viewBox="0 0 50 50">
+                                    <circle class="loader-circle" cx="25" cy="25" r="20" fill="none" stroke-width="4"></circle>
+                                </svg>
+                            </div>
+                            <button class="btn btn-success btn-sm" id="createTicketButton">Create Ticket</button>
+                            <button class="btn btn-success btn-sm" id="ticketListBtn">Ticket List</button>
                             <div id="ticketIframeContainer" style="margin-top: 20px; display: none;">
                                 <iframe
                                     id="ticketIframe"
@@ -1252,12 +1249,12 @@ use Carbon\Carbon;
     document.getElementById("ticketListBtn").style.display = 'none';
 
     function showLoader() {
-        document.getElementById('fullPageLoader').style.display = 'flex';
+        document.getElementById('loader').style.display = 'flex';
     }
 
     // Hide the full-page loader
     function hideLoader() {
-        document.getElementById('fullPageLoader').style.display = 'none';
+        document.getElementById('loader').style.display = 'none';
     }
 
     function getTickets(phone_no) {
@@ -1294,16 +1291,16 @@ use Carbon\Carbon;
         });
     }
 
-    document.getElementById('g_lead_tickets_tab').addEventListener('click', function() {
+    // document.getElementById('g_lead_tickets_tab').addEventListener('click', function() {
         getTickets(phone_no);
-    });
+    // });
 
     function getTicketReplyFrame(ticket_id)
     {
         const ticketReplyUrl = ticketUrl+"ticket_crm/ticket_crm_api.php?TYPE=TICKET_REPLY&TICKET_ID="+ticket_id;
         showLoader();
         document.getElementById("ticketListBtn").style.display = '';
-        document.getElementById("createTicketButton").style.display = 'none';
+        document.getElementById("createTicketButton").style.display = '';
         document.getElementById("ticketTable").style.display = 'none';
         fetch(ticketReplyUrl)
             .then(response => response.json())
@@ -1353,34 +1350,35 @@ use Carbon\Carbon;
 </script>
 @endsection
 <style>
-    #fullPageLoader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0.8); 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999; 
+    .loader {
+        animation: rotate 1s linear infinite;
     }
 
     .loader-circle {
-        stroke: #007bff; 
+        stroke: #4caf50;
         stroke-dasharray: 150;
         stroke-dashoffset: 0;
-        animation: spin 1s linear infinite;
+        animation: dash 1.5s ease-in-out infinite;
     }
 
-    @keyframes spin {
+    @keyframes rotate {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes dash {
         0% {
-            stroke-dashoffset: 150;
-            transform: rotate(0);
+            stroke-dasharray: 1, 150;
+            stroke-dashoffset: 0;
+        }
+        50% {
+            stroke-dasharray: 90, 150;
+            stroke-dashoffset: -35;
         }
         100% {
-            stroke-dashoffset: 0;
-            transform: rotate(360deg);
+            stroke-dasharray: 90, 150;
+            stroke-dashoffset: -125;
         }
     }
 </style>
