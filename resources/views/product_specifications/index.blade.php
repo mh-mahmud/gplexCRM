@@ -242,7 +242,7 @@ use Carbon\Carbon;
                                     <td class="text-dark fs-6">{{ number_format($productSpecification->work_order_value, 2) }}</td>
                                     <td class="text-dark fs-6">{{ $productSpecification->work_order_rate }}</td>
                                     <td class="text-dark fs-6">{{ number_format($productSpecification->purchase_order_value, 2) }}</td>
-                                    <td class="text-dark fs-6">{{ \Carbon\Carbon::parse($productSpecification->amc_start_date)->format('d-m-Y') }}</td>
+                                    <td class="text-dark fs-6">{{ $productSpecification->amc_start_date ? \Carbon\Carbon::parse($productSpecification->amc_start_date)->format('d-m-Y') : '' }}</td>
                                     <td class="text-dark fs-6">{{ $productSpecification->amc_rate }}</td>
                                     <td class="text-dark fs-6">{{ $productSpecification->service_type }}</td>
                                     <td class="text-end">

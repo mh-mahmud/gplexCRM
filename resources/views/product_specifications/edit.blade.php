@@ -245,7 +245,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">AMC Start Date</label>
-                                <input class="form-control form-control-sm form-control-solid flatpickr" type="text" name="amc_start_date" value="{{ old('amc_start_date', $productSpecification->amc_start_date) }}" />
+                                <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="amc_start_date" value="{{ old('amc_start_date', $productSpecification->amc_start_date) }}" />
                                 @error('amc_start_date')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -253,7 +253,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">AMC Renewal Date</label>
-                                <input class="form-control form-control-sm form-control-solid flatpickr" type="text" name="amc_renewal_date" value="{{ old('amc_renewal_date', $productSpecification->amc_renewal_date) }}" />
+                                <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="amc_renewal_date" value="{{ old('amc_renewal_date', $productSpecification->amc_renewal_date) }}" />
                                 @error('amc_renewal_date')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror

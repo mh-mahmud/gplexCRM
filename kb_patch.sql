@@ -367,3 +367,30 @@ ALTER TABLE `campaigns` ADD COLUMN `created_by` INT(11) UNSIGNED NULL AFTER `pro
 --12-11-2024
 ALTER TABLE `menus` CHANGE `sub_name` `sub_name` CHAR(50) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
 ALTER TABLE `menus` CHANGE `name` `name` CHAR(50) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
+
+--19-11-2024
+CREATE TABLE `product_specification` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) unsigned DEFAULT NULL,
+  `work_order_number` varchar(50) NOT NULL,
+  `work_order_value` decimal(15,2) NOT NULL,
+  `work_order_file` varchar(255) DEFAULT NULL,
+  `work_order_rate` varchar(255) DEFAULT NULL,
+  `purchase_order_value` decimal(15,2) DEFAULT NULL,
+  `purchase_order_file` varchar(255) DEFAULT NULL,
+  `amc_start_date` date DEFAULT NULL,
+  `amc_renewal_date` date DEFAULT NULL,
+  `amc_rate` varchar(255) DEFAULT NULL,
+  `amc_effective_amount` decimal(15,2) DEFAULT NULL,
+  `amc_agreement_documents` varchar(255) DEFAULT NULL,
+  `service_type` varchar(50) DEFAULT NULL,
+  `software_value` text DEFAULT NULL,
+  `hardware_value` text DEFAULT NULL,
+  `implementation_value` text DEFAULT NULL,
+  `invoice_mushak_file` varchar(255) DEFAULT NULL,
+  `tax_exemption_certificate` varchar(255) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4
