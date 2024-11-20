@@ -180,6 +180,11 @@
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Template</span>
+                        <span>{{ $campaign->email_template_id ? 'Email' : ($campaign->sms_template_id ? 'SMS' : '') }}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Campaign Type</span>
                         <span>{{ $campaign->campaign_type}}</span>
                     </div>

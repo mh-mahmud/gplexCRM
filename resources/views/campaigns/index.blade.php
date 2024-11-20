@@ -203,6 +203,7 @@ use Carbon\Carbon;
                                     <!-- <th class="min-w-150px">Promotion</th> -->
                                     <th class="min-w-140px">Start Date</th>
                                     <th class="min-w-140px">End Date</th>
+                                    <th class="min-w-140px">Template</th>
                                     <th class="min-w-140px">Type</th>
                                     <th class="min-w-140px">Limit</th>
                                     <th class="min-w-120px">Status</th>
@@ -228,6 +229,9 @@ use Carbon\Carbon;
                                         @if($campaign->end_date)
                                         {{ \Carbon\Carbon::parse($campaign->end_date)->format('Y-m-d h:i A') }}
                                         @endif
+                                    </td>
+                                    <td class="text-dark fs-6">
+                                        {{ $campaign->email_template_id ? 'Email' : ($campaign->sms_template_id ? 'SMS' : '') }}
                                     </td>
                                     <td class="text-dark fs-6">{{$campaign->campaign_type }}</td>
                                     <td class="text-dark fs-6">{{$campaign->campaign_limit }}</td>

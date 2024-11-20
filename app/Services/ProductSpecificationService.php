@@ -7,15 +7,34 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductSpecificationService
 {
-    public function getAllProductSpecifications()
+    public function getAllProductSpecifications_backup()
     {
         return ProductSpecification::orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
     }
 
-    public function getProductSpecificationById($id)
+    public function getAllProductSpecifications()
+{
+    return ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+        ->join('leads', 'customers.lead_id', '=', 'leads.id')
+        ->select('product_specification.*','customers.customer_group','leads.first_name','leads.last_name')
+        ->orderBy('product_specification.created_at', 'desc') 
+        ->paginate(config('constants.ROW_PER_PAGE'));
+}
+
+    public function getProductSpecificationById_backup($id)
     {
         return ProductSpecification::findOrFail($id);
     }
+
+    public function getProductSpecificationById($id)
+    {
+        return ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+        ->join('leads', 'customers.lead_id', '=', 'leads.id')
+        ->select('product_specification.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
+        ->where('product_specification.id', $id)
+        ->firstOrFail();
+    }
+
 
     public function createProductSpecification($data)
     {
