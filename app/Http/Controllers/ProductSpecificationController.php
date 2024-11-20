@@ -8,6 +8,7 @@ use App\Services\ProductSpecificationService;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
 use App\Models\Customer;
+use App\Helpers\Helper;
 
 class ProductSpecificationController extends Controller
 {
@@ -55,6 +56,7 @@ class ProductSpecificationController extends Controller
         }
 
         $this->productSpecificationService->createProductSpecification($request);
+        Helper::storeLog("Product Specification created successfully", "Product Specification", "Create Product Specification", null,null);
         return redirect()->route('product-specification-index')->with('success', 'Product Specification created successfully.');
     }
 
@@ -114,6 +116,7 @@ class ProductSpecificationController extends Controller
         }
 
         $this->productSpecificationService->updateProductSpecification($request, $id);
+        Helper::storeLog("Product Specification updated successfully", "Product Specification", "Edit Product Specification", null,null);
         return redirect()->route('product-specification-index')->with('success', 'Product Specification updated successfully.');
     }
 
@@ -121,6 +124,7 @@ class ProductSpecificationController extends Controller
     {
         try {
             $this->productSpecificationService->deleteProductSpecification($id);
+            Helper::storeLog("Product Specification deleted successfully", "Product Specification", "Delete Product Specification", null,null);
             return redirect()->route('product-specification-index')->with('success', 'Product Specification deleted successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
