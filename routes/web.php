@@ -317,6 +317,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('customers', [CustomerController::class, 'index'])->name('customers')->middleware(['check-permission']);
 	Route::get('add-customer/{leadid?}', [CustomerController::class, 'add_customer'])->name('add-customer')->middleware(['check-permission']);
 	Route::post('add-customer', [CustomerController::class, 'save_customer'])->name('post-add-customer');
+	Route::post('customer-search', [CustomerController::class, 'search'])->name('customer-search');
 
 
 });

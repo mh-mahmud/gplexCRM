@@ -228,8 +228,8 @@ use Carbon\Carbon;
                                     <th class="min-w-140px">Purchase Order Value</th>
                                     <th class="min-w-120px">AMC Start Date</th>
                                     <th class="min-w-120px">AMC Rate</th>
-                                    <th class="min-w-200px">Service Type</th>
-                                    <th class="min-w-100px text-center">Actions</th>
+                                    <th class="min-w-100px">Service Type</th>
+                                    <th class="min-w-100px text-end-new">Actions</th>
                                 </tr>
                             </thead>
                             <!--end::Table head-->
