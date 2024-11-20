@@ -86,10 +86,17 @@ class CampaignService
     }
 
 
-    public function deleteCampaign($id)
+    public function deleteCampaign_backup($id)
     {
         $promotion = Campaign::findOrFail($id);
         $promotion->delete();
+    }
+
+    public function deleteCampaign($id)
+    {
+        $campaign = Campaign::findOrFail($id);
+        CampaignData::where('campaign_id', $id)->delete();
+        $campaign->delete();
     }
 
 
