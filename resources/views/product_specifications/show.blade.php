@@ -263,8 +263,8 @@ use Carbon\Carbon;
                     @endif
 
                    
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
-                        <span class="fw-bold w-lg-150px">Notes:</span>
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Notes:</span>
                         <span>{{ $productSpecification->note }}</span>
                     </div>
                 </div>

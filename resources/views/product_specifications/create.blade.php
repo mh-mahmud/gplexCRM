@@ -206,7 +206,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Work Order Value</label>
-                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_value" value="{{ old('work_order_value') }}" step="0.01" />
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_value" value="{{ old('work_order_value') }}" />
                                 @if ($errors->has('work_order_value'))
                                 <div class="text-danger">{{ $errors->first('work_order_value') }}</div>
                                 @endif
@@ -233,7 +233,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Purchase Order Value</label>
-                                <input class="form-control form-control-sm form-control-solid" type="number" name="purchase_order_value" value="{{ old('purchase_order_value') }}" step="0.01" />
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="purchase_order_value" value="{{ old('purchase_order_value') }}"/>
                                 @if ($errors->has('purchase_order_value'))
                                 <div class="text-danger">{{ $errors->first('purchase_order_value') }}</div>
                                 @endif
@@ -278,7 +278,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">AMC Effective Amount</label>
-                                <input class="form-control form-control-sm form-control-solid" type="number" name="amc_effective_amount" value="{{ old('amc_effective_amount') }}" step="0.01" />
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="amc_effective_amount" value="{{ old('amc_effective_amount') }}" />
                                 @if ($errors->has('amc_effective_amount'))
                                 <div class="text-danger">{{ $errors->first('amc_effective_amount') }}</div>
                                 @endif
@@ -293,13 +293,19 @@
                                 @endif
                             </div>
 
-
                             <div class="col-md-4">
-                                <label class="form-label fw-bolder text-dark">Service Type</label>
-                                <input class="form-control form-control-sm form-control-solid" type="text" name="service_type" value="{{ old('service_type') }}" />
-                                @if ($errors->has('service_type'))
-                                <div class="text-danger">{{ $errors->first('service_type') }}</div>
-                                @endif
+                                <div class="fv-row mb-3">
+                                    <label class="form-label fw-bolder text-dark">Service Type</label>
+                                    <select class=" form-control form-control-sm form-control-solid" name="service_type"
+                                        aria-label="Default select example">
+                                        <option value="">Select Service Type</option>
+                                        <option value="Yearly" {{ old('service_type') == 'Yearly' ? 'selected' : '' }}>Yearly</option>
+                                        <option value="Half-Yearly" {{ old('service_type') == 'Half-Yearly ' ? 'selected' : '' }}>Half-Yearly</option>
+                                        <option value="Quarterly" {{ old('service_type') == 'Quarterly' ? 'selected' : '' }}>Quarterly</option>
+                                        <option value="Monthly" {{ old('service_type') == 'Monthly ' ? 'selected' : '' }}>Monthly</option>
+
+                                    </select>
+                                </div>
                             </div>
 
 

@@ -83,7 +83,7 @@ class ProductSpecificationController extends Controller
         $searchTerm = trim($request->input('search'));
 
         if (empty($searchTerm)) {
-            return redirect()->route('agents-index')->with('error', 'Search Field cannot be blank.');
+            return redirect()->route('product-specification-index')->with('error', 'Search Field cannot be blank.');
         }
 
         $request->validate([
