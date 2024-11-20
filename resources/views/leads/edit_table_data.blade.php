@@ -161,7 +161,7 @@
             </div>
             <!--End Row-->
             <div class="card-footer d-flex justify-content-end py-6 px-9">
-                <a href="{{ route('lead-edit-tabledata', ['tableName' => $tableName, 'leadId' => $leads->id]) }}" class="btn btn-light me-2">Reset</a>
+                {{--<a href="{{ route('lead-edit-tabledata', ['tableName' => $tableName, 'leadId' => $leads->id]) }}" class="btn btn-light me-2">Reset</a>--}}
                 <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Update Changes
                 </button>
             </div>

@@ -73,4 +73,21 @@ class CustomerController extends Controller
 
         return $randomString;
     }
+
+    public function search(Request $request)
+    {
+        $searchTerm = trim($request->input('search'));
+        $formName = LeadsForm::pluck('form_name', 'form_id');
+
+        if (empty($searchTerm)) {
+            return redirect()->route('lead-index')->with('error', 'Search Field cannot be blank.');
+        }
+
+        $request->validate([
+            'search' => 'required|string',
+        ]);
+
+        $leads = $this->leadService->searchLeadForm($request);
+        return view('leads.index', compact('leads', 'formName'));
+    }
 }
