@@ -172,6 +172,7 @@ class CampaignService
                 }
 
                 if (!empty($validData)) {
+                    try{
                     foreach ($validData as $entry) {
                         $csv_id = str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
                         if (isset($entry['email'])) {
@@ -197,6 +198,29 @@ class CampaignService
                         }
                     }
                     $dataInserted = true;
+                    }
+                    catch (\Illuminate\Database\QueryException $e) {
+                        //chk for duplicate entry error
+                        if ($e->errorInfo[1] == 1062) {
+                            $errorMessage = $e->getMessage();
+                          //duplicate entry value  phone number or email from the error message
+                            preg_match("/Duplicate entry '([^']+)'/", $errorMessage, $matches);
+                           if (!empty($matches[1])) {
+                                $duplicateValue = $matches[1];
+                                //custom the error message based on the field
+                                if (isset($entry['phone']) && $entry['phone'] == $duplicateValue) {
+                                    return ['error' => "Duplicate phone number: $duplicateValue"];
+                                } elseif (isset($entry['email']) && $entry['email'] == $duplicateValue) {
+                                    return ['error' => "Duplicate email address: $duplicateValue"];
+                                }
+                            }
+                    
+                            //common duplicate entry error if value is not extracted
+                            return ['error' => 'Duplicate entry detected: ' . $errorMessage];
+                        }
+                        //handle other database errors
+                        return ['error' => 'Database error: ' . $e->getMessage()];
+                    }
                 }
 
                 if (!$dataInserted) {

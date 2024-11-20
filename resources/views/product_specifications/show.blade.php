@@ -153,12 +153,16 @@ use Carbon\Carbon;
                 <div class="card-body p-4">
 
                 <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                        <span class="fw-bold w-lg-150px">Customer:</span>
+                        <span>{{$productSpecification->first_name?? '' }} {{$productSpecification->last_name?? '' }}</span>
+                </div>
+
+                <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                         <span class="fw-bold w-lg-150px">Product Name:</span>
                         <span>{{ $productSpecification->product->name ?? '' }}</span>
-                    </div>
+                </div>
 
-                   
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                         <span class="fw-bold w-lg-150px">Work Order Number:</span>
                         <span>{{ $productSpecification->work_order_number }}</span>
                     </div>

@@ -179,7 +179,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Product</label>
-                                <select class="form-control form-control-sm form-control-solid" name="product_id" required>
+                                <select class="form-control form-control-sm form-control-solid" name="product_id">
                                     <!-- The default option will be selected when no product is selected -->
                                     <option value="" {{ old('product_id') == '' ? 'selected' : '' }}>Select Product</option>
                                     @foreach ($products as $product)

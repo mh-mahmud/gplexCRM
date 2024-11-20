@@ -397,3 +397,5 @@ CREATE TABLE `product_specification` (
 
 --19-11-2024
 ALTER TABLE `product_specification` ADD COLUMN `customer_id` BIGINT(20) UNSIGNED NOT NULL AFTER `product_id`;
+--20-11-2024
+ALTER TABLE `campaign_data` ADD UNIQUE KEY `campaign_data_phone_unique` (`phone`);
