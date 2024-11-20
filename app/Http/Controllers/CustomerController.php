@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\CustomerService;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
+use App\Models\Customer;
 use Auth;
 
 class CustomerController extends Controller
@@ -33,7 +34,7 @@ class CustomerController extends Controller
         $rand_str = $this->generateRandomString();
 
         $data['cus'] = $cus_data;
-        $data['products'] = Product::all(['id', 'name']);
+        $data['products'] = Product::where('status', '1')->get(['id', 'name']);
         $data['rand_str'] = $rand_str;
         $data['groups'] = config('constants.customer_group');
         return view('customers.add_customer', $data);
@@ -77,17 +78,26 @@ class CustomerController extends Controller
     public function search(Request $request)
     {
         $searchTerm = trim($request->input('search'));
-        $formName = LeadsForm::pluck('form_name', 'form_id');
 
         if (empty($searchTerm)) {
-            return redirect()->route('lead-index')->with('error', 'Search Field cannot be blank.');
+            return redirect()->route('customers')->with('error', 'Search Field cannot be blank.');
         }
 
         $request->validate([
             'search' => 'required|string',
         ]);
 
-        $leads = $this->leadService->searchLeadForm($request);
-        return view('leads.index', compact('leads', 'formName'));
+        $searchTerm = trim($request->input('search'));
+
+        $query = Customer::query();
+        $query->where(function ($q) use ($searchTerm) {
+            $q->where('first_name', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('last_name', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('customer_group', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('customer_id', 'LIKE', '%' . $searchTerm . '%');
+        });
+
+        $customers = $query->paginate(config('constants.ROW_PER_PAGE'));
+        return view('customers.index', compact('customers'));
     }
 }
