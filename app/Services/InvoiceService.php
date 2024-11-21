@@ -66,7 +66,7 @@ class InvoiceService
             $custom_form = InvoiceCustomForm::where('id', $data["custom_invoice_id"])
                                 ->select('field_details', 'footer_details')
                                 ->first(); 
-
+            
             foreach ($custom_form->field_details as $custom_form_data) {
                 $fieldName = $custom_form_data["field_value"];           
                 if (array_key_exists($fieldName, $data['items'])) {
@@ -76,7 +76,13 @@ class InvoiceService
                         }
                     }
                 }
-            }          
+            } 
+            foreach ($custom_form->footer_details as $custom_footer_data) {
+                $footerName = $custom_footer_data["field_value"];           
+                if (array_key_exists($footerName, $data['footer'])) {                 
+                    $items[] = [$footerName => $data['footer'][$footerName]];
+                }
+            }    
         }
         //array as JSON
         $itemDescriptionJson = json_encode($items);
