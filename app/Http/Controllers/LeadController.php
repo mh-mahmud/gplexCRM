@@ -181,7 +181,8 @@ class LeadController  extends Controller
         $sms = SmsQueue::where('lead_id', $id)->get();
         $meetings = Meeting::where('lead_id', $id)->get();
         $proposals = Proposal::where('lead_id', $id)->get();
-        $logs = Logs::where('lead_id', $id)->get();
+        //$logs = Logs::where('lead_id', $id)->get();
+        $logs = Logs::where('lead_id', $id)->orderBy('created_at', 'desc')->get();
         $invoices = Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
             ->join('leads', 'customers.lead_id', '=', 'leads.id')
             ->select('invoices.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
