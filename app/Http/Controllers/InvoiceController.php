@@ -71,26 +71,28 @@ class InvoiceController extends Controller
 
     public function store(Request $request)
     {
-        // $validatedData = $request->validate([
-        //     'customer_id' => 'required|exists:customers,id',
-        //     //'invoice_number' => 'required|unique:invoices,invoice_number',
-        //     'invoice_date' => 'required|date',
-        //     'due_date' => 'nullable|date|after_or_equal:invoice_date',
-        //     'product_id' => 'required|exists:products,id',
-        //     //item validation
-        //     'items.item_name.*' => 'required|string',
-        //     'items.quantity.*' => 'required|integer|min:1',
-        //     'items.rate.*' => 'required|numeric|min:0',
-        //     'items.tax.*' => 'nullable|numeric|min:0|max:100',
-        // ], [
-        //     'items.item_name.*.required' => 'Item Name is required for all items',
-        //     'items.quantity.*.required' => 'Quantity is required and must be at least 1',
-        //     'items.rate.*.required' => 'Rate is required and must be a positive number',
-        //     'items.tax.*.numeric' => 'Tax must be a valid percentage',
-        //     'items.tax.*.max' => 'Tax cannot exceed 100%',
-        //     'product_id.required' => 'Item is required',
-        //     //'invoice_number.unique' => 'This invoice number is already in use by another invoice',
-        // ]);
+        if (!$request->filled('custom_invoice_id')) {
+            $validatedData = $request->validate([
+                'customer_id' => 'required|exists:customers,id',
+                //'invoice_number' => 'required|unique:invoices,invoice_number',
+                'invoice_date' => 'required|date',
+                'due_date' => 'nullable|date|after_or_equal:invoice_date',
+                'product_id' => 'required|exists:products,id',
+                //item validation
+                'items.item_name.*' => 'required|string',
+                'items.quantity.*' => 'required|integer|min:1',
+                'items.rate.*' => 'required|numeric|min:0',
+                'items.tax.*' => 'nullable|numeric|min:0|max:100',
+            ], [
+                'items.item_name.*.required' => 'Item Name is required for all items',
+                'items.quantity.*.required' => 'Quantity is required and must be at least 1',
+                'items.rate.*.required' => 'Rate is required and must be a positive number',
+                'items.tax.*.numeric' => 'Tax must be a valid percentage',
+                'items.tax.*.max' => 'Tax cannot exceed 100%',
+                'product_id.required' => 'Item is required',
+                //'invoice_number.unique' => 'This invoice number is already in use by another invoice',
+            ]);
+        }
         try {
 
             $invoice = $this->invoiceService->createInvoice($request->all());

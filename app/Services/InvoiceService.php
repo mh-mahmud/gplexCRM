@@ -28,7 +28,7 @@ class InvoiceService
     public function createInvoice($data)
     {
         //prepare items array by iterating
-        //dd($data);die();
+        dd($data);
         $items = [];
         if(empty($data["custom_invoice_id"])) {
             $itemCount = count($data['items']['item_name']); //all arrays have the same length
@@ -48,7 +48,6 @@ class InvoiceService
                                 ->select('field_details', 'footer_details')
                                 ->first(); 
 
-            $itemCount = count($data['items']);             
             foreach ($custom_form->field_details as $custom_form_data) {
                 $fieldName = $custom_form_data["field_value"];           
                 if (array_key_exists($fieldName, $data['items'])) {
