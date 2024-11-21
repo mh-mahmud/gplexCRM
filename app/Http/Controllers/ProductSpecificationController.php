@@ -55,8 +55,11 @@ class ProductSpecificationController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        $customer = Customer::find($request->customer_id);
+        $lead_id = $customer->lead_id;
+
         $this->productSpecificationService->createProductSpecification($request);
-        Helper::storeLog("Product Specification created successfully", "Product Specification", "Create Product Specification", null,null);
+        Helper::storeLog("Product Specification created successfully", "Product Specification", "Create Product Specification", null, $lead_id);
         return redirect()->route('product-specification-index')->with('success', 'Product Specification created successfully.');
     }
 
@@ -114,17 +117,23 @@ class ProductSpecificationController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+        $customer = Customer::find($request->customer_id);
+        $lead_id = $customer->lead_id;
 
         $this->productSpecificationService->updateProductSpecification($request, $id);
-        Helper::storeLog("Product Specification updated successfully", "Product Specification", "Edit Product Specification", null,null);
+        Helper::storeLog("Product Specification updated successfully", "Product Specification", "Edit Product Specification", null,$lead_id);
         return redirect()->route('product-specification-index')->with('success', 'Product Specification updated successfully.');
     }
 
     public function destroy($id)
     {
         try {
+            $productSpecification =ProductSpecification::findOrFail($id);
+            $customer_id = $productSpecification->customer_id;
+            $customer =Customer::find($customer_id);
+            $lead_id = $customer ? $customer->lead_id : null; 
             $this->productSpecificationService->deleteProductSpecification($id);
-            Helper::storeLog("Product Specification deleted successfully", "Product Specification", "Delete Product Specification", null,null);
+            Helper::storeLog("Product Specification deleted successfully", "Product Specification", "Delete Product Specification", null, $lead_id);
             return redirect()->route('product-specification-index')->with('success', 'Product Specification deleted successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());

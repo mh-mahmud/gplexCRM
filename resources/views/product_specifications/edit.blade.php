@@ -393,7 +393,6 @@
 
                             <!-- Submit and Reset buttons -->
                             <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                <a href="{{ route('product-specification-create') }}" class="btn btn-light me-2">Reset</a>
                                 <button type="submit" class="btn btn-primary">Update</button>
                             </div>
                         </div>
