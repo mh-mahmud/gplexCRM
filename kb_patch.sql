@@ -188,9 +188,7 @@ ALTER TABLE `email_queue` CHANGE `campaign_id` `campaign_id` BIGINT NULL DEFAULT
 
 ALTER TABLE `email_log` ADD `meeting_id` BIGINT NULL DEFAULT NULL AFTER `user_id`, ADD `csv_id` BIGINT NULL DEFAULT NULL AFTER `meeting_id`;
 
--- 20/11/24
 
-ALTER TABLE `invoices` ADD `invoice_custom_form_id` INT NULL AFTER `customer_id`;
 
 ---Ishtiak SQL end
 
@@ -405,3 +403,9 @@ ALTER TABLE `product_specification` ADD COLUMN `customer_id` BIGINT(20) UNSIGNED
 ALTER TABLE `campaign_data` ADD UNIQUE KEY `campaign_data_phone_unique` (`phone`);
 -- Hasan
 ALTER TABLE `customers` ADD `first_name` VARCHAR(50) NULL DEFAULT NULL AFTER `customer_id`, ADD `last_name` VARCHAR(50) NULL DEFAULT NULL AFTER `first_name`; 
+
+-- Ishtiak
+
+-- 20/11/24
+
+ALTER TABLE `invoices` ADD `invoice_custom_form_id` INT NULL AFTER `customer_id`;

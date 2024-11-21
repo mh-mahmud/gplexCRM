@@ -48,10 +48,7 @@ class InvoiceService
                                 ->select('field_details', 'footer_details')
                                 ->first(); 
 
-            $itemCount = count($data['items']); 
-
-            $result = []; 
-            
+            $itemCount = count($data['items']);             
             foreach ($custom_form->field_details as $custom_form_data) {
                 $fieldName = $custom_form_data["field_value"];           
                 if (array_key_exists($fieldName, $data['items'])) {
