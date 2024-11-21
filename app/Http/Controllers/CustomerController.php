@@ -26,7 +26,6 @@ class CustomerController extends Controller
 
         $data = [];
         $cus_data = $this->service->get_customer_data($id);
-        //dd($cus_data);
         if(empty($cus_data->id)) {
             return redirect()->back();
         }

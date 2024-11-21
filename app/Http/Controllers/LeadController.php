@@ -22,6 +22,7 @@ use App\Models\Meeting;
 use App\Models\Proposal;
 use App\Models\Logs;
 use App\Models\Invoice;
+use App\Models\ProductSpecification;
 use App\Services\LeadService;
 use Illuminate\Support\Facades\Schema;
 use DateTime;
@@ -186,8 +187,13 @@ class LeadController  extends Controller
             ->select('invoices.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
             ->where('lead_id', $id)
             ->orderBy('invoices.created_at', 'desc')->get();
+        $productSpecifications = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+        ->join('leads', 'customers.lead_id', '=', 'leads.id')
+        ->select('product_specification.*','customers.customer_group','leads.first_name','leads.last_name')
+        ->where('lead_id', $id)
+        ->orderBy('product_specification.created_at', 'desc')->get();
 
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices'));
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications'));
     }
 
 
