@@ -234,17 +234,17 @@ use Carbon\Carbon;
 
                    
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
-                        <span class="fw-bold w-lg-150px">Software Value:</span>
+                        <span class="fw-bold w-lg-150px flex-shrink-0">Software Value:</span>
                         <span>{{ $productSpecification->software_value }}</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
-                        <span class="fw-bold w-lg-150px">Hardware Value:</span>
+                        <span class="fw-bold w-lg-150px flex-shrink-0">Hardware Value:</span>
                         <span>{{ $productSpecification->hardware_value }}</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
-                        <span class="fw-bold w-lg-150px">Implementation Value:</span>
+                        <span class="fw-bold w-lg-150px flex-shrink-0">Implementation Value:</span>
                         <span>{{ $productSpecification->implementation_value }}</span>
                     </div>
 
@@ -264,7 +264,7 @@ use Carbon\Carbon;
 
                    
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Notes:</span>
+                        <span class="fw-bold w-lg-150px flex-shrink-0">Notes:</span>
                         <span>{{ $productSpecification->note }}</span>
                     </div>
                 </div>

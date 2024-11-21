@@ -1348,7 +1348,7 @@ use Carbon\Carbon;
     });
     
 </script>
-@endsection
+
 <style>
     .loader {
         animation: rotate 1s linear infinite;
@@ -1382,3 +1382,5 @@ use Carbon\Carbon;
         }
     }
 </style>
+@endsection
+
