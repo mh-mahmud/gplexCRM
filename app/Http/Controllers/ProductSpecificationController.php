@@ -7,6 +7,8 @@ use App\Models\ProductSpecification;
 use App\Services\ProductSpecificationService;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
+use App\Models\Customer;
+use App\Helpers\Helper;
 
 class ProductSpecificationController extends Controller
 {
@@ -26,12 +28,16 @@ class ProductSpecificationController extends Controller
     public function create()
     {   
         $products = Product::all();
-        return view('product_specifications.create', compact('products'));
+        $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
+        ->select('customers.*', 'leads.first_name', 'leads.last_name')
+        ->get();
+        return view('product_specifications.create', compact('products','customers'));
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'customer_id' => 'required|exists:customers,id',
             //'product_id' => 'required|integer',
             'work_order_number' => 'required|string|max:50',
             'work_order_value' => 'required|numeric',
@@ -50,6 +56,7 @@ class ProductSpecificationController extends Controller
         }
 
         $this->productSpecificationService->createProductSpecification($request);
+        Helper::storeLog("Product Specification created successfully", "Product Specification", "Create Product Specification", null,null);
         return redirect()->route('product-specification-index')->with('success', 'Product Specification created successfully.');
     }
 
@@ -62,8 +69,11 @@ class ProductSpecificationController extends Controller
     public function edit($id)
     {   
         $products = Product::all();
+        $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
+        ->select('customers.*', 'leads.first_name', 'leads.last_name')
+        ->get();
         $productSpecification = $this->productSpecificationService->getProductSpecificationById($id);
-        return view('product_specifications.edit', compact('productSpecification','products'));
+        return view('product_specifications.edit', compact('productSpecification','products','customers'));
     }
 
 
@@ -73,7 +83,7 @@ class ProductSpecificationController extends Controller
         $searchTerm = trim($request->input('search'));
 
         if (empty($searchTerm)) {
-            return redirect()->route('agents-index')->with('error', 'Search Field cannot be blank.');
+            return redirect()->route('product-specification-index')->with('error', 'Search Field cannot be blank.');
         }
 
         $request->validate([
@@ -87,6 +97,7 @@ class ProductSpecificationController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
+            'customer_id' => 'required|exists:customers,id',
             //'product_id' => 'required|integer',
             'work_order_number' => 'required|string|max:50',
             'work_order_value' => 'required|numeric',
@@ -105,6 +116,7 @@ class ProductSpecificationController extends Controller
         }
 
         $this->productSpecificationService->updateProductSpecification($request, $id);
+        Helper::storeLog("Product Specification updated successfully", "Product Specification", "Edit Product Specification", null,null);
         return redirect()->route('product-specification-index')->with('success', 'Product Specification updated successfully.');
     }
 
@@ -112,6 +124,7 @@ class ProductSpecificationController extends Controller
     {
         try {
             $this->productSpecificationService->deleteProductSpecification($id);
+            Helper::storeLog("Product Specification deleted successfully", "Product Specification", "Delete Product Specification", null,null);
             return redirect()->route('product-specification-index')->with('success', 'Product Specification deleted successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());

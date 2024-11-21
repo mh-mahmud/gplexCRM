@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\Role;
 use App\Models\Agent;
 
 class AgentService
@@ -19,6 +20,10 @@ class AgentService
         ->join('users', 'users.id', '=', 'agents.user_id')
         ->orderBy('agents.created_at', 'desc') 
         ->paginate(config('constants.ROW_PER_PAGE')); 
+    }
+
+    public function get_all_role() {
+        return Role::where('status', '1')->get(['id', 'name', 'slug']);
     }
 
     
@@ -103,6 +108,7 @@ class AgentService
         $user->gender = $request->gender;
         $user->phone_number = $request->phone_number;
         $user->address = $request->address;
+        $user->role_id = $request->role_id;
         $user->status = $request->status;
         $user->user_type ='agent';
         //$user->password = bcrypt($request->password);
@@ -132,6 +138,7 @@ class AgentService
         $agent->gender = $request->gender;
         $agent->birth_day = $request->birth_day;
         $agent->phone_number = $request->phone_number;
+        $agent->role_id = $request->role_id;
         $agent->status = $request->status;
         $agent->address = $request->address;
         $agent->description = $request->description;

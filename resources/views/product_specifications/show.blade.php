@@ -153,12 +153,16 @@ use Carbon\Carbon;
                 <div class="card-body p-4">
 
                 <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                        <span class="fw-bold w-lg-150px">Customer:</span>
+                        <span>{{$productSpecification->first_name?? '' }} {{$productSpecification->last_name?? '' }}</span>
+                </div>
+
+                <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                         <span class="fw-bold w-lg-150px">Product Name:</span>
                         <span>{{ $productSpecification->product->name ?? '' }}</span>
-                    </div>
+                </div>
 
-                   
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                         <span class="fw-bold w-lg-150px">Work Order Number:</span>
                         <span>{{ $productSpecification->work_order_number }}</span>
                     </div>
@@ -230,17 +234,17 @@ use Carbon\Carbon;
 
                    
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
-                        <span class="fw-bold w-lg-150px">Software Value:</span>
+                        <span class="fw-bold w-lg-150px flex-shrink-0">Software Value:</span>
                         <span>{{ $productSpecification->software_value }}</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
-                        <span class="fw-bold w-lg-150px">Hardware Value:</span>
+                        <span class="fw-bold w-lg-150px flex-shrink-0">Hardware Value:</span>
                         <span>{{ $productSpecification->hardware_value }}</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
-                        <span class="fw-bold w-lg-150px">Implementation Value:</span>
+                        <span class="fw-bold w-lg-150px flex-shrink-0">Implementation Value:</span>
                         <span>{{ $productSpecification->implementation_value }}</span>
                     </div>
 
@@ -259,8 +263,8 @@ use Carbon\Carbon;
                     @endif
 
                    
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
-                        <span class="fw-bold w-lg-150px">Notes:</span>
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fw-bold w-lg-150px flex-shrink-0">Notes:</span>
                         <span>{{ $productSpecification->note }}</span>
                     </div>
                 </div>

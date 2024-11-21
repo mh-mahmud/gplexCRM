@@ -398,3 +398,10 @@ CREATE TABLE `product_specification` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4
+
+--19-11-2024
+ALTER TABLE `product_specification` ADD COLUMN `customer_id` BIGINT(20) UNSIGNED NOT NULL AFTER `product_id`;
+--20-11-2024
+ALTER TABLE `campaign_data` ADD UNIQUE KEY `campaign_data_phone_unique` (`phone`);
+-- Hasan
+ALTER TABLE `customers` ADD `first_name` VARCHAR(50) NULL DEFAULT NULL AFTER `customer_id`, ADD `last_name` VARCHAR(50) NULL DEFAULT NULL AFTER `first_name`; 

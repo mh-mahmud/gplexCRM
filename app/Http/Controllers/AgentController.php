@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Agent;
 use App\Services\AgentService;
+use App\Services\UserService;
 
 class AgentController extends Controller {
 
@@ -25,6 +26,7 @@ class AgentController extends Controller {
     public function __construct(AgentService $agentService)
     {
         $this->agentService = $agentService;
+
         // $this->middleware('auth');
     }
 
@@ -72,6 +74,8 @@ class AgentController extends Controller {
     public function edit($id)
     {
         $agentData = $this->agentService->getAgentEditData($id);
+        $agentData['role_list'] = $this->agentService->get_all_role();
+
         return view('agents.edit', $agentData);
     }
 

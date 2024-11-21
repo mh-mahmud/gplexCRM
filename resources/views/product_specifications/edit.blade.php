@@ -159,9 +159,29 @@
                         @method('PUT')
                         <div class="row">
                             <!-- Product Dropdown -->
+
+                            <div class="col-md-4">
+                                        <div class="fv-row mb-5">
+                                            <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
+
+                                            </label>
+                                            <select class="form-control form-control-sm form-control-solid" name="customer_id">
+                                                <option value="" {{ old('customer_id', $productSpecification->customer_id) == '' ? 'selected' : '' }}>Select Customer</option>
+                                                @foreach($customers as $customer)
+                                                <option value="{{ $customer->id }}" {{ old('customer_id', $productSpecification->customer_id) == $customer->id ? 'selected' : '' }}>
+                                                    {{ $customer->first_name }} {{ $customer->last_name }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('customer_id'))
+                                            <span class="text-danger">{{ $errors->first('customer_id') }}</span>
+                                            @endif
+
+                                        </div>
+                                    </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Product</label>
-                                <select class="form-control form-control-sm form-control-solid" name="product_id" required>
+                                <select class="form-control form-control-sm form-control-solid" name="product_id">
                                     <option value="">Select Product</option>
                                     @foreach ($products as $product)
                                     <option value="{{ $product->id }}" {{ $productSpecification->product_id == $product->id ? 'selected' : '' }}>
@@ -177,7 +197,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Work Order Number</label>
-                                <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number', $productSpecification->work_order_number) }}" required />
+                                <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number', $productSpecification->work_order_number) }}" />
                                 @error('work_order_number')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -186,7 +206,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Work Order Value</label>
-                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_value" value="{{ old('work_order_value', $productSpecification->work_order_value) }}" step="0.01" required />
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_value" value="{{ old('work_order_value', $productSpecification->work_order_value) }}" />
                                 @error('work_order_value')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -221,7 +241,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Purchase Order Value</label>
-                                <input class="form-control form-control-sm form-control-solid" type="number" name="purchase_order_value" value="{{ old('purchase_order_value', $productSpecification->purchase_order_value) }}" step="0.01" />
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="purchase_order_value" value="{{ old('purchase_order_value', $productSpecification->purchase_order_value) }}"/>
                                 @error('purchase_order_value')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -271,7 +291,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">AMC Effective Amount</label>
-                                <input class="form-control form-control-sm form-control-solid" type="number" name="amc_effective_amount" value="{{ old('amc_effective_amount', $productSpecification->amc_effective_amount) }}" step="0.01" />
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="amc_effective_amount" value="{{ old('amc_effective_amount', $productSpecification->amc_effective_amount) }}"/>
                                 @if ($errors->has('amc_effective_amount'))
                                 <div class="text-danger">{{ $errors->first('amc_effective_amount') }}</div>
                                 @endif
@@ -294,11 +314,16 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label class="form-label fw-bolder text-dark">Service Type</label>
-                                <input class="form-control form-control-sm form-control-solid" type="text" name="service_type" value="{{ old('service_type', $productSpecification->service_type) }}" />
-                                @if ($errors->has('service_type'))
-                                <div class="text-danger">{{ $errors->first('service_type') }}</div>
-                                @endif
+                                <div class="fv-row mb-3">
+                                    <label class="form-label fw-bolder text-dark">Service Type</label>
+                                    <select class="form-control form-control-sm form-control-solid" name="service_type" aria-label="Default select example">
+                                        <option value="">Select Service Type</option>
+                                        <option value="Yearly" {{ $productSpecification->service_type === 'Yearly' ? 'selected' : '' }}>Yearly</option>
+                                        <option value="Half-Yearly" {{ $productSpecification->service_type === 'Half-Yearly' ? 'selected' : '' }}>Half-Yearly</option>
+                                        <option value="Quarterly" {{ $productSpecification->service_type === 'Quarterly' ? 'selected' : '' }}>Quarterly</option>
+                                        <option value="Monthly" {{ $productSpecification->service_type === 'Monthly' ? 'selected' : '' }}>Monthly</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="col-md-4">
