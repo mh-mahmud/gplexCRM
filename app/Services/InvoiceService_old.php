@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Invoice;
-use App\Models\InvoiceCustomForm;
 
 class InvoiceService
 {
@@ -30,47 +29,24 @@ class InvoiceService
         //prepare items array by iterating
         //dd($data);die();
         $items = [];
-        if(empty($data["custom_invoice_id"])) {
-            $itemCount = count($data['items']['item_name']); //all arrays have the same length
+        $itemCount = count($data['items']['item_name']); //all arrays have the same length
 
-            for ($i = 0; $i < $itemCount; $i++) {
-                $items[] = [
-                    'Item' => $data['items']['item_name'][$i] ?? '',
-                    'Description' => $data['items']['description'][$i] ?? '',
-                    'Qty' => $data['items']['quantity'][$i] ?? 0,
-                    'Rate' => $data['items']['rate'][$i] ?? 0,
-                    'Tax' => $data['items']['tax'][$i] ?? 0,
-                    'Amount' => ($data['items']['quantity'][$i] ?? 0) * ($data['items']['rate'][$i] ?? 0) //calculate Amount (Qty * Rate)
-                ];
-            }
-        } else {
-            $custom_form = InvoiceCustomForm::where('id', $data["custom_invoice_id"])
-                                ->select('field_details', 'footer_details')
-                                ->first(); 
-
-            $itemCount = count($data['items']); 
-
-            $result = []; 
-            
-            foreach ($custom_form->field_details as $custom_form_data) {
-                $fieldName = $custom_form_data["field_value"];           
-                if (array_key_exists($fieldName, $data['items'])) {
-                    foreach ($data['items'][$fieldName] as $value) {
-                        if (!empty($value)) {
-                            $items[] = [$fieldName => $value];
-                        }
-                    }
-                }
-            }          
+        for ($i = 0; $i < $itemCount; $i++) {
+            $items[] = [
+                'Item' => $data['items']['item_name'][$i] ?? '',
+                'Description' => $data['items']['description'][$i] ?? '',
+                'Qty' => $data['items']['quantity'][$i] ?? 0,
+                'Rate' => $data['items']['rate'][$i] ?? 0,
+                'Tax' => $data['items']['tax'][$i] ?? 0,
+                'Amount' => ($data['items']['quantity'][$i] ?? 0) * ($data['items']['rate'][$i] ?? 0) //calculate Amount (Qty * Rate)
+            ];
         }
         //array as JSON
         $itemDescriptionJson = json_encode($items);
-
         //create the invoice
         $invoice = Invoice::create([
             'invoice_number' =>  'INV-' . $data['invoice_number'],
             'customer_id' => $data['customer_id'],
-            'invoice_custom_form_id' => $data["custom_invoice_id"],
             'address' => $data['address'],
             'invoice_date' => $data['invoice_date'],
             'due_date' => $data['due_date'],

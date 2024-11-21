@@ -168,7 +168,6 @@
                                                 <option
                                                     value="{{ $custom_invoices->id }}"
                                                     data-fields="{{ json_encode($custom_invoices->field_details) }}"
-                                                    data-footer="{{ json_encode($custom_invoices->footer_details) }}"
                                                     {{ old('custom_invoice_id') == $custom_invoices->id ? 'selected' : '' }}>
                                                     {{ $custom_invoices->invoice_name }}
                                                 </option>
@@ -573,17 +572,6 @@
                                     </tbody>
                                 </table>
 
-                                <table id="custom-invoice-footer-table" class="table table-rounded table-sm table-striped border align-middle gs-2" style="display: none;">
-                                    <thead>
-                                        <tr id="custom-invoice-footer-header" class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200"></tr>
-                                    </thead>
-                                    <tbody id="custom-invoice-footer-body">
-                                        <tr>
-                                            <!-- Placeholder for dynamic footer fields, populated by JS below -->
-                                        </tr>
-                                    </tbody>
-                                </table>
-
 
                                 <div class="row">
                                     <div class="col-md-12">
@@ -960,16 +948,10 @@
         const customInvoiceHeader = document.getElementById('custom-invoice-header');
         const customInvoiceBody = document.getElementById('custom-invoice-body');
 
-        const footerTable = document.getElementById('custom-invoice-footer-table'); 
-        const customInvoiceFooterHeader = document.getElementById('custom-invoice-footer-header');
-        const customInvoiceFooterBody = document.getElementById('custom-invoice-footer-body');
-
-
         customInvoiceSelect.addEventListener('change', function() {
             const selectedOption = this.options[this.selectedIndex];
             const fieldDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.fields) : null;
-            const footerDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.footer) : null;
-console.log('footerDetails', footerDetails)
+            
             if (fieldDetails && fieldDetails.length > 0) {
 
                 defaultInvoice.style.display = 'none';
@@ -981,16 +963,6 @@ console.log('footerDetails', footerDetails)
                 defaultInvoice.style.display = 'block';
                 proposalTable.style.display = 'none';
             }
-
-            if (footerDetails && footerDetails.length > 0) {
-                footerTable.style.display = 'table';
-                populateCustomInvoiceFooters(footerDetails);
-
-            }else {
-                footerTable.style.display = 'none';
-
-            }
-
         });
 
 
@@ -1028,19 +1000,6 @@ console.log('footerDetails', footerDetails)
 
                 addRemoveFunctionality(); // reapply remove functionality to new row
             });
-        }
-
-        function populateCustomInvoiceFooters(fields) {
-            // headers in custom invoice table
-            customInvoiceFooterHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('');
-
-
-            customInvoiceFooterBody.innerHTML = `
-            <tr>
-                ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
-            </tr>
-        `;
-
         }
 
         //remove row button

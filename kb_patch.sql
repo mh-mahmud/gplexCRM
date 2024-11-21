@@ -188,6 +188,10 @@ ALTER TABLE `email_queue` CHANGE `campaign_id` `campaign_id` BIGINT NULL DEFAULT
 
 ALTER TABLE `email_log` ADD `meeting_id` BIGINT NULL DEFAULT NULL AFTER `user_id`, ADD `csv_id` BIGINT NULL DEFAULT NULL AFTER `meeting_id`;
 
+-- 20/11/24
+
+ALTER TABLE `invoices` ADD `invoice_custom_form_id` INT NULL AFTER `customer_id`;
+
 ---Ishtiak SQL end
 
 CREATE TABLE customers LIKE leads;
