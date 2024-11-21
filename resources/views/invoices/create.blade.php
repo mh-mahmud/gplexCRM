@@ -271,12 +271,11 @@
                                                <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : 'selected' }}>
                                                     {{ $agent->first_name }} {{ $agent->last_name }}
                                                 </option>
+                                                <input type="hidden" name="sale_agent_id" value="{{ $agent->agent_id }}">
                                                 @endif
                                                 @endforeach
                                             </select>
-                                            @if(!$isAdmin)
-                                            <input type="hidden" name="sale_agent_id" value="{{ $agent->agent_id }}">
-                                            @endif
+                                          
 
                                             @if ($errors->has('sale_agent_id'))
                                             <span class="text-danger">{{ $errors->first('sale_agent_id') }}</span>

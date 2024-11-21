@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Invoice;
 use App\Models\InvoiceCustomForm;
+use Illuminate\Support\Facades\Auth;
 
 class InvoiceService
 {
@@ -14,7 +15,7 @@ class InvoiceService
         return Invoice::orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
     }
 
-    public function getAllInvoices()
+    public function getAllInvoices_21112024()
     {
         return Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
         ->join('leads', 'customers.lead_id', '=', 'leads.id')
@@ -23,12 +24,30 @@ class InvoiceService
         ->paginate(config('constants.ROW_PER_PAGE'));
     }
 
+    public function getAllInvoices()
+    {
+        if (Auth::user()->user_type !== 'admin') {
+            return Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id')
+            ->where('invoices.created_by', Auth::user()->id) 
+            ->select('invoices.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
+            ->orderBy('invoices.created_at', 'desc')
+            ->paginate(config('constants.ROW_PER_PAGE'));
+        } else {
+            return Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id')
+            ->select('invoices.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
+            ->orderBy('invoices.created_at', 'desc')
+            ->paginate(config('constants.ROW_PER_PAGE'));
+        }
+    }
+
 
 
     public function createInvoice($data)
     {
         //prepare items array by iterating
-        dd($data);
+        //dd($data);
         $items = [];
         if(empty($data["custom_invoice_id"])) {
             $itemCount = count($data['items']['item_name']); //all arrays have the same length
@@ -82,6 +101,7 @@ class InvoiceService
             'currency' => $data['currency'],
             'payment_mode' => $data['payment_mode'],
             'sale_agent_id' => $data['sale_agent_id'],
+            'created_by' =>Auth::user()->id,
             'invoice_status' => $data['invoice_status'],
             'item_description' => $itemDescriptionJson,
         ]);
@@ -112,6 +132,7 @@ class InvoiceService
         $invoice->currency = $data['currency'];
         $invoice->payment_mode = $data['payment_mode'];
         $invoice->sale_agent_id = $data['sale_agent_id'];
+        $invoice->created_by = Auth::user()->id;
         $invoice->invoice_status = $data['invoice_status'];
         //saved as json, excluding empty rows
         $items = [];

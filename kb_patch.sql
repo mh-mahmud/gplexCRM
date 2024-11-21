@@ -409,3 +409,6 @@ ALTER TABLE `customers` ADD `first_name` VARCHAR(50) NULL DEFAULT NULL AFTER `cu
 -- 20/11/24
 
 ALTER TABLE `invoices` ADD `invoice_custom_form_id` INT NULL AFTER `customer_id`;
+
+-- rokib 21/11/24
+ALTER TABLE `invoices` ADD COLUMN `created_by` INT(11) UNSIGNED NULL AFTER `sale_agent_id`;

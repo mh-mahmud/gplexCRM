@@ -37,6 +37,7 @@ class Invoice extends Model
         'is_recurring',
         'payment_mode',
         'sale_agent_id',
+        'created_by',
         'invoice_status',
     ];
 
@@ -60,7 +61,7 @@ class Invoice extends Model
      */
     public function saleAgent()
     {
-        return $this->belongsTo(Agent::class, 'sale_agent_id');
+        return $this->belongsTo(Agent::class, 'sale_agent_id', 'agent_id');
     }
 
     
