@@ -59,12 +59,8 @@ class InvoiceService
             } 
             foreach ($custom_form->footer_details as $custom_footer_data) {
                 $footerName = $custom_footer_data["field_value"];           
-                if (array_key_exists($footerName, $data['footer'])) {
-                    // foreach ($data['footer'][$footerName] as $value) {
-                        // if (!empty($value)) {
-                            $items[] = [$footerName => $data['footer'][$footerName]];
-                        // }
-                    // }
+                if (array_key_exists($footerName, $data['footer'])) {                 
+                    $items[] = [$footerName => $data['footer'][$footerName]];
                 }
             }    
         }
