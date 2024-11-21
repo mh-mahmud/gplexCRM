@@ -1037,7 +1037,7 @@ console.log('footerDetails', footerDetails)
 
             customInvoiceFooterBody.innerHTML = `
             <tr>
-                ${fields.map(field => `<td><input type="text" class="form-control" name="footer[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
+                ${fields.map(field => `<td><input type="text" class="form-control" name="footer[${field.field_value}]" placeholder="${field.field_name}" /></td>`).join('')}
             </tr>
         `;
 
