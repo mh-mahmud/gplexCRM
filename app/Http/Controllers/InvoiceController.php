@@ -50,7 +50,8 @@ class InvoiceController extends Controller
         $discountTypes = Helper::getEnumValues('invoices', 'discount_type');
         $agents = Agent::select('agent_id', 'first_name', 'last_name','user_id')->get();
         $custom_invoice = InvoiceCustomForm::select('id', 'invoice_name','field_details','footer_details')->get();
-        $products = Product::select('id', 'name', 'description', 'product_value')->get();
+        //$products = Product::select('id', 'name', 'description', 'product_value')->get();
+        $products = Product::select('id', 'name', 'description', 'product_value')->where('status', 1)->get();
         return view('invoices.create', compact('customers', 'countries', 'currencies', 'nextInvoiceNumber', 'discountTypes', 'agents', 'products','custom_invoice'));
     }
 
@@ -138,7 +139,8 @@ class InvoiceController extends Controller
         $currencies = $this->currencyService->currencyList($request);
         $discountTypes = Helper::getEnumValues('invoices', 'discount_type');
         $agents = Agent::select('agent_id', 'first_name', 'last_name','user_id')->get();
-        $products = Product::select('id', 'name', 'description', 'product_value')->get();
+        //$products = Product::select('id', 'name', 'description', 'product_value')->get();
+        $products = Product::select('id', 'name', 'description', 'product_value')->where('status', 1)->get();
         return view('invoices.edit', compact('invoice', 'customers', 'countries', 'currencies', 'discountTypes', 'agents', 'products', 'invoiceItems'));
     }
 

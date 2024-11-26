@@ -27,7 +27,8 @@ class ProductSpecificationController extends Controller
 
     public function create()
     {   
-        $products = Product::all();
+        //$products = Product::all();
+        $products = Product::where('status', 1)->get();
         $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
         ->select('customers.*', 'leads.first_name', 'leads.last_name')
         ->get();
@@ -71,7 +72,8 @@ class ProductSpecificationController extends Controller
 
     public function edit($id)
     {   
-        $products = Product::all();
+        //$products = Product::all();
+        $products = Product::where('status', 1)->get();
         $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
         ->select('customers.*', 'leads.first_name', 'leads.last_name')
         ->get();
