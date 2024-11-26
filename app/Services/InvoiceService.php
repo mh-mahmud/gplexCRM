@@ -50,9 +50,9 @@ class InvoiceService
             foreach ($custom_form->field_details as $custom_form_data) {
                 $fieldName = $custom_form_data["field_value"];           
                 if (array_key_exists($fieldName, $data['items'])) {
-                    foreach ($data['items'][$fieldName] as $value) {
+                    foreach ($data['items'][$fieldName] as $key => $value) {
                         if (!empty($value)) {
-                            $items[] = [$fieldName => $value];
+                            $items[$key][] = [$fieldName => $value];
                         }
                     }
                 }
@@ -60,12 +60,13 @@ class InvoiceService
             foreach ($custom_form->footer_details as $custom_footer_data) {
                 $footerName = $custom_footer_data["field_value"];           
                 if (array_key_exists($footerName, $data['footer'])) {                 
-                    $items[] = [$footerName => $data['footer'][$footerName]];
+                    $custom_footer = [$footerName => $data['footer'][$footerName]];
                 }
             }    
         }
         //array as JSON
         $itemDescriptionJson = json_encode($items);
+        $customFooterJson = json_encode($custom_footer);
 
         //create the invoice
         $invoice = Invoice::create([
@@ -89,6 +90,7 @@ class InvoiceService
             'sale_agent_id' => $data['sale_agent_id'],
             'invoice_status' => $data['invoice_status'],
             'item_description' => $itemDescriptionJson,
+            'custom_footer_details' => $customFooterJson,
         ]);
 
         return $invoice;

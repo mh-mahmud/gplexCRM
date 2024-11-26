@@ -112,7 +112,7 @@
                         </tbody>
                     </table>
                 </div>
-                @if(empty($invoice->invoice_custom_form_id))
+
                 <div class="px-14 py-10 text-sm text-neutral-700">
                     <table class="w-full border-collapse border-spacing-0">
                         <thead>
@@ -216,44 +216,6 @@
                         </tbody>
                     </table>
                 </div>
-                @else
-                
-                <div class="px-14 py-10 text-sm text-neutral-700">
-                    <table class="w-full border-collapse border-spacing-0">
-                        <thead>
-                            <tr>
-                                @foreach($customInvoiceData->field_details as $field)
-                                    <td class="border-b-2 border-main pb-3 pl-3 text-center font-bold text-main">
-                                        {{ $field['field_name'] }}
-                                    </td>
-                                @endforeach
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($invoiceItems as $item)
-                                <tr>
-                                    @foreach($customInvoiceData->field_details as $field)
-                                        <td class="border-b py-3 pl-3 text-center">
-                                            <?php
-                                            $fieldValue = $field['field_value'];
-                                            $value = '';
-
-                                            foreach ($item as $data) {
-                                                if (isset($data[$fieldValue])) {
-                                                    $value = $data[$fieldValue];
-                                                    break; 
-                                                }
-                                            }
-                                            ?>
-                                            {{ $value }}
-                                        </td>
-                                    @endforeach
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    
-                @endif
 
                 <div class="px-14 text-sm text-neutral-700 border-b py-3">
                     <p class="text-main font-bold">Terms And Condition</p>

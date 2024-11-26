@@ -38,6 +38,7 @@ class Invoice extends Model
         'payment_mode',
         'sale_agent_id',
         'invoice_status',
+        'custom_footer_details'
     ];
 
     // Dates to handle date and soft delete functionality

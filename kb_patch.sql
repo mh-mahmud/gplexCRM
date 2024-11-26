@@ -409,3 +409,8 @@ ALTER TABLE `customers` ADD `first_name` VARCHAR(50) NULL DEFAULT NULL AFTER `cu
 -- 20/11/24
 
 ALTER TABLE `invoices` ADD `invoice_custom_form_id` INT NULL AFTER `customer_id`;
+
+-- Ishtiak
+
+-- 26/11/24
+ALTER TABLE `invoices` ADD `custom_footer_details` TEXT NULL AFTER `item_description`;
