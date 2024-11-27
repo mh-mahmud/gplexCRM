@@ -235,15 +235,15 @@
                                     @foreach($customInvoiceData->field_details as $field)
                                         <td class="border-b py-3 pl-3 text-center">
                                             <?php
-                                            $fieldValue = $field['field_value'];
-                                            $value = '';
+                                                $fieldValue = $field['field_value'];
+                                                $value = '';
 
-                                            foreach ($item as $data) {
-                                                if (isset($data[$fieldValue])) {
-                                                    $value = $data[$fieldValue];
-                                                    break; 
+                                                foreach ($item as $data) {
+                                                    if (isset($data[$fieldValue])) {
+                                                        $value = $data[$fieldValue];
+                                                        break; 
+                                                    }
                                                 }
-                                            }
                                             ?>
                                             {{ $value }}
                                         </td>

@@ -77,16 +77,16 @@ class InvoiceService
                     }
                 }
             } 
-            foreach ($custom_form->footer_details as $custom_footer_data) {
-                $footerName = $custom_footer_data["field_value"];           
-                if (array_key_exists($footerName, $data['footer'])) {                 
-                    $custom_footer = [$footerName => $data['footer'][$footerName]];
-                }
-            }    
+            // foreach ($custom_form->footer_details as $custom_footer_data) {
+            //     $footerName = $custom_footer_data["field_value"];           
+            //     if (array_key_exists($footerName, $data['footer'])) {                 
+            //         $custom_footer = [$footerName => $data['footer'][$footerName]];
+            //     }
+            // }    
         }
         //array as JSON
         $itemDescriptionJson = json_encode($items);
-        $customFooterJson = json_encode($custom_footer);
+        // $customFooterJson = json_encode($custom_footer);
 
         //create the invoice
         $invoice = Invoice::create([
@@ -111,7 +111,7 @@ class InvoiceService
             'created_by' =>Auth::user()->id,
             'invoice_status' => $data['invoice_status'],
             'item_description' => $itemDescriptionJson,
-            'custom_footer_details' => $customFooterJson,
+            // 'custom_footer_details' => $customFooterJson,
         ]);
 
         return $invoice;
