@@ -412,3 +412,8 @@ ALTER TABLE `invoices` ADD `invoice_custom_form_id` INT NULL AFTER `customer_id`
 
 -- rokib 21/11/24
 ALTER TABLE `invoices` ADD COLUMN `created_by` INT(11) UNSIGNED NULL AFTER `sale_agent_id`;
+
+-- Ishtiak
+
+-- 26/11/24
+ALTER TABLE `invoices` ADD `custom_footer_details` TEXT NULL AFTER `item_description`;

@@ -39,6 +39,7 @@ class Invoice extends Model
         'sale_agent_id',
         'created_by',
         'invoice_status',
+        'custom_footer_details'
     ];
 
     // Dates to handle date and soft delete functionality

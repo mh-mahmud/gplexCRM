@@ -968,7 +968,6 @@
             const selectedOption = this.options[this.selectedIndex];
             const fieldDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.fields) : null;
             const footerDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.footer) : null;
-console.log('footerDetails', footerDetails)
             if (fieldDetails && fieldDetails.length > 0) {
 
                 defaultInvoice.style.display = 'none';
