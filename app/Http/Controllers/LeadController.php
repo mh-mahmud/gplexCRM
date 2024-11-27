@@ -48,14 +48,14 @@ class LeadController  extends Controller
 
     public function index($form_id = null)
     {
-        // Get all leads or filter by form_id if provided
+        // get all leads or filter by form_id if provided
         if ($form_id) {
             $leads = $this->leadService->getLeadsByFormId($form_id);
         } else {
             $leads = $this->leadService->getAllLeads();
         }
 
-        // Get form names where parent_id is null
+        // get form names where parent_id is null
         $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
 
         return view('leads.index', compact('leads', 'formName'));
@@ -149,7 +149,7 @@ class LeadController  extends Controller
     {
         $lead = $this->leadService->getLeadById($id);
 
-        // Fetch dynamic fields data based on lead_id
+        //dynamic fields data based on lead_id
         $fields = LeadFormDetail::where('form_id', $lead->form_id)->get();
         $tableData = [];
         foreach ($fields as $field) {
@@ -169,7 +169,7 @@ class LeadController  extends Controller
             $customer_id = $is_customer->customer_id;
         }
 
-        // Fetch dynamic fields data based on lead_id
+        //dynamic fields data based on lead_id
         $fields = LeadFormDetail::where('form_id', $lead->form_id)->get();
         $tableData = [];
         foreach ($fields as $field) {
@@ -182,7 +182,12 @@ class LeadController  extends Controller
         $meetings = Meeting::where('lead_id', $id)->get();
         $proposals = Proposal::where('lead_id', $id)->get();
         //$logs = Logs::where('lead_id', $id)->get();
-        $logs = Logs::where('lead_id', $id)->orderBy('created_at', 'desc')->get();
+        //$logs = Logs::where('lead_id', $id)->orderBy('created_at', 'desc')->get();
+        $logs = Logs::join('users', 'logs.user_id', '=', 'users.id')
+        ->where('logs.lead_id', $id)
+        ->select('logs.*', 'users.first_name', 'users.last_name')
+        ->orderBy('logs.created_at', 'desc')
+        ->get();
         $invoices = Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
             ->join('leads', 'customers.lead_id', '=', 'leads.id')
             ->select('invoices.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
@@ -201,19 +206,16 @@ class LeadController  extends Controller
 
     public function add($tableName, $leadId)
     {
-        // Get column names
+        //column names
         $columns = Schema::getColumnListing($tableName);
-
-        // Fetch lead form details
+        // fetch lead form details
         $fields = LeadFormDetail::where('table_name', $tableName)->get();
-
-        // Fetch lead details associated with the lead ID
+        //fetch lead details associated with the lead ID
         $leads = Lead::where('id', $leadId)->first();
-
-        // Fetch column details with data types using raw SQL query
+        //fetch column details with data types using raw SQL query
         $columnDetails = DB::select("SHOW COLUMNS FROM $tableName");
 
-        // Map column names to their types
+        //map column names to their types
         $columnTypes = [];
         $dropdownOptions = [];
         foreach ($columnDetails as $column) {
@@ -317,7 +319,7 @@ class LeadController  extends Controller
         $lead = $this->leadService->getLeadById($id);
         $tableData = [];
 
-        // Fetch dynamic fields data based on lead_id
+        //dynamic fields data based on lead_id
         $fields = LeadFormDetail::where('form_id', $lead->form_id)->get();
         $tableData = [];
         foreach ($fields as $field) {
@@ -459,10 +461,10 @@ class LeadController  extends Controller
             'form_id' => 'required|exists:leads_form,form_id'
         ]);
         $leadFormDetailsColumns = LeadFormDetail::where('form_id', $request->form_id)->pluck('field_name')->toArray();
-        // Get columns from Lead table
+        // get columns from Lead table
         $leadColumns = (new Lead)->getFillable();
 
-        //Merge columns ensuring no duplicates
+        //merge columns ensuring no duplicates
         $columns = array_unique(array_merge($leadColumns, $leadFormDetailsColumns));
         $columns = array_filter($columns, function ($column) {
             return $column !== 'form_id' && $column !== 'parent_id';
@@ -501,13 +503,13 @@ class LeadController  extends Controller
         //$leadColumns = array_diff($lead->getFillable(), ['lead_status', 'no_of_employee',]);
         $leadColumns = array_diff($lead->getFillable(), ['lead_status', 'no_of_employee','title','profile_image','gender','dob','marital_status','lead_source','age','created_by']);
 
-        //Merge columns ensuring no duplicates
+        //merge columns ensuring no duplicates
         $columns = array_unique(array_merge($leadColumns, $leadFormDetailsColumns));
         $columns = array_filter($columns, function ($column) {
             return $column !== 'form_id' && $column !== 'parent_id';
         });
 
-        // Map columns to user-friendly names
+        // map columns to user-friendly names
         $formattedColumns = array_map(function ($column) {
             return ucwords(str_replace('_', ' ', $column));
         }, $columns);
@@ -656,7 +658,7 @@ class LeadController  extends Controller
 
     public function upload_file(Request $request)
     {
-        // Custom validation messages
+        //custom validation messages
         $messages = [
             'fileUpload.required' => 'The file upload is required.',
             'fileUpload.file' => 'The uploaded file must be a valid file.',
@@ -703,7 +705,7 @@ class LeadController  extends Controller
                 // Get fields from LeadFormDetail
                 $fieldsConfig = LeadFormDetail::where('form_id', $formId)->get()->groupBy('table_name');
 
-                // Collect all CSV data and validation errors
+                //collect all CSV data and validation errors
                 $allCsvData = [];
                 $errors = []; //collect validation errors
                 $rowNumber = 2; // Start from the second row because the first row is the header
@@ -723,7 +725,7 @@ class LeadController  extends Controller
 
                     // dd($csvData);die();
 
-                    // Custom validation rules for each field based on their types
+                    // custom validation rules for each field based on their types
                     $fieldValidations = [];
                     foreach ($fieldsConfig as $tableFields) {
                         foreach ($tableFields as $field) {
@@ -818,7 +820,7 @@ class LeadController  extends Controller
                         }
 
 
-                        // Insert data into the tables based on the config
+                        // insert data into the tables based on the config
                         foreach ($fieldsConfig as $tableName => $fields) {
 
                             $insertData = [
@@ -855,7 +857,7 @@ class LeadController  extends Controller
                         }
 
 
-                        // Increment the count of successfully inserted records
+                        // increment the count
                         $insertedCount++;
                     }
 
@@ -963,12 +965,12 @@ class LeadController  extends Controller
             //$imagePath = public_path('uploads/agents/' . $lead->profile_image);
             $imagePath =getcwd().'/uploads/leads/'.$lead->profile_image;
     
-            // Delete the file if it exists
+            // Ddlete the file if it exists
             if (file_exists($imagePath)) {
                 unlink($imagePath);
             }
     
-            // Update the user record to remove the profile image
+            //update the user record to remove the profile image
             $lead->profile_image = null;
             $lead->save();
     
