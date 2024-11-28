@@ -223,7 +223,7 @@ use Carbon\Carbon;
                                     <th class="ps-4 min-w-50px">SL</th>
                                     <th class="min-w-150px">Invoice Name</th>
                                     <th class="min-w-400px">Item Field Name</th>
-                                    <th class="min-w-400px">Footer Field Name</th>
+                                    {{-- <th class="min-w-400px">Footer Field Name</th> --}}
                                     <th class="min-w-140px">Total In Word</th>
                                     <th class="min-w-100px text-end text-end-new">Actions</th>
                                 </tr>
@@ -242,12 +242,12 @@ use Carbon\Carbon;
                                         @endphp
                                         {{ $fieldNames }}
                                     </td>
-                                    <td class="text-dark fs-6 w-400px">
+                                    {{-- <td class="text-dark fs-6 w-400px">
                                         @php
                                         $footerFieldNames = collect($invoice->footer_details)->pluck('field_name')->implode(', ');
                                         @endphp
                                         {{ $footerFieldNames }}
-                                    </td>
+                                    </td> --}}
                                     <td class="text-dark fs-6 w-200px">{{$invoice->total_in_word}}</td>
 
                                     <td>

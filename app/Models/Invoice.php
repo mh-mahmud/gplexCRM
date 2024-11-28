@@ -21,6 +21,7 @@ class Invoice extends Model
         'due_date',
         'currency',
         'sub_total',
+        'vat',
         'discount',
         'discount_type',
         'adjustment',

@@ -417,3 +417,5 @@ ALTER TABLE `invoices` ADD COLUMN `created_by` INT(11) UNSIGNED NULL AFTER `sale
 
 -- 26/11/24
 ALTER TABLE `invoices` ADD `custom_footer_details` TEXT NULL AFTER `item_description`;
+-- 26/11/28
+ALTER TABLE `invoices` ADD `vat` DECIMAL(3,2) NULL AFTER `sub_total`;

@@ -77,6 +77,11 @@ class InvoiceService
                     }
                 }
             } 
+            if(!empty($data['items']['amount'])) {
+                foreach($data['items']['amount'] as $key => $amount) {
+                    $items[$key][] = ["amount" => $amount];
+                }
+            }
             // foreach ($custom_form->footer_details as $custom_footer_data) {
             //     $footerName = $custom_footer_data["field_value"];           
             //     if (array_key_exists($footerName, $data['footer'])) {                 
@@ -97,6 +102,8 @@ class InvoiceService
             'invoice_date' => $data['invoice_date'],
             'due_date' => $data['due_date'],
             'total_amount' => $data['total_amount'],
+            'vat' => $data['vat'],
+
             'total_tax' => $data['total_tax'],
             'sub_total' => $data['sub_total'],
             'discount' => $data['total_discount'],

@@ -95,11 +95,9 @@ class InvoiceController extends Controller
             ]);
         }
         try {
-            
             $invoice = $this->invoiceService->createInvoice($request->all());
             return redirect()->route('invoice-index')->with('success', 'Invoice Created Successfully!');
         } catch (\Illuminate\Database\QueryException $e) {
-            
             if ($e->getCode() === '23000') {
                 return back()->withErrors(['invoice_number' => 'This invoice number exists'])->withInput();
             }

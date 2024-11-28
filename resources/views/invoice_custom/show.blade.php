@@ -161,10 +161,10 @@
                             <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Item Field Name</span>
                             <span>{{$fieldNames}}</span>
                         </div>
-                        <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        {{-- <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                             <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Footer Field Name</span>
                             <span>{{$footerFieldNames}}</span>
-                        </div>
+                        </div> --}}
 
                         <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                             <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Total In Word</span>

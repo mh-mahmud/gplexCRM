@@ -117,17 +117,17 @@
                         </div>
 
                        
-                        <div class="row justify-content-center align-items-center mb-3">
+                        {{-- <div class="row justify-content-center align-items-center mb-3">
                             <div class="col-md-6">
                                 <h3>Footer Section</h3>
                             </div>
                             <div class="col-md-6 text-end">
                                 <button type="button" class="btn btn-sm btn-success" onclick="addFooterField()"><i class="bi bi-plus-lg"></i> Add Field</button>
                             </div>
-                        </div>
+                        </div> --}}
 
                        
-                        <div id="footer-field-group-container">
+                        {{-- <div id="footer-field-group-container">
                             <div class="row mb-3 footer-field-group">
                                 <div class="col-md-4">
                                     <div class="fv-row">
@@ -153,7 +153,7 @@
                                     <button type="button" class="btn btn-sm btn-danger" onclick="removeFooterField(this)"><i class="bi bi-x"></i></button>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         
                         <div class="row">
@@ -262,40 +262,40 @@
     }
 
     // Function to add new footer field
-    function addFooterField() {
-        const container = document.getElementById('footer-field-group-container');
-        const newFooterFieldGroup = document.createElement('div');
-        newFooterFieldGroup.className = 'row mb-3 footer-field-group';
+    // function addFooterField() {
+    //     const container = document.getElementById('footer-field-group-container');
+    //     const newFooterFieldGroup = document.createElement('div');
+    //     newFooterFieldGroup.className = 'row mb-3 footer-field-group';
 
-        newFooterFieldGroup.innerHTML = `
-            <div class="col-md-4">
-                <div class="fv-row">
-                    <label class="form-label fw-bolder text-dark">Field Name</label>
-                    <input class="form-control form-control-sm form-control-solid" type="text" name="footer_details[${footerFieldIndex}][field_name]" autocomplete="off" />
-                </div>
-            </div>
+    //     newFooterFieldGroup.innerHTML = `
+    //         <div class="col-md-4">
+    //             <div class="fv-row">
+    //                 <label class="form-label fw-bolder text-dark">Field Name</label>
+    //                 <input class="form-control form-control-sm form-control-solid" type="text" name="footer_details[${footerFieldIndex}][field_name]" autocomplete="off" />
+    //             </div>
+    //         </div>
 
-            <div class="col-md-4">
-                <div class="fv-row">
-                    <label class="form-label fw-bolder text-dark">Field Value</label>
-                    <input class="form-control form-control-sm form-control-solid" type="text" name="footer_details[${footerFieldIndex}][field_value]" autocomplete="off" />
-                </div>
-            </div>
+    //         <div class="col-md-4">
+    //             <div class="fv-row">
+    //                 <label class="form-label fw-bolder text-dark">Field Value</label>
+    //                 <input class="form-control form-control-sm form-control-solid" type="text" name="footer_details[${footerFieldIndex}][field_value]" autocomplete="off" />
+    //             </div>
+    //         </div>
 
-            <div class="col-md-4 text-center" style="padding-top: 1.5rem;">
-                <button type="button" class="btn btn-sm btn-danger" onclick="removeFooterField(this)"><i class="bi bi-x"></i></button>
-            </div>
-        `;
+    //         <div class="col-md-4 text-center" style="padding-top: 1.5rem;">
+    //             <button type="button" class="btn btn-sm btn-danger" onclick="removeFooterField(this)"><i class="bi bi-x"></i></button>
+    //         </div>
+    //     `;
 
-        container.appendChild(newFooterFieldGroup);
-        footerFieldIndex++;
-    }
+    //     container.appendChild(newFooterFieldGroup);
+    //     footerFieldIndex++;
+    // }
 
     // Function to remove footer field
-    function removeFooterField(button) {
-        const fieldGroup = button.closest('.footer-field-group');
-        fieldGroup.remove();
-    }
+    // function removeFooterField(button) {
+    //     const fieldGroup = button.closest('.footer-field-group');
+    //     fieldGroup.remove();
+    // }
 </script>
 
 <script>

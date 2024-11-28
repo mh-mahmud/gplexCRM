@@ -590,13 +590,13 @@
                                                 <table class="table table-sm table-row-bordered align-middle">
                                                     <tr>
                                                         <th class="text-end"><strong>Sub Total:</strong></th>
-                                                        <td class="text-end"><strong>BDT</strong> <span id="subtotal-amount">0.00</span></td>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="custom-subtotal-amount">0.00</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th><strong>VAT :</strong>
                                                             <div class="input-group flex-nowrap">
                                                                 <div class="flex-grow-1">
-                                                                    <input class="form-control form-control-sm rounded-end-0 border-end" type="number" name="discount" placeholder="Discount">
+                                                                    <input class="form-control form-control-sm rounded-end-0 border-end" type="number" name="vat" placeholder="VAT" onchange="calculateVat(this.value)">
                                                                 </div>
                                                                 %
                                                             </div>
@@ -606,7 +606,7 @@
                                                     <!-- New Tax Row -->
                                                     <tr>
                                                         <th class="text-end"><strong>Total Tax:</strong></th>
-                                                        <td class="text-end"><strong>BDT</strong> <span id="total-tax-amount">0.00</span></td>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="custom-total-vat">0.00</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th><strong>Adjustment :</strong>
@@ -617,7 +617,7 @@
                                                     <tr>
                                                         <th class="text-end"><strong>Total</strong></th>
                                                         <td class="text-end">
-                                                            <strong>BDT</strong> <span id="total-amount">0.00</span>
+                                                            <strong>BDT</strong> <span id="custom-total-amount">0.00</span>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -998,6 +998,24 @@
 <script>
     function getTotalAmount(value)
     {
+        let subTotalAmount = document.getElementById('subtotal-hidden').value;
+        let total = subTotalAmount ? subTotalAmount : 0;
+        total = parseFloat(total) + parseFloat(value);
+        document.getElementById('custom-subtotal-amount').innerHTML = total;
+        document.getElementById('subtotal-hidden').value = total;    
+        document.getElementById('total-hidden').value = total;
+        document.getElementById('custom-total-amount').innerHTML = total;
+    }
+    function calculateVat(value)
+    {
+        let subTotalAmount = document.getElementById('subtotal-hidden').value;
+        let totalVat = (subTotalAmount * value) / 100;
+        document.getElementById('totaltax-hidden').value = totalVat;
+        let totalAmount = 0;
+        totalAmount = parseFloat(subTotalAmount) + parseFloat(totalVat) + parseFloat(totalAmount); 
+        document.getElementById('custom-total-vat').innerHTML = totalVat;
+        document.getElementById('total-hidden').value = totalAmount;
+        document.getElementById('custom-total-amount').innerHTML = totalAmount;
     }
     document.addEventListener('DOMContentLoaded', function() {
         const customInvoiceSelect = document.getElementById('custom-invoice-select');
@@ -1014,7 +1032,7 @@
         customInvoiceSelect.addEventListener('change', function() {
             const selectedOption = this.options[this.selectedIndex];
             const fieldDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.fields) : null;
-            const footerDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.footer) : null;
+            // const footerDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.footer) : null;
             if (fieldDetails && fieldDetails.length > 0) {
 
                 defaultInvoice.style.display = 'none';
@@ -1028,14 +1046,14 @@
                 proposalTable.style.display = 'none';
             }
 
-            if (footerDetails && footerDetails.length > 0) {
-                footerTable.style.display = 'table';
-                populateCustomInvoiceFooters(footerDetails);
+            // if (footerDetails && footerDetails.length > 0) {
+            //     footerTable.style.display = 'table';
+            //     populateCustomInvoiceFooters(footerDetails);
 
-            }else {
-                footerTable.style.display = 'none';
+            // }else {
+            //     footerTable.style.display = 'none';
 
-            }
+            // }
 
         });
 
@@ -1067,6 +1085,7 @@
                 customInvoiceBody.insertAdjacentHTML('beforeend', `
                 <tr>
                     ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
+                    <td><input type="text" class="form-control" name="items[amount][]" placeholder="Amount" onchange="getTotalAmount(this.value)"/></td>
                     <td><button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
                            <i class="bi bi-trash pe-0"></i>
                        </button>
@@ -1077,18 +1096,18 @@
             });
         }
 
-        function populateCustomInvoiceFooters(fields) {
-            // headers in custom invoice table
-            customInvoiceFooterHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('');
+        // function populateCustomInvoiceFooters(fields) {
+        //     // headers in custom invoice table
+        //     customInvoiceFooterHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('');
 
 
-            customInvoiceFooterBody.innerHTML = `
-            <tr>
-                ${fields.map(field => `<td><input type="text" class="form-control" name="footer[${field.field_value}]" placeholder="${field.field_name}" /></td>`).join('')}
-            </tr>
-        `;
+        //     customInvoiceFooterBody.innerHTML = `
+        //     <tr>
+        //         ${fields.map(field => `<td><input type="text" class="form-control" name="footer[${field.field_value}]" placeholder="${field.field_name}" /></td>`).join('')}
+        //     </tr>
+        // `;
 
-        }
+        // }
 
         //remove row button
         function addRemoveFunctionality() {
