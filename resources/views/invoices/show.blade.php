@@ -217,7 +217,9 @@
                     </table>
                 </div>
                 @else
-                
+                @php
+                  $custom_invoice_total_field = count($customInvoiceData->field_details);
+                @endphp
                 <div class="px-14 py-10 text-sm text-neutral-700">
                     <table class="w-full border-collapse border-spacing-0">
                         <thead>
@@ -227,6 +229,9 @@
                                         {{ $field['field_name'] }}
                                     </td>
                                 @endforeach
+                                <td class="border-b-2 border-main pb-3 pl-3 text-center font-bold text-main">
+                                    Amount
+                                </td>
                             </tr>
                         </thead>
                         <tbody>
@@ -235,21 +240,37 @@
                                     @foreach($customInvoiceData->field_details as $field)
                                         <td class="border-b py-3 pl-3 text-center">
                                             <?php
-                                            $fieldValue = $field['field_value'];
-                                            $value = '';
+                                                $fieldValue = $field['field_value'];
+                                                $value = '';
 
-                                            foreach ($item as $data) {
-                                                if (isset($data[$fieldValue])) {
-                                                    $value = $data[$fieldValue];
-                                                    break; 
+                                                foreach ($item as $data) {
+                                                    if (isset($data[$fieldValue])) {
+                                                        $value = $data[$fieldValue];
+                                                        break; 
+                                                    } 
                                                 }
-                                            }
                                             ?>
                                             {{ $value }}
                                         </td>
                                     @endforeach
+                                    <td>
+                                        {{ $item[count($item) -1]["amount"] }}
+                                    </td>
                                 </tr>
-                            @endforeach
+                            @endforeach        
+                            <tr>
+                                <td class="border-b py-3 pl-3 text-center">Total Net Value</td>
+                                <td class="border-b py-3 pl-3 text-center" colspan="6">{{ $invoice["sub_total"] }}</td>
+                            </tr>
+                            <tr>
+                                <td class="border-b py-3 pl-3 text-center">VAT</td>
+                                <td class="border-b py-3 pl-3 text-center">{{ $invoice["vat"] }}%</td>
+                                <td class="border-b py-3 pl-3 text-center">{{ $invoice["total_tax"] }}</td>
+                            </tr>
+                            <tr>
+                                <td class="border-b py-3 pl-3 text-center">Total Including VAT</td>
+                                <td colspan= "{{ $custom_invoice_total_field }}" class="border-b py-3 pl-3 text-center">{{ $invoice["total_amount"] }}</td>
+                            </tr>
                         </tbody>
                     </table>
                     

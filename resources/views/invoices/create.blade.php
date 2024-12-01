@@ -560,29 +560,73 @@
                                    
                                 </table> -->
 
+                                <div id="custom-invoice" style="display: block;">
+                                    <table id="custom-invoice-table" class="table table-rounded table-sm table-striped border align-middle gs-2" style="display: none;">
+                                        <thead>
+                                            <tr id="custom-invoice-header" class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200"></tr>
+                                        </thead>
+                                        <tbody id="custom-invoice-body">
+                                            <tr>
+                                                <!-- Placeholder for dynamic input fields, populated by JS below -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
 
-                                <table id="custom-invoice-table" class="table table-rounded table-sm table-striped border align-middle gs-2" style="display: none;">
-                                    <thead>
-                                        <tr id="custom-invoice-header" class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200"></tr>
-                                    </thead>
-                                    <tbody id="custom-invoice-body">
-                                        <tr>
-                                            <!-- Placeholder for dynamic input fields, populated by JS below -->
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    <table id="custom-invoice-footer-table" class="table table-rounded table-sm table-striped border align-middle gs-2" style="display: none;">
+                                        <thead>
+                                            <tr id="custom-invoice-footer-header" class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200"></tr>
+                                        </thead>
+                                        <tbody id="custom-invoice-footer-body">
+                                            <tr>
+                                                <!-- Placeholder for dynamic footer fields, populated by JS below -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
 
-                                <table id="custom-invoice-footer-table" class="table table-rounded table-sm table-striped border align-middle gs-2" style="display: none;">
-                                    <thead>
-                                        <tr id="custom-invoice-footer-header" class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200"></tr>
-                                    </thead>
-                                    <tbody id="custom-invoice-footer-body">
-                                        <tr>
-                                            <!-- Placeholder for dynamic footer fields, populated by JS below -->
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    <div class="row">
+                                        <div class="col-md-4 ms-auto ">
+                                            <!-- Proposal Calculations-->
+                                            <div class="table-responsive bg-light-warning rounded-2 p-3">
+                                                <table class="table table-sm table-row-bordered align-middle">
+                                                    <tr>
+                                                        <th class="text-end"><strong>Sub Total:</strong></th>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="custom-subtotal-amount">0.00</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><strong>VAT :</strong>
+                                                            <div class="input-group flex-nowrap">
+                                                                <div class="flex-grow-1">
+                                                                    <input class="form-control form-control-sm rounded-end-0 border-end" type="number" name="vat" placeholder="VAT" onchange="calculateVat(this.value)">
+                                                                </div>
+                                                                %
+                                                            </div>
+                                                        </th>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="discount-amount">-0.00</span></td>
+                                                    </tr>
+                                                    <!-- New Tax Row -->
+                                                    <tr>
+                                                        <th class="text-end"><strong>Total Tax:</strong></th>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="custom-total-vat">0.00</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><strong>Adjustment :</strong>
+                                                            <input class="form-control form-control-sm" type="number" name="adjustment" placeholder="Adjustment">
+                                                        </th>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="adjustment-amount">0.00</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="text-end"><strong>Total</strong></th>
+                                                        <td class="text-end">
+                                                            <strong>BDT</strong> <span id="custom-total-amount">0.00</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
 
+                                            <!--End Proposal Calculations-->
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="row">
                                     <div class="col-md-12">
@@ -952,6 +996,27 @@
 
 
 <script>
+    function getTotalAmount(value)
+    {
+        let subTotalAmount = document.getElementById('subtotal-hidden').value;
+        let total = subTotalAmount ? subTotalAmount : 0;
+        total = parseFloat(total) + parseFloat(value);
+        document.getElementById('custom-subtotal-amount').innerHTML = total;
+        document.getElementById('subtotal-hidden').value = total;    
+        document.getElementById('total-hidden').value = total;
+        document.getElementById('custom-total-amount').innerHTML = total;
+    }
+    function calculateVat(value)
+    {
+        let subTotalAmount = document.getElementById('subtotal-hidden').value;
+        let totalVat = (subTotalAmount * value) / 100;
+        document.getElementById('totaltax-hidden').value = totalVat;
+        let totalAmount = 0;
+        totalAmount = parseFloat(subTotalAmount) + parseFloat(totalVat) + parseFloat(totalAmount); 
+        document.getElementById('custom-total-vat').innerHTML = totalVat;
+        document.getElementById('total-hidden').value = totalAmount;
+        document.getElementById('custom-total-amount').innerHTML = totalAmount;
+    }
     document.addEventListener('DOMContentLoaded', function() {
         const customInvoiceSelect = document.getElementById('custom-invoice-select');
         const defaultInvoice = document.getElementById('default-invoice');
@@ -962,44 +1027,46 @@
         const footerTable = document.getElementById('custom-invoice-footer-table'); 
         const customInvoiceFooterHeader = document.getElementById('custom-invoice-footer-header');
         const customInvoiceFooterBody = document.getElementById('custom-invoice-footer-body');
-
-
+        const customInvoiceDiv = document.getElementById('custom-invoice');
+        
         customInvoiceSelect.addEventListener('change', function() {
             const selectedOption = this.options[this.selectedIndex];
             const fieldDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.fields) : null;
-            const footerDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.footer) : null;
+            // const footerDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.footer) : null;
             if (fieldDetails && fieldDetails.length > 0) {
 
                 defaultInvoice.style.display = 'none';
                 proposalTable.style.display = 'table';
+                customInvoiceDiv.style.display = 'block';
 
                 populateCustomInvoiceFields(fieldDetails);
             } else {
-
+                customInvoiceDiv.style.display = 'none';
                 defaultInvoice.style.display = 'block';
                 proposalTable.style.display = 'none';
             }
 
-            if (footerDetails && footerDetails.length > 0) {
-                footerTable.style.display = 'table';
-                populateCustomInvoiceFooters(footerDetails);
+            // if (footerDetails && footerDetails.length > 0) {
+            //     footerTable.style.display = 'table';
+            //     populateCustomInvoiceFooters(footerDetails);
 
-            }else {
-                footerTable.style.display = 'none';
+            // }else {
+            //     footerTable.style.display = 'none';
 
-            }
+            // }
 
         });
 
 
         function populateCustomInvoiceFields(fields) {
             // headers in custom invoice table
-            customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Action</th>';
+            customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Amount</th><th>Action</th>';
 
 
             customInvoiceBody.innerHTML = `
             <tr>
                 ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
+                <td><input type="text" class="form-control" name="items[amount][]" placeholder="Amount" onchange="getTotalAmount(this.value)"/></td>
                 <td>
                     
                     <button type="button" class="btn btn-sm btn-primary py-2 px-3" id="add-row">
@@ -1018,6 +1085,7 @@
                 customInvoiceBody.insertAdjacentHTML('beforeend', `
                 <tr>
                     ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
+                    <td><input type="text" class="form-control" name="items[amount][]" placeholder="Amount" onchange="getTotalAmount(this.value)"/></td>
                     <td><button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
                            <i class="bi bi-trash pe-0"></i>
                        </button>
@@ -1028,18 +1096,18 @@
             });
         }
 
-        function populateCustomInvoiceFooters(fields) {
-            // headers in custom invoice table
-            customInvoiceFooterHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('');
+        // function populateCustomInvoiceFooters(fields) {
+        //     // headers in custom invoice table
+        //     customInvoiceFooterHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('');
 
 
-            customInvoiceFooterBody.innerHTML = `
-            <tr>
-                ${fields.map(field => `<td><input type="text" class="form-control" name="footer[${field.field_value}]" placeholder="${field.field_name}" /></td>`).join('')}
-            </tr>
-        `;
+        //     customInvoiceFooterBody.innerHTML = `
+        //     <tr>
+        //         ${fields.map(field => `<td><input type="text" class="form-control" name="footer[${field.field_value}]" placeholder="${field.field_name}" /></td>`).join('')}
+        //     </tr>
+        // `;
 
-        }
+        // }
 
         //remove row button
         function addRemoveFunctionality() {
