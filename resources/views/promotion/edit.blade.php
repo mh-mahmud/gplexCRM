@@ -146,7 +146,7 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Status</label>
-                                                    <select class="form-control form-control-sm form-control-solid" name="form_status" aria-label="Default select example">
+                                                    <select class="form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
                                                         <option value="1" {{ $promotion->status == 1 ? 'selected' : '' }}>Active</option>
                                                         <option value="0" {{ $promotion->status == 0 ? 'selected' : '' }}>Inactive</option>
                                                     </select>
