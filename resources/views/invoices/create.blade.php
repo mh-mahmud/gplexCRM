@@ -596,23 +596,21 @@
                                                         <th><strong>VAT :</strong>
                                                             <div class="input-group flex-nowrap">
                                                                 <div class="flex-grow-1">
-                                                                    <input class="form-control form-control-sm rounded-end-0 border-end" type="number" name="vat" placeholder="VAT" onchange="calculateVat(this.value)">
+                                                                    <input class="form-control form-control-sm rounded-end-0 border-end" type="number" name="vat" placeholder="VAT" onblur="calculateVat(this.value)">
                                                                 </div>
                                                                 %
                                                             </div>
                                                         </th>
-                                                        <td class="text-end"><strong>BDT</strong> <span id="discount-amount">-0.00</span></td>
                                                     </tr>
                                                     <!-- New Tax Row -->
                                                     <tr>
-                                                        <th class="text-end"><strong>Total Tax:</strong></th>
+                                                        <th class="text-end"><strong>Total VAT:</strong></th>
                                                         <td class="text-end"><strong>BDT</strong> <span id="custom-total-vat">0.00</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th><strong>Adjustment :</strong>
-                                                            <input class="form-control form-control-sm" type="number" name="adjustment" placeholder="Adjustment">
+                                                            <input class="form-control form-control-sm" type="number" name="custom_adjustment" placeholder="Adjustment" onblur="calculateCustomAdjustment(this.value)">
                                                         </th>
-                                                        <td class="text-end"><strong>BDT</strong> <span id="adjustment-amount">0.00</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th class="text-end"><strong>Total</strong></th>
@@ -1017,6 +1015,15 @@
         document.getElementById('total-hidden').value = totalAmount;
         document.getElementById('custom-total-amount').innerHTML = totalAmount;
     }
+    function calculateCustomAdjustment(value)
+    {
+        let totalAmount = document.getElementById('total-hidden').value;
+        console.log('v', totalAmount)
+        // totalAmount = parseFloat(totalAmount) + parseFloat(value);
+        // document.getElementById('total-hidden').value = totalAmount;
+        // document.getElementById('custom-total-amount').innerHTML = totalAmount;
+        // document.getElementById('custom-adjustment-amount').innerHTML = totalAmount;
+    }
     document.addEventListener('DOMContentLoaded', function() {
         const customInvoiceSelect = document.getElementById('custom-invoice-select');
         const defaultInvoice = document.getElementById('default-invoice');
@@ -1066,7 +1073,7 @@
             customInvoiceBody.innerHTML = `
             <tr>
                 ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
-                <td><input type="text" class="form-control" name="items[amount][]" placeholder="Amount" onchange="getTotalAmount(this.value)"/></td>
+                <td><input type="text" class="form-control" name="items[amount][]" placeholder="Amount" onblur="getTotalAmount(this.value)"/></td>
                 <td>
                     
                     <button type="button" class="btn btn-sm btn-primary py-2 px-3" id="add-row">

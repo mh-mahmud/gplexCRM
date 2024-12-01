@@ -111,7 +111,7 @@ class InvoiceService
             'admin_note' => $data['admin_note'],
             'client_note' => $data['client_note'],
             'terms_conditions' => $data['terms_conditions'],
-            'adjustment' => $data['adjustment'],
+            'adjustment' => $data['custom_adjustment'] ? $data['custom_adjustment'] : $data['adjustment'],
             'currency' => $data['currency'],
             'payment_mode' => $data['payment_mode'],
             'sale_agent_id' => $data['sale_agent_id'],

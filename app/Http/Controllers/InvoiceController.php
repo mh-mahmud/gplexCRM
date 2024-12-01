@@ -222,7 +222,10 @@ class InvoiceController extends Controller
         $totalPayments = array_sum(array_column($existingPayments, 'payment'));
         $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
         $products = Product::select('id', 'name', 'description', 'product_value')->get();
-        $pdf = PDF::loadView('invoices.invoice_pdf', compact('invoice', 'products', 'invoiceItems','newDueAmount'));
+        $customInvoiceData = InvoiceCustomForm::where('id', $invoice->invoice_custom_form_id)
+                                            ->select('id', 'invoice_name','field_details','footer_details')
+                                            ->first();
+        $pdf = PDF::loadView('invoices.invoice_pdf', compact('invoice', 'products', 'invoiceItems','newDueAmount', 'customInvoiceData'));
         return $pdf->download('invoice_' . $invoice->invoice_number . '.pdf');
     }
 

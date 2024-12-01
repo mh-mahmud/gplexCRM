@@ -253,27 +253,27 @@
                                             {{ $value }}
                                         </td>
                                     @endforeach
-                                    <td>
+                                    <td class="border-b py-3 pl-3 text-right">
                                         {{ $item[count($item) -1]["amount"] }}
                                     </td>
                                 </tr>
                             @endforeach        
                             <tr>
                                 <td class="border-b py-3 pl-3 text-center">Total Net Value</td>
-                                <td class="border-b py-3 pl-3 text-center" colspan="6">{{ $invoice["sub_total"] }}</td>
+                                <td class="border-b py-3 pl-3 text-right" colspan= "{{ $custom_invoice_total_field }}">{{ $invoice["sub_total"] }}</td>
                             </tr>
                             <tr>
                                 <td class="border-b py-3 pl-3 text-center">VAT</td>
-                                <td class="border-b py-3 pl-3 text-center">{{ $invoice["vat"] }}%</td>
-                                <td class="border-b py-3 pl-3 text-center">{{ $invoice["total_tax"] }}</td>
+                                <td class="border-b py-3 pl-3 text-right" colspan= "{{ $custom_invoice_total_field - 1 }} ">{{ !empty($invoice["vat"]) ? $invoice["vat"] . '%' : '' }}</td>
+                                <td class="border-b py-3 pl-3 text-right">{{ $invoice["total_tax"] }}</td>
                             </tr>
                             <tr>
                                 <td class="border-b py-3 pl-3 text-center">Total Including VAT</td>
-                                <td colspan= "{{ $custom_invoice_total_field }}" class="border-b py-3 pl-3 text-center">{{ $invoice["total_amount"] }}</td>
+                                <td colspan= "{{ $custom_invoice_total_field }}" class="border-b py-3 pl-3 text-right">{{ $invoice["total_amount"] }}</td>
                             </tr>
                         </tbody>
                     </table>
-                    
+                </div>    
                 @endif
 
                 <div class="px-14 text-sm text-neutral-700 border-b py-3">
