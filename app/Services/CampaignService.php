@@ -100,7 +100,7 @@ class CampaignService
     }
 
 
-    public function campaign_lead_upload_file(Request $request)
+    public function campaign_lead_upload_file_backup_12012024(Request $request)
     {
         // custom validation messages show
         $messages = [
@@ -242,6 +242,130 @@ class CampaignService
 
         return ['error' => 'No file was uploaded.'];
     }
+
+
+
+
+    public function campaign_lead_upload_file(Request $request)
+    {
+        // validation messages
+        $messages = [
+            'fileUpload.required' => 'The file upload is required.',
+            'fileUpload.file' => 'The uploaded file must be a valid file.',
+            'fileUpload.mimes' => 'The uploaded file must be a file of type: csv',
+        ];
+
+        //validate the request
+        $validator = Validator::make($request->all(), [
+            //'fileUpload' => 'required|file|mimes:csv,txt,xls,xlsx',
+            'fileUpload' => 'required|file|mimes:csv,txt,xls,xlsx',
+        ], $messages);
+
+        if ($validator->fails()) {
+            $errorMessages = implode(' ', $validator->errors()->all());
+            return ['error' => $errorMessages];
+        }
+
+        if (!$request->hasFile('fileUpload')) {
+            return ['error' => 'No file was uploaded.'];
+        }
+
+        $file = $request->file('fileUpload');
+        $path = $file->getRealPath();
+        $handle = fopen($path, 'r');
+
+        if ($handle === false) {
+            return ['error' => 'Failed to open the uploaded file.'];
+        }
+
+        //read the first line headers
+        $headers = fgetcsv($handle);
+
+        if (($request->template_type == 'Email' && $headers[0] !== 'Email') ||
+            ($request->template_type == 'SMS' && $headers[0] !== 'Phone')
+        ) {
+            fclose($handle);
+            return ['error' => 'File heading format is wrong.'];
+        }
+
+        $validData = [];
+        $duplicateEmails = [];
+        $duplicatePhones = [];
+
+        $seenEmails = [];
+        $seenPhones = [];
+
+        $campaignId = $request->input('campaign_id');
+
+        //query existing data in the database for this campaign
+        $existingEmails = CampaignData::where('campaign_id', $campaignId)->pluck('email')->toArray();
+        $existingPhones = CampaignData::where('campaign_id', $campaignId)->pluck('phone')->toArray();
+
+        while (($data = fgetcsv($handle, 1000, ',')) !== false) {
+            if ($request->template_type == 'Email' && count($data) == 1 && $headers[0] == 'Email') {
+                $email = $data[0];
+                if (in_array($email, $seenEmails) || in_array($email, $existingEmails)) {
+                    $duplicateEmails[] = $email;
+                } else {
+                    $seenEmails[] = $email;
+                    $validData[] = ['email' => $email];
+                }
+            } elseif ($request->template_type == 'SMS' && count($data) == 1 && $headers[0] == 'Phone') {
+                $phone = '0' . $data[0];
+                if (in_array($phone, $seenPhones) || in_array($phone, $existingPhones)) {
+                    $duplicatePhones[] = $phone;
+                } else {
+                    $seenPhones[] = $phone;
+                    $validData[] = ['phone' => $phone];
+                }
+            }
+        }
+
+        fclose($handle);
+
+        if (!empty($duplicateEmails) || !empty($duplicatePhones)) {
+            $duplicateMessages = [];
+            if (!empty($duplicateEmails)) {
+                $duplicateMessages[] = 'Duplicate Emails: ' . implode(', ', $duplicateEmails);
+            }
+            if (!empty($duplicatePhones)) {
+                $duplicateMessages[] = 'Duplicate Phone Numbers: ' . implode(', ', $duplicatePhones);
+            }
+            return ['error' => implode('. ', $duplicateMessages)];
+        }
+
+        if (empty($validData)) {
+            return ['error' => 'No valid data found in the uploaded file.'];
+        }
+
+        foreach ($validData as $entry) {
+            $csv_id = str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
+            if (isset($entry['email'])) {
+                CampaignData::create([
+                    'email' => $entry['email'],
+                    'email_template_id' => $request->input('email_template_id'),
+                    'campaign_id' => $campaignId,
+                    'csv_id' => $csv_id,
+                    'status' => config('constants.campaign_status.Pending'),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            } elseif (isset($entry['phone'])) {
+                CampaignData::create([
+                    'phone' => $entry['phone'],
+                    'sms_template_id' => $request->input('sms_template_id'),
+                    'campaign_id' => $campaignId,
+                    'csv_id' => $csv_id,
+                    'status' => config('constants.campaign_status.Pending'),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+
+        return ['success' => 'File uploaded and data inserted successfully.'];
+    }
+
 
 
     public function getAllCampaignData($id)

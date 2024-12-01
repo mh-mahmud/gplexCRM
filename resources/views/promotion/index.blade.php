@@ -156,7 +156,8 @@
 									<span class="badge badge-light-danger">Inactive</span>
 								@endif
                             </td>
-							<td class="text-end">
+							<td>
+							<div class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
 								<a href="{{ route('promotion-show', $promotion->id) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
@@ -210,6 +211,7 @@
 										<!--end::Svg Icon-->
 									</button>
 								</form>
+								</div>
 							</td>
 						</tr>
 						@endforeach

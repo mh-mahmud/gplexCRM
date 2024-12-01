@@ -417,5 +417,9 @@ ALTER TABLE `invoices` ADD COLUMN `created_by` INT(11) UNSIGNED NULL AFTER `sale
 
 -- 26/11/24
 ALTER TABLE `invoices` ADD `custom_footer_details` TEXT NULL AFTER `item_description`;
+
 -- 26/11/28
 ALTER TABLE `invoices` ADD `vat` DECIMAL(3,2) NULL AFTER `sub_total`;
+
+-- 01/12/24
+ALTER TABLE `campaign_data` DROP INDEX `campaign_data_email_unique`,DROP INDEX `campaign_data_phone_unique`;
