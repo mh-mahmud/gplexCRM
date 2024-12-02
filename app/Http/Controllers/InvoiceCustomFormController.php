@@ -27,12 +27,14 @@ class InvoiceCustomFormController extends Controller
     }
 
     public function store(Request $request)
-    {   
+    {  
         $data = $request->validate([
             'invoice_name' => 'required|string|max:255',
             'field_details' => 'array',
             'field_details.*.field_name' => 'required|string',
             'field_details.*.field_value' => 'required|string',
+            'field_details.*.is_sum' => 'required',
+            'field_details.*.is_mandatory' => 'required',
             'footer_details' => 'array',
             'footer_details.*.field_name' => 'required|string',
             'footer_details.*.field_value' => 'required|string',
@@ -43,6 +45,8 @@ class InvoiceCustomFormController extends Controller
             //custom error messages
             'field_details.*.field_name.required' => 'Each Item Field Name is required.',
             'field_details.*.field_value.required' => 'Each Item Field Value is required.',
+            'field_details.*.is_sum.required' => 'Is Sum is required.',
+            'field_details.*.is_mandatory.required' => 'Is Mandatory Field Value is required.',
             'footer_details.*.field_name.required' => 'Each Footer Field Name is required.',
             'footer_details.*.field_value.required' => 'Each Footer Field Value is required.',
             'invoice_name.required' => 'The Invoice Name is required.',

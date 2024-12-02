@@ -235,6 +235,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php 
+                            $cal_total = [];
+                            @endphp
                             @foreach($invoiceItems as $item)
                                 <tr>
                                     @foreach($customInvoiceData->field_details as $field)
@@ -242,12 +245,17 @@
                                             <?php
                                                 $fieldValue = $field['field_value'];
                                                 $value = '';
-
+                                                $totalValue = 0;
                                                 foreach ($item as $data) {
                                                     if (isset($data[$fieldValue])) {
                                                         $value = $data[$fieldValue];
+                                                        if(isset($field['is_sum']) && $field['is_sum'] == 1) {
+                                                            $totalValue = $totalValue + $value;
+                                                            $cal_total[$fieldValue][] = $totalValue;
+                                                        }
                                                         break; 
-                                                    } 
+                                                    }
+                                                    
                                                 }
                                             ?>
                                             {{ $value }}
@@ -257,10 +265,19 @@
                                         {{ $item[count($item) -1]["amount"] }}
                                     </td>
                                 </tr>
-                            @endforeach        
+                            @endforeach 
                             <tr>
                                 <td class="border-b py-3 pl-3 text-center">Total Net Value</td>
-                                <td class="border-b py-3 pl-3 text-right" colspan= "{{ $custom_invoice_total_field }}">{{ $invoice["sub_total"] }}</td>
+                                @php
+                                foreach($cal_total as $total) {
+                                    $sum = 0;
+                                    foreach($total as $value) {
+                                        $sum = $sum + $value;
+                                    }
+                                    echo "<td class='border-b py-3 pl-3 text-center'>". $sum."</td>";
+                                }
+                                @endphp
+                                <td class="border-b py-3 pl-3 text-right" colspan= "{{ $custom_invoice_total_field - 1 }}">{{ $invoice["sub_total"] }}</td>
                             </tr>
                             <tr>
                                 <td class="border-b py-3 pl-3 text-center">VAT</td>
