@@ -216,7 +216,11 @@ class InvoiceController extends Controller
     public function downloadInvoice($invoiceId)
     {
 
-        $invoice = Invoice::findOrFail($invoiceId);
+        $invoice = Invoice::join('customers', 'customers.id', '=', 'invoices.customer_id')
+                            ->join('leads', 'leads.id', '=', 'customers.lead_id')
+                            ->where('invoices.id', $invoiceId)
+                            ->select('invoices.*', 'leads.first_name', 'leads.last_name')
+                            ->first();
         $invoiceItems = json_decode($invoice->item_description, true);
         $existingPayments = $invoice->payment_details ?? [];
         $totalPayments = array_sum(array_column($existingPayments, 'payment'));

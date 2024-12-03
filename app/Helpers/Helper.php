@@ -89,4 +89,70 @@ class Helper
         return config('constants.MAX_REPORT_DAYS') >= $startDate->diffInDays($endDate);
     }
 
+    public static function convertNumberToWords($number) {
+        if ($number == 0) {
+            return 'zero taka';
+        }
+    
+        // Define arrays for words
+        $ones = array(
+            "", "one", "two", "three", "four", "five",
+            "six", "seven", "eight", "nine", "ten",
+            "eleven", "twelve", "thirteen", "fourteen",
+            "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"
+        );
+        $tens = array(
+            "", "", "twenty", "thirty", "forty", "fifty",
+            "sixty", "seventy", "eighty", "ninety"
+        );
+        $thousands = array(
+            "", "thousand", "million", "billion", "trillion"
+        );
+    
+        // Helper function to convert three-digit numbers
+        function convertThreeDigits($num, $ones, $tens) {
+            $result = "";
+    
+            if ($num >= 100) {
+                $result .= $ones[intval($num / 100)] . " hundred ";
+                $num %= 100;
+            }
+            if ($num >= 20) {
+                $result .= $tens[intval($num / 10)] . " ";
+                $num %= 10;
+            }
+            if ($num > 0) {
+                $result .= $ones[$num] . " ";
+            }
+    
+            return trim($result);
+        }
+    
+        // Split number into integer and decimal parts
+        $integerPart = intval($number);
+        $decimalPart = round($number - $integerPart, 2) * 100; // Extract 2 decimal places
+    
+        $words = "";
+        $place = 0;
+    
+        // Convert the integer part
+        while ($integerPart > 0) {
+            $chunk = $integerPart % 1000; // Get the last three digits
+            if ($chunk > 0) {
+                $words = convertThreeDigits($chunk, $ones, $tens) . " " . $thousands[$place] . " " . $words;
+            }
+            $integerPart = intval($integerPart / 1000); // Remove the last three digits
+            $place++;
+        }
+    
+        $words = trim($words) . " taka";
+    
+        // Add decimal part if exists
+        if ($decimalPart > 0) {
+            $words .= " and " . convertThreeDigits($decimalPart, $ones, $tens) . " paisa";
+        }
+    
+        return $words;
+    }
+    
 }

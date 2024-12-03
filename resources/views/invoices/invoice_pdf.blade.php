@@ -96,7 +96,7 @@
 
 
         </div>
-
+        
         <div class="py-4">
             <table>
                 <tr>
@@ -114,7 +114,7 @@
 
                 <tr>
                     <td class="text-main font-bold">Bill To</td>
-                    <td>{{$invoice->customer?->customer_group}}<br>{{ $invoice->address }}</td>
+                    <td>{{$invoice->first_name}} {{$invoice->last_name}}<br>{{ $invoice->address }}</td>
                 </tr>
                 <tr>
                     <td class="text-main font-bold">Sale Agent</td>
@@ -237,6 +237,7 @@
         <div class="text-right font-bold">Adjustment: TK{{ $invoice->adjustment }}</div>
         @endif
         <div class="text-right font-bold">Total Amount: TK{{ $invoice->total_amount }}</div>
+        <div class="text-right font-bold">Total Amount In Word: {{ \App\Helpers\Helper::convertNumberToWords($invoice->total_amount) }}</div>
         <div class="text-right font-bold">Total Due Amount: TK{{$newDueAmount}}</div>
         <div class="terms_conditions">
             <h3>Terms & Conditions</h3>

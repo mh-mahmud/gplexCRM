@@ -218,6 +218,12 @@
                 </div>
 
                 <div class="px-14 text-sm text-neutral-700 border-b py-3">
+                    <p class="text-main font-bold">Total In Word</p>
+                    <p>{{ \App\Helpers\Helper::convertNumberToWords($invoice->total_amount) }}</p>
+
+                </div>
+
+                <div class="px-14 text-sm text-neutral-700 border-b py-3">
                     <p class="text-main font-bold">Terms And Condition</p>
                     <p>{{$invoice->terms_conditions}}</p>
 
