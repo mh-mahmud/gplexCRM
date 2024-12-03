@@ -83,58 +83,64 @@ use Carbon\Carbon;
                     <ul class="nav nav-tabs nav-stretch fs-6 border-0">
                         <li class="nav-item">
                             <a class="nav-link @if(session('success') || session('error')) @else active @endif"
-                                data-bs-toggle="tab" href="#g_lead_details" data-tab="g_lead_details" id="g_lead_details_tab" 
-                                data-bs-target="#g_lead_details" role="tab" aria-controls="g_lead_details" aria-selected="true">Lead Details</a>
+                               data-bs-toggle="tab" href="#g_lead_details" data-tab="g_lead_details" id="g_lead_details_tab"
+                               data-bs-target="#g_lead_details" role="tab" aria-controls="g_lead_details" aria-selected="true">Lead Details</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @if(session('success') || session('error')) active @endif"
-                                data-bs-toggle="tab" href="#g_lead_table" data-tab="g_lead_table" id="g_lead_table_tab" 
-                                data-bs-target="#g_lead_table" role="tab" aria-controls="g_lead_table" aria-selected="true">Lead Table</a>
+                               data-bs-toggle="tab" href="#g_lead_table" data-tab="g_lead_table" id="g_lead_table_tab"
+                               data-bs-target="#g_lead_table" role="tab" aria-controls="g_lead_table" aria-selected="true">Lead Table</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link @if(session('success') || session('error')) active @endif"
+                               data-bs-toggle="tab" href="#g_lead_dashboard" data-tab="g_lead_dashboard" id="g_lead_dashboard_tab"
+                               data-bs-target="#g_lead_dashboard" role="tab" aria-controls="g_lead_dashboard" aria-selected="true">Dashboard</a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link {{ session('active_tab') === 'g_lead_email_tab' ? 'active' : '' }}"
-                                data-bs-toggle="tab" href="#g_lead_email" data-tab="g_lead_email" id="g_lead_email_tab" 
-                                data-bs-target="#g_lead_email" role="tab" aria-controls="g_lead_email" aria-selected="true">Email</a>
+                               data-bs-toggle="tab" href="#g_lead_email" data-tab="g_lead_email" id="g_lead_email_tab"
+                               data-bs-target="#g_lead_email" role="tab" aria-controls="g_lead_email" aria-selected="true">Email</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ session('active_tab') === 'g_lead_sms_tab' ? 'active' : '' }}"
-                                data-bs-toggle="tab" href="#g_lead_sms" data-tab="g_lead_sms" id="g_lead_sms_tab" 
-                                data-bs-target="#g_lead_sms" role="tab" aria-controls="g_lead_sms" aria-selected="true">SMS</a>
+                               data-bs-toggle="tab" href="#g_lead_sms" data-tab="g_lead_sms" id="g_lead_sms_tab"
+                               data-bs-target="#g_lead_sms" role="tab" aria-controls="g_lead_sms" aria-selected="true">SMS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ session('active_tab') === 'g_lead_meeting_tab' ? 'active' : '' }}"
-                                data-bs-toggle="tab" href="#g_lead_meeting" data-tab="g_lead_meeting" id="g_lead_meeting_tab" 
-                                data-bs-target="#g_lead_meeting" role="tab" aria-controls="g_lead_meeting" aria-selected="true">Meetings</a>
+                               data-bs-toggle="tab" href="#g_lead_meeting" data-tab="g_lead_meeting" id="g_lead_meeting_tab"
+                               data-bs-target="#g_lead_meeting" role="tab" aria-controls="g_lead_meeting" aria-selected="true">Meetings</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ session('active_tab') === 'g_lead_proposals_tab' ? 'active' : '' }}"
-                                data-bs-toggle="tab" href="#g_lead_proposals" data-tab="g_lead_proposals" id="g_lead_proposals_tab" 
-                                data-bs-target="#g_lead_proposals" role="tab" aria-controls="g_lead_proposals" aria-selected="true">Proposals</a>
+                               data-bs-toggle="tab" href="#g_lead_proposals" data-tab="g_lead_proposals" id="g_lead_proposals_tab"
+                               data-bs-target="#g_lead_proposals" role="tab" aria-controls="g_lead_proposals" aria-selected="true">Proposals</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ session('active_tab') === 'g_lead_products_tab' ? 'active' : '' }}"
-                                data-bs-toggle="tab" href="#g_lead_products" data-tab="g_lead_products" id="g_lead_products_tab" 
-                                data-bs-target="#g_lead_products" role="tab" aria-controls="g_lead_products" aria-selected="true">Products</a>
+                               data-bs-toggle="tab" href="#g_lead_products" data-tab="g_lead_products" id="g_lead_products_tab"
+                               data-bs-target="#g_lead_products" role="tab" aria-controls="g_lead_products" aria-selected="true">Products</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ session('active_tab') === 'g_lead_invoice_tab' ? 'active' : '' }}"
-                                data-bs-toggle="tab" href="#g_lead_invoice" data-tab="g_lead_invoice" id="g_lead_invoice_tab" 
-                                data-bs-target="#g_lead_invoice" role="tab" aria-controls="g_lead_invoice" aria-selected="true">Invoice</a>
+                               data-bs-toggle="tab" href="#g_lead_invoice" data-tab="g_lead_invoice" id="g_lead_invoice_tab"
+                               data-bs-target="#g_lead_invoice" role="tab" aria-controls="g_lead_invoice" aria-selected="true">Invoice</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ session('active_tab') === 'g_lead_tickets_tab' ? 'active' : '' }}"
-                                data-bs-toggle="tab" href="#g_lead_tickets" data-tab="g_lead_tickets" id="g_lead_tickets_tab" 
-                                data-bs-target="#g_lead_tickets" role="tab" aria-controls="g_lead_tickets" aria-selected="true">Tickets</a>
+                               data-bs-toggle="tab" href="#g_lead_tickets" data-tab="g_lead_tickets" id="g_lead_tickets_tab"
+                               data-bs-target="#g_lead_tickets" role="tab" aria-controls="g_lead_tickets" aria-selected="true">Tickets</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ session('active_tab') === 'g_lead_activity_log_tab' ? 'active' : '' }}"
-                                data-bs-toggle="tab" href="#g_lead_activity_log" data-tab="g_lead_activity_log" id="g_lead_activity_log_tab" 
-                                data-bs-target="#g_lead_activity_log" role="tab" aria-controls="g_lead_activity_log" aria-selected="true">Activity Logs</a>
+                               data-bs-toggle="tab" href="#g_lead_activity_log" data-tab="g_lead_activity_log" id="g_lead_activity_log_tab"
+                               data-bs-target="#g_lead_activity_log" role="tab" aria-controls="g_lead_activity_log" aria-selected="true">Activity Logs</a>
                         </li>
 
 
                     </ul>
-
+                    <img class="py-1" height="50px" alt="Logo" src="{{url('/')}}/assets/media/logos/city_bank.png"/>
                 </div>
             </div>
 
@@ -509,6 +515,65 @@ use Carbon\Carbon;
                             @endif
                            <!-- @endif -->
                             @endforeach
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade show @if(session('success') || session('error')) active @endif" id="g_lead_dashboard" role="tabpanel" aria-labelledby="g_lead_dashboard_tab">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="row g-5 g-xl-8">
+                                <div class="col-xl-3">
+                                    <!--begin::Statistics Widget 5-->
+                                    <a href="#" class="card bg-success hoverable card-xl-stretch mb-xl-8">
+                                        <!--begin::Body-->
+                                        <div class="card-body">
+                                            <div class="text-white fw-bolder fs-2 mb-2 mt-5">500M$</div>
+                                            <div class="fw-bold text-white">SAP UI Progress</div>
+                                        </div>
+                                        <!--end::Body-->
+                                    </a>
+                                    <!--end::Statistics Widget 5-->
+                                </div>
+                                <div class="col-xl-3">
+                                    <!--begin::Statistics Widget 5-->
+                                    <a href="#" class="card bg-dark hoverable card-xl-stretch mb-xl-8">
+                                        <!--begin::Body-->
+                                        <div class="card-body">
+                                            <div class="text-gray-100 fw-bolder fs-2 mb-2 mt-5">+3000</div>
+                                            <div class="fw-bold text-gray-100">New Customers</div>
+                                        </div>
+                                        <!--end::Body-->
+                                    </a>
+                                    <!--end::Statistics Widget 5-->
+                                </div>
+                                <div class="col-xl-3">
+                                    <!--begin::Statistics Widget 5-->
+                                    <a href="#" class="card bg-warning hoverable card-xl-stretch mb-xl-8">
+                                        <!--begin::Body-->
+                                        <div class="card-body">
+                                            <div class="text-white fw-bolder fs-2 mb-2 mt-5">$50,000</div>
+                                            <div class="fw-bold text-white">Milestone Reached</div>
+                                        </div>
+                                        <!--end::Body-->
+                                    </a>
+                                    <!--end::Statistics Widget 5-->
+                                </div>
+                                <div class="col-xl-3">
+                                    <!--begin::Statistics Widget 5-->
+                                    <a href="#" class="card bg-info hoverable card-xl-stretch mb-5 mb-xl-8">
+                                        <!--begin::Body-->
+                                        <div class="card-body">
+                                            <div class="text-white fw-bolder fs-2 mb-2 mt-5">$50,000</div>
+                                            <div class="fw-bold text-white">Milestone Reached</div>
+                                        </div>
+                                        <!--end::Body-->
+                                    </a>
+                                    <!--end::Statistics Widget 5-->
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -1002,7 +1067,7 @@ use Carbon\Carbon;
                                                         </span>
                                                     </a>
                                                     <!-- Delete Button -->
-                                                    
+
                                                     <form action="{{ route('product-specification-destroy', $productSpecification->id) }}" method="POST" style="display: inline;">
                                                         @csrf
                                                         @method('DELETE')
@@ -1236,7 +1301,7 @@ use Carbon\Carbon;
 
                                 </tr>
                                 </thead>
-                               
+
                                 <tbody>
                                 </tbody>
                             </table>
@@ -1449,7 +1514,7 @@ use Carbon\Carbon;
         document.getElementById("ticketTable").style.display = '';
         getTickets(phone_no);
     });
-    
+
 </script>
 
 @endsection
