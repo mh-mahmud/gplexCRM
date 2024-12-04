@@ -565,6 +565,7 @@
                                         <!--
 
 
+
                                     @endif -->
                                 @endforeach
 
@@ -580,7 +581,7 @@
                                 <div class="row g-5 g-xl-8">
                                     <div class="col-xl-3">
                                         <!--begin::Statistics Widget 5-->
-                                        <div class="card bg-success hoverable card-xl-stretch mb-xl-8">
+                                        <div class="card bg-success  card-xl-stretch mb-xl-8">
                                             <!--begin::Body-->
                                             <div class="card-body">
                                                 <div class="text-white fw-bolder fs-2 mb-2 mt-5">500M$</div>
@@ -596,7 +597,7 @@
                                     </div>
                                     <div class="col-xl-3">
                                         <!--begin::Statistics Widget 5-->
-                                        <div class="card bg-dark hoverable card-xl-stretch mb-xl-8">
+                                        <div class="card bg-danger  card-xl-stretch mb-xl-8">
                                             <!--begin::Body-->
                                             <div class="card-body">
                                                 <div class="text-gray-100 fw-bolder fs-2 mb-2 mt-5">+3000</div>
@@ -612,7 +613,7 @@
                                     </div>
                                     <div class="col-xl-3">
                                         <!--begin::Statistics Widget 5-->
-                                        <div class="card bg-warning hoverable card-xl-stretch mb-xl-8">
+                                        <div class="card bg-warning  card-xl-stretch mb-xl-8">
                                             <!--begin::Body-->
                                             <div class="card-body">
                                                 <div class="text-white fw-bolder fs-2 mb-2 mt-5">$50,000</div>
@@ -628,7 +629,7 @@
                                     </div>
                                     <div class="col-xl-3">
                                         <!--begin::Statistics Widget 5-->
-                                        <div class="card bg-info hoverable card-xl-stretch mb-5 mb-xl-8">
+                                        <div class="card bg-info  card-xl-stretch mb-5 mb-xl-8">
                                             <!--begin::Body-->
                                             <div class="card-body">
                                                 <div class="text-white fw-bolder fs-2 mb-2 mt-5">$50,000</div>
