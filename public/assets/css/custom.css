@@ -10,9 +10,9 @@
 }
 
 .card .card-header {
-/*    background-color: #54B4D3;*/
+    /*    background-color: #54B4D3;*/
     min-height: 40px !important;
-/*    padding: 10px;*/
+    /*    padding: 10px;*/
 }
 
 .card .card-header-dashboard {
@@ -23,12 +23,15 @@
 .text-gray-901 {
     color: #FFF;
 }
+
 .text-gray-501 {
     color: #eee !important;
 }
+
 .table.table-row-gray-100 tr {
     border-bottom-color: #ddd;
 }
+
 .th-data {
     font-weight: bold !important;
     color: #000 !important;
@@ -323,19 +326,19 @@ body.swal2-height-auto {
     break-inside: avoid;
 }
 
-@media all and (min-width: 1601px){
+@media all and (min-width: 1601px) {
     .g-lead-details-area {
         columns: 4;
         break-inside: avoid;
     }
 }
+
 @media all and (1024px <= width <= 1600px) {
     .g-lead-details-area {
         columns: 3;
         break-inside: avoid;
     }
 }
-
 
 
 /*End For Leads (Show Blade PHP) */
@@ -359,9 +362,6 @@ body.swal2-height-auto {
 .g-user-select > .select2-container--bootstrap5 .select2-selection--multiple:not(.form-select-sm):not(.form-select-lg) {
     padding-block: 2px;
 }
-
-
-
 
 
 /* start meeting module calender design CSS*/
@@ -419,8 +419,6 @@ body.swal2-height-auto {
 /* end meeting module calender design CSS*/
 
 
-
-
 /* Event details section - Positioned behind the calendar */
 .event-details-block {
     /* top: 0; */
@@ -469,82 +467,88 @@ body.swal2-height-auto {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-  }
-  :root {
-    font-size: 16px;
-  }
+}
 
-  .call-to-action-text {
+:root {
+    font-size: 16px;
+}
+
+.call-to-action-text {
     margin: 1rem 0;
     text-align: left;
-  }
-  .star-wrap {
+}
+
+.star-wrap {
     width: max-content;
     /* margin: 0 auto; */
-    margin: 0 ;
+    margin: 0;
     position: relative;
-  }
-  .star-label.hidden {
+}
+
+.star-label.hidden {
     display: none;
-  }
-  .star-label {
+}
+
+.star-label {
     display: inline-flex;
     justify-content: center;
     align-items: center;
     width: 4rem;
     height: 4rem;
-  }
-  /* @media (min-width: 840px) {
-    .star-label {
-      width: 6rem;
-      height: 6rem;
-    }
-  } */
+}
 
-  @media (min-width: 840px) {
-    .star-label {
-      width: 3rem;
-      height: 3rem;
-    }
+/* @media (min-width: 840px) {
+  .star-label {
+    width: 6rem;
+    height: 6rem;
   }
+} */
 
-  .star-shape {
+@media (min-width: 840px) {
+    .star-label {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+.star-shape {
     background-color: gold;
     width: 80%;
     height: 80%;
     /*star shaped cutout, works  best if it is applied to a square*/
     /* from Clippy @ https://bennettfeely.com/clippy/ */
     clip-path: polygon(
-      50% 0%,
-      61% 35%,
-      98% 35%,
-      68% 57%,
-      79% 91%,
-      50% 70%,
-      21% 91%,
-      32% 57%,
-      2% 35%,
-      39% 35%
+        50% 0%,
+        61% 35%,
+        98% 35%,
+        68% 57%,
+        79% 91%,
+        50% 70%,
+        21% 91%,
+        32% 57%,
+        2% 35%,
+        39% 35%
     );
-  }
+}
 
-  /* make stars *after* the checked radio gray*/
-  .star:checked + .star-label ~ .star-label .star-shape {
+/* make stars *after* the checked radio gray*/
+.star:checked + .star-label ~ .star-label .star-shape {
     background-color: lightgray;
-  }
+}
 
-  /*hide away the actual radio inputs*/
-  .star {
+/*hide away the actual radio inputs*/
+.star {
     position: fixed;
     opacity: 0;
     /*top: -90000px;*/
     left: -90000px;
-  }
+}
 
-  .star:focus + .star-label {
+.star:focus + .star-label {
     outline: 2px dotted black;
-  }
-  .skip-button {
+}
+
+.skip-button {
     display: block;
     width: 2rem;
     height: 2rem;
@@ -555,43 +559,49 @@ body.swal2-height-auto {
     /*transform: translateY(-50%);*/
     text-align: center;
     line-height: 2rem;
-    font-size:2rem;
+    font-size: 2rem;
     background-color: rgba(255, 255, 255, 0.1);
-  }
-  .skip-button:hover {
+}
+
+.skip-button:hover {
     background-color: rgba(255, 255, 255, 0.2);
-  }
-  #skip-star:checked ~ .skip-button {
+}
+
+#skip-star:checked ~ .skip-button {
     display: none;
-  }
-  #result {
+}
+
+#result {
     text-align: center;
     padding: 1rem 2rem;
-  }
-  .exp-link {
+}
+
+.exp-link {
     text-align: center;
     padding: 1rem 2rem;
-   }
-  .exp-link a{
+}
+
+.exp-link a {
     color: lightgray;
-    text-decoration:underline;
-  }
+    text-decoration: underline;
+}
 
 
-  /* end meeting module rating design CSS*/
+/* end meeting module rating design CSS*/
 
- /* error message Invoice module rating design CSS*/
+/* error message Invoice module rating design CSS*/
 
 .is-invalid {
     border-color: #dc3545; /* Red border for invalid fields */
 }
+
 .error-message {
     font-size: 0.875rem; /* Smaller text for error message */
     color: #dc3545; /* Red color for error message */
 }
 
-.h-18px{
-    height:18px;
+.h-18px {
+    height: 18px;
 }
 
 .loader {
