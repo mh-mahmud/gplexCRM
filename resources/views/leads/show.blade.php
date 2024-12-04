@@ -629,7 +629,7 @@
                                     </div>
                                     <div class="col-xl-3">
                                         <!--begin::Statistics Widget 5-->
-                                        <div class="card bg-info  card-xl-stretch mb-5 mb-xl-8">
+                                        <div class="card bg-info card-xl-stretch mb-5 mb-xl-8">
                                             <!--begin::Body-->
                                             <div class="card-body">
                                                 <div class="text-white fw-bolder fs-2 mb-2 mt-5">$50,000</div>
