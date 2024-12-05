@@ -239,13 +239,13 @@ use Carbon\Carbon;
                                 <tr>
                                     <td class="ps-5 text-dark fs-6">{{ ($productSpecifications->currentPage() - 1) * $productSpecifications->perPage() + $loop->iteration }}</td>
                                     <td class="text-dark fs-6 w-120px">{{$productSpecification->first_name}} {{$productSpecification->last_name}}</td>
-                                    <td class="text-dark fs-6 w-150px">{{ $productSpecification->product->name ?? '' }}</td>
+                                    <td class="text-dark fs-6 w-150px">{{ $productSpecification->product_names ?? '' }}</td>
                                     <td class="text-dark fs-6 w-140px">{{ $productSpecification->work_order_number }}</td>
                                     <td class="text-dark fs-6 w-140px">{{ number_format($productSpecification->work_order_value, 2) }}</td>
-                                    <td class="text-dark fs-6 w-140px">{{ $productSpecification->work_order_rate }}</td>
+                                    <td class="text-dark fs-6 w-140px">{{ $productSpecification->work_order_rate }}%</td>
                                     <td class="text-dark fs-6 w-140px">{{ number_format($productSpecification->purchase_order_value, 2) }}</td>
                                     <td class="text-dark fs-6 w-120px">{{ $productSpecification->amc_start_date ? \Carbon\Carbon::parse($productSpecification->amc_start_date)->format('d-m-Y') : '' }}</td>
-                                    <td class="text-dark fs-6 w-120px">{{ $productSpecification->amc_rate }}</td>
+                                    <td class="text-dark fs-6 w-120px">{{ $productSpecification->amc_rate }}%</td>
                                     <td class="text-dark fs-6 w-120px">{{ $productSpecification->service_type }}</td>
                                     <td class="text-end">
                                         <div class="d-inline-flex justify-content-end gap-1">

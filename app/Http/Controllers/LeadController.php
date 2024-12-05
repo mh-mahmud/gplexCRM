@@ -198,8 +198,25 @@ class LeadController  extends Controller
         ->select('product_specification.*','customers.customer_group','leads.first_name','leads.last_name')
         ->where('lead_id', $id)
         ->orderBy('product_specification.created_at', 'desc')->get();
+        $totalWorkOrderNumber = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+        ->where('customers.lead_id', $id)
+        ->whereNotNull('product_specification.work_order_number')
+        ->where('product_specification.work_order_number', '<>', '')
+        ->distinct('product_specification.work_order_number')
+        ->count('product_specification.work_order_number');
 
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications'));
+        $totalWorkOrderValue = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+        ->where('customers.lead_id', $id)
+        ->sum('product_specification.work_order_value');
+
+        $totalAmcEffectiveAmount = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+        ->where('customers.lead_id', $id)
+        ->sum('product_specification.amc_effective_amount');
+
+        $totalAmcRate = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+        ->where('customers.lead_id', $id)
+        ->avg('product_specification.amc_rate');
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate'));
     }
 
 

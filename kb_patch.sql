@@ -423,3 +423,5 @@ ALTER TABLE `invoices` ADD `vat` DECIMAL(3,2) NULL AFTER `sub_total`;
 
 -- 01/12/24
 ALTER TABLE `campaign_data` DROP INDEX `campaign_data_email_unique`,DROP INDEX `campaign_data_phone_unique`;
+-- 05/12/24
+ALTER TABLE `product_specification` CHANGE `product_id` `product_id` TEXT NULL;
