@@ -41,7 +41,7 @@
       ***********************************-->
     <div class="container-xxl">
         <div class="row">
-            <div class="col-xl-8 mx-auto">
+            <div class="col-xl-12">
                 <div class="card card-xxl-stretch mt-4">
                     <div class="card-header bg-light bd-cyan">
                         <!--begin::Card title-->
