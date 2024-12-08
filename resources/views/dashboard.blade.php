@@ -64,8 +64,7 @@
 
 
                 <!--begin::Row-->
-                <div class="p-5"></div>
-                <div class="row gy-5 g-xl-8">
+                <div class="row gy-5 g-xl-8 pt-5">
                     <!--begin::Col-->
                     <div class="col-sm-4">
                         <div class="card card-flush h-md-20 mb-5 mb-xl-10">
@@ -179,7 +178,159 @@
                         </div>
                     </div>
                     <!--end::Col-->
+                </div>
+                <!--end::Row-->
 
+                <!--begin::Row-->
+                <div class="row gy-5 g-xl-8 pb-2">
+                    <!--begin::Col-->
+                    <div class="col-sm-3">
+                        <div class="card card-flush h-md-20 mb-5 mb-xl-10">
+                            <!--begin::Header-->
+                            <div class="card-header bg-warning card-header-dashboard pt-5">
+                                <!--begin::Title-->
+                                <div class="card-title d-flex flex-column">
+                                    <!--begin::Info-->
+                                    <div class="d-flex align-items-center">
+                                        <!--begin::Currency-->
+                                        <!-- <span class="fs-4 fw-semibold text-gray-501 me-1 align-self-start">$</span> -->
+                                        <!--end::Currency-->
+
+                                        <!--begin::Amount-->
+                                        <span
+                                            class="fs-2hx fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$count_lead}}</span>
+                                        <!--end::Amount-->
+
+                                        <!--begin::Badge-->
+                                        <!-- <span class="badge badge-light-success fs-base">
+                                            <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span class="path1"></span><span class="path2"></span></i>
+                                            2.2%
+                                        </span>   -->
+                                        <!--end::Badge-->
+                                    </div>
+                                    <!--end::Info-->
+
+                                    <!--begin::Subtitle-->
+                                    <a href="{{ route('lead-index') }}">
+                                        <span class="text-gray-501 pt-1 fw-semibold fs-6">Total Leads</span>
+                                    </a>
+                                    <!--end::Subtitle-->
+                                </div>
+                                <!--end::Title-->
+                            </div>
+                            <!--end::Header-->
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="card card-flush  h-md-20 mb-5 mb-xl-10">
+                            <!--begin::Header-->
+                            <div class="card-header bg-danger card-header-dashboard pt-5">
+                                <!--begin::Title-->
+                                <div class="card-title d-flex flex-column">
+                                    <!--begin::Info-->
+                                    <div class="d-flex align-items-center">
+                                        <!--begin::Currency-->
+                                        <!-- <span class="fs-4 fw-semibold text-gray-501 me-1 align-self-start">$</span> -->
+                                        <!--end::Currency-->
+
+                                        <!--begin::Amount-->
+                                        <span
+                                            class="fs-2hx fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$active_agents}}</span>
+                                        <!--end::Amount-->
+
+                                        <!--begin::Badge-->
+                                        <!-- <span class="badge badge-light-success fs-base">
+                                            <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span class="path1"></span><span class="path2"></span></i>
+                                            2.2%
+                                        </span>  -->
+                                        <!--end::Badge-->
+                                    </div>
+                                    <!--end::Info-->
+
+                                    <!--begin::Subtitle-->
+                                    <a href="{{ route('agents-index') }}">
+                                        <span class="text-gray-501 pt-1 fw-semibold fs-6">Active Agents</span>
+                                    </a>
+                                    <!--end::Subtitle-->
+                                </div>
+                                <!--end::Title-->
+                            </div>
+                            <!--end::Header-->
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="card card-flush  h-md-20 mb-5 mb-xl-10">
+                            <!--begin::Header-->
+                            <div class="card-header bg-danger card-header-dashboard pt-5">
+                                <!--begin::Title-->
+                                <div class="card-title d-flex flex-column">
+                                    <!--begin::Info-->
+                                    <div class="d-flex align-items-center">
+                                        <!--begin::Currency-->
+                                        <!-- <span class="fs-4 fw-semibold text-gray-501 me-1 align-self-start">$</span> -->
+                                        <!--end::Currency-->
+
+                                        <!--begin::Amount-->
+                                        <span
+                                            class="fs-2hx fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$active_agents}}</span>
+                                        <!--end::Amount-->
+
+                                        <!--begin::Badge-->
+                                        <!-- <span class="badge badge-light-success fs-base">
+                                            <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span class="path1"></span><span class="path2"></span></i>
+                                            2.2%
+                                        </span>  -->
+                                        <!--end::Badge-->
+                                    </div>
+                                    <!--end::Info-->
+
+                                    <!--begin::Subtitle-->
+                                    <a href="{{ route('agents-index') }}">
+                                        <span class="text-gray-501 pt-1 fw-semibold fs-6">Active Agents</span>
+                                    </a>
+                                    <!--end::Subtitle-->
+                                </div>
+                                <!--end::Title-->
+                            </div>
+                            <!--end::Header-->
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="card card-flush h-md-20 mb-5 mb-xl-10">
+                            <!--begin::Header-->
+                            <div class="card-header bg-success card-header-dashboard pt-5">
+                                <!--begin::Title-->
+                                <div class="card-title d-flex flex-column">
+                                    <!--begin::Info-->
+                                    <div class="d-flex align-items-center">
+                                        <!--begin::Currency-->
+                                        <!-- <span class="fs-4 fw-semibold text-gray-501 me-1 align-self-start">$</span> -->
+                                        <!--end::Currency-->
+
+                                        <!--begin::Amount-->
+                                        <span
+                                            class="fs-2hx fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$active_products}}</span>
+                                        <!--end::Amount-->
+
+                                        <!--begin::Badge-->
+                                        <!-- <span class="badge badge-light-success fs-base">
+                                            <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span class="path1"></span><span class="path2"></span></i>
+                                            2.2%
+                                        </span>  -->
+                                        <!--end::Badge-->
+                                    </div>
+                                    <!--end::Info-->
+
+                                    <!--begin::Subtitle-->
+                                    <span class="text-gray-501 pt-1 fw-semibold fs-6">Total Products</span>
+                                    <!--end::Subtitle-->
+                                </div>
+                                <!--end::Title-->
+                            </div>
+                            <!--end::Header-->
+                        </div>
+                    </div>
+                    <!--end::Col-->
                 </div>
                 <!--end::Row-->
 
