@@ -22,7 +22,7 @@ class Helper
 
     }
 
-    public static function storeLog($log_text, $module_name, $sub_module_name, $action=null, $lead_id=null, $user_id = null)
+    public static function storeLog($log_text, $module_name, $sub_module_name, $lead_id=null)
     {
         $log                    = new Logs();
         $log->user_id           = $user_id ?? Auth::id();

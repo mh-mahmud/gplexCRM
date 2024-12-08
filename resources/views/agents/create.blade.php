@@ -273,6 +273,18 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Set Role</label>
+                                                    <select class="form-control form-control-sm form-control-solid" name="role_id" aria-label="Default select example">
+                                                            <option value="">Select Role</option>
+                                                            @foreach($role_list as $role)
+                                                            <option @if(old('role_id')==$role->id) selected  @endif value="{{$role->id}}">{{$role->name}}</option>
+                                                            @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">
                                                     Date Of Birth</label>
@@ -331,10 +343,7 @@
                                         </div>
                                         <!--End Row-->
                                       <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <a href="{{ route('agents-create') }}" class="btn btn-light me-2">Reset</a>
-                                            <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Save Changes
-                                            </button>
+                                            <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
                                         </div>
 
                                     </form>

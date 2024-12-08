@@ -38,7 +38,8 @@ class AgentController extends Controller {
     }
 
 	function create() {
-		return view('agents.create');
+        $agentData['role_list'] = $this->agentService->get_all_role();
+		return view('agents.create', $agentData);
 	}
 
     public function store(Request $request)
@@ -63,7 +64,7 @@ class AgentController extends Controller {
         return redirect()->route('agents-index')->with('success', 'Agent created successfully.');
     }
 
-   
+
     public function show($id)
     {
         $agentData = $this->agentService->getAgentWithUser($id);
