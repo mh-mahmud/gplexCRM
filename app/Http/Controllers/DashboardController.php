@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -14,33 +15,91 @@ use App\Models\Task;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\ProductSpecification;
 
-class DashboardController extends Controller {
+class DashboardController extends Controller
+{
 
-	public function __construct() {
+    public function __construct()
+    {
         // $this->middleware(['auth']);
     }
 
-	public function dashboard()
+    public function dashboard()
     {
 
         $data = [];
         $user_id = Auth::user()->id;
-        if(Auth()->user()->user_type=='admin') {
-           $data['lead_list'] = Lead::where('lead_status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']); 
-        }
-        else {
+        if (Auth()->user()->user_type == 'admin') {
+            $data['lead_list'] = Lead::where('lead_status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
+        } else {
             $data['lead_list'] = Lead::where('lead_status', 1)->where('created_by', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
         }
         //$data['camp_list'] = Campaign::where('status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'campaign_title', 'start_date', 'end_date', 'campaign_type', 'campaign_limit']);
-        if(Auth()->user()->user_type=='admin') {
+        if (Auth()->user()->user_type == 'admin') {
             $data['camp_list'] = Campaign::where('status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'campaign_title', 'start_date', 'end_date', 'campaign_type', 'campaign_limit']);
-         }
-         else {
+        } else {
             $data['camp_list'] = Campaign::where('status', 1)->where('created_by', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get(['id', 'campaign_title', 'start_date', 'end_date', 'campaign_type', 'campaign_limit']);
-         }
+        }
+
+        if (Auth()->user()->user_type == 'admin') {
+            $data['totalWorkOrderNumber'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id')
+            ->whereNotNull('product_specification.work_order_number')
+            ->where('product_specification.work_order_number', '<>', '')
+            //->where('leads.created_by', Auth::id()) 
+            ->distinct('product_specification.work_order_number')
+            ->count('product_specification.work_order_number');
+
+            $data['totalWorkOrderValue'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id') 
+            //->where('leads.created_by', Auth::id()) 
+            ->sum('product_specification.work_order_value');
+
+            $data['totalAmcEffectiveAmount'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id')
+            //->where('leads.created_by', Auth::id())
+            ->sum('product_specification.amc_effective_amount');
+
+            $data['totalAmcRate'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id')
+            //->where('leads.created_by', Auth::id())
+            ->avg('product_specification.amc_rate');
+
+        } else {
+            $data['totalWorkOrderNumber'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id') 
+            ->whereNotNull('product_specification.work_order_number')
+            ->where('product_specification.work_order_number', '<>', '')
+            ->where('leads.created_by', Auth::id()) 
+            ->distinct('product_specification.work_order_number')
+            ->count('product_specification.work_order_number');
+
+            $data['totalWorkOrderValue'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id') 
+            ->where('leads.created_by', Auth::id()) 
+            ->sum('product_specification.work_order_value');
+
+            $$data['totalAmcEffectiveAmount'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id')
+            ->where('leads.created_by', Auth::id())
+            ->sum('product_specification.amc_effective_amount');
+
+            $data['totalAmcRate'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id')
+            ->where('leads.created_by', Auth::id())
+            ->avg('product_specification.amc_rate');
+        }
+
+        $data['totalWorkOrderNumber'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id') // Join with the leads table
+            ->whereNotNull('product_specification.work_order_number')
+            ->where('product_specification.work_order_number', '<>', '')
+            ->where('leads.created_by', Auth::id()) // Condition to check the logged-in user
+            ->distinct('product_specification.work_order_number')
+            ->count('product_specification.work_order_number');
         $data['agent_list'] = Agent::with('user')->where('status', 1)->orderBy('agent_id', 'desc')->limit(5)->get();
-        $data['todo_list'] = (Auth()->user()->user_type=='admin') ? Task::where('status', '!=', 9)->limit(6)->get(['task_name', 'description', 'due_date', 'status']) : Task::where('created_by', $user_id)->orWhere('assigned_to', $user_id)->limit(6)->get(['task_name', 'description', 'due_date', 'status']);
+        $data['todo_list'] = (Auth()->user()->user_type == 'admin') ? Task::where('status', '!=', 9)->limit(6)->get(['task_name', 'description', 'due_date', 'status']) : Task::where('created_by', $user_id)->orWhere('assigned_to', $user_id)->limit(6)->get(['task_name', 'description', 'due_date', 'status']);
         $data['formName'] = $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
 
         $data['count_lead'] = Lead::where('lead_status', 1)->count();
@@ -51,9 +110,8 @@ class DashboardController extends Controller {
         return view('dashboard', $data);
     }
 
-	function profile() {
-		return view('single_form');
-	}
-
+    function profile()
+    {
+        return view('single_form');
+    }
 }
-

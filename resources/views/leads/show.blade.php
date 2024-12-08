@@ -633,7 +633,7 @@
                                         <div class="card bg-info card-xl-stretch mb-5 mb-xl-8">
                                             <!--begin::Body-->
                                             <div class="card-body">
-                                                <div class="text-white fw-bolder fs-2 mb-2 mt-5">{{$totalAmcRate}}%</div>
+                                                <div class="text-white fw-bolder fs-2 mb-2 mt-5">{{ $totalAmcRate ? number_format($totalAmcRate, 2) . '%' : '0%' }}</div>
                                                 <div class="fw-bold text-white">
                                                     <a class="text-white">
                                                     Total AMC Rate
