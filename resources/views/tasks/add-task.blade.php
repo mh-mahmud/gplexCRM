@@ -81,6 +81,7 @@
 
                                     <form class="g-form w-100" action="{{ route('add-task-pro') }}"  method="POST">
                                          @csrf
+                                        <div class="row pb-3">
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Task Name<span class="text-danger">*</span></label>
@@ -91,28 +92,23 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Description</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" id="description" name="description" rows="3">{{ old('description') }}</textarea>
-                                                </div>
-                                            </div>
+
                                             @if(Auth::user()->user_type == 'admin')
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Assigned To<span class="text-danger">*</span></label>
-                                                    <select class=" form-control form-control-sm form-control-solid" id="assigned_to" name="assigned_to"
-                                                            aria-label="Default select example">
-                                                        <option value=''>Select</option>
-                                                        @foreach($users as $user)
-                                                        <option value="{{$user->id}}" {{ old('assigned_to') == $user->id ? 'selected' : '' }}>{{ $user->first_name }} {{ $user->last_name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @if ($errors->has('assigned_to'))
-                                                        <span class="text-danger">{{ $errors->first('assigned_to') }}</span>
-                                                    @endif
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">Assigned To<span class="text-danger">*</span></label>
+                                                        <select class=" form-control form-control-sm form-control-solid" id="assigned_to" name="assigned_to"
+                                                                aria-label="Default select example">
+                                                            <option value=''>Select</option>
+                                                            @foreach($users as $user)
+                                                                <option value="{{$user->id}}" {{ old('assigned_to') == $user->id ? 'selected' : '' }}>{{ $user->first_name }} {{ $user->last_name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->has('assigned_to'))
+                                                            <span class="text-danger">{{ $errors->first('assigned_to') }}</span>
+                                                        @endif
+                                                    </div>
                                                 </div>
-                                            </div>
                                             @endif
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
@@ -125,16 +121,23 @@
                                                     <div class="position-relative">
                                                         <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" placeholder="Due Date" name="due_date" value="{{ old('due_date') }}">
                                                         @if ($errors->has('due_date'))
-                                                        <span class="text-danger">{{ $errors->first('due_date') }}</span>
+                                                            <span class="text-danger">{{ $errors->first('due_date') }}</span>
                                                         @endif
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label fw-bolder text-dark" for="textarea">Description</label>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" id="description" name="description" rows="3">{{ old('description') }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <!--End Row-->
-                                        <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                            <input type="reset" value="Reset" class="btn btn-light me-2">
-                                            <button type="submit" class="btn btn-primary"
+                                        <div class="card-footer d-flex justify-content-end p-2">
+                                            <input type="reset" value="Reset" class="btn btn-light btn-sm me-2">
+                                            <button type="submit" class="btn btn-primary btn-sm"
                                                     id="kt_account_profile_details_submit">Send
                                             </button>
                                         </div>
