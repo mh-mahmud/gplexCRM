@@ -164,15 +164,12 @@
 
 
                         </ul>
-                        
+
                         @if(!empty($lead->profile_image))
-                            
                             <img class="py-1" height="50px" alt="Logo" src="{{ asset('uploads/leads/' . $lead->profile_image) }}"/>
                         @endif
                     </div>
                 </div>
-
-
                 {{--End Table Tabs--}}
 
                 {{--Tab Content--}}
