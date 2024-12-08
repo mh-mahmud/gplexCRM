@@ -425,3 +425,7 @@ ALTER TABLE `invoices` ADD `vat` DECIMAL(3,2) NULL AFTER `sub_total`;
 ALTER TABLE `campaign_data` DROP INDEX `campaign_data_email_unique`,DROP INDEX `campaign_data_phone_unique`;
 -- 05/12/24
 ALTER TABLE `product_specification` CHANGE `product_id` `product_id` TEXT NULL;
+
+-- 08-12-2024
+ALTER TABLE `customers` ADD `created_by` INT NULL DEFAULT NULL AFTER `customer_notes`;
+ALTER TABLE `customers` ADD `phone` VARCHAR(50) NULL DEFAULT NULL AFTER `last_name`, ADD `email` VARCHAR(50) NULL DEFAULT NULL AFTER `phone`, ADD `product_id` VARCHAR(255) NULL DEFAULT NULL AFTER `email`; 

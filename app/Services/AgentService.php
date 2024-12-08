@@ -56,6 +56,7 @@ class AgentService
             'profile_image' => $fileNameToStore,
             'status' => $request->status,
             'user_type' =>'agent',
+            'role_id' => $request->role_id,
             'password' => bcrypt($request->password),
         ]);
         //$agent_id = str_pad(mt_rand(1, 9999), 4);
@@ -66,6 +67,7 @@ class AgentService
             'gender' => $request->gender,
             'birth_day' => $request->birth_day,
             'phone_number' => $request->phone_number,
+            'role_id' => $request->role_id,
             'status' => $request->status,
             'address' => $request->address,
             'description' => $request->description,
