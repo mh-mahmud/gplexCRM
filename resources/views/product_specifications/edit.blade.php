@@ -179,20 +179,24 @@
 
                                         </div>
                                     </div>
-                            <div class="col-md-4">
-                                <label class="form-label fw-bolder text-dark">Product</label>
-                                <select class="form-control form-control-sm form-control-solid" name="product_id">
-                                    <option value="">Select Product</option>
-                                    @foreach ($products as $product)
-                                    <option value="{{ $product->id }}" {{ $productSpecification->product_id == $product->id ? 'selected' : '' }}>
-                                        {{ $product->name }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                                @error('product_id')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bolder text-dark">Product</label>
+                                        <select id="product-select" class="form-control form-control-sm form-control-solid"
+                                                name="product_id[]"
+                                                multiple="multiple"
+                                                data-allow-clear="true"
+                                                data-kt-select2="select2">
+                                            @foreach ($products as $product)
+                                                <option value="{{ $product->id }}"
+                                                    {{ in_array($product->id, $productSpecification->product_ids) ? 'selected' : '' }}>
+                                                    {{ $product->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('product_id'))
+                                            <div class="text-danger">{{ $errors->first('product_id') }}</div>
+                                        @endif
+                                    </div>
 
 
                             <div class="col-md-4">
@@ -233,7 +237,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Work Order Rate</label>
-                                <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_rate" value="{{ old('work_order_rate', $productSpecification->work_order_rate) }}" />
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_rate" step="0.01"  value="{{ old('work_order_rate', $productSpecification->work_order_rate) }}" />
                                 @error('work_order_rate')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -281,7 +285,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">AMC Rate</label>
-                                <input class="form-control form-control-sm form-control-solid" type="text" name="amc_rate" value="{{ old('amc_rate', $productSpecification->amc_rate) }}" />
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="amc_rate" step="0.01" value="{{ old('amc_rate', $productSpecification->amc_rate) }}" />
                                 @error('amc_rate')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -418,6 +422,14 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        $('#product-select').select2({
+        placeholder: "Select Products",
+        allowClear: true,
+    });
+    });
+</script>
 <script>
 $(document).ready(function() {
     $('.delete-file-btn').click(function() {

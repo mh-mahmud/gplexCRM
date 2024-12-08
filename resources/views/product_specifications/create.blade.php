@@ -177,10 +177,9 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Product</label>
                                 <select class="form-control form-control-sm form-control-solid" name="product_id">
-                                    <!-- The default option will be selected when no product is selected -->
                                     <option value="" {{ old('product_id') == '' ? 'selected' : '' }}>Select Product</option>
                                     @foreach ($products as $product)
                                     <option value="{{ $product->id }}" {{ old('product_id') == $product->id ? 'selected' : '' }}>
@@ -191,7 +190,28 @@
                                 @if ($errors->has('product_id'))
                                 <div class="text-danger">{{ $errors->first('product_id') }}</div>
                                 @endif
+                            </div> -->
+
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Product</label>
+                                <select id="product-select" class="form-control form-control-sm form-control-solid"
+                                    name="product_id[]"
+                                    multiple="multiple"
+                                    data-allow-clear="true"
+                                    data-kt-select2="select2">
+                                    @foreach ($products as $product)
+                                    <option value="{{ $product->id }}"
+                                        {{ is_array(old('product_id')) && in_array($product->id, old('product_id')) ? 'selected' : '' }}>
+                                        {{ $product->name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('product_id'))
+                                <div class="text-danger">{{ $errors->first('product_id') }}</div>
+                                @endif
                             </div>
+
 
 
 
@@ -224,7 +244,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Work Order Rate</label>
-                                <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_rate" value="{{ old('work_order_rate') }}" />
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_rate" step="0.01" value="{{ old('work_order_rate') }}" />
                                 @if ($errors->has('work_order_rate'))
                                 <div class="text-danger">{{ $errors->first('work_order_rate') }}</div>
                                 @endif
@@ -233,7 +253,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Purchase Order Value</label>
-                                <input class="form-control form-control-sm form-control-solid" type="number" name="purchase_order_value" value="{{ old('purchase_order_value') }}"/>
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="purchase_order_value" value="{{ old('purchase_order_value') }}" />
                                 @if ($errors->has('purchase_order_value'))
                                 <div class="text-danger">{{ $errors->first('purchase_order_value') }}</div>
                                 @endif
@@ -269,7 +289,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">AMC Rate</label>
-                                <input class="form-control form-control-sm form-control-solid" type="text" name="amc_rate" value="{{ old('amc_rate') }}" />
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="amc_rate" step="0.01" value="{{ old('amc_rate') }}" />
                                 @if ($errors->has('amc_rate'))
                                 <div class="text-danger">{{ $errors->first('amc_rate') }}</div>
                                 @endif
@@ -364,7 +384,7 @@
 
 
                             <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                
+
                                 <button type="submit" class="btn btn-primary">Save Changes</button>
                             </div>
                         </div>
@@ -388,6 +408,15 @@
 
 <!-- </div> -->
 <!--end::Content-->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        $('#product-select').select2({
+        placeholder: "Select Products",
+        allowClear: true,
+    });
+    });
+</script>
 
 
 @endsection

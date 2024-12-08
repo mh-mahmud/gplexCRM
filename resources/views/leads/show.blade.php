@@ -164,7 +164,11 @@
 
 
                         </ul>
-                        <img class="py-1" height="50px" alt="Logo" src="{{url('/')}}/assets/media/logos/city_bank.png"/>
+                        
+                        @if(!empty($lead->profile_image))
+                            
+                            <img class="py-1" height="50px" alt="Logo" src="{{ asset('uploads/leads/' . $lead->profile_image) }}"/>
+                        @endif
                     </div>
                 </div>
 
@@ -584,10 +588,10 @@
                                         <div class="card bg-success  card-xl-stretch mb-xl-8">
                                             <!--begin::Body-->
                                             <div class="card-body">
-                                                <div class="text-white fw-bolder fs-2 mb-2 mt-5">500M$</div>
+                                                <div class="text-white fw-bolder fs-2 mb-2 mt-5">{{$totalWorkOrderNumber}}</div>
                                                 <div class="fw-bold text-white">
-                                                    <a class="text-white" href="">
-                                                        SAP UI Progress
+                                                    <a class="text-white">
+                                                        Total Work Order
                                                     </a>
                                                 </div>
                                             </div>
@@ -600,10 +604,10 @@
                                         <div class="card bg-danger  card-xl-stretch mb-xl-8">
                                             <!--begin::Body-->
                                             <div class="card-body">
-                                                <div class="text-gray-100 fw-bolder fs-2 mb-2 mt-5">+3000</div>
+                                                <div class="text-gray-100 fw-bolder fs-2 mb-2 mt-5">{{$totalWorkOrderValue}}</div>
                                                 <div class="fw-bold text-gray-100">
-                                                    <a class="text-white" href="">
-                                                        New Customers
+                                                    <a class="text-white">
+                                                    Total Work Order Value
                                                     </a>
                                                 </div>
                                             </div>
@@ -616,10 +620,10 @@
                                         <div class="card bg-warning card-xl-stretch mb-xl-8">
                                             <!--begin::Body-->
                                             <div class="card-body">
-                                                <div class="text-white fw-bolder fs-2 mb-2 mt-5">$50,000</div>
+                                                <div class="text-white fw-bolder fs-2 mb-2 mt-5">{{$totalAmcEffectiveAmount}}</div>
                                                 <div class="fw-bold text-white">
-                                                    <a class="text-white" href="">
-                                                        Milestone Reached
+                                                    <a class="text-white">
+                                                    Total AMC Amount
                                                     </a>
                                                 </div>
                                             </div>
@@ -632,10 +636,10 @@
                                         <div class="card bg-info card-xl-stretch mb-5 mb-xl-8">
                                             <!--begin::Body-->
                                             <div class="card-body">
-                                                <div class="text-white fw-bolder fs-2 mb-2 mt-5">$50,000</div>
+                                                <div class="text-white fw-bolder fs-2 mb-2 mt-5">{{$totalAmcRate}}%</div>
                                                 <div class="fw-bold text-white">
-                                                    <a class="text-white" href="">
-                                                        Milestone Reached
+                                                    <a class="text-white">
+                                                    Total AMC Rate
                                                     </a>
                                                 </div>
                                             </div>
@@ -1145,10 +1149,10 @@
                                                     <td class="text-dark fs-6 w-150px">{{ $productSpecification->product->name ?? '' }}</td>
                                                     <td class="text-dark fs-6 w-140px">{{ $productSpecification->work_order_number }}</td>
                                                     <td class="text-dark fs-6 w-140px">{{ number_format($productSpecification->work_order_value, 2) }}</td>
-                                                    <td class="text-dark fs-6 w-140px">{{ $productSpecification->work_order_rate }}</td>
+                                                    <td class="text-dark fs-6 w-140px">{{ $productSpecification->work_order_rate }}%</td>
                                                     <td class="text-dark fs-6 w-140px">{{ number_format($productSpecification->purchase_order_value, 2) }}</td>
                                                     <td class="text-dark fs-6 w-120px">{{ $productSpecification->amc_start_date ? \Carbon\Carbon::parse($productSpecification->amc_start_date)->format('d-m-Y') : '' }}</td>
-                                                    <td class="text-dark fs-6 w-120px">{{ $productSpecification->amc_rate }}</td>
+                                                    <td class="text-dark fs-6 w-120px">{{ $productSpecification->amc_rate }}%</td>
                                                     <td class="text-dark fs-6 w-120px">{{ $productSpecification->service_type }}</td>
                                                     <td class="text-end">
                                                         <div class="d-inline-flex justify-content-end gap-1">

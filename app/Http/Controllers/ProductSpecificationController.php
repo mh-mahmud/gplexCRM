@@ -95,7 +95,7 @@ class ProductSpecificationController extends Controller
             'search' => 'required|string',
         ]);
        
-        $productSpecifications = $this->productSpecificationService->searchroductSpecification($request);
+        $productSpecifications = $this->productSpecificationService->searchProductSpecification($request);
         return view('product_specifications.index', compact('productSpecifications'));
     }
 

@@ -159,7 +159,7 @@ use Carbon\Carbon;
 
                 <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                         <span class="fw-bold w-lg-150px">Product Name:</span>
-                        <span>{{ $productSpecification->product->name ?? '' }}</span>
+                        <span>{{ $productSpecification->product_names ?? '' }}</span>
                 </div>
 
                 <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
@@ -174,7 +174,7 @@ use Carbon\Carbon;
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                         <span class="fw-bold w-lg-150px">Work Order Rate:</span>
-                        <span>{{ $productSpecification->work_order_rate }}</span>
+                        <span>{{ $productSpecification->work_order_rate }}%</span>
                     </div>
 
                     @if($productSpecification->work_order_file)
@@ -211,7 +211,7 @@ use Carbon\Carbon;
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                         <span class="fw-bold w-lg-150px">AMC Rate:</span>
-                        <span>{{ $productSpecification->amc_rate }}</span>
+                        <span>{{ $productSpecification->amc_rate }}%</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
