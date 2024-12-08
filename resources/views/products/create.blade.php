@@ -57,6 +57,8 @@
 
                                     <form class="g-form w-100" action="{{ route('add-product-pro') }}"  method="POST" enctype="multipart/form-data">
                                          @csrf
+                                        <div class="row">
+
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
@@ -92,7 +94,7 @@
                                                     <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Type<span class="text-danger">*</span></label>
                                                     <select class="form-control form-control-sm form-control-solid"
-                                                        id="assigned_to" name="product_type" aria-label="Default select example">
+                                                            id="assigned_to" name="product_type" aria-label="Default select example">
                                                         <option value='' {{ old('product_type', '') === '' ? 'selected' : '' }}>Select</option>
                                                         @foreach (config('constants.PRODUCT_TYPE') as $key => $type)
                                                             <option value="{{ $key }}" {{ old('product_type') === (string)$key ? 'selected' : '' }}>
@@ -105,8 +107,7 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                                                                                                             
-                                          
+
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Cost</label>
@@ -129,7 +130,7 @@
                                                 </div>
                                             </div>
 
-                                           <div class="col-md-6">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Description</label>
                                                     <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{ old('description') }}</textarea>
@@ -157,10 +158,13 @@
                                                 </div>
                                             </div>
 
-                                      <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                        </div>
+
+                                      <div class="card-footer d-flex gap-2 justify-content-end align-items-center p-2">
                                             <input type="reset" value="Reset" class="btn btn-light me-2">
                                             <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Save Changes
+                                                    id="kt_account_profile_details_submit">
+                                                Save Changes
                                             </button>
                                         </div>
 
