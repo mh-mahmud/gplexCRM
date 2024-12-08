@@ -22,6 +22,7 @@ class ProductSpecification extends Model
         'amc_start_date',
         'amc_renewal_date',
         'amc_rate',
+        'rental_amount',
         'amc_effective_amount',
         'amc_agreement_documents',
         'service_type',

@@ -243,8 +243,8 @@
 
 
                             <div class="col-md-4">
-                                <label class="form-label fw-bolder text-dark">Work Order Rate</label>
-                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_rate" step="0.01" value="{{ old('work_order_rate') }}" />
+                                <label class="form-label fw-bolder text-dark">Work Order Rate (%)</label>
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_rate"  value="{{ old('work_order_rate') }}" />
                                 @if ($errors->has('work_order_rate'))
                                 <div class="text-danger">{{ $errors->first('work_order_rate') }}</div>
                                 @endif
@@ -288,10 +288,19 @@
 
 
                             <div class="col-md-4">
-                                <label class="form-label fw-bolder text-dark">AMC Rate</label>
-                                <input class="form-control form-control-sm form-control-solid" type="number" name="amc_rate" step="0.01" value="{{ old('amc_rate') }}" />
+                                <label class="form-label fw-bolder text-dark">AMC Rate (%)</label>
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="amc_rate" value="{{ old('amc_rate') }}" />
                                 @if ($errors->has('amc_rate'))
                                 <div class="text-danger">{{ $errors->first('amc_rate') }}</div>
+                                @endif
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Rental Amount</label>
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="rental_amount" value="{{ old('rental_amount') }}" />
+                                @if ($errors->has('rental_amount'))
+                                <div class="text-danger">{{ $errors->first('rental_amount') }}</div>
                                 @endif
                             </div>
 

@@ -224,10 +224,10 @@ use Carbon\Carbon;
                                     <th class="min-w-150px">Product Name</th>
                                     <th class="min-w-140px">Work Order Number</th>
                                     <th class="min-w-140px">Work Order Value</th>
-                                    <th class="min-w-140px">Work Order Rate</th>
+                                    <th class="min-w-140px">Work Order Rate (%)</th>
                                     <th class="min-w-140px">Purchase Order Value</th>
                                     <th class="min-w-120px">AMC Start Date</th>
-                                    <th class="min-w-120px">AMC Rate</th>
+                                    <th class="min-w-120px">AMC Rate (%)</th>
                                     <th class="min-w-100px">Service Type</th>
                                     <th class="min-w-100px text-end-new">Actions</th>
                                 </tr>
@@ -242,10 +242,10 @@ use Carbon\Carbon;
                                     <td class="text-dark fs-6 w-150px">{{ $productSpecification->product_names ?? '' }}</td>
                                     <td class="text-dark fs-6 w-140px">{{ $productSpecification->work_order_number }}</td>
                                     <td class="text-dark fs-6 w-140px">{{ number_format($productSpecification->work_order_value, 2) }}</td>
-                                    <td class="text-dark fs-6 w-140px">{{ $productSpecification->work_order_rate }}%</td>
+                                    <td class="text-dark fs-6 w-140px">{{ !empty($productSpecification->work_order_rate) ? $productSpecification->work_order_rate . '%' : '' }}</td>
                                     <td class="text-dark fs-6 w-140px">{{ number_format($productSpecification->purchase_order_value, 2) }}</td>
                                     <td class="text-dark fs-6 w-120px">{{ $productSpecification->amc_start_date ? \Carbon\Carbon::parse($productSpecification->amc_start_date)->format('d-m-Y') : '' }}</td>
-                                    <td class="text-dark fs-6 w-120px">{{ $productSpecification->amc_rate }}%</td>
+                                    <td class="text-dark fs-6 w-120px"> {{ !empty($productSpecification->amc_rate) ? $productSpecification->amc_rate . '%' : '' }}</td>
                                     <td class="text-dark fs-6 w-120px">{{ $productSpecification->service_type }}</td>
                                     <td class="text-end">
                                         <div class="d-inline-flex justify-content-end gap-1">
