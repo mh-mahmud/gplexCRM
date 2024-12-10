@@ -400,7 +400,7 @@ CREATE TABLE `product_specification` (
 --19-11-2024
 ALTER TABLE `product_specification` ADD COLUMN `customer_id` BIGINT(20) UNSIGNED NOT NULL AFTER `product_id`;
 --20-11-2024
-ALTER TABLE `campaign_data` ADD UNIQUE KEY `campaign_data_phone_unique` (`phone`);
+--ALTER TABLE `campaign_data` ADD UNIQUE KEY `campaign_data_phone_unique` (`phone`);
 -- Hasan
 ALTER TABLE `customers` ADD `first_name` VARCHAR(50) NULL DEFAULT NULL AFTER `customer_id`, ADD `last_name` VARCHAR(50) NULL DEFAULT NULL AFTER `first_name`; 
 

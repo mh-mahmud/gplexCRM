@@ -237,7 +237,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Work Order Rate (%)</label>
-                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_rate" value="{{ old('work_order_rate', $productSpecification->work_order_rate) }}" />
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_rate" value="{{ old('work_order_rate', $productSpecification->work_order_rate) }}" step="0.01" />
                                 @error('work_order_rate')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -285,7 +285,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">AMC Rate (%)</label>
-                                <input class="form-control form-control-sm form-control-solid" type="number" name="amc_rate" value="{{ old('amc_rate', $productSpecification->amc_rate) }}" />
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="amc_rate" value="{{ old('amc_rate', $productSpecification->amc_rate) }}" step="0.01" />
                                 @error('amc_rate')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
