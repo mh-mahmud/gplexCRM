@@ -1143,7 +1143,7 @@
                                                 <tr>
                                                     <td class="ps-5 text-dark fs-6">{{ $i }}</td>
                                                     <td class="text-dark fs-6 w-120px">{{$productSpecification->first_name}} {{$productSpecification->last_name}}</td>
-                                                    <td class="text-dark fs-6 w-150px">{{ $productSpecification->product->name ?? '' }}</td>
+                                                    <td class="text-dark fs-6 w-150px">{{ $productSpecification->product_names ?? '' }}</td>
                                                     <td class="text-dark fs-6 w-140px">{{ $productSpecification->work_order_number }}</td>
                                                     <td class="text-dark fs-6 w-140px">{{ number_format($productSpecification->work_order_value, 2) }}</td>
                                                     <td class="text-dark fs-6 w-140px">{{ $productSpecification->work_order_rate }}%</td>

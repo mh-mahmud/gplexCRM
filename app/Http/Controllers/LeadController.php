@@ -26,6 +26,7 @@ use App\Models\ProductSpecification;
 use App\Services\LeadService;
 use Illuminate\Support\Facades\Schema;
 use DateTime;
+use App\Models\Product;
 
 class LeadController  extends Controller
 {
@@ -198,11 +199,16 @@ class LeadController  extends Controller
         ->select('product_specification.*','customers.customer_group','leads.first_name','leads.last_name')
         ->where('lead_id', $id)
         ->orderBy('product_specification.created_at', 'desc')->get();
+        foreach ($productSpecifications as $specification) {
+            $productIds = explode(',', $specification->product_id);
+            $productNames = Product::whereIn('id', $productIds)->pluck('name')->toArray();
+            $specification->product_names = implode(', ', $productNames);
+        }
         $totalWorkOrderNumber = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
         ->where('customers.lead_id', $id)
         ->whereNotNull('product_specification.work_order_number')
         ->where('product_specification.work_order_number', '<>', '')
-        ->distinct('product_specification.work_order_number')
+        //->distinct('product_specification.work_order_number')
         ->count('product_specification.work_order_number');
 
         $totalWorkOrderValue = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
