@@ -343,7 +343,7 @@
                         <div class="card card-xl-stretch mb-xl-8">
                             <!--begin::Header-->
                             <div class="card-header card-header-dashboard border-0">
-                                <h3 class="card-title fw-bolder text-dark">Todo List</h3>
+                                <h3 class="card-title fw-bolder"><span class="card-label fw-bolder fs-3">Todo List</span></h3>
                                 <div class="card-toolbar">
                                     <!--begin::Menu-->
                                     <button type="button"
@@ -436,8 +436,8 @@
                         <div class="card card-xl-stretch mb-5 mb-xl-8">
                             <!--begin::Header-->
                             <div class="card-header card-header-dashboard border-0">
-                                <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bolder fs-3 mb-1">New Leads</span>
+                                <h3 class="card-title align-items-start flex-column text-dark">
+                                    <span class="card-label fw-bolder fs-3">New Leads</span>
                                 </h3>
                                 <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top"
                                      data-bs-trigger="hover" title="Click to add a user">
@@ -557,7 +557,7 @@
                         <div class="card card-xl-stretch mb-xl-8">
                             <!--begin::Header-->
                             <div class="card-header card-header-dashboard border-0">
-                                <h3 class="card-title fw-bolder text-dark">Agents</h3>
+                                <h3 class="card-title fw-bolder text-dark"><span class="card-label fw-bolder fs-3">Agents</span></h3>
                                 <div class="card-toolbar">
                                     <!--begin::Menu-->
                                     <button type="button"
@@ -621,8 +621,8 @@
                         <div class="card card-xl-stretch mb-5 mb-xl-8">
                             <!--begin::Header-->
                             <div class="card-header card-header-dashboard border-0">
-                                <h3 class="card-title align-items-start flex-column py-2">
-                                    <span class="card-label fw-bolder fs-3 mb-1">Campaign</span>
+                                <h3 class="card-title align-items-start flex-column py-2 text-dark">
+                                    <span class="card-label fw-bolder fs-3">Campaign</span>
                                 </h3>
                             </div>
                             <!--end::Header-->
