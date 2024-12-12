@@ -137,7 +137,8 @@
 							<td class="text-dark fs-6">{{ $dynamicTable->leadsForm?->form_name ?? '' }}</td>
 							<td class="text-dark fs-6">{{$dynamicTable->table_name}}</td>
 
-							<td class="text-end">
+							<td>
+							<div class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
 								<a href="{{ route('dynamictable-show', $dynamicTable->table_name) }}"
 								   class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 									<!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
@@ -191,6 +192,7 @@
 										<!--end::Svg Icon-->
 									</button>
 								</form>
+							</div>
 							</td>
 						</tr>
 						@endforeach
