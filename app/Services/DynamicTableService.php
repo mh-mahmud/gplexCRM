@@ -15,6 +15,7 @@ class DynamicTableService
         return LeadFormDetail::select('table_name', 'form_id')
             ->with('leadsForm:form_id,form_name')
             ->groupBy('table_name', 'form_id')
+            ->orderBy('table_name')
             ->paginate(config('constants.ROW_PER_PAGE'));
     }
 
