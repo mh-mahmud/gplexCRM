@@ -71,23 +71,23 @@ class DashboardController extends Controller
             ->join('leads', 'customers.lead_id', '=', 'leads.id') 
             ->whereNotNull('product_specification.work_order_number')
             ->where('product_specification.work_order_number', '<>', '')
-            ->where('leads.created_by', Auth::id()) 
+            //->where('leads.created_by', Auth::id()) 
             //->distinct('product_specification.work_order_number')
             ->count('product_specification.work_order_number');
 
             $data['totalWorkOrderValue'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
             ->join('leads', 'customers.lead_id', '=', 'leads.id') 
-            ->where('leads.created_by', Auth::id()) 
+            //->where('leads.created_by', Auth::id()) 
             ->sum('product_specification.work_order_value');
 
-            $$data['totalAmcEffectiveAmount'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            $data['totalAmcEffectiveAmount'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
             ->join('leads', 'customers.lead_id', '=', 'leads.id')
-            ->where('leads.created_by', Auth::id())
+            //->where('leads.created_by', Auth::id())
             ->sum('product_specification.amc_effective_amount');
 
             $data['totalAmcRate'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
             ->join('leads', 'customers.lead_id', '=', 'leads.id')
-            ->where('leads.created_by', Auth::id())
+            //->where('leads.created_by', Auth::id())
             ->avg('product_specification.amc_rate');
         }
         $data['agent_list'] = Agent::with('user')->where('status', 1)->orderBy('agent_id', 'desc')->limit(5)->get();
