@@ -80,7 +80,7 @@
 
                                         <!--begin::Amount-->
                                         <span
-                                            class="fs-2hx fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$count_lead}}</span>
+                                            class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$count_lead}}</span>
                                         <!--end::Amount-->
 
                                         <!--begin::Badge-->
@@ -118,7 +118,7 @@
 
                                         <!--begin::Amount-->
                                         <span
-                                            class="fs-2hx fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$active_agents}}</span>
+                                            class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$active_agents}}</span>
                                         <!--end::Amount-->
 
                                         <!--begin::Badge-->
@@ -156,7 +156,7 @@
 
                                         <!--begin::Amount-->
                                         <span
-                                            class="fs-2hx fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$active_products}}</span>
+                                            class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$active_products}}</span>
                                         <!--end::Amount-->
 
                                         <!--begin::Badge-->
@@ -198,7 +198,7 @@
 
                                         <!--begin::Amount-->
                                         <span
-                                            class="fs-2hx fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$totalWorkOrderNumber}}</span>
+                                            class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$totalWorkOrderNumber}}</span>
                                         <!--end::Amount-->
 
                                         <!--begin::Badge-->
@@ -235,7 +235,7 @@
 
                                         <!--begin::Amount-->
                                         <span
-                                            class="fs-2hx fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$totalWorkOrderValue}}</span>
+                                            class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$totalWorkOrderValue}}</span>
                                         <!--end::Amount-->
 
                                         <!--begin::Badge-->
@@ -272,7 +272,7 @@
 
                                         <!--begin::Amount-->
                                         <span
-                                            class="fs-2hx fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$totalAmcEffectiveAmount}}</span>
+                                            class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$totalAmcEffectiveAmount}}</span>
                                         <!--end::Amount-->
 
                                         <!--begin::Badge-->
@@ -309,7 +309,7 @@
 
                                         <!--begin::Amount-->
                                         <span
-                                            class="fs-2hx fw-bold text-gray-901 me-2 lh-1 ls-n2">{{ $totalAmcRate ? number_format($totalAmcRate, 2) . '%' : '0%' }}
+                                            class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{ $totalAmcRate ? number_format($totalAmcRate, 2) . '%' : '0%' }}
                                             </span>
                                         <!--end::Amount-->
 
