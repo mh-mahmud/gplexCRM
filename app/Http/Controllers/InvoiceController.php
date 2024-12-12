@@ -176,7 +176,7 @@ class InvoiceController extends Controller
             'invoice_date' => 'required|date',
             'due_date' => 'nullable|date|after_or_equal:invoice_date',
             //item validation - maintaining the same structure as store
-            'items.item_name.*' => 'required|string',
+            'items.item_name.*' => 'required|string', 
             'items.quantity.*' => 'required|integer|min:1',
             'items.rate.*' => 'required|numeric|min:0',
             'items.tax.*' => 'nullable|numeric|min:0|max:100',
