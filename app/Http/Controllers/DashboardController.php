@@ -48,7 +48,7 @@ class DashboardController extends Controller
             ->whereNotNull('product_specification.work_order_number')
             ->where('product_specification.work_order_number', '<>', '')
             //->where('leads.created_by', Auth::id()) 
-            ->distinct('product_specification.work_order_number')
+            //->distinct('product_specification.work_order_number')
             ->count('product_specification.work_order_number');
 
             $data['totalWorkOrderValue'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
@@ -71,33 +71,25 @@ class DashboardController extends Controller
             ->join('leads', 'customers.lead_id', '=', 'leads.id') 
             ->whereNotNull('product_specification.work_order_number')
             ->where('product_specification.work_order_number', '<>', '')
-            ->where('leads.created_by', Auth::id()) 
-            ->distinct('product_specification.work_order_number')
+            //->where('leads.created_by', Auth::id()) 
+            //->distinct('product_specification.work_order_number')
             ->count('product_specification.work_order_number');
 
             $data['totalWorkOrderValue'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
             ->join('leads', 'customers.lead_id', '=', 'leads.id') 
-            ->where('leads.created_by', Auth::id()) 
+            //->where('leads.created_by', Auth::id()) 
             ->sum('product_specification.work_order_value');
 
-            $$data['totalAmcEffectiveAmount'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            $data['totalAmcEffectiveAmount'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
             ->join('leads', 'customers.lead_id', '=', 'leads.id')
-            ->where('leads.created_by', Auth::id())
+            //->where('leads.created_by', Auth::id())
             ->sum('product_specification.amc_effective_amount');
 
             $data['totalAmcRate'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
             ->join('leads', 'customers.lead_id', '=', 'leads.id')
-            ->where('leads.created_by', Auth::id())
+            //->where('leads.created_by', Auth::id())
             ->avg('product_specification.amc_rate');
         }
-
-        $data['totalWorkOrderNumber'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
-            ->join('leads', 'customers.lead_id', '=', 'leads.id') // Join with the leads table
-            ->whereNotNull('product_specification.work_order_number')
-            ->where('product_specification.work_order_number', '<>', '')
-            ->where('leads.created_by', Auth::id()) // Condition to check the logged-in user
-            ->distinct('product_specification.work_order_number')
-            ->count('product_specification.work_order_number');
         $data['agent_list'] = Agent::with('user')->where('status', 1)->orderBy('agent_id', 'desc')->limit(5)->get();
         $data['todo_list'] = (Auth()->user()->user_type == 'admin') ? Task::where('status', '!=', 9)->limit(6)->get(['task_name', 'description', 'due_date', 'status']) : Task::where('created_by', $user_id)->orWhere('assigned_to', $user_id)->limit(6)->get(['task_name', 'description', 'due_date', 'status']);
         $data['formName'] = $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');

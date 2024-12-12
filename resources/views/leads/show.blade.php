@@ -98,8 +98,16 @@
                                    data-bs-target="#g_lead_table" role="tab" aria-controls="g_lead_table"
                                    aria-selected="true">Lead Table</a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link @if(session('success') || session('error')) active @endif"
+                                   data-bs-toggle="tab" href="#g_lead_dashboard" data-tab="g_lead_dashboard"
+                                   id="g_lead_dashboard_tab"
+                                   data-bs-target="#g_lead_dashboard" role="tab" aria-controls="g_lead_dashboard"
+                                   aria-selected="true">Dashboard</a>
+                            </li> -->
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ session('active_tab') === 'g_lead_dashboard_tab' ? 'active' : '' }}"
                                    data-bs-toggle="tab" href="#g_lead_dashboard" data-tab="g_lead_dashboard"
                                    id="g_lead_dashboard_tab"
                                    data-bs-target="#g_lead_dashboard" role="tab" aria-controls="g_lead_dashboard"
@@ -574,7 +582,9 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane fade show @if(session('success') || session('error')) active @endif"
+                    <!-- <div class="tab-pane fade show @if(session('success') || session('error')) active @endif"
+                         id="g_lead_dashboard" role="tabpanel" aria-labelledby="g_lead_dashboard_tab"> -->
+                    <div class="tab-pane fade {{ session('active_tab') === 'g_lead_dashboard_tab' ? 'active show' : '' }}"
                          id="g_lead_dashboard" role="tabpanel" aria-labelledby="g_lead_dashboard_tab">
                         <div class="card">
                             <div class="card-body">
@@ -1143,13 +1153,13 @@
                                                 <tr>
                                                     <td class="ps-5 text-dark fs-6">{{ $i }}</td>
                                                     <td class="text-dark fs-6 w-120px">{{$productSpecification->first_name}} {{$productSpecification->last_name}}</td>
-                                                    <td class="text-dark fs-6 w-150px">{{ $productSpecification->product->name ?? '' }}</td>
+                                                    <td class="text-dark fs-6 w-150px">{{ $productSpecification->product_names ?? '' }}</td>
                                                     <td class="text-dark fs-6 w-140px">{{ $productSpecification->work_order_number }}</td>
                                                     <td class="text-dark fs-6 w-140px">{{ number_format($productSpecification->work_order_value, 2) }}</td>
-                                                    <td class="text-dark fs-6 w-140px">{{ $productSpecification->work_order_rate }}%</td>
+                                                    <td class="text-dark fs-6 w-140px">{{ !empty($productSpecification->work_order_rate) ? $productSpecification->work_order_rate . '%' : '' }}</td>
                                                     <td class="text-dark fs-6 w-140px">{{ number_format($productSpecification->purchase_order_value, 2) }}</td>
                                                     <td class="text-dark fs-6 w-120px">{{ $productSpecification->amc_start_date ? \Carbon\Carbon::parse($productSpecification->amc_start_date)->format('d-m-Y') : '' }}</td>
-                                                    <td class="text-dark fs-6 w-120px">{{ $productSpecification->amc_rate }}%</td>
+                                                    <td class="text-dark fs-6 w-120px">{{ !empty($productSpecification->amc_rate) ? $productSpecification->amc_rate . '%' : '' }}</td>
                                                     <td class="text-dark fs-6 w-120px">{{ $productSpecification->service_type }}</td>
                                                     <td class="text-end">
                                                         <div class="d-inline-flex justify-content-end gap-1">
