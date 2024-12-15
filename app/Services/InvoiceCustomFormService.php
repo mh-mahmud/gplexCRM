@@ -16,7 +16,17 @@ class InvoiceCustomFormService
     }
 
     public function createCustomInvoice(array $data)
-    {   //store json
+    {   
+        if (isset($data['field_details']) && is_array($data['field_details'])) {
+            foreach ($data['field_details'] as &$detail) {
+                if (isset($detail['field_name'])) {
+                    // Transform field_value: lowercase and replace spaces with underscores
+                    $detail['field_value'] = strtolower(str_replace(' ', '_', $detail['field_name']));
+                }
+            }
+        }
+
+        //store json
         return InvoiceCustomForm::create([
             'invoice_name' => $data['invoice_name'],
             'field_details' => $data['field_details'], // direct array insertion
@@ -30,6 +40,14 @@ class InvoiceCustomFormService
 
     public function updateCustomInvoice($id, array $data)
     {
+        if (isset($data['field_details']) && is_array($data['field_details'])) {
+            foreach ($data['field_details'] as &$detail) {
+                if (isset($detail['field_name'])) {
+                    // Transform field_value: lowercase and replace spaces with underscores
+                    $detail['field_value'] = strtolower(str_replace(' ', '_', $detail['field_name']));
+                }
+            }
+        }
         $invoice = InvoiceCustomForm::findOrFail($id);
         $invoice->update([
             'invoice_name' => $data['invoice_name'],

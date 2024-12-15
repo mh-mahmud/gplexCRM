@@ -189,16 +189,6 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <div class="fv-row">
-                                        <label class="form-label fw-bolder text-dark">Field Value</label>
-                                        <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[{{ $index }}][field_value]" value="{{ old("field_details.$index.field_value", $field['field_value']) }}" autocomplete="off" />
-                                        @error("field_details.$index.field_value")
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-
                                 <div class="col-md-4 text-center" style="padding-top: 1.5rem;">
                                     <button type="button" class="btn btn-sm btn-danger" onclick="removeItemField(this)"><i class="bi bi-x"></i></button>
                                 </div>
@@ -207,17 +197,7 @@
                         </div>
 
                         
-                        <div class="row justify-content-center align-items-center mb-3">
-                            <div class="col-md-6">
-                                <h3>Footer Section</h3>
-                            </div>
-                            <div class="col-md-6 text-end">
-                                <button type="button" class="btn btn-sm btn-success" onclick="addFooterField()"><i class="bi bi-plus-lg"></i> Add Field</button>
-                            </div>
-                        </div>
-
-                        
-                        <div id="footer-field-group-container">
+                        {{-- <div id="footer-field-group-container">
                             @foreach ($invoice->footer_details as $index => $footer)
                             <div class="row mb-3 footer-field-group">
                                 <div class="col-md-4">
@@ -245,7 +225,7 @@
                                 </div>
                             </div>
                             @endforeach
-                        </div>
+                        </div> --}}
 
                         
                         <div class="row">
@@ -320,13 +300,6 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="fv-row">
-                    <label class="form-label fw-bolder text-dark">Field Value</label>
-                    <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[${itemFieldIndex}][field_value]" autocomplete="off" />
-                </div>
-            </div>
-
             <div class="col-md-4 text-center" style="padding-top: 1.5rem;">
                 <button type="button" class="btn btn-sm btn-danger" onclick="removeItemField(this)"><i class="bi bi-x"></i></button>
             </div>
@@ -353,13 +326,6 @@
                 <div class="fv-row">
                     <label class="form-label fw-bolder text-dark">Field Name</label>
                     <input class="form-control form-control-sm form-control-solid" type="text" name="footer_details[${footerFieldIndex}][field_name]" autocomplete="off" />
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="fv-row">
-                    <label class="form-label fw-bolder text-dark">Field Value</label>
-                    <input class="form-control form-control-sm form-control-solid" type="text" name="footer_details[${footerFieldIndex}][field_value]" autocomplete="off" />
                 </div>
             </div>
 

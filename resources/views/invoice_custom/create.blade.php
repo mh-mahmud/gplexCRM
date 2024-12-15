@@ -102,16 +102,6 @@
 
                                 <div class="col-md-2">
                                     <div class="fv-row">
-                                        <label class="form-label fw-bolder text-dark">Field Value</label>
-                                        <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[0][field_value]" autocomplete="off" />
-                                        @error('field_details.0.field_value')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <div class="fv-row">
                                         <label class="form-label fw-bolder text-dark">Sum</label>
                                         <select class="form-control form-control-sm form-control-solid" name="field_details[0][is_sum]">
                                             <option value=''>Select</option>
@@ -264,13 +254,6 @@
                 <div class="fv-row">
                     <label class="form-label fw-bolder text-dark">Field Name</label>
                     <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[${itemFieldIndex}][field_name]" autocomplete="off" />
-                </div>
-            </div>
-
-            <div class="col-md-2">
-                <div class="fv-row">
-                    <label class="form-label fw-bolder text-dark">Field Value</label>
-                    <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[${itemFieldIndex}][field_value]" autocomplete="off" />
                 </div>
             </div>
 

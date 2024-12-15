@@ -250,8 +250,8 @@
                                                     if (isset($data[$fieldValue])) {
                                                         $value = $data[$fieldValue];
                                                         if(isset($field['is_sum']) && $field['is_sum'] == 1) {
-                                                            $totalValue = $totalValue + $value;
-                                                            $cal_total[$fieldValue][] = $totalValue;
+                                                            // $totalValue = $totalValue + $value;
+                                                            $cal_total[$fieldValue][] = $value;
                                                         }
                                                         break; 
                                                     }
@@ -270,11 +270,30 @@
                                 <td class="border-b py-3 pl-3 text-center">Total Net Value</td>
                                 @php
                                 foreach($cal_total as $total) {
-                                    $sum = 0;
+                                    $sumSeconds = 0; 
+                                    $numericSum = 0;
                                     foreach($total as $value) {
-                                        $sum = $sum + $value;
+                                        if (preg_match('/^(\d{2}):(\d{2}):(\d{2})$/', $value, $matches)) {
+                                            $hours = (int)$matches[1];
+                                            $minutes = (int)$matches[2];
+                                            $seconds = (int)$matches[3];
+                                            $sumSeconds += ($hours * 3600) + ($minutes * 60) + $seconds;
+                                        } else {
+                                            $numericSum = $numericSum + $value;
+                                            
+                                        }
                                     }
-                                    echo "<td class='border-b py-3 pl-3 text-center'>". $sum."</td>";
+                                    $sumTime = $sumSeconds > 0 ? gmdate('H:i:s', $sumSeconds) : null;
+
+                                    // Combine the results for output
+                                    $field_sum_output = '';
+                                    if ($sumTime) {
+                                        $field_sum_output = $sumTime ;
+                                    }
+                                    if ($numericSum > 0) {
+                                        $field_sum_output = $numericSum;
+                                    }
+                                    echo "<td class='border-b py-3 pl-3 text-center'>". $field_sum_output."</td>";
                                 }
                                 @endphp
                                 <td class="border-b py-3 pl-3 text-right" colspan= "{{ $custom_invoice_total_field - 1 }}">{{ $invoice["sub_total"] }}</td>

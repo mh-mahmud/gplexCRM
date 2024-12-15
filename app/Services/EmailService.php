@@ -288,14 +288,14 @@ class EmailService
 
                     $this->logEmail($email, "Success");
 
-                    Helper::storeLog("Email sent successfully to " . $email->email_to, "Email Module", "Send an Email", "Send Email", $email->lead_id, $email->user_id);
+                    Helper::storeLog("Email sent successfully to " . $email->email_to, "Email Module", "Send an Email", $email->lead_id, $email->user_id);
 
                     EmailQueue::where('id', $email->id)->delete();
 
                 } catch (\Exception $e) {
                     $this->logEmail($email, "Failed");
 
-                    Helper::storeLog("Email failed to send to " . $email->email_to, "Email Module", "Send an Email", "Send Email", $email->lead_id, $email->user_id);
+                    Helper::storeLog("Email failed to send to " . $email->email_to, "Email Module", "Send an Email", $email->lead_id, $email->user_id);
 
                     EmailQueue::where('id', $email->id)->delete();
 

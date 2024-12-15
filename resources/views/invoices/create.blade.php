@@ -596,7 +596,7 @@
                                                         <th><strong>VAT :</strong>
                                                             <div class="input-group flex-nowrap">
                                                                 <div class="flex-grow-1">
-                                                                    <input class="form-control form-control-sm rounded-end-0 border-end" type="number" name="vat" placeholder="VAT" onblur="calculateVat(this.value)">
+                                                                    <input class="form-control form-control-sm rounded-end-0 border-end" id="cutom_vat" type="number" name="vat" placeholder="VAT" onblur="calculateVat(this.value)">
                                                                 </div>
                                                                 %
                                                             </div>
@@ -609,7 +609,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th><strong>Adjustment :</strong>
-                                                            <input class="form-control form-control-sm" type="number" name="custom_adjustment" placeholder="Adjustment" onblur="calculateCustomAdjustment(this.value)">
+                                                            <input id="custom_adjustment" class="form-control form-control-sm" type="number" name="custom_adjustment" placeholder="Adjustment" onblur="calculateCustomAdjustment(this.value)">
                                                         </th>
                                                     </tr>
                                                     <tr>
@@ -994,36 +994,54 @@
 
 
 <script>
-    function getTotalAmount(value)
-    {
-        let subTotalAmount = document.getElementById('subtotal-hidden').value;
-        let total = subTotalAmount ? subTotalAmount : 0;
-        total = parseFloat(total) + parseFloat(value);
-        document.getElementById('custom-subtotal-amount').innerHTML = total;
-        document.getElementById('subtotal-hidden').value = total;    
-        document.getElementById('total-hidden').value = total;
-        document.getElementById('custom-total-amount').innerHTML = total;
+    function getTotalAmount(value) {
+        let total = 0;
+
+        const amountInputs = document.querySelectorAll('.custom-amount-input');
+
+        amountInputs.forEach(input => {
+            let value = parseFloat(input.value.replace(/,/g, '')) || 0;
+            total += value;
+        });
+
+        const formattedTotal = total.toFixed(2);
+        document.getElementById('custom-subtotal-amount').innerHTML = formattedTotal;
+        document.getElementById('subtotal-hidden').value = formattedTotal;
+        document.getElementById('total-hidden').value = formattedTotal;
+        document.getElementById('custom-total-amount').innerHTML = formattedTotal;
     }
     function calculateVat(value)
     {
+        value = parseFloat(value);
+        if (isNaN(value)) {
+            value = 0;
+        }
         let subTotalAmount = document.getElementById('subtotal-hidden').value;
         let totalVat = (subTotalAmount * value) / 100;
         document.getElementById('totaltax-hidden').value = totalVat;
         let totalAmount = 0;
         totalAmount = parseFloat(subTotalAmount) + parseFloat(totalVat) + parseFloat(totalAmount); 
-        document.getElementById('custom-total-vat').innerHTML = totalVat;
-        document.getElementById('total-hidden').value = totalAmount;
-        document.getElementById('custom-total-amount').innerHTML = totalAmount;
+        document.getElementById('custom-total-vat').innerHTML = totalVat.toFixed(2);
+        document.getElementById('total-hidden').value = totalAmount.toFixed(2);
+        document.getElementById('custom-total-amount').innerHTML = totalAmount.toFixed(2);
     }
-    function calculateCustomAdjustment(value)
-    {
+    function calculateCustomAdjustment(value) {
+        if (value === '' || isNaN(parseFloat(value))) {
+            value = 0; 
+        } else {
+            value = parseFloat(value);
+        }
+
         let totalAmount = document.getElementById('total-hidden').value;
-        console.log('v', totalAmount)
-        // totalAmount = parseFloat(totalAmount) + parseFloat(value);
-        // document.getElementById('total-hidden').value = totalAmount;
-        // document.getElementById('custom-total-amount').innerHTML = totalAmount;
-        // document.getElementById('custom-adjustment-amount').innerHTML = totalAmount;
+        totalAmount = parseFloat(totalAmount); 
+
+        totalAmount += value;
+
+        document.getElementById('total-hidden').value = totalAmount.toFixed(2);
+        document.getElementById('custom-total-amount').innerHTML = totalAmount.toFixed(2);
+        document.getElementById('custom-adjustment-amount').innerHTML = totalAmount.toFixed(2);
     }
+
     document.addEventListener('DOMContentLoaded', function() {
         const customInvoiceSelect = document.getElementById('custom-invoice-select');
         const defaultInvoice = document.getElementById('default-invoice');
@@ -1035,7 +1053,11 @@
         const customInvoiceFooterHeader = document.getElementById('custom-invoice-footer-header');
         const customInvoiceFooterBody = document.getElementById('custom-invoice-footer-body');
         const customInvoiceDiv = document.getElementById('custom-invoice');
-        
+
+        window.sanitizeInput = function (inputElement) {
+                inputElement.value = inputElement.value.replace(/,/g, '');
+                console.log("Sanitized in oninput:", inputElement.value);
+        };
         customInvoiceSelect.addEventListener('change', function() {
             const selectedOption = this.options[this.selectedIndex];
             const fieldDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.fields) : null;
@@ -1073,7 +1095,7 @@
             customInvoiceBody.innerHTML = `
             <tr>
                 ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
-                <td><input type="text" class="form-control" name="items[amount][]" placeholder="Amount" onblur="getTotalAmount(this.value)"/></td>
+                <td><input type="text" class="form-control custom-amount-input" name="items[amount][]" placeholder="Amount" oninput="sanitizeInput(this)"  onblur="getTotalAmount(this.value)"/></td>
                 <td>
                     
                     <button type="button" class="btn btn-sm btn-primary py-2 px-3" id="add-row">
@@ -1092,7 +1114,7 @@
                 customInvoiceBody.insertAdjacentHTML('beforeend', `
                 <tr>
                     ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
-                    <td><input type="text" class="form-control" name="items[amount][]" placeholder="Amount" onchange="getTotalAmount(this.value)"/></td>
+                    <td><input type="text" class="form-control custom-amount-input" name="items[amount][]" placeholder="Amount" oninput="sanitizeInput(this)" onchange="getTotalAmount(this.value)"/></td>
                     <td><button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
                            <i class="bi bi-trash pe-0"></i>
                        </button>
