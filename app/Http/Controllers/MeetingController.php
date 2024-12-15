@@ -129,7 +129,7 @@ class MeetingController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'meeting_subject' => 'required|string|max:191',
-            'meeting_description' => 'required|string',
+            'meeting_description' => 'nullable|string',
             'meeting_date' => 'required|date',
             'meeting_link' => 'nullable|url',
             'attachments' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx,xls,xlsx|max:2048',

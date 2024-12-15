@@ -171,7 +171,7 @@ class LeadController  extends Controller
         }
 
         //dynamic fields data based on lead_id
-        $fields = LeadFormDetail::where('form_id', $lead->form_id)->get();
+        $fields = LeadFormDetail::where('form_id', $lead->form_id)->orderBy('table_name')->get();
         $tableData = [];
         foreach ($fields as $field) {
             $tableName = $field->table_name;
@@ -343,7 +343,7 @@ class LeadController  extends Controller
         $tableData = [];
 
         //dynamic fields data based on lead_id
-        $fields = LeadFormDetail::where('form_id', $lead->form_id)->get();
+        $fields = LeadFormDetail::where('form_id', $lead->form_id)->orderBy('table_name')->get();
         $tableData = [];
         foreach ($fields as $field) {
             $tableName = $field->table_name;
