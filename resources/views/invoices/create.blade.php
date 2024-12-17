@@ -596,7 +596,7 @@
                                                         <th><strong>VAT :</strong>
                                                             <div class="input-group flex-nowrap">
                                                                 <div class="flex-grow-1">
-                                                                    <input class="form-control form-control-sm rounded-end-0 border-end" id="cutom_vat" type="number" name="vat" placeholder="VAT" onblur="calculateVat(this.value)">
+                                                                    <input class="form-control form-control-sm rounded-end-0 border-end" id="custom_vat" type="number" name="vat" placeholder="VAT">
                                                                 </div>
                                                                 %
                                                             </div>
@@ -609,7 +609,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th><strong>Adjustment :</strong>
-                                                            <input id="custom_adjustment" class="form-control form-control-sm" type="number" name="custom_adjustment" placeholder="Adjustment" onblur="calculateCustomAdjustment(this.value)">
+                                                            <input id="custom_adjustment" class="form-control form-control-sm" type="number" name="custom_adjustment" placeholder="Adjustment" />
                                                         </th>
                                                     </tr>
                                                     <tr>
@@ -1005,10 +1005,19 @@
         });
 
         const formattedTotal = total.toFixed(2);
+        
         document.getElementById('custom-subtotal-amount').innerHTML = formattedTotal;
         document.getElementById('subtotal-hidden').value = formattedTotal;
         document.getElementById('total-hidden').value = formattedTotal;
         document.getElementById('custom-total-amount').innerHTML = formattedTotal;
+        let vatInput = document.querySelector('[id="custom_vat"]');
+        if (vatInput && vatInput.value) {
+            calculateVat(vatInput.value);
+        }
+        let adjustmentInput = document.querySelector('[id="custom_adjustment"]');
+        if (adjustmentInput && adjustmentInput.value) {
+            calculateCustomAdjustment(adjustmentInput.value);
+        }
     }
     function calculateVat(value)
     {
@@ -1026,20 +1035,32 @@
         document.getElementById('custom-total-amount').innerHTML = totalAmount.toFixed(2);
     }
     function calculateCustomAdjustment(value) {
-        if (value === '' || isNaN(parseFloat(value))) {
-            value = 0; 
-        } else {
-            value = parseFloat(value);
-        }
+        // Validate the input value
+        value = value === '' || isNaN(parseFloat(value)) ? 0 : parseFloat(value);
 
-        let totalAmount = document.getElementById('total-hidden').value;
-        totalAmount = parseFloat(totalAmount); 
+        // Fetch values and validate them
+        let subTotalAmount = getValidNumber(document.getElementById('subtotal-hidden')?.value);
+        let totalVat = getValidNumber(document.getElementById('totaltax-hidden')?.value);
+        console.log('totalVat', totalVat)
+        // Calculate the total amount
+        let totalAmount = subTotalAmount + totalVat + value;
 
-        totalAmount += value;
 
-        document.getElementById('total-hidden').value = totalAmount.toFixed(2);
-        document.getElementById('custom-total-amount').innerHTML = totalAmount.toFixed(2);
-        document.getElementById('custom-adjustment-amount').innerHTML = totalAmount.toFixed(2);
+        // Safely update DOM elements if they exist
+        let totalHidden = document.getElementById('total-hidden');
+        let totalAmountDisplay = document.getElementById('custom-total-amount');
+        let adjustmentDisplay = document.getElementById('custom-adjustment-amount');
+
+        if (totalHidden) 
+            totalHidden.value = totalAmount.toFixed(2);
+        if (totalAmountDisplay) 
+            totalAmountDisplay.innerHTML = totalAmount.toFixed(2);
+        if (adjustmentDisplay) 
+            adjustmentDisplay.innerHTML = totalAmount.toFixed(2);
+    }
+
+    function getValidNumber(value) {
+        return value === '' || isNaN(parseFloat(value)) ? 0 : parseFloat(value);
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -1054,10 +1075,23 @@
         const customInvoiceFooterBody = document.getElementById('custom-invoice-footer-body');
         const customInvoiceDiv = document.getElementById('custom-invoice');
 
+        const customVat = document.getElementById('custom_vat');
+        const customAdjustment = document.getElementById('custom_adjustment');
+
+
         window.sanitizeInput = function (inputElement) {
-                inputElement.value = inputElement.value.replace(/,/g, '');
-                console.log("Sanitized in oninput:", inputElement.value);
+            inputElement.value = inputElement.value.replace(/,/g, '');
+            getTotalAmount(inputElement.value);
         };
+
+        customVat.addEventListener('input', function() {
+            calculateVat(this.value);  
+        });
+
+        customAdjustment.addEventListener('input', function() {
+            calculateCustomAdjustment(this.value);  
+        });
+
         customInvoiceSelect.addEventListener('change', function() {
             const selectedOption = this.options[this.selectedIndex];
             const fieldDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.fields) : null;
@@ -1114,7 +1148,7 @@
                 customInvoiceBody.insertAdjacentHTML('beforeend', `
                 <tr>
                     ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
-                    <td><input type="text" class="form-control custom-amount-input" name="items[amount][]" placeholder="Amount" oninput="sanitizeInput(this)" onchange="getTotalAmount(this.value)"/></td>
+                    <td><input type="text" class="form-control custom-amount-input" name="items[amount][]" placeholder="Amount" oninput="sanitizeInput(this)"/></td>
                     <td><button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
                            <i class="bi bi-trash pe-0"></i>
                        </button>
