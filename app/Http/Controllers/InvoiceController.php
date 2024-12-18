@@ -127,6 +127,7 @@ class InvoiceController extends Controller
     public function edit($id, Request $request)
     {
         $invoice = Invoice::findOrFail($id);
+        $invoiceCustomFormId = $invoice->invoice_custom_form_id;
         $invoiceItems = json_decode($invoice->item_description, true);
         //dd($items);die();
         //$customers = Customer::all();
@@ -139,7 +140,8 @@ class InvoiceController extends Controller
         $agents = Agent::select('agent_id', 'first_name', 'last_name','user_id')->get();
         //$products = Product::select('id', 'name', 'description', 'product_value')->get();
         $products = Product::select('id', 'name', 'description', 'product_value')->where('status', 1)->get();
-        return view('invoices.edit', compact('invoice', 'customers', 'countries', 'currencies', 'discountTypes', 'agents', 'products', 'invoiceItems'));
+        $custom_invoice = InvoiceCustomForm::select('id', 'invoice_name','field_details','footer_details')->get();
+        return view('invoices.edit', compact('invoice', 'customers', 'countries', 'currencies', 'discountTypes', 'agents', 'products', 'invoiceItems','invoiceCustomFormId','custom_invoice'));
     }
 
 
