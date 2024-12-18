@@ -313,7 +313,7 @@
 </div>
 
 <script>
-    let itemFieldIndex = 1;
+    let itemFieldIndex = {{ isset($invoice->field_details) ? count($invoice->field_details) : 0 }};
     let footerFieldIndex = 1;
 
     
