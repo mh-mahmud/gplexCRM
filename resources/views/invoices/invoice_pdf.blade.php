@@ -163,7 +163,7 @@
     @endphp
 
 
-    <div class="{{ $statusClass }}">
+    <div style="margin-left:8px" class="{{ $statusClass }}">
         <button>
             {{ $statusText }}
         </button>
@@ -203,7 +203,7 @@
         </div>
 
         <div>
-            <h1 style="text-align: center; margin: 30px 0; font-size: 24px; text-decoration: underline;">Invoice</h1>
+            <h1 style="text-align: center; margin-bottom: 2px; margin-top:20px; margin-left:auto; margin-right:auto; font-size: 24px; text-decoration: underline;">Invoice</h1>
         </div>
 
         @if (!isset($invoice->invoice_custom_form_id))
@@ -352,14 +352,14 @@
             <div class="text-right font-bold">Total Amount: TK{{ $invoice->total_amount }}</div>
             <div class="text-right font-bold">Total Due Amount: TK{{ $newDueAmount }}</div>
         @endif
-        <div style="border: 2px solid #000000; display: flex; justify-content: space-between; padding: 10px 5px; border-collapse: collapse; margin: 40px 0;">
+        <div style="border: 2px solid #000000; display: flex; justify-content: space-between; padding: 10px 5px; border-collapse: collapse; margin: 40px 8px;">
             <strong>Total In word:</strong>
             <strong>
                 {{ \App\Helpers\Helper::convertNumberToWords($invoice->total_amount) }}
             </strong>
         </div>
         @if (!empty($invoice->invoice_custom_form_id))
-        <div style="position: relative; width: 100%; height: auto; margin-top: 40px">
+        <div style="position: relative; width: 100%; height: auto; margin: 40px 8px">
 
             <!-- Left Side: Bank Information Details -->
             <div style="position: absolute; left: 0; top: 0; width: 48%; text-align: left;">
@@ -368,7 +368,7 @@
             </div>
         
             <!-- Right Side: Issued by -->
-            <div style="position: absolute; right: 0; top: 0; width: 48%; text-align: right;">
+            <div style="position: absolute; right: 15px; top: 0; width: 48%; text-align: right;">
                 <strong>Issued by:</strong></br></br>
                 _____________________</br>
                 <strong>{!! $customInvoiceData->issued_by !!}</strong>
@@ -380,12 +380,13 @@
             <h3>Terms & Conditions</h3>
             <p>{{ $invoice->terms_conditions }}</p>
         </div>
-        @endif
+        
 
         <div style="margin-top: 100px">
             <h3>Transactions</h3>
             <p>No payments found for this invoice</p>
         </div>
+        @endif
     </div>
 
 </body>
