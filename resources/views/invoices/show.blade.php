@@ -269,28 +269,40 @@
                             <tr>
                                 <td class="border-b py-3 pl-3 text-center">Total Net Value</td>
                                 @php
+
                                 foreach($cal_total as $total) {
                                     $sumSeconds = 0; 
                                     $numericSum = 0;
                                     foreach($total as $value) {
-                                        if (preg_match('/^(\d{2}):(\d{2}):(\d{2})$/', $value, $matches)) {
-                                            $hours = (int)$matches[1];
-                                            $minutes = (int)$matches[2];
-                                            $seconds = (int)$matches[3];
-                                            $sumSeconds += ($hours * 3600) + ($minutes * 60) + $seconds;
-                                        } else {
-                                            $numericSum = $numericSum + $value;
-                                            
-                                        }
+
+                                        if (strpos($value, ':') !== false) {
+											$timeParts = explode(':', $value); // Split time into parts
+											if (count($timeParts) == 3) { // Ensure it's in the form of H:M:S
+												$hours = (int)$timeParts[0];
+												$minutes = (int)$timeParts[1];
+												$seconds = (int)$timeParts[2];
+												$sumSeconds += ($hours * 3600) + ($minutes * 60) + $seconds;
+											}
+										} elseif (is_numeric($value)) { // Only process numeric values
+											$numericSum += $value;
+										}
                                     }
-                                    $sumTime = $sumSeconds > 0 ? gmdate('H:i:s', $sumSeconds) : null;
+                                    $sumTime = null;
+									//dd($sumSeconds);
+									if ($sumSeconds > 0) {
+										$hours = floor($sumSeconds / 3600); // Calculate total hours
+										$minutes = floor(($sumSeconds % 3600) / 60); // Calculate remaining minutes
+										$seconds = $sumSeconds % 60; // Calculate remaining seconds
+									
+										$sumTime = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds); // Format as H:i:s
+									}
 
                                     // Combine the results for output
                                     $field_sum_output = '';
+									
                                     if ($sumTime) {
-                                        $field_sum_output = $sumTime ;
-                                    }
-                                    if ($numericSum > 0) {
+										$field_sum_output = $sumTime ;
+                                    } else if ($numericSum > 0) {
                                         $field_sum_output = $numericSum;
                                     }
                                     echo "<td class='border-b py-3 pl-3 text-center'>". $field_sum_output."</td>";

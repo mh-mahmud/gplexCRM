@@ -189,6 +189,36 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-2">
+                                    <div class="fv-row">
+                                        <label class="form-label fw-bolder text-dark">Sum</label>
+                                        <select class="form-control form-control-sm form-control-solid" name="field_details[{{ $index }}][is_sum]">
+                                            <option value=''>Select</option>
+                                            <option value='1' {{ old("field_details.$index.is_sum", $field['is_sum']) == '1' ? 'selected' : '' }}>Yes</option>
+                                            <option value='0' {{ old("field_details.$index.is_sum", $field['is_sum']) == '0' ? 'selected' : '' }}>No</option>
+                                        </select>   
+                                        @error("field_details.$index.is_sum")
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="fv-row">
+                                        <label class="form-label fw-bolder text-dark">Mandatory</label>
+                                        <select class="form-control form-control-sm form-control-solid" name="field_details[{{ $index }}][is_mandatory]">
+                                            <option value=''>Select</option>
+                                            <option value='1' {{ old("field_details.$index.is_mandatory", $field['is_mandatory']) == '1' ? 'selected' : '' }}>Yes</option>
+                                            <option value='0' {{ old("field_details.$index.is_mandatory", $field['is_mandatory']) == '0' ? 'selected' : '' }}>No</option>
+                                        </select>   
+                                        @error("field_details.$index.is_mandatory")
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                
+                                
+
                                 <div class="col-md-4 text-center" style="padding-top: 1.5rem;">
                                     <button type="button" class="btn btn-sm btn-danger" onclick="removeItemField(this)"><i class="bi bi-x"></i></button>
                                 </div>
@@ -297,6 +327,28 @@
                 <div class="fv-row">
                     <label class="form-label fw-bolder text-dark">Field Name</label>
                     <input class="form-control form-control-sm form-control-solid" type="text" name="field_details[${itemFieldIndex}][field_name]" autocomplete="off" />
+                </div>
+            </div>
+
+             <div class="col-md-2">
+                <div class="fv-row">
+                    <label class="form-label fw-bolder text-dark">Sum</label>
+                    <select class="form-control form-control-sm form-control-solid" name="field_details[${itemFieldIndex}][is_sum]">
+                        <option value=''>Select</option>
+                        <option value='1'>Yes</option>
+                        <option value='0'>No</option>
+                    </select>   
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="fv-row">
+                    <label class="form-label fw-bolder text-dark">Is Mandatory</label>
+                    <select class="form-control form-control-sm form-control-solid" name="field_details[${itemFieldIndex}][is_mandatory]">
+                        <option value=''>Select</option>
+                        <option value='1'>Yes</option>
+                        <option value='0'>No</option>
+                    </select>   
                 </div>
             </div>
 
