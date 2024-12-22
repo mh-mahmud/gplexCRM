@@ -99,7 +99,10 @@
                                    aria-selected="true">Lead Table</a>
                             </li>
                             <!-- <li class="nav-item">
-                                <a class="nav-link @if(session('success') || session('error')) active @endif"
+                                <a class="nav-link @if(session('success') || session('error'))
+                                active
+
+                            @endif"
                                    data-bs-toggle="tab" href="#g_lead_dashboard" data-tab="g_lead_dashboard"
                                    id="g_lead_dashboard_tab"
                                    data-bs-target="#g_lead_dashboard" role="tab" aria-controls="g_lead_dashboard"
@@ -174,7 +177,8 @@
                         </ul>
 
                         @if(!empty($lead->profile_image))
-                            <img class="py-1" height="50px" alt="Logo" src="{{ asset('uploads/leads/' . $lead->profile_image) }}"/>
+                            <img class="py-1" height="50px" alt="Logo"
+                                 src="{{ asset('uploads/leads/' . $lead->profile_image) }}"/>
                         @endif
                     </div>
                 </div>
@@ -449,10 +453,10 @@
                                         @endphp
 
                                         @if ($viewType === 'table_view')
-                                            <div>
-                                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <div class="mb-10 bg-light p-5 rounded-3">
+                                                <div class="d-flex justify-content-between align-items-center py-2">
                                                     <strong
-                                                        class="fs-3">{{ ucwords(str_replace('_', ' ', $tableName)) }}</strong>
+                                                        class="fs-5">{{ ucwords(str_replace('_', ' ', $tableName)) }}</strong>
                                                     <button type="button" class="btn btn-success btn-sm"
                                                             onclick="window.location='{{ route('leads-add', ['tableName' => $tableName, 'leadId' => $lead->id]) }}'">
                                                         <i class="bi bi-plus-lg"></i>
@@ -510,9 +514,9 @@
                                                                         @endif
                                                                     @endforeach
                                                                     <td class="ps-5 text-dark fs-6">{{ $row->created_by }}</td>
-                                                                    <td class="text-end pe-6">
+                                                                    <td class="d-flex align-items-center justify-content-end gap-1">
                                                                         <a href="{{ route('lead-edit-tabledata', ['tableName' => $tableName, 'leadId' => $row->id]) }}"
-                                                                           class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                           class="btn btn-icon btn-sm btn-success">
                                                                             <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                                                             <span class="svg-icon svg-icon-3">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -534,7 +538,7 @@
                                                                             @csrf
                                                                             @method('DELETE')
                                                                             <button type="submit"
-                                                                                    class="btn btn-danger btn-sm px-2 py-1">
+                                                                                    class="btn btn-danger btn-icon btn-sm px-3 py-2">
                                                                                 <i class="bi bi-x p-0"></i>
                                                                             </button>
                                                                         </form>
@@ -575,6 +579,8 @@
 
 
 
+
+
                                     @endif -->
                                 @endforeach
 
@@ -582,10 +588,14 @@
                         </div>
                     </div>
 
-                    <!-- <div class="tab-pane fade show @if(session('success') || session('error')) active @endif"
+                    <!-- <div class="tab-pane fade show @if(session('success') || session('error'))
+                        active
+
+                    @endif"
                          id="g_lead_dashboard" role="tabpanel" aria-labelledby="g_lead_dashboard_tab"> -->
-                    <div class="tab-pane fade {{ session('active_tab') === 'g_lead_dashboard_tab' ? 'active show' : '' }}"
-                         id="g_lead_dashboard" role="tabpanel" aria-labelledby="g_lead_dashboard_tab">
+                    <div
+                        class="tab-pane fade {{ session('active_tab') === 'g_lead_dashboard_tab' ? 'active show' : '' }}"
+                        id="g_lead_dashboard" role="tabpanel" aria-labelledby="g_lead_dashboard_tab">
                         <div class="card">
                             <div class="card-body">
 
@@ -595,7 +605,8 @@
                                         <div class="card bg-success  card-xl-stretch mb-xl-8">
                                             <!--begin::Body-->
                                             <div class="card-body">
-                                                <div class="text-white fw-bolder fs-2 mb-2 mt-5">{{$totalWorkOrderNumber}}</div>
+                                                <div
+                                                    class="text-white fw-bolder fs-2 mb-2 mt-5">{{$totalWorkOrderNumber}}</div>
                                                 <div class="fw-bold text-white">
                                                     <a class="text-white">
                                                         Total Work Order
@@ -611,10 +622,11 @@
                                         <div class="card bg-danger  card-xl-stretch mb-xl-8">
                                             <!--begin::Body-->
                                             <div class="card-body">
-                                                <div class="text-gray-100 fw-bolder fs-2 mb-2 mt-5">{{$totalWorkOrderValue}}</div>
+                                                <div
+                                                    class="text-gray-100 fw-bolder fs-2 mb-2 mt-5">{{$totalWorkOrderValue}}</div>
                                                 <div class="fw-bold text-gray-100">
                                                     <a class="text-white">
-                                                    Total Work Order Value
+                                                        Total Work Order Value
                                                     </a>
                                                 </div>
                                             </div>
@@ -627,10 +639,11 @@
                                         <div class="card bg-warning card-xl-stretch mb-xl-8">
                                             <!--begin::Body-->
                                             <div class="card-body">
-                                                <div class="text-white fw-bolder fs-2 mb-2 mt-5">{{$totalAmcEffectiveAmount}}</div>
+                                                <div
+                                                    class="text-white fw-bolder fs-2 mb-2 mt-5">{{$totalAmcEffectiveAmount}}</div>
                                                 <div class="fw-bold text-white">
                                                     <a class="text-white">
-                                                    Total AMC Amount
+                                                        Total AMC Amount
                                                     </a>
                                                 </div>
                                             </div>
@@ -643,10 +656,11 @@
                                         <div class="card bg-info card-xl-stretch mb-5 mb-xl-8">
                                             <!--begin::Body-->
                                             <div class="card-body">
-                                                <div class="text-white fw-bolder fs-2 mb-2 mt-5">{{ $totalAmcRate ? number_format($totalAmcRate, 2) . '%' : '0%' }}</div>
+                                                <div
+                                                    class="text-white fw-bolder fs-2 mb-2 mt-5">{{ $totalAmcRate ? number_format($totalAmcRate, 2) . '%' : '0%' }}</div>
                                                 <div class="fw-bold text-white">
                                                     <a class="text-white">
-                                                    Total AMC Rate
+                                                        Total AMC Rate
                                                     </a>
                                                 </div>
                                             </div>
