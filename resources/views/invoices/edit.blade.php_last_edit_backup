@@ -62,9 +62,9 @@
                     <!-- Start Form-->
 
                     <form class="g-form g-proposal w-100" action="{{ route('invoice-update', $invoice->id) }}" enctype="multipart/form-data" method="POST">
-                        <input type="hidden" name="sub_total" id="subtotal-hidden" value="{{ old('sub_total', $invoice->sub_total) }}">
-                        <input type="hidden" name="total_amount" id="total-hidden" value="{{ old('total_amount', $invoice->total_amount) }}">
-                        <input type="hidden" name="total_tax" id="totaltax-hidden" value="{{ old('total_tax', $invoice->total_tax) }}">
+                        <input type="hidden" name="sub_total" id="subtotal-hidden" value="0.00">
+                        <input type="hidden" name="total_amount" id="total-hidden" value="0.00">
+                        <input type="hidden" name="total_tax" id="totaltax-hidden" value="0.00">
                         <input type="hidden" name="total_discount" id="totaldiscount-hidden" value="0.00">
                         @csrf
                         @method('PUT')
@@ -582,7 +582,7 @@
                                                         <th><strong>Adjustment :</strong>
                                                             <input class="form-control form-control-sm" type="number" name="adjustment" placeholder="Adjustment">
                                                         </th>
-                                                        <td class="text-end"><strong>BDT</strong> <span id="custom_adjustment">{{ old('adjustment', $invoice->adjustment) }}</span></td>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="adjustment-amount">{{ old('adjustment', $invoice->adjustment) }}</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th class="text-end"><strong>Total</strong></th>
@@ -632,7 +632,7 @@
                                                 <table class="table table-sm table-row-bordered align-middle">
                                                     <tr>
                                                         <th class="text-end"><strong>Sub Total:</strong></th>
-                                                        <td class="text-end"><strong>BDT</strong> <span id="custom-subtotal-amount">{{ old('sub_total', $invoice->sub_total) }}</span></td>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="custom-subtotal-amount">0.00</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th><strong>VAT :</strong>
@@ -647,18 +647,17 @@
                                                     <!-- New Tax Row -->
                                                     <tr>
                                                         <th class="text-end"><strong>Total VAT:</strong></th>
-                                                        <td class="text-end"><strong>BDT</strong> <span id="custom-total-vat">{{ old('total_tax', $invoice->total_tax) }}</span></td>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="custom-total-vat">0.00</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th><strong>Adjustment :</strong>
                                                             <input id="custom_adjustment" class="form-control form-control-sm" type="number" name="custom_adjustment" placeholder="Adjustment" />
                                                         </th>
-                                                        <td class="text-end"><strong>BDT</strong> <span id="custom_adjustment">{{ old('adjustment', $invoice->adjustment) }}</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th class="text-end"><strong>Total</strong></th>
                                                         <td class="text-end">
-                                                            <strong>BDT</strong> <span id="custom-total-amount">{{ old('total_amount', $invoice->total_amount) }}</span>
+                                                            <strong>BDT</strong> <span id="custom-total-amount">0.00</span>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -966,7 +965,7 @@
         });
 
         const formattedTotal = total.toFixed(2);
-
+        
         document.getElementById('custom-subtotal-amount').innerHTML = formattedTotal;
         document.getElementById('subtotal-hidden').value = formattedTotal;
         document.getElementById('total-hidden').value = formattedTotal;
@@ -980,8 +979,8 @@
             calculateCustomAdjustment(adjustmentInput.value);
         }
     }
-
-    function calculateVat(value) {
+    function calculateVat(value)
+    {
         value = parseFloat(value);
         if (isNaN(value)) {
             value = 0;
@@ -990,12 +989,11 @@
         let totalVat = (subTotalAmount * value) / 100;
         document.getElementById('totaltax-hidden').value = totalVat;
         let totalAmount = 0;
-        totalAmount = parseFloat(subTotalAmount) + parseFloat(totalVat) + parseFloat(totalAmount);
+        totalAmount = parseFloat(subTotalAmount) + parseFloat(totalVat) + parseFloat(totalAmount); 
         document.getElementById('custom-total-vat').innerHTML = totalVat.toFixed(2);
         document.getElementById('total-hidden').value = totalAmount.toFixed(2);
         document.getElementById('custom-total-amount').innerHTML = totalAmount.toFixed(2);
     }
-
     function calculateCustomAdjustment(value) {
         // Validate the input value
         value = value === '' || isNaN(parseFloat(value)) ? 0 : parseFloat(value);
@@ -1013,11 +1011,11 @@
         let totalAmountDisplay = document.getElementById('custom-total-amount');
         let adjustmentDisplay = document.getElementById('custom-adjustment-amount');
 
-        if (totalHidden)
+        if (totalHidden) 
             totalHidden.value = totalAmount.toFixed(2);
-        if (totalAmountDisplay)
+        if (totalAmountDisplay) 
             totalAmountDisplay.innerHTML = totalAmount.toFixed(2);
-        if (adjustmentDisplay)
+        if (adjustmentDisplay) 
             adjustmentDisplay.innerHTML = totalAmount.toFixed(2);
     }
 
@@ -1032,7 +1030,7 @@
         const customInvoiceHeader = document.getElementById('custom-invoice-header');
         const customInvoiceBody = document.getElementById('custom-invoice-body');
 
-        const footerTable = document.getElementById('custom-invoice-footer-table');
+        const footerTable = document.getElementById('custom-invoice-footer-table'); 
         const customInvoiceFooterHeader = document.getElementById('custom-invoice-footer-header');
         const customInvoiceFooterBody = document.getElementById('custom-invoice-footer-body');
         const customInvoiceDiv = document.getElementById('custom-invoice');
@@ -1041,17 +1039,17 @@
         const customAdjustment = document.getElementById('custom_adjustment');
 
 
-        window.sanitizeInput = function(inputElement) {
+        window.sanitizeInput = function (inputElement) {
             inputElement.value = inputElement.value.replace(/,/g, '');
             getTotalAmount(inputElement.value);
         };
 
         customVat.addEventListener('input', function() {
-            calculateVat(this.value);
+            calculateVat(this.value);  
         });
 
         customAdjustment.addEventListener('input', function() {
-            calculateCustomAdjustment(this.value);
+            calculateCustomAdjustment(this.value);  
         });
 
         customInvoiceSelect.addEventListener('change', function() {
@@ -1064,26 +1062,7 @@
                 proposalTable.style.display = 'table';
                 customInvoiceDiv.style.display = 'block';
 
-                const fields = fieldDetails.map(detail => ({
-                    field_name: detail.field_name,
-                    field_value: detail.field_value
-                }));
-
-
-                const rawData = JSON.parse(invoiceDescription.replace(/&quot;/g, '"'));
-                const existingData = rawData.map(entry => {
-                    const result = {};
-                    entry.forEach(field => {
-                        const key = Object.keys(field)[0];
-                        result[key] = field[key];
-                    });
-                    return result;
-                });
-
-                console.log(invoiceDescription);
-
-                // Populate the invoice fields with existing data
-                populateCustomInvoiceFields(fields, existingData);
+                populateCustomInvoiceFields(fieldDetails);
             } else {
                 customInvoiceDiv.style.display = 'none';
                 defaultInvoice.style.display = 'block';
@@ -1102,114 +1081,43 @@
         });
 
 
-        function populateCustomInvoiceFields(fields, existingData = []) {
-            // Headers in the custom invoice table
+        function populateCustomInvoiceFields(fields) {
+            // headers in custom invoice table
             customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Amount</th><th>Action</th>';
 
-            // Initialize the custom invoice table body
-            customInvoiceBody.innerHTML = '';
 
-            // If existing data is available, populate the first row
-            if (existingData.length > 0) {
-                existingData.forEach((data, index) => {
-                    const initialRow = `
-                        <tr>
-                            ${fields.map(field => `
-                                <td>
-                                    <input 
-                                        type="text" 
-                                        class="form-control" 
-                                        name="items[${field.field_value}][]" 
-                                        placeholder="${field.field_name}" 
-                                        value="${data[field.field_value] || ''}" />
-                                </td>`).join('')}
-                            <td>
-                                <input 
-                                    type="text" 
-                                    class="form-control custom-amount-input" 
-                                    name="items[amount][]" 
-                                    placeholder="Amount" 
-                                    value="${data['amount'] || ''}" 
-                                    oninput="sanitizeInput(this)" />
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
-                                    <i class="bi bi-trash pe-0"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                    // Add the initial row for each existing data entry
-                    customInvoiceBody.insertAdjacentHTML('beforeend', initialRow);
-                });
-            }
+            customInvoiceBody.innerHTML = `
+            <tr>
+                ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
+                <td><input type="text" class="form-control custom-amount-input" name="items[amount][]" placeholder="Amount" oninput="sanitizeInput(this)"  onblur="getTotalAmount(this.value)"/></td>
+                <td>
+                    
+                    <button type="button" class="btn btn-sm btn-primary py-2 px-3" id="add-row">
+                                                            <i class="bi bi-plus-lg pe-0"></i>
+                                                        </button>
+                </td>
+            </tr>
+        `;
 
-            // After populating existing data, add an empty row with "Add More" functionality
-            customInvoiceBody.insertAdjacentHTML('beforeend', `
-                <tr>
-                    ${fields.map(field => `
-                        <td>
-                            <input 
-                                type="text" 
-                                class="form-control" 
-                                name="items[${field.field_value}][]" 
-                                placeholder="${field.field_name}" />
-                        </td>`).join('')}
-                    <td>
-                        <input 
-                            type="text" 
-                            class="form-control custom-amount-input" 
-                            name="items[amount][]" 
-                            placeholder="Amount" 
-                            oninput="sanitizeInput(this)" />
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-primary py-2 px-3" id="add-row">
-                            <i class="bi bi-plus-lg pe-0"></i>
-                        </button>
-                    </td>
-                </tr>
-            `);
-
-            // Add functionality for the "Remove" buttons
+            //"add More" button and remove buttons
             addRemoveFunctionality();
 
             // Add event listener for the "Add More" button
             document.getElementById('add-row').addEventListener('click', function() {
-                // Insert a new, empty row
+                // insert new row
                 customInvoiceBody.insertAdjacentHTML('beforeend', `
-                    <tr>
-                        ${fields.map(field => `
-                            <td>
-                                <input 
-                                    type="text" 
-                                    class="form-control" 
-                                    name="items[${field.field_value}][]" 
-                                    placeholder="${field.field_name}" />
-                            </td>`).join('')}
-                        <td>
-                            <input 
-                                type="text" 
-                                class="form-control custom-amount-input" 
-                                name="items[amount][]" 
-                                placeholder="Amount" 
-                                oninput="sanitizeInput(this)" />
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
-                                <i class="bi bi-trash pe-0"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `);
+                <tr>
+                    ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
+                    <td><input type="text" class="form-control custom-amount-input" name="items[amount][]" placeholder="Amount" oninput="sanitizeInput(this)"/></td>
+                    <td><button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
+                           <i class="bi bi-trash pe-0"></i>
+                       </button>
+                </tr>
+            `);
 
-                // Reapply functionality for new rows
-                addRemoveFunctionality();
+                addRemoveFunctionality(); // reapply remove functionality to new row
             });
         }
-        const invoiceDescription = `{{ $invoice->item_description }}`;
-
-
 
         // function populateCustomInvoiceFooters(fields) {
         //     // headers in custom invoice table
