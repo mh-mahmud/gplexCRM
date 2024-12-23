@@ -111,7 +111,8 @@ class InvoiceService
             'admin_note' => $data['admin_note'],
             'client_note' => $data['client_note'],
             'terms_conditions' => $data['terms_conditions'],
-            'adjustment' => $data['custom_adjustment'] ? $data['custom_adjustment'] : $data['adjustment'],
+            //'adjustment' => $data['custom_adjustment'] ? $data['custom_adjustment'] : $data['adjustment'],
+            'adjustment' => $data['custom_adjustment'] ?? $data['adjustment'] ?? null,
             'currency' => $data['currency'],
             'payment_mode' => $data['payment_mode'],
             'sale_agent_id' => $data['sale_agent_id'],
@@ -126,7 +127,7 @@ class InvoiceService
 
 
 
-    public function updateInvoice(array $data, $id)
+    public function updateInvoice_19122024(array $data, $id)
     {
         $invoice = Invoice::findOrFail($id);
         //dd($data);die();
@@ -169,6 +170,90 @@ class InvoiceService
         $invoice->item_description = json_encode($items);
         $invoice->save();
     }
+
+
+    public function updateInvoice(array $data, $id)
+    {
+        $invoice = Invoice::findOrFail($id);
+
+        //update details invoice general details
+        $invoice->invoice_number = 'INV-' . $data['invoice_number'];
+        $invoice->customer_id = $data['customer_id'];
+        $invoice->invoice_custom_form_id = $data['custom_invoice_id'] ?? null;
+        $invoice->address = $data['address'];
+        $invoice->invoice_date = $data['invoice_date'];
+        $invoice->due_date = $data['due_date'];
+        $invoice->sub_total = $data['sub_total'];
+        $invoice->total_amount = $data['total_amount'];
+        $invoice->total_tax = $data['total_tax'] ?? null;
+        $invoice->discount = $data['total_discount'] ?? null;
+        $invoice->discount_type = $data['discount_type_name'] ?? null;
+        //$invoice->adjustment = $data['custom_adjustment'] ? $data['custom_adjustment'] : $data['adjustment'];
+        $invoice->adjustment = $data['custom_adjustment'] ?? $data['adjustment'] ?? null;
+        $invoice->admin_note = $data['admin_note'];
+        $invoice->client_note = $data['client_note'];
+        $invoice->terms_conditions = $data['terms_conditions'];
+        $invoice->currency = $data['currency'];
+        $invoice->payment_mode = $data['payment_mode'];
+        $invoice->sale_agent_id = $data['sale_agent_id'];
+        $invoice->created_by = Auth::user()->id;
+        $invoice->invoice_status = $data['invoice_status'];
+
+        //handle item description logic
+        $items = [];
+        if (empty($data["custom_invoice_id"])) {
+            // default invoice items
+            foreach ($data['items']['item_name'] as $key => $itemName) {
+                if (!empty($itemName) || !empty($data['items']['description'][$key]) || !empty($data['items']['quantity'][$key]) || !empty($data['items']['rate'][$key])) {
+                    $items[] = [
+                        'Item' => $itemName,
+                        'Description' => $data['items']['description'][$key] ?? '',
+                        'Qty' => $data['items']['quantity'][$key] ?? 0,
+                        'Rate' => $data['items']['rate'][$key] ?? 0,
+                        'Tax' => $data['items']['tax'][$key] ?? 0,
+                        'Amount' => ($data['items']['quantity'][$key] ?? 0) * ($data['items']['rate'][$key] ?? 0),
+                    ];
+                }
+            }
+        } else {
+            //custom invoice items
+            $custom_form = InvoiceCustomForm::where('id', $data["custom_invoice_id"])
+            ->select('field_details', 'footer_details')
+            ->first();
+
+            foreach ($custom_form->field_details as $custom_form_data) {
+                $fieldName = $custom_form_data["field_value"];
+                if (array_key_exists($fieldName, $data['items'])) {
+                    foreach ($data['items'][$fieldName] as $key => $value) {
+                        if (!empty($value)) {
+                            $items[$key][] = [$fieldName => $value];
+                        }
+                    }
+                }
+            }
+            if (!empty($data['items']['amount'])) {
+                foreach ($data['items']['amount'] as $key => $amount) {
+                    $items[$key][] = ["amount" => $amount];
+                }
+            }
+
+            $items = array_filter($items, function ($row) {
+                // Check if the row has any non-empty fields
+                foreach ($row as $field) {
+                    if (!empty(array_values($field)[0])) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+       
+        // array to JSON and save
+        $invoice->item_description = json_encode($items);
+        //dd($invoice->item_description);die();
+        $invoice->save();
+    }
+
 
 
     public function searchInvoices($request)

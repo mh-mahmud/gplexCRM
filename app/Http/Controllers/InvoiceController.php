@@ -129,6 +129,7 @@ class InvoiceController extends Controller
         $invoice = Invoice::findOrFail($id);
         $invoiceCustomFormId = $invoice->invoice_custom_form_id;
         $invoiceItems = json_decode($invoice->item_description, true);
+        //dd($invoiceItems);die();
         //dd($items);die();
         //$customers = Customer::all();
         $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
@@ -164,7 +165,7 @@ class InvoiceController extends Controller
                 return back()->withErrors(['invoice_number' => 'This invoice number exists'])->withInput();
             }
 
-            // Handle other database errors
+            //database errors
             return back()->withErrors(['error' => 'There was an error creating the invoice. Please try again later.'])->withInput();
         }
     }

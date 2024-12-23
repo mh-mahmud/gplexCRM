@@ -359,7 +359,7 @@
                                             </div>
 
 
-                                            <div class="g-right-proposal-table-header d-flex align-items-center gap-3">
+                                            <!-- <div class="g-right-proposal-table-header d-flex align-items-center gap-3">
 
                                                 <div class="min-w-sm-100px">
                                                     <strong>Show quantity as: </strong>
@@ -384,7 +384,7 @@
                                                     </label>
                                                 </div>
 
-                                            </div>
+                                            </div> -->
 
                                         </div>
                                     </div>
