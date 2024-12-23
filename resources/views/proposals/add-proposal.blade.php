@@ -258,7 +258,7 @@
                                 </div>
                                 <!--End Row-->
 
-                                <div class="container-fluid mt-2 overflow-hidden">
+                                <div class="mt-2 overflow-hidden">
 
                                     <div class="card">
                                         <div class="card-header">
@@ -491,7 +491,7 @@
     $("#tax_amount").on("focusout", function() {
         var tax = parseFloat($("#tax_amount").val()) || 0;
         offer_price = parseFloat($("#offer_price").val()) || 0;
-        
+
         if(offer_price > 0 && tax >= 0 && tax <= 50) {
             var tax_value = offer_price*tax/100;
             var final = tax_value + offer_price;
