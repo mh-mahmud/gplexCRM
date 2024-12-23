@@ -49,7 +49,7 @@
                         </div>
 
                         <!-- Card Body-->
-                        <div class="card-body">
+                        <div class="card-body pb-2">
 
                             <!-- Start Form-->
 
