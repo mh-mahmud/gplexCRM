@@ -374,7 +374,7 @@
                                             </div>
 
 
-                                            <div class="row">
+                                            <div class="row mb-4">
                                                 <div class="col-md-4 ms-auto ">
                                                     <!-- Proposal Calculations-->
                                                     <div class="table-responsive bg-light-warning rounded-2 p-3">
@@ -436,7 +436,7 @@
 
 
                                         <!--begin::Actions-->
-                                        <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                        <div class="card-footer d-flex justify-content-end py-4 pe-0">
                                             <button type="submit" class="btn btn-primary"
                                                     id="kt_account_profile_details_submit">Submit
                                             </button>
