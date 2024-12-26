@@ -140,8 +140,8 @@
                                     </div>
 
                                     <!--End Row-->
-                                    <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <input type="reset" id="resetButton" value="Reset" class="btn btn-light me-2">
+                                    <div class="d-flex justify-content-end gap-2 mt-5">
+                                        <input type="reset" id="resetButton" value="Reset" class="btn btn-light">
                                         <button type="submit" class="btn btn-primary"
                                                 id="kt_account_profile_details_submit">Send
                                         </button>
@@ -229,7 +229,7 @@
                 }
             });
 
-            var summernoteElement = document.querySelectorAll('.editor');         
+            var summernoteElement = document.querySelectorAll('.editor');
             document.getElementById('resetButton').addEventListener('click', function() {
                 $(summernoteElement).summernote('code', ''); // Clear the content of Summernote
             });
