@@ -98,7 +98,7 @@
 
 
                                         <!--End Row-->
-                                        <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                        <div class="d-flex justify-content-end pt-5">
                                             <input type="reset" id="resetButton" value="Reset" class="btn btn-light me-2">
                                             <button type="submit" class="btn btn-primary"
                                                     id="form_submit">Save Changes
@@ -131,7 +131,7 @@
 @section('endScript')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var summernoteElement = document.querySelectorAll('.editor');         
+        var summernoteElement = document.querySelectorAll('.editor');
         document.getElementById('resetButton').addEventListener('click', function() {
             $(summernoteElement).summernote('code', ''); // Clear the content of Summernote
         });
