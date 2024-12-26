@@ -78,7 +78,7 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <div class="form-group">
+                                    <div class="form-group mb-3">
                                         <label class="form-label fw-bolder text-dark" for="textarea">Content<span
                                                 class="text-danger">*</span></label>
                                         <textarea class="form-control form-control-sm  form-control-solid"
