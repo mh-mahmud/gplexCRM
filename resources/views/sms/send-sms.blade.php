@@ -109,7 +109,7 @@
 
 
                                         <!--End Row-->
-                                      <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                      <div class="d-flex justify-content-end mt-5">
                                             <input type="reset" id="reset_btn" value="Reset" class="btn btn-light me-2">
                                             <button type="submit" class="btn btn-primary"
                                                     id="kt_account_profile_details_submit">Save Changes
