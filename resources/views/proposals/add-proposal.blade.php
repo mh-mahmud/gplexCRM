@@ -258,7 +258,7 @@
                                 </div>
                                 <!--End Row-->
 
-                                <div class="container-fluid mt-2 overflow-hidden">
+                                <div class="mt-2 overflow-hidden">
 
                                     <div class="card">
                                         <div class="card-header">
@@ -374,7 +374,7 @@
                                             </div>
 
 
-                                            <div class="row">
+                                            <div class="row mb-4">
                                                 <div class="col-md-4 ms-auto ">
                                                     <!-- Proposal Calculations-->
                                                     <div class="table-responsive bg-light-warning rounded-2 p-3">
@@ -436,7 +436,7 @@
 
 
                                         <!--begin::Actions-->
-                                        <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                        <div class="card-footer d-flex justify-content-end py-4 pe-0">
                                             <button type="submit" class="btn btn-primary"
                                                     id="kt_account_profile_details_submit">Submit
                                             </button>
@@ -491,7 +491,7 @@
     $("#tax_amount").on("focusout", function() {
         var tax = parseFloat($("#tax_amount").val()) || 0;
         offer_price = parseFloat($("#offer_price").val()) || 0;
-        
+
         if(offer_price > 0 && tax >= 0 && tax <= 50) {
             var tax_value = offer_price*tax/100;
             var final = tax_value + offer_price;
