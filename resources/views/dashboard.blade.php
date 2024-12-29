@@ -342,7 +342,7 @@
                         <!--begin::List Widget 3-->
                         <div class="card card-xl-stretch mb-xl-8">
                             <!--begin::Header-->
-                            <div class="card-header card-header-dashboard border-0">
+                            <div class="card-header card-header-dashboard border-0 bd-cyan-2">
                                 <h3 class="card-title fw-bolder"><span class="card-label fw-bolder fs-3">Todo List</span></h3>
                                 <div class="card-toolbar">
                                     <!--begin::Menu-->
@@ -435,7 +435,7 @@
                         <!--begin::Tables Widget 9-->
                         <div class="card card-xl-stretch mb-5 mb-xl-8">
                             <!--begin::Header-->
-                            <div class="card-header card-header-dashboard border-0">
+                            <div class="card-header card-header-dashboard border-0 bd-cyan-2">
                                 <h3 class="card-title align-items-start flex-column text-dark">
                                     <span class="card-label fw-bolder fs-3">New Leads</span>
                                 </h3>
@@ -556,7 +556,7 @@
                         <!--begin::List Widget 2-->
                         <div class="card card-xl-stretch mb-xl-8">
                             <!--begin::Header-->
-                            <div class="card-header card-header-dashboard border-0">
+                            <div class="card-header card-header-dashboard border-0 bd-cyan-2">
                                 <h3 class="card-title fw-bolder text-dark"><span class="card-label fw-bolder fs-3">Agents</span></h3>
                                 <div class="card-toolbar">
                                     <!--begin::Menu-->
@@ -620,7 +620,7 @@
                         <!--begin::Tables Widget 9-->
                         <div class="card card-xl-stretch mb-5 mb-xl-8">
                             <!--begin::Header-->
-                            <div class="card-header card-header-dashboard border-0">
+                            <div class="card-header card-header-dashboard border-0 bd-cyan-2">
                                 <h3 class="card-title align-items-start flex-column py-2 text-dark">
                                     <span class="card-label fw-bolder fs-3">Campaign</span>
                                 </h3>

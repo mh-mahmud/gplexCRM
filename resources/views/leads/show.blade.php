@@ -192,7 +192,7 @@
 
                             <div class="card-header bg-light bd-cyan">
                                 <div class="card-title">
-                                    <h2>Lead Details</h2>
+                                    <h4>Lead Details</h4>
                                 </div>
                             </div>
                             <!--begin::Body-->
