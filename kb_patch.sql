@@ -434,3 +434,7 @@ ALTER TABLE `customers` ADD `phone` VARCHAR(50) NULL DEFAULT NULL AFTER `last_na
 ALTER TABLE `product_specification` ADD COLUMN `rental_amount` DECIMAL(15,2) NULL AFTER `amc_rate`;
 
 ALTER TABLE `product_specification` CHANGE `work_order_rate` `work_order_rate` DECIMAL(15,2) NULL,CHANGE `amc_rate` `amc_rate` DECIMAL(15,2) NULL;
+
+
+-- 29-12-2024 by rokib
+ALTER TABLE `leads` ADD COLUMN `lead_start_date` DATE NULL AFTER `country`;
