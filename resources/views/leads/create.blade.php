@@ -394,13 +394,13 @@
                                 <div class="fv-row mb-3">
                                     <label for="{{ $field->field_name }}" class="form-label fw-bolder text-dark">{{ ucwords(str_replace('_', ' ', $field->field_name)) }}</label>
                                     @if(in_array($field->field_value, ['varchar', 'char']))
-                                    <input type="text" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}">
+                                    <input type="text" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}" value="{{ old($field->field_name) }}">
                                     @elseif($field->field_value == 'int')
-                                    <input type="number" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}">
+                                    <input type="number" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}" value="{{ old($field->field_name) }}">
                                     @elseif($field->field_value == 'date')
-                                    <input type="date" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $field->field_name }}">
+                                    <input type="date" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $field->field_name }}" value="{{ old($field->field_name) }}">
                                     @elseif($field->field_value == 'text')
-                                    <textarea class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}" rows="1"></textarea>
+                                    <textarea class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}" rows="1">{{ old($field->field_name) }}</textarea>
                                     @elseif($field->field_value == 'file')
                                     <input type="file" class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}">
                                     @elseif($field->field_value == 'dropdown')
@@ -412,7 +412,9 @@
                                     <select class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}" id="{{ $field->field_name }}">
                                         <option value="" selected>Select {{ ucwords(str_replace('_', ' ', $field->field_name)) }}</option>
                                         @foreach($dropdownOptions as $option)
-                                        <option value="{{ $option }}">{{ ucfirst($option) }}</option>
+                                        <option value="{{ $option }}" {{ old($field->field_name) == $option ? 'selected' : '' }}>
+                                            {{ ucfirst($option) }}
+                                        </option>
                                         @endforeach
                                     </select>
                                     @endif
