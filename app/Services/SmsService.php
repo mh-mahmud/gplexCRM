@@ -42,6 +42,12 @@ class SmsService
         }
     }
 
+    public function getSmsTemplates()
+    {
+        return SmsTemplate::select('sms_templates.id', 'sms_templates.title')->get();
+    }
+
+
     public function templateStore($request)
     {
         $request->validate([

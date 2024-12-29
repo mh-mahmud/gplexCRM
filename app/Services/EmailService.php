@@ -46,6 +46,11 @@ class EmailService
         }
     }
 
+    public function getEmailTemplates()
+    {
+        return EmailTemplate::select("id", "email_subject")->get();
+    }
+
     public function templateStore($request)
     {
         $request->validate([
