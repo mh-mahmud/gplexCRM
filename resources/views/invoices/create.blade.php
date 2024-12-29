@@ -1177,6 +1177,7 @@
             document.querySelectorAll('.remove-row').forEach(button => {
                 button.addEventListener('click', function() {
                     this.closest('tr').remove();
+                    getTotalAmount();
                 });
             });
         }
