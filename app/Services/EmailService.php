@@ -48,7 +48,9 @@ class EmailService
 
     public function getEmailTemplates()
     {
-        return EmailTemplate::select("id", "email_subject")->get();
+        return EmailTemplate::where('status', 1)
+                        ->select("id", "email_subject", "email_content")
+                        ->get();
     }
 
     public function templateStore($request)

@@ -24,9 +24,12 @@ class TaskService
 
     public function getUsers()
     {
-        return User::where('role_id', '!=', config('constants.ADMIN_ROLE_ID'))
-                    ->orWhereNull('role_id')
-                    ->get();
+        return User::where(function ($query) {
+                    $query->where('role_id', '!=', config('constants.ADMIN_ROLE_ID'))
+                        ->orWhereNull('role_id');
+                })
+                ->where('status', 1)
+                ->get();  
     }
 
     public function addTaskPro($request)

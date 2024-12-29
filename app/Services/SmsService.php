@@ -44,7 +44,9 @@ class SmsService
 
     public function getSmsTemplates()
     {
-        return SmsTemplate::select('sms_templates.id', 'sms_templates.title')->get();
+        return SmsTemplate::where('status', 1)
+                        ->select('sms_templates.id', 'sms_templates.title', 'description')
+                        ->get();
     }
 
 
