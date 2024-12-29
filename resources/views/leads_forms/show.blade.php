@@ -66,9 +66,10 @@
                         </div>
 
                         <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
-                            <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Description</span>
+                            <span class="fw-bold w-lg-150px flex-shrink-0">Description</span>
                             <span>{{ $leadsForm->form_description }}</span>
                         </div>
+                        
 
                         <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                             <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Status</span>
