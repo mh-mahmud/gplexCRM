@@ -190,10 +190,10 @@ class SmsService
                     ->select('sms_queue.*', 'leads.first_name', 'leads.last_name', 'users.first_name as send_by_fname', 'users.last_name as send_by_lname')
                     ->leftJoin('leads', 'sms_queue.lead_id', '=', 'leads.id')
                     ->join('users', 'users.id', '=', 'sms_queue.user_id');
-        if (Auth::user()->user_type === 'agent') {
-            $sql->where('sms_queue.user_id',Auth::id());
+        // if (Auth::user()->user_type === 'agent') {
+        //     $sql->where('sms_queue.user_id',Auth::id());
 
-        }
+        // }
         $data = $request->all();
         if(!empty($data["search"])) {
             $sql->where('sms_to','like', '%' . $data["search"] . '%');
