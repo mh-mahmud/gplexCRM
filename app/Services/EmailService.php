@@ -186,10 +186,10 @@ class EmailService
             $sql->where('email_to','like', '%' . $data["search"] . '%');
 
         }
-        if (Auth::user()->user_type === 'agent') {
-            $sql->where('email_log.user_id', Auth::id());
+        // if (Auth::user()->user_type === 'agent') {
+        //     $sql->where('email_log.user_id', Auth::id());
 
-        }
+        // }
         return $sql->orderBy('id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
     }
 
