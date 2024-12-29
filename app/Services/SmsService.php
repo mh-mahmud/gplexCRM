@@ -59,8 +59,9 @@ class SmsService
                 $dataObj->created_by            = Auth::id();
                 $dataObj->status                = $data['status'];
                 $dataObj->save();
+                $log_text = $data['title'].", SMS template created"; 
 
-                Helper::storeLog($data['title'], "SMS Template", "SMS Template Create", "Created");
+                Helper::storeLog($log_text, "SMS Template", "SMS Template Create", NULL);
 
                 return (object)[
                     'status'                 => 201,
@@ -89,7 +90,9 @@ class SmsService
         return  DB::transaction(function () use ($id) {
             $data = SmsTemplate::findOrFail($id);
             $data->delete();
-            Helper::storeLog($data->title, "SMS Template", "SMS Template Delete", "Deleted");
+            $log_text = $data['title'].", SMS template deleted"; 
+
+            Helper::storeLog($log_text, "SMS Template", "SMS Template Delete", NULL);
         });
     }
 
@@ -110,8 +113,9 @@ class SmsService
                 $dataObj->updated_by            = Auth::id();
                 $dataObj->status                = $data['status'];
                 $dataObj->save();
+                $log_text = $data['title'].", SMS template updated"; 
 
-                Helper::storeLog($data['title'], "SMS Template", "SMS Template Update", "Updated");
+                Helper::storeLog($log_text, "SMS Template", "SMS Template Update", NULL);
 
                 return (object)[
                     'status'                 => 208,
