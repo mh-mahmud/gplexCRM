@@ -72,7 +72,8 @@ class ProductService
                 $dataObj->created_by            = Auth::id();
                 $dataObj->save();
 
-                Helper::storeLog($data['name'], "Products", "Add Product", "Added");
+                $logMessage = $data['name'].", new product added"; 
+                Helper::storeLog($logMessage, "Products", "Add Product", NULL);
 
                 return (object)[
                     'status'                 => 201,
@@ -132,7 +133,9 @@ class ProductService
                 $dataObj->updated_by            = Auth::id();
                 $dataObj->save();
 
-                Helper::storeLog($data['name'], "Products", "Update Product", "Updated");
+                $logMessage = $data['name'].",  product updated"; 
+
+                Helper::storeLog($logMessage, "Products", "Update Product", NULL);
 
                 return (object)[
                     'status'                 => 208,
@@ -162,7 +165,9 @@ class ProductService
                 $data = Product::findOrFail($id);
                 $data->delete();
 
-                Helper::storeLog($data->name, "Products", "Delete Product", "Deleted");
+                $logMessage = $data['name'].",  product deleted"; 
+
+                Helper::storeLog($logMessage, "Products", "Delete Product", NULL);
 
                 return (object)[
                     'status'                 => 200,
