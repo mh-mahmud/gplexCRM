@@ -38,6 +38,7 @@ class Lead extends Model
        'zip',
        'state',
        'country',
+       'lead_start_date',
        'lead_notes',
        'created_by',
        'profile_image'
