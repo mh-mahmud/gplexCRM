@@ -249,7 +249,7 @@ use Carbon\Carbon;
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
-                        <span class="fw-bold w-lg-150px flex-shrink-0">Implementation Value:</span>
+                        <span class="fw-bold w-lg-150px flex-shrink-0">Implementation Cost:</span>
                         <span>{{ $productSpecification->implementation_value }}</span>
                     </div>
 

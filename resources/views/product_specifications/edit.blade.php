@@ -356,7 +356,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label class="form-label fw-bolder text-dark">Implementation Value</label>
+                                <label class="form-label fw-bolder text-dark">Implementation Cost</label>
                                 <textarea class="form-control form-control-sm form-control-solid" name="implementation_value" rows="3">{{ old('implementation_value', $productSpecification->implementation_value) }}</textarea>
                                 @if ($errors->has('implementation_value'))
                                 <div class="text-danger">{{ $errors->first('implementation_value') }}</div>

@@ -436,5 +436,5 @@ ALTER TABLE `product_specification` ADD COLUMN `rental_amount` DECIMAL(15,2) NUL
 ALTER TABLE `product_specification` CHANGE `work_order_rate` `work_order_rate` DECIMAL(15,2) NULL,CHANGE `amc_rate` `amc_rate` DECIMAL(15,2) NULL;
 
 
--- 29-12-2024 by rokib
+-- 29-12-2024 by rokib its not given in db
 ALTER TABLE `leads` ADD COLUMN `lead_start_date` DATE NULL AFTER `country`;

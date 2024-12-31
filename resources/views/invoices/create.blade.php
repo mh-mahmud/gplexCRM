@@ -237,11 +237,15 @@
                                             <label class="form-label fw-bolder text-dark">Status
 
                                             </label>
-                                            <select class="form-control form-control-sm form-control-solid" name="invoice_status" aria-label="Default select example">
+                                            <select class="form-control form-control-sm form-control-solid" name="invoice_status">
+                                                <option value="" disabled {{ old('invoice_status') == '' ? 'selected' : '' }}>Select Invoice Status</option>
                                                 @foreach(config('constants.invoice_status') as $key => $status)
-                                                <option value="{{ $key }}" {{ old('invoice_status', $loop->first ? $key : '') == $key ? 'selected' : '' }}>{{ $status }}</option>
+                                                <option value="{{ $key }}" {{ old('invoice_status') == $key ? 'selected' : '' }}>
+                                                    {{ $status }}
+                                                </option>
                                                 @endforeach
                                             </select>
+
 
                                             @if ($errors->has('invoice_status'))
                                             <span class="text-danger">{{ $errors->first('invoice_status') }}</span>
@@ -264,18 +268,18 @@
 
                                                 @foreach($agents as $agent)
                                                 @if($isAdmin)
-                                               <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : '' }}>
+                                                <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : '' }}>
                                                     {{ $agent->first_name }} {{ $agent->last_name }}
                                                 </option>
                                                 @elseif($agent->user_id == Auth::user()->id)
-                                               <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : 'selected' }}>
+                                                <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : 'selected' }}>
                                                     {{ $agent->first_name }} {{ $agent->last_name }}
                                                 </option>
                                                 <input type="hidden" name="sale_agent_id" value="{{ $agent->agent_id }}">
                                                 @endif
                                                 @endforeach
                                             </select>
-                                          
+
 
                                             @if ($errors->has('sale_agent_id'))
                                             <span class="text-danger">{{ $errors->first('sale_agent_id') }}</span>
@@ -1005,7 +1009,7 @@
         });
 
         const formattedTotal = total.toFixed(2);
-        
+
         document.getElementById('custom-subtotal-amount').innerHTML = formattedTotal;
         document.getElementById('subtotal-hidden').value = formattedTotal;
         document.getElementById('total-hidden').value = formattedTotal;
@@ -1019,8 +1023,8 @@
             calculateCustomAdjustment(adjustmentInput.value);
         }
     }
-    function calculateVat(value)
-    {
+
+    function calculateVat(value) {
         value = parseFloat(value);
         if (isNaN(value)) {
             value = 0;
@@ -1029,11 +1033,12 @@
         let totalVat = (subTotalAmount * value) / 100;
         document.getElementById('totaltax-hidden').value = totalVat;
         let totalAmount = 0;
-        totalAmount = parseFloat(subTotalAmount) + parseFloat(totalVat) + parseFloat(totalAmount); 
+        totalAmount = parseFloat(subTotalAmount) + parseFloat(totalVat) + parseFloat(totalAmount);
         document.getElementById('custom-total-vat').innerHTML = totalVat.toFixed(2);
         document.getElementById('total-hidden').value = totalAmount.toFixed(2);
         document.getElementById('custom-total-amount').innerHTML = totalAmount.toFixed(2);
     }
+
     function calculateCustomAdjustment(value) {
         // Validate the input value
         value = value === '' || isNaN(parseFloat(value)) ? 0 : parseFloat(value);
@@ -1051,11 +1056,11 @@
         let totalAmountDisplay = document.getElementById('custom-total-amount');
         let adjustmentDisplay = document.getElementById('custom-adjustment-amount');
 
-        if (totalHidden) 
+        if (totalHidden)
             totalHidden.value = totalAmount.toFixed(2);
-        if (totalAmountDisplay) 
+        if (totalAmountDisplay)
             totalAmountDisplay.innerHTML = totalAmount.toFixed(2);
-        if (adjustmentDisplay) 
+        if (adjustmentDisplay)
             adjustmentDisplay.innerHTML = totalAmount.toFixed(2);
     }
 
@@ -1070,7 +1075,7 @@
         const customInvoiceHeader = document.getElementById('custom-invoice-header');
         const customInvoiceBody = document.getElementById('custom-invoice-body');
 
-        const footerTable = document.getElementById('custom-invoice-footer-table'); 
+        const footerTable = document.getElementById('custom-invoice-footer-table');
         const customInvoiceFooterHeader = document.getElementById('custom-invoice-footer-header');
         const customInvoiceFooterBody = document.getElementById('custom-invoice-footer-body');
         const customInvoiceDiv = document.getElementById('custom-invoice');
@@ -1079,17 +1084,17 @@
         const customAdjustment = document.getElementById('custom_adjustment');
 
 
-        window.sanitizeInput = function (inputElement) {
+        window.sanitizeInput = function(inputElement) {
             inputElement.value = inputElement.value.replace(/,/g, '');
             getTotalAmount(inputElement.value);
         };
 
         customVat.addEventListener('input', function() {
-            calculateVat(this.value);  
+            calculateVat(this.value);
         });
 
         customAdjustment.addEventListener('input', function() {
-            calculateCustomAdjustment(this.value);  
+            calculateCustomAdjustment(this.value);
         });
 
         customInvoiceSelect.addEventListener('change', function() {

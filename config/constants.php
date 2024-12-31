@@ -87,12 +87,9 @@ return [
     ],
 
     'invoice_status' => [
-        'Draft' => 'Draft',
-        'Sent' => 'Sent',
-        'Open' => 'Open',
-        'Revised' => 'Revised',
-        'Declined' => 'Declined',
-        'Accepted' => 'Accepted',
+        'Paid' => 'Paid',
+        'Partial Paid' => 'Partial Paid',
+        'Unpaid' => 'Unpaid',
     ],
 
     'svg_icons' => [
