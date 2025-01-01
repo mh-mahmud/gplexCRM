@@ -438,3 +438,5 @@ ALTER TABLE `product_specification` CHANGE `work_order_rate` `work_order_rate` D
 
 -- 29-12-2024 by rokib its not given in db
 ALTER TABLE `leads` ADD COLUMN `lead_start_date` DATE NULL AFTER `country`;
+
+ALTER TABLE `invoices` ADD COLUMN `ps_id` INT(11) NULL AFTER `invoice_custom_form_id`;

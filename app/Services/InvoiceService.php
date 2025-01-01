@@ -98,6 +98,7 @@ class InvoiceService
             'invoice_number' =>  'INV-' . $data['invoice_number'],
             'customer_id' => $data['customer_id'],
             'invoice_custom_form_id' => $data["custom_invoice_id"],
+            'ps_id' => $data["ps_id"],
             'address' => $data['address'],
             'invoice_date' => $data['invoice_date'],
             'due_date' => $data['due_date'],
@@ -180,6 +181,7 @@ class InvoiceService
         $invoice->invoice_number = 'INV-' . $data['invoice_number'];
         $invoice->customer_id = $data['customer_id'];
         $invoice->invoice_custom_form_id = $data['custom_invoice_id'] ?? null;
+        $invoice->ps_id = $data['ps_id'] ?? null;
         $invoice->address = $data['address'];
         $invoice->invoice_date = $data['invoice_date'];
         $invoice->due_date = $data['due_date'];

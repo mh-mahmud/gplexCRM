@@ -186,6 +186,26 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-xl-6">
+                                        <div class="fv-row mb-5">
+                                        <label class="form-label fw-bolder text-dark">Work Order Number</label>
+
+                                            </label>
+                                            <select class="form-control form-control-sm form-control-solid" name="ps_id">
+                                                <option value="" {{ old('ps_id', $invoice->ps_id) == '' ? 'selected' : '' }}>Select Work Order Number</option>
+                                                @foreach($wordOrderNumbers as $wordOrderNumber)
+                                                <option value="{{ $wordOrderNumber->id }}" {{ old('ps_id', $invoice->ps_id) == $wordOrderNumber->id ? 'selected' : '' }}>
+                                                    {{ $wordOrderNumber->work_order_number }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('ps_id'))
+                                            <span class="text-danger">{{ $errors->first('ps_id') }}</span>
+                                            @endif
+
+                                        </div>
+                                    </div>
+
 
 
                                     {{-- <div class="col-md-6">

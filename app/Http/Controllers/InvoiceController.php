@@ -13,6 +13,7 @@ use App\Helpers\Helper;
 use App\Models\Agent;
 use App\Models\Product;
 use App\Models\InvoiceCustomForm;
+use App\Models\ProductSpecification;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Facades\Auth;
@@ -49,10 +50,11 @@ class InvoiceController extends Controller
         $nextInvoiceNumber = $lastInvoice ? $lastInvoice->id + 1 : 1;
         $discountTypes = Helper::getEnumValues('invoices', 'discount_type');
         $agents = Agent::select('agent_id', 'first_name', 'last_name','user_id')->get();
+        $wordOrderNumbers = ProductSpecification::select('id', 'work_order_number')->get();
         $custom_invoice = InvoiceCustomForm::select('id', 'invoice_name','field_details','footer_details')->get();
         //$products = Product::select('id', 'name', 'description', 'product_value')->get();
         $products = Product::select('id', 'name', 'description', 'product_value')->where('status', 1)->get();
-        return view('invoices.create', compact('customers', 'countries', 'currencies', 'nextInvoiceNumber', 'discountTypes', 'agents', 'products','custom_invoice'));
+        return view('invoices.create', compact('customers', 'countries', 'currencies', 'nextInvoiceNumber', 'discountTypes', 'agents', 'products','custom_invoice','wordOrderNumbers'));
     }
 
     public function store_backup(Request $request)
@@ -139,10 +141,11 @@ class InvoiceController extends Controller
         $currencies = $this->currencyService->currencyList($request);
         $discountTypes = Helper::getEnumValues('invoices', 'discount_type');
         $agents = Agent::select('agent_id', 'first_name', 'last_name','user_id')->get();
+        $wordOrderNumbers = ProductSpecification::select('id', 'work_order_number')->get();
         //$products = Product::select('id', 'name', 'description', 'product_value')->get();
         $products = Product::select('id', 'name', 'description', 'product_value')->where('status', 1)->get();
         $custom_invoice = InvoiceCustomForm::select('id', 'invoice_name','field_details','footer_details')->get();
-        return view('invoices.edit', compact('invoice', 'customers', 'countries', 'currencies', 'discountTypes', 'agents', 'products', 'invoiceItems','invoiceCustomFormId','custom_invoice'));
+        return view('invoices.edit', compact('invoice', 'customers', 'countries', 'currencies', 'discountTypes', 'agents', 'products', 'invoiceItems','invoiceCustomFormId','custom_invoice','wordOrderNumbers'));
     }
 
 
