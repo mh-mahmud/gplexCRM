@@ -39,10 +39,16 @@ class DynamicTableService
                 $length = $field['character_length'] ?? null;
 
                 if ($type === 'varchar') {
+                    if (is_numeric($length) && $length > 255) {
+                        throw new \Exception("The character length for the String Field Value {$name} cannot exceed 255");
+                    }
                     $column = $table->string($name, $length)->nullable();
                 } elseif ($type === 'int') {
                     $column = $table->integer($name)->nullable();
                 } elseif ($type === 'char') {
+                    if (is_numeric($length) && $length > 255) {
+                        throw new \Exception("The character length for the  Character Field Value {$name}  cannot exceed 255.");
+                    }
                     $column = $table->char($name, $length)->nullable();
                 } elseif ($type === 'date') {
                     $column = $table->date($name)->nullable();
@@ -53,9 +59,9 @@ class DynamicTableService
                 } elseif ($type === 'file') {
                     $column = $table->string($name)->nullable();
                 } elseif ($type === 'dropdown') {
-                    // Ensure 'character_length' is treated as an array for the enum
+                    //an array for the enum
                     if (is_string($length)) {
-                        $length = explode(',', $length); // Convert comma-separated string to an array
+                        $length = explode(',', $length); //string to an array
                     }
                     $column = $table->enum($name, (array) $length)->nullable();
                 }
@@ -96,7 +102,7 @@ class DynamicTableService
             ];
         }
 
-        // insert data into the lead form details table
+        
         DB::table('lead_form_details')->insert($data);
 
         return 'Data inserted successfully.';
@@ -443,12 +449,18 @@ class DynamicTableService
 
         switch ($type) {
             case 'varchar':
+                if (is_numeric($length) && $length > 255) {
+                    throw new \Exception("The character length for the String Field Value {$name} cannot exceed 255");
+                }
                 $column = $table->string($name, $length)->nullable();
                 break;
             case 'int':
                 $column = $table->integer($name)->nullable();
                 break;
             case 'char':
+                if (is_numeric($length) && $length > 255) {
+                    throw new \Exception("The character length for the  Character Field Value {$name}  cannot exceed 255.");
+                }
                 $column = $table->char($name, $length)->nullable();
                 break;
             case 'date':
@@ -486,12 +498,18 @@ class DynamicTableService
 
         switch ($type) {
             case 'varchar':
+                if (is_numeric($length) && $length > 255) {
+                    throw new \Exception("The character length for the String Field Value {$existingColumnName} cannot exceed 255");
+                }
                 $column = $table->string($existingColumnName, $length)->nullable()->change();
                 break;
             case 'int':
                 $column = $table->integer($existingColumnName)->nullable()->change();
                 break;
             case 'char':
+                if (is_numeric($length) && $length > 255) {
+                    throw new \Exception("The character length for the  Character Field Value {$existingColumnName}  cannot exceed 255.");
+                }
                 $column = $table->char($existingColumnName, $length)->nullable()->change();
                 break;
             case 'date':

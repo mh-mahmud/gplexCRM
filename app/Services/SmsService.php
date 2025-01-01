@@ -42,6 +42,14 @@ class SmsService
         }
     }
 
+    public function getSmsTemplates()
+    {
+        return SmsTemplate::where('status', 1)
+                        ->select('sms_templates.id', 'sms_templates.title', 'description')
+                        ->get();
+    }
+
+
     public function templateStore($request)
     {
         $request->validate([
@@ -59,8 +67,9 @@ class SmsService
                 $dataObj->created_by            = Auth::id();
                 $dataObj->status                = $data['status'];
                 $dataObj->save();
+                $log_text = $data['title'].", SMS template created"; 
 
-                Helper::storeLog($data['title'], "SMS Template", "SMS Template Create", "Created");
+                Helper::storeLog($log_text, "SMS Template", "SMS Template Create", NULL);
 
                 return (object)[
                     'status'                 => 201,
@@ -89,7 +98,9 @@ class SmsService
         return  DB::transaction(function () use ($id) {
             $data = SmsTemplate::findOrFail($id);
             $data->delete();
-            Helper::storeLog($data->title, "SMS Template", "SMS Template Delete", "Deleted");
+            $log_text = $data['title'].", SMS template deleted"; 
+
+            Helper::storeLog($log_text, "SMS Template", "SMS Template Delete", NULL);
         });
     }
 
@@ -110,8 +121,9 @@ class SmsService
                 $dataObj->updated_by            = Auth::id();
                 $dataObj->status                = $data['status'];
                 $dataObj->save();
+                $log_text = $data['title'].", SMS template updated"; 
 
-                Helper::storeLog($data['title'], "SMS Template", "SMS Template Update", "Updated");
+                Helper::storeLog($log_text, "SMS Template", "SMS Template Update", NULL);
 
                 return (object)[
                     'status'                 => 208,
@@ -186,10 +198,10 @@ class SmsService
                     ->select('sms_queue.*', 'leads.first_name', 'leads.last_name', 'users.first_name as send_by_fname', 'users.last_name as send_by_lname')
                     ->leftJoin('leads', 'sms_queue.lead_id', '=', 'leads.id')
                     ->join('users', 'users.id', '=', 'sms_queue.user_id');
-        if (Auth::user()->user_type === 'agent') {
-            $sql->where('sms_queue.user_id',Auth::id());
+        // if (Auth::user()->user_type === 'agent') {
+        //     $sql->where('sms_queue.user_id',Auth::id());
 
-        }
+        // }
         $data = $request->all();
         if(!empty($data["search"])) {
             $sql->where('sms_to','like', '%' . $data["search"] . '%');

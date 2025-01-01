@@ -244,10 +244,14 @@
 
                                             </label>
                                             <select class="form-control form-control-sm form-control-solid" name="invoice_status">
+                                                <option value="" disabled {{ old('invoice_status', $invoice->invoice_status ?? '') == '' ? 'selected' : '' }}>Select Invoice Status</option>
                                                 @foreach(config('constants.invoice_status') as $key => $status)
-                                                <option value="{{ $key }}" {{ old('invoice_status', $invoice->status) == $key ? 'selected' : '' }}>{{ $status }}</option>
+                                                <option value="{{ $key }}" {{ old('invoice_status', $invoice->invoice_status) == $key ? 'selected' : '' }}>
+                                                    {{ $status }}
+                                                </option>
                                                 @endforeach
                                             </select>
+
 
                                             @if ($errors->has('invoice_status'))
                                             <span class="text-danger">{{ $errors->first('invoice_status') }}</span>
@@ -1229,6 +1233,7 @@
             document.querySelectorAll('.remove-row').forEach(button => {
                 button.addEventListener('click', function() {
                     this.closest('tr').remove();
+                    getTotalAmount();
                 });
             });
         }

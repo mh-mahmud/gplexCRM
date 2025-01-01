@@ -82,7 +82,7 @@
                                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Status</span>
                                         @if ($sms->send_status == 1)
                                             <span class="badge badge-light-success">Success</span>
-                                        @elseif ($value->status == 0)
+                                        @elseif ($sms->send_status == 0)
                                             <span class="badge badge-light-danger">Fail</span>
                                         @endif
                                     </div>

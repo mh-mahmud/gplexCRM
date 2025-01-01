@@ -24,9 +24,12 @@ class TaskService
 
     public function getUsers()
     {
-        return User::where('role_id', '!=', config('constants.ADMIN_ROLE_ID'))
-                    ->orWhereNull('role_id')
-                    ->get();
+        return User::where(function ($query) {
+                    $query->where('role_id', '!=', config('constants.ADMIN_ROLE_ID'))
+                        ->orWhereNull('role_id');
+                })
+                ->where('status', 1)
+                ->get();  
     }
 
     public function addTaskPro($request)
@@ -57,7 +60,7 @@ class TaskService
                 $dataObj->created_by            = Auth::id();
                 $dataObj->save();   
                 
-                Helper::storeLog("New task added, ".$data['task_name'], "Tasks", "Add Task", "Created");
+                Helper::storeLog("New task added, ".$data['task_name'], "Tasks", "Add Task", NULL);
                 
                 return (object)[
                     'status'                 => 201,
@@ -82,7 +85,7 @@ class TaskService
                 $dataObj->status                = $data['status'];
                 $dataObj->save();
 
-                Helper::storeLog("Status Change of task, ".$dataObj['task_name'], "Tasks", "Task Status Change", "Updated");
+                Helper::storeLog("Status Change of task, ".$dataObj['task_name'], "Tasks", "Task Status Change", NULL);
                
                 return (object)[
                     'status'                 => 208,
@@ -105,7 +108,7 @@ class TaskService
                 $task = Task::findOrFail($id);
                 $task->delete();
 
-                Helper::storeLog("Delete task, ".$task['task_name'], "Tasks", "Task Delete", "Deleted");
+                Helper::storeLog("Delete task, ".$task['task_name'], "Tasks", "Task Delete", NULL);
                 
                 return (object)[
                     'status'                 => 200,

@@ -38,28 +38,30 @@
                                 Forms
     ***********************************-->
 <div class="container-xxl">
-@if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: '{{ session('success') }}',
-                showConfirmButton: false,
-                timer: 2500
-            });
-        </script>
+    @if (session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '{{ session('
+            success ') }}',
+            showConfirmButton: false,
+            timer: 2500
+        });
+    </script>
     @endif
 
     @if ($errors->any())
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Validation Error',
-                text: '{{ implode(' ', $errors->all()) }}',
-                showConfirmButton: false,
-                timer: 2500
-            });
-        </script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: '{{ implode('
+            ', $errors->all()) }}',
+            showConfirmButton: false,
+            timer: 2500
+        });
+    </script>
     @endif
     <div class="row">
         <div class="col-xxl-12">
@@ -86,7 +88,7 @@
                                     <label class="form-label fw-bolder text-dark">First Name</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="first_name" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="first_name" value="{{ old('first_name') }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('first_name'))
                                     <span class="text-danger">{{ $errors->first('first_name') }}</span>
@@ -100,7 +102,7 @@
                                     <label class="form-label fw-bolder text-dark">Last Name</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="last_name" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="last_name" value="{{ old('last_name') }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('last_name'))
                                     <span class="text-danger">{{ $errors->first('last_name') }}</span>
@@ -114,7 +116,7 @@
                                     <label class="form-label fw-bolder text-dark">Email</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="email" name="email" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="email" name="email" value="{{ old('email') }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('email'))
                                     <span class="text-danger">{{ $errors->first('email') }}</span>
@@ -128,7 +130,7 @@
                                     <label class="form-label fw-bolder text-dark">Phone</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $old_phone }}" name="phone" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" value="{{ old('phone') }}" name="phone" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('phone'))
                                     <span class="text-danger">{{ $errors->first('phone') }}</span>
@@ -142,7 +144,7 @@
                                     <label class="form-label fw-bolder text-dark">Alternative Number</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="alternative_number" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="alternative_number" value="{{ old('alternative_number') }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('alternative_number'))
                                     <span class="text-danger">{{ $errors->first('alternative_number') }}</span>
@@ -156,7 +158,7 @@
                                     <label class="form-label fw-bolder text-dark">Address</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="address" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="address" value="{{ old('address') }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('address'))
                                     <span class="text-danger">{{ $errors->first('address') }}</span>
@@ -170,7 +172,7 @@
                                     <label class="form-label fw-bolder text-dark">Company</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="company" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="company" value="{{ old('company') }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('company'))
                                     <span class="text-danger">{{ $errors->first('company') }}</span>
@@ -182,8 +184,8 @@
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Lead Status</label>
                                     <select class="form-control form-control-sm form-control-solid" name="lead_status">
-                                        <option value="1" selected>Active</option>
-                                        <option value="0">Inactive</option>
+                                        <option value="1" {{ old('lead_status', '1') == '1' ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ old('lead_status', '1') == '0' ? 'selected' : '' }}>Inactive</option>
                                     </select>
                                     @if ($errors->has('lead_status'))
                                     <span class="text-danger">{{ $errors->first('lead_status') }}</span>
@@ -191,13 +193,14 @@
                                 </div>
                             </div>
 
+
                             <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Lead Rating</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="number" name="lead_rating" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="number" name="lead_rating" value="{{ old('lead_rating') }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('lead_rating'))
                                     <span class="text-danger">{{ $errors->first('lead_rating') }}</span>
@@ -211,7 +214,7 @@
                                     <label class="form-label fw-bolder text-dark">Website</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="website" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="website" value="{{ old('website') }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('website'))
                                     <span class="text-danger">{{ $errors->first('website') }}</span>
@@ -225,7 +228,7 @@
                                     <label class="form-label fw-bolder text-dark">Lead Owner</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="lead_owner" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="lead_owner" value="{{ old('lead_owner') }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('lead_owner'))
                                     <span class="text-danger">{{ $errors->first('lead_owner') }}</span>
@@ -239,7 +242,7 @@
                                     <label class="form-label fw-bolder text-dark">Industry</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="industry" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="industry" value="{{ old('industry') }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('industry'))
                                     <span class="text-danger">{{ $errors->first('industry') }}</span>
@@ -253,9 +256,11 @@
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Lead Source</label>
                                     <select class="form-control form-control-sm form-control-solid" name="lead_source">
-                                        <option value="" disabled selected>Select Lead Source</option>
+                                        <option value="" disabled {{ old('lead_source') == '' ? 'selected' : '' }}>Select Lead Source</option>
                                         @foreach(config('constants.lead_source') as $source)
-                                        <option value="{{ $source }}">{{ $source }}</option>
+                                        <option value="{{ $source }}" {{ old('lead_source') == $source ? 'selected' : '' }}>
+                                            {{ $source }}
+                                        </option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('lead_source'))
@@ -264,13 +269,14 @@
                                 </div>
                             </div>
 
+
                             <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Street</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="street" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="street" value="{{ old('street') }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('street'))
                                     <span class="text-danger">{{ $errors->first('street') }}</span>
@@ -284,7 +290,7 @@
                                     <label class="form-label fw-bolder text-dark">City</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="city" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="city" value="{{ old('city') }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('city'))
                                     <span class="text-danger">{{ $errors->first('city') }}</span>
@@ -298,7 +304,7 @@
                                     <label class="form-label fw-bolder text-dark">Zip</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="zip" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="zip" value="{{ old('zip') }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('zip'))
                                     <span class="text-danger">{{ $errors->first('zip') }}</span>
@@ -312,7 +318,7 @@
                                     <label class="form-label fw-bolder text-dark">State</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="state" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="state" value="{{ old('state') }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('state'))
                                     <span class="text-danger">{{ $errors->first('state') }}</span>
@@ -326,7 +332,7 @@
                                     <label class="form-label fw-bolder text-dark">Country</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="country" autocomplete="off" />
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="country" value="{{ old('country') }}" autocomplete="off" />
                                     <!--end::Input-->
                                     @if ($errors->has('country'))
                                     <span class="text-danger">{{ $errors->first('country') }}</span>
@@ -336,10 +342,27 @@
 
                             <div class="col-md-3">
                                 <div class="fv-row mb-3">
-                                    <label class="form-label  fw-bolder text-dark">Profile Image</label>
-                                    <input class="form-control form-control-sm form-control-solid" type="file" name="profile_image" autocomplete="off"/>
+                                    <!--begin::Label-->
+                                    <label class="form-label fw-bolder text-dark">Lead Start Date</label>
+                                    <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="lead_start_date" value="{{ old('lead_start_date') }}" />
+                                    @if ($errors->has('lead_start_date'))
+                                    <div class="text-danger">{{ $errors->first('lead_start_date') }}</div>
+                                    @endif
                                 </div>
                             </div>
+
+                            <div class="col-md-3">
+                                <div class="fv-row mb-3">
+                                    <label class="form-label  fw-bolder text-dark">Profile Image</label>
+                                    <input class="form-control form-control-sm form-control-solid" type="file" name="profile_image" autocomplete="off" />
+                                    @if ($errors->has('profile_image'))
+                                    <span class="text-danger">{{ $errors->first('profile_image') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+
+
 
                             <div class="col-md-3">
                                 <div class="fv-row mb-3">
@@ -347,7 +370,7 @@
                                     <label class="form-label fw-bolder text-dark">Lead Notes</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <textarea class="form-control form-control-sm form-control-solid" name="lead_notes" rows="3"></textarea>
+                                    <textarea class="form-control form-control-sm form-control-solid" name="lead_notes" rows="3">{{ old('lead_notes') }}</textarea>
                                     <!--end::Input-->
                                     @if ($errors->has('lead_notes'))
                                     <span class="text-danger">{{ $errors->first('lead_notes') }}</span>
@@ -371,13 +394,13 @@
                                 <div class="fv-row mb-3">
                                     <label for="{{ $field->field_name }}" class="form-label fw-bolder text-dark">{{ ucwords(str_replace('_', ' ', $field->field_name)) }}</label>
                                     @if(in_array($field->field_value, ['varchar', 'char']))
-                                    <input type="text" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}">
+                                    <input type="text" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}" value="{{ old($field->field_name) }}">
                                     @elseif($field->field_value == 'int')
-                                    <input type="number" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}">
+                                    <input type="number" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}" value="{{ old($field->field_name) }}">
                                     @elseif($field->field_value == 'date')
-                                    <input type="date" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $field->field_name }}">
+                                    <input type="date" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $field->field_name }}" value="{{ old($field->field_name) }}">
                                     @elseif($field->field_value == 'text')
-                                    <textarea class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}" rows="1"></textarea>
+                                    <textarea class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}" rows="1">{{ old($field->field_name) }}</textarea>
                                     @elseif($field->field_value == 'file')
                                     <input type="file" class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}">
                                     @elseif($field->field_value == 'dropdown')
@@ -387,9 +410,11 @@
                                     @endphp
 
                                     <select class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}" id="{{ $field->field_name }}">
-                                    <option value="" selected>Select {{ ucwords(str_replace('_', ' ', $field->field_name)) }}</option>
+                                        <option value="" selected>Select {{ ucwords(str_replace('_', ' ', $field->field_name)) }}</option>
                                         @foreach($dropdownOptions as $option)
-                                        <option value="{{ $option }}">{{ ucfirst($option) }}</option>
+                                        <option value="{{ $option }}" {{ old($field->field_name) == $option ? 'selected' : '' }}>
+                                            {{ ucfirst($option) }}
+                                        </option>
                                         @endforeach
                                     </select>
                                     @endif

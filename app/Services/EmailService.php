@@ -46,6 +46,13 @@ class EmailService
         }
     }
 
+    public function getEmailTemplates()
+    {
+        return EmailTemplate::where('status', 1)
+                        ->select("id", "email_subject", "email_content")
+                        ->get();
+    }
+
     public function templateStore($request)
     {
         $request->validate([
@@ -63,8 +70,8 @@ class EmailService
                 $dataObj->created_by            = Auth::id();
                 $dataObj->status                = $data['status'];
                 $dataObj->save();
-
-                Helper::storeLog($data['email_subject'], "Email Template", "Email Template Create", "Created");
+                $log_text = $data['email_subject'].", email template created"; 
+                Helper::storeLog($log_text, "Email Template", "Email Template Create", NULL);
 
                 return (object)[
                     'status'                 => 201,
@@ -95,7 +102,9 @@ class EmailService
         return  DB::transaction(function () use ($id) {
             $data = EmailTemplate::findOrFail($id);
             $data->delete();
-            Helper::storeLog($data->email_subject, "Email Template", "Email Template Delete",  "Deleted");
+            $log_text = $data['email_subject'].", email template deleted"; 
+
+            Helper::storeLog($log_text, "Email Template", "Email Template Delete",  NULL);
         });
     }
 
@@ -116,8 +125,9 @@ class EmailService
                 $dataObj->status                = $data['status'];
                 $dataObj->updated_by            = Auth::id();
                 $dataObj->save();
+                $log_text = $data['email_subject'].", email template updated"; 
 
-                Helper::storeLog($data['email_subject'], "Email Template", "Email Template Update", "Updated");
+                Helper::storeLog($log_text, "Email Template", "Email Template Update", NULL);
 
                 return (object)[
                     'status'                 => 208,
@@ -183,10 +193,10 @@ class EmailService
             $sql->where('email_to','like', '%' . $data["search"] . '%');
 
         }
-        if (Auth::user()->user_type === 'agent') {
-            $sql->where('email_log.user_id', Auth::id());
+        // if (Auth::user()->user_type === 'agent') {
+        //     $sql->where('email_log.user_id', Auth::id());
 
-        }
+        // }
         return $sql->orderBy('id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
     }
 

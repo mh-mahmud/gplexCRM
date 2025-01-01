@@ -349,6 +349,20 @@
 
                             <div class="col-md-3">
                                 <div class="fv-row mb-3">
+                                    <!--begin::Label-->
+                                    <label class="form-label fw-bolder text-dark">Lead Start Date</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="lead_start_date" value="{{ old('lead_start_date', $lead->lead_start_date) }}" />
+                                    <!--end::Input-->
+                                    @if ($errors->has('lead_start_date'))
+                                    <span class="text-danger">{{ $errors->first('lead_start_date') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="fv-row mb-3">
                                     <label class="form-label  fw-bolder text-dark">Profile Image</label>
                                     <input class="form-control form-control-sm form-control-solid" type="file" name="profile_image" autocomplete="off"/>
                                     @if ($lead->profile_image)
@@ -365,6 +379,9 @@
                                     
                                 </div>
                             </div>
+
+
+                           
 
                             <!-- Lead Notes -->
                             <div class="col-md-3">

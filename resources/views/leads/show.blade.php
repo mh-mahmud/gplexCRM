@@ -192,7 +192,7 @@
 
                             <div class="card-header bg-light bd-cyan">
                                 <div class="card-title">
-                                    <h2>Lead Details</h2>
+                                    <h4>Lead Details</h4>
                                 </div>
                             </div>
                             <!--begin::Body-->
@@ -324,6 +324,12 @@
                                     <span
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Country</span>
                                         <span>{{ $lead->country }}</span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                    <span
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Start Date</span>
+                                        <span>{{ $lead->lead_start_date ? \Carbon\Carbon::parse($lead->lead_start_date)->format('d-m-Y') : '' }}</span>
                                     </div>
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">

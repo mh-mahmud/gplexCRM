@@ -83,8 +83,7 @@ class smsController extends Controller {
 
     public function sendSms(Request $request)
     {   
-        $request->merge(['paginate' => false]);   
-        $templates = $this->smsService->smsTemplateList($request);
+        $templates = $this->smsService->getSmsTemplates();
         $leads = Helper::getLeads();
         return view('sms.send-sms', compact('templates', 'leads'));
     }
@@ -103,8 +102,7 @@ class smsController extends Controller {
 
     public function sendBulkSms(Request $request)
     {   
-        $request->merge(['paginate' => false]);   
-        $templates = $this->smsService->smsTemplateList($request);
+        $templates = $this->smsService->getSmsTemplates();
         return view('sms.send-bulk-sms', compact('templates'));
     }
 

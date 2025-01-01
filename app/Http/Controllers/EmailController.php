@@ -78,8 +78,7 @@ class EmailController extends Controller {
 
     public function sendEmail(Request $request)
     {   
-        $request->merge(['paginate' => false]);   
-        $templates = $this->emailService->emailTemplateList($request);
+        $templates = $this->emailService->getEmailTemplates();
         $leads = Helper::getLeads();
         return view('emails.send-email', compact('templates', 'leads'));
     }
@@ -103,8 +102,7 @@ class EmailController extends Controller {
 
     public function sendBulkEmail(Request $request)
     {   
-        $request->merge(['paginate' => false]);   
-        $templates = $this->emailService->emailTemplateList($request);
+        $templates = $this->emailService->getEmailTemplates();
         return view('emails.send-bulk-email', compact('templates'));
     }
 
