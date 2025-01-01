@@ -172,17 +172,39 @@ use Carbon\Carbon;
                         <span>{{ number_format($productSpecification->work_order_value, 2) }}</span>
                     </div>
 
-                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
-                        <span class="fw-bold w-lg-150px">Work Order Rate (%):</span>
-                        <span>{{ !empty($productSpecification->work_order_rate) ? $productSpecification->work_order_rate . '%' : '' }}</span>
-                    </div>
-
                     @if($productSpecification->work_order_file)
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                         <span class="fw-bold w-lg-150px">Work Order File:</span>
                         <a href="{{ asset('uploads/product_specification/' . $productSpecification->work_order_file) }}" target="_blank">Download</a>
                     </div>
                     @endif
+
+                    <!-- new data -->
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                        <span class="fw-bold w-lg-150px">Advance Amount:</span>
+                        <span>{{ $productSpecification->advance_amount }}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                        <span class="fw-bold w-lg-150px">Total Installment:</span>
+                        <span>{{ $productSpecification->total_installment }}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                        <span class="fw-bold w-lg-150px">Per Month Installment:</span>
+                        <span>{{ $productSpecification->per_month_installment }}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                        <span class="fw-bold w-lg-150px">Payment Date Cycle:</span>
+                        <span>{{ $productSpecification->payment_date_cycle }}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                        <span class="fw-bold w-lg-150px">Remaining Month:</span>
+                        <span>{{ $productSpecification->remaining_month }}</span>
+                    </div>
+                    <!-- end new data -->
 
                     
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
