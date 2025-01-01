@@ -50,6 +50,12 @@ class ProductSpecificationController extends Controller
             'invoice_mushak_file' => 'nullable|file|max:10048',
             'tax_exemption_certificate' => 'nullable|file|max:10048',
             // Add other validation rules as necessary
+
+            'payment_date_cycle' => 'nullable|date',
+            'advance_amount' => 'required|numeric',
+            'total_installment' => 'required|numeric',
+            'per_month_installment' => 'nullable|numeric',
+            'remaining_month' => 'nullable|numeric',
         ]);
 
         if ($validator->fails()) {
