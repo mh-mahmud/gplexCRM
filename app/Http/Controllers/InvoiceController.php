@@ -14,6 +14,7 @@ use App\Models\Agent;
 use App\Models\Product;
 use App\Models\InvoiceCustomForm;
 use App\Models\ProductSpecification;
+use App\Services\ProductSpecificationService;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Facades\Auth;
@@ -118,6 +119,7 @@ class InvoiceController extends Controller
                 'customer_id' => 'required|exists:customers,id',
                 //'invoice_number' => 'required|unique:invoices,invoice_number',
                 'invoice_date' => 'required|date',
+                'invoice_status' => 'required',
                 'due_date' => 'nullable|date|after_or_equal:invoice_date',
                 'product_id' => 'required|exists:products,id',
                 //item validation
@@ -195,6 +197,7 @@ class InvoiceController extends Controller
             'customer_id' => 'required|exists:customers,id',
             //'invoice_number' => 'required|unique:invoices,invoice_number,' . $id, //current invoice number
             'invoice_date' => 'required|date',
+            'invoice_status' => 'required',
             'due_date' => 'nullable|date|after_or_equal:invoice_date',
         ]);
 
@@ -319,7 +322,8 @@ class InvoiceController extends Controller
                 },
             ],
         ]);
-
+        //dd($request->all());
+        $payment_amount=$request->input('payment_amount');
         $paymentDetails = [
             'invoice_id' => $invoice->id,
             'payment' => $request->input('payment_amount'),
@@ -327,7 +331,7 @@ class InvoiceController extends Controller
             'due' => max(0, $newDueAmount - $request->input('payment_amount'))
         ];
 
-        $this->invoiceService->addPaymentInvoice($invoice, $paymentDetails);
+        $this->invoiceService->addPaymentInvoice($invoice, $paymentDetails, $payment_amount);
 
         return redirect()->route('invoice-index')->with('success', 'Payment recorded successfully!');
     }

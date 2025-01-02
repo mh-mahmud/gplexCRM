@@ -264,11 +264,8 @@
 
                                             </label>
                                             <select class="form-control form-control-sm form-control-solid" name="invoice_status">
-                                                <option value="" disabled {{ old('invoice_status', $invoice->invoice_status ?? '') == '' ? 'selected' : '' }}>Select Invoice Status</option>
                                                 @foreach(config('constants.invoice_status') as $key => $status)
-                                                <option value="{{ $key }}" {{ old('invoice_status', $invoice->invoice_status) == $key ? 'selected' : '' }}>
-                                                    {{ $status }}
-                                                </option>
+                                                <option value="{{ $key }}" {{ old('invoice_status', $invoice->invoice_status) == $key ? 'selected' : '' }}>{{ $status }}</option>
                                                 @endforeach
                                             </select>
 

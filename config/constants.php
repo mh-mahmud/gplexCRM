@@ -87,9 +87,10 @@ return [
     ],
 
     'invoice_status' => [
+        'Unpaid' => 'Unpaid',
         'Paid' => 'Paid',
         'Partial Paid' => 'Partial Paid',
-        'Unpaid' => 'Unpaid',
+        
     ],
 
     'svg_icons' => [

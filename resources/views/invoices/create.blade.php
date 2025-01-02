@@ -223,9 +223,9 @@
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark">Work Order Number</label>
                                             <select class="form-control form-control-sm form-control-solid" name="ps_id" aria-label="Default select example">
-                                                @if (!isset($leadid))
+                                               
                                                 <option value="" {{ old('ps_id') == '' ? 'selected' : '' }}>Select Work Order Number</option>
-                                                @endif
+                                                
                                                 @foreach($wordOrderNumbers as $wordOrderNumber)
                                                 <option value="{{ $wordOrderNumber->id }}"
                                                     {{ old('ps_id') == $wordOrderNumber->id || (isset($leadid) && $wordOrderNumber->id == old('ps_id')) ? 'selected' : '' }}>
@@ -296,12 +296,9 @@
                                             <label class="form-label fw-bolder text-dark">Status
 
                                             </label>
-                                            <select class="form-control form-control-sm form-control-solid" name="invoice_status">
-                                                <option value="" disabled {{ old('invoice_status') == '' ? 'selected' : '' }}>Select Invoice Status</option>
+                                            <select class="form-control form-control-sm form-control-solid" name="invoice_status" aria-label="Default select example">
                                                 @foreach(config('constants.invoice_status') as $key => $status)
-                                                <option value="{{ $key }}" {{ old('invoice_status') == $key ? 'selected' : '' }}>
-                                                    {{ $status }}
-                                                </option>
+                                                <option value="{{ $key }}" {{ old('invoice_status', $loop->first ? $key : '') == $key ? 'selected' : '' }}>{{ $status }}</option>
                                                 @endforeach
                                             </select>
 

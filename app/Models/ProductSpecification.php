@@ -32,7 +32,7 @@ class ProductSpecification extends Model
         'invoice_mushak_file',
         'tax_exemption_certificate',
         'note',
-
+        'due_balance',
         'advance_amount',
         'total_installment',
         'per_month_installment',
