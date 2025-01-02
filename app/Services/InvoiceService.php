@@ -276,12 +276,11 @@ class InvoiceService
         $existingPayments[] = $paymentDetails;
         $invoice->payment_details = $existingPayments;
         $invoice->save();
-        // update product specification data
+        //update product specification data
         $pr_sp = ProductSpecification::findOrFail($invoice->ps_id);
         $pr_sp->remaining_month = $pr_sp->remaining_month - 1; 
         $pr_sp->due_balance = $pr_sp->due_balance - $payment_amount;
         $pr_sp->save();
-
         return $invoice;
     }
     
