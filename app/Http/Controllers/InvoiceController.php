@@ -38,7 +38,7 @@ class InvoiceController extends Controller
         return view('invoices.index', compact('invoices'));
     }
 
-    public function create(Request $request)
+    public function create_backup(Request $request)
     {
         //$customers = Customer::all();
         $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
@@ -56,6 +56,45 @@ class InvoiceController extends Controller
         $products = Product::select('id', 'name', 'description', 'product_value')->where('status', 1)->get();
         return view('invoices.create', compact('customers', 'countries', 'currencies', 'nextInvoiceNumber', 'discountTypes', 'agents', 'products','custom_invoice','wordOrderNumbers'));
     }
+
+
+    public function create(Request $request, $leadid = null)
+    {
+        if ($leadid) {
+            
+            $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
+                ->where('leads.id', $leadid)
+                ->select('customers.*', 'leads.first_name', 'leads.last_name')
+                ->get();
+                //dd($customers);
+        } else {
+            
+            $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
+                ->select('customers.*', 'leads.first_name', 'leads.last_name')
+                ->get();
+        }
+        $countries = $this->countryService->countryList($request);
+        $currencies = $this->currencyService->currencyList($request);
+        $lastInvoice = Invoice::latest()->first();
+        $nextInvoiceNumber = $lastInvoice ? $lastInvoice->id + 1 : 1;
+        $discountTypes = Helper::getEnumValues('invoices', 'discount_type');
+        $agents = Agent::select('agent_id', 'first_name', 'last_name','user_id')->get();
+        //$wordOrderNumbers = ProductSpecification::select('id', 'work_order_number')->get();
+        if ($leadid) {
+            $wordOrderNumbers = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+                ->where('customers.lead_id', $leadid)
+                ->select('product_specification.id', 'product_specification.work_order_number')
+                ->get();
+        } else {
+            $wordOrderNumbers = ProductSpecification::select('id', 'work_order_number')->get();
+        }
+        $custom_invoice = InvoiceCustomForm::select('id', 'invoice_name','field_details','footer_details')->get();
+        $products = Product::select('id', 'name', 'description', 'product_value')->where('status', 1)->get();
+        return view('invoices.create', compact('customers', 'countries', 'currencies', 'nextInvoiceNumber', 'discountTypes', 'agents', 'products','custom_invoice','wordOrderNumbers', 'leadid'));
+    }
+
+
+    
 
     public function store_backup(Request $request)
     {

@@ -73,7 +73,7 @@
                                 <div class="row">
 
 
-                                    <div class="col-md-12">
+                                    <!-- <div class="col-md-12">
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
 
@@ -91,7 +91,26 @@
                                             @endif
 
                                         </div>
+                                    </div> -->
+
+                                    <div class="fv-row mb-5">
+                                        <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span></label>
+                                        <select class="form-control form-control-sm form-control-solid" name="customer_id" aria-label="Default select example">
+                                            <option value="" {{ old('customer_id') == '' ? 'selected' : '' }}>Select Customer</option>
+                                            @foreach($customers as $customer)
+                                            <option value="{{ $customer->id }}"
+                                                {{ old('customer_id') == $customer->id || (isset($leadid) && $customer->lead_id == $leadid) ? 'selected' : '' }}>
+                                                {{ $customer->first_name }} {{ $customer->last_name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('customer_id'))
+                                        <span class="text-danger">{{ $errors->first('customer_id') }}</span>
+                                        @endif
                                     </div>
+
+
+
 
                                     <div class="col-md-12">
                                         <div class="fv-row mb-5">
@@ -180,7 +199,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-6">
+                                    <!-- <div class="col-xl-6">
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark">Work Order Number
 
@@ -197,6 +216,26 @@
                                             <span class="text-danger">{{ $errors->first('ps_id') }}</span>
                                             @endif
 
+                                        </div>
+                                    </div> -->
+
+                                    <div class="col-xl-6">
+                                        <div class="fv-row mb-5">
+                                            <label class="form-label fw-bolder text-dark">Work Order Number</label>
+                                            <select class="form-control form-control-sm form-control-solid" name="ps_id" aria-label="Default select example">
+                                                @if (!isset($leadid))
+                                                <option value="" {{ old('ps_id') == '' ? 'selected' : '' }}>Select Work Order Number</option>
+                                                @endif
+                                                @foreach($wordOrderNumbers as $wordOrderNumber)
+                                                <option value="{{ $wordOrderNumber->id }}"
+                                                    {{ old('ps_id') == $wordOrderNumber->id || (isset($leadid) && $wordOrderNumber->id == old('ps_id')) ? 'selected' : '' }}>
+                                                    {{ $wordOrderNumber->work_order_number }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('ps_id'))
+                                            <span class="text-danger">{{ $errors->first('ps_id') }}</span>
+                                            @endif
                                         </div>
                                     </div>
 

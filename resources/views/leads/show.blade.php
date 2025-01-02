@@ -1276,7 +1276,7 @@
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <strong class="fs-3">Invoices</strong>
                                     <a class="btn btn-success btn-sm" target="_blank"
-                                       href="{{ route('invoice-create') }}">
+                                       href="{{ route('invoice-create', $lead->id) }}">
                                         <i class="bi bi-plus-lg"></i>
                                         Create Invoice
                                     </a>
