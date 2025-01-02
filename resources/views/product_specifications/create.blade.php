@@ -277,6 +277,15 @@
                                 <div class="text-danger">{{ $errors->first('remaining_month') }}</div>
                                 @endif
                             </div>
+
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Due Balance</label>
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="due_balance" value="{{ old('due_balance') }}" />
+                                @if ($errors->has('due_balance'))
+                                <div class="text-danger">{{ $errors->first('due_balance') }}</div>
+                                @endif
+                            </div>
                             <!-- end new fields -->
 
 

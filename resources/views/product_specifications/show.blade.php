@@ -182,7 +182,7 @@ use Carbon\Carbon;
                     <!-- new data -->
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                         <span class="fw-bold w-lg-150px">Advance Amount:</span>
-                        <span>{{ $productSpecification->advance_amount }}</span>
+                        <span>{{ number_format($productSpecification->advance_amount) }}</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
@@ -192,7 +192,7 @@ use Carbon\Carbon;
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                         <span class="fw-bold w-lg-150px">Per Month Installment:</span>
-                        <span>{{ $productSpecification->per_month_installment }}</span>
+                        <span>{{ number_format($productSpecification->per_month_installment) }}</span>
                     </div>
 
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
@@ -203,6 +203,11 @@ use Carbon\Carbon;
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                         <span class="fw-bold w-lg-150px">Remaining Month:</span>
                         <span>{{ $productSpecification->remaining_month }}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                        <span class="fw-bold w-lg-150px">Due Balance:</span>
+                        <span>{{ number_format($productSpecification->due_balance) }}</span>
                     </div>
                     <!-- end new data -->
 
