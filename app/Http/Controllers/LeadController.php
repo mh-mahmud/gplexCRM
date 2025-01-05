@@ -222,7 +222,18 @@ class LeadController  extends Controller
         $totalAmcRate = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
         ->where('customers.lead_id', $id)
         ->avg('product_specification.amc_rate');
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate'));
+        $invoicesGroupedByPsId = Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
+        ->join('leads', 'customers.lead_id', '=', 'leads.id')
+        ->select(
+            'invoices.*',
+            'customers.customer_group',
+            'leads.first_name',
+            'leads.last_name'
+        )
+        ->orderBy('invoices.created_at', 'desc')
+        ->get()
+        ->groupBy('ps_id');
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId'));
     }
 
 
