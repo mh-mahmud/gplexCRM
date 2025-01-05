@@ -10,7 +10,7 @@
 
 <body>
     @php
-    // Determine the payment status based on $newDueAmount
+    
     if ($newDueAmount == 0) {
     $statusClass = 'g-paid';
     $statusText = 'Paid';

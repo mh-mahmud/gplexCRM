@@ -146,8 +146,7 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: '{{ session('
-            success ')}}',
+            text: '{{ session('success')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -159,8 +158,7 @@ use Carbon\Carbon;
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: '{{ session('
-            error ')}}',
+            text: '{{ session('error')}}',
             showConfirmButton: false,
             timer: 1500
         });
@@ -213,6 +211,24 @@ use Carbon\Carbon;
                             </thead>
                             <tbody>
                                 @foreach ($invoices as $index => $invoice)
+                                @php
+                                
+                                $paymentDetails = collect($invoice->payment_details);
+                                $totalPayments = $paymentDetails->sum('payment');
+                                $dueAmount = $paymentDetails->last()['due'] ?? $invoice->total_amount;
+
+                               
+                                if ($totalPayments == $invoice->total_amount) {
+                                    $status = 'Paid';
+                                    $statusClass = 'badge-light-success';
+                                } elseif ($totalPayments == 0) {
+                                    $status = 'Unpaid';
+                                    $statusClass = 'badge-light-danger';
+                                } elseif ($totalPayments > 0 && $totalPayments < $invoice->total_amount) {
+                                    $status = 'Partial Paid';
+                                    $statusClass = 'badge-light-warning';
+                                }
+                               @endphp
                                 <tr>
                                     <td class="ps-5 text-dark fs-6">{{ $index + 1 }}</td>
                                     <td class="text-dark fs-6">{{ $invoice->invoice_number }}</td>
@@ -224,8 +240,8 @@ use Carbon\Carbon;
 
                                     <td class="text-dark fs-6">{{ \Carbon\Carbon::parse($invoice->due_date)->format('d-m-Y') }}</td>
                                     <td>
-                                        <span class="badge badge-light-success">{{ $invoice->invoice_status }}</span>
-                                    </td>
+                                   <span class="badge {{ $statusClass }}">{{ $status }}</span>
+                                   </td>
                                     <td class="text-dark fs-6 text-center">
                                         {{ collect($invoice->payment_details)->sum('payment') ?? '0.00' }}
                                     </td>
