@@ -443,3 +443,4 @@ ALTER TABLE `invoices` ADD COLUMN `ps_id` INT(11) NULL AFTER `invoice_custom_for
 
 -- 01-01-2025
 ALTER TABLE `product_specification` ADD `advance_amount` DOUBLE NULL DEFAULT NULL AFTER `updated_at`, ADD `total_installment` INT NULL DEFAULT NULL AFTER `advance_amount`, ADD `per_month_installment` DOUBLE NULL DEFAULT NULL AFTER `total_installment`, ADD `payment_date_cycle` DATE NULL DEFAULT NULL AFTER `per_month_installment`, ADD `remaining_month` INT NULL DEFAULT NULL AFTER `payment_date_cycle`;
+ALTER TABLE `product_specification` ADD `due_balance` DOUBLE NULL DEFAULT NULL AFTER `remaining_month`; 
