@@ -8,7 +8,14 @@
     @endif
 
     <!-- Pagination Elements -->
-    @for ($page = 1; $page <= $paginator->lastPage(); $page++)
+    @php
+    $currentPage = $paginator->currentPage(); // Current page
+    $lastPage = $paginator->lastPage(); // Last page
+    $startPage = max(1, $currentPage - 2); // Start page (2 pages before current page)
+    $endPage = min($lastPage, $currentPage + 2); // End page (2 pages after current page)
+    @endphp
+
+    @for ($page = $startPage; $page <= $endPage; $page++)
         @if ($page == $paginator->currentPage())
             <li class="page-item active"><span class="page-link">{{ $page }}</span></li>
         @else
