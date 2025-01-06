@@ -235,13 +235,57 @@
 
 
 
+                            <!-- new fields -->
                             <div class="col-md-4">
-                                <label class="form-label fw-bolder text-dark">Work Order Rate (%)</label>
-                                <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_rate" value="{{ old('work_order_rate', $productSpecification->work_order_rate) }}" step="0.01" />
-                                @error('work_order_rate')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                                <label class="form-label fw-bolder text-dark">Advance Amount</label>
+                                <input class="form-control form-control-sm form-control-solid" type="text" name="advance_amount" value="{{ old('advance_amount', $productSpecification->advance_amount) }}" />
+                                @if ($errors->has('advance_amount'))
+                                <div class="text-danger">{{ $errors->first('advance_amount') }}</div>
+                                @endif
                             </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Total Installment</label>
+                                <input class="form-control form-control-sm form-control-solid" type="text" name="total_installment" value="{{ old('total_installment', $productSpecification->total_installment) }}" />
+                                @if ($errors->has('total_installment'))
+                                <div class="text-danger">{{ $errors->first('total_installment') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Per Month Installment</label>
+                                <input class="form-control form-control-sm form-control-solid" type="text" name="per_month_installment" value="{{ old('per_month_installment', $productSpecification->per_month_installment) }}" />
+                                @if ($errors->has('per_month_installment'))
+                                <div class="text-danger">{{ $errors->first('per_month_installment') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Payment Date Cycle</label>
+                                <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="payment_date_cycle" value="{{ old('payment_date_cycle', $productSpecification->payment_date_cycle) }}" />
+                                @if ($errors->has('payment_date_cycle'))
+                                <div class="text-danger">{{ $errors->first('payment_date_cycle') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Remaining Month</label>
+                                <input class="form-control form-control-sm form-control-solid" type="text" name="remaining_month" value="{{ old('remaining_month', $productSpecification->remaining_month) }}" />
+                                @if ($errors->has('remaining_month'))
+                                <div class="text-danger">{{ $errors->first('remaining_month') }}</div>
+                                @endif
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bolder text-dark">Due Balance</label>
+                                <input class="form-control form-control-sm form-control-solid" type="number" name="due_balance" value="{{ old('due_balance', $productSpecification->due_balance) }}" />
+                                @if ($errors->has('due_balance'))
+                                <div class="text-danger">{{ $errors->first('due_balance') }}</div>
+                                @endif
+                            </div>
+                            <!-- end new fields -->
+
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Purchase Order Value</label>
@@ -356,7 +400,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label class="form-label fw-bolder text-dark">Implementation Value</label>
+                                <label class="form-label fw-bolder text-dark">Implementation Cost</label>
                                 <textarea class="form-control form-control-sm form-control-solid" name="implementation_value" rows="3">{{ old('implementation_value', $productSpecification->implementation_value) }}</textarea>
                                 @if ($errors->has('implementation_value'))
                                 <div class="text-danger">{{ $errors->first('implementation_value') }}</div>

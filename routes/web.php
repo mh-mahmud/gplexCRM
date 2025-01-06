@@ -148,7 +148,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     // invoice route
 	Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice-index')->middleware(['check-permission']);
-	Route::get('/invoice/create/{id?}', [InvoiceController::class, 'create'])->name('invoice-create')->middleware(['check-permission']);
+	//Route::get('/invoice/create/{id?}', [InvoiceController::class, 'create'])->name('invoice-create')->middleware(['check-permission']);
+	Route::get('/invoice/create/{leadid?}', [InvoiceController::class, 'create'])->name('invoice-create')->middleware(['check-permission']);
 	Route::post('/invoice', [InvoiceController::class, 'store'])->name('invoice-store');
 	Route::get('/invoice/{id?}', [InvoiceController::class, 'show'])->name('invoice-show')->middleware(['check-permission']);
 	Route::get('/invoice/{id?}/edit', [InvoiceController::class, 'edit'])->name('invoice-edit')->middleware(['check-permission']);

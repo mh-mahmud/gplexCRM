@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Invoice;
+use App\Models\ProductSpecification;
 use App\Models\InvoiceCustomForm;
 use Illuminate\Support\Facades\Auth;
 
@@ -98,6 +99,7 @@ class InvoiceService
             'invoice_number' =>  'INV-' . $data['invoice_number'],
             'customer_id' => $data['customer_id'],
             'invoice_custom_form_id' => $data["custom_invoice_id"],
+            'ps_id' => $data["ps_id"],
             'address' => $data['address'],
             'invoice_date' => $data['invoice_date'],
             'due_date' => $data['due_date'],
@@ -117,7 +119,7 @@ class InvoiceService
             'payment_mode' => $data['payment_mode'],
             'sale_agent_id' => $data['sale_agent_id'],
             'created_by' =>Auth::user()->id,
-            'invoice_status' => $data['invoice_status'],
+            'invoice_status' => $data['invoice_status']?? null,
             'item_description' => $itemDescriptionJson,
             // 'custom_footer_details' => $customFooterJson,
         ]);
@@ -180,6 +182,7 @@ class InvoiceService
         $invoice->invoice_number = 'INV-' . $data['invoice_number'];
         $invoice->customer_id = $data['customer_id'];
         $invoice->invoice_custom_form_id = $data['custom_invoice_id'] ?? null;
+        $invoice->ps_id = $data['ps_id'] ?? null;
         $invoice->address = $data['address'];
         $invoice->invoice_date = $data['invoice_date'];
         $invoice->due_date = $data['due_date'];
@@ -197,7 +200,7 @@ class InvoiceService
         $invoice->payment_mode = $data['payment_mode'];
         $invoice->sale_agent_id = $data['sale_agent_id'];
         $invoice->created_by = Auth::user()->id;
-        $invoice->invoice_status = $data['invoice_status'];
+        $invoice->invoice_status = $data['invoice_status']?? null;
 
         //handle item description logic
         $items = [];
@@ -267,13 +270,17 @@ class InvoiceService
             ->paginate(config('constants.ROW_PER_PAGE'));
     }
 
-    public function addPaymentInvoice($invoice, $paymentDetails)
+    public function addPaymentInvoice($invoice, $paymentDetails,$payment_amount)
     {
-        //directly push to the array if it's already cast
         $existingPayments = $invoice->payment_details ?? [];
         $existingPayments[] = $paymentDetails;
         $invoice->payment_details = $existingPayments;
         $invoice->save();
+        //update product specification data
+        $pr_sp = ProductSpecification::findOrFail($invoice->ps_id);
+        $pr_sp->remaining_month = $pr_sp->remaining_month - 1; 
+        $pr_sp->due_balance = $pr_sp->due_balance - $payment_amount;
+        $pr_sp->save();
         return $invoice;
     }
     

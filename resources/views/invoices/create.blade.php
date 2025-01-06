@@ -73,7 +73,7 @@
                                 <div class="row">
 
 
-                                    <div class="col-md-12">
+                                    <!-- <div class="col-md-12">
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
 
@@ -91,7 +91,26 @@
                                             @endif
 
                                         </div>
+                                    </div> -->
+
+                                    <div class="fv-row mb-5">
+                                        <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span></label>
+                                        <select class="form-control form-control-sm form-control-solid" name="customer_id" aria-label="Default select example">
+                                            <option value="" {{ old('customer_id') == '' ? 'selected' : '' }}>Select Customer</option>
+                                            @foreach($customers as $customer)
+                                            <option value="{{ $customer->id }}"
+                                                {{ old('customer_id') == $customer->id || (isset($leadid) && $customer->lead_id == $leadid) ? 'selected' : '' }}>
+                                                {{ $customer->first_name }} {{ $customer->last_name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('customer_id'))
+                                        <span class="text-danger">{{ $errors->first('customer_id') }}</span>
+                                        @endif
                                     </div>
+
+
+
 
                                     <div class="col-md-12">
                                         <div class="fv-row mb-5">
@@ -180,6 +199,46 @@
                                         </div>
                                     </div>
 
+                                    <!-- <div class="col-xl-6">
+                                        <div class="fv-row mb-5">
+                                            <label class="form-label fw-bolder text-dark">Work Order Number
+
+                                            </label>
+                                            <select class="form-control form-control-sm form-control-solid" name="ps_id" aria-label="Default select example">
+                                                <option value="" {{ old('ps_id') == '' ? 'selected' : '' }}>Select Work Order Number</option>
+                                                @foreach($wordOrderNumbers as $wordOrderNumber)
+                                                <option value="{{ $wordOrderNumber->id }}" {{ old('ps_id') == $wordOrderNumber->id ? 'selected' : '' }}>
+                                                    {{ $wordOrderNumber->work_order_number }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('ps_id'))
+                                            <span class="text-danger">{{ $errors->first('ps_id') }}</span>
+                                            @endif
+
+                                        </div>
+                                    </div> -->
+
+                                    <div class="col-xl-6">
+                                        <div class="fv-row mb-5">
+                                            <label class="form-label fw-bolder text-dark">Work Order Number</label>
+                                            <select class="form-control form-control-sm form-control-solid" name="ps_id" aria-label="Default select example">
+                                               
+                                                <option value="" {{ old('ps_id') == '' ? 'selected' : '' }}>Select Work Order Number</option>
+                                                
+                                                @foreach($wordOrderNumbers as $wordOrderNumber)
+                                                <option value="{{ $wordOrderNumber->id }}"
+                                                    {{ old('ps_id') == $wordOrderNumber->id || (isset($leadid) && $wordOrderNumber->id == old('ps_id')) ? 'selected' : '' }}>
+                                                    {{ $wordOrderNumber->work_order_number }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('ps_id'))
+                                            <span class="text-danger">{{ $errors->first('ps_id') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
 
                                     {{-- <div class="col-md-6">
                                                 <div class="form-check form-switch form-check-light">
@@ -243,6 +302,7 @@
                                                 @endforeach
                                             </select>
 
+
                                             @if ($errors->has('invoice_status'))
                                             <span class="text-danger">{{ $errors->first('invoice_status') }}</span>
                                             @endif
@@ -264,18 +324,18 @@
 
                                                 @foreach($agents as $agent)
                                                 @if($isAdmin)
-                                               <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : '' }}>
+                                                <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : '' }}>
                                                     {{ $agent->first_name }} {{ $agent->last_name }}
                                                 </option>
                                                 @elseif($agent->user_id == Auth::user()->id)
-                                               <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : 'selected' }}>
+                                                <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : 'selected' }}>
                                                     {{ $agent->first_name }} {{ $agent->last_name }}
                                                 </option>
                                                 <input type="hidden" name="sale_agent_id" value="{{ $agent->agent_id }}">
                                                 @endif
                                                 @endforeach
                                             </select>
-                                          
+
 
                                             @if ($errors->has('sale_agent_id'))
                                             <span class="text-danger">{{ $errors->first('sale_agent_id') }}</span>
@@ -1005,7 +1065,7 @@
         });
 
         const formattedTotal = total.toFixed(2);
-        
+
         document.getElementById('custom-subtotal-amount').innerHTML = formattedTotal;
         document.getElementById('subtotal-hidden').value = formattedTotal;
         document.getElementById('total-hidden').value = formattedTotal;
@@ -1019,8 +1079,8 @@
             calculateCustomAdjustment(adjustmentInput.value);
         }
     }
-    function calculateVat(value)
-    {
+
+    function calculateVat(value) {
         value = parseFloat(value);
         if (isNaN(value)) {
             value = 0;
@@ -1029,11 +1089,12 @@
         let totalVat = (subTotalAmount * value) / 100;
         document.getElementById('totaltax-hidden').value = totalVat;
         let totalAmount = 0;
-        totalAmount = parseFloat(subTotalAmount) + parseFloat(totalVat) + parseFloat(totalAmount); 
+        totalAmount = parseFloat(subTotalAmount) + parseFloat(totalVat) + parseFloat(totalAmount);
         document.getElementById('custom-total-vat').innerHTML = totalVat.toFixed(2);
         document.getElementById('total-hidden').value = totalAmount.toFixed(2);
         document.getElementById('custom-total-amount').innerHTML = totalAmount.toFixed(2);
     }
+
     function calculateCustomAdjustment(value) {
         // Validate the input value
         value = value === '' || isNaN(parseFloat(value)) ? 0 : parseFloat(value);
@@ -1051,11 +1112,11 @@
         let totalAmountDisplay = document.getElementById('custom-total-amount');
         let adjustmentDisplay = document.getElementById('custom-adjustment-amount');
 
-        if (totalHidden) 
+        if (totalHidden)
             totalHidden.value = totalAmount.toFixed(2);
-        if (totalAmountDisplay) 
+        if (totalAmountDisplay)
             totalAmountDisplay.innerHTML = totalAmount.toFixed(2);
-        if (adjustmentDisplay) 
+        if (adjustmentDisplay)
             adjustmentDisplay.innerHTML = totalAmount.toFixed(2);
     }
 
@@ -1070,7 +1131,7 @@
         const customInvoiceHeader = document.getElementById('custom-invoice-header');
         const customInvoiceBody = document.getElementById('custom-invoice-body');
 
-        const footerTable = document.getElementById('custom-invoice-footer-table'); 
+        const footerTable = document.getElementById('custom-invoice-footer-table');
         const customInvoiceFooterHeader = document.getElementById('custom-invoice-footer-header');
         const customInvoiceFooterBody = document.getElementById('custom-invoice-footer-body');
         const customInvoiceDiv = document.getElementById('custom-invoice');
@@ -1079,17 +1140,17 @@
         const customAdjustment = document.getElementById('custom_adjustment');
 
 
-        window.sanitizeInput = function (inputElement) {
+        window.sanitizeInput = function(inputElement) {
             inputElement.value = inputElement.value.replace(/,/g, '');
             getTotalAmount(inputElement.value);
         };
 
         customVat.addEventListener('input', function() {
-            calculateVat(this.value);  
+            calculateVat(this.value);
         });
 
         customAdjustment.addEventListener('input', function() {
-            calculateCustomAdjustment(this.value);  
+            calculateCustomAdjustment(this.value);
         });
 
         customInvoiceSelect.addEventListener('change', function() {
