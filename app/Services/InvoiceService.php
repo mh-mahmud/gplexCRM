@@ -241,7 +241,7 @@ class InvoiceService
             }
 
             $items = array_filter($items, function ($row) {
-                // Check if the row has any non-empty fields
+                // chk if the row has any non-empty fields
                 foreach ($row as $field) {
                     if (!empty(array_values($field)[0])) {
                         return true;
