@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
 use App\Models\Customer;
 use App\Helpers\Helper;
+use Illuminate\Support\Facades\DB;
+use App\Models\Invoice;
 
 class ProductSpecificationController extends Controller
 {
@@ -22,7 +24,18 @@ class ProductSpecificationController extends Controller
     public function index()
     { 
         $productSpecifications = $this->productSpecificationService->getAllProductSpecifications();
-        return view('product_specifications.index', compact('productSpecifications'));
+        $invoicesGroupedByPsId = Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
+        ->join('leads', 'customers.lead_id', '=', 'leads.id')
+        ->select(
+            'invoices.*',
+            'customers.customer_group',
+            'leads.first_name',
+            'leads.last_name'
+        )
+        ->orderBy('invoices.created_at', 'desc')
+        ->get()
+        ->groupBy('ps_id');
+        return view('product_specifications.index', compact('productSpecifications','invoicesGroupedByPsId'));
     }
 
     public function create()
@@ -50,6 +63,12 @@ class ProductSpecificationController extends Controller
             'invoice_mushak_file' => 'nullable|file|max:10048',
             'tax_exemption_certificate' => 'nullable|file|max:10048',
             // Add other validation rules as necessary
+
+            'payment_date_cycle' => 'nullable|date',
+            'advance_amount' => 'required|numeric',
+            'total_installment' => 'required|numeric',
+            'per_month_installment' => 'nullable|numeric',
+            'remaining_month' => 'nullable|numeric',
         ]);
 
         if ($validator->fails()) {

@@ -10,7 +10,7 @@
 
 <body>
     @php
-    // Determine the payment status based on $newDueAmount
+    
     if ($newDueAmount == 0) {
     $statusClass = 'g-paid';
     $statusText = 'Paid';
@@ -49,7 +49,7 @@
                             <tr>
                                 <td class="w-full align-top">
                                     <div>
-                                        <img src="{{ asset('uploads/logo.svg') }}" class="h-12" />
+                                        <img src="{{ asset('uploads/gplex_logo.png') }}" class="h-12" />
                                     </div>
                                 </td>
 

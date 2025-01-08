@@ -362,7 +362,7 @@ use Carbon\Carbon;
                         <!--begin::Table head-->
                         <thead>
                             <tr class="fw-bolder text-muted bg-light bd-cyan">
-                                <th class="min-w-150px ps-4">SL</th>
+                                <th class="ps-4">SL</th>
                                 <!-- <th class="min-w-150px">Form ID</th> -->
                                 <th class="min-w-150px">Meeting Subject</th>
                                 <!-- <th class="min-w-150px">Promotion</th> -->

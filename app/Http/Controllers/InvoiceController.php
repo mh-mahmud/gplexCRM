@@ -13,6 +13,8 @@ use App\Helpers\Helper;
 use App\Models\Agent;
 use App\Models\Product;
 use App\Models\InvoiceCustomForm;
+use App\Models\ProductSpecification;
+use App\Services\ProductSpecificationService;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +39,7 @@ class InvoiceController extends Controller
         return view('invoices.index', compact('invoices'));
     }
 
-    public function create(Request $request)
+    public function create_backup(Request $request)
     {
         //$customers = Customer::all();
         $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
@@ -49,11 +51,51 @@ class InvoiceController extends Controller
         $nextInvoiceNumber = $lastInvoice ? $lastInvoice->id + 1 : 1;
         $discountTypes = Helper::getEnumValues('invoices', 'discount_type');
         $agents = Agent::select('agent_id', 'first_name', 'last_name','user_id')->get();
+        $wordOrderNumbers = ProductSpecification::select('id', 'work_order_number')->get();
         $custom_invoice = InvoiceCustomForm::select('id', 'invoice_name','field_details','footer_details')->get();
         //$products = Product::select('id', 'name', 'description', 'product_value')->get();
         $products = Product::select('id', 'name', 'description', 'product_value')->where('status', 1)->get();
-        return view('invoices.create', compact('customers', 'countries', 'currencies', 'nextInvoiceNumber', 'discountTypes', 'agents', 'products','custom_invoice'));
+        return view('invoices.create', compact('customers', 'countries', 'currencies', 'nextInvoiceNumber', 'discountTypes', 'agents', 'products','custom_invoice','wordOrderNumbers'));
     }
+
+
+    public function create(Request $request, $leadid = null)
+    {
+        if ($leadid) {
+            
+            $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
+                ->where('leads.id', $leadid)
+                ->select('customers.*', 'leads.first_name', 'leads.last_name')
+                ->get();
+                //dd($customers);
+        } else {
+            
+            $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
+                ->select('customers.*', 'leads.first_name', 'leads.last_name')
+                ->get();
+        }
+        $countries = $this->countryService->countryList($request);
+        $currencies = $this->currencyService->currencyList($request);
+        $lastInvoice = Invoice::latest()->first();
+        $nextInvoiceNumber = $lastInvoice ? $lastInvoice->id + 1 : 1;
+        $discountTypes = Helper::getEnumValues('invoices', 'discount_type');
+        $agents = Agent::select('agent_id', 'first_name', 'last_name','user_id')->get();
+        //$wordOrderNumbers = ProductSpecification::select('id', 'work_order_number')->get();
+        if ($leadid) {
+            $wordOrderNumbers = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+                ->where('customers.lead_id', $leadid)
+                ->select('product_specification.id', 'product_specification.work_order_number')
+                ->get();
+        } else {
+            $wordOrderNumbers = ProductSpecification::select('id', 'work_order_number')->get();
+        }
+        $custom_invoice = InvoiceCustomForm::select('id', 'invoice_name','field_details','footer_details')->get();
+        $products = Product::select('id', 'name', 'description', 'product_value')->where('status', 1)->get();
+        return view('invoices.create', compact('customers', 'countries', 'currencies', 'nextInvoiceNumber', 'discountTypes', 'agents', 'products','custom_invoice','wordOrderNumbers', 'leadid'));
+    }
+
+
+    
 
     public function store_backup(Request $request)
     {
@@ -77,6 +119,7 @@ class InvoiceController extends Controller
                 'customer_id' => 'required|exists:customers,id',
                 //'invoice_number' => 'required|unique:invoices,invoice_number',
                 'invoice_date' => 'required|date',
+                'invoice_status' => 'required',
                 'due_date' => 'nullable|date|after_or_equal:invoice_date',
                 'product_id' => 'required|exists:products,id',
                 //item validation
@@ -139,10 +182,11 @@ class InvoiceController extends Controller
         $currencies = $this->currencyService->currencyList($request);
         $discountTypes = Helper::getEnumValues('invoices', 'discount_type');
         $agents = Agent::select('agent_id', 'first_name', 'last_name','user_id')->get();
+        $wordOrderNumbers = ProductSpecification::select('id', 'work_order_number')->get();
         //$products = Product::select('id', 'name', 'description', 'product_value')->get();
         $products = Product::select('id', 'name', 'description', 'product_value')->where('status', 1)->get();
         $custom_invoice = InvoiceCustomForm::select('id', 'invoice_name','field_details','footer_details')->get();
-        return view('invoices.edit', compact('invoice', 'customers', 'countries', 'currencies', 'discountTypes', 'agents', 'products', 'invoiceItems','invoiceCustomFormId','custom_invoice'));
+        return view('invoices.edit', compact('invoice', 'customers', 'countries', 'currencies', 'discountTypes', 'agents', 'products', 'invoiceItems','invoiceCustomFormId','custom_invoice','wordOrderNumbers'));
     }
 
 
@@ -153,6 +197,7 @@ class InvoiceController extends Controller
             'customer_id' => 'required|exists:customers,id',
             //'invoice_number' => 'required|unique:invoices,invoice_number,' . $id, //current invoice number
             'invoice_date' => 'required|date',
+            'invoice_status' => 'required',
             'due_date' => 'nullable|date|after_or_equal:invoice_date',
         ]);
 
@@ -277,7 +322,8 @@ class InvoiceController extends Controller
                 },
             ],
         ]);
-
+        //dd($request->all());
+        $payment_amount=$request->input('payment_amount');
         $paymentDetails = [
             'invoice_id' => $invoice->id,
             'payment' => $request->input('payment_amount'),
@@ -285,7 +331,7 @@ class InvoiceController extends Controller
             'due' => max(0, $newDueAmount - $request->input('payment_amount'))
         ];
 
-        $this->invoiceService->addPaymentInvoice($invoice, $paymentDetails);
+        $this->invoiceService->addPaymentInvoice($invoice, $paymentDetails, $payment_amount);
 
         return redirect()->route('invoice-index')->with('success', 'Payment recorded successfully!');
     }

@@ -438,3 +438,13 @@ ALTER TABLE `product_specification` CHANGE `work_order_rate` `work_order_rate` D
 
 -- 29-12-2024 by rokib its not given in db
 ALTER TABLE `leads` ADD COLUMN `lead_start_date` DATE NULL AFTER `country`;
+
+ALTER TABLE `invoices` ADD COLUMN `ps_id` INT(11) NULL AFTER `invoice_custom_form_id`;
+
+
+-- 01-01-2025 its not given in db
+ALTER TABLE `product_specification` ADD `advance_amount` DOUBLE NULL DEFAULT NULL AFTER `work_order_value`, ADD `total_installment` INT NULL DEFAULT NULL AFTER `advance_amount`, ADD `per_month_installment` DOUBLE NULL DEFAULT NULL AFTER `total_installment`, ADD `payment_date_cycle` DATE NULL DEFAULT NULL AFTER `per_month_installment`, ADD `remaining_month` INT NULL DEFAULT NULL AFTER `payment_date_cycle`;
+
+-- 01-02-2025 its not given in db
+ALTER TABLE `product_specification` ADD `due_balance` DOUBLE NULL DEFAULT NULL AFTER `remaining_month`;
+
