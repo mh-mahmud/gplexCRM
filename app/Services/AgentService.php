@@ -153,16 +153,20 @@ class AgentService
     public function searchAgents($request)
     {
         $searchTerm = trim($request->input('search'));
-        $query = Agent::query();
 
-        $query->where(function($q) use ($searchTerm) {
-            $q->where('agent_id', 'LIKE', '%' . $searchTerm . '%')
-              ->orWhere('first_name', 'LIKE', '%' . $searchTerm . '%')
-              ->orWhere('last_name', 'LIKE', '%' . $searchTerm . '%');
-        });
+        $query = Agent::select('agents.*', 'users.username')
+        ->join('users', 'users.id', '=', 'agents.user_id')
+        ->where(function ($q) use ($searchTerm) {
+            $q->where('agents.agent_id', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('agents.first_name', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('agents.last_name', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('users.username', 'LIKE', '%' . $searchTerm . '%');
+        })
+            ->orderBy('agents.created_at', 'desc');
 
         return $query->paginate(config('constants.ROW_PER_PAGE'));
     }
+
 
     public function deleteAgentAndUser($id)
     {
