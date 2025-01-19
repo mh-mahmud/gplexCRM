@@ -15,7 +15,7 @@ class TaskService
         if(Auth::user()->user_type != 'admin') {
             $sql->where('assigned_to', Auth::id());
         } else {
-            $sql->join('users', 'users.id', '=', 'tasks.assigned_to')
+            $sql->leftJoin('users', 'users.id', '=', 'tasks.assigned_to')
                 ->select('tasks.*', 'users.first_name', 'users.last_name');
         }
         return $sql->orderBy('id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
