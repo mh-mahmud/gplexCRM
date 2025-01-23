@@ -1,4 +1,4 @@
-@if ($paginator->total() > 10)
+<!-- @if ($paginator->total() > 10) -->
 <ul class="pagination mt-5">
     <!-- Previous Page Link -->
     @if ($paginator->onFirstPage())
@@ -11,8 +11,8 @@
     @php
     $currentPage = $paginator->currentPage(); // Current page
     $lastPage = $paginator->lastPage(); // Last page
-    $startPage = max(1, $currentPage - 2); // Start page (2 pages before current page)
-    $endPage = min($lastPage, $currentPage + 2); // End page (2 pages after current page)
+    $startPage = max(1, $currentPage - 4); // Start page (2 pages before current page)
+    $endPage = min($lastPage, $currentPage + 4); // End page (2 pages after current page)
     @endphp
 
     @for ($page = $startPage; $page <= $endPage; $page++)
@@ -30,4 +30,4 @@
         <li class="page-item next disabled"><span class="page-link"><i class="next"></i></span></li>
     @endif
 </ul>
-@endif
+<!-- @endif -->
