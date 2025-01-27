@@ -582,7 +582,7 @@ video {
 }
 
 .border-main {
-    border-color: #54B4D3;
+    border-color: #cbd5e1;
 }
 
 .bg-main {
@@ -668,10 +668,10 @@ video {
 }
 
 .status-btn-group button {
-    border: 1px solid #54B4D3;
+    border: 1px solid #5cb85c;
     padding: 0.2rem 1rem;
     border-radius: 0.2rem;
-    background-color: #54B4D3;
+    background-color: #5cb85c;
     color: #ffffff;
     display: flex;
     align-items: center;
@@ -745,7 +745,7 @@ video {
 }
 
 .text-main {
-    color: #54B4D3;
+    color: #3f4254;
 }
 
 .text-neutral-600 {
@@ -761,7 +761,7 @@ video {
 }
 
 .text-slate-400 {
-    color: #94a3b8;
+    color: #7e8299;
 }
 
 .text-white {
@@ -803,10 +803,10 @@ label[for="payment-amount"] span input + span {
 }
 
 .pay-now {
-    border: 1px solid #54B4D3;
+    border: 1px solid #5cb85c;
     padding: 0.2rem 1rem;
     border-radius: 0.2rem;
-    background-color: #54B4D3;
+    background-color: #5cb85c;
     color: #ffffff;
 }
 
