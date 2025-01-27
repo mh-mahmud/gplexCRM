@@ -804,8 +804,7 @@
                                 <div class="card-body p-1">
                                     <div class="d-flex justify-content-between align-items-center mb-1">
                                         <strong class="fs-3">Emails</strong>
-                                        <a class="btn btn-success btn-sm" target="_blank"
-                                           href="{{ route('send-email') }}">
+                                        <a class="btn btn-success btn-sm" id="kt_activities_toggle">
                                             <i class="bi bi-plus-lg"></i>
                                             Send Email
                                         </a>
@@ -1703,6 +1702,574 @@
 
     <!-- </div> -->
     <!--end::Content-->
+
+    <!--begin::Activities drawer-->
+    <div id="kt_activities" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '1200px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle" data-kt-drawer-close="#kt_activities_close">
+        <div class="card shadow-none rounded-0 w-100">
+            <!--begin::Header-->
+            <div class="card-header" id="kt_activities_header">
+                <h3 class="card-title fw-bolder text-dark">Send Email</h3>
+                <div class="card-toolbar">
+                    <button type="button" class="btn btn-sm btn-icon btn-active-light-primary me-n5" id="kt_activities_close">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </button>
+                </div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body position-relative" id="kt_activities_body">
+                <!--begin::Content-->
+                <div id="kt_activities_scroll" class="position-relative scroll-y me-n5 pe-5" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_activities_body" data-kt-scroll-dependencies="#kt_activities_header, #kt_activities_footer" data-kt-scroll-offset="5px">
+                    <!--begin::Timeline items-->
+                    <!-- <div class="timeline"> -->
+
+                            <!--begin::Tables Widget 9-->
+                            <div class="card mb-5 mb-xl-8">
+                                <!--begin::Header-->
+                               
+                                <!--end::Header-->
+                                <div style="border:1px solid #ddd;padding:20px">
+                                <div class="row">
+                                    <div class="col-md-12 mx-auto">
+                                        <form class="g-form w-100" action="{{ route('send-email-process') }}" method="POST">
+                                            @csrf
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">To<span
+                                                                class="text-danger">*</span></label>
+                                                        <input class="form-control form-control-sm form-control-solid"
+                                                               type="text" id="to_email" name="to_email" autocomplete="off"
+                                                               value="{{ old('to_email') }}"/>
+                                                        @if ($errors->has('to_email'))
+                                                            <span class="text-danger">{{ $errors->first('to_email') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">Email Template</label>
+                                                        <select class=" form-control form-control-sm form-control-solid"
+                                                                id="template_id"
+                                                                name="template_id"
+                                                                aria-label="Default select example">
+                                                            <option value=''>Select</option>
+                                                            @foreach($templates=[] as $template)
+                                                                <option
+                                                                    value="{{$template->id}}" {{ old('template_id') == $template->id ? 'selected' : '' }}>{{ $template->email_subject }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">Email Subject<span
+                                                                class="text-danger">*</span></label>
+                                                        <input class="form-control form-control-sm form-control-solid"
+                                                               type="text" id="email_subject" name="email_subject"
+                                                               autocomplete="off"
+                                                               value="{{ old('email_subject') }}"/>
+                                                        @if ($errors->has('email_subject'))
+                                                            <span
+                                                                class="text-danger">{{ $errors->first('email_subject') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label fw-bolder text-dark"
+                                                               for="textarea">Content<span
+                                                                class="text-danger">*</span></label>
+                                                        <textarea
+                                                            class="form-control form-control-sm  form-control-solid editor"
+                                                            id="email_content" name="email_content"
+                                                            rows="3">{{ old('email_content') }}</textarea>
+                                                        @if ($errors->has('email_content'))
+                                                            <span
+                                                                class="text-danger">{{ $errors->first('email_content') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--End Row-->
+                                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                                <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Send</button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                                </div>
+
+                            </div>
+                            <!--end::Tables Widget 9-->
+
+                    <!-- </div> -->
+                    <!--end::Timeline items-->
+                </div>
+                <!--end::Content-->
+            </div>
+            <!--end::Body-->
+            <!--begin::Footer-->
+
+            <!--end::Footer-->
+        </div>
+    </div>
+    <!--end::Activities drawer-->
+
+    <!--begin::Activities drawer-->
+    <div id="kt_activities_2" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '1200px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle_2" data-kt-drawer-close="#kt_activities_close">
+        <div class="card shadow-none rounded-0 w-100">
+            <!--begin::Header-->
+            <div class="card-header" id="kt_activities_header">
+                <h3 class="card-title fw-bolder text-dark">Activity Logs Another</h3>
+                <div class="card-toolbar">
+                    <button type="button" class="btn btn-sm btn-icon btn-active-light-primary me-n5" id="kt_activities_close">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </button>
+                </div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body position-relative" id="kt_activities_body">
+                <!--begin::Content-->
+                <div id="kt_activities_scroll" class="position-relative scroll-y me-n5 pe-5" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_activities_body" data-kt-scroll-dependencies="#kt_activities_header, #kt_activities_footer" data-kt-scroll-offset="5px">
+                    <!--begin::Timeline items-->
+                    <div class="timeline">
+
+                            <!--begin::Tables Widget 9-->
+                            <div class="card mb-5 mb-xl-8">
+                                <!--begin::Header-->
+                                <div class="card-header border-0 pt-5">
+                                    <h3 class="card-title align-items-start flex-column">
+                                        <span class="card-label fw-bolder fs-3 mb-1">Members Statistics</span>
+                                        <span class="text-muted mt-1 fw-bold fs-7">Over 500 members</span>
+                                    </h3>
+                                    <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="Click to add a user">
+                                        <a href="#" class="btn btn-sm btn-light btn-active-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_invite_friends">
+                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                                        <span class="svg-icon svg-icon-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black" />
+                                                <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->New Member</a>
+                                    </div>
+                                </div>
+                                <!--end::Header-->
+                                <!--begin::Body-->
+                                <div class="card-body py-3">
+                                    <!--begin::Table container-->
+                                    <div class="table-responsive">
+                                        <!--begin::Table-->
+                                        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <tr class="fw-bolder text-muted">
+                                                    <th class="w-25px">
+                                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                            <input class="form-check-input" type="checkbox" value="1" data-kt-check="true" data-kt-check-target=".widget-9-check" />
+                                                        </div>
+                                                    </th>
+                                                    <th class="min-w-150px">Authors</th>
+                                                    <th class="min-w-140px">Company</th>
+                                                    <th class="min-w-120px">Progress</th>
+                                                    <th class="min-w-100px text-end">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                            <input class="form-check-input widget-9-check" type="checkbox" value="1" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="symbol symbol-45px me-5">
+                                                                <img src="assets/media/avatars/150-11.jpg" alt="" />
+                                                            </div>
+                                                            <div class="d-flex justify-content-start flex-column">
+                                                                <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">Ana Simmons</a>
+                                                                <span class="text-muted fw-bold text-muted d-block fs-7">HTML, JS, ReactJS</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">Intertico</a>
+                                                        <span class="text-muted fw-bold text-muted d-block fs-7">Web, UI/UX Design</span>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <div class="d-flex flex-column w-100 me-2">
+                                                            <div class="d-flex flex-stack mb-2">
+                                                                <span class="text-muted me-2 fs-7 fw-bold">50%</span>
+                                                            </div>
+                                                            <div class="progress h-6px w-100">
+                                                                <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-end flex-shrink-0">
+                                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="black" />
+                                                                        <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </a>
+                                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="black" />
+                                                                        <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </a>
+                                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                                <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black" />
+                                                                        <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black" />
+                                                                        <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                            <input class="form-check-input widget-9-check" type="checkbox" value="1" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="symbol symbol-45px me-5">
+                                                                <img src="assets/media/avatars/150-3.jpg" alt="" />
+                                                            </div>
+                                                            <div class="d-flex justify-content-start flex-column">
+                                                                <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">Jessie Clarcson</a>
+                                                                <span class="text-muted fw-bold text-muted d-block fs-7">C#, ASP.NET, MS SQL</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">Agoda</a>
+                                                        <span class="text-muted fw-bold text-muted d-block fs-7">Houses &amp; Hotels</span>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <div class="d-flex flex-column w-100 me-2">
+                                                            <div class="d-flex flex-stack mb-2">
+                                                                <span class="text-muted me-2 fs-7 fw-bold">70%</span>
+                                                            </div>
+                                                            <div class="progress h-6px w-100">
+                                                                <div class="progress-bar bg-danger" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-end flex-shrink-0">
+                                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="black" />
+                                                                        <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </a>
+                                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="black" />
+                                                                        <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </a>
+                                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                                <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black" />
+                                                                        <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black" />
+                                                                        <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                            <input class="form-check-input widget-9-check" type="checkbox" value="1" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="symbol symbol-45px me-5">
+                                                                <img src="assets/media/avatars/150-4.jpg" alt="" />
+                                                            </div>
+                                                            <div class="d-flex justify-content-start flex-column">
+                                                                <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">Lebron Wayde</a>
+                                                                <span class="text-muted fw-bold text-muted d-block fs-7">PHP, Laravel, VueJS</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">RoadGee</a>
+                                                        <span class="text-muted fw-bold text-muted d-block fs-7">Transportation</span>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <div class="d-flex flex-column w-100 me-2">
+                                                            <div class="d-flex flex-stack mb-2">
+                                                                <span class="text-muted me-2 fs-7 fw-bold">60%</span>
+                                                            </div>
+                                                            <div class="progress h-6px w-100">
+                                                                <div class="progress-bar bg-success" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-end flex-shrink-0">
+                                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="black" />
+                                                                        <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </a>
+                                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="black" />
+                                                                        <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </a>
+                                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                                <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black" />
+                                                                        <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black" />
+                                                                        <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                            <input class="form-check-input widget-9-check" type="checkbox" value="1" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="symbol symbol-45px me-5">
+                                                                <img src="assets/media/avatars/150-5.jpg" alt="" />
+                                                            </div>
+                                                            <div class="d-flex justify-content-start flex-column">
+                                                                <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">Natali Goodwin</a>
+                                                                <span class="text-muted fw-bold text-muted d-block fs-7">Python, PostgreSQL, ReactJS</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">The Hill</a>
+                                                        <span class="text-muted fw-bold text-muted d-block fs-7">Insurance</span>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <div class="d-flex flex-column w-100 me-2">
+                                                            <div class="d-flex flex-stack mb-2">
+                                                                <span class="text-muted me-2 fs-7 fw-bold">50%</span>
+                                                            </div>
+                                                            <div class="progress h-6px w-100">
+                                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-end flex-shrink-0">
+                                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="black" />
+                                                                        <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </a>
+                                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="black" />
+                                                                        <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </a>
+                                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                                <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black" />
+                                                                        <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black" />
+                                                                        <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                            <input class="form-check-input widget-9-check" type="checkbox" value="1" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="symbol symbol-45px me-5">
+                                                                <img src="assets/media/avatars/150-6.jpg" alt="" />
+                                                            </div>
+                                                            <div class="d-flex justify-content-start flex-column">
+                                                                <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">Kevin Leonard</a>
+                                                                <span class="text-muted fw-bold text-muted d-block fs-7">HTML, JS, ReactJS</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">RoadGee</a>
+                                                        <span class="text-muted fw-bold text-muted d-block fs-7">Art Director</span>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <div class="d-flex flex-column w-100 me-2">
+                                                            <div class="d-flex flex-stack mb-2">
+                                                                <span class="text-muted me-2 fs-7 fw-bold">90%</span>
+                                                            </div>
+                                                            <div class="progress h-6px w-100">
+                                                                <div class="progress-bar bg-info" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-end flex-shrink-0">
+                                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="black" />
+                                                                        <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </a>
+                                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="black" />
+                                                                        <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </a>
+                                                            <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                                <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black" />
+                                                                        <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black" />
+                                                                        <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                    <!--end::Table container-->
+                                </div>
+                                <!--begin::Body-->
+                            </div>
+                            <!--end::Tables Widget 9-->
+
+                    </div>
+                    <!--end::Timeline items-->
+                </div>
+                <!--end::Content-->
+            </div>
+            <!--end::Body-->
+            <!--begin::Footer-->
+            <div class="card-footer py-5 text-center" id="kt_activities_footer">
+                <a href="../dist/pages/profile/activity.html" class="btn btn-bg-body text-primary">View All Activities
+                <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
+                <span class="svg-icon svg-icon-3 svg-icon-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black" />
+                        <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
+                    </svg>
+                </span>
+                <!--end::Svg Icon--></a>
+            </div>
+            <!--end::Footer-->
+        </div>
+    </div>
+    <!--end::Activities drawer-->
 
 @endsection
 
