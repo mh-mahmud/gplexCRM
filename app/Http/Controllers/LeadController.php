@@ -25,6 +25,7 @@ use App\Models\Invoice;
 use App\Models\ProductSpecification;
 use App\Services\LeadService;
 use App\Services\EmailService;
+use App\Services\SmsService;
 use Illuminate\Support\Facades\Schema;
 use DateTime;
 use App\Models\Product;
@@ -33,11 +34,13 @@ class LeadController  extends Controller
 {
     protected $leadService;
     protected $emailService;
+    protected $smsService;
 
-    public function __construct(LeadService  $leadService, EmailService $emailService)
+    public function __construct(LeadService  $leadService, EmailService $emailService, SmsService $smsService)
     {
         $this->leadService = $leadService;
         $this->emailService = $emailService;
+        $this->smsService = $smsService;
     }
 
 
@@ -236,7 +239,8 @@ class LeadController  extends Controller
         ->get()
         ->groupBy('ps_id');
         $templates = $this->emailService->getEmailTemplates();
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates'));
+        $sms_templates = $this->smsService->getSmsTemplates();
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates'));
     }
 
 
