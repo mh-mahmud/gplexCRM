@@ -24,6 +24,7 @@ use App\Models\Logs;
 use App\Models\Invoice;
 use App\Models\ProductSpecification;
 use App\Services\LeadService;
+use App\Services\EmailService;
 use Illuminate\Support\Facades\Schema;
 use DateTime;
 use App\Models\Product;
@@ -31,11 +32,12 @@ use App\Models\Product;
 class LeadController  extends Controller
 {
     protected $leadService;
+    protected $emailService;
 
-    public function __construct(LeadService  $leadService)
+    public function __construct(LeadService  $leadService, EmailService $emailService)
     {
         $this->leadService = $leadService;
-        // $this->middleware(['auth']);
+        $this->emailService = $emailService;
     }
 
 
@@ -233,7 +235,8 @@ class LeadController  extends Controller
         ->orderBy('invoices.created_at', 'desc')
         ->get()
         ->groupBy('ps_id');
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId'));
+        $templates = $this->emailService->getEmailTemplates();
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates'));
     }
 
 

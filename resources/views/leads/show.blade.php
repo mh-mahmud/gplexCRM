@@ -1763,7 +1763,7 @@
                                                                 name="template_id"
                                                                 aria-label="Default select example">
                                                             <option value=''>Select</option>
-                                                            @foreach($templates=[] as $template)
+                                                            @foreach($templates as $template)
                                                                 <option
                                                                     value="{{$template->id}}" {{ old('template_id') == $template->id ? 'selected' : '' }}>{{ $template->email_subject }}</option>
                                                             @endforeach
@@ -2296,6 +2296,23 @@
                     localStorage.setItem('activeTab', selectedTab);
                 });
             });
+
+            // loading email template content
+            const templates = @json($templates);
+            document.getElementById('template_id').addEventListener('change', function () {
+                const selectedId = this.value;
+                const selectedTemplate = templates.find(template => template.id == selectedId);
+                if (selectedTemplate) {
+                    // document.getElementById('email_subject').value = selectedTemplate.email_subject;
+                    $('.editor').summernote('code', selectedTemplate.email_content);
+
+                } else {
+                    // document.getElementById('email_subject').value = '';
+                    $('.editor').summernote('code', '');
+
+                }
+            });
+
         });
     </script>
     <script>
@@ -2405,4 +2422,3 @@
     </script>
 
 @endsection
-
