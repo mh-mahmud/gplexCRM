@@ -363,7 +363,7 @@
                                                 @if(is_null($invoiceCustomFormId))
                                                 <div class="input-group input-group-sm min-w-300px w-100 w-md-500px">
                                                     <div class="flex-grow-1">
-                                                        <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2" name="product_id" data-placeholder="Add an item" id="product-select">
+                                                        <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2" name="product_id" id="product-select">
                                                             <option value="" {{ old('product_id') == '' ? 'selected' : '' }}>Nothing Selected</option>
                                                             @foreach($products as $product)
                                                             <option value="{{ $product->id }}"

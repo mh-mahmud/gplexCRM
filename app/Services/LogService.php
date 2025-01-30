@@ -60,6 +60,7 @@ class LogService
         $logs = $query->orderBy('logs.id', 'DESC')
             ->paginate(config('constants.ROW_PER_PAGE'))
             ->withQueryString();
+            //dd($logs);die();
 
         return $logs;
         

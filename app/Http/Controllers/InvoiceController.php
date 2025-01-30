@@ -138,7 +138,10 @@ class InvoiceController extends Controller
             ]);
         }
         try {
+            $customer = Customer::find($request->customer_id);
+            $lead_id  = $customer->lead_id;
             $invoice = $this->invoiceService->createInvoice($request->all());
+            Helper::storeLog("Invoice created successfully", "Invoice", "Create Invoice",$lead_id);
             return redirect()->route('invoice-index')->with('success', 'Invoice Created Successfully!');
         } catch (\Illuminate\Database\QueryException $e) {
             if ($e->getCode() === '23000') {
@@ -202,7 +205,10 @@ class InvoiceController extends Controller
         ]);
 
         try {
+            $customer = Customer::find($request->customer_id);
+            $lead_id = $customer->lead_id;
             $invoice = $this->invoiceService->updateInvoice($request->all(), $id);
+            Helper::storeLog("Invoice updated successfully", "Invoice", "Edit Invoice",$lead_id);
             return redirect()->route('invoice-index')->with('success', 'Invoice Updated Successfully!');
         } catch (\Illuminate\Database\QueryException $e) {
 
@@ -243,8 +249,12 @@ class InvoiceController extends Controller
     }
 
     public function destroy($id)
-    {
+    {  
+        $invoice = Invoice::find($id);
+        $customerId = $invoice->customer_id;
+        $lead_id = Customer::where('id', $customerId)->value('lead_id');
         Invoice::destroy($id);
+        Helper::storeLog("Invoice deleted successfully", "Invoice", "Delete Invoice",$lead_id);
         return redirect()->route('invoice-index')->with('success', 'Invoice Deleted Successfully!');
     }
 
@@ -306,6 +316,8 @@ class InvoiceController extends Controller
     public function storePayment(Request $request, $invoiceId)
     {
         $invoice = Invoice::findOrFail($invoiceId);
+        $customerId = $invoice->customer_id;
+        $lead_id = Customer::where('id', $customerId)->value('lead_id');
         $existingPayments = $invoice->payment_details ?? [];
         $totalPayments = array_sum(array_column($existingPayments, 'payment'));
         $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
@@ -332,7 +344,7 @@ class InvoiceController extends Controller
         ];
 
         $this->invoiceService->addPaymentInvoice($invoice, $paymentDetails, $payment_amount);
-
+        Helper::storeLog("Payment recorded successfully", "Invoice", "Payment recorded",$lead_id);
         return redirect()->route('invoice-index')->with('success', 'Payment recorded successfully!');
     }
 

@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use App\Models\Agent;
 use App\Services\AgentService;
 use App\Services\UserService;
+use App\Helpers\Helper;
 
 class AgentController extends Controller {
 
@@ -61,6 +62,7 @@ class AgentController extends Controller {
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $user = $this->agentService->create_agent($request);
+        Helper::storeLog("Agent created successfully", "Agent", "Create Agent");
         return redirect()->route('agents-index')->with('success', 'Agent created successfully.');
     }
 
@@ -94,6 +96,7 @@ class AgentController extends Controller {
 
        
         $this->agentService->updateAgent($request, $id);
+        Helper::storeLog("Agent updated successfully", "Agent", "Edit Agent");
         return redirect()->route('agents-index')->with('success', 'Agent updated successfully.');
     }
 
@@ -123,6 +126,7 @@ class AgentController extends Controller {
     {
         try {
             $this->agentService->deleteAgentAndUser($id);
+            Helper::storeLog("Agent deleted successfully", "Agent", "Delete Agent");
             return redirect()->route('agents-index')->with('success', 'Agent deleted successfully.');
         } catch (\Exception $e) {
            return redirect()->back()->with('error', $e->getMessage());
