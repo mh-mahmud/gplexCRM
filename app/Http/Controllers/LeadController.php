@@ -240,7 +240,11 @@ class LeadController  extends Controller
         ->groupBy('ps_id');
         $templates = $this->emailService->getEmailTemplates();
         $sms_templates = $this->smsService->getSmsTemplates();
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates'));
+        $products = Product::where('status', 1)->get();
+        $customers = Customer::where('customers.lead_id', '=', $id)->join('leads', 'customers.lead_id', '=', 'leads.id')
+        ->select('customers.*', 'leads.first_name', 'leads.last_name')
+        ->get();
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers'));
     }
 
 
