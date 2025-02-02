@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Helpers\Helper;
 
 class DynamicTableController extends Controller
 {
@@ -95,6 +96,7 @@ class DynamicTableController extends Controller
             if ($result === 'Table already exists.') {
                 return redirect()->route('dynamictable-index')->with('error', $result);
             }
+            Helper::storeLog("Dynamic Table created successfully", "Dynamic Table", "Create Dynamic Table");
     
             return redirect()->route('dynamictable-index')->with('success', 'Dynamic Table created successfully.');
         } catch (\Exception $e) {
@@ -183,7 +185,7 @@ class DynamicTableController extends Controller
             if ($result === 'Table not found.') {
                 return redirect()->route('dynamictable-index')->with('error', $result);
             }
-
+            Helper::storeLog("Dynamic Table updated successfully", "Dynamic Table", "Edit Dynamic Table");
             return redirect()->route('dynamictable-index')->with('success', 'Dynamic Table updated successfully.');
         } catch (\Exception $e) {
             return redirect()->route('dynamictable-index')->with('error', 'An error occurred while updating the table: ' . $e->getMessage());
@@ -213,6 +215,7 @@ class DynamicTableController extends Controller
     {   
         //dd($id);
         $this->dynamicTableService->deleteDynamicTable($id);
+        Helper::storeLog("Dynamic Table deleted successfully", "Dynamic Table", "Delete Dynamic Table");
         return redirect()->route('dynamictable-index')->with('success', 'Dynamic Table deleted successfully.');
     }
 
