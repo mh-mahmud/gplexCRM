@@ -35,7 +35,7 @@ class smsController extends Controller {
     public function templateStore(Request $request)
     { 
         $result = $this->smsService->templateStore($request);
-        if($result->status == 201){
+        if($result->status == 201) {
             return redirect()->route('sms-template')->with('success', 'Sms template created successfully.');
 
         }else{
@@ -92,7 +92,10 @@ class smsController extends Controller {
     public function sendSmsPro(Request $request)
     {
         $result = $this->smsService->sendSmsPro($request);
-        if($result->status == 201){
+        if($result->status == 201) {
+            if($request->form_lead_panel==1) {
+                return redirect()->back()->with('success', 'SMS send successfully.');
+            }
             return redirect()->route('send-sms')->with('success', 'SMS send successfully.');
 
         }else{
