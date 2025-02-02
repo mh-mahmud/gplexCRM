@@ -90,6 +90,10 @@ class EmailController extends Controller {
          $result = $this->emailService->sendEmailPro($request);
          if($result->status == 200){
             Helper::storeLog("Email send successfully", "Email Send", "Email Send");
+         if($result->status == 200) {
+            if($request->form_lead_panel==1) {
+                return redirect()->back()->with('success', 'Email send successfully.');
+            }
             return redirect()->route('send-email')->with('success', 'Email send successfully.');
         }else{
             session()->flash('error', 'Email can not send !');

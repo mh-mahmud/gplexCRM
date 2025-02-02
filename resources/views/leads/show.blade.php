@@ -1686,7 +1686,7 @@
     <!--end::Content-->
 
     <!--begin::Email drawer-->
-    <div id="kt_activities" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '1200px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle" data-kt-drawer-close="#kt_activities_close">
+    <div id="kt_activities" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle" data-kt-drawer-close="#kt_activities_close">
         <div class="card shadow-none rounded-0 w-100">
             <!--begin::Header-->
             <div class="card-header" id="kt_activities_header">
@@ -1715,7 +1715,7 @@
                             <!--begin::Tables Widget 9-->
                             <div class="card mb-5 mb-xl-8">
                                 <!--begin::Header-->
-                               
+
                                 <!--end::Header-->
                                 <div style="border:1px solid #ddd;padding:20px">
                                 <div class="row">
@@ -1723,12 +1723,13 @@
                                         <form class="g-form w-100" action="{{ route('send-email-process') }}" method="POST">
                                             @csrf
 
+                                            <input type="hidden" name="lead_id" value="{{ $lead->id }}">
+                                            <input type="hidden" name="form_lead_panel" value="1">
                                             <div class="row">
-
                                                 <div class="col-md-6">
                                                     <div class="fv-row mb-3">
                                                         <label class="form-label fw-bolder text-dark">To<span class="text-danger">*</span></label>
-                                                        <input class="form-control form-control-sm form-control-solid" type="text" id="to_email" name="to_email" autocomplete="off" value="{{ $lead->email }}"/>
+                                                        <input required class="form-control form-control-sm form-control-solid" type="text" id="to_email" name="to_email" autocomplete="off" value="{{ $lead->email }}"/>
                                                         @if ($errors->has('to_email'))
                                                             <span class="text-danger">{{ $errors->first('to_email') }}</span>
                                                         @endif
@@ -1751,15 +1752,12 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="fv-row mb-3">
-                                                        <label class="form-label fw-bolder text-dark">Email Subject<span
-                                                                class="text-danger">*</span></label>
-                                                        <input class="form-control form-control-sm form-control-solid"
-                                                               type="text" id="email_subject" name="email_subject"
+                                                        <label class="form-label fw-bolder text-dark">Email Subject<span class="text-danger">*</span></label>
+                                                        <input class="form-control form-control-sm form-control-solid" required type="text" id="email_subject" name="email_subject"
                                                                autocomplete="off"
                                                                value="{{ old('email_subject') }}"/>
                                                         @if ($errors->has('email_subject'))
-                                                            <span
-                                                                class="text-danger">{{ $errors->first('email_subject') }}</span>
+                                                            <span class="text-danger">{{ $errors->first('email_subject') }}</span>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -1769,16 +1767,10 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
-                                                        <label class="form-label fw-bolder text-dark"
-                                                               for="textarea">Content<span
-                                                                class="text-danger">*</span></label>
-                                                        <textarea
-                                                            class="form-control form-control-sm  form-control-solid editor"
-                                                            id="email_content" name="email_content"
-                                                            rows="3">{{ old('email_content') }}</textarea>
+                                                        <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
+                                                        <textarea class="form-control form-control-sm required form-control-solid editor" id="email_content" name="email_content" rows="3">{{ old('email_content') }}</textarea>
                                                         @if ($errors->has('email_content'))
-                                                            <span
-                                                                class="text-danger">{{ $errors->first('email_content') }}</span>
+                                                            <span class="text-danger">{{ $errors->first('email_content') }}</span>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -1811,7 +1803,7 @@
     <!--end::Activities drawer-->
 
     <!--begin::SMS activities drawer-->
-    <div id="kt_activities_2" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '1200px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle_2" data-kt-drawer-close="#kt_activities_close">
+    <div id="kt_activities_2" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle_2" data-kt-drawer-close="#kt_activities_close">
         <div class="card shadow-none rounded-0 w-100">
             <!--begin::Header-->
             <div class="card-header" id="kt_activities_header">
@@ -1847,6 +1839,8 @@
                                     <div class="col-md-12 mx-auto">
                                         <form class="g-form w-100" action="{{ route('send-sms-pro') }}"  method="POST">
                                              @csrf
+                                            <input type="hidden" name="lead_id" value="{{ $lead->id }}">
+                                            <input type="hidden" name="form_lead_panel" value="1">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="fv-row mb-3">
@@ -1872,7 +1866,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
-                                                        <textarea class="form-control form-control-sm  form-control-solid" name="sms_text" id="sms_text" rows="5">{{ old('sms_text') }}</textarea>
+                                                        <textarea required class="form-control form-control-sm  form-control-solid" name="sms_text" id="sms_text" rows="5">{{ old('sms_text') }}</textarea>
                                                         @if ($errors->has('sms_text'))
                                                             <span class="text-danger">{{ $errors->first('sms_text') }}</span>
                                                         @endif
@@ -1883,7 +1877,6 @@
 
                                             <!--End Row-->
                                             <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                                <input type="reset" id="reset_btn" value="Reset" class="btn btn-light me-2">
                                                 <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
                                             </div>
 
@@ -1909,7 +1902,7 @@
     <!--end::SMS activities drawer-->
 
     <!--begin::Meeting activities drawer-->
-    <div id="kt_activities_3" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '1200px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle_3" data-kt-drawer-close="#kt_activities_close">
+    <div id="kt_activities_3" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle_3" data-kt-drawer-close="#kt_activities_close">
         <div class="card shadow-none rounded-0 w-100">
             <!--begin::Header-->
             <div class="card-header" id="kt_activities_header">
@@ -2080,7 +2073,7 @@
 
 
     <!--begin::Proposal drawer-->
-    <div id="kt_activities_4" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '1200px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle_4" data-kt-drawer-close="#kt_activities_close">
+    <div id="kt_activities_4" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle_4" data-kt-drawer-close="#kt_activities_close">
         <div class="card shadow-none rounded-0 w-100">
             <!--begin::Header-->
             <div class="card-header" id="kt_activities_header">
@@ -2480,7 +2473,7 @@
     <!--end::Proposal drawer-->
 
     <!--begin::Proposal drawer-->
-    <div id="kt_activities_5" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '1200px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle_5" data-kt-drawer-close="#kt_activities_close">
+    <div id="kt_activities_5" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle_5" data-kt-drawer-close="#kt_activities_close">
         <div class="card shadow-none rounded-0 w-100">
             <!--begin::Header-->
             <div class="card-header" id="kt_activities_header">
