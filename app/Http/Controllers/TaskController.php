@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Services\TaskService;
 use App\Models\EmailTemplate;
 use App\Services\API\UserService;
+use App\Helpers\Helper;
 
 class TaskController extends Controller {
 
@@ -37,6 +38,7 @@ class TaskController extends Controller {
     { 
         $result = $this->taskService->addTaskPro($request);
         if($result->status == 201){
+            Helper::storeLog("Task created successfully", "Task", "Create Task");
             return redirect()->route('task-list')->with('success', 'Task created successfully.');
 
         }else{
@@ -49,6 +51,7 @@ class TaskController extends Controller {
     { 
         $result = $this->taskService->changeStatus($request, $id);
         if($result->status == 208){
+            Helper::storeLog("Status updated successfully", "Task", "Status updated");
             return redirect()->route('task-list')->with('success', 'Status updated successfully.');
         }else{
             session()->flash('error', 'Can not Update !');
@@ -60,6 +63,7 @@ class TaskController extends Controller {
     {
         $result = $this->taskService->taskDelete($id);
         if($result->status == 200) {
+            Helper::storeLog("Task deleted successfully", "Task", "Delete Task");
             return redirect()->route('task-list')->with('success', 'Task deleted successfully.');
         } else{
             session()->flash('error', 'Can not Delete !');

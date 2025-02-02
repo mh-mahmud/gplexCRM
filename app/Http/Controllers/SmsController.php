@@ -36,6 +36,7 @@ class smsController extends Controller {
     { 
         $result = $this->smsService->templateStore($request);
         if($result->status == 201){
+            Helper::storeLog("Sms template created successfully", "Sms Template", "Create Sms Template");
             return redirect()->route('sms-template')->with('success', 'Sms template created successfully.');
 
         }else{
@@ -67,6 +68,7 @@ class smsController extends Controller {
         $result = $this->smsService->templateUpdate($request, $id);
        
         if($result->status == 208){
+            Helper::storeLog("Sms template edited successfully", "Sms template", "Edit Sms template");
             return redirect()->route('sms-template')->with('success', 'Sms template updated successfully.');
 
         }else{
@@ -93,6 +95,7 @@ class smsController extends Controller {
     {
         $result = $this->smsService->sendSmsPro($request);
         if($result->status == 201){
+            Helper::storeLog("SMS send successfully", "SMS send", "SMS send");
             return redirect()->route('send-sms')->with('success', 'SMS send successfully.');
 
         }else{
@@ -111,6 +114,7 @@ class smsController extends Controller {
     {
         $result = $this->smsService->sendBulkSmsPro($request);
         if($result->status == 201) {
+            Helper::storeLog("Bulk SMS send successfully", "Bulk SMS Send", "Bulk SMS Send");
             return redirect()->route('send-bulk-sms')->with('success', 'SMS send successfully.');
 
         } else if ($result->status == 400) {

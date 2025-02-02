@@ -37,6 +37,7 @@ class EmailController extends Controller {
     { 
         $result = $this->emailService->templateStore($request);
         if($result->status == 201){
+            Helper::storeLog("Email template created successfully", "Email Template", "Create Email Template");
             return redirect()->route('email-template')->with('success', 'Email template created successfully.');
 
         }else{
@@ -68,6 +69,7 @@ class EmailController extends Controller {
         $result = $this->emailService->templateUpdate($request, $id);
         
         if($result->status == 208){
+            Helper::storeLog("Email template edited successfully", "Email Template", "Edit Email Template");
             return redirect()->route('email-template')->with('success', 'Email template updated successfully.');
 
         }else{
@@ -87,6 +89,7 @@ class EmailController extends Controller {
     { 
          $result = $this->emailService->sendEmailPro($request);
          if($result->status == 200){
+            Helper::storeLog("Email send successfully", "Email Send", "Email Send");
             return redirect()->route('send-email')->with('success', 'Email send successfully.');
         }else{
             session()->flash('error', 'Email can not send !');
@@ -110,6 +113,7 @@ class EmailController extends Controller {
     { 
          $result = $this->emailService->sendBulkEmailPro($request);
          if($result->status == 201) {
+            Helper::storeLog("Bulk Email send successfully", "Bulk Email Send", "Bulk Email Send");
             return redirect()->route('send-bulk-email')->with('success', 'Email send successfully.');
 
         } else if ($result->status == 400) {

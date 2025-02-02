@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\ProductService;
+use App\Helpers\Helper;
 
 class ProductController extends Controller {
 
@@ -29,6 +30,7 @@ class ProductController extends Controller {
     { 
         $result = $this->productService->productStore($request);
         if($result->status == 201){
+            Helper::storeLog("Product added successfully", "Product", "Create Product");
             return redirect()->route('product-list')->with('success', 'Product added successfully.');
 
         }else{
@@ -53,6 +55,7 @@ class ProductController extends Controller {
     { 
         $result = $this->productService->productUpdate($request, $id);
         if($result->status == 208){
+            Helper::storeLog("Product updated successfully", "Product", "Edit Product");
             return redirect()->route('product-list')->with('success', 'Product updated successfully.');
 
         }else{
@@ -66,6 +69,7 @@ class ProductController extends Controller {
     {
         $result = $this->productService->productDelete($id);
         if($result->status == 200){
+            Helper::storeLog("Product deleted successfully", "Product", "Delete Product");
             return redirect()->route('product-list')->with('success', 'Product deleted successfully.');
 
         }else{

@@ -141,7 +141,7 @@ class LeadController  extends Controller
 
 
         $lead =$this->leadService->createLead($data, $request->input('form_id'), $dynamicFields, $request);
-        Helper::storeLog("Lead created successfully", "Lead", "Create Lead",$lead->id);
+        Helper::storeLog("Product Specification deleted successfully", "Product Specification", "Delete Product Specification",$lead->id);
 
         return redirect()->route('lead-index')->with('success', 'Lead created successfully.');
     }
@@ -322,7 +322,6 @@ class LeadController  extends Controller
            
         }
         DB::table($tableName)->insert($data);
-        Helper::storeLog("Lead $tableName table data created successfully", "Lead", "Create Lead Table Data",$lead_id);
         return redirect()->route('lead-show', ['id' => $lead_id])->with('success', 'Data inserted successfully');
     }
 
@@ -331,7 +330,6 @@ class LeadController  extends Controller
     {
         $this->leadService->deleteTableRecord($tableName, $id, $leadId);
         //return redirect()->route('lead-index')->with('success', 'Record deleted successfully.');
-        Helper::storeLog("Lead $tableName table data Deleted successfully", "Lead", "Delete Lead Table Data",$leadId);
         return redirect()->route('lead-show', ['id' => $leadId])->with('success', 'Data Deleted successfully');
     }
 
@@ -396,7 +394,6 @@ class LeadController  extends Controller
 
         $data = $request->all();
         $this->leadService->updateLead($id, $data, $request);
-        Helper::storeLog("Lead updated successfully", "Lead", "Edit Lead",$id);
 
         return redirect()->route('lead-index')->with('success', 'Lead updated successfully.');
     }
@@ -422,7 +419,6 @@ class LeadController  extends Controller
     public function destroy($id)
     {
         $this->leadService->deleteLead($id);
-        Helper::storeLog("Lead deleted successfully", "Lead", "Delete Lead",$id);
         return redirect()->route('lead-index')->with('success', 'Lead deleted successfully.');
     }
 
@@ -462,10 +458,8 @@ class LeadController  extends Controller
             //return redirect()->route('lead-edit', ['id' => $leadTableId])->with('success', 'Data updated successfully');
             // Conditional redirection based on the value of $lastFourDigits
             if ($lastFourDigits === 'edit') {
-                Helper::storeLog("Lead $tableName table data updated successfully", "Lead", "Edit Lead Table Data",$leadTableId);
                 return redirect()->route('lead-edit', ['id' => $leadTableId])->with('success', 'Data updated successfully');
             } else {
-                Helper::storeLog("Lead $tableName table data updated successfully", "Lead", "Edit Lead Table Data",$leadTableId);
                 return redirect()->route('lead-show', ['id' => $leadTableId])->with('success', 'Data Edited successfully');
             }
         } catch (\Exception $e) {
@@ -918,7 +912,6 @@ class LeadController  extends Controller
 
                     // Commit the transaction
                     DB::commit();
-                    Helper::storeLog("Lead File uploaded and data inserted successfully", "Lead", "Upload Lead",$leadId);
 
                     return redirect()->back()->with('success', "File uploaded and data inserted successfully. Number of records inserted: $insertedCount.");
                 } catch (\Exception $e) {
