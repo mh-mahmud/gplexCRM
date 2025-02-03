@@ -100,6 +100,7 @@ class EmailController extends Controller {
         }
 
     }
+  }
 
     public function sendEmailList(Request $request)
     {      

@@ -45,6 +45,7 @@ class smsController extends Controller {
         }
 
     }
+ }
 
     public function templateShow($id)
     {
@@ -107,6 +108,7 @@ class smsController extends Controller {
             session()->flash('error', 'Can not Send !');
         }
     }
+  }
 
     public function sendBulkSms(Request $request)
     {   
