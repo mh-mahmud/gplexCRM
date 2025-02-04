@@ -69,7 +69,7 @@
                     <div class="col-sm-4">
                         <div class="card card-flush h-md-20 mb-5 mb-xl-10">
                             <!--begin::Header-->
-                            <div class="card-header bg-warning card-header-dashboard pt-5">
+                            <div class="card-header bg-green-hard card-header-dashboard pt-5">
                                 <!--begin::Title-->
                                 <div class="card-title d-flex flex-column">
                                     <!--begin::Info-->
@@ -187,7 +187,7 @@
                     <div class="col-sm-3">
                         <div class="card card-flush h-md-20 mb-5 mb-xl-10">
                             <!--begin::Header-->
-                            <div class="card-header bg-warning card-header-dashboard pt-5">
+                            <div class="card-header bg-green-hard card-header-dashboard pt-5">
                                 <!--begin::Title-->
                                 <div class="card-title d-flex flex-column">
                                     <!--begin::Info-->
