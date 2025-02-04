@@ -10,7 +10,6 @@
 }
 
 
-
 .card .card-header-dashboard {
     background-color: #5cb8af;
     min-height: 40px;
@@ -632,17 +631,20 @@ body.swal2-height-auto {
     padding: 2rem 2.25rem;
     border: 1px solid #c7c5bf;
 }
+
 .bd-cyan {
     color: #111 !important;
     /* background-color: #cff4fc !important; */
     background-color: #E8F5E9 !important;
     border: 1px solid #ddd;
 }
+
 .card .card-header {
     /*    background-color: #54B4D3;*/
     min-height: 50px !important;
     /*    padding: 10px;*/
 }
+
 .card .card-header {
     display: flex;
     justify-content: space-between;
@@ -654,11 +656,13 @@ body.swal2-height-auto {
     border-bottom: 1px solid #EFF2F5;
     border-radius: 0px;
 }
+
 .form-control.form-control-solid {
     background-color: #FFF;
     border-color: #bbb;
     border-radius: 0px;
 }
+
 .bd-cyan-2 {
     color: #111 !important;
     background-color: #E8F5E9 !important;
