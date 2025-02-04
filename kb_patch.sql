@@ -448,3 +448,22 @@ ALTER TABLE `product_specification` ADD `advance_amount` DOUBLE NULL DEFAULT NUL
 -- 01-02-2025 its not given in db
 ALTER TABLE `product_specification` ADD `due_balance` DOUBLE NULL DEFAULT NULL AFTER `remaining_month`;
 
+
+----04-02-2025 not given in db
+CREATE TABLE `notifications` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `lead_id` INT DEFAULT NULL,
+  `user_id` INT DEFAULT NULL,
+  `notify_msg` TEXT COLLATE utf8mb3_unicode_ci NOT NULL,
+  `notify_date` DATE DEFAULT NULL,
+  `notify_datetime` DATETIME NOT NULL,
+  `notify_time` TIME NOT NULL,
+  `notify_type` VARCHAR(50) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `send_email` TINYINT NOT NULL DEFAULT '0',
+  `send_sms` TINYINT NOT NULL DEFAULT '0',
+  `notify_by` INT DEFAULT NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) 
+
