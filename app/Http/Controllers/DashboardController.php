@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\ProductSpecification;
+use App\Models\Customer;
 
 class DashboardController extends Controller
 {
@@ -94,7 +95,11 @@ class DashboardController extends Controller
         $data['todo_list'] = (Auth()->user()->user_type == 'admin') ? Task::where('status', '!=', 9)->limit(6)->get(['task_name', 'description', 'due_date', 'status']) : Task::where('created_by', $user_id)->orWhere('assigned_to', $user_id)->limit(6)->get(['task_name', 'description', 'due_date', 'status']);
         $data['formName'] = $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
 
-        $data['count_lead'] = Lead::where('lead_status', 1)->count();
+        //$data['count_lead'] = Lead::where('lead_status', 1)->count();
+        $data['count_lead'] = Lead::where('lead_status', 1)
+        ->whereNotIn('id', Customer::select('lead_id')->distinct())
+        ->count();
+        $data['total_customers'] = Customer::count();
         $data['active_agents'] = Agent::where('status', 1)->count();
         $data['active_products'] = Product::where('status', 1)->count();
         $data['const_task'] = config('constants.TASK_STATUS');
