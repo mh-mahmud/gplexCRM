@@ -26,7 +26,7 @@
         <!--end::Container-->
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid mt-3">
 
         <!--Table Alert Message-->
         <!-- Display Success and Error Messages using SweetAlert2 -->
