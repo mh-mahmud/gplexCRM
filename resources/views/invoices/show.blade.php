@@ -152,7 +152,7 @@
                                                                 <td class="border-b p-3">
                                                                     <div class="whitespace-nowrap text-slate-400">Sub Total:</div>
                                                                 </td>
-                                                                <td class="border-b p-3 text-right">
+                                                                <td class="border-b text-right">
                                                                     <div class="whitespace-nowrap font-bold text-main">TK{{$invoice->sub_total}}</div>
                                                                 </td>
                                                             </tr>
@@ -161,7 +161,7 @@
                                                                 <td class="p-3">
                                                                     <div class="whitespace-nowrap text-slate-400">Discount:</div>
                                                                 </td>
-                                                                <td class="p-3 text-right">
+                                                                <td class="text-right">
                                                                     <div class="whitespace-nowrap font-bold text-main">TK-{{$invoice->discount}}</div>
                                                                 </td>
                                                             </tr>
@@ -172,7 +172,7 @@
                                                                 <td class="p-3">
                                                                     <div class="whitespace-nowrap text-slate-400">Tax Total:</div>
                                                                 </td>
-                                                                <td class="p-3 text-right">
+                                                                <td class="text-right">
                                                                     <div class="whitespace-nowrap font-bold text-main">TK{{$invoice->total_tax}}</div>
                                                                 </td>
                                                             </tr>
@@ -183,26 +183,26 @@
                                                                 <td class="p-3">
                                                                     <div class="whitespace-nowrap text-slate-400">Adjustment:</div>
                                                                 </td>
-                                                                <td class="p-3 text-right">
+                                                                <td class="text-right">
                                                                     <div class="whitespace-nowrap font-bold text-main">TK{{$invoice->adjustment}}</div>
                                                                 </td>
                                                             </tr>
                                                             @endif
                                                             <tr>
-                                                                <td class="bg-main p-3">
-                                                                    <div class="whitespace-nowrap font-bold text-white">Total Amount:</div>
+                                                                <td class="p-3">
+                                                                    <div class="whitespace-nowrap">Total Amount:</div>
                                                                 </td>
-                                                                <td class="bg-main p-3 text-right">
-                                                                    <div class="whitespace-nowrap font-bold text-white">TK{{$invoice->total_amount}}</div>
+                                                                <td class="text-right">
+                                                                    <div class="whitespace-nowrap font-bold">TK{{$invoice->total_amount}}</div>
                                                                 </td>
                                                             </tr>
 
                                                             <tr>
-                                                                <td class="bg-main p-3">
-                                                                    <div class="whitespace-nowrap font-bold text-white">Total Due Amount:</div>
+                                                                <td class="p-3">
+                                                                    <div class="whitespace-nowrap">Total Due Amount:</div>
                                                                 </td>
-                                                                <td class="bg-main p-3 text-right">
-                                                                    <div class="whitespace-nowrap font-bold text-white">TK{{$newDueAmount}}</div>
+                                                                <td class="text-right">
+                                                                    <div class="whitespace-nowrap font-bold">TK{{$newDueAmount}}</div>
                                                                 </td>
                                                             </tr>
                                                         </tbody>

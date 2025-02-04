@@ -71,8 +71,7 @@
                                                         aria-label="Default select example">
                                                     <option value=''>Select</option>
                                                     @foreach($leads as $lead)
-                                                        <option
-                                                            value="{{$lead->id}}" {{ old('lead_id') == $lead->id ? 'selected' : '' }}>{{ $lead->first_name }} {{ $lead->last_name }}</option>
+                                                        <option value="{{$lead->id}}" {{ old('lead_id') == $lead->id ? 'selected' : '' }}>{{ $lead->first_name }} {{ $lead->last_name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

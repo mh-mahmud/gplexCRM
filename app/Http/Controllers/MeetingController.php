@@ -72,7 +72,7 @@ class MeetingController extends Controller
         }
 
         $this->meetingService->createMeeting($request);
-        Helper::storeLog("Meeting created successfully", "Meeting", "Create Meeting", null, $request->lead_id);
+        Helper::storeLog("Meeting created successfully", "Meeting", "Create Meeting",$request->lead_id);
         return redirect()->route('meeting-index')->with('success', 'Meeting created successfully.');
     }
 
@@ -140,15 +140,16 @@ class MeetingController extends Controller
         }
 
         $this->meetingService->updateMeeting($request, $id);
-        Helper::storeLog("Meeting edited successfully", "Meeting", "Edit Meeting", null, $request->lead_id);
+        Helper::storeLog("Meeting edited successfully", "Meeting", "Edit Meeting",$request->lead_id);
         return redirect()->route('meeting-index')->with('success', 'Meeting updated successfully.');
     }
 
     // remove the specified meeting
     public function destroy($id)
-    {
+    {   
+        $meeting = Meeting::find($id);
         $this->meetingService->deleteMeeting($id);
-        Helper::storeLog("Meeting deleted successfully", "Meeting", "delete Meeting", null,null);
+        Helper::storeLog("Meeting deleted successfully", "Meeting", "delete Meeting",$meeting->lead_id);
         return redirect()->route('meeting-index')->with('success', 'Meeting deleted successfully.');
     }
 

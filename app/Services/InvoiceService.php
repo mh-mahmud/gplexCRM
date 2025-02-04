@@ -270,7 +270,7 @@ class InvoiceService
             ->paginate(config('constants.ROW_PER_PAGE'));
     }
 
-    public function addPaymentInvoice($invoice, $paymentDetails,$payment_amount)
+    public function addPaymentInvoice_backup($invoice, $paymentDetails,$payment_amount)
     {
         $existingPayments = $invoice->payment_details ?? [];
         $existingPayments[] = $paymentDetails;
@@ -282,6 +282,24 @@ class InvoiceService
         $pr_sp->due_balance = $pr_sp->due_balance - $payment_amount;
         $pr_sp->save();
         return $invoice;
+    }
+
+    public function addPaymentInvoice($invoice, $paymentDetails,$payment_amount)
+    {
+        $existingPayments = $invoice->payment_details ?? [];
+        $existingPayments[] = $paymentDetails;
+        $invoice->payment_details = $existingPayments;
+        $invoice->save();
+        //update product specification data
+        if (!empty($invoice->ps_id)) {
+            $pr_sp = ProductSpecification::find($invoice->ps_id); 
+    
+            if ($pr_sp) { 
+                $pr_sp->remaining_month = max(0, $pr_sp->remaining_month - 1); 
+                $pr_sp->due_balance = max(0, $pr_sp->due_balance - $payment_amount);
+                $pr_sp->save();
+            }
+        }
     }
     
 }

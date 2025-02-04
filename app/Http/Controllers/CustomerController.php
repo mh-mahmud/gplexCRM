@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
 use App\Models\Customer;
 use Auth;
+use App\Helpers\Helper;
 
 class CustomerController extends Controller
 {
@@ -49,6 +50,7 @@ class CustomerController extends Controller
         $data = $this->service->createCustomer($request);
 
         if($data) {
+            Helper::storeLog("Customer created successfully", "Customer", "Create Customer",$request->lead_id);
             return redirect()->route('customers')->with('success', 'Customer created successfully.');
         }
         session()->flash('error', 'Can not Add!');

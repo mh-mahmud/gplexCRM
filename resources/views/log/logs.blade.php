@@ -128,8 +128,8 @@
                                         <td class="text-dark fs-6">{{ $log->sub_module }}</td>
                                         <td class="text-dark fs-6">{{ $log->log_message }}</td>
                                         <td class="text-dark fs-6">
-                                            @isset($lead)
-                                                {{ $lead->lead_first_name }} {{ $lead->lead_last_name }}
+                                            @isset($log)
+                                                {{ $log->lead_first_name }} {{ $log->lead_last_name }}
                                             @endisset
                                         </td>
                                         <td class="text-dark fs-6">{{ $log->first_name }} {{ $log->last_name }}</td>

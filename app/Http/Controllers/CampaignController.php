@@ -23,6 +23,7 @@ use App\Models\EmailQueue;
 use App\Models\SmsQueue;
 use App\Mail\BulkEmail;
 use Mail;
+use App\Helpers\Helper;
 
 class CampaignController extends Controller
 {
@@ -61,6 +62,7 @@ class CampaignController extends Controller
         ]);
 
         $this->campaignService->createCampaign($request->all());
+        Helper::storeLog("Campaign created successfully", "Campaign", "Create Campaign");
 
         return redirect()->route('campaign-index')->with('success', 'Campaign created successfully.');
     }
@@ -94,7 +96,7 @@ class CampaignController extends Controller
         $data = $request->all();
         //dd($data);die();
         $this->campaignService->updateCampaign($id, $data);
-
+        Helper::storeLog("Campaign updated successfully", "Campaign", "Edit Campaign");
         return redirect()->route('campaign-index')->with('success', 'Campaign updated successfully.');
     }
 
@@ -118,6 +120,7 @@ class CampaignController extends Controller
     public function destroy($id)
     {
         $this->campaignService->deleteCampaign($id);
+        Helper::storeLog("Campaign deleted successfully", "Campaign", "Delete Campaign");
         return redirect()->route('campaign-index')->with('success', 'Campaign deleted successfully.');
     }
     
@@ -170,7 +173,7 @@ class CampaignController extends Controller
         if (isset($result['error'])) {
             return redirect()->back()->with('error', $result['error'])->withInput();
         }
-
+        Helper::storeLog("Campaign data uploaded successfully", "Campaign Data", "Upload Campaign");
         return redirect()->back()->with('success', $result['success']);
     }
 

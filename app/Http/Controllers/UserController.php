@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Models\Agent;
 use Auth;
+use App\Helpers\Helper;
 
 class UserController extends Controller
 {
@@ -43,6 +44,7 @@ class UserController extends Controller
        
         $user = $this->service->create_user($request);
         if(!empty($user->id)) {
+            Helper::storeLog("User created successfully", "User", "Create User");
         	return redirect()->to('user-list')->with('success', 'User created successfully.');
         }
         return redirect()->route('create-user')->with('error', 'Failed request');
@@ -67,6 +69,7 @@ class UserController extends Controller
        
         $user = $this->service->edit_user($request);
         if($user) {
+            Helper::storeLog("User edited successfully", "User", "Edit User");
         	return redirect()->to('user-list')->with('success', 'User edited successfully.');
         }
         return redirect()->back()->with('error', 'Failed request');
@@ -82,6 +85,7 @@ class UserController extends Controller
     {
         try {
             $this->service->deleteUser($id);
+            Helper::storeLog("User deleted successfully", "User", "Delete User");
             return redirect()->route('users.index')->with('success', 'User deleted successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
@@ -114,6 +118,7 @@ class UserController extends Controller
 
         $user = $this->service->create_permission($request);
         if(!empty($user->id)) {
+            Helper::storeLog("Permission created successfully", "Permission", "Create Permission");
         	return redirect()->to('permission-list')->with('success', 'Permission created successfully.');
         }
         return redirect()->route('permission-user')->with('error', 'Failed request');
@@ -126,6 +131,7 @@ class UserController extends Controller
         ]);
         $data = $this->service->edit_permission($request);
         if($data) {
+            Helper::storeLog("Permission edited successfully", "Permission", "Edit Permission");
         	return redirect()->to('permission-list')->with('success', 'Permission edited successfully.');
         }
         return redirect()->back()->with('error', 'Failed request');
@@ -148,6 +154,7 @@ class UserController extends Controller
     {
         try {
             $this->service->delete_permission($id);
+            Helper::storeLog("Permission deleted successfully", "Permission", "Delete Permission");
             return redirect()->route('permission.index')->with('success', 'Permission deleted successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
@@ -163,6 +170,7 @@ class UserController extends Controller
     public function role_destroy($id) {
         try {
             $this->service->delete_role($id);
+            Helper::storeLog("Role deleted successfully", "Role", "Delete Role");
             return redirect()->route('role-list')->with('success', 'Role deleted successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
@@ -184,6 +192,7 @@ class UserController extends Controller
         $role_data = $this->service->create_role_data($request);
         // dd($role_data);
         if(!empty($role_data)) {
+            Helper::storeLog("Role created successfully", "Role", "Create Role");
         	return redirect()->to('role-list')->with('success', 'Role created successfully.');
         }
         return redirect()->back()->with('error', 'Failed request');
@@ -220,7 +229,8 @@ class UserController extends Controller
         $role_data = $this->service->edit_role_data($request);
         // dd($role_data);
         if(!empty($role_data)) {
-            return redirect()->to('role-list')->with('success', 'Role created successfully.');
+            Helper::storeLog("Role edited successfully", "Role", "Edit Role");
+            return redirect()->to('role-list')->with('success', 'Role updated successfully.');
         }
         return redirect()->back()->with('error', 'Failed request');
     }
@@ -263,6 +273,7 @@ class UserController extends Controller
             // Update session data
             Session::setId(session()->getId());
             Session::put('users', $user);
+            Helper::storeLog("Account settings edited successfully", "Account settings", "Edit Account settings");
             return redirect()->back()->with('success', 'Account settings updated successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage())->withInput();

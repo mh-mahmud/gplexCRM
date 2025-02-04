@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\CurrencyService;
+use App\Helpers\Helper;
 
 class CurrencyController extends Controller {
 
@@ -29,7 +30,8 @@ class CurrencyController extends Controller {
     { 
         $result = $this->currencyService->currencyStore($request);
         if($result->status == 201){
-            return redirect()->route('currency-list')->with('success', 'Currency added successfully.');
+            Helper::storeLog("Currency added successfully", "Currency", "Create Currency");
+            return redirect()->route('currency-list')->with('success', ' added successfully.');
 
         }else{
             session()->flash('error', 'Can not Add!');
@@ -47,6 +49,7 @@ class CurrencyController extends Controller {
     {
         $result = $this->currencyService->currencyDelete($id);
         if($result->status == 200){
+            Helper::storeLog("Currency deleted successfully", "Currency", "Delete Currency");
             return redirect()->route('currency-list')->with('success', 'Currency deleted successfully.');
 
         }else{

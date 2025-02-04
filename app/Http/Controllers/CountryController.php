@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\CountryService;
+use App\Helpers\Helper;
 
 class CountryController extends Controller {
 
@@ -29,6 +30,7 @@ class CountryController extends Controller {
     { 
         $result = $this->countryService->countryStore($request);
         if($result->status == 201){
+            Helper::storeLog("Country added successfully", "Country", "Create Country");
             return redirect()->route('country-list')->with('success', 'Country added successfully.');
 
         }else{
@@ -47,6 +49,7 @@ class CountryController extends Controller {
     {
         $result = $this->countryService->countryDelete($id);
         if($result->status == 200){
+            Helper::storeLog("Country deleted successfully", "Country", "Delete Country");
             return redirect()->route('country-list')->with('success', 'Country deleted successfully.');
 
         }else{

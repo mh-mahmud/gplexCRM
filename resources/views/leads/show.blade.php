@@ -804,8 +804,7 @@
                                 <div class="card-body p-1">
                                     <div class="d-flex justify-content-between align-items-center mb-1">
                                         <strong class="fs-3">Emails</strong>
-                                        <a class="btn btn-success btn-sm" target="_blank"
-                                           href="{{ route('send-email') }}">
+                                        <a class="btn btn-success btn-sm" id="kt_activities_toggle">
                                             <i class="bi bi-plus-lg"></i>
                                             Send Email
                                         </a>
@@ -866,14 +865,9 @@
                         <div class="card">
                             <div class="card-body">
 
-                                <!--begin::Body-->
-                                <!-- <div class="card-body p-1"> -->
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <strong class="fs-3">SMS List</strong>
-                                    <a class="btn btn-success btn-sm" target="_blank" href="{{ route('send-sms') }}">
-                                        <i class="bi bi-plus-lg"></i>
-                                        Send SMS
-                                    </a>
+                                    <a class="btn btn-success btn-sm" id="kt_activities_toggle_2"><i class="bi bi-plus-lg"></i>Send SMS</a>
                                 </div>
 
 
@@ -943,11 +937,7 @@
 
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <strong class="fs-3">Meetings</strong>
-                                    <a class="btn btn-success btn-sm" target="_blank"
-                                       href="{{ route('meeting-create') }}">
-                                        <i class="bi bi-plus-lg"></i>
-                                        Meeting Request
-                                    </a>
+                                    <a class="btn btn-success btn-sm" id="kt_activities_toggle_3"><i class="bi bi-plus-lg"></i>Meeting Request</a>
                                 </div>
 
                                 <div class="table-responsive">
@@ -1109,11 +1099,7 @@
 
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <strong class="fs-3">Proposals</strong>
-                                    <a class="btn btn-success btn-sm" target="_blank"
-                                       href="{{ route('add-proposal') }}">
-                                        <i class="bi bi-plus-lg"></i>
-                                        Send Proposal
-                                    </a>
+                                    <a class="btn btn-success btn-sm" id="kt_activities_toggle_4"><i class="bi bi-plus-lg"></i>Send Proposal</a>
                                 </div>
 
                                 <div class="table-responsive">
@@ -1241,19 +1227,14 @@
                         </div>
                     </div>
 
-                    <div
-                        class="tab-pane fade {{ session('active_tab') === 'g_lead_products_tab' ? 'active show' : '' }}"
+                    <div class="tab-pane fade {{ session('active_tab') === 'g_lead_products_tab' ? 'active show' : '' }}"
                         id="g_lead_products" role="tabpanel" aria-labelledby="g_lead_products_tab">
                         <div class="card">
                             <div class="card-body">
 
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <strong class="fs-3">Product Specification</strong>
-                                    <a class="btn btn-success btn-sm" target="_blank"
-                                       href="{{ route('product-specification-create') }}">
-                                        <i class="bi bi-plus-lg"></i>
-                                        Add Specification
-                                    </a>
+                                    <a class="btn btn-success btn-sm" id="kt_activities_toggle_5"><i class="bi bi-plus-lg"></i>Add Specification</a>
                                 </div>
 
                                 <div class="table-responsive">
@@ -1704,6 +1685,1118 @@
     <!-- </div> -->
     <!--end::Content-->
 
+    <!--begin::Email drawer-->
+    <div id="kt_activities" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle" data-kt-drawer-close="#kt_activities_close">
+        <div class="card shadow-none rounded-0 w-100">
+            <!--begin::Header-->
+            <div class="card-header" id="kt_activities_header">
+                <h3 class="card-title fw-bolder text-dark">Send Email</h3>
+                <div class="card-toolbar">
+                    <button type="button" class="btn btn-sm btn-icon btn-active-light-primary me-n5" id="kt_activities_close">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </button>
+                </div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body position-relative" id="kt_activities_body">
+                <!--begin::Content-->
+                <div id="kt_activities_scroll" class="position-relative scroll-y me-n5 pe-5" data-kt-scroll="false" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_activities_body" data-kt-scroll-dependencies="#kt_activities_header, #kt_activities_footer" data-kt-scroll-offset="5px">
+                    <!--begin::Timeline items-->
+                    <!-- <div class="timeline"> -->
+
+                            <!--begin::Tables Widget 9-->
+                            <div class="card mb-5 mb-xl-8">
+                                <!--begin::Header-->
+
+                                <!--end::Header-->
+                                <div style="border:1px solid #ddd;padding:20px">
+                                <div class="row">
+                                    <div class="col-md-12 mx-auto">
+                                        <form class="g-form w-100" action="{{ route('send-email-process') }}" method="POST">
+                                            @csrf
+
+                                            <input type="hidden" name="lead_id" value="{{ $lead->id }}">
+                                            <input type="hidden" name="form_lead_panel" value="1">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">To<span class="text-danger">*</span></label>
+                                                        <input required class="form-control form-control-sm form-control-solid" type="text" id="to_email" name="to_email" autocomplete="off" value="{{ $lead->email }}"/>
+                                                        @if ($errors->has('to_email'))
+                                                            <span class="text-danger">{{ $errors->first('to_email') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">Email Template</label>
+                                                        <select class=" form-control form-control-sm form-control-solid"
+                                                                id="template_id"
+                                                                name="template_id"
+                                                                aria-label="Default select example">
+                                                            <option value=''>Select</option>
+                                                            @foreach($templates as $template)
+                                                                <option
+                                                                    value="{{$template->id}}" {{ old('template_id') == $template->id ? 'selected' : '' }}>{{ $template->email_subject }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">Email Subject<span class="text-danger">*</span></label>
+                                                        <input class="form-control form-control-sm form-control-solid" required type="text" id="email_subject" name="email_subject"
+                                                               autocomplete="off"
+                                                               value="{{ old('email_subject') }}"/>
+                                                        @if ($errors->has('email_subject'))
+                                                            <span class="text-danger">{{ $errors->first('email_subject') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
+                                                        <textarea class="form-control form-control-sm required form-control-solid editor" id="email_content" name="email_content" rows="3">{{ old('email_content') }}</textarea>
+                                                        @if ($errors->has('email_content'))
+                                                            <span class="text-danger">{{ $errors->first('email_content') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--End Row-->
+                                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                                <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Send</button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                                </div>
+
+                            </div>
+                            <!--end::Tables Widget 9-->
+
+                    <!-- </div> -->
+                    <!--end::Timeline items-->
+                </div>
+                <!--end::Content-->
+            </div>
+            <!--end::Body-->
+            <!--begin::Footer-->
+
+            <!--end::Footer-->
+        </div>
+    </div>
+    <!--end::Activities drawer-->
+
+    <!--begin::SMS activities drawer-->
+    <div id="kt_activities_2" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle_2" data-kt-drawer-close="#kt_activities_close">
+        <div class="card shadow-none rounded-0 w-100">
+            <!--begin::Header-->
+            <div class="card-header" id="kt_activities_header">
+                <h3 class="card-title fw-bolder text-dark">Send SMS</h3>
+                <div class="card-toolbar">
+                    <button type="button" class="btn btn-sm btn-icon btn-active-light-primary me-n5" id="kt_activities_close">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </button>
+                </div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body position-relative" id="kt_activities_body">
+                <!--begin::Content-->
+                <div id="kt_activities_scroll" class="position-relative scroll-y me-n5 pe-5" data-kt-scroll="false" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_activities_body" data-kt-scroll-dependencies="#kt_activities_header, #kt_activities_footer" data-kt-scroll-offset="5px">
+                    <!--begin::Timeline items-->
+                    <!-- <div class="timeline"> -->
+
+                            <!--begin::Tables Widget 9-->
+                            <div class="card mb-5 mb-xl-8">
+                                <!--begin::Header-->
+                               
+                                <!--end::Header-->
+                                <div style="border:1px solid #ddd;padding:20px">
+                                <div class="row">
+                                    <div class="col-md-12 mx-auto">
+                                        <form class="g-form w-100" action="{{ route('send-sms-pro') }}"  method="POST">
+                                             @csrf
+                                            <input type="hidden" name="lead_id" value="{{ $lead->id }}">
+                                            <input type="hidden" name="form_lead_panel" value="1">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">Mobile No.<span class="text-danger">*</span></label>
+                                                        <input class="form-control form-control-sm form-control-solid"
+                                                               type="text" name="sms_to" id="sms_to" autocomplete="off" value="{{ $lead->phone }}"/>
+                                                        @if ($errors->has('sms_to'))
+                                                            <span class="text-danger">{{ $errors->first('sms_to') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">SMS Template</label>
+                                                        <select class=" form-control form-control-sm form-control-solid" name="template_id" id="template_id" aria-label="Default select example">
+                                                            <option value=''>Select</option>
+                                                            @foreach($sms_templates as $template)
+                                                                <option value="{{$template->id}}" {{ old('template_id') == $template->id ? 'selected' : '' }}>{{ $template->title }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
+                                                        <textarea required class="form-control form-control-sm  form-control-solid" name="sms_text" id="sms_text" rows="5">{{ old('sms_text') }}</textarea>
+                                                        @if ($errors->has('sms_text'))
+                                                            <span class="text-danger">{{ $errors->first('sms_text') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <!--End Row-->
+                                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                                <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                                </div>
+
+                            </div>
+                            <!--end::Tables Widget 9-->
+
+                    <!-- </div> -->
+                    <!--end::Timeline items-->
+                </div>
+                <!--end::Content-->
+            </div>
+            <!--end::Body-->
+            <!--begin::Footer-->
+
+            <!--end::Footer-->
+        </div>
+    </div>
+    <!--end::SMS activities drawer-->
+
+    <!--begin::Meeting activities drawer-->
+    <div id="kt_activities_3" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle_3" data-kt-drawer-close="#kt_activities_close">
+        <div class="card shadow-none rounded-0 w-100">
+            <!--begin::Header-->
+            <div class="card-header" id="kt_activities_header">
+                <h3 class="card-title fw-bolder text-dark">Create Meeting</h3>
+                <div class="card-toolbar">
+                    <button type="button" class="btn btn-sm btn-icon btn-active-light-primary me-n5" id="kt_activities_close">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </button>
+                </div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body position-relative" id="kt_activities_body">
+                <!--begin::Content-->
+                <div id="kt_activities_scroll" class="position-relative scroll-y me-n5 pe-5" data-kt-scroll="false" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_activities_body" data-kt-scroll-dependencies="#kt_activities_header, #kt_activities_footer" data-kt-scroll-offset="5px">
+                    <!--begin::Timeline items-->
+                    <!-- <div class="timeline"> -->
+
+                            <!--begin::Tables Widget 9-->
+                            <div class="card mb-5 mb-xl-8">
+                                <!--begin::Header-->
+                               
+                                <!--end::Header-->
+                                <div style="border:1px solid #ddd;padding:20px">
+                                <div class="row">
+                                    <div class="col-md-12 mx-auto">
+
+                                        <form class="g-form w-100" action="{{ route('meeting-store') }}" enctype="multipart/form-data" method="POST">
+                                            @csrf
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">Select User</label>
+                                                        <select class=" form-control form-control-sm form-control-solid" name="recipients" aria-label="Default select example">
+                                                            <option value="{{$lead->id}}">{{$lead->email}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">Meeting Subject</label>
+                                                        <input class="form-control form-control-sm form-control-solid" type="text" name="meeting_subject" value="{{ old('meeting_subject') }}" autocomplete="off" />
+                                                        @if ($errors->has('meeting_subject'))
+                                                        <span class="text-danger">{{ $errors->first('meeting_subject') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">Meeting Date</label>
+                                                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr" name="meeting_date" value="{{ old('meeting_date') }}" />
+                                                        @if ($errors->has('meeting_date'))
+                                                        <span class="text-danger">{{ $errors->first('meeting_date') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label fw-bolder text-dark" for="textarea">Meeting Description</label>
+                                                        <textarea class="form-control form-control-sm form-control-solid" name="meeting_description" rows="2">{{ old('meeting_description') }}</textarea>
+                                                        @if ($errors->has('meeting_description'))
+                                                        <span class="text-danger">{{ $errors->first('meeting_description') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                               
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">Meeting Link</label>
+                                                        <input class="form-control form-control-sm form-control-solid" type="url" name="meeting_link" value="{{ old('meeting_link') }}" autocomplete="off" />
+                                                        @if ($errors->has('meeting_link'))
+                                                        <span class="text-danger">{{ $errors->first('meeting_link') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                               
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">Duration</label>
+                                                        <input class="form-control form-control-sm form-control-solid" type="text" name="duration" value="{{ old('duration') }}" autocomplete="off" />
+                                                        @if ($errors->has('duration'))
+                                                        <span class="text-danger">{{ $errors->first('duration') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">Attachments</label>
+                                                        <input type="file" class="form-control form-control-sm form-control-solid" name="attachments" />
+                                                        @if ($errors->has('attachments'))
+                                                        <span class="text-danger">{{ $errors->first('attachments') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">Status</label>
+                                                        <select class=" form-control form-control-sm form-control-solid" name="status"
+                                                            aria-label="Default select example">
+
+                                                            <option value="1" {{ old('status', '1') == '1' ? 'selected' : '' }}>Active</option>
+                                                            <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Inactive</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-2">
+                                                   <div class="fv-row mt-10 form-check form-check-custom form-check-sm">
+                                                        <input class="form-check-input form-check-sm" type="checkbox" name="send_email" id="sendEmail" value="1" {{ old('send_email') ? 'checked' : '' }}>
+                                                        <label class="form-check-label fw-bolder text-dark" for="sendEmail">
+                                                            Send Email
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+
+                                               <div class="col-md-2">
+                                                    <div class="fv-row mt-10 form-check form-check-custom form-check-sm">
+                                                        <input class="form-check-input" type="checkbox" name="send_sms" id="sendSMS" value="1" {{ old('send_sms') ? 'checked' : '' }}>
+                                                        <label class="form-check-label fw-bolder text-dark" for="sendSMS">
+                                                            Send SMS
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <!--End Row-->
+                                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                                <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                                </div>
+
+                            </div>
+                            <!--end::Tables Widget 9-->
+
+                    <!-- </div> -->
+                    <!--end::Timeline items-->
+                </div>
+                <!--end::Content-->
+            </div>
+            <!--end::Body-->
+            <!--begin::Footer-->
+
+            <!--end::Footer-->
+        </div>
+    </div>
+    <!--end::Meeting activities drawer-->
+
+
+    <!--begin::Proposal drawer-->
+    <div id="kt_activities_4" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle_4" data-kt-drawer-close="#kt_activities_close">
+        <div class="card shadow-none rounded-0 w-100">
+            <!--begin::Header-->
+            <div class="card-header" id="kt_activities_header">
+                <h3 class="card-title fw-bolder text-dark">Send Proposal</h3>
+                <div class="card-toolbar">
+                    <button type="button" class="btn btn-sm btn-icon btn-active-light-primary me-n5" id="kt_activities_close">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </button>
+                </div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body position-relative" id="kt_activities_body">
+                <!--begin::Content-->
+                <div id="kt_activities_scroll" class="position-relative scroll-y me-n5 pe-5" data-kt-scroll="false" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_activities_body" data-kt-scroll-dependencies="#kt_activities_header, #kt_activities_footer" data-kt-scroll-offset="5px">
+                    <!--begin::Timeline items-->
+                    <!-- <div class="timeline"> -->
+
+                            <!--begin::Tables Widget 9-->
+                            <div class="card mb-5 mb-xl-8">
+                                <!--begin::Header-->
+                               
+                                <!--end::Header-->
+                                <div style="border:1px solid #ddd;padding:20px">
+                                <div class="row">
+                                    <div class="col-md-12 mx-auto">
+
+                                    <form class="g-form g-proposal w-100" action="{{ route('store-proposal') }}" enctype="multipart/form-data" method="POST">
+                                        @csrf
+                                        <div class="row">
+                                            <!--Left Part-->
+                                            <div class="col-xl-6">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="fv-row mb-5">
+                                                            <!--begin::Label-->
+                                                            <label class="form-label fw-bolder text-dark">Subject<span class="text-danger">*</span></label>
+                                                            <input class="form-control form-control-sm form-control-solid" type="text" name="subject"  value="{{ old('subject') }}" />
+                                                            @if ($errors->has('subject'))
+                                                                <span class="text-danger">{{ $errors->first('subject') }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <div class="fv-row mb-5">
+                                                            <label class="form-label fw-bolder text-dark">Lead ID<span class="text-danger">*</span>
+                                                            </label>
+                                                            <select name="lead_id" class=" form-control form-control-sm form-control-solid" aria-label="Default select example">
+                                                                <option value="{{ $lead->id }}">{{ $lead->first_name . " " . $lead->last_name }}</option>
+                                                            </select>
+                                                            @if ($errors->has('lead_id'))
+                                                                <span class="text-danger">{{ $errors->first('lead_id') }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <div class="fv-row mb-5">
+                                                            <label class="form-label fw-bolder text-dark">Company Name</label>
+                                                            <input class="form-control form-control-sm form-control-solid" type="text" name="company_name" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xl-6">
+                                                        <div class="fv-row mb-5">
+                                                            <label class="form-label fw-bolder text-dark">Date<span class="text-danger">*</span></label>
+                                                            <div class="position-relative">
+                                                                <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" placeholder="Date" name="start_date" value="{{ old('start_date') }}">
+                                                                @if ($errors->has('start_date'))
+                                                                <span class="text-danger">{{ $errors->first('start_date') }}</span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xl-6">
+
+                                                        <div class="fv-row mb-5">
+                                                            <label class="form-label fw-bolder text-dark">Open Till<span class="text-danger">*</span></label>
+                                                            <div class="position-relative">
+                                                                <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" placeholder="Open Till" name="end_date" value="{{ old('end_date') }}">
+                                                                @if ($errors->has('end_date'))
+                                                                <span class="text-danger">{{ $errors->first('end_date') }}</span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    {{--
+                                                    <div class="col-md-12">
+                                                        <div class="fv-row mb-5">
+                                                            <label class="form-label fw-bolder text-dark">Currency<span class="text-danger">*</span></label>
+                                                            <select class=" form-control form-control-sm form-control-solid" id="currency" name="currency"
+                                                                    aria-label="Default select example">
+                                                                <option value=''>Select</option>
+                                                                @foreach($currencies as $currency)
+                                                                <option value="{{$currency->name}}" {{ old("currency") == $currency->name ? "selected" : "" }}>
+                                                                    {{ $currency->name }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                            @if ($errors->has('currency'))
+                                                                <span class="text-danger">{{ $errors->first('currency') }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    --}}
+
+                                                    <div class="col-md-12">
+                                                        <div class="fv-row mb-3">
+                                                            <label class="form-label  fw-bolder text-dark">Upload PDF, xcel or Word</label>
+                                                            <input class="form-control form-control-sm form-control-solid" accept=".csv,.xls,.xlsx,.docx,.pdf" type="file" name="upload_file" />
+                                                            @if ($errors->has('upload_file'))
+                                                                <span class="text-danger">{{ $errors->first('upload_file') }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+
+                                                    {{-- <div class="col-md-6">
+                                                        <div class="form-check form-switch form-check-light">
+                                                            <label class="form-label fw-bolder text-dark g-proposal-c-label" for="status">Allow Comments</label>
+                                                            <div><input class="form-check-input" type="checkbox" value="" id="status" name="status" checked="checked"/></div>
+                                                        </div>
+                                                    </div> --}}
+
+                                                </div>
+                                            </div>
+
+                                            <!--Right Part-->
+                                            <div class="col-xl-6">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="fv-row mb-5">
+                                                            <!--begin::Label-->
+                                                            <label class="form-label fw-bolder text-dark">Status<span class="text-danger">*</span></label>
+                                                            <select class=" form-control form-control-sm form-control-solid" id="status" name="status" aria-label="Default select example">
+                                                                <option value=''>Select</option>
+                                                                @foreach(config('constants.proposal_status') as $key => $status)
+                                                                <option value="{{$status}}" {{ old('status') == $key ? 'selected' : '' }}>{{ $status }} </option>
+                                                                @endforeach
+                                                            </select>
+                                                            @if ($errors->has('status'))
+                                                                <span class="text-danger">{{ $errors->first('status') }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="fv-row mb-5">
+                                                            <label class="form-label fw-bolder text-dark">First Name</label>
+                                                            <input class="form-control form-control-sm form-control-solid" type="text" name="first_name" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <div class="fv-row mb-5">
+                                                            <label class="form-label fw-bolder text-dark">Email To<span class="text-danger">*</span></label>
+                                                            <input class="form-control form-control-sm form-control-solid" type="email" id="send_to" name="send_to"  value="{{ old('send_to') }}"/>
+                                                            @if ($errors->has('send_to'))
+                                                                <span class="text-danger">{{ $errors->first('send_to') }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <div class="fv-row mb-5">
+                                                            <label class="form-label fw-bolder text-dark" for="textarea">Address</label>
+                                                            <textarea class="form-control form-control-sm  form-control-solid" id="address" name="address" rows="3">{{ old('address') }}</textarea>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="fv-row mb-5">
+                                                            <!--begin::Label-->
+                                                            <label class="form-label fw-bolder text-dark">City</label>
+                                                            <input class="form-control form-control-sm form-control-solid" type="text" id="city" name="city"  value="{{ old('city') }}"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="fv-row mb-5">
+                                                            <label class="form-label fw-bolder text-dark">State</label>
+                                                            <input class="form-control form-control-sm form-control-solid" type="text" id="state" name="state"  value="{{ old('state') }}"/>
+                                                        </div>
+                                                    </div>
+
+                                                    {{--
+                                                    <div class="col-md-6">
+                                                        <div class="fv-row mb-5">
+                                                            <label class="form-label  fw-bolder text-dark">Country</label>
+                                                            <select class=" form-control form-control-sm form-control-solid" name="country_name" aria-label="Default select example">
+                                                                <option value=''>Select</option>
+                                                                @foreach($countries as $country)
+                                                                <option value="{{$country->name}}" {{ old('country_name') == $country->name ? 'selected' : '' }}>{{ $country->name }} </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    --}}
+
+                                                    <div class="col-md-6">
+                                                        <div class="fv-row mb-5">
+                                                            <label class="form-label fw-bolder text-dark">Zip Code</label>
+                                                            <input class="form-control form-control-sm form-control-solid" type="text" id="zip_code" name="zip_code"  value="{{ old('zip_code') }}"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label fw-bolder text-dark">Phone</label>
+                                                            <input class="form-control form-control-sm form-control-solid" type="text" id="phone" name="phone"  value="{{ old('phone') }}"/>
+                                                        </div>
+                                                    </div>
+
+
+                                            </div>
+                                                </div>
+
+
+                                        </div>
+                                        <!--End Row-->
+
+                                        <div class="mt-2 overflow-hidden">
+
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="g-proposal-add-item d-flex flex-wrap justify-content-between align-items-center w-100 gap-3">
+
+
+                                                    </div>
+                                                </div>
+
+
+
+                                                    <div class="table-responsive">
+                                                        <!--Proposal Table Preview-->
+                                                        <table class="table table-rounded table-sm table-striped border align-middle gs-2">
+                                                            <thead>
+                                                            <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
+                                                                <th>Item details</th>
+                                                                <th>Description</th>
+                                                                <th>Price</th>
+                                                                <th>Offer Price</th>
+                                                                <!-- <th>Tax Amount</th> -->
+                                                                <th>Amount</th>
+                                                                <!-- <th><i class="bi bi-gear-fill"></i></th> -->
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <textarea class="form-control form-control-sm min-w-250px" name="item_name" cols="30" rows="2"placeholder=""></textarea>
+                                                                    @if ($errors->has('item_name'))
+                                                                        <span class="text-danger">{{ $errors->first('item_name') }}</span>
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    <textarea class="form-control form-select-sm min-w-250px" name="item_description" cols="30" rows="2"placeholder="Long Description"></textarea>
+                                                                    @if ($errors->has('item_description'))
+                                                                        <span class="text-danger">{{ $errors->first('item_description') }}</span>
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    <input id="price" class="form-control form-control-sm" type="number" name="price">
+                                                                    @if ($errors->has('price'))
+                                                                        <span class="text-danger">{{ $errors->first('price') }}</span>
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    <input id="offer_price" class="form-control form-control-sm" type="number" name="offer_price">
+                                                                    @if ($errors->has('offer_price'))
+                                                                        <span class="text-danger">{{ $errors->first('offer_price') }}</span>
+                                                                    @endif
+                                                                </td>
+                                                                <!-- <td>
+                                                                    <input class="form-control form-control-sm" type="number" name="tax">
+                                                                    <select class="form-select form-select-sm" data-control="" data-placeholder="No Tax">
+                                                                        <option value="fixed">Fixed</option>
+                                                                        <option value="percent">%</option>
+                                                                    </select>
+                                                                </td> -->
+                                                                <td><b><span id="total_amount">0</span></b></td>
+                                                                <!-- <td>
+                                                                    <button type="button" class="btn btn-sm btn-primary py-2 px-2">
+                                                                        <i class="bi bi-check"></i>
+                                                                    </button>
+                                                                </td> -->
+                                                            </tr>
+
+                                                            </tbody>
+                                                        </table>
+
+                                                        <!--End Proposal Table Preview-->
+                                                    </div>
+
+
+                                                    <div class="row mb-4">
+                                                        <div class="col-md-4 ms-auto ">
+                                                            <!-- Proposal Calculations-->
+                                                            <div class="table-responsive bg-light-warning rounded-2 p-3">
+                                                                <table class="table table-sm table-row-bordered align-middle">
+                                                                    <tr>
+                                                                        <th class="text-end"><strong>Sub Total:</strong></th>
+                                                                        <td class="text-end"><b><span class="cur-data">BDT</span></b> <span id="sub_total">0</span></td>
+                                                                    </tr>
+                                                                    <!-- <tr>
+                                                                        <th><strong>Discount :</strong>
+                                                                            <div class="input-group">
+                                                                                <div class="flex-grow-1">
+                                                                                    <input
+                                                                                        class="form-control form-control-sm rounded-end-0 border-end"
+                                                                                        type="text" name="discount">
+                                                                                </div>
+                                                                                <select class="form-select form-select-sm form-control-sm"
+                                                                                        name="discount_type" id="">
+                                                                                    <option value="fixed">Fixed Amount</option>
+                                                                                    <option value="percentage">%</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </th>
+                                                                        <td class="text-end"> <strong>BDT</strong> -0.00</td>
+                                                                    </tr> -->
+                                                                    <tr>
+                                                                        <th><strong>Tax :</strong>
+                                                                            <div class="input-group flex-nowrap">
+                                                                                <div class="flex-grow-1">
+                                                                                    <input id="tax_amount" class="form-control form-control-sm rounded-end-0 border-end" type="text" name="tax_percent">
+                                                                                </div>
+                                                                                <select class="form-select form-select-sm form-control-sm" name="tax_type" id="tax_type" style="width:40%">
+                                                                                    <!-- <option value="fixed">Fixed Amount</option> -->
+                                                                                    <option value="percentage">%</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </th>
+                                                                        <td class="text-end"> <b><span class="cur-data">BDT</span></b> <span id="tax_field">0</span></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th><strong>Discount :</strong>
+                                                                            <input id="discount" disabled class="form-control form-control-sm" type="text" name="discount">
+                                                                        </th>
+                                                                        <td class="text-end"><b><span class="cur-data">BDT</span></b>  <span id="discount_right">0</span></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="text-end"><strong>Total with Tax: </strong></th>
+                                                                        <td class="text-end">
+                                                                            <b><span class="cur-data">BDT</span></b> <span id="total_amount_final">0</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                            <!--End Proposal Calculations-->
+                                                        </div>
+                                                    </div>
+
+
+
+
+                                                <!--begin::Actions-->
+                                                <div class="card-footer d-flex justify-content-end py-4 pe-0">
+                                                    <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Submit</button>
+                                                </div>
+                                                <!--end::Actions-->
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+
+                                    </div>
+                                </div>
+                                </div>
+
+                            </div>
+                            <!--end::Tables Widget 9-->
+
+                    <!-- </div> -->
+                    <!--end::Timeline items-->
+                </div>
+                <!--end::Content-->
+            </div>
+            <!--end::Body-->
+            <!--begin::Footer-->
+
+            <!--end::Footer-->
+        </div>
+    </div>
+    <!--end::Proposal drawer-->
+
+    <!--begin::Proposal drawer-->
+    <div id="kt_activities_5" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle_5" data-kt-drawer-close="#kt_activities_close">
+        <div class="card shadow-none rounded-0 w-100">
+            <!--begin::Header-->
+            <div class="card-header" id="kt_activities_header">
+                <h3 class="card-title fw-bolder text-dark">Product Specification</h3>
+                <div class="card-toolbar">
+                    <button type="button" class="btn btn-sm btn-icon btn-active-light-primary me-n5" id="kt_activities_close">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </button>
+                </div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body position-relative" id="kt_activities_body">
+                <!--begin::Content-->
+                <div id="kt_activities_scroll" class="position-relative scroll-y me-n5 pe-5" data-kt-scroll="false" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_activities_body" data-kt-scroll-dependencies="#kt_activities_header, #kt_activities_footer" data-kt-scroll-offset="5px">
+                    <!--begin::Timeline items-->
+                    <!-- <div class="timeline"> -->
+
+                            <!--begin::Tables Widget 9-->
+                            <div class="card mb-5 mb-xl-8">
+                                <!--begin::Header-->
+                               
+                                <!--end::Header-->
+                                <div style="border:1px solid #ddd;padding:20px">
+                                <div class="row">
+                                    <div class="col-md-12 mx-auto">
+
+                                        <form class="g-form w-100" action="{{ route('product-specification-store') }}" enctype="multipart/form-data" method="POST">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="fv-row mb-5">
+                                                        <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
+
+                                                        </label>
+                                                        <select class="form-control form-control-sm form-control-solid" name="customer_id" aria-label="Default select example">
+                                                            <option value="" {{ old('customer_id') == '' ? 'selected' : '' }}>Select Customer</option>
+                                                            @foreach($customers as $customer)
+                                                            <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
+                                                                {{ $customer->first_name }} {{ $customer->last_name }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->has('customer_id'))
+                                                        <span class="text-danger">{{ $errors->first('customer_id') }}</span>
+                                                        @endif
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Product</label>
+                                                    <select id="product-select" class="form-control form-control-sm form-control-solid"
+                                                        name="product_id[]"
+                                                        multiple="multiple"
+                                                        data-allow-clear="true"
+                                                        data-kt-select2="select2">
+                                                        @foreach ($products as $product)
+                                                        <option value="{{ $product->id }}"
+                                                            {{ is_array(old('product_id')) && in_array($product->id, old('product_id')) ? 'selected' : '' }}>
+                                                            {{ $product->name }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @if ($errors->has('product_id'))
+                                                    <div class="text-danger">{{ $errors->first('product_id') }}</div>
+                                                    @endif
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Work Order Number</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" />
+                                                    @if ($errors->has('work_order_number'))
+                                                    <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
+                                                    @endif
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Work Order File</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="file" name="work_order_file" />
+                                                    @if ($errors->has('work_order_file'))
+                                                    <div class="text-danger">{{ $errors->first('work_order_file') }}</div>
+                                                    @endif
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Work Order Value</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_value" value="{{ old('work_order_value') }}" />
+                                                    @if ($errors->has('work_order_value'))
+                                                    <div class="text-danger">{{ $errors->first('work_order_value') }}</div>
+                                                    @endif
+                                                </div>
+
+
+                                                <!-- new fields -->
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Advance Amount</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="advance_amount" value="{{ old('advance_amount') }}" />
+                                                    @if ($errors->has('advance_amount'))
+                                                    <div class="text-danger">{{ $errors->first('advance_amount') }}</div>
+                                                    @endif
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Total Installment</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="total_installment" value="{{ old('total_installment') }}" />
+                                                    @if ($errors->has('total_installment'))
+                                                    <div class="text-danger">{{ $errors->first('total_installment') }}</div>
+                                                    @endif
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Per Month Installment</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="per_month_installment" value="{{ old('per_month_installment') }}" />
+                                                    @if ($errors->has('per_month_installment'))
+                                                    <div class="text-danger">{{ $errors->first('per_month_installment') }}</div>
+                                                    @endif
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Payment Date Cycle</label>
+                                                    <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="payment_date_cycle" value="{{ old('payment_date_cycle') }}" />
+                                                    @if ($errors->has('payment_date_cycle'))
+                                                    <div class="text-danger">{{ $errors->first('payment_date_cycle') }}</div>
+                                                    @endif
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Remaining Month</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="remaining_month" value="{{ old('remaining_month') }}" />
+                                                    @if ($errors->has('remaining_month'))
+                                                    <div class="text-danger">{{ $errors->first('remaining_month') }}</div>
+                                                    @endif
+                                                </div>
+
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Due Balance</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="number" name="due_balance" value="{{ old('due_balance') }}" />
+                                                    @if ($errors->has('due_balance'))
+                                                    <div class="text-danger">{{ $errors->first('due_balance') }}</div>
+                                                    @endif
+                                                </div>
+                                                <!-- end new fields -->
+
+
+
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Purchase Order Value</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="number" name="purchase_order_value" value="{{ old('purchase_order_value') }}" />
+                                                    @if ($errors->has('purchase_order_value'))
+                                                    <div class="text-danger">{{ $errors->first('purchase_order_value') }}</div>
+                                                    @endif
+                                                </div>
+
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Purchase Order File</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="file" name="purchase_order_file" />
+                                                    @if ($errors->has('purchase_order_file'))
+                                                    <div class="text-danger">{{ $errors->first('purchase_order_file') }}</div>
+                                                    @endif
+                                                </div>
+
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">AMC Start Date</label>
+                                                    <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="amc_start_date" value="{{ old('amc_start_date') }}" />
+                                                    @if ($errors->has('amc_start_date'))
+                                                    <div class="text-danger">{{ $errors->first('amc_start_date') }}</div>
+                                                    @endif
+                                                </div>
+
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">AMC Renewal Date</label>
+                                                    <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="amc_renewal_date" value="{{ old('amc_renewal_date') }}" />
+                                                    @if ($errors->has('amc_renewal_date'))
+                                                    <div class="text-danger">{{ $errors->first('amc_renewal_date') }}</div>
+                                                    @endif
+                                                </div>
+
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">AMC Rate (%)</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="number" name="amc_rate" value="{{ old('amc_rate') }}" step="0.01" />
+                                                    @if ($errors->has('amc_rate'))
+                                                    <div class="text-danger">{{ $errors->first('amc_rate') }}</div>
+                                                    @endif
+                                                </div>
+
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Rental Amount</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="number" name="rental_amount" value="{{ old('rental_amount') }}" />
+                                                    @if ($errors->has('rental_amount'))
+                                                    <div class="text-danger">{{ $errors->first('rental_amount') }}</div>
+                                                    @endif
+                                                </div>
+
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">AMC Effective Amount</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="number" name="amc_effective_amount" value="{{ old('amc_effective_amount') }}" />
+                                                    @if ($errors->has('amc_effective_amount'))
+                                                    <div class="text-danger">{{ $errors->first('amc_effective_amount') }}</div>
+                                                    @endif
+                                                </div>
+
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">AMC Agreement Documents</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="file" name="amc_agreement_documents" />
+                                                    @if ($errors->has('amc_agreement_documents'))
+                                                    <div class="text-danger">{{ $errors->first('amc_agreement_documents') }}</div>
+                                                    @endif
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="fv-row mb-3">
+                                                        <label class="form-label fw-bolder text-dark">Service Type</label>
+                                                        <select class=" form-control form-control-sm form-control-solid" name="service_type"
+                                                            aria-label="Default select example">
+                                                            <option value="">Select Service Type</option>
+                                                            <option value="Yearly" {{ old('service_type') == 'Yearly' ? 'selected' : '' }}>Yearly</option>
+                                                            <option value="Half-Yearly" {{ old('service_type') == 'Half-Yearly ' ? 'selected' : '' }}>Half-Yearly</option>
+                                                            <option value="Quarterly" {{ old('service_type') == 'Quarterly' ? 'selected' : '' }}>Quarterly</option>
+                                                            <option value="Monthly" {{ old('service_type') == 'Monthly ' ? 'selected' : '' }}>Monthly</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Software Value</label>
+                                                    <textarea class="form-control form-control-sm form-control-solid" name="software_value" rows="3">{{ old('software_value') }}</textarea>
+                                                    @if ($errors->has('software_value'))
+                                                    <div class="text-danger">{{ $errors->first('software_value') }}</div>
+                                                    @endif
+                                                </div>
+
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Hardware Value</label>
+                                                    <textarea class="form-control form-control-sm form-control-solid" name="hardware_value" rows="3">{{ old('hardware_value') }}</textarea>
+                                                    @if ($errors->has('hardware_value'))
+                                                    <div class="text-danger">{{ $errors->first('hardware_value') }}</div>
+                                                    @endif
+                                                </div>
+
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Implementation Cost</label>
+                                                    <textarea class="form-control form-control-sm form-control-solid" name="implementation_value" rows="3">{{ old('implementation_value') }}</textarea>
+                                                    @if ($errors->has('implementation_value'))
+                                                    <div class="text-danger">{{ $errors->first('implementation_value') }}</div>
+                                                    @endif
+                                                </div>
+
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Invoice Mushak File</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="file" name="invoice_mushak_file" />
+                                                    @if ($errors->has('invoice_mushak_file'))
+                                                    <div class="text-danger">{{ $errors->first('invoice_mushak_file') }}</div>
+                                                    @endif
+                                                </div>
+
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Tax Exemption Certificate</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="file" name="tax_exemption_certificate" />
+                                                    @if ($errors->has('tax_exemption_certificate'))
+                                                    <div class="text-danger">{{ $errors->first('tax_exemption_certificate') }}</div>
+                                                    @endif
+                                                </div>
+
+
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bolder text-dark">Note</label>
+                                                    <textarea class="form-control form-control-sm form-control-solid" name="note" rows="3">{{ old('note') }}</textarea>
+                                                    @if ($errors->has('note'))
+                                                    <div class="text-danger">{{ $errors->first('note') }}</div>
+                                                    @endif
+                                                </div>
+
+
+                                                <div class="card-footer d-flex justify-content-end py-6 px-9">
+
+                                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                                </div>
+
+                            </div>
+                            <!--end::Tables Widget 9-->
+
+                    <!-- </div> -->
+                    <!--end::Timeline items-->
+                </div>
+                <!--end::Content-->
+            </div>
+            <!--end::Body-->
+            <!--begin::Footer-->
+
+            <!--end::Footer-->
+        </div>
+    </div>
+    <!--end::Proposal drawer-->
+
 @endsection
 
 @section('endScript')
@@ -1729,6 +2822,23 @@
                     localStorage.setItem('activeTab', selectedTab);
                 });
             });
+
+            // loading email template content
+            const templates = @json($templates);
+            document.getElementById('template_id').addEventListener('change', function () {
+                const selectedId = this.value;
+                const selectedTemplate = templates.find(template => template.id == selectedId);
+                if (selectedTemplate) {
+                    // document.getElementById('email_subject').value = selectedTemplate.email_subject;
+                    $('.editor').summernote('code', selectedTemplate.email_content);
+
+                } else {
+                    // document.getElementById('email_subject').value = '';
+                    $('.editor').summernote('code', '');
+
+                }
+            });
+
         });
     </script>
     <script>
@@ -1838,4 +2948,3 @@
     </script>
 
 @endsection
-
