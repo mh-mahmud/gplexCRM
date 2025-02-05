@@ -7,9 +7,21 @@ use App\Models\Notification;
 class NotificationService
 {
     public function getAllNotifications()
-    {
-        return Notification::paginate(config('constants.ROW_PER_PAGE'));
-    }
+{
+    return Notification::leftJoin('leads', 'notifications.lead_id', '=', 'leads.id')
+        ->leftJoin('users', 'notifications.user_id', '=', 'users.id')
+        ->select(
+            'notifications.*',
+            'leads.first_name as lead_first_name',
+            'leads.last_name as lead_last_name',
+            'leads.email as lead_email',
+            'users.first_name as user_first_name',
+            'users.last_name as user_last_name',
+            'users.email as user_email'
+        )
+        ->orderBy('notifications.created_at', 'desc')
+        ->paginate(config('constants.ROW_PER_PAGE'));
+}
 
     public function createNotification($data)
     {
@@ -34,4 +46,35 @@ class NotificationService
         $notification = Notification::findOrFail($id);
         $notification->delete();
     }
+
+    public function searchNotifications($request)
+{
+    $searchTerm = trim($request->input('search'));
+
+    return Notification::leftJoin('leads', 'notifications.lead_id', '=', 'leads.id')
+        ->leftJoin('users', 'notifications.user_id', '=', 'users.id')
+        ->where(function ($query) use ($searchTerm) {
+            $query->where('notifications.notify_msg', 'LIKE', "%{$searchTerm}%")
+                ->orWhere('notifications.notify_datetime', 'LIKE', "%{$searchTerm}%")
+                ->orWhere('leads.first_name', 'LIKE', "%{$searchTerm}%")
+                ->orWhere('leads.last_name', 'LIKE', "%{$searchTerm}%")
+                ->orWhere('leads.email', 'LIKE', "%{$searchTerm}%")
+                ->orWhere('users.first_name', 'LIKE', "%{$searchTerm}%")
+                ->orWhere('users.last_name', 'LIKE', "%{$searchTerm}%")
+                ->orWhere('users.email', 'LIKE', "%{$searchTerm}%");
+        })
+        ->select(
+            'notifications.*',
+            'leads.first_name as lead_first_name',
+            'leads.last_name as lead_last_name',
+            'leads.email as lead_email',
+            'users.first_name as user_first_name',
+            'users.last_name as user_last_name',
+            'users.email as user_email'
+        )
+        ->orderBy('notifications.created_at', 'desc')
+        ->paginate(config('constants.ROW_PER_PAGE'));
+}
+
+
 }

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Invoice;
 use App\Models\ProductSpecification;
 use App\Models\InvoiceCustomForm;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class InvoiceService
@@ -259,7 +260,7 @@ class InvoiceService
 
 
 
-    public function searchInvoices($request)
+    public function searchInvoices_backup($request)
     {
         $searchTerm = trim($request->input('search'));
 
@@ -269,6 +270,34 @@ class InvoiceService
             ->orderBy('created_at', 'desc')
             ->paginate(config('constants.ROW_PER_PAGE'));
     }
+
+    public function searchInvoices($request)
+    {
+        $searchTerm = trim($request->input('search'));
+    
+        //convert search DD-MM-YYYY to YYYY-MM-DD if date
+        $formattedSearchTerm = preg_match('/\d{2}-\d{2}-\d{4}/', $searchTerm) 
+            ? Carbon::createFromFormat('d-m-Y', $searchTerm)->format('Y-m-d') 
+            : $searchTerm;
+    
+        return Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id')
+            ->where(function ($query) use ($formattedSearchTerm) {
+                $query->where('invoices.invoice_number', 'LIKE', "%{$formattedSearchTerm}%")
+                    ->orWhereRaw("DATE_FORMAT(invoices.invoice_date, '%Y-%m-%d') LIKE ?", ["%{$formattedSearchTerm}%"])
+                    ->orWhereRaw("DATE_FORMAT(invoices.due_date, '%Y-%m-%d') LIKE ?", ["%{$formattedSearchTerm}%"])
+                    ->orWhere('customers.customer_group', 'LIKE', "%{$formattedSearchTerm}%")
+                    ->orWhere('leads.first_name', 'LIKE', "%{$formattedSearchTerm}%")
+                    ->orWhere('leads.last_name', 'LIKE', "%{$formattedSearchTerm}%");
+            })
+            ->select('invoices.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
+            ->orderBy('invoices.created_at', 'desc')
+            ->paginate(config('constants.ROW_PER_PAGE'));
+    }
+    
+    
+    
+
 
     public function addPaymentInvoice_backup($invoice, $paymentDetails,$payment_amount)
     {

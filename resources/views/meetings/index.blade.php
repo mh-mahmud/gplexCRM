@@ -371,7 +371,7 @@ use Carbon\Carbon;
                                 <th class="min-w-140px">Created By</th>
                                 <th class="min-w-120px">Status</th>
                                 <th class="min-w-120px">Rating</th>
-                                <th class="min-w-100px text-center text-center-new">Actions</th>
+                                <th class="min-w-100px text-center text-end-new">Actions</th>
                             </tr>
                         </thead>
                         <!--end::Table head-->

@@ -451,19 +451,19 @@ ALTER TABLE `product_specification` ADD `due_balance` DOUBLE NULL DEFAULT NULL A
 
 ----04-02-2025 not given in db
 CREATE TABLE `notifications` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `lead_id` INT DEFAULT NULL,
-  `user_id` INT DEFAULT NULL,
-  `notify_msg` TEXT COLLATE utf8mb3_unicode_ci NOT NULL,
-  `notify_date` DATE DEFAULT NULL,
-  `notify_datetime` DATETIME NOT NULL,
-  `notify_time` TIME NOT NULL,
-  `notify_type` VARCHAR(50) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `send_email` TINYINT NOT NULL DEFAULT '0',
-  `send_sms` TINYINT NOT NULL DEFAULT '0',
-  `notify_by` INT DEFAULT NULL,
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lead_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `notify_msg` text COLLATE utf8_unicode_ci NOT NULL,
+  `notify_date` date DEFAULT NULL,
+  `notify_datetime` datetime NOT NULL,
+  `notify_time` time DEFAULT NULL,
+  `notify_type` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `send_email` tinyint(4) NOT NULL DEFAULT 0,
+  `send_sms` tinyint(4) NOT NULL DEFAULT 0,
+  `notify_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) 
+)
 

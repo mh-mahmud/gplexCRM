@@ -132,7 +132,7 @@
                                     <!--end::Info-->
 
                                     <!--begin::Subtitle-->
-                                    <a href="{{ route('agents-index') }}">
+                                    <a href="{{ route('customers') }}">
                                         <span class="text-gray-501 pt-1 fw-semibold fs-6">Total Customers</span>
                                     </a>
                                     <!--end::Subtitle-->

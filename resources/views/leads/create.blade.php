@@ -43,8 +43,7 @@
         Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: '{{ session('
-            success ') }}',
+            text: '{{ session('success') }}',
             showConfirmButton: false,
             timer: 2500
         });
@@ -56,8 +55,7 @@
         Swal.fire({
             icon: 'error',
             title: 'Validation Error',
-            text: '{{ implode('
-            ', $errors->all()) }}',
+            text: '{{ implode('', $errors->all()) }}',
             showConfirmButton: false,
             timer: 2500
         });
