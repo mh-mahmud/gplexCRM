@@ -59,6 +59,8 @@
 
                     <form class="g-form w-100" action="{{ route('notification-store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
+                        <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
@@ -109,16 +111,16 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2"
-                                        name="user_id">
-                                        <option value="" {{ old('user_id') == '' ? 'selected' : '' }}>Nothing Selected</option>
+                                        name="notify_by">
+                                        <option value="" {{ old('notify_by') == '' ? 'selected' : '' }}>Nothing Selected</option>
                                         @foreach($users as $user)
-                                        <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>{{ $user->username . ' <' . $user->email . '>' }}
+                                        <option value="{{ $user->id }}" {{ old('notify_by') == $user->id ? 'selected' : '' }}>{{ $user->username . ' <' . $user->email . '>' }}
                                         </option>
                                         @endforeach
                                     </select>
                                     <!--end::Input-->
-                                    @if ($errors->has('user_id'))
-                                    <span class="text-danger">{{ $errors->first('user_id') }}</span>
+                                    @if ($errors->has('notify_by'))
+                                    <span class="text-danger">{{ $errors->first('notify_by') }}</span>
                                     @endif
                                 </div>
                             </div>

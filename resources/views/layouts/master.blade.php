@@ -31,6 +31,7 @@
     <link href="{{url('/')}}/assets/css/custom.css" rel="stylesheet" type="text/css" />
 	<script src="{{url('/')}}/assets/js/sweetalert2.min.js"></script>
 	<script src="{{url('/')}}/assets/js/jquery-3.6.0.min.js"></script>
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->

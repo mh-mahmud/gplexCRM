@@ -380,18 +380,18 @@
                 <!--begin::Row-->
                 <div class="row gy-5 g-xl-8">
                     <!--begin::Col-->
-                    <div class="col-xl-4">
-                        <!--begin::List Widget 3-->
+                    <!-- <div class="col-xl-4">
+                       
                         <div class="card card-xl-stretch mb-xl-8">
-                            <!--begin::Header-->
+                          
                             <div class="card-header card-header-dashboard border-0 bd-cyan-2">
                                 <h3 class="card-title fw-bolder"><span class="card-label fw-bolder fs-3">Todo List</span></h3>
                                 <div class="card-toolbar">
-                                    <!--begin::Menu-->
+                                  
                                     <button type="button"
                                             class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
                                             data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
+                                        
                                         <span class="svg-icon svg-icon-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
                                                  viewBox="0 0 24 24">
@@ -406,13 +406,12 @@
                                                 </g>
                                             </svg>
                                         </span>
-                                        <!--end::Svg Icon-->
+                                      
                                     </button>
 
                                 </div>
                             </div>
-                            <!--end::Header-->
-                            <!--begin::Body-->
+                        
                             <div class="card-body pt-2">
 
                                 @php
@@ -442,22 +441,20 @@
                                         }
                                     @endphp
                                     <div class="d-flex align-items-center mb-8">
-                                        <!--begin::Bullet-->
+                                    
                                         <span class="bullet bullet-vertical h-40px {{$bg_color}}"></span>
-                                        <!--end::Bullet-->
-                                        <!--begin::Checkbox-->
+                                   
                                         <div class="form-check form-check-custom form-check-solid mx-5">
                                             <input class="form-check-input" type="checkbox" value=""/>
                                         </div>
-                                        <!--end::Checkbox-->
-                                        <!--begin::Description-->
+                                       
                                         <div class="flex-grow-1">
                                             <a href="{{ route('task-list') }}"
                                                class="text-gray-800 text-hover-primary fw-bolder fs-6">{{$val->task_name}}</a>
                                             <span class="text-muted d-block"
                                                   style="color: red !important;font-size:10px;">Due Date: {{substr($val->due_date, 0, 10)}}</span>
                                         </div>
-                                        <!--end::Description-->
+                                      
                                         <span class=""
                                               style="text-align:center;width:70px !important;font-size:9px;color:#fff;background-color:#3B71CA;padding:5px; border-radius:5px;">{{@$const_task[$val->status]}}</span>
                                     </div>
@@ -467,10 +464,160 @@
                                 @endforeach
 
                             </div>
-                            <!--end::Body-->
+                           
                         </div>
-                        <!--end:List Widget 3-->
-                    </div>
+                       
+                    </div> -->
+
+                    <div class="col-xl-4">
+                       
+                       <div class="card card-xl-stretch mb-xl-8">
+                         
+                           <div class="card-header card-header-dashboard border-0 bd-cyan-2">
+                               <h3 class="card-title fw-bolder"><span class="card-label fw-bolder fs-3">Notifications</span></h3>
+                               <div class="card-toolbar">
+													<!--begin::Menu-->
+													<button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+														<!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
+														<span class="svg-icon svg-icon-2">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+																<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+																	<rect x="5" y="5" width="5" height="5" rx="1" fill="#000000" />
+																	<rect x="14" y="5" width="5" height="5" rx="1" fill="#000000" opacity="0.3" />
+																	<rect x="5" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3" />
+																	<rect x="14" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3" />
+																</g>
+															</svg>
+														</span>
+														<!--end::Svg Icon-->
+													</button>
+													<!--begin::Menu 3-->
+												
+													<!--end::Menu 3-->
+													<!--end::Menu-->
+												</div>
+											</div>
+											<!--end::Header-->
+											<!--begin::Body-->
+											<div class="card-body pt-0">
+                                                                        
+                                                @foreach ($notifications as $notification)
+                                                    <!-- Notification Link -->
+                                                    <div class="d-flex align-items-center bg-light-success rounded p-1 mb-2 notification-item" data-id="{{ $notification->id }}">
+                                                        <span class="svg-icon {{ $notification->notify_seen ? 'svg-icon-success' : 'svg-icon-danger' }} me-5">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="black"/>
+                                                                <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="black"/>
+                                                        </svg>
+                                                        </span>
+                                                        <div class="flex-grow-1 me-2 single-line-text">
+                                                            <!-- Notification Title -->
+                                                            <a href="#" class="fw-bolder text-gray-800 text-hover-primary fs-7 notification-link " data-bs-toggle="modal" data-bs-target="#notificationModal_{{ $notification->id }}" data-id="{{ $notification->id }}">
+                                                                {{ $notification->notify_msg }}
+                                                            </a>
+                                                            <span class="text-muted fw-bold d-block">
+                                                                Due in {{ \Carbon\Carbon::parse($notification->notify_datetime)->diffForHumans() }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal fade" id="notificationModal_{{ $notification->id }}" tabindex="-1" aria-hidden="true">
+                                                        <!--begin::Modal dialog-->
+                                                        <div class="modal-dialog modal-lg">
+                                                            <!--begin::Modal content-->
+                                                            <div class="modal-content">
+                                                                <!--begin::Modal header-->
+                                                                <div class="modal-header pb-0 border-0 justify-content-end">
+                                                                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                                                        <span class="svg-icon svg-icon-1">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                                                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                                                            </svg>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <!--end::Modal header-->
+
+                                                                <!-- Modal Body -->
+                                                                <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+                                                                                                                        <div class="card mt-4">
+                                                                        <div class="card-header bg-light bd-cyan">
+                                                                            <div class="card-title">
+                                                                                <h2>Notification Details</h2>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--begin::Body-->
+                                                                        <div class="card-body p-1">
+                                                                        
+                                                                            <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Notify Message</span>
+                                                                                <span>{{ $notification->notify_msg }}</span>
+                                                                            </div>
+
+                                                                        
+                                                                            <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Notify Date</span>
+                                                                                <span>{{ \Carbon\Carbon::parse($notification->notify_datetime)->format('Y-m-d h:i A') }}</span>
+                                                                            </div>
+
+                                                                        
+                                                                         
+                                                                            <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Lead</span>
+                                                                                <span>{{ $notification->lead_first_name . ' ' . $notification->lead_last_name . ' <' . $notification->lead_email . '>' }}</span>
+                                                                            </div>
+                                                                          
+
+                                                                            
+                                                                           
+                                                                            <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Notified By</span>
+                                                                                <span>
+                                                                                    @if(empty($notification->user_first_name) && empty($notification->user_last_name))
+                                                                                        System User
+                                                                                    @else
+                                                                                        {{ $notification->user_first_name . ' ' . $notification->user_last_name . ' <' . $notification->user_email . '>' }}
+                                                                                    @endif
+                                                                                </span>
+                                                                            </div>
+
+                                                                           
+
+                                                                        
+                                                                            <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Send SMS</span>
+                                                                                <span>{{ $notification->send_sms == 1 ? 'Yes' : ($notification->send_sms == 0 ? 'No' : '') }}</span>
+                                                                            </div>
+
+                                                                             
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                            </div>
+                                                                            
+                                                                           
+                                                                        </div>
+
+
+
+                                                                    </div>
+                                                                
+                                                                </div>
+                                                                <!--end::Modal body-->
+                                                            </div>
+                                                            <!--end::Modal content-->
+                                                        </div>
+                                                        <!--end::Modal dialog-->
+                                                    </div>
+                                                    @endforeach
+
+
+											
+											</div>
+											<!--end::Body-->
+										</div>
+										<!--end::List Widget 6-->
+					           </div>
                     <!--end::Col-->
                     <!--begin::Col-->
                     <div class="col-xl-8">
@@ -594,18 +741,18 @@
                 <!--begin::Row-->
                 <div class="row gy-5 g-xl-8">
                     <!--begin::Col-->
-                    <div class="col-xl-4">
-                        <!--begin::List Widget 2-->
+                    <!-- <div class="col-xl-4">
+                       
                         <div class="card card-xl-stretch mb-xl-8">
-                            <!--begin::Header-->
+                            
                             <div class="card-header card-header-dashboard border-0 bd-cyan-2">
                                 <h3 class="card-title fw-bolder text-dark"><span class="card-label fw-bolder fs-3">Agents</span></h3>
                                 <div class="card-toolbar">
-                                    <!--begin::Menu-->
+                                   
                                     <button type="button"
                                             class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
                                             data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
+                                       
                                         <span class="svg-icon svg-icon-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
                                                  viewBox="0 0 24 24">
@@ -620,19 +767,18 @@
                                                 </g>
                                             </svg>
                                         </span>
-                                        <!--end::Svg Icon-->
+                                      
                                     </button>
 
-                                    <!--end::Menu-->
+                                 
                                 </div>
                             </div>
-                            <!--end::Header-->
-                            <!--begin::Body-->
+                     
                             <div class="card-body pt-2">
 
                                 @foreach($agent_list as $key=> $val)
                                     <div class="d-flex align-items-center mb-7">
-                                        <!--begin::Avatar-->
+                                       
                                         <div class="symbol symbol-50px me-5">
                                             @if($val->user->profile_image && file_exists("uploads/agents/".$val->user->profile_image))
                                                 <img src="uploads/agents/{{$val->user->profile_image}}" class=""
@@ -641,22 +787,110 @@
                                                 <img src="assets/media/avatars/blank.png" class="" alt=""/>
                                             @endif
                                         </div>
-                                        <!--end::Avatar-->
-                                        <!--begin::Text-->
+                                    
                                         <div class="flex-grow-1">
                                             <a href="{{ route('agents-show', $val->agent_id) }}"
                                                class="text-dark fw-bolder text-hover-primary fs-6">{{$val->first_name}} {{$val->last_name}}</a>
                                             <span class="text-muted d-block fw-bold">Agent Id: {{$val->agent_id}}</span>
                                         </div>
-                                        <!--end::Text-->
+                                      
                                     </div>
                                 @endforeach
 
                             </div>
-                            <!--end::Body-->
+                           
                         </div>
-                        <!--end::List Widget 2-->
-                    </div>
+                       
+                    </div> -->
+
+                    <div class="col-xl-4">
+                       
+                       <div class="card card-xl-stretch mb-xl-8">
+                         
+                           <div class="card-header card-header-dashboard border-0 bd-cyan-2">
+                               <h3 class="card-title fw-bolder"><span class="card-label fw-bolder fs-3">Todo List</span></h3>
+                               <div class="card-toolbar">
+                                 
+                                   <button type="button"
+                                           class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+                                           data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                       
+                                       <span class="svg-icon svg-icon-2">
+                                           <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+                                                viewBox="0 0 24 24">
+                                               <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                   <rect x="5" y="5" width="5" height="5" rx="1" fill="#000000"/>
+                                                   <rect x="14" y="5" width="5" height="5" rx="1" fill="#000000"
+                                                         opacity="0.3"/>
+                                                   <rect x="5" y="14" width="5" height="5" rx="1" fill="#000000"
+                                                         opacity="0.3"/>
+                                                   <rect x="14" y="14" width="5" height="5" rx="1" fill="#000000"
+                                                         opacity="0.3"/>
+                                               </g>
+                                           </svg>
+                                       </span>
+                                     
+                                   </button>
+
+                               </div>
+                           </div>
+                       
+                           <div class="card-body pt-2">
+
+                               @php
+                                   $i=1;
+                               @endphp
+                               @foreach($todo_list as $key=>$val)
+
+                                   @php
+                                       switch($i) {
+                                           case($i==1):
+                                               $bg_color = 'bg-success';
+                                           break;
+
+                                           case($i==2):
+                                               $bg_color = 'bg-danger';
+                                           break;
+
+                                           case($i==3):
+                                               $bg_color = 'bg-warning';
+                                           break;
+
+                                           case($i==4):
+                                               $bg_color = 'bg-primary';
+                                           break;
+                                           default:
+                                               $bg_color = 'bg-default';
+                                       }
+                                   @endphp
+                                   <div class="d-flex align-items-center mb-8">
+                                   
+                                       <span class="bullet bullet-vertical h-40px {{$bg_color}}"></span>
+                                  
+                                       <div class="form-check form-check-custom form-check-solid mx-5">
+                                           <input class="form-check-input" type="checkbox" value=""/>
+                                       </div>
+                                      
+                                       <div class="flex-grow-1">
+                                           <a href="{{ route('task-list') }}"
+                                              class="text-gray-800 text-hover-primary fw-bolder fs-6">{{$val->task_name}}</a>
+                                           <span class="text-muted d-block"
+                                                 style="color: red !important;font-size:10px;">Due Date: {{substr($val->due_date, 0, 10)}}</span>
+                                       </div>
+                                     
+                                       <span class=""
+                                             style="text-align:center;width:70px !important;font-size:9px;color:#fff;background-color:#3B71CA;padding:5px; border-radius:5px;">{{@$const_task[$val->status]}}</span>
+                                   </div>
+                                   @php
+                                       $i++;
+                                   @endphp
+                               @endforeach
+
+                           </div>
+                          
+                       </div>
+                      
+                   </div>
 
                     <div class="col-xl-8">
                         <!--begin::Tables Widget 9-->
@@ -837,4 +1071,38 @@
                 }
             });
         </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('.notification-link').forEach(function (element) {
+            element.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                let notificationId = this.getAttribute('data-id');
+                let baseUrl = "{{ url('/') }}"; // base url get
+
+                fetch(`${baseUrl}/notification/mark-as-read/${notificationId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => response.json())
+                  .then(data => {
+                      if (data.success) {
+                          let notificationItem = document.querySelector(`.notification-item[data-id="${notificationId}"]`);
+                          if (notificationItem) {
+                              let icon = notificationItem.querySelector('.svg-icon');
+                              icon.classList.remove('svg-icon-danger');
+                              icon.classList.add('svg-icon-success');
+                          }
+                      }
+                  })
+                  .catch(error => console.error('Error:', error));
+            });
+        });
+    });
+</script>
+
+
 @endsection

@@ -92,16 +92,16 @@
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Notify By</label>
-                                    <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2" name="user_id">
-                                        <option value="" {{ old('user_id', $notification->user_id) == '' ? 'selected' : '' }}>Nothing Selected</option>
+                                    <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2" name="notify_by">
+                                        <option value="" {{ old('notify_by', $notification->notify_by) == '' ? 'selected' : '' }}>Nothing Selected</option>
                                         @foreach($users as $user)
-                                        <option value="{{ $user->id }}" {{ old('user_id', $notification->user_id) == $user->id ? 'selected' : '' }}>
+                                        <option value="{{ $user->id }}" {{ old('notify_by', $notification->notify_by) == $user->id ? 'selected' : '' }}>
                                             {{ $user->username . ' <' . $user->email . '>' }}
                                         </option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('user_id'))
-                                    <span class="text-danger">{{ $errors->first('user_id') }}</span>
+                                    @if ($errors->has('notify_by'))
+                                    <span class="text-danger">{{ $errors->first('notify_by') }}</span>
                                     @endif
                                 </div>
                             </div>
