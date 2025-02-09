@@ -187,6 +187,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::put('/account-settings/{id}', [UserController::class, 'profile_update'])->name('profile-update');
 	Route::post('/user/search', [UserController::class, 'search'])->name('user-search');
 	Route::put('/user/{id}/update-profile-image', [UserController::class, 'updateProfileImage'])->name('update-profile-image');
+	Route::get('app-settings', [UserController::class, 'app_settings'])->name('app-settings')->middleware(['check-permission']);
+	Route::post('app-settings', [UserController::class, 'store_app_settings'])->name('save-app-settings');
 
     Route::get('permission-list',        [UserController::class, 'permission_index'])->name('permission.index')->middleware(['check-permission']);
     Route::get('permission-show/{id}',        [UserController::class, 'permission_show'])->name('permission.show')->middleware(['check-permission']);

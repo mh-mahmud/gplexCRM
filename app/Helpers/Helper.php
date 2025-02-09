@@ -154,5 +154,52 @@ class Helper
     
         return $words;
     }
+
+    public static function settings() {
+        return Settings::first();
+    }
+
+    public static function send_sms($phone, $custom_message) {
+        // new api code
+        $url = "https://sms.novocom-bd.com/api/v2/SendSMS";
+        $myObj = new stdClass();
+        $myObj->senderId = "8809638011080";
+        $myObj->is_Unicode = false;
+        $myObj->is_Flash = false;
+        $myObj->dataCoding = 0;
+        $myObj->schedTime = "";
+        $myObj->groupId = "";
+        $myObj->Message = $custom_message;
+        $myObj->mobileNumbers = "88".$phone;
+        $myObj->serviceId = "";
+        $myObj->coRelator = "";
+        $myObj->linkId = "";
+        $myObj->principleEntityId = "";
+        $myObj->templateId = "";
+        $myObj->clientId = "66b4a410-c559-4bcd-98d3-ead4e6bf033b";
+        $myObj->apiKey = "j21qvq/8AJZmHVNnyyO+2CRwjobe4lqXgYLc3JJoZUQ=";
+
+        $data_string = json_encode($myObj);
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Authorization: Bearer ' . $myObj->apiKey
+        ));
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        // Improved error handling
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'CURL Error: ' . curl_error($ch);
+        } else {
+            echo 'API Response: ' . $result;
+        }
+        curl_close($ch);
+    }
     
 }

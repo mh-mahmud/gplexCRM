@@ -7,6 +7,7 @@ use App\Services\UserService;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Models\Agent;
+use App\Models\Settings;
 use Auth;
 use App\Helpers\Helper;
 
@@ -369,6 +370,39 @@ class UserController extends Controller
         $res = [];
         $res['user'] = $this->service->show_role_data($id);
         return view('users.show_roles', $res);
+    }
+
+    public function app_settings() {
+        $data = Settings::first();
+        return view('users.app_settings', compact('data'));
+    }
+
+    public function store_app_settings(Request $request) {
+
+        $settings = Settings::findOrFail($request->id);
+        $settings->facebook_link = $request->facebook_link;
+        $settings->whats_app_link = $request->whats_app_link;
+        $settings->instagram_link = $request->instagram_link;
+        $settings->youtube_link = $request->youtube_link;
+        $settings->twitter_link = $request->twitter_link;
+        $settings->linkedin_link = $request->linkedin_link;
+        $settings->messanger_link = $request->messanger_link;
+        $settings->whats_app_chat_link = $request->whats_app_chat_link;
+        $settings->google_map_link = $request->google_map_link;
+        $settings->office_phone_number = $request->office_phone_number;
+        $settings->phone_number_2 = $request->phone_number_2;
+        $settings->phone_number_3 = $request->phone_number_3;
+        $settings->charge_inside_dhaka = $request->charge_inside_dhaka;
+        $settings->charge_outside_dhaka = $request->charge_outside_dhaka;
+        $settings->about_us = $request->about_us;
+        $settings->contact_address = $request->contact_address;
+        $settings->return_policy = $request->return_policy;
+        $settings->refund_policy = $request->refund_policy;
+        $settings->terms_and_conditions = $request->terms_and_conditions;
+        $settings->footer_message = $request->footer_message;
+        $settings->faq = $request->faq;
+        $settings->save();
+        return redirect()->back()->with('success', 'Settings updated successfully');
     }
 
     
