@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LeadService
 {
-    public function getAllLeads()
+    public function getAllLeads_backup()
     {
 
         if (Auth::user()->user_type !== 'admin') {
@@ -24,6 +24,12 @@ class LeadService
             return Lead::with('leadsForm:form_id,form_name')->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
           
         }
+    }
+	
+	 public function getAllLeads()
+    {
+
+         return Lead::with('leadsForm:form_id,form_name')->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
     }
 
     public function getLeadsByFormId($form_id)
