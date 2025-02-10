@@ -53,19 +53,19 @@ use Carbon\Carbon;
                 </div>
                 <!--begin::Body-->
                 <div class="card-body p-1">
-                   
+
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Notify Message</span>
                         <span>{{ $notification->notify_msg }}</span>
                     </div>
 
-                   
+
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Notify Date</span>
                         <span>{{ \Carbon\Carbon::parse($notification->notify_datetime)->format('Y-m-d h:i A') }}</span>
                     </div>
 
-                   
+
                     @if($lead)
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Lead</span>
@@ -73,15 +73,22 @@ use Carbon\Carbon;
                     </div>
                     @endif
 
-                    
-                    @if($user)
+
+
+                    @if($user && $user->first_name && $user->last_name)
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Notified By</span>
                         <span>{{ $user->first_name . ' ' . $user->last_name . ' <' . $user->email . '>' }}</span>
                     </div>
+                    @else
+                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                        <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Notified By</span>
+                        <span>System User</span>
+                    </div>
                     @endif
 
-                   
+
+
                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                         <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Send SMS</span>
                         <span>{{ $notification->send_sms == 1 ? 'Yes' : ($notification->send_sms == 0 ? 'No' : '') }}</span>

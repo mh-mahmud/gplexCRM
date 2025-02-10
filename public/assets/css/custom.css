@@ -673,3 +673,9 @@ body.swal2-height-auto {
     min-height: 81.5vh;
 }
 
+.single-line-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+

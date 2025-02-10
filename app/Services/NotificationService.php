@@ -9,7 +9,7 @@ class NotificationService
     public function getAllNotifications()
 {
     return Notification::leftJoin('leads', 'notifications.lead_id', '=', 'leads.id')
-        ->leftJoin('users', 'notifications.user_id', '=', 'users.id')
+        ->leftJoin('users', 'notifications.notify_by', '=', 'users.id')
         ->select(
             'notifications.*',
             'leads.first_name as lead_first_name',
@@ -52,7 +52,7 @@ class NotificationService
     $searchTerm = trim($request->input('search'));
 
     return Notification::leftJoin('leads', 'notifications.lead_id', '=', 'leads.id')
-        ->leftJoin('users', 'notifications.user_id', '=', 'users.id')
+        ->leftJoin('users', 'notifications.notify_by', '=', 'users.id')
         ->where(function ($query) use ($searchTerm) {
             $query->where('notifications.notify_msg', 'LIKE', "%{$searchTerm}%")
                 ->orWhere('notifications.notify_datetime', 'LIKE', "%{$searchTerm}%")

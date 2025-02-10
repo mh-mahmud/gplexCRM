@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\ProductSpecification;
 use App\Models\Customer;
+use App\Models\Notification;
 
 class DashboardController extends Controller
 {
@@ -93,6 +94,22 @@ class DashboardController extends Controller
         }
         $data['agent_list'] = Agent::with('user')->where('status', 1)->orderBy('agent_id', 'desc')->limit(5)->get();
         $data['todo_list'] = (Auth()->user()->user_type == 'admin') ? Task::where('status', '!=', 9)->limit(6)->get(['task_name', 'description', 'due_date', 'status']) : Task::where('created_by', $user_id)->orWhere('assigned_to', $user_id)->limit(6)->get(['task_name', 'description', 'due_date', 'status']);
+        $data['notifications'] = Notification::leftJoin('leads', 'notifications.lead_id', '=', 'leads.id')
+        ->leftJoin('users', 'notifications.notify_by', '=', 'users.id')
+        ->select(
+            'notifications.*',
+            'leads.first_name as lead_first_name',
+            'leads.last_name as lead_last_name',
+            'leads.email as lead_email',
+            'users.first_name as user_first_name',
+            'users.last_name as user_last_name',
+            'users.email as user_email'
+        )
+        ->where('notifications.notify_by', '=', auth()->id())
+        ->orderBy('notify_datetime', 'desc')
+        ->limit(5)
+        ->get();
+
         $data['formName'] = $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
 
         //$data['count_lead'] = Lead::where('lead_status', 1)->count();

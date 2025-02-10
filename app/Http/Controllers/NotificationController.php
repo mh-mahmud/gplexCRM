@@ -141,5 +141,16 @@ class NotificationController extends Controller
           $notifications = $this->notificationService->searchNotifications($request);
           return view('notification.index', compact('notifications'));
       }
+
+    public function markAsRead($id)
+    {
+        $notification = Notification::find($id);
+        if ($notification) {
+            $notification->notify_seen = 1; // mark read
+            $notification->save();
+        }
+        return response()->json(['success' => true]);
+    }
+
   
 }

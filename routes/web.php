@@ -352,6 +352,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::put('/notification/{id}', [NotificationController::class, 'update'])->name('notification-update');
 	Route::delete('/notification/{id?}', [NotificationController::class, 'destroy'])->name('notification-destroy');
 	Route::post('/notification/search', [NotificationController::class, 'search'])->name('notification-search');
+	Route::post('/notification/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('notification-markAsRead');
+
 
 
 });
