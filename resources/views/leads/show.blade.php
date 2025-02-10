@@ -2118,7 +2118,7 @@
                                                         <div class="fv-row mb-5">
                                                             <!--begin::Label-->
                                                             <label class="form-label fw-bolder text-dark">Subject<span class="text-danger">*</span></label>
-                                                            <input class="form-control form-control-sm form-control-solid" type="text" name="subject"  value="{{ old('subject') }}" />
+                                                            <input class="form-control form-control-sm form-control-solid" type="text" required name="subject"  value="{{ old('subject') }}" />
                                                             @if ($errors->has('subject'))
                                                                 <span class="text-danger">{{ $errors->first('subject') }}</span>
                                                             @endif
@@ -2129,7 +2129,7 @@
                                                         <div class="fv-row mb-5">
                                                             <label class="form-label fw-bolder text-dark">Lead ID<span class="text-danger">*</span>
                                                             </label>
-                                                            <select name="lead_id" class=" form-control form-control-sm form-control-solid" aria-label="Default select example">
+                                                            <select name="lead_id" class=" form-control form-control-sm form-control-solid" required aria-label="Default select example">
                                                                 <option value="{{ $lead->id }}">{{ $lead->first_name . " " . $lead->last_name }}</option>
                                                             </select>
                                                             @if ($errors->has('lead_id'))
@@ -2149,7 +2149,7 @@
                                                         <div class="fv-row mb-5">
                                                             <label class="form-label fw-bolder text-dark">Date<span class="text-danger">*</span></label>
                                                             <div class="position-relative">
-                                                                <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" placeholder="Date" name="start_date" value="{{ old('start_date') }}">
+                                                                <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" required placeholder="Date" name="start_date" value="{{ old('start_date') }}">
                                                                 @if ($errors->has('start_date'))
                                                                 <span class="text-danger">{{ $errors->first('start_date') }}</span>
                                                                 @endif
@@ -2162,7 +2162,7 @@
                                                         <div class="fv-row mb-5">
                                                             <label class="form-label fw-bolder text-dark">Open Till<span class="text-danger">*</span></label>
                                                             <div class="position-relative">
-                                                                <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" placeholder="Open Till" name="end_date" value="{{ old('end_date') }}">
+                                                                <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" required placeholder="Open Till" name="end_date" value="{{ old('end_date') }}">
                                                                 @if ($errors->has('end_date'))
                                                                 <span class="text-danger">{{ $errors->first('end_date') }}</span>
                                                                 @endif
@@ -2175,7 +2175,7 @@
                                                     <div class="col-md-12">
                                                         <div class="fv-row mb-5">
                                                             <label class="form-label fw-bolder text-dark">Currency<span class="text-danger">*</span></label>
-                                                            <select class=" form-control form-control-sm form-control-solid" id="currency" name="currency"
+                                                            <select class=" form-control form-control-sm form-control-solid" required id="currency" name="currency"
                                                                     aria-label="Default select example">
                                                                 <option value=''>Select</option>
                                                                 @foreach($currencies as $currency)
@@ -2194,7 +2194,7 @@
                                                     <div class="col-md-12">
                                                         <div class="fv-row mb-3">
                                                             <label class="form-label  fw-bolder text-dark">Upload PDF, xcel or Word</label>
-                                                            <input class="form-control form-control-sm form-control-solid" accept=".csv,.xls,.xlsx,.docx,.pdf" type="file" name="upload_file" />
+                                                            <input class="form-control form-control-sm form-control-solid" required accept=".csv,.xls,.xlsx,.docx,.pdf" type="file" name="upload_file" />
                                                             @if ($errors->has('upload_file'))
                                                                 <span class="text-danger">{{ $errors->first('upload_file') }}</span>
                                                             @endif
@@ -2219,7 +2219,7 @@
                                                         <div class="fv-row mb-5">
                                                             <!--begin::Label-->
                                                             <label class="form-label fw-bolder text-dark">Status<span class="text-danger">*</span></label>
-                                                            <select class=" form-control form-control-sm form-control-solid" id="status" name="status" aria-label="Default select example">
+                                                            <select class=" form-control form-control-sm form-control-solid" required id="status" name="status" aria-label="Default select example">
                                                                 <option value=''>Select</option>
                                                                 @foreach(config('constants.proposal_status') as $key => $status)
                                                                 <option value="{{$status}}" {{ old('status') == $key ? 'selected' : '' }}>{{ $status }} </option>
@@ -2241,7 +2241,7 @@
                                                     <div class="col-md-12">
                                                         <div class="fv-row mb-5">
                                                             <label class="form-label fw-bolder text-dark">Email To<span class="text-danger">*</span></label>
-                                                            <input class="form-control form-control-sm form-control-solid" type="email" id="send_to" name="send_to"  value="{{ old('send_to') }}"/>
+                                                            <input class="form-control form-control-sm form-control-solid" required type="email" id="send_to" name="send_to"  value="{{ old('send_to') }}"/>
                                                             @if ($errors->has('send_to'))
                                                                 <span class="text-danger">{{ $errors->first('send_to') }}</span>
                                                             @endif
@@ -2335,25 +2335,25 @@
                                                             <tbody>
                                                             <tr>
                                                                 <td>
-                                                                    <textarea class="form-control form-control-sm min-w-250px" name="item_name" cols="30" rows="2"placeholder=""></textarea>
+                                                                    <textarea class="form-control form-control-sm min-w-250px" required name="item_name" cols="30" rows="2"placeholder=""></textarea>
                                                                     @if ($errors->has('item_name'))
                                                                         <span class="text-danger">{{ $errors->first('item_name') }}</span>
                                                                     @endif
                                                                 </td>
                                                                 <td>
-                                                                    <textarea class="form-control form-select-sm min-w-250px" name="item_description" cols="30" rows="2"placeholder="Long Description"></textarea>
+                                                                    <textarea class="form-control form-select-sm min-w-250px" required name="item_description" cols="30" rows="2"placeholder="Long Description"></textarea>
                                                                     @if ($errors->has('item_description'))
                                                                         <span class="text-danger">{{ $errors->first('item_description') }}</span>
                                                                     @endif
                                                                 </td>
                                                                 <td>
-                                                                    <input id="price" class="form-control form-control-sm" type="number" name="price">
+                                                                    <input id="price" class="form-control form-control-sm" required type="number" name="price">
                                                                     @if ($errors->has('price'))
                                                                         <span class="text-danger">{{ $errors->first('price') }}</span>
                                                                     @endif
                                                                 </td>
                                                                 <td>
-                                                                    <input id="offer_price" class="form-control form-control-sm" type="number" name="offer_price">
+                                                                    <input id="offer_price" class="form-control form-control-sm" required type="number" name="offer_price">
                                                                     @if ($errors->has('offer_price'))
                                                                         <span class="text-danger">{{ $errors->first('offer_price') }}</span>
                                                                     @endif
