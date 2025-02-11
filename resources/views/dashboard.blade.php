@@ -713,7 +713,7 @@
                                                 <td>
                                                     <a href="#"
                                                        class="text-dark fw-bolder text-hover-primary d-block fs-6">{{$val->email}}</a>
-                                                    <span class="text-muted fw-bold text-muted d-block fs-7">Houses &amp; Hotels</span>
+                                                   
                                                 </td>
                                                 <td class="text-end">
                                                     <div class="d-flex flex-column w-100 me-2">

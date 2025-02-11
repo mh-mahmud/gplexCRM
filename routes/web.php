@@ -344,7 +344,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('blog/search', [BlogController::class, 'search'])->name('blog-search');
 	Route::delete('blog-delete/{id?}', [BlogController::class, 'destroy'])->name('blog-delete')->middleware(['check-permission']);
 	Route::put('blog/{id}/update-blog-image', [BlogController::class, 'update_blog_image'])->name('update-blog-image');
-
+    //notification routes
 	Route::get('/notification', [NotificationController::class, 'index'])->name('notification-index')->middleware(['check-permission']);
 	Route::get('/notification/create', [NotificationController::class, 'create'])->name('notification-create')->middleware(['check-permission']);
 	Route::post('/notification', [NotificationController::class, 'store'])->name('notification-store');
