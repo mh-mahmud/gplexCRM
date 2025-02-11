@@ -53,6 +53,7 @@
                 });
             </script>
         @endif
+        
 
         <!--End Table Alert Message-->
         <!--end::Toolbar-->
@@ -1146,11 +1147,12 @@
                                                 <label class="form-label fw-bolder text-dark">First Name</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input class="form-control form-control-sm form-control-solid" required type="text" name="first_name" value="{{ old('first_name') }}" autocomplete="off" />
+                                                <input class="form-control form-control-sm form-control-solid" type="text" name="first_name" value="{{ old('first_name') }}" autocomplete="off" />
                                                 <!--end::Input-->
                                                 @if ($errors->has('first_name'))
                                                 <span class="text-danger">{{ $errors->first('first_name') }}</span>
                                                 @endif
+                                                
                                             </div>
                                         </div>
 
@@ -1160,7 +1162,7 @@
                                                 <label class="form-label fw-bolder text-dark">Last Name</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input class="form-control form-control-sm form-control-solid" required type="text" name="last_name" value="{{ old('last_name') }}" autocomplete="off" />
+                                                <input class="form-control form-control-sm form-control-solid"  type="text" name="last_name" value="{{ old('last_name') }}" autocomplete="off" />
                                                 <!--end::Input-->
                                                 @if ($errors->has('last_name'))
                                                 <span class="text-danger">{{ $errors->first('last_name') }}</span>
@@ -1188,11 +1190,12 @@
                                                 <label class="form-label fw-bolder text-dark">Phone</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input class="form-control form-control-sm form-control-solid" required type="text" value="{{ old('phone') }}" name="phone" autocomplete="off" />
+                                                <input class="form-control form-control-sm form-control-solid"  type="text" value="{{ old('phone') }}" name="phone" autocomplete="off" />
                                                 <!--end::Input-->
                                                 @if ($errors->has('phone'))
                                                 <span class="text-danger">{{ $errors->first('phone') }}</span>
                                                 @endif
+                                                
                                             </div>
                                         </div>
 
@@ -1241,7 +1244,7 @@
                     </div>
                 </div>
                         <!--end::Textarea-->
-                    </div>
+             </div>
                     <!--end::Modal body-->
                 </div>
                 <!--end::Modal content-->
@@ -1293,6 +1296,15 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function(){
+        @if ($errors->any())
+            $("#add_quick_lead_modal").modal('show'); 
+        @endif
+    });
+</script>
+
 
 
 @endsection

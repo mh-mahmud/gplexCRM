@@ -150,7 +150,7 @@ class LeadController  extends Controller
     public function quickLeadStore(Request $request)
     {
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:191',
             'last_name' => 'required|string|max:191',
             'email' => 'nullable|string|email|max:191|unique:leads,email',
@@ -158,7 +158,11 @@ class LeadController  extends Controller
             //'form_id' => 'required|exists:leads_form,form_id',
             'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        //dd($request);die();
+    
+        //check validation fails
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         //$data = $request->only(['first_name', 'last_name', 'title', 'email', 'phone', 'lead_status','form_id']);
         $data = $request->all();
