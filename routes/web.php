@@ -69,6 +69,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/lead/sample-file', [LeadController::class, 'downloadSampleFile'])->name('sample-file');
 	Route::post('/lead/upload', [LeadController::class, 'upload_file'])->name('lead-upload-file');
     Route::post('/lead', [LeadController::class, 'store'])->name('lead-store');
+	Route::post('/lead/quick-lead-store', [LeadController::class, 'quickLeadStore'])->name('quick-lead-store');
 	Route::get('/lead/{id?}', [LeadController::class, 'show'])->name('lead-show')->middleware(['check-permission']);
 	Route::get('/lead/{id?}/edit', [LeadController::class, 'edit'])->name('lead-edit')->middleware(['check-permission']);
 	Route::put('/lead/{id}', [LeadController::class, 'update'])->name('lead-update');

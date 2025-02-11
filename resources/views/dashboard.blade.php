@@ -629,7 +629,22 @@
                                     <span class="card-label fw-bolder fs-3">New Leads</span>
                                 </h3>
                                 <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top"
-                                     data-bs-trigger="hover" title="Click to add a user">
+                                     data-bs-trigger="hover" title="">
+
+                                     <div class="d-flex align-items-center gap-3">
+                                     <a href="/gplexCRM/lead/create?form_id=6820060189"
+                                       class="btn btn-sm btn-light btn-active-primary" data-bs-toggle="modal"
+                                       data-bs-target="#add_quick_lead_modal">
+
+                                        <span class="svg-icon svg-icon-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
+                                                  transform="rotate(-90 11.364 20.364)" fill="black"/>
+                                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>
+                                        </svg>
+                                    </span>Quick Lead</a>
+
                                     <a href="/gplexCRM/lead/create?form_id=6820060189"
                                        class="btn btn-sm btn-light btn-active-primary" data-bs-toggle="modal"
                                        data-bs-target="#add_lead_modal">
@@ -642,6 +657,8 @@
                                             <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>
                                         </svg>
                                     </span>Create Lead</a>
+                                     </div>
+                                 
                                 </div>
                             </div>
                             <!--end::Header-->
@@ -1047,9 +1064,182 @@
                         </div>
 
                         <div class="card-footer d-flex justify-content-end py-0 px-0">
-                            <a href="{{ route('lead-index') }}" class="btn btn-light me-2 btn-sm">Reset</a>
+                            
                             <button type="button" class="btn btn-primary btn-sm" id="submit_button">Submit</button>
                         </div>
+                        <!--end::Textarea-->
+                    </div>
+                    <!--end::Modal body-->
+                </div>
+                <!--end::Modal content-->
+            </div>
+            <!--end::Modal dialog-->
+        </div>
+
+
+
+        <div class="modal fade" id="add_quick_lead_modal" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog mw-800px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Modal header-->
+                    <div class="modal-header pb-0 border-0 justify-content-end">
+                        <!--begin::Close-->
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                            <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                      transform="rotate(-45 6 17.3137)" fill="black"/>
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                      fill="black"/>
+                            </svg>
+                        </span>
+                            <!--end::Svg Icon-->
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--begin::Modal header-->
+                    <!--begin::Modal body-->
+                <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+                                <!--begin::Heading-->
+                                <!--begin::Textarea-->
+                    <div class="row">
+                    <div class="col-xxl-12">
+                        <div class="card card-xxl-stretch mt-4">
+                            <div class="card-header bg-light bd-cyan">
+                                <!--begin::Card title-->
+                                <div class="card-title m-0">
+                                    <h3 class="fw-bolder m-0">Lead Create</h3>
+                                </div>
+                                <!--end::Card title-->
+                            </div>
+
+                            <!-- Card Body-->
+                            <div class="card-body">
+
+                                <!-- Start Form-->
+
+                                <form class="g-form w-100" action="{{ route('quick-lead-store') }}" enctype="multipart/form-data" method="POST">
+                                    @csrf
+                                    <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">Form Name</label>
+                                            <select class="form-control form-control-sm form-control-solid" id="form_id"
+                                                    name="form_id" aria-label="Default select example">
+                                                <option value="">Select Form Name</option>
+                                                @foreach($formName as $id => $name)
+                                                    <option value="{{ $id }}">{{ $name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('form_id'))
+                                                <span class="text-danger">{{ $errors->first('form_id') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                        <div class="col-md-6">
+                                            <div class="fv-row mb-3">
+                                                <!--begin::Label-->
+                                                <label class="form-label fw-bolder text-dark">First Name</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input class="form-control form-control-sm form-control-solid" required type="text" name="first_name" value="{{ old('first_name') }}" autocomplete="off" />
+                                                <!--end::Input-->
+                                                @if ($errors->has('first_name'))
+                                                <span class="text-danger">{{ $errors->first('first_name') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="fv-row mb-3">
+                                                <!--begin::Label-->
+                                                <label class="form-label fw-bolder text-dark">Last Name</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input class="form-control form-control-sm form-control-solid" required type="text" name="last_name" value="{{ old('last_name') }}" autocomplete="off" />
+                                                <!--end::Input-->
+                                                @if ($errors->has('last_name'))
+                                                <span class="text-danger">{{ $errors->first('last_name') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="fv-row mb-3">
+                                                <!--begin::Label-->
+                                                <label class="form-label fw-bolder text-dark">Email</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input class="form-control form-control-sm form-control-solid" type="email" name="email" value="{{ old('email') }}" autocomplete="off" />
+                                                <!--end::Input-->
+                                                @if ($errors->has('email'))
+                                                <span class="text-danger">{{ $errors->first('email') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="fv-row mb-3">
+                                                <!--begin::Label-->
+                                                <label class="form-label fw-bolder text-dark">Phone</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input class="form-control form-control-sm form-control-solid" required type="text" value="{{ old('phone') }}" name="phone" autocomplete="off" />
+                                                <!--end::Input-->
+                                                @if ($errors->has('phone'))
+                                                <span class="text-danger">{{ $errors->first('phone') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                    <div class="col-md-6">
+                                        <div class="fv-row mb-3">
+                                            <!--begin::Label-->
+                                            <label class="form-label fw-bolder text-dark">Lead Start Date</label>
+                                            <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="lead_start_date" value="{{ old('lead_start_date') }}" />
+                                            @if ($errors->has('lead_start_date'))
+                                            <div class="text-danger">{{ $errors->first('lead_start_date') }}</div>
+                                            @endif
+                                        </div>
+                                      </div>
+
+                                     <div class="col-md-6">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">Lead Status</label>
+                                            <select class="form-control form-control-sm form-control-solid" name="lead_status">
+                                                <option value="1" {{ old('lead_status', '1') == '1' ? 'selected' : '' }}>Active</option>
+                                                <option value="0" {{ old('lead_status', '1') == '0' ? 'selected' : '' }}>Inactive</option>
+                                            </select>
+                                            @if ($errors->has('lead_status'))
+                                            <span class="text-danger">{{ $errors->first('lead_status') }}</span>
+                                            @endif
+                                        </div>
+                                     </div>
+
+                                    
+                                    <!--End Row-->
+                                    <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                        <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Submit</button>
+                                    </div>
+
+                                </form>
+                                <!-- End Form-->
+
+                                <!-- End Form-->
+
+                            </div>
+                            <!--End Card body-->
+
+                            <!--begin::Actions-->
+
+                            <!--end::Actions-->
+                        </div>
+                    </div>
+                </div>
                         <!--end::Textarea-->
                     </div>
                     <!--end::Modal body-->
