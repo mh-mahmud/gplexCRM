@@ -78,6 +78,109 @@
         @endif
 
 
+        
+    <div class="modal fade" id="add_feedback_modal" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog mw-600px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header pb-0 border-0 justify-content-end">
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+
+<!-- Modal Body -->
+<div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+    <form action="{{ url('/meeting-update-feedback/') }}" method="POST" name="star-rating-form">
+        @csrf <!-- Token for form security -->
+        <input type="hidden" name="form_meeting_feedback" value="1">
+
+        <!-- Feedback Textarea -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="fv-row mb-3">
+                    <label class="form-label fw-bolder text-dark">Feedback</label>
+                    <textarea class="form-control form-control-sm form-control-solid" name="meeting_feedback" rows="2"></textarea>
+                    @if ($errors->has('meeting_feedback'))
+                    <span class="text-danger">{{ $errors->first('meeting_feedback') }}</span>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <!-- Star Rating -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="fv-row mb-3">
+                    <h6 id="title" class="call-to-action-text">Select a rating:</h6>
+                    <div class="star-wrap">
+                        <!-- Skip Rating -->
+                        <input class="star" checked type="radio" value="" id="skip-star" name="rating" />
+                        <label class="star-label hidden"></label>
+
+                        <!-- Star Ratings -->
+                        <input class="star" type="radio" id="st-1" value="1" name="rating" />
+                        <label class="star-label" for="st-1">
+                            <div class="star-shape"></div>
+                        </label>
+
+                        <input class="star" type="radio" id="st-2" value="2" name="rating" />
+                        <label class="star-label" for="st-2">
+                            <div class="star-shape"></div>
+                        </label>
+
+                        <input class="star" type="radio" id="st-3" value="3" name="rating" />
+                        <label class="star-label" for="st-3">
+                            <div class="star-shape"></div>
+                        </label>
+
+                        <input class="star" type="radio" id="st-4" value="4" name="rating" />
+                        <label class="star-label" for="st-4">
+                            <div class="star-shape"></div>
+                        </label>
+
+                        <input class="star" type="radio" id="st-5" value="5" name="rating" />
+                        <label class="star-label" for="st-5">
+                            <div class="star-shape"></div>
+                        </label>
+
+                        <!-- Skip Button for Removing Rating -->
+                        <!-- <label class="skip-button" for="skip-star">&times;</label> -->
+                    </div>
+                    <p id="result">Not chosen</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="card-footer d-flex justify-content-end py-0 px-0">
+            <a href="{{ route('meeting-index') }}" class="btn btn-light me-2 btn-sm">Back</a>
+            <button type="submit" class="btn btn-primary btn-sm" id="submit_button">Submit</button>
+        </div>
+    </form>
+</div>
+
+
+<!--end::Modal body-->
+</div>
+<!--end::Modal content-->
+</div>
+<!--end::Modal dialog-->
+</div>
+
+
  @foreach ($productSpecifications as $productSpecification)
     <div class="modal fade" id="add_invoice_modal_{{ $productSpecification->id }}" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
@@ -1949,6 +2052,8 @@
 
                                         <form class="g-form w-100" action="{{ route('meeting-store') }}" enctype="multipart/form-data" method="POST">
                                             @csrf
+                                            <input type="hidden" name="lead_id" value="{{ $lead->id }}">
+                                            <input type="hidden" name="form_lead_panel" value="1">
                                             <div class="row">
 
                                                 <div class="col-md-6">
@@ -2520,20 +2625,21 @@
 
                                         <form class="g-form w-100" action="{{ route('product-specification-store') }}" enctype="multipart/form-data" method="POST">
                                             @csrf
+                                            <input type="hidden" name="form_ps_panel" value="1">
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="fv-row mb-5">
                                                         <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
 
                                                         </label>
-                                                        <select class="form-control form-control-sm form-control-solid" name="customer_id" aria-label="Default select example">
-                                                            <option value="" {{ old('customer_id') == '' ? 'selected' : '' }}>Select Customer</option>
-                                                            @foreach($customers as $customer)
-                                                            <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
-                                                                {{ $customer->first_name }} {{ $customer->last_name }}
-                                                            </option>
-                                                            @endforeach
-                                                        </select>
+                
+                                                            <select name="customer_id" class="form-control form-control-sm form-control-solid" required aria-label="Default select example">
+                                                                @if (!empty($lead_customer))
+                                                                    <option value="{{ $lead_customer->id }}">{{ $lead_customer->first_name . " " . $lead_customer->last_name }}</option>
+                                                                @else
+                                                                    <option value="" disabled selected>No customer assigned</option>
+                                                                @endif
+                                                            </select>
                                                         @if ($errors->has('customer_id'))
                                                         <span class="text-danger">{{ $errors->first('customer_id') }}</span>
                                                         @endif
@@ -2956,5 +3062,86 @@
         });
 
     </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        $('[name="meeting_date"]').flatpickr({
+            enableTime: true,  // enables time picker
+            dateFormat: "Y-m-d H:i",//custom date format
+            time_24hr: true,  // 24-hour time format
+            onOpen: function(selectedDates, dateStr, instance) {
+                if (!dateStr) { // Only set current date if no date is already selected
+                    instance.setDate(new Date());  // Set current date and time when opened
+                }
+            }
+        });
+    });
+</script>
+
+
+<script>
+    function displayValue() {
+        starVal = document.forms["star-rating-form"]["rating"].value;
+        if (starVal == '') {
+            document.getElementById("result").innerText = "Not Chosen";
+        } else {
+            document.getElementById("result").innerText =
+                "You chose: " + starVal +
+                " out of 5.";
+        }
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+        displayValue();
+        document.forms["star-rating-form"]["rating"].forEach((star) => {
+            star.addEventListener("change", () => {
+                displayValue();
+            });
+        });
+    });
+</script>
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<!-- <script src="{{url('/')}}/assets/js/jquery-3.6.0.min.js"></script> -->
+<script>
+    $(document).ready(function() {
+        //Trigger modal and load data
+        $('a[data-bs-target="#add_feedback_modal"]').on('click', function() {
+            var meetingId = $(this).data('id');
+            //Set the form action dynamically with meeting ID using route
+            var formAction = "{{ route('meeting-update-feedback', ':id') }}"; // ':id' is a placeholder
+            formAction = formAction.replace(':id', meetingId); // Replace ':id' with actual meetingId
+            $('form[name="star-rating-form"]').attr('action', formAction);
+            //Make an AJAX call to fetch the meeting data
+            var fetchUrl = "{{ route('meeting-feedback', ':id') }}"; // Define the route for fetching data
+            fetchUrl = fetchUrl.replace(':id', meetingId); // Replace ':id' with actual meetingId
+            $.ajax({
+                url: fetchUrl,
+                type: 'GET',
+                success: function(data) {
+                    //Populate the modal fields with AJAX response
+                    $('textarea[name="meeting_feedback"]').val(data.meeting_feedback);
+                    //Update the rating value in the modal
+                    $('input[name="rating"]').prop('checked', false); // Uncheck all ratings first
+                    if (data.rating) {
+                        $('input[name="rating"][value="' + data.rating + '"]').prop('checked', true);
+                    } else {
+                        $('#skip-star').prop('checked', true); // Select skip if no rating
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        $('#product-select').select2({
+        placeholder: "Select Products",
+        allowClear: true,
+    });
+    });
+</script>
+
 
 @endsection

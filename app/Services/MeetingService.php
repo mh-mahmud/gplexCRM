@@ -10,6 +10,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use App\Models\SmsQueue;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
 
 class MeetingService
 {
@@ -53,6 +54,18 @@ class MeetingService
             
         ]);
         $meetingId = $meeting->id;
+
+
+        //insert notification
+        // $notification = Notification::create([
+        //     'lead_id' => $request->lead_id,
+        //     'user_id' => auth()->id(),
+        //     'notify_msg' => 'New meeting scheduled: ' . $request->meeting_subject,
+        //     'notify_datetime' => $request->meeting_date,
+        //     'send_email' => isset($request->send_email) ? 1 : 0,
+        //     'send_sms' => isset($request->send_sms) ? 1 : 0,
+        //     'notify_seen' => 0,
+        // ]);
         //if send_email is checked,insert email data into the EmailQueue table
         if (isset($request->send_email) && $request->send_email == 1) {
             $this->queueEmails($request,$meetingId);
