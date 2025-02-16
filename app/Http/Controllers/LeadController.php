@@ -203,6 +203,7 @@ class LeadController  extends Controller
     public function show($id)
     {
         $lead = $this->leadService->getLeadById($id);
+        $lead_data_id = $id;
         $is_customer = Customer::where('lead_id', $id)->first();
         $customer_id = null;
         if(!empty($is_customer)) {
@@ -278,7 +279,7 @@ class LeadController  extends Controller
         $customers = Customer::where('customers.lead_id', '=', $id)->join('leads', 'customers.lead_id', '=', 'leads.id')
         ->select('customers.*', 'leads.first_name', 'leads.last_name')
         ->get();
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers'));
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id'));
     }
 
 
