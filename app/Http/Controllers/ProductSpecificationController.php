@@ -80,6 +80,9 @@ class ProductSpecificationController extends Controller
 
         $this->productSpecificationService->createProductSpecification($request);
         Helper::storeLog("Product Specification created successfully", "Product Specification", "Create Product Specification",$lead_id);
+        if($request->form_ps_panel==1) {
+            return redirect()->back()->with('success', 'Product Specification created successfully.');
+        }
         return redirect()->route('product-specification-index')->with('success', 'Product Specification created successfully.');
     }
 

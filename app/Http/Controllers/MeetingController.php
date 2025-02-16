@@ -73,6 +73,9 @@ class MeetingController extends Controller
 
         $this->meetingService->createMeeting($request);
         Helper::storeLog("Meeting created successfully", "Meeting", "Create Meeting",$request->lead_id);
+        if($request->form_lead_panel==1) {
+            return redirect()->back()->with('success', 'Meeting created successfully.');
+        }
         return redirect()->route('meeting-index')->with('success', 'Meeting created successfully.');
     }
 
@@ -203,6 +206,9 @@ class MeetingController extends Controller
 
         if ($result) {
             Helper::storeLog("Meeting feedback updated successfully", "Meeting", "updateFeedback", null);
+            if($request->form_meeting_feedback==1) {
+                return redirect()->back()->with('success', 'Meeting feedback updated successfully.');
+            }
             return redirect()->route('meeting-index')->with('success', 'Meeting feedback updated successfully.');
         } else {
             Helper::storeLog("Failed to update the meeting feedback", "Meeting", "updateFeedback", null);
