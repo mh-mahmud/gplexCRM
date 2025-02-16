@@ -162,7 +162,7 @@ class Helper
     public static function send_sms($phone, $custom_message) {
         // new api code
         $url = "https://sms.novocom-bd.com/api/v2/SendSMS";
-        $myObj = new stdClass();
+        $myObj = new \stdClass();
         $myObj->senderId = "8809638011080";
         $myObj->is_Unicode = false;
         $myObj->is_Flash = false;
@@ -195,9 +195,9 @@ class Helper
         // Improved error handling
         $result = curl_exec($ch);
         if (curl_errno($ch)) {
-            echo 'CURL Error: ' . curl_error($ch);
+            return 'CURL Error: ' . curl_error($ch);
         } else {
-            echo 'API Response: ' . $result;
+            return 'API Response: ' . $result;
         }
         curl_close($ch);
     }

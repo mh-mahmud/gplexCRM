@@ -102,10 +102,7 @@
                             </div>
                             <!--End Row-->
                             <div class="d-flex justify-content-end mt-5">
-                                <input type="reset" id="reset_btn" value="Reset" class="btn btn-light me-2">
-                                <button type="submit" class="btn btn-primary"
-                                        id="kt_account_profile_details_submit">Save Changes
-                                </button>
+                                <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
                             </div>
 
                         </form>

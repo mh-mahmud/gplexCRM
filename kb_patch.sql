@@ -467,3 +467,5 @@ CREATE TABLE `notifications` (
   PRIMARY KEY (`id`)
 )
 
+-- 16-02-2025
+ALTER TABLE `sms_log` ADD `lead_id` INT NULL DEFAULT NULL AFTER `user_id`, ADD `api_response` TEXT NULL DEFAULT NULL AFTER `lead_id`;
