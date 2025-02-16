@@ -13,13 +13,15 @@ use DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Helpers\Helper;
 use App\Models\Lead;
+
+
 class SmsService
 {
     public function smsTemplateList($request)
     {
         $sql = SmsTemplate::query()
                         ->select('sms_templates.*', 'users.first_name', 'users.last_name', 'users.user_type')
-                        ->join('users', 'users.id', '=', 'sms_templates.created_by');;
+                        ->join('users', 'users.id', '=', 'sms_templates.created_by');
         $data = $request->all();
 
         if (Auth::user()->user_type === 'agent') {
@@ -141,6 +143,7 @@ class SmsService
     }
 
     public function sendSmsPro($request) {
+
         $data = [];
         $request->validate([
             'sms_to' => ['required', 'digits:11'],
@@ -152,29 +155,22 @@ class SmsService
             'sms_text.max' => 'Content may not be greater than 191 characters',
         ]);
 
-        // if(empty($request->send_status)) {
-        //     $request['send_status'] = 0;
-        // }
 
-        // if(empty($request->priority_level)) {
-        //     $request['priority_level'] = 5;
-        // }
-        // $request['log_time'] = date("Y-m-d h:i:s", time());
+        $api_response = Helper::send_sms($request->sms_to, $request->sms_text);
         $data = $request->all();
-
-        $dataObj                        = new SmsQueue();
+        $dataObj                        = new SmsLog();
         $dataObj->sms_from              = config('constants.SMS_SEND_MOBILE_NO');
         $dataObj->lead_id               = $data['lead_id'];
+        $dataObj->api_response               = $api_response;
         $dataObj->sms_to                = $data['sms_to'];
         $dataObj->sms_text              = $data['sms_text'];
         $dataObj->log_time              = Carbon::now();
-        $dataObj->user_id               = Auth::id();  
+        $dataObj->user_id               = Auth::id();
 
         try {
             $dataObj->send_status       = 1;
             $dataObj->save();
             Helper::storeLog("SMS send successfully to " .$data['sms_to'], "SMS Module", "Send SMS", $data['lead_id']);
-           
         } catch (\Exception $e) {
             $dataObj->send_status       = 0;
             $dataObj->save();
@@ -198,10 +194,6 @@ class SmsService
                     ->select('sms_queue.*', 'leads.first_name', 'leads.last_name', 'users.first_name as send_by_fname', 'users.last_name as send_by_lname')
                     ->leftJoin('leads', 'sms_queue.lead_id', '=', 'leads.id')
                     ->join('users', 'users.id', '=', 'sms_queue.user_id');
-        // if (Auth::user()->user_type === 'agent') {
-        //     $sql->where('sms_queue.user_id',Auth::id());
-
-        // }
         $data = $request->all();
         if(!empty($data["search"])) {
             $sql->where('sms_to','like', '%' . $data["search"] . '%');
