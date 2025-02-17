@@ -1148,12 +1148,12 @@
                                                                 </g>
                                                             </svg>
                                                         </span>
-                                                                <!--end::Svg Icon-->
+                                                               
                                                             </a>
-                                                            <a target="_blank"
+                                                            <!-- <a target="_blank"
                                                                href="{{ route('meeting-edit', $meeting->id) }}"
                                                                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                                <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                                               
                                                                 <span class="svg-icon svg-icon-3">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                  height="24" viewBox="0 0 24 24" fill="none">
@@ -1165,8 +1165,221 @@
                                                                     fill="black"/>
                                                             </svg>
                                                         </span>
-                                                                <!--end::Svg Icon-->
+                                                                
+                                                            </a> -->
+
+                                                            <a 
+                                                               href="#"
+                                                               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" id="update_meeting_{{ $meeting->id }}">
+                                                               
+                                                                <span class="svg-icon svg-icon-3">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                 height="24" viewBox="0 0 24 24" fill="none">
+                                                                <path opacity="0.3"
+                                                                      d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z"
+                                                                      fill="black"/>
+                                                                <path
+                                                                    d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z"
+                                                                    fill="black"/>
+                                                            </svg>
+                                                        </span>
+                                                                
                                                             </a>
+
+                                                            
+                                                <!--begin::Meeting activities drawer-->
+                                                <div id="kt_activities_3_{{ $meeting->id }}" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#update_meeting_{{ $meeting->id }}" data-kt-drawer-close="#kt_activities_close">
+                                                <div class="card shadow-none rounded-0 w-100">
+                                                    <!--begin::Header-->
+                                                    <div class="card-header" id="kt_activities_header">
+                                                        <h3 class="card-title fw-bolder text-dark">Edit Meeting</h3>
+                                                        <div class="card-toolbar">
+                                                            <button type="button" class="btn btn-sm btn-icon btn-active-light-primary me-n5" id="kt_activities_close">
+                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                                                <span class="svg-icon svg-icon-1">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                                                        <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <!--end::Header-->
+                                                    <!--begin::Body-->
+                                                    <div class="card-body position-relative" id="kt_activities_body">
+                                                        <!--begin::Content-->
+                                                        <div id="kt_activities_scroll" class="position-relative scroll-y me-n5 pe-5" data-kt-scroll="false" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_activities_body" data-kt-scroll-dependencies="#kt_activities_header, #kt_activities_footer" data-kt-scroll-offset="5px">
+                                                            <!--begin::Timeline items-->
+                                                            <!-- <div class="timeline"> -->
+
+                                                                    <!--begin::Tables Widget 9-->
+                                                                    <div class="card mb-5 mb-xl-8">
+                                                                        <!--begin::Header-->
+                                                                    
+                                                                        <!--end::Header-->
+                                                                        <div style="border:1px solid #ddd;padding:20px">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 mx-auto">
+
+                                                                            <form action="{{ route('meeting-update', $meeting->id) }}" method="POST" enctype="multipart/form-data">
+                                                                                    @csrf
+                                                                                    @method('PUT')
+                                                                                    <input type="hidden" name="lead_id" value="{{ $lead->id }}">
+                                                                                    <input type="hidden" name="form_lead_panel" value="1">
+                                                                                    <div class="row">
+
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="fv-row mb-3">
+                                                                                                <label class="form-label fw-bolder text-dark">Select User</label>
+                                                                                                <select class=" form-control form-control-sm form-control-solid" name="recipients" aria-label="Default select example">
+                                                                                                    <option value="{{$lead->id}}">{{$lead->email}}</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="fv-row mb-3">
+                                                                                                <label class="form-label fw-bolder text-dark">Meeting Subject</label>
+                                                                                                <input class="form-control form-control-sm form-control-solid" required type="text" name="meeting_subject" value="{{ old('meeting_subject', $meeting->meeting_subject ?? '') }}" autocomplete="off" />
+                                                                                                @if ($errors->has('meeting_subject'))
+                                                                                                <span class="text-danger">{{ $errors->first('meeting_subject') }}</span>
+                                                                                                @endif
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="fv-row mb-3">
+                                                                                                <label class="form-label fw-bolder text-dark">Meeting Date</label>
+                                                                                                <input type="text" class="form-control form-control-sm form-control-solid flatpickr"  name="meeting_date" value="{{ old('meeting_date', $meeting->meeting_date ?? '') }}" required />
+                                                                                                @if ($errors->has('meeting_date'))
+                                                                                                <span class="text-danger">{{ $errors->first('meeting_date') }}</span>
+                                                                                                @endif
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label fw-bolder text-dark" for="textarea">Meeting Description</label>
+                                                                                                <textarea class="form-control form-control-sm form-control-solid" name="meeting_description" rows="2">{{ old('meeting_description', $meeting->meeting_description ?? '') }}</textarea>
+                                                                                                @if ($errors->has('meeting_description'))
+                                                                                                <span class="text-danger">{{ $errors->first('meeting_description') }}</span>
+                                                                                                @endif
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="fv-row mb-3">
+                                                                                                <label class="form-label fw-bolder text-dark">Meeting Link</label>
+                                                                                                <input class="form-control form-control-sm form-control-solid" type="url" name="meeting_link" value="{{ old('meeting_link', $meeting->meeting_link ?? '') }}" autocomplete="off" />
+                                                                                                @if ($errors->has('meeting_link'))
+                                                                                                <span class="text-danger">{{ $errors->first('meeting_link') }}</span>
+                                                                                                @endif
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="fv-row mb-3">
+                                                                                                <label class="form-label fw-bolder text-dark">Duration</label>
+                                                                                                <input class="form-control form-control-sm form-control-solid" type="text" name="duration" value="{{ old('duration', $meeting->duration ?? '') }}" autocomplete="off" />
+                                                                                                @if ($errors->has('duration'))
+                                                                                                <span class="text-danger">{{ $errors->first('duration') }}</span>
+                                                                                                @endif
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="fv-row mb-3">
+                                                                                                <label class="form-label fw-bolder text-dark">Attachments</label>
+                                                                                                <input type="file" class="form-control form-control-sm form-control-solid" name="attachments" />
+                                                                                                @if ($meeting->attachments)
+                                                                                            <div class="mt-3" id="attachments-file-container">
+                                                                                                @php
+                                                                                                
+                                                                                                    $fileExtension = pathinfo($meeting->attachments, PATHINFO_EXTENSION);
+                                                                                                @endphp
+
+                                                                                                <!-- Show a link for non-image attachments -->
+                                                                                                    <a href="{{ asset('uploads/meetings/' . $meeting->attachments) }}" target="_blank">
+                                                                                                        View {{ strtoupper($fileExtension) }} Attachment
+                                                                                                    </a>
+                                                                                            
+
+                                                                                                <!-- Replace the trash icon with a new "remove" icon -->
+                                                                                                <button type="button" class="btn btn-danger btn-sm p-1" id="delete-attachments-file">
+                                                                                                    <i class="fas fa-times-circle pe-0"></i>
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        @endif
+                                                                                                @if ($errors->has('attachments'))
+                                                                                                <span class="text-danger">{{ $errors->first('attachments') }}</span>
+                                                                                                @endif
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="fv-row mb-3">
+                                                                                                <label class="form-label fw-bolder text-dark">Status</label>
+                                                                                                <select class=" form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
+                                                                                                    <option value="1" {{ old('status', $meeting->status ?? '1') == '1' ? 'selected' : '' }}>Active</option>
+                                                                                                    <option value="0" {{ old('status', $meeting->status ?? '') == '0' ? 'selected' : '' }}>Inactive</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    
+                                                                                    <div class="col-md-2">
+                                                                                        <div class="fv-row mt-10 form-check form-check-custom form-check-sm">
+                                                                                            <input class="form-check-input form-check-sm" type="checkbox" name="send_email" id="sendEmail" value="1" {{ old('send_email', $meeting->send_email) ? 'checked' : '' }}>
+                                                                                            <label class="form-check-label fw-bolder text-dark" for="sendEmail">
+                                                                                                Send Email
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    
+                                                                                    <div class="col-md-2">
+                                                                                        <div class="fv-row mt-10 form-check form-check-custom form-check-sm">
+                                                                                            <input class="form-check-input" type="checkbox" name="send_sms" id="sendSMS" value="1" {{ old('send_sms', $meeting->send_sms) ? 'checked' : '' }}>
+                                                                                            <label class="form-check-label fw-bolder text-dark" for="sendSMS">
+                                                                                                Send SMS
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+
+
+                                                                                    </div>
+                                                                                    <!--End Row-->
+                                                                                    <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                                                                        <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
+                                                                                    </div>
+                                                                                </form>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <!--end::Tables Widget 9-->
+
+                                                            <!-- </div> -->
+                                                            <!--end::Timeline items-->
+                                                        </div>
+                                                        <!--end::Content-->
+                                                    </div>
+                                                    <!--end::Body-->
+                                                    <!--begin::Footer-->
+
+                                                    <!--end::Footer-->
+                                                </div>
+                                            </div>
+
                                                             {{--
                                                             <form action="{{ route('meeting-destroy', $meeting->id) }}" method="POST" style="display: inline;">
                                                                 @csrf
@@ -2068,7 +2281,7 @@
                                                 <div class="col-md-6">
                                                     <div class="fv-row mb-3">
                                                         <label class="form-label fw-bolder text-dark">Meeting Subject</label>
-                                                        <input class="form-control form-control-sm form-control-solid" type="text" name="meeting_subject" value="{{ old('meeting_subject') }}" autocomplete="off" />
+                                                        <input class="form-control form-control-sm form-control-solid" required type="text" name="meeting_subject" value="{{ old('meeting_subject') }}" autocomplete="off" />
                                                         @if ($errors->has('meeting_subject'))
                                                         <span class="text-danger">{{ $errors->first('meeting_subject') }}</span>
                                                         @endif
@@ -2078,7 +2291,7 @@
                                                 <div class="col-md-6">
                                                     <div class="fv-row mb-3">
                                                         <label class="form-label fw-bolder text-dark">Meeting Date</label>
-                                                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr" name="meeting_date" value="{{ old('meeting_date') }}" />
+                                                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr" required name="meeting_date" value="{{ old('meeting_date') }}" />
                                                         @if ($errors->has('meeting_date'))
                                                         <span class="text-danger">{{ $errors->first('meeting_date') }}</span>
                                                         @endif
@@ -2185,6 +2398,7 @@
         </div>
     </div>
     <!--end::Meeting activities drawer-->
+
 
 
     <!--begin::Proposal drawer-->
@@ -3066,12 +3280,12 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         $('[name="meeting_date"]').flatpickr({
-            enableTime: true,  // enables time picker
-            dateFormat: "Y-m-d H:i",//custom date format
-            time_24hr: true,  // 24-hour time format
+            enableTime: true,  //time picker
+            dateFormat: "Y-m-d H:i",//date format
+            time_24hr: true,  // 24 hour time format
             onOpen: function(selectedDates, dateStr, instance) {
-                if (!dateStr) { // Only set current date if no date is already selected
-                    instance.setDate(new Date());  // Set current date and time when opened
+                if (!dateStr) { //set current date if no date selected
+                    instance.setDate(new Date());  //set current date and time when opened
                 }
             }
         });
@@ -3142,6 +3356,7 @@
     });
     });
 </script>
+
 
 
 @endsection

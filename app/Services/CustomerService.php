@@ -41,9 +41,9 @@ class CustomerService
     }
 
     public function get_all_customers() {
-        if(Auth::user()->user_type !='admin') {
-            return Customer::with('lead_data')->where('created_by', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
-        }
+        //if(Auth::user()->user_type !='admin') {
+            //return Customer::with('lead_data')->where('created_by', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
+        //}
         return Customer::with('lead_data')->orderBy('created_at', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
         
         // return Customer::with('lead_data')->get();

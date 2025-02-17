@@ -144,6 +144,9 @@ class MeetingController extends Controller
 
         $this->meetingService->updateMeeting($request, $id);
         Helper::storeLog("Meeting edited successfully", "Meeting", "Edit Meeting",$request->lead_id);
+        if($request->form_lead_panel==1) {
+            return redirect()->back()->with('success', 'Meeting updated successfully');
+        }
         return redirect()->route('meeting-index')->with('success', 'Meeting updated successfully.');
     }
 

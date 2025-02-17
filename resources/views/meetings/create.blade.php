@@ -316,12 +316,12 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         $('[name="meeting_date"]').flatpickr({
-            enableTime: true,  // enables time picker
+            enableTime: true,  // time picker
             dateFormat: "Y-m-d H:i",//custom date format
-            time_24hr: true,  // 24-hour time format
+            time_24hr: true,  // 24 hour time format
             onOpen: function(selectedDates, dateStr, instance) {
-                if (!dateStr) { // Only set current date if no date is already selected
-                    instance.setDate(new Date());  // Set current date and time when opened
+                if (!dateStr) { // set current date no date selected
+                    instance.setDate(new Date());  // set current date and time when opened
                 }
             }
         });

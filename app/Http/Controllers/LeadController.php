@@ -282,7 +282,8 @@ class LeadController  extends Controller
         $lead_customer = Customer::where('customers.lead_id', '=', $id)->join('leads', 'customers.lead_id', '=', 'leads.id')
         ->select('customers.*', 'leads.first_name', 'leads.last_name')
         ->first();
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer'));
+        $latestMeeting = Meeting::where('lead_id', $id)->orderBy('created_at', 'desc')->first();
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer','latestMeeting'));
     }
 
 

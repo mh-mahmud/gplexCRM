@@ -65,8 +65,8 @@ class ProductSpecificationController extends Controller
             // Add other validation rules as necessary
 
             'payment_date_cycle' => 'nullable|date',
-            'advance_amount' => 'required|numeric',
-            'total_installment' => 'required|numeric',
+            //'advance_amount' => 'required|numeric',
+            //'total_installment' => 'required|numeric',
             'per_month_installment' => 'nullable|numeric',
             'remaining_month' => 'nullable|numeric',
         ]);
@@ -135,6 +135,11 @@ class ProductSpecificationController extends Controller
             'amc_agreement_documents' => 'nullable|file|max:10048',
             'invoice_mushak_file' => 'nullable|file|max:10048',
             'tax_exemption_certificate' => 'nullable|file|max:10048',
+            'payment_date_cycle' => 'nullable|date',
+            //'advance_amount' => 'required|numeric',
+            //'total_installment' => 'required|numeric',
+            'per_month_installment' => 'nullable|numeric',
+            'remaining_month' => 'nullable|numeric',
             // Add other validation rules as necessary
         ]);
 
