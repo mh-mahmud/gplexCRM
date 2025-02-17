@@ -112,7 +112,7 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Product</label>
-                                                    <select class=" form-control form-control-sm form-control-solid" id="product_id" name="product_id" required aria-label="Default select example">
+                                                    <select class=" form-control form-control-sm form-control-solid" id="product_id" name="product_id" aria-label="Default select example">
                                                         <option value=''>Select</option>
                                                         @foreach($products as $product)
                                                             <option value="{{$product->id}}">{{ $product->name }}</option>
@@ -133,10 +133,21 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <!--begin::Label-->
+                                                    <label class="form-label fw-bolder text-dark">Customer Listing Date</label>
+                                                    <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="customer_listing_date" value="{{ old('customer_listing_date') }}" />
+                                                    @if ($errors->has('customer_listing_date'))
+                                                    <div class="text-danger">{{ $errors->first('customer_listing_date') }}</div>
+                                                    @endif
+                                                </div>
+                                            </div>
+
                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Customer Notes</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="customer_notes" rows="3" required></textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="customer_notes" rows="3"></textarea>
                                                 </div>
                                             </div>
 

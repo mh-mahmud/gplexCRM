@@ -367,7 +367,7 @@ use Carbon\Carbon;
                                     <td class="text-end">
                                         <div class="d-inline-flex justify-content-end gap-1">
                                             <!-- View Button -->
-                                            <a href="#"
+                                            <a href="#" title="Show Invoices" 
                                                 class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#add_invoice_modal_{{ $productSpecification->id }}">
@@ -381,7 +381,7 @@ use Carbon\Carbon;
                                                     </svg>
                                                 </span>
                                             </a>
-                                            <a href="{{ route('product-specification-show', $productSpecification->id) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                            <a title="Show Word Order" href="{{ route('product-specification-show', $productSpecification->id) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <span class="svg-icon svg-icon-3">
                                                     <!-- Eye Icon -->
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
@@ -394,7 +394,7 @@ use Carbon\Carbon;
                                                 </span>
                                             </a>
                                             <!-- Edit Button -->
-                                            <a href="{{ route('product-specification-edit', $productSpecification->id) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                            <a title="Edit" href="{{ route('product-specification-edit', $productSpecification->id) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <span class="svg-icon svg-icon-3">
                                                     <!-- Edit Icon -->
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -408,7 +408,7 @@ use Carbon\Carbon;
                                             <form action="{{ route('product-specification-destroy', $productSpecification->id) }}" method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" onclick="return confirmDelete()">
+                                                <button title="Delete" type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" onclick="return confirmDelete()">
                                                     <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                                     <span class="svg-icon svg-icon-3">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

@@ -43,7 +43,7 @@ class CustomerController extends Controller
     public function save_customer(Request $request) {
 
         $request->validate([
-            'customer_notes' => 'required|string|max:191',
+            // 'customer_notes' => 'required|string|max:191',
             'product_id' => 'required'
 
         ]);

@@ -33,6 +33,7 @@ class CustomerService
         $data->created_by = Auth::user()->id;
         $data->customer_group = $request->customer_group;
         $data->customer_notes = $request->customer_notes;
+        $data->customer_listing_date = $request->customer_listing_date;
         if($data->save()) {
             Helper::storeLog("Listed as a Customer ", "Customers", "Create Customer", $request->lead_id);
             return true;

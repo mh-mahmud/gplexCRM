@@ -30,7 +30,7 @@ class ProductService
     {
         $request->validate([
             'name' => 'required|unique:products|max:191',
-            'product_code' => 'required|max:20',
+            'product_code' => 'required|max:20|unique:products',
             'product_type' => 'required',
             'product_cost' => [
                 'nullable',
@@ -47,6 +47,8 @@ class ProductService
             'product_value.regex' => 'The product value must have at most 11 digits before the decimal point and up to 2 digits after the decimal point.',
         ]);
         $data = $request->all();
+
+        dd($data);
 
         $fileNameToStore = '';
         if ($request->hasFile('img_path')) {
