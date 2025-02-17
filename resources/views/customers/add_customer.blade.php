@@ -112,7 +112,7 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Product</label>
-                                                    <select class=" form-control form-control-sm form-control-solid" id="product_id" name="product_id" required aria-label="Default select example">
+                                                    <select class=" form-control form-control-sm form-control-solid" id="product_id" name="product_id" aria-label="Default select example">
                                                         <option value=''>Select</option>
                                                         @foreach($products as $product)
                                                             <option value="{{$product->id}}">{{ $product->name }}</option>
@@ -136,7 +136,7 @@
                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Customer Notes</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="customer_notes" rows="3" required></textarea>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="customer_notes" rows="3"></textarea>
                                                 </div>
                                             </div>
 

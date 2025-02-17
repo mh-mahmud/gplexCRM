@@ -96,7 +96,9 @@
                                     <!--end::Info-->
 
                                     <!--begin::Subtitle-->
-                                    <span class="text-gray-501 pt-1 fw-semibold fs-6">Total Leads</span>
+                                    <a href="{{ route('lead-index') }}">
+                                        <span class="text-gray-501 pt-1 fw-semibold fs-6">Total Leads</span>
+                                    </a>
                                     <!--end::Subtitle-->
                                 </div>
                                 <!--end::Title-->
@@ -157,8 +159,7 @@
                                         <!--end::Currency-->
 
                                         <!--begin::Amount-->
-                                        <span
-                                            class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$active_agents}}</span>
+                                        <span class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$active_agents}}</span>
                                         <!--end::Amount-->
 
                                         <!--begin::Badge-->
@@ -195,8 +196,7 @@
                                         <!--end::Currency-->
 
                                         <!--begin::Amount-->
-                                        <span
-                                            class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$active_products}}</span>
+                                        <span class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$active_products}}</span>
                                         <!--end::Amount-->
 
                                         <!--begin::Badge-->
@@ -209,7 +209,9 @@
                                     <!--end::Info-->
 
                                     <!--begin::Subtitle-->
-                                    <span class="text-gray-501 pt-1 fw-semibold fs-6">Total Products</span>
+                                    <a href="{{ route('product-list') }}">
+                                        <span class="text-gray-501 pt-1 fw-semibold fs-6">Total Products</span>
+                                    </a>
                                     <!--end::Subtitle-->
                                 </div>
                                 <!--end::Title-->
@@ -256,7 +258,9 @@
                                     <!--end::Info-->
 
                                     <!--begin::Subtitle-->
-                                    <span class="text-gray-501 pt-1 fw-semibold fs-6">Total Work Order</span>
+                                    <a href="{{ route('product-specification-index') }}">
+                                        <span class="text-gray-501 pt-1 fw-semibold fs-6">Total Work Order</span>
+                                    </a>
                                     <!--end::Subtitle-->
                                 </div>
                                 <!--end::Title-->
