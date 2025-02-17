@@ -133,6 +133,17 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <!--begin::Label-->
+                                                    <label class="form-label fw-bolder text-dark">Customer Listing Date</label>
+                                                    <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="customer_listing_date" value="{{ old('customer_listing_date') }}" />
+                                                    @if ($errors->has('customer_listing_date'))
+                                                    <div class="text-danger">{{ $errors->first('customer_listing_date') }}</div>
+                                                    @endif
+                                                </div>
+                                            </div>
+
                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Customer Notes</label>

@@ -470,3 +470,4 @@ CREATE TABLE `notifications` (
 -- 16-02-2025
 ALTER TABLE `sms_log` ADD `lead_id` INT NULL DEFAULT NULL AFTER `user_id`, ADD `api_response` TEXT NULL DEFAULT NULL AFTER `lead_id`;
 ALTER TABLE `sms_log` ADD `work_order_id` INT NULL DEFAULT NULL AFTER `campaign_id`, ADD `invoice_id` INT NULL DEFAULT NULL AFTER `work_order_id`, ADD `meeting_id` INT NULL DEFAULT NULL AFTER `invoice_id`;
+ALTER TABLE `customers` ADD `customer_listing_date` DATE NULL DEFAULT NULL AFTER `customer_notes`;

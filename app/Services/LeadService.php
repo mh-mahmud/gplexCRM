@@ -194,6 +194,10 @@ class LeadService
         $rules = [];
         $messages = [];
 
+        $request->validate([
+            'first_name' => 'required|unique:leads,first_name'
+        ]);
+
         // prepare validation rules based on the form fields
         foreach ($fields as $field) {
             $fieldName = $field->field_name;
