@@ -118,6 +118,10 @@
                                                             <option value="{{$product->id}}">{{ $product->name }}</option>
                                                         @endforeach
                                                     </select>
+
+                                                    @if ($errors->has('product_id'))
+                                                        <span class="text-danger">{{ $errors->first('product_id') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 

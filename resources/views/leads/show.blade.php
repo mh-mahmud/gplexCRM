@@ -1232,9 +1232,14 @@
 
                                                                                         <div class="col-md-6">
                                                                                             <div class="fv-row mb-3">
-                                                                                                <label class="form-label fw-bolder text-dark">Select User</label>
+                                                                                                <label class="form-label fw-bolder text-dark">Select Lead</label>
                                                                                                 <select class=" form-control form-control-sm form-control-solid" name="recipients" aria-label="Default select example">
-                                                                                                    <option value="{{$lead->id}}">{{$lead->email}}</option>
+                                                                                                    <option value="{{$lead->id}}">
+                                                                                                    @if($lead->first_name || $lead->last_name || $lead->email)
+                                                                                                        {{ trim(($lead->first_name ?? '') . ' ' . ($lead->last_name ?? '') . 
+                                                                                                        ($lead->email ? ' <' . $lead->email . '>' : '')) }}
+                                                                                                    @endif 
+                                                                                                    </option>
                                                                                                 </select>
                                                                                             </div>
                                                                                         </div>
@@ -2271,9 +2276,14 @@
 
                                                 <div class="col-md-6">
                                                     <div class="fv-row mb-3">
-                                                        <label class="form-label fw-bolder text-dark">Select User</label>
+                                                        <label class="form-label fw-bolder text-dark">Select Lead</label>
                                                         <select class=" form-control form-control-sm form-control-solid" name="recipients" aria-label="Default select example">
-                                                            <option value="{{$lead->id}}">{{$lead->email}}</option>
+                                                            <option value="{{$lead->id}}">
+                                                            @if($lead->first_name || $lead->last_name || $lead->email)
+                                                                {{ trim(($lead->first_name ?? '') . ' ' . ($lead->last_name ?? '') . 
+                                                                ($lead->email ? ' <' . $lead->email . '>' : '')) }}
+                                                            @endif          
+                                                            </option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -3196,8 +3206,8 @@
                     hideLoader();
                 })
                 .catch(error => {
-                    console.error('Error fetching data:', error);
-                    alert('Failed to load the ticket creation form. Please try again.');
+                    //console.error('Error fetching data:', error);
+                    //alert('Failed to load the ticket creation form. Please try again.');
                 });
         }
 

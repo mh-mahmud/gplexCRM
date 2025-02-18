@@ -462,6 +462,7 @@ CREATE TABLE `notifications` (
   `send_email` tinyint(4) NOT NULL DEFAULT 0,
   `send_sms` tinyint(4) NOT NULL DEFAULT 0,
   `notify_by` int(11) DEFAULT NULL,
+  `notify_seen` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
