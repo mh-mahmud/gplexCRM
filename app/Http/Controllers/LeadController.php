@@ -240,7 +240,8 @@ class LeadController  extends Controller
         ->where('lead_id', $id)
         ->orderBy('product_specification.created_at', 'desc')->get();
         foreach ($productSpecifications as $specification) {
-            $productIds = explode(',', $specification->product_id);
+            $productIds = $specification->product_id ? explode(',', $specification->product_id) : [];//comma-separated string to array,
+            $specification->product_ids = $productIds;
             $productNames = Product::whereIn('id', $productIds)->pluck('name')->toArray();
             $specification->product_names = implode(', ', $productNames);
         }

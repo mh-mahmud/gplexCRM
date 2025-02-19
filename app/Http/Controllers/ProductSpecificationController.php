@@ -151,6 +151,9 @@ class ProductSpecificationController extends Controller
 
         $this->productSpecificationService->updateProductSpecification($request, $id);
         Helper::storeLog("Product Specification updated successfully", "Product Specification", "Edit Product Specification",$lead_id);
+        if($request->form_ps_panel==1) {
+            return redirect()->back()->with('success', 'Edit Product Specification');
+        }
         return redirect()->route('product-specification-index')->with('success', 'Product Specification updated successfully.');
     }
 

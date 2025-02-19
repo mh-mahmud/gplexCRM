@@ -1130,8 +1130,8 @@
                                                             </a>
 
                                                             <a target="_blank"
-                                                               href="{{ route('meeting-show', $meeting->id) }}"
-                                                               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                               href="#"
+                                                               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" id="show_meeting_{{ $meeting->id }}">
                                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                                                                 <span class="svg-icon svg-icon-3">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24px"
@@ -1365,6 +1365,190 @@
                                                                                         <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
                                                                                     </div>
                                                                                 </form>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <!--end::Tables Widget 9-->
+
+                                                            <!-- </div> -->
+                                                            <!--end::Timeline items-->
+                                                        </div>
+                                                        <!--end::Content-->
+                                                    </div>
+                                                    <!--end::Body-->
+                                                    <!--begin::Footer-->
+
+                                                    <!--end::Footer-->
+                                                </div>
+                                            </div>
+
+                                                        <!--begin::Meeting activities drawer-->
+                                            <div id="kt_activities_3_{{ $meeting->id }}" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#show_meeting_{{ $meeting->id }}" data-kt-drawer-close="#kt_activities_close">
+                                                <div class="card shadow-none rounded-0 w-100">
+                                                    <!--begin::Header-->
+                                                    <div class="card-header" id="kt_activities_header">
+                                                        <h3 class="card-title fw-bolder text-dark">Meeting Details</h3>
+                                                        <div class="card-toolbar">
+                                                            <button type="button" class="btn btn-sm btn-icon btn-active-light-primary me-n5" id="kt_activities_close">
+                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                                                <span class="svg-icon svg-icon-1">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                                                        <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                                                    </svg>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <!--end::Header-->
+                                                    <!--begin::Body-->
+                                                    <div class="card-body position-relative" id="kt_activities_body">
+                                                        <!--begin::Content-->
+                                                        <div id="kt_activities_scroll" class="position-relative scroll-y me-n5 pe-5" data-kt-scroll="false" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_activities_body" data-kt-scroll-dependencies="#kt_activities_header, #kt_activities_footer" data-kt-scroll-offset="5px">
+                                                            <!--begin::Timeline items-->
+                                                            <!-- <div class="timeline"> -->
+
+                                                                    <!--begin::Tables Widget 9-->
+                                                                    <div class="card mb-5 mb-xl-8">
+                                                                        <!--begin::Header-->
+                                                                    
+                                                                        <!--end::Header-->
+                                                                        <div style="border:1px solid #ddd;padding:20px">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 mx-auto">
+
+                                                                            <div class="card-body p-1">
+
+                                                                            <!-- Show Lead Information if lead_id exists -->
+                                                                            @if($lead)
+                                                                            <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Lead</span>
+                                                                                <span>{{ $lead->first_name . ' ' . $lead->last_name . ' <' . $lead->email . '>' }}</span>
+                                                                            </div>
+                                                                            @endif
+
+                                                                            <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Meeting Subject</span>
+                                                                                <span>{{ $meeting->meeting_subject }}</span>
+                                                                            </div>
+
+                                                                            @php
+                                                                            date_default_timezone_set('Asia/Dhaka');
+                                                                            //assuming the $meeting->meeting_date is a datetime string
+                                                                            $meetingDate = Carbon::parse($meeting->meeting_date); // Parse date with Carbon
+                                                                            // Format pieces of the date and time
+                                                                            $dayOfWeek = $meetingDate->format('l'); // full day name (example., Thursday)
+                                                                            $day = $meetingDate->format('d'); // numeric day (example., 12)
+                                                                            $monthYear = $meetingDate->format('F Y'); // full month and year (example., September 2024)
+                                                                            $time = $meetingDate->format('g:i A'); // time with AM/PM (example., 2:00 PM)
+                                                                            $timezone = $meetingDate->timezoneName; // timezone (example., Asia/Dhaka)
+                                                                            @endphp
+
+                                                                            <div class="position-relative d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                <!-- <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Meeting Date</span> -->
+                                                                                <span>
+                                                                                    <div class="calendar-block position-relative">
+                                                                                        <div class="calendar-left">
+                                                                                            <!-- Display the day of the week -->
+                                                                                            <div class="calendar-header">{{ $dayOfWeek }}</div>
+                                                                                            <!-- Display the numeric day -->
+                                                                                            <div class="calendar-date">{{ $day }}</div>
+                                                                                            <!-- Display the month and year -->
+                                                                                            <div class="calendar-footer">
+                                                                                                <div class="calendar-month-year">{{ $monthYear }}</div>
+                                                                                                <div class="calendar-time-block">
+                                                                                                    <!-- Display the time -->
+                                                                                                    <div class="calendar-time">{{ $time }}</div>
+                                                                                                    <!-- Display the timezone dynamically -->
+                                                                                                    <div class="calendar-timezone">({{ $timezone }})</div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </span>
+
+                                                                                <!-- Event details placed behind the calendar using z-index -->
+                                                                                <span class="event-details-block">
+                                                                                    <div class="event-details">
+                                                                                        <h3>Details of the event</h3>
+                                                                                        <ul>
+                                                                                            <li><strong>Description:</strong>{{ $meeting->meeting_description }}</li>
+                                                                                            <li>
+                                                                                                Please attend the meeting on time.<br><strong>How to Join:</strong> <a href="{{ $meeting->meeting_link }}">{{ $meeting->meeting_link }}</a></li>
+                                                                                            <li><strong>Duration:</strong> {{ $meeting->duration }}</li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </span>
+                                                                            </div>
+
+
+                                                                            @if($meeting->attachments)
+                                                                            <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Attachments</span>
+                                                                                <span> <a href="{{ asset('uploads/meetings/' . $meeting->attachments) }}" target="_blank">
+                                                                                        <i class="fas fa-paperclip me-1"></i>Attachment
+                                                                                    </a></span>
+                                                                            </div>
+                                                                            @endif
+
+                                                                            <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Status</span>
+                                                                                @if ($meeting->status === 1)
+                                                                                <span>Active</span>
+                                                                                @elseif ($meeting->status === 0)
+                                                                                <span>Inactive</span>
+                                                                                @endif
+                                                                            </div>
+
+                                                                            <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Created By</span>
+                                                                                <span>{{ $meeting->user->username ?? 'N/A' }}</span>
+                                                                            </div>
+
+                                                                            <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Rating</span>
+                                                                                <span>
+                                                                                    @for ($i = 1; $i <= 5; $i++)
+                                                                                        @if($i <=$meeting->rating)
+                                                                                        <i class="fa fa-star text-warning"></i> <!-- yellow star ratings -->
+                                                                                        @else
+                                                                                        <i class="fa fa-star text-muted"></i> <!-- grey star remaining -->
+                                                                                        @endif
+                                                                                        @endfor
+                                                                                </span>
+                                                                            </div>
+
+                                                                            <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Meeting Feedback</span>
+                                                                                <span>{{ $meeting->meeting_feedback }}</span>
+                                                                            </div>
+
+                                                                            <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Send Email</span>
+                                                                                @if ($meeting->send_email === 1)
+                                                                                <span>Yes</span>
+                                                                                @elseif ($meeting->send_email === 0 || $meeting->send_email === null)
+                                                                                <span>No</span>
+                                                                                @endif
+                                                                            </div>
+
+                                                                            <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Send SMS</span>
+                                                                                @if ($meeting->send_sms === 1)
+                                                                                    <span>Yes</span>
+                                                                                @elseif ($meeting->send_sms === 0 || $meeting->send_sms === null)
+                                                                                    <span>No</span>
+                                                                                @endif
+                                                                            </div>
+
+
+
+
+                                                                            </div>
 
                                                                             </div>
                                                                         </div>
@@ -1625,8 +1809,8 @@
                                                             </span>
                                                         </a>
                                                             <!-- View Button -->
-                                                            <a href="{{ route('product-specification-show', $productSpecification->id) }}"
-                                                               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                            <a href="#"
+                                                               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" id="show_productSpecification_{{ $productSpecification->id }}">
                                                         <span class="svg-icon svg-icon-3">
                                                             <!-- Eye Icon -->
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24px"
@@ -1645,8 +1829,8 @@
                                                         </span>
                                                             </a>
                                                             <!-- Edit Button -->
-                                                            <a href="{{ route('product-specification-edit', $productSpecification->id) }}"
-                                                               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                            <a href="#"
+                                                               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" id="update_productSpecification_{{ $productSpecification->id }}">
                                                         <span class="svg-icon svg-icon-3">
                                                             <!-- Edit Icon -->
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -1662,8 +1846,7 @@
                                                             </a>
                                                             <!-- Delete Button -->
 
-                                                            <form
-                                                                action="{{ route('product-specification-destroy', $productSpecification->id) }}"
+                                                            <form action="{{ route('product-specification-destroy', $productSpecification->id) }}"
                                                                 method="POST" style="display: inline;">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -1671,23 +1854,586 @@
                                                                         class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
                                                                         onclick="return confirmDelete()">
                                                                     <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                                                    <span class="svg-icon svg-icon-3">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                     height="24" viewBox="0 0 24 24" fill="none">
-                                                                    <path
-                                                                        d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
-                                                                        fill="black"/>
-                                                                    <path opacity="0.5"
-                                                                          d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
-                                                                          fill="black"/>
-                                                                    <path opacity="0.5"
-                                                                          d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
-                                                                          fill="black"/>
-                                                                </svg>
-                                                            </span>
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path
+                                                                            d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
+                                                                            fill="black"/>
+                                                                        <path opacity="0.5"
+                                                                            d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
+                                                                            fill="black"/>
+                                                                        <path opacity="0.5"
+                                                                            d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
+                                                                            fill="black"/>
+                                                                    </svg>
+                                                                </span>
                                                                     <!--end::Svg Icon-->
                                                                 </button>
                                                             </form>
+
+                                                            <div id="kt_activities_5_{{ $productSpecification->id }}" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '70%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#update_productSpecification_{{ $productSpecification->id }}" data-kt-drawer-close="#kt_activities_close">
+                                                            
+                                                                <div class="card shadow-none rounded-0 w-100">
+                                                                    <!--begin::Header-->
+                                                                    <div class="card-header" id="kt_activities_header">
+                                                                        <h3 class="card-title fw-bolder text-dark">Edit Product Specification</h3>
+                                                                        <div class="card-toolbar">
+                                                                            <button type="button" class="btn btn-sm btn-icon btn-active-light-primary me-n5" id="kt_activities_close">
+                                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                                                                <span class="svg-icon svg-icon-1">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                                                                        <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                                                                    </svg>
+                                                                                </span>
+                                                                                <!--end::Svg Icon-->
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--end::Header-->
+                                                                    <!--begin::Body-->
+                                                                    <div class="card-body position-relative" id="kt_activities_body">
+                                                                        <!--begin::Content-->
+                                                                        <div id="kt_activities_scroll" class="position-relative scroll-y me-n5 pe-5" data-kt-scroll="false" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_activities_body" data-kt-scroll-dependencies="#kt_activities_header, #kt_activities_footer" data-kt-scroll-offset="5px">
+                                                                            <!--begin::Timeline items-->
+                                                                            <!-- <div class="timeline"> -->
+
+                                                                                    <!--begin::Tables Widget 9-->
+                                                                                    <div class="card mb-5 mb-xl-8">
+                                                                                        <!--begin::Header-->
+                                                                                    
+                                                                                        <!--end::Header-->
+                                                                                        <div style="border:1px solid #ddd;padding:20px">
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-12 mx-auto">
+                                                                                            <div class="card-body">
+                                                                                            <form class="g-form w-100" action="{{ route('product-specification-update', $productSpecification->id) }}" enctype="multipart/form-data" method="POST">
+                                                                                                    @csrf
+                                                                                                    <input type="hidden" name="form_ps_panel" value="1">
+                                                                                                    @method('PUT')
+                                                                                                    <div class="row">
+                                                                                                        <!-- Product Dropdown -->
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <div class="fv-row mb-5">
+                                                                                                                <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
+
+                                                                                                                </label>
+                                                                        
+                                                                                                                    <select name="customer_id" class="form-control form-control-sm form-control-solid" required aria-label="Default select example">
+                                                                                                                        @if (!empty($lead_customer))
+                                                                                                                            <option value="{{ $lead_customer->id }}">{{ $lead_customer->first_name . " " . $lead_customer->last_name }}</option>
+                                                                                                                        @else
+                                                                                                                            <option value="" disabled selected>No customer assigned</option>
+                                                                                                                        @endif
+                                                                                                                    </select>
+                                                                                                                @if ($errors->has('customer_id'))
+                                                                                                                <span class="text-danger">{{ $errors->first('customer_id') }}</span>
+                                                                                                                @endif
+
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Product</label>
+                                                                                                            <select id="product-select-ps-edit" class="form-control form-control-sm form-control-solid"
+                                                                                                               name="product_id[]" multiple="multiple" data-allow-clear="true" data-kt-select2="select2">
+                                                                                                                @foreach ($products as $product)
+                                                                                                                <option value="{{ $product->id }}"
+                                                                                                                        {{ in_array($product->id, $productSpecification->product_ids ?? []) ? 'selected' : '' }}>
+                                                                                                                        {{ $product->name }}
+                                                                                                                </option>
+                                                                                                                @endforeach
+                                                                                                            </select>
+                                                                                                            @if ($errors->has('product_id'))
+                                                                                                                <div class="text-danger">{{ $errors->first('product_id') }}</div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Work Order Number</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number', $productSpecification->work_order_number) }}" />
+                                                                                                            @error('work_order_number')
+                                                                                                            <div class="text-danger">{{ $message }}</div>
+                                                                                                            @enderror
+                                                                                                        </div>
+
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Work Order Value</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="number" name="work_order_value" value="{{ old('work_order_value', $productSpecification->work_order_value) }}" />
+                                                                                                            @error('work_order_value')
+                                                                                                            <div class="text-danger">{{ $message }}</div>
+                                                                                                            @enderror
+                                                                                                        </div>
+
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Work Order File</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="file" name="work_order_file" />
+                                                                                                            @if ($productSpecification->work_order_file)
+                                                                                                            <div id="work_order_file-file-container">
+                                                                                                            <a href="{{ asset('uploads/product_specification/' . $productSpecification->work_order_file) }}" target="_blank">View Current File</a>
+                                                                                                            <button type="button" class="btn btn-danger btn-sm p-2 delete-file-btn" data-type="work_order_file">
+                                                                                                                <i class="fas fa-trash-alt pe-0"></i>
+                                                                                                            </button>
+                                                                                                        </div>
+                                                                                                            @endif
+                                                                                                            @error('work_order_file')
+                                                                                                            <div class="text-danger">{{ $message }}</div>
+                                                                                                            @enderror
+                                                                                                        </div>
+
+
+
+                                                                                                        <!-- new fields -->
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Advance Amount</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="text" name="advance_amount" value="{{ old('advance_amount', $productSpecification->advance_amount) }}" />
+                                                                                                            @if ($errors->has('advance_amount'))
+                                                                                                            <div class="text-danger">{{ $errors->first('advance_amount') }}</div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Total Installment</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="text" name="total_installment" value="{{ old('total_installment', $productSpecification->total_installment) }}" />
+                                                                                                            @if ($errors->has('total_installment'))
+                                                                                                            <div class="text-danger">{{ $errors->first('total_installment') }}</div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Per Month Installment</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="text" name="per_month_installment" value="{{ old('per_month_installment', $productSpecification->per_month_installment) }}" />
+                                                                                                            @if ($errors->has('per_month_installment'))
+                                                                                                            <div class="text-danger">{{ $errors->first('per_month_installment') }}</div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Payment Date Cycle</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="payment_date_cycle" value="{{ old('payment_date_cycle', $productSpecification->payment_date_cycle) }}" />
+                                                                                                            @if ($errors->has('payment_date_cycle'))
+                                                                                                            <div class="text-danger">{{ $errors->first('payment_date_cycle') }}</div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Remaining Month</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="text" name="remaining_month" value="{{ old('remaining_month', $productSpecification->remaining_month) }}" />
+                                                                                                            @if ($errors->has('remaining_month'))
+                                                                                                            <div class="text-danger">{{ $errors->first('remaining_month') }}</div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Due Balance</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="number" name="due_balance" value="{{ old('due_balance', $productSpecification->due_balance) }}" />
+                                                                                                            @if ($errors->has('due_balance'))
+                                                                                                            <div class="text-danger">{{ $errors->first('due_balance') }}</div>
+                                                                                                            @endif
+                                                                                                        </div>
+                                                                                                        <!-- end new fields -->
+
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Purchase Order Value</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="number" name="purchase_order_value" value="{{ old('purchase_order_value', $productSpecification->purchase_order_value) }}"/>
+                                                                                                            @error('purchase_order_value')
+                                                                                                            <div class="text-danger">{{ $message }}</div>
+                                                                                                            @enderror
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Purchase Order File</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="file" name="purchase_order_file" />
+                                                                                                            @if ($productSpecification->purchase_order_file)
+                                                                                                            <div id="purchase_order_file-file-container">
+                                                                                                            <a href="{{ asset('uploads/product_specification/' . $productSpecification->purchase_order_file) }}" target="_blank">View Current File</a>
+                                                                                                            <button type="button" class="btn btn-danger btn-sm p-2 delete-file-btn" data-type="purchase_order_file">
+                                                                                                                <i class="fas fa-trash-alt pe-0"></i>
+                                                                                                            </button>
+                                                                                                            </div>
+                                                                                                            @endif
+                                                                                                            @if ($errors->has('purchase_order_file'))
+                                                                                                            <div class="text-danger">{{ $errors->first('purchase_order_file') }}</div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">AMC Start Date</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="amc_start_date" value="{{ old('amc_start_date', $productSpecification->amc_start_date) }}" />
+                                                                                                            @error('amc_start_date')
+                                                                                                            <div class="text-danger">{{ $message }}</div>
+                                                                                                            @enderror
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">AMC Renewal Date</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="amc_renewal_date" value="{{ old('amc_renewal_date', $productSpecification->amc_renewal_date) }}" />
+                                                                                                            @error('amc_renewal_date')
+                                                                                                            <div class="text-danger">{{ $message }}</div>
+                                                                                                            @enderror
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">AMC Rate (%)</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="number" name="amc_rate" value="{{ old('amc_rate', $productSpecification->amc_rate) }}" step="0.01" />
+                                                                                                            @error('amc_rate')
+                                                                                                            <div class="text-danger">{{ $message }}</div>
+                                                                                                            @enderror
+                                                                                                        </div>
+
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Rental Amount</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="number" name="rental_amount" value="{{ old('rental_amount', $productSpecification->rental_amount) }}"/>
+                                                                                                            @if ($errors->has('rental_amount'))
+                                                                                                            <div class="text-danger">{{ $errors->first('rental_amount') }}</div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">AMC Effective Amount</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="number" name="amc_effective_amount" value="{{ old('amc_effective_amount', $productSpecification->amc_effective_amount) }}"/>
+                                                                                                            @if ($errors->has('amc_effective_amount'))
+                                                                                                            <div class="text-danger">{{ $errors->first('amc_effective_amount') }}</div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">AMC Agreement Documents</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="file" name="amc_agreement_documents" />
+                                                                                                            @if ($errors->has('amc_agreement_documents'))
+                                                                                                            <div class="text-danger">{{ $errors->first('amc_agreement_documents') }}</div>
+                                                                                                            @endif
+                                                                                                            @if (!empty($productSpecification->amc_agreement_documents))
+                                                                                                            <div id="amc_agreement_documents-file-container">
+                                                                                                            <a href="{{ asset('uploads/product_specification/' . $productSpecification->amc_agreement_documents) }}" target="_blank">View Current Document</a>
+                                                                                                            <button type="button" class="btn btn-danger btn-sm p-2 delete-file-btn" data-type="amc_agreement_documents">
+                                                                                                                <i class="fas fa-trash-alt pe-0"></i>
+                                                                                                            </button>
+                                                                                                            </div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <div class="fv-row mb-3">
+                                                                                                                <label class="form-label fw-bolder text-dark">Service Type</label>
+                                                                                                                <select class="form-control form-control-sm form-control-solid" name="service_type" aria-label="Default select example">
+                                                                                                                    <option value="">Select Service Type</option>
+                                                                                                                    <option value="Yearly" {{ $productSpecification->service_type === 'Yearly' ? 'selected' : '' }}>Yearly</option>
+                                                                                                                    <option value="Half-Yearly" {{ $productSpecification->service_type === 'Half-Yearly' ? 'selected' : '' }}>Half-Yearly</option>
+                                                                                                                    <option value="Quarterly" {{ $productSpecification->service_type === 'Quarterly' ? 'selected' : '' }}>Quarterly</option>
+                                                                                                                    <option value="Monthly" {{ $productSpecification->service_type === 'Monthly' ? 'selected' : '' }}>Monthly</option>
+                                                                                                                </select>
+                                                                                                            </div>
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Software Value</label>
+                                                                                                            <textarea class="form-control form-control-sm form-control-solid" name="software_value" rows="3">{{ old('software_value', $productSpecification->software_value) }}</textarea>
+                                                                                                            @if ($errors->has('software_value'))
+                                                                                                            <div class="text-danger">{{ $errors->first('software_value') }}</div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Hardware Value</label>
+                                                                                                            <textarea class="form-control form-control-sm form-control-solid" name="hardware_value" rows="3">{{ old('hardware_value', $productSpecification->hardware_value) }}</textarea>
+                                                                                                            @if ($errors->has('hardware_value'))
+                                                                                                            <div class="text-danger">{{ $errors->first('hardware_value') }}</div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Implementation Cost</label>
+                                                                                                            <textarea class="form-control form-control-sm form-control-solid" name="implementation_value" rows="3">{{ old('implementation_value', $productSpecification->implementation_value) }}</textarea>
+                                                                                                            @if ($errors->has('implementation_value'))
+                                                                                                            <div class="text-danger">{{ $errors->first('implementation_value') }}</div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Invoice Mushak File</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="file" name="invoice_mushak_file" />
+                                                                                                            @if ($errors->has('invoice_mushak_file'))
+                                                                                                            <div class="text-danger">{{ $errors->first('invoice_mushak_file') }}</div>
+                                                                                                            @endif
+                                                                                                            @if (!empty($productSpecification->invoice_mushak_file))
+                                                                                                            <div id="invoice_mushak_file-file-container">
+                                                                                                            <a href="{{ asset('uploads/product_specification/' . $productSpecification->invoice_mushak_file) }}" target="_blank">View Current File</a>
+                                                                                                            <button type="button" class="btn btn-danger btn-sm p-2 delete-file-btn" data-type="invoice_mushak_file">
+                                                                                                                <i class="fas fa-trash-alt pe-0"></i>
+                                                                                                            </button>
+                                                                                                            </div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Tax Exemption Certificate</label>
+                                                                                                            <input class="form-control form-control-sm form-control-solid" type="file" name="tax_exemption_certificate" />
+                                                                                                            @if ($errors->has('tax_exemption_certificate'))
+                                                                                                            <div class="text-danger">{{ $errors->first('tax_exemption_certificate') }}</div>
+                                                                                                            @endif
+                                                                                                            @if (!empty($productSpecification->tax_exemption_certificate))
+                                                                                                            <div id="tax_exemption_certificate-file-container">
+                                                                                                            <a href="{{ asset('uploads/product_specification/' . $productSpecification->tax_exemption_certificate) }}" target="_blank">View Current Certificate</a>
+                                                                                                            <button type="button" class="btn btn-danger btn-sm p-2 delete-file-btn" data-type="tax_exemption_certificate">
+                                                                                                                <i class="fas fa-trash-alt pe-0"></i>
+                                                                                                            </button>
+                                                                                                            </div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-4">
+                                                                                                            <label class="form-label fw-bolder text-dark">Note</label>
+                                                                                                            <textarea class="form-control form-control-sm form-control-solid" name="note" rows="3">{{ old('note', $productSpecification->note) }}</textarea>
+                                                                                                            @if ($errors->has('note'))
+                                                                                                            <div class="text-danger">{{ $errors->first('note') }}</div>
+                                                                                                            @endif
+                                                                                                        </div>
+
+
+                                                                                                        <!-- Submit and Reset buttons -->
+                                                                                                        <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                                                                                            <button type="submit" class="btn btn-primary">Update</button>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </form>
+                                                                                            </div>
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                    <!--end::Tables Widget 9-->
+
+                                                                            <!-- </div> -->
+                                                                            <!--end::Timeline items-->
+                                                                        </div>
+                                                                        <!--end::Content-->
+                                                                    </div>
+                                                                    <!--end::Body-->
+                                                                    <!--begin::Footer-->
+
+                                                                    <!--end::Footer-->
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            <div id="kt_activities_5_{{ $productSpecification->id }}" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#show_productSpecification_{{ $productSpecification->id }}" data-kt-drawer-close="#kt_activities_close">
+                                                            
+                                                            <div class="card shadow-none rounded-0 w-100">
+                                                                <!--begin::Header-->
+                                                                <div class="card-header" id="kt_activities_header">
+                                                                    <h3 class="card-title fw-bolder text-dark">Product Specification Details</h3>
+                                                                    <div class="card-toolbar">
+                                                                        <button type="button" class="btn btn-sm btn-icon btn-active-light-primary me-n5" id="kt_activities_close">
+                                                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                                                            <span class="svg-icon svg-icon-1">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                                                                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                                                                </svg>
+                                                                            </span>
+                                                                            <!--end::Svg Icon-->
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <!--end::Header-->
+                                                                <!--begin::Body-->
+                                                                <div class="card-body position-relative" id="kt_activities_body">
+                                                                    <!--begin::Content-->
+                                                                    <div id="kt_activities_scroll" class="position-relative scroll-y me-n5 pe-5" data-kt-scroll="false" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_activities_body" data-kt-scroll-dependencies="#kt_activities_header, #kt_activities_footer" data-kt-scroll-offset="5px">
+                                                                        <!--begin::Timeline items-->
+                                                                        <!-- <div class="timeline"> -->
+
+                                                                                <!--begin::Tables Widget 9-->
+                                                                                <div class="card mb-5 mb-xl-8">
+                                                                                    <!--begin::Header-->
+                                                                                
+                                                                                    <!--end::Header-->
+                                                                                    <div style="border:1px solid #ddd;padding:20px">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mx-auto">
+                                                                                        <div class="card-body p-4">
+
+                                                                                        <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Customer:</span>
+                                                                                                        <span>{{$productSpecification->first_name?? '' }} {{$productSpecification->last_name?? '' }}</span>
+                                                                                                </div>
+
+                                                                                                <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Product Name:</span>
+                                                                                                        <span>{{ $productSpecification->product_names ?? '' }}</span>
+                                                                                                </div>
+
+                                                                                                <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Work Order Number:</span>
+                                                                                                        <span>{{ $productSpecification->work_order_number }}</span>
+                                                                                                    </div>
+
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Work Order Value:</span>
+                                                                                                        <span>{{ number_format($productSpecification->work_order_value, 2) }}</span>
+                                                                                                    </div>
+
+                                                                                                    @if($productSpecification->work_order_file)
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Work Order File:</span>
+                                                                                                        <a href="{{ asset('uploads/product_specification/' . $productSpecification->work_order_file) }}" target="_blank">Download</a>
+                                                                                                    </div>
+                                                                                                    @endif
+
+                                                                                                    <!-- new data -->
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Advance Amount:</span>
+                                                                                                        <span>{{ number_format($productSpecification->advance_amount) }}</span>
+                                                                                                    </div>
+
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Total Installment:</span>
+                                                                                                        <span>{{ $productSpecification->total_installment }}</span>
+                                                                                                    </div>
+
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Per Month Installment:</span>
+                                                                                                        <span>{{ number_format($productSpecification->per_month_installment) }}</span>
+                                                                                                    </div>
+
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Payment Date Cycle:</span>
+                                                                                                        <span>{{ $productSpecification->payment_date_cycle }}</span>
+                                                                                                    </div>
+
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Remaining Month:</span>
+                                                                                                        <span>{{ $productSpecification->remaining_month }}</span>
+                                                                                                    </div>
+
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Due Balance:</span>
+                                                                                                        <span>{{ number_format($productSpecification->due_balance) }}</span>
+                                                                                                    </div>
+                                                                                                    <!-- end new data -->
+
+                                                                                                    
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Purchase Order Value:</span>
+                                                                                                        <span>{{ number_format($productSpecification->purchase_order_value, 2) }}</span>
+                                                                                                    </div>
+
+                                                                                                    @if($productSpecification->purchase_order_file)
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Purchase Order File:</span>
+                                                                                                        <a href="{{ asset('uploads/product_specification/' . $productSpecification->purchase_order_file) }}" target="_blank">Download</a>
+                                                                                                    </div>
+                                                                                                    @endif
+
+                                                                                                
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">AMC Start Date:</span>
+                                                                                                        <span>{{ $productSpecification->amc_start_date ? \Carbon\Carbon::parse($productSpecification->amc_start_date)->format('d-m-Y') : '' }}
+                                                                                                        </span>
+                                                                                                    </div>
+
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">AMC Renewal Date:</span>
+                                                                                                        <span>{{ $productSpecification->amc_renewal_date ? \Carbon\Carbon::parse($productSpecification->amc_renewal_date)->format('d-m-Y') : '' }}</span>
+                                                                                                    </div>
+
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">AMC Rate (%):</span>
+                                                                                                        <span>{{ !empty($productSpecification->amc_rate) ? $productSpecification->amc_rate . '%' : '' }}</span>
+                                                                                                    </div>
+
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Rental Amount:</span>
+                                                                                                        <span>{{ number_format($productSpecification->rental_amount, 2) }}</span>
+                                                                                                    </div>
+
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">AMC Effective Amount:</span>
+                                                                                                        <span>{{ number_format($productSpecification->amc_effective_amount, 2) }}</span>
+                                                                                                    </div>
+
+                                                                                                    @if($productSpecification->amc_agreement_documents)
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">AMC Agreement Documents:</span>
+                                                                                                        <a href="{{ asset('uploads/product_specification/' . $productSpecification->amc_agreement_documents) }}" target="_blank">Download</a>
+                                                                                                    </div>
+                                                                                                    @endif
+
+
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Service Type:</span>
+                                                                                                        <span>{{ $productSpecification->service_type }}</span>
+                                                                                                    </div>
+
+                                                                                                
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px flex-shrink-0">Software Value:</span>
+                                                                                                        <span>{{ $productSpecification->software_value }}</span>
+                                                                                                    </div>
+
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px flex-shrink-0">Hardware Value:</span>
+                                                                                                        <span>{{ $productSpecification->hardware_value }}</span>
+                                                                                                    </div>
+
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px flex-shrink-0">Implementation Cost:</span>
+                                                                                                        <span>{{ $productSpecification->implementation_value }}</span>
+                                                                                                    </div>
+
+                                                                                                    @if($productSpecification->invoice_mushak_file)
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Invoice Mushak File:</span>
+                                                                                                        <a href="{{ asset('uploads/product_specification/' . $productSpecification->invoice_mushak_file) }}" target="_blank">Download</a>
+                                                                                                    </div>
+                                                                                                    @endif
+
+                                                                                                    @if($productSpecification->tax_exemption_certificate)
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
+                                                                                                        <span class="fw-bold w-lg-150px">Tax Exemption Certificate:</span>
+                                                                                                        <a href="{{ asset('uploads/product_specification/' . $productSpecification->tax_exemption_certificate) }}" target="_blank">Download</a>
+                                                                                                    </div>
+                                                                                                    @endif
+
+                                                                                                
+                                                                                                    <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                                                                                                        <span class="fw-bold w-lg-150px flex-shrink-0">Notes:</span>
+                                                                                                        <span>{{ $productSpecification->note }}</span>
+                                                                                                    </div>
+                                                                                       
+                                                                                        </div>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <!--end::Tables Widget 9-->
+
+                                                                        <!-- </div> -->
+                                                                        <!--end::Timeline items-->
+                                                                    </div>
+                                                                    <!--end::Content-->
+                                                                </div>
+                                                                <!--end::Body-->
+                                                                <!--begin::Footer-->
+
+                                                                <!--end::Footer-->
+                                                            </div>
+                                                        </div>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -2812,11 +3558,11 @@
     <!--end::Proposal drawer-->
 
     <!--begin::Proposal drawer-->
-    <div id="kt_activities_5" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle_5" data-kt-drawer-close="#kt_activities_close">
+    <div id="kt_activities_5" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '70%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle_5" data-kt-drawer-close="#kt_activities_close">
         <div class="card shadow-none rounded-0 w-100">
             <!--begin::Header-->
             <div class="card-header" id="kt_activities_header">
-                <h3 class="card-title fw-bolder text-dark">Product Specification</h3>
+                <h3 class="card-title fw-bolder text-dark">Create Product Specification</h3>
                 <div class="card-toolbar">
                     <button type="button" class="btn btn-sm btn-icon btn-active-light-primary me-n5" id="kt_activities_close">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
@@ -3360,10 +4106,10 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        $('#product-select').select2({
-        placeholder: "Select Products",
-        allowClear: true,
-    });
+        $('#product-select, #product-select-ps, #product-select-ps-edit').select2({
+            placeholder: "Select Products",
+            allowClear: true,
+        });
     });
 </script>
 
