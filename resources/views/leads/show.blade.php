@@ -78,7 +78,7 @@
         @endif
 
 
-        
+
     <div class="modal fade" id="add_feedback_modal" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog mw-600px">
@@ -226,12 +226,12 @@
                                 <tbody>
                                     @foreach ($invoices as $index => $invoice)
                                     @php
-                                
+
                                     $paymentDetails = collect($invoice->payment_details);
                                     $totalPayments = $paymentDetails->sum('payment');
                                     $dueAmount = $paymentDetails->last()['due'] ?? $invoice->total_amount;
 
-                                
+
                                     if ($totalPayments == $invoice->total_amount) {
                                         $status = 'Paid';
                                         $statusClass = 'badge-light-success';
@@ -251,7 +251,7 @@
                                             <td class="text-dark fs-6">{{ $invoice->discount ?? '0.00' }}</td>
                                             <td class="text-dark fs-6">{{ \Carbon\Carbon::parse($invoice->invoice_date)->format('d-m-Y') }}</td>
                                             <td class="text-dark fs-6">{{ $invoice->first_name }} {{ $invoice->last_name }}</td>
-                                          
+
                                             <td class="text-dark fs-6">{{ \Carbon\Carbon::parse($invoice->due_date)->format('d-m-Y') }}</td>
                                             <td>
                                              <span class="badge {{ $statusClass }}">{{ $status }}</span>
@@ -413,14 +413,14 @@
                                     <h4>Lead Details</h4>
                                 </div>
                             <a href="{{ route('lead-edit', $lead_data_id) }}" class="btn btn-sm btn-success" id="kt_toolbar_primary_button">
-							
+
 							<span class="svg-icon svg-icon-3 me-0">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                             <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="black"></path>
                                             <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="black"></path>
                                     </svg>
                             </span>
-							
+
 							</a>
                             </div>
                             <!--begin::Body-->
@@ -1148,12 +1148,12 @@
                                                                 </g>
                                                             </svg>
                                                         </span>
-                                                               
+
                                                             </a>
                                                             <!-- <a target="_blank"
                                                                href="{{ route('meeting-edit', $meeting->id) }}"
                                                                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                               
+
                                                                 <span class="svg-icon svg-icon-3">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                  height="24" viewBox="0 0 24 24" fill="none">
@@ -1165,13 +1165,13 @@
                                                                     fill="black"/>
                                                             </svg>
                                                         </span>
-                                                                
+
                                                             </a> -->
 
-                                                            <a 
+                                                            <a
                                                                href="#"
                                                                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" id="update_meeting_{{ $meeting->id }}">
-                                                               
+
                                                                 <span class="svg-icon svg-icon-3">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                  height="24" viewBox="0 0 24 24" fill="none">
@@ -1183,10 +1183,10 @@
                                                                     fill="black"/>
                                                             </svg>
                                                         </span>
-                                                                
+
                                                             </a>
 
-                                                            
+
                                                 <!--begin::Meeting activities drawer-->
                                                 <div id="kt_activities_3_{{ $meeting->id }}" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#update_meeting_{{ $meeting->id }}" data-kt-drawer-close="#kt_activities_close">
                                                 <div class="card shadow-none rounded-0 w-100">
@@ -1217,7 +1217,7 @@
                                                                     <!--begin::Tables Widget 9-->
                                                                     <div class="card mb-5 mb-xl-8">
                                                                         <!--begin::Header-->
-                                                                    
+
                                                                         <!--end::Header-->
                                                                         <div style="border:1px solid #ddd;padding:20px">
                                                                         <div class="row">
@@ -1236,9 +1236,9 @@
                                                                                                 <select class=" form-control form-control-sm form-control-solid" name="recipients" aria-label="Default select example">
                                                                                                     <option value="{{$lead->id}}">
                                                                                                     @if($lead->first_name || $lead->last_name || $lead->email)
-                                                                                                        {{ trim(($lead->first_name ?? '') . ' ' . ($lead->last_name ?? '') . 
+                                                                                                        {{ trim(($lead->first_name ?? '') . ' ' . ($lead->last_name ?? '') .
                                                                                                         ($lead->email ? ' <' . $lead->email . '>' : '')) }}
-                                                                                                    @endif 
+                                                                                                    @endif
                                                                                                     </option>
                                                                                                 </select>
                                                                                             </div>
@@ -1254,7 +1254,7 @@
                                                                                             </div>
                                                                                         </div>
 
-                                                                                        
+
                                                                                         <div class="col-md-6">
                                                                                             <div class="fv-row mb-3">
                                                                                                 <label class="form-label fw-bolder text-dark">Meeting Date</label>
@@ -1265,7 +1265,7 @@
                                                                                             </div>
                                                                                         </div>
 
-                                                                                        
+
                                                                                         <div class="col-md-6">
                                                                                             <div class="form-group">
                                                                                                 <label class="form-label fw-bolder text-dark" for="textarea">Meeting Description</label>
@@ -1276,7 +1276,7 @@
                                                                                             </div>
                                                                                         </div>
 
-                                                                                        
+
                                                                                         <div class="col-md-6">
                                                                                             <div class="fv-row mb-3">
                                                                                                 <label class="form-label fw-bolder text-dark">Meeting Link</label>
@@ -1287,7 +1287,7 @@
                                                                                             </div>
                                                                                         </div>
 
-                                                                                    
+
                                                                                         <div class="col-md-6">
                                                                                             <div class="fv-row mb-3">
                                                                                                 <label class="form-label fw-bolder text-dark">Duration</label>
@@ -1298,7 +1298,7 @@
                                                                                             </div>
                                                                                         </div>
 
-                                                                                        
+
                                                                                         <div class="col-md-6">
                                                                                             <div class="fv-row mb-3">
                                                                                                 <label class="form-label fw-bolder text-dark">Attachments</label>
@@ -1306,7 +1306,7 @@
                                                                                                 @if ($meeting->attachments)
                                                                                             <div class="mt-3" id="attachments-file-container">
                                                                                                 @php
-                                                                                                
+
                                                                                                     $fileExtension = pathinfo($meeting->attachments, PATHINFO_EXTENSION);
                                                                                                 @endphp
 
@@ -1314,7 +1314,7 @@
                                                                                                     <a href="{{ asset('uploads/meetings/' . $meeting->attachments) }}" target="_blank">
                                                                                                         View {{ strtoupper($fileExtension) }} Attachment
                                                                                                     </a>
-                                                                                            
+
 
                                                                                                 <!-- Replace the trash icon with a new "remove" icon -->
                                                                                                 <button type="button" class="btn btn-danger btn-sm p-1" id="delete-attachments-file">
@@ -1328,7 +1328,7 @@
                                                                                             </div>
                                                                                         </div>
 
-                                                                                    
+
                                                                                         <div class="col-md-6">
                                                                                             <div class="fv-row mb-3">
                                                                                                 <label class="form-label fw-bolder text-dark">Status</label>
@@ -1339,7 +1339,7 @@
                                                                                             </div>
                                                                                         </div>
 
-                                                                                    
+
                                                                                     <div class="col-md-2">
                                                                                         <div class="fv-row mt-10 form-check form-check-custom form-check-sm">
                                                                                             <input class="form-check-input form-check-sm" type="checkbox" name="send_email" id="sendEmail" value="1" {{ old('send_email', $meeting->send_email) ? 'checked' : '' }}>
@@ -1348,7 +1348,7 @@
                                                                                             </label>
                                                                                         </div>
                                                                                     </div>
-                                                                                    
+
                                                                                     <div class="col-md-2">
                                                                                         <div class="fv-row mt-10 form-check form-check-custom form-check-sm">
                                                                                             <input class="form-check-input" type="checkbox" name="send_sms" id="sendSMS" value="1" {{ old('send_sms', $meeting->send_sms) ? 'checked' : '' }}>
@@ -1415,7 +1415,7 @@
                                                                     <!--begin::Tables Widget 9-->
                                                                     <div class="card mb-5 mb-xl-8">
                                                                         <!--begin::Header-->
-                                                                    
+
                                                                         <!--end::Header-->
                                                                         <div style="border:1px solid #ddd;padding:20px">
                                                                         <div class="row">
@@ -1873,7 +1873,7 @@
                                                             </form>
 
                                                             <div id="kt_activities_5_{{ $productSpecification->id }}" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '70%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#update_productSpecification_{{ $productSpecification->id }}" data-kt-drawer-close="#kt_activities_close">
-                                                            
+
                                                                 <div class="card shadow-none rounded-0 w-100">
                                                                     <!--begin::Header-->
                                                                     <div class="card-header" id="kt_activities_header">
@@ -1902,10 +1902,10 @@
                                                                                     <!--begin::Tables Widget 9-->
                                                                                     <div class="card mb-5 mb-xl-8">
                                                                                         <!--begin::Header-->
-                                                                                    
+
                                                                                         <!--end::Header-->
-                                                                                        <div style="border:1px solid #ddd;padding:20px">
-                                                                                        <div class="row">
+                                                                                        <div>
+                                                                                        <div class="row text-start">
                                                                                             <div class="col-md-12 mx-auto">
                                                                                             <div class="card-body">
                                                                                             <form class="g-form w-100" action="{{ route('product-specification-update', $productSpecification->id) }}" enctype="multipart/form-data" method="POST">
@@ -1920,7 +1920,7 @@
                                                                                                                 <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
 
                                                                                                                 </label>
-                                                                        
+
                                                                                                                     <select name="customer_id" class="form-control form-control-sm form-control-solid" required aria-label="Default select example">
                                                                                                                         @if (!empty($lead_customer))
                                                                                                                             <option value="{{ $lead_customer->id }}">{{ $lead_customer->first_name . " " . $lead_customer->last_name }}</option>
@@ -1937,7 +1937,7 @@
                                                                                                         <div class="col-md-4">
                                                                                                             <label class="form-label fw-bolder text-dark">Product</label>
                                                                                                             <select id="product-select-ps-edit" class="form-control form-control-sm form-control-solid"
-                                                                                                               name="product_id[]" multiple="multiple" data-allow-clear="true" data-kt-select2="select2">
+                                                                                                               name="product_ids[]" multiple="multiple" data-allow-clear="true" data-kt-select2="select2">
                                                                                                                 @foreach ($products as $product)
                                                                                                                 <option value="{{ $product->id }}"
                                                                                                                         {{ in_array($product->id, $productSpecification->product_ids ?? []) ? 'selected' : '' }}>
@@ -2230,7 +2230,7 @@
 
 
                                                             <div id="kt_activities_5_{{ $productSpecification->id }}" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#show_productSpecification_{{ $productSpecification->id }}" data-kt-drawer-close="#kt_activities_close">
-                                                            
+
                                                             <div class="card shadow-none rounded-0 w-100">
                                                                 <!--begin::Header-->
                                                                 <div class="card-header" id="kt_activities_header">
@@ -2259,10 +2259,10 @@
                                                                                 <!--begin::Tables Widget 9-->
                                                                                 <div class="card mb-5 mb-xl-8">
                                                                                     <!--begin::Header-->
-                                                                                
+
                                                                                     <!--end::Header-->
                                                                                     <div style="border:1px solid #ddd;padding:20px">
-                                                                                    <div class="row">
+                                                                                    <div class="row text-start">
                                                                                         <div class="col-md-12 mx-auto">
                                                                                         <div class="card-body p-4">
 
@@ -2325,7 +2325,7 @@
                                                                                                     </div>
                                                                                                     <!-- end new data -->
 
-                                                                                                    
+
                                                                                                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                                                                                                         <span class="fw-bold w-lg-150px">Purchase Order Value:</span>
                                                                                                         <span>{{ number_format($productSpecification->purchase_order_value, 2) }}</span>
@@ -2338,7 +2338,7 @@
                                                                                                     </div>
                                                                                                     @endif
 
-                                                                                                
+
                                                                                                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                                                                                                         <span class="fw-bold w-lg-150px">AMC Start Date:</span>
                                                                                                         <span>{{ $productSpecification->amc_start_date ? \Carbon\Carbon::parse($productSpecification->amc_start_date)->format('d-m-Y') : '' }}
@@ -2378,7 +2378,7 @@
                                                                                                         <span>{{ $productSpecification->service_type }}</span>
                                                                                                     </div>
 
-                                                                                                
+
                                                                                                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-3">
                                                                                                         <span class="fw-bold w-lg-150px flex-shrink-0">Software Value:</span>
                                                                                                         <span>{{ $productSpecification->software_value }}</span>
@@ -2408,12 +2408,12 @@
                                                                                                     </div>
                                                                                                     @endif
 
-                                                                                                
+
                                                                                                     <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                                                                                                         <span class="fw-bold w-lg-150px flex-shrink-0">Notes:</span>
                                                                                                         <span>{{ $productSpecification->note }}</span>
                                                                                                     </div>
-                                                                                       
+
                                                                                         </div>
 
                                                                                         </div>
@@ -2519,10 +2519,10 @@
                                                     </td>
 
                                                     @php
-                                                       
+
                                                         $paymentDetails = collect($invoice->payment_details);
                                                         $totalPayments = $paymentDetails->sum('payment');
-                                                       
+
                                                         $lastPayment = $paymentDetails->last();
                                                         $paymentAmount = $lastPayment['payment'] ?? '0.00';
                                                         $dueAmount = $lastPayment['due'] ?? $invoice->total_amount;
@@ -2545,7 +2545,7 @@
                                                     </td>
 
                                                     <!-- Display Payment and Due from payment_details -->
-                                                 
+
 
                                                     <td class="text-dark fs-6 w-200px text-center">{{ $totalPayments}}</td>
                                                     <td class="text-dark fs-6 w-200px text-center">{{ $dueAmount }}</td>
@@ -2909,7 +2909,7 @@
                             <!--begin::Tables Widget 9-->
                             <div class="card mb-5 mb-xl-8">
                                 <!--begin::Header-->
-                               
+
                                 <!--end::Header-->
                                 <div style="border:1px solid #ddd;padding:20px">
                                 <div class="row">
@@ -3008,7 +3008,7 @@
                             <!--begin::Tables Widget 9-->
                             <div class="card mb-5 mb-xl-8">
                                 <!--begin::Header-->
-                               
+
                                 <!--end::Header-->
                                 <div style="border:1px solid #ddd;padding:20px">
                                 <div class="row">
@@ -3026,9 +3026,9 @@
                                                         <select class=" form-control form-control-sm form-control-solid" name="recipients" aria-label="Default select example">
                                                             <option value="{{$lead->id}}">
                                                             @if($lead->first_name || $lead->last_name || $lead->email)
-                                                                {{ trim(($lead->first_name ?? '') . ' ' . ($lead->last_name ?? '') . 
+                                                                {{ trim(($lead->first_name ?? '') . ' ' . ($lead->last_name ?? '') .
                                                                 ($lead->email ? ' <' . $lead->email . '>' : '')) }}
-                                                            @endif          
+                                                            @endif
                                                             </option>
                                                         </select>
                                                     </div>
@@ -3053,7 +3053,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="form-label fw-bolder text-dark" for="textarea">Meeting Description</label>
@@ -3063,7 +3063,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                               
+
                                                 <div class="col-md-6">
                                                     <div class="fv-row mb-3">
                                                         <label class="form-label fw-bolder text-dark">Meeting Link</label>
@@ -3074,7 +3074,7 @@
                                                     </div>
                                                 </div>
 
-                                               
+
                                                 <div class="col-md-6">
                                                     <div class="fv-row mb-3">
                                                         <label class="form-label fw-bolder text-dark">Duration</label>
@@ -3187,7 +3187,7 @@
                             <!--begin::Tables Widget 9-->
                             <div class="card mb-5 mb-xl-8">
                                 <!--begin::Header-->
-                               
+
                                 <!--end::Header-->
                                 <div style="border:1px solid #ddd;padding:20px">
                                 <div class="row">
@@ -3587,7 +3587,7 @@
                             <!--begin::Tables Widget 9-->
                             <div class="card mb-5 mb-xl-8">
                                 <!--begin::Header-->
-                               
+
                                 <!--end::Header-->
                                 <div style="border:1px solid #ddd;padding:20px">
                                 <div class="row">
@@ -3602,7 +3602,7 @@
                                                         <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
 
                                                         </label>
-                
+
                                                             <select name="customer_id" class="form-control form-control-sm form-control-solid" required aria-label="Default select example">
                                                                 @if (!empty($lead_customer))
                                                                     <option value="{{ $lead_customer->id }}">{{ $lead_customer->first_name . " " . $lead_customer->last_name }}</option>
@@ -4076,13 +4076,13 @@
     $(document).ready(function() {
         //Trigger modal and load data
         $('a[data-bs-target="#add_feedback_modal"]').on('click', function() {
-            var meetingId = $(this).data('id');
+            let meetingId = $(this).data('id');
             //Set the form action dynamically with meeting ID using route
-            var formAction = "{{ route('meeting-update-feedback', ':id') }}"; // ':id' is a placeholder
+            let formAction = "{{ route('meeting-update-feedback', ':id') }}"; // ':id' is a placeholder
             formAction = formAction.replace(':id', meetingId); // Replace ':id' with actual meetingId
             $('form[name="star-rating-form"]').attr('action', formAction);
             //Make an AJAX call to fetch the meeting data
-            var fetchUrl = "{{ route('meeting-feedback', ':id') }}"; // Define the route for fetching data
+            let fetchUrl = "{{ route('meeting-feedback', ':id') }}"; // Define the route for fetching data
             fetchUrl = fetchUrl.replace(':id', meetingId); // Replace ':id' with actual meetingId
             $.ajax({
                 url: fetchUrl,
@@ -4106,7 +4106,17 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        $('#product-select, #product-select-ps, #product-select-ps-edit').select2({
+        $('#product-select').select2({
+            placeholder: "Select Products",
+            allowClear: true,
+        });
+
+        $('#product-select-ps').select2({
+            placeholder: "Select Products",
+            allowClear: true,
+        });
+
+        $('#product-select-ps-edit').select2({
             placeholder: "Select Products",
             allowClear: true,
         });
