@@ -57,7 +57,7 @@ class InvoiceService
             for ($i = 0; $i < $itemCount; $i++) {
                 $items[] = [
                     'Item' => $data['items']['item_name'][$i] ?? '',
-                    'Description' => $data['items']['description'][$i] ?? '',
+                    'Description' => $data['items']['descriptions'][$i] ?? '',
                     'Qty' => $data['items']['quantity'][$i] ?? 0,
                     'Rate' => $data['items']['rate'][$i] ?? 0,
                     'Tax' => $data['items']['tax'][$i] ?? 0,
@@ -67,7 +67,8 @@ class InvoiceService
         } else {
             $custom_form = InvoiceCustomForm::where('id', $data["custom_invoice_id"])
                                 ->select('field_details', 'footer_details')
-                                ->first(); 
+                                ->first();
+            //dd($custom_form);die();
             
             foreach ($custom_form->field_details as $custom_form_data) {
                 $fieldName = $custom_form_data["field_value"];           

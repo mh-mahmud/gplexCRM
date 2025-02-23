@@ -51,7 +51,7 @@
                 <div class="card-header bg-light bd-cyan">
                     <!--begin::Card title-->
                     <div class="card-title m-0">
-                        <h3 class="fw-bolder m-0">Edit New Invoice</h3>
+                        <h3 class="fw-bolder m-0">New Invoice</h3>
                     </div>
                     <!--end::Card title-->
                 </div>
@@ -61,28 +61,27 @@
 
                     <!-- Start Form-->
 
-                    <form class="g-form g-proposal w-100" action="{{ route('invoice-update', $invoice->id) }}" enctype="multipart/form-data" method="POST">
-                        <input type="hidden" name="sub_total" id="subtotal-hidden" value="{{ old('sub_total', $invoice->sub_total) }}">
-                        <input type="hidden" name="total_amount" id="total-hidden" value="{{ old('total_amount', $invoice->total_amount) }}">
-                        <input type="hidden" name="total_tax" id="totaltax-hidden" value="{{ old('total_tax', $invoice->total_tax) }}">
+                    <form class="g-form g-proposal w-100" action="{{ route('invoice-store') }}" enctype="multipart/form-data" method="POST">
+                        <input type="hidden" name="sub_total" id="subtotal-hidden" value="0.00">
+                        <input type="hidden" name="total_amount" id="total-hidden" value="0.00">
+                        <input type="hidden" name="total_tax" id="totaltax-hidden" value="0.00">
                         <input type="hidden" name="total_discount" id="totaldiscount-hidden" value="0.00">
                         @csrf
-                        @method('PUT')
                         <div class="row">
                             <!--Left Part-->
                             <div class="col-xl-6">
                                 <div class="row">
 
 
-                                    <div class="col-md-12">
+                                    <!-- <div class="col-md-12">
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
 
                                             </label>
-                                            <select class="form-control form-control-sm form-control-solid" name="customer_id">
-                                                <option value="" {{ old('customer_id', $invoice->customer_id) == '' ? 'selected' : '' }}>Select Customer</option>
+                                            <select class="form-control form-control-sm form-control-solid" name="customer_id" aria-label="Default select example">
+                                                <option value="" {{ old('customer_id') == '' ? 'selected' : '' }}>Select Customer</option>
                                                 @foreach($customers as $customer)
-                                                <option value="{{ $customer->id }}" {{ old('customer_id', $invoice->customer_id) == $customer->id ? 'selected' : '' }}>
+                                                <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
                                                     {{ $customer->first_name }} {{ $customer->last_name }}
                                                 </option>
                                                 @endforeach
@@ -92,12 +91,31 @@
                                             @endif
 
                                         </div>
+                                    </div> -->
+
+                                    <div class="fv-row mb-5">
+                                        <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span></label>
+                                        <select class="form-control form-control-sm form-control-solid" name="customer_id" aria-label="Default select example">
+                                            <option value="" {{ old('customer_id') == '' ? 'selected' : '' }}>Select Customer</option>
+                                            @foreach($customers as $customer)
+                                            <option value="{{ $customer->id }}"
+                                                {{ old('customer_id') == $customer->id || (isset($leadid) && $customer->lead_id == $leadid) ? 'selected' : '' }}>
+                                                {{ $customer->first_name }} {{ $customer->last_name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('customer_id'))
+                                        <span class="text-danger">{{ $errors->first('customer_id') }}</span>
+                                        @endif
                                     </div>
+
+
+
 
                                     <div class="col-md-12">
                                         <div class="fv-row mb-5">
-                                            <label class="form-label fw-bolder text-dark" for="address">Bill To</label>
-                                            <textarea class="form-control form-control-sm form-control-solid" id="address" name="address" rows="3">{{ old('address', $invoice->address) }}</textarea>
+                                            <label class="form-label fw-bolder text-dark" for="textarea">Bill To</label>
+                                            <textarea class="form-control form-control-sm  form-control-solid" id="address" name="address" rows="3">{{ old('address') }}</textarea>
                                         </div>
                                     </div>
 
@@ -115,9 +133,8 @@
                                                 <span class="input-group-text bg-light">INV-</span>
                                                 <input class="form-control form-control-sm"
                                                     type="text" name="invoice_number" id="invoice_number"
-                                                    value="{{ old('invoice_number', str_replace('INV-', '', $invoice->invoice_number)) }}" />
-
-                                                @if ($errors->has('invoice_number'))
+                                                    value="{{ old('invoice_number', sprintf('%06d', $nextInvoiceNumber)) }}" />
+                                                @if($errors->has('invoice_number'))
                                                 <span class="text-danger">{{ $errors->first('invoice_number') }}</span>
                                                 @endif
                                             </div>
@@ -135,7 +152,7 @@
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <div class="position-relative">
-                                                <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" placeholder="Date" name="invoice_date" value="{{ old('invoice_date', $invoice->invoice_date) }}">
+                                                <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" placeholder="Date" name="invoice_date" value="{{ old('invoice_date') }}">
                                                 @if ($errors->has('invoice_date'))
                                                 <span class="text-danger">{{ $errors->first('invoice_date') }}</span>
                                                 @endif
@@ -152,7 +169,7 @@
                                                 Due Date</label>
 
                                             <div class="position-relative">
-                                                <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" placeholder="Due Date" name="due_date" value="{{ old('due_date', $invoice->due_date) }}">
+                                                <input type="text" class="form-control form-control-sm form-control-solid flatpickr date" placeholder="Due Date" name="due_date" value="{{ old('due_date') }}">
                                                 @if ($errors->has('due_date'))
                                                 <span class="text-danger">{{ $errors->first('due_date') }}</span>
                                                 @endif
@@ -164,18 +181,14 @@
                                     <div class="col-xl-6">
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark">Custom Invoice</label>
-                                            <select
-                                                id="custom-invoice-select"
-                                                class="form-control form-control-sm form-control-solid"
-                                                name="custom_invoice_id"
-                                                aria-label="Default select example">
-                                                <option value="" {{ old('custom_invoice_id', $invoiceCustomFormId) === null ? 'selected' : '' }}>Nothing Selected</option>
+                                            <select id="custom-invoice-select" class="form-control form-control-sm form-control-solid" name="custom_invoice_id" aria-label="Default select example">
+                                                <option value="" {{ old('custom_invoice_id') === null ? 'selected' : '' }}>Nothing Selected</option>
                                                 @foreach($custom_invoice as $custom_invoices)
                                                 <option
                                                     value="{{ $custom_invoices->id }}"
                                                     data-fields="{{ json_encode($custom_invoices->field_details) }}"
                                                     data-footer="{{ json_encode($custom_invoices->footer_details) }}"
-                                                    {{ old('custom_invoice_id', $invoiceCustomFormId) == $custom_invoices->id ? 'selected' : '' }}>
+                                                    {{ old('custom_invoice_id') == $custom_invoices->id ? 'selected' : '' }}>
                                                     {{ $custom_invoices->invoice_name }}
                                                 </option>
                                                 @endforeach
@@ -186,15 +199,15 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-6">
+                                    <!-- <div class="col-xl-6">
                                         <div class="fv-row mb-5">
-                                        <label class="form-label fw-bolder text-dark">Work Order Number</label>
+                                            <label class="form-label fw-bolder text-dark">Work Order Number
 
                                             </label>
-                                            <select class="form-control form-control-sm form-control-solid" name="ps_id">
-                                                <option value="" {{ old('ps_id', $invoice->ps_id) == '' ? 'selected' : '' }}>Select Work Order Number</option>
+                                            <select class="form-control form-control-sm form-control-solid" name="ps_id" aria-label="Default select example">
+                                                <option value="" {{ old('ps_id') == '' ? 'selected' : '' }}>Select Work Order Number</option>
                                                 @foreach($wordOrderNumbers as $wordOrderNumber)
-                                                <option value="{{ $wordOrderNumber->id }}" {{ old('ps_id', $invoice->ps_id) == $wordOrderNumber->id ? 'selected' : '' }}>
+                                                <option value="{{ $wordOrderNumber->id }}" {{ old('ps_id') == $wordOrderNumber->id ? 'selected' : '' }}>
                                                     {{ $wordOrderNumber->work_order_number }}
                                                 </option>
                                                 @endforeach
@@ -204,8 +217,27 @@
                                             @endif
 
                                         </div>
-                                    </div>
+                                    </div> -->
 
+                                    <div class="col-xl-6">
+                                        <div class="fv-row mb-5">
+                                            <label class="form-label fw-bolder text-dark">Work Order Number</label>
+                                            <select class="form-control form-control-sm form-control-solid" name="ps_id" aria-label="Default select example">
+                                               
+                                                <option value="" {{ old('ps_id') == '' ? 'selected' : '' }}>Select Work Order Number</option>
+                                                
+                                                @foreach($wordOrderNumbers as $wordOrderNumber)
+                                                <option value="{{ $wordOrderNumber->id }}"
+                                                    {{ old('ps_id') == $wordOrderNumber->id || (isset($leadid) && $wordOrderNumber->id == old('ps_id')) ? 'selected' : '' }}>
+                                                    {{ $wordOrderNumber->work_order_number }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('ps_id'))
+                                            <span class="text-danger">{{ $errors->first('ps_id') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
 
 
                                     {{-- <div class="col-md-6">
@@ -231,10 +263,10 @@
                                             <label class="form-label fw-bolder text-dark">Allowed payment modes for this invoice
 
                                             </label>
-                                            <select class="form-control form-control-sm form-control-solid" name="payment_mode">
-                                                <option value="" {{ old('payment_mode', $invoice->payment_mode) == '' ? 'selected' : '' }}>Nothing Selected</option>
-                                                <option value="Bank" {{ old('payment_mode', $invoice->payment_mode) == 'Bank' ? 'selected' : '' }}>Bank</option>
-                                                <option value="Stripe Checkout" {{ old('payment_mode', $invoice->payment_mode) == 'Stripe Checkout' ? 'selected' : '' }}>Stripe Checkout</option>
+                                            <select class="form-control form-control-sm form-control-solid" name="payment_mode" aria-label="Default select example">
+                                                <option value="" {{ old('payment_mode') == '' ? 'selected' : '' }}>Nothing Selected</option>
+                                                <option value="Bank" {{ old('payment_mode') == 'Bank' ? 'selected' : '' }}>Bank</option>
+                                                <option value="Stripe Checkout" {{ old('payment_mode') == 'Stripe Checkout' ? 'selected' : '' }}>Stripe Checkout</option>
                                             </select>
 
                                             @if ($errors->has('payment_mode'))
@@ -246,10 +278,11 @@
                                     <div class="col-md-6">
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark">Currency</label>
-                                            <select class="form-control form-control-sm form-control-solid" id="currency" name="currency">
-                                                <option value="">Select</option>
+                                            <select class=" form-control form-control-sm form-control-solid" id="currency" name="currency"
+                                                aria-label="Default select example">
+                                                <option value=''>Select</option>
                                                 @foreach($currencies as $currency)
-                                                <option value="{{$currency->id}}" {{ old('currency', $invoice->currency) == $currency->id ? 'selected' : '' }}>{{ $currency->name }}</option>
+                                                <option value="{{$currency->id}}" {{ old('currency') == $currency->id ? 'selected' : '' }}>{{ $currency->name }} </option>
                                                 @endforeach
                                             </select>
                                             @if ($errors->has('currency'))
@@ -263,9 +296,9 @@
                                             <label class="form-label fw-bolder text-dark">Status
 
                                             </label>
-                                            <select class="form-control form-control-sm form-control-solid" name="invoice_status">
+                                            <select class="form-control form-control-sm form-control-solid" name="invoice_status" aria-label="Default select example">
                                                 @foreach(config('constants.invoice_status') as $key => $status)
-                                                <option value="{{ $key }}" {{ old('invoice_status', $invoice->invoice_status) == $key ? 'selected' : '' }}>{{ $status }}</option>
+                                                <option value="{{ $key }}" {{ old('invoice_status', $loop->first ? $key : '') == $key ? 'selected' : '' }}>{{ $status }}</option>
                                                 @endforeach
                                             </select>
 
@@ -282,27 +315,27 @@
                                         @endphp
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark">Sale Agent</label>
-
                                             <select class="form-control form-control-sm form-control-solid"
                                                 name="sale_agent_id"
                                                 aria-label="Default select example"
                                                 {{ !$isAdmin ? 'disabled' : '' }}>
-                                                <option value="" {{ old('sale_agent_id', $invoice->sale_agent_id) === null ? 'selected' : '' }}>Nothing Selected</option>
+                                                <!-- Default option -->
+                                                <option value="" {{ old('sale_agent_id') === null ? 'selected' : '' }}>Nothing Selected</option>
+
                                                 @foreach($agents as $agent)
                                                 @if($isAdmin)
-                                                <option value="{{ $agent->agent_id }}"
-                                                    {{ old('sale_agent_id', $invoice->sale_agent_id) == $agent->agent_id ? 'selected' : '' }}>
+                                                <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : '' }}>
                                                     {{ $agent->first_name }} {{ $agent->last_name }}
                                                 </option>
                                                 @elseif($agent->user_id == Auth::user()->id)
-                                                <option value="{{ $agent->agent_id }}"
-                                                    {{ old('sale_agent_id', $invoice->sale_agent_id) == $agent->agent_id ? 'selected' : '' }}>
+                                                <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : 'selected' }}>
                                                     {{ $agent->first_name }} {{ $agent->last_name }}
                                                 </option>
-                                                <input type="hidden" name="sale_agent_id" value="{{ $invoice->sale_agent_id }}">
+                                                <input type="hidden" name="sale_agent_id" value="{{ $agent->agent_id }}">
                                                 @endif
                                                 @endforeach
                                             </select>
+
 
                                             @if ($errors->has('sale_agent_id'))
                                             <span class="text-danger">{{ $errors->first('sale_agent_id') }}</span>
@@ -312,14 +345,15 @@
 
 
 
-
                                     <div class="col-md-6">
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark">Discount Type</label>
-                                            <select class="form-control form-control-sm form-control-solid" name="discount_type_name">
-                                                <option value="" {{ old('discount_type_name', $invoice->discount_type) === null ? 'selected' : '' }}>Nothing Selected</option>
+                                            <select class="form-control form-control-sm form-control-solid" name="discount_type_name" aria-label="Default select example">
+                                                <option value="" {{ old('discount_type_name') === null ? 'selected' : '' }}>Nothing Selected</option>
                                                 @foreach($discountTypes as $type)
-                                                <option value="{{ $type }}" {{ old('discount_type_name', $invoice->discount_type) == $type ? 'selected' : '' }}>{{ $type }}</option>
+                                                <option value="{{ $type }}" {{ old('discount_type_name') == $type ? 'selected' : '' }}>
+                                                    {{ $type }}
+                                                </option>
                                                 @endforeach
                                             </select>
 
@@ -332,7 +366,7 @@
                                     <div class="col-md-12">
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark" for="textarea">Admin Note</label>
-                                            <textarea class="form-control form-control-sm form-control-solid" id="admin_note" name="admin_note" rows="3">{{ old('admin_note', $invoice->admin_note) }}</textarea>
+                                            <textarea class="form-control form-control-sm  form-control-solid" id="admin_note" name="admin_note" rows="3">{{ old('admin_note') }}</textarea>
                                             @if ($errors->has('admin_note'))
                                             <span class="text-danger">{{ $errors->first('admin_note') }}</span>
                                             @endif
@@ -360,10 +394,10 @@
                                             class="g-proposal-add-item d-flex flex-wrap justify-content-between align-items-center w-100 gap-3">
                                             <div>
                                                 <!--begin::Both add-ons-->
-                                                @if(is_null($invoiceCustomFormId))
                                                 <div class="input-group input-group-sm min-w-300px w-100 w-md-500px">
                                                     <div class="flex-grow-1">
-                                                        <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2" name="product_id" id="product-select">
+                                                        <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2"
+                                                            name="product_id" id="product-select">
                                                             <option value="" {{ old('product_id') == '' ? 'selected' : '' }}>Nothing Selected</option>
                                                             @foreach($products as $product)
                                                             <option value="{{ $product->id }}"
@@ -381,42 +415,41 @@
                                                     </div>
                                                     <span class="input-group-sm input-group-text"><i class="bi bi-plus fs-4"></i></span>
                                                 </div>
-                                                @endif
                                                 <!--end::Both add-ons-->
                                             </div>
 
 
                                             <!-- <div class="g-right-proposal-table-header d-flex align-items-center gap-3">
 
-                                            <div class="min-w-sm-100px">
-                                                <strong>Show quantity as: </strong>
-                                            </div>
+                                                <div class="min-w-sm-100px">
+                                                    <strong>Show quantity as: </strong>
+                                                </div>
 
-                                            <div class="form-check form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="radio" value="" id="g-qty" name="quantity" />
-                                                <label class="form-check-label" for="g-qty">
-                                                    qty
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="radio" value="" id="g-hours" name="quantity" />
-                                                <label class="form-check-label" for="g-hours">
-                                                    hours
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="radio" value="" id="g-qty-hours" name="quantity" />
-                                                <label class="form-check-label" for="g-qty-hours">
-                                                    qty/hours
-                                                </label>
-                                            </div>
+                                                <div class="form-check form-check-custom form-check-solid">
+                                                    <input class="form-check-input" type="radio" value="" id="g-qty" name="quantity" />
+                                                    <label class="form-check-label" for="g-qty">
+                                                        qty
+                                                    </label>
+                                                </div>
+                                                <div class="form-check form-check-custom form-check-solid">
+                                                    <input class="form-check-input" type="radio" value="" id="g-hours" name="quantity" />
+                                                    <label class="form-check-label" for="g-hours">
+                                                        hours
+                                                    </label>
+                                                </div>
+                                                <div class="form-check form-check-custom form-check-solid">
+                                                    <input class="form-check-input" type="radio" value="" id="g-qty-hours" name="quantity" />
+                                                    <label class="form-check-label" for="g-qty-hours">
+                                                        qty/hours
+                                                    </label>
+                                                </div>
 
-                                        </div> -->
+                                            </div> -->
 
                                         </div>
                                     </div>
 
-                                    @if(is_null($invoiceCustomFormId))
+
                                     <div class="table-responsive">
                                         <!--Invoice Table Preview-->
                                         <table class="table table-rounded table-sm table-striped border align-middle gs-2" id="proposal-table">
@@ -433,137 +466,101 @@
                                             </thead>
 
 
-                                            <tbody id="table-body">
-                                                @foreach($invoiceItems as $item)
-
-                                                <tr>
-                                                    <td>
-                                                        <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
-                                                            id="item-name" placeholder="Item Name" readonly>{{ $item['Item'] }}</textarea>
-                                                        @error('items.*.item_name')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
-                                                    </td>
-                                                    <td>
-                                                        <textarea class="form-control form-select-sm min-w-250px" name="items[descriptions][]" cols="30" rows="2"
-                                                            id="item-description" placeholder="Description">{{ $item['Description'] }}</textarea>
-                                                    </td>
-                                                    <td>
-                                                        <input class="form-control form-control-sm" type="number" name="items[quantity][]" id="item-quantity"
-                                                            placeholder="Quantity" value="{{$item['Qty'] }}">
-                                                    </td>
-                                                    <td>
-                                                        <input class="form-control form-control-sm" type="number" name="items[rate][]" id="item-rate"
-                                                            placeholder="Rate" value="{{ $item['Rate']}}">
-                                                    </td>
-                                                    <td>
-                                                        <select class="form-select form-select-sm" data-control="select2" data-placeholder="No Tax" id="item-tax"
-                                                            name="items[tax][]">
-                                                            <option value="" {{ $item['Tax'] == '' ? 'selected' : '' }}>No Tax (0.00%)</option>
-                                                            <option value="5.00" {{ $item['Tax'] == '5.00' ? 'selected' : '' }}>5.00%</option>
-                                                            <option value="10.00" {{ $item['Tax'] == '10.00' ? 'selected' : '' }}>10.00%</option>
-                                                            <option value="15.00" {{ $item['Tax'] == '15.00' ? 'selected' : '' }}>15.00%</option>
-                                                        </select>
-                                                    </td>
-                                                    <td class="item-amount">{{ $item['Amount'] }}</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm btn-danger py-2 px-2 remove-row">
-                                                            <i class="bi bi-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                                <tr>
-                                                    <td>
-                                                        <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
-                                                            id="item-name" placeholder="Item Name" readonly></textarea>
-                                                    </td>
-                                                    <td>
-                                                        <textarea class="form-control form-select-sm min-w-250px" name="items[descriptions][]" cols="30" rows="2"
-                                                            id="item-description" placeholder="Description"></textarea>
-                                                    </td>
-                                                    <td>
-                                                        <input class="form-control form-control-sm" type="number" name="items[quantity][]" id="item-quantity"
-                                                            placeholder="Quantity">
-                                                    </td>
-                                                    <td>
-                                                        <input class="form-control form-control-sm" type="number" name="items[rate][]" id="item-rate"
-                                                            placeholder="Rate">
-                                                    </td>
-                                                    <td>
-                                                        <select class="form-select form-select-sm" data-control="select2" data-placeholder="No Tax" id="item-tax"
-                                                            name="items[tax][]">
-                                                            <option value="0.00">No Tax (0.00%)</option>
-                                                            <option value="5.00">5.00%</option>
-                                                            <option value="10.00">10.00%</option>
-                                                            <option value="15.00">15.00%</option>
-                                                        </select>
-                                                    </td>
-                                                    <td class="item-amount">0.00</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm btn-primary py-2 px-2 add-row">
-                                                            <i class="bi bi-check"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- <tr>
-
+                                            <!-- <tbody id="table-body">
+                                            <tr>
                                                 <td>
-                                                    <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2" id="item-name" placeholder="Item Name">{{ old('items.item_name.0') }}</textarea>
-                                                    @error('items.item_name.0')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
+                                                    <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
+                                                        id="item-name" placeholder="Item Name"></textarea>
                                                 </td>
-
-
                                                 <td>
-                                                    <textarea class="form-control form-control-sm min-w-250px" name="items[descriptions][]" cols="30" rows="2" id="item-description" placeholder="Description">{{ old('items.description.0') }}</textarea>
-                                                    @error('items.description.0')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
+                                                    <textarea class="form-control form-select-sm min-w-250px" name="items[description][]" cols="30" rows="2"
+                                                        id="item-description" placeholder="Description"></textarea>
                                                 </td>
-
-
                                                 <td>
-                                                    <input class="form-control form-control-sm" type="number" name="items[quantity][]" id="item-quantity" placeholder="Quantity" value="{{ old('items.quantity.0') }}">
-                                                    @error('items.quantity.0')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
+                                                    <input class="form-control form-control-sm" type="number" name="items[quantity][]" id="item-quantity"
+                                                        placeholder="Quantity">
                                                 </td>
-
-
                                                 <td>
-                                                    <input class="form-control form-control-sm" type="number" name="items[rate][]" id="item-rate" placeholder="Rate" value="{{ old('items.rate.0') }}">
-                                                    @error('items.rate.0')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
+                                                    <input class="form-control form-control-sm" type="number" name="items[rate][]" id="item-rate"
+                                                        placeholder="Rate">
                                                 </td>
-
-
                                                 <td>
-                                                    <select class="form-select form-select-sm" name="items[tax][]">
-                                                        <option value="0.00" {{ old('items.tax.0') == '0.00' ? 'selected' : '' }}>No Tax (0.00%)</option>
-                                                        <option value="5.00" {{ old('items.tax.0') == '5.00' ? 'selected' : '' }}>5.00%</option>
-                                                        <option value="10.00" {{ old('items.tax.0') == '10.00' ? 'selected' : '' }}>10.00%</option>
-                                                        <option value="15.00" {{ old('items.tax.0') == '15.00' ? 'selected' : '' }}>15.00%</option>
+                                                    <select class="form-select form-select-sm" data-control="select2" data-placeholder="No Tax" id="item-tax"
+                                                        name="items[tax][]">
+                                                        <option value="0.00">No Tax (0.00%)</option>
+                                                        <option value="5.00">5.00%</option>
+                                                        <option value="10.00">10.00%</option>
+                                                        <option value="15.00">15.00%</option>
                                                     </select>
-                                                    @error('items.tax.0')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
                                                 </td>
-
-
                                                 <td class="item-amount">0.00</td>
-
-
                                                 <td>
                                                     <button type="button" class="btn btn-sm btn-primary py-2 px-2 add-row">
                                                         <i class="bi bi-check"></i>
                                                     </button>
                                                 </td>
-                                            </tr> -->
+                                            </tr>
+                                        </tbody> -->
+
+                                            <tbody id="table-body">
+                                                <tr>
+
+                                                    <td>
+                                                        <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2" id="item-name" placeholder="Item Name" readonly>{{ old('items.item_name.0') }}</textarea>
+                                                        @error('items.item_name.0')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </td>
+
+
+                                                    <td>
+                                                        <textarea class="form-control form-control-sm min-w-250px" name="items[description][]" cols="30" rows="2" id="item-description" placeholder="Description">{{ old('items.description.0') }}</textarea>
+                                                        @error('items.description.0')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </td>
+
+
+                                                    <td>
+                                                        <input class="form-control form-control-sm" type="number" name="items[quantity][]" id="item-quantity" placeholder="Quantity" value="{{ old('items.quantity.0') }}">
+                                                        @error('items.quantity.0')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </td>
+
+
+                                                    <td>
+                                                        <input class="form-control form-control-sm" type="number" name="items[rate][]" id="item-rate" placeholder="Rate" value="{{ old('items.rate.0') }}">
+                                                        @error('items.rate.0')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </td>
+
+
+                                                    <td>
+                                                        <select class="form-select form-select-sm" name="items[tax][]">
+                                                            <option value="0.00" {{ old('items.tax.0') == '0.00' ? 'selected' : '' }}>No Tax (0.00%)</option>
+                                                            <option value="5.00" {{ old('items.tax.0') == '5.00' ? 'selected' : '' }}>5.00%</option>
+                                                            <option value="10.00" {{ old('items.tax.0') == '10.00' ? 'selected' : '' }}>10.00%</option>
+                                                            <option value="15.00" {{ old('items.tax.0') == '15.00' ? 'selected' : '' }}>15.00%</option>
+                                                        </select>
+                                                        @error('items.tax.0')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </td>
+
+
+                                                    <td class="item-amount">0.00</td>
+
+
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-primary py-2 px-3 add-row">
+                                                            <i class="bi bi-plus-lg pe-0"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
                                             </tbody>
+
 
                                         </table>
                                         <!--End Proposal Table Preview-->
@@ -578,7 +575,7 @@
                                                 <table class="table table-sm table-row-bordered align-middle">
                                                     <tr>
                                                         <th class="text-end"><strong>Sub Total:</strong></th>
-                                                        <td class="text-end"><strong>BDT</strong> <span id="subtotal-amount">{{ old('sub_total', $invoice->sub_total) }}</span></td>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="subtotal-amount">0.00</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th><strong>Discount :</strong>
@@ -592,23 +589,23 @@
                                                                 </select>
                                                             </div>
                                                         </th>
-                                                        <td class="text-end"><strong>BDT</strong> <span id="discount-amount">-{{ old('discount', $invoice->discount) }}</span></td>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="discount-amount">-0.00</span></td>
                                                     </tr>
                                                     <!-- New Tax Row -->
                                                     <tr>
                                                         <th class="text-end"><strong>Total Tax:</strong></th>
-                                                        <td class="text-end"><strong>BDT</strong> <span id="total-tax-amount">{{ old('total_tax', $invoice->total_tax) }}</span></td>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="total-tax-amount">0.00</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th><strong>Adjustment :</strong>
                                                             <input class="form-control form-control-sm" type="number" name="adjustment" placeholder="Adjustment">
                                                         </th>
-                                                        <td class="text-end"><strong>BDT</strong> <span id="custom_adjustment">{{ old('adjustment', $invoice->adjustment) }}</span></td>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="adjustment-amount">0.00</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th class="text-end"><strong>Total</strong></th>
                                                         <td class="text-end">
-                                                            <strong>BDT</strong> <span id="total-amount">{{ old('total_amount', $invoice->total_amount) }}</span>
+                                                            <strong>BDT</strong> <span id="total-amount">0.00</span>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -617,11 +614,11 @@
                                             <!--End Proposal Calculations-->
                                         </div>
                                     </div>
-                                    @endif
-
                                 </div>
 
-                                @if(!is_null($invoiceCustomFormId))
+                                <!-- <table id="custom-invoice-table" class="table table-rounded table-sm table-striped border align-middle gs-2" style="display: none;">
+                                   
+                                </table> -->
 
                                 <div id="custom-invoice" style="display: block;">
                                     <table id="custom-invoice-table" class="table table-rounded table-sm table-striped border align-middle gs-2" style="display: none;">
@@ -653,7 +650,7 @@
                                                 <table class="table table-sm table-row-bordered align-middle">
                                                     <tr>
                                                         <th class="text-end"><strong>Sub Total:</strong></th>
-                                                        <td class="text-end"><strong>BDT</strong> <span id="custom-subtotal-amount">{{ old('sub_total', $invoice->sub_total) }}</span></td>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="custom-subtotal-amount">0.00</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th><strong>VAT :</strong>
@@ -668,18 +665,17 @@
                                                     <!-- New Tax Row -->
                                                     <tr>
                                                         <th class="text-end"><strong>Total VAT:</strong></th>
-                                                        <td class="text-end"><strong>BDT</strong> <span id="custom-total-vat">{{ old('total_tax', $invoice->total_tax) }}</span></td>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="custom-total-vat">0.00</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th><strong>Adjustment :</strong>
                                                             <input id="custom_adjustment" class="form-control form-control-sm" type="number" name="custom_adjustment" placeholder="Adjustment" />
                                                         </th>
-                                                        <td class="text-end"><strong>BDT</strong> <span id="custom_adjustment">{{ old('adjustment', $invoice->adjustment) }}</span></td>
                                                     </tr>
                                                     <tr>
                                                         <th class="text-end"><strong>Total</strong></th>
                                                         <td class="text-end">
-                                                            <strong>BDT</strong> <span id="custom-total-amount">{{ old('total_amount', $invoice->total_amount) }}</span>
+                                                            <strong>BDT</strong> <span id="custom-total-amount">0.00</span>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -690,13 +686,11 @@
                                     </div>
                                 </div>
 
-                                @endif
-
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark" for="textarea">Client Note</label>
-                                            <textarea class="form-control form-control-sm  form-control-solid" id="client_note" name="client_note" rows="3">{{ old('client_note', $invoice->client_note) }}</textarea>
+                                            <textarea class="form-control form-control-sm  form-control-solid" id="client_note" name="client_note" rows="3">{{ old('client_note') }}</textarea>
                                             @if ($errors->has('client_note'))
                                             <span class="text-danger">{{ $errors->first('client_note') }}</span>
                                             @endif
@@ -709,7 +703,7 @@
                                     <div class="col-md-12">
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark" for="textarea">Terms & Conditions</label>
-                                            <textarea class="form-control form-control-sm  form-control-solid" id="address" name="terms_conditions" rows="3">{{ old('terms_conditions', $invoice->terms_conditions) }}</textarea>
+                                            <textarea class="form-control form-control-sm  form-control-solid" id="terms_conditions" name="terms_conditions" rows="3">{{ old('terms_conditions') }}</textarea>
                                             @if ($errors->has('terms_condition'))
                                             <span class="text-danger">{{ $errors->first('terms_condition') }}</span>
                                             @endif
@@ -877,19 +871,18 @@
 
             //ensure necessary fields in the last row are filled before adding a new row
             var itemName = lastRow.find('textarea[name="items[item_name][]"]').val();
-            var description = lastRow.find('textarea[name="items[descriptions][]"]').val();
+            var description = lastRow.find('textarea[name="items[description][]"]').val();
             var quantity = lastRow.find('input[name="items[quantity][]"]').val();
             var rate = lastRow.find('input[name="items[rate][]"]').val();
 
             if (itemName !== "" && quantity !== "" && rate !== "") {
-                //all fields are filled, add a new row
                 var newRow = `<tr>
                    <td>
                        <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
                            placeholder="Item Name" readonly></textarea>
                    </td>
                    <td>
-                       <textarea class="form-control form-select-sm min-w-250px" name="items[descriptions][]" cols="30" rows="2"
+                       <textarea class="form-control form-select-sm min-w-250px" name="items[description][]" cols="30" rows="2"
                            placeholder="Description"></textarea>
                    </td>
                    <td>
@@ -910,16 +903,15 @@
                    </td>
                    <td class="item-amount">0.00</td>
                    <td>
-                       <button type="button" class="btn btn-sm btn-danger py-2 px-2 remove-row">
-                           <i class="bi bi-trash"></i>
+                       <button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
+                           <i class="bi bi-trash pe-0"></i>
                        </button>
                    </td>
                </tr>`;
 
                 //append the new row to the table body
                 $('#table-body').append(newRow);
-
-                //clear the product selection
+                // clear the product selection
                 $('#product-select').val('').trigger('change');
                 //when add more row click this input hide
                 $('input[name="discount"]').val('');
@@ -930,10 +922,98 @@
             }
         });
 
+
+        $(document).on('click', '.add-row-backup', function() {
+            //alert('asdsd');
+            var lastRow = $('#table-body tr:last'); // reference to the last row
+            // clear any previous error messages and highlights
+            lastRow.find('.error-message').remove(); // remove any existing error messages
+            lastRow.find('textarea, input').removeClass('is-invalid'); // remove error highlight
+            //get the values from the last row
+            var itemName = lastRow.find('textarea[name="items[item_name][]"]').val();
+            var description = lastRow.find('textarea[name="items[description][]"]').val();
+            var quantity = lastRow.find('input[name="items[quantity][]"]').val();
+            var rate = lastRow.find('input[name="items[rate][]"]').val();
+
+            var isValid = true;
+
+            //validate Item Name,Description,Quantity,Rate
+            if (itemName == "") {
+                alert('asdsd');
+                lastRow.find('textarea[name="items[item_name][]"]').addClass('is-invalid'); // highlight field
+                lastRow.find('textarea[name="items[item_name][]"]').after('<div class="error-message text-danger">Item Name is required</div>'); // add error message
+                isValid = false;
+            }
+
+
+            if (description === "") {
+                lastRow.find('textarea[name="items[description][]"]').addClass('is-invalid');
+                lastRow.find('textarea[name="items[description][]"]').after('<div class="error-message text-danger">Description is required</div>');
+                isValid = false;
+            }
+
+
+            if (quantity === "" || quantity <= 0) {
+                lastRow.find('input[name="items[quantity][]"]').addClass('is-invalid');
+                lastRow.find('input[name="items[quantity][]"]').after('<div class="error-message text-danger">Quantity must be greater than 0</div>');
+                isValid = false;
+            }
+
+
+            if (rate === "" || rate <= 0) {
+                lastRow.find('input[name="items[rate][]"]').addClass('is-invalid');
+                lastRow.find('input[name="items[rate][]"]').after('<div class="error-message text-danger">Rate must be greater than 0</div>');
+                isValid = false;
+            }
+
+            //all fields are valid, add a new row
+            if (isValid) {
+                var newRow = `<tr>
+            <td>
+                <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
+                    placeholder="Item Name"></textarea>
+            </td>
+            <td>
+                <textarea class="form-control form-select-sm min-w-250px" name="items[description][]" cols="30" rows="2"
+                    placeholder="Description"></textarea>
+            </td>
+            <td>
+                <input class="form-control form-control-sm" type="number" name="items[quantity][]"
+                    placeholder="Quantity">
+            </td>
+            <td>
+                <input class="form-control form-control-sm" type="number" name="items[rate][]"
+                    placeholder="Rate">
+            </td>
+            <td>
+                <select class="form-select form-select-sm" name="items[tax][]">
+                    <option value="0.00">No Tax (0.00%)</option>
+                    <option value="5.00">5.00%</option>
+                    <option value="10.00">10.00%</option>
+                    <option value="15.00">15.00%</option>
+                </select>
+            </td>
+            <td class="item-amount">0.00</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-danger py-2 px-2 remove-row">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </td>
+        </tr>`;
+
+                //append the new row to the table body
+                $('#table-body').append(newRow);
+
+                //clear the product selection if there is any dropdown or selection mechanism
+                $('#product-select').val('').trigger('change');
+            }
+        });
+
+
         //remove row logic
         $(document).on('click', '.remove-row', function() {
             $(this).closest('tr').remove();
-            updateTotal(); //recalculate total after row removal
+            updateTotal(); // recalculate total after row removal
         });
 
         //handle product selection and populate only the last row
@@ -948,7 +1028,7 @@
             var lastRow = $('#table-body tr:last');
             //set values in the last row
             lastRow.find('textarea[name="items[item_name][]"]').val(productName);
-            lastRow.find('textarea[name="items[descriptions][]"]').val(productDescription);
+            lastRow.find('textarea[name="items[description][]"]').val(productDescription);
             lastRow.find('input[name="items[rate][]"]').val(productRate);
 
             //optionally calculate the amount ex(quantity * rate)
@@ -971,8 +1051,6 @@
         });
     });
 </script>
-
-
 
 
 <script>
@@ -1085,26 +1163,7 @@
                 proposalTable.style.display = 'table';
                 customInvoiceDiv.style.display = 'block';
 
-                const fields = fieldDetails.map(detail => ({
-                    field_name: detail.field_name,
-                    field_value: detail.field_value
-                }));
-
-
-                const rawData = JSON.parse(invoiceDescription.replace(/&quot;/g, '"'));
-                const existingData = rawData.map(entry => {
-                    const result = {};
-                    entry.forEach(field => {
-                        const key = Object.keys(field)[0];
-                        result[key] = field[key];
-                    });
-                    return result;
-                });
-
-                console.log(invoiceDescription);
-
-                // Populate the invoice fields with existing data
-                populateCustomInvoiceFields(fields, existingData);
+                populateCustomInvoiceFields(fieldDetails);
             } else {
                 customInvoiceDiv.style.display = 'none';
                 defaultInvoice.style.display = 'block';
@@ -1123,114 +1182,43 @@
         });
 
 
-        function populateCustomInvoiceFields(fields, existingData = []) {
-            // Headers in the custom invoice table
+        function populateCustomInvoiceFields(fields) {
+            // headers in custom invoice table
             customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Amount</th><th>Action</th>';
 
-            // Initialize the custom invoice table body
-            customInvoiceBody.innerHTML = '';
 
-            // If existing data is available, populate the first row
-            if (existingData.length > 0) {
-                existingData.forEach((data, index) => {
-                    const initialRow = `
-                        <tr>
-                            ${fields.map(field => `
-                                <td>
-                                    <input 
-                                        type="text" 
-                                        class="form-control" 
-                                        name="items[${field.field_value}][]" 
-                                        placeholder="${field.field_name}" 
-                                        value="${data[field.field_value] || ''}" />
-                                </td>`).join('')}
-                            <td>
-                                <input 
-                                    type="text" 
-                                    class="form-control custom-amount-input" 
-                                    name="items[amount][]" 
-                                    placeholder="Amount" 
-                                    value="${data['amount'] || ''}" 
-                                    oninput="sanitizeInput(this)" />
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
-                                    <i class="bi bi-trash pe-0"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                    // Add the initial row for each existing data entry
-                    customInvoiceBody.insertAdjacentHTML('beforeend', initialRow);
-                });
-            }
+            customInvoiceBody.innerHTML = `
+            <tr>
+                ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
+                <td><input type="text" class="form-control custom-amount-input" name="items[amount][]" placeholder="Amount" oninput="sanitizeInput(this)"  onblur="getTotalAmount(this.value)"/></td>
+                <td>
+                    
+                    <button type="button" class="btn btn-sm btn-primary py-2 px-3" id="add-row">
+                                                            <i class="bi bi-plus-lg pe-0"></i>
+                                                        </button>
+                </td>
+            </tr>
+        `;
 
-            // After populating existing data, add an empty row with "Add More" functionality
-            customInvoiceBody.insertAdjacentHTML('beforeend', `
-                <tr>
-                    ${fields.map(field => `
-                        <td>
-                            <input 
-                                type="text" 
-                                class="form-control" 
-                                name="items[${field.field_value}][]" 
-                                placeholder="${field.field_name}" />
-                        </td>`).join('')}
-                    <td>
-                        <input 
-                            type="text" 
-                            class="form-control custom-amount-input" 
-                            name="items[amount][]" 
-                            placeholder="Amount" 
-                            oninput="sanitizeInput(this)" />
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-primary py-2 px-3" id="add-row">
-                            <i class="bi bi-plus-lg pe-0"></i>
-                        </button>
-                    </td>
-                </tr>
-            `);
-
-            // Add functionality for the "Remove" buttons
+            //"add More" button and remove buttons
             addRemoveFunctionality();
 
             // Add event listener for the "Add More" button
             document.getElementById('add-row').addEventListener('click', function() {
-                // Insert a new, empty row
+                // insert new row
                 customInvoiceBody.insertAdjacentHTML('beforeend', `
-                    <tr>
-                        ${fields.map(field => `
-                            <td>
-                                <input 
-                                    type="text" 
-                                    class="form-control" 
-                                    name="items[${field.field_value}][]" 
-                                    placeholder="${field.field_name}" />
-                            </td>`).join('')}
-                        <td>
-                            <input 
-                                type="text" 
-                                class="form-control custom-amount-input" 
-                                name="items[amount][]" 
-                                placeholder="Amount" 
-                                oninput="sanitizeInput(this)" />
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
-                                <i class="bi bi-trash pe-0"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `);
+                <tr>
+                    ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
+                    <td><input type="text" class="form-control custom-amount-input" name="items[amount][]" placeholder="Amount" oninput="sanitizeInput(this)"/></td>
+                    <td><button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
+                           <i class="bi bi-trash pe-0"></i>
+                       </button>
+                </tr>
+            `);
 
-                // Reapply functionality for new rows
-                addRemoveFunctionality();
+                addRemoveFunctionality(); // reapply remove functionality to new row
             });
         }
-        const invoiceDescription = `{{ $invoice->item_description }}`;
-
-
 
         // function populateCustomInvoiceFooters(fields) {
         //     // headers in custom invoice table
@@ -1259,6 +1247,8 @@
         customInvoiceSelect.dispatchEvent(new Event('change'));
     });
 </script>
+
+
 
 <!-- End Forms-->
 

@@ -514,7 +514,7 @@
 
 
                                                     <td>
-                                                        <textarea class="form-control form-control-sm min-w-250px" name="items[description][]" cols="30" rows="2" id="item-description" placeholder="Description">{{ old('items.description.0') }}</textarea>
+                                                        <textarea class="form-control form-control-sm min-w-250px" name="items[descriptions][]" cols="30" rows="2" id="item-description" placeholder="Description">{{ old('items.description.0') }}</textarea>
                                                         @error('items.description.0')
                                                         <div class="text-danger">{{ $message }}</div>
                                                         @enderror
@@ -871,7 +871,7 @@
 
             //ensure necessary fields in the last row are filled before adding a new row
             var itemName = lastRow.find('textarea[name="items[item_name][]"]').val();
-            var description = lastRow.find('textarea[name="items[description][]"]').val();
+            var description = lastRow.find('textarea[name="items[descriptions][]"]').val();
             var quantity = lastRow.find('input[name="items[quantity][]"]').val();
             var rate = lastRow.find('input[name="items[rate][]"]').val();
 
@@ -882,7 +882,7 @@
                            placeholder="Item Name" readonly></textarea>
                    </td>
                    <td>
-                       <textarea class="form-control form-select-sm min-w-250px" name="items[description][]" cols="30" rows="2"
+                       <textarea class="form-control form-select-sm min-w-250px" name="items[descriptions][]" cols="30" rows="2"
                            placeholder="Description"></textarea>
                    </td>
                    <td>
@@ -931,7 +931,7 @@
             lastRow.find('textarea, input').removeClass('is-invalid'); // remove error highlight
             //get the values from the last row
             var itemName = lastRow.find('textarea[name="items[item_name][]"]').val();
-            var description = lastRow.find('textarea[name="items[description][]"]').val();
+            var description = lastRow.find('textarea[name="items[descriptions][]"]').val();
             var quantity = lastRow.find('input[name="items[quantity][]"]').val();
             var rate = lastRow.find('input[name="items[rate][]"]').val();
 
@@ -947,8 +947,8 @@
 
 
             if (description === "") {
-                lastRow.find('textarea[name="items[description][]"]').addClass('is-invalid');
-                lastRow.find('textarea[name="items[description][]"]').after('<div class="error-message text-danger">Description is required</div>');
+                lastRow.find('textarea[name="items[descriptions][]"]').addClass('is-invalid');
+                lastRow.find('textarea[name="items[descriptions][]"]').after('<div class="error-message text-danger">Description is required</div>');
                 isValid = false;
             }
 
@@ -974,7 +974,7 @@
                     placeholder="Item Name"></textarea>
             </td>
             <td>
-                <textarea class="form-control form-select-sm min-w-250px" name="items[description][]" cols="30" rows="2"
+                <textarea class="form-control form-select-sm min-w-250px" name="items[descriptions][]" cols="30" rows="2"
                     placeholder="Description"></textarea>
             </td>
             <td>
@@ -1028,7 +1028,7 @@
             var lastRow = $('#table-body tr:last');
             //set values in the last row
             lastRow.find('textarea[name="items[item_name][]"]').val(productName);
-            lastRow.find('textarea[name="items[description][]"]').val(productDescription);
+            lastRow.find('textarea[name="items[descriptions][]"]').val(productDescription);
             lastRow.find('input[name="items[rate][]"]').val(productRate);
 
             //optionally calculate the amount ex(quantity * rate)

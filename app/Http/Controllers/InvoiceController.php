@@ -140,6 +140,7 @@ class InvoiceController extends Controller
         try {
             $customer = Customer::find($request->customer_id);
             $lead_id  = $customer->lead_id;
+            //dd($request->all());
             $invoice = $this->invoiceService->createInvoice($request->all());
             Helper::storeLog("Invoice created successfully", "Invoice", "Create Invoice",$lead_id);
             return redirect()->route('invoice-index')->with('success', 'Invoice Created Successfully!');
