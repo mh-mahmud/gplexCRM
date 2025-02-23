@@ -243,12 +243,13 @@
                 <table  style="width: 100%; border-collapse: collapse; margin: 20px 0;">
                     <thead>
                         <tr>
-                            <th style="border: 1px solid #424242; padding: 5px; text-align: center; background-color: #002060; color: #ffffff" colspan="{{ $custom_invoice_total_field + 1 }}">
+                            <th style="border: 1px solid #424242; padding: 5px; text-align: center; background-color: #002060; color: #ffffff" colspan="{{ $custom_invoice_total_field + 2 }}">
                                 {{  \Carbon\Carbon::parse($customInvoiceData->created_at)->format('F, Y') }}
                             </th>
                         </tr>
                         <tr style="border: 1px solid #424242; padding: 5px; text-align: left; background-color: #c65911;
     color: #ffffff;">
+                       <th>SL No</th>
                             @foreach ($customInvoiceData->field_details as $field)
                                 <th>
                                     {{ $field['field_name'] }}
@@ -262,9 +263,11 @@
                     <tbody>
                         @php
                             $cal_total = [];
+                            $slNo = 1;
                         @endphp
                         @foreach ($invoiceItems as $item)
                             <tr>
+                            <td>{{ $slNo++ }}</td>
                                 @foreach ($customInvoiceData->field_details as $field)
                                     <td>
                                         <?php
@@ -330,19 +333,19 @@
                                     echo "<td class='border-b py-3 pl-3 text-center'>" . $field_sum_output . '</td>';
                                 }
                             @endphp
-                            <td colspan="{{ $net_value_col_span }}" class="text-right">
+                            <td colspan="{{ $net_value_col_span + 1}}" class="text-right">
                                 {{ $invoice['sub_total'] }}
                             </td>
                         </tr>
                         <tr>
                             <td>VAT</td>
-                            <td colspan="{{ $custom_invoice_total_field - 1 }}" class="text-right" >
+                            <td colspan="{{ $custom_invoice_total_field}}" class="text-right" >
                                 {{ !empty($invoice['vat']) ? $invoice['vat'] . '%' : '' }}</td>
                             <td class="text-right">{{ $invoice['total_tax'] }}</td>
                         </tr>
                         <tr>
                             <td>Total Including VAT</td>
-                            <td colspan= "{{ $custom_invoice_total_field }}" class="text-right">
+                            <td colspan= "{{ $custom_invoice_total_field + 1  }}" class="text-right">
                                 {{ $invoice['total_amount'] }}</td>
                         </tr>
                     </tbody>

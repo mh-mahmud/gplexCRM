@@ -223,6 +223,7 @@
                     <table class="w-full border-collapse border-spacing-0">
                         <thead>
                             <tr>
+                            <td class="border-b-2 border-main pb-3 pl-3 text-center font-bold text-main">SL No</td> <!-- Added Sl No Column -->
                                 @foreach($customInvoiceData->field_details as $field)
                                     <td class="border-b-2 border-main pb-3 pl-3 text-center font-bold text-main">
                                         {{ $field['field_name'] }}
@@ -236,9 +237,11 @@
                         <tbody>
                             @php 
                             $cal_total = [];
+                            $slNo = 1;
                             @endphp
                             @foreach($invoiceItems as $item)
                                 <tr>
+                                <td class="border-b py-3 pl-3 text-center">{{ $slNo++ }}</td>
                                     @foreach($customInvoiceData->field_details as $field)
                                         <td class="border-b py-3 pl-3 text-center">
                                             <?php
@@ -311,12 +314,12 @@
                             </tr>
                             <tr>
                                 <td class="border-b py-3 pl-3 text-center">VAT</td>
-                                <td class="border-b py-3 pl-3 text-right" colspan= "{{ $custom_invoice_total_field - 1 }} ">{{ !empty($invoice["vat"]) ? $invoice["vat"] . '%' : '' }}</td>
+                                <td class="border-b py-3 pl-3 text-right" colspan= "{{ $custom_invoice_total_field  }} ">{{ !empty($invoice["vat"]) ? $invoice["vat"] . '%' : '' }}</td>
                                 <td class="border-b py-3 pl-3 text-right">{{ $invoice["total_tax"] }}</td>
                             </tr>
                             <tr>
                                 <td class="border-b py-3 pl-3 text-center">Total Including VAT</td>
-                                <td colspan= "{{ $custom_invoice_total_field }}" class="border-b py-3 pl-3 text-right">{{ $invoice["total_amount"] }}</td>
+                                <td colspan= "{{ $custom_invoice_total_field + 1}}" class="border-b py-3 pl-3 text-right">{{ $invoice["total_amount"] }}</td>
                             </tr>
                         </tbody>
                     </table>
