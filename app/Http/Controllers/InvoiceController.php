@@ -165,7 +165,7 @@ class InvoiceController extends Controller
         $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
         $products = Product::select('id', 'name', 'description', 'product_value')->get();
         $customInvoiceData = InvoiceCustomForm::where('id', $invoice->invoice_custom_form_id)
-                                        ->select('id', 'invoice_name','field_details','footer_details')
+                                        ->select('id', 'invoice_name','field_details','footer_details','bank_details', 'issued_by')
                                         ->first();
                                  
         return view('invoices.show', compact('invoice', 'products', 'invoiceItems','newDueAmount', 'customInvoiceData'));

@@ -92,20 +92,19 @@
                             <tr>
                                 <td class="w-1/2 align-top">
                                     <div class="text-sm text-neutral-600">
-                                        <p class="font-bold">Supplier Company INC</p>
-                                        <p>Number: 23456789</p>
-                                        <p>VAT: 23456789</p>
-                                        <p>6622 Abshire Mills</p>
-                                        <p>Port Orlofurt, 05820</p>
-                                        <p>United States</p>
+                                        <p class="font-bold">Supplier Address</p>
+                                        <strong>Genuity Systems Ltd</strong>
+                                        <p>Genusys Point</p>
+                                        <p>Plot-8, Road 4, Block-A</p>
+                                        <p>Section-11, Mirpur, Dhaka-1216</p>
+                                      
                                     </div>
                                 </td>
                                 <td class="w-1/2 align-top text-right">
                                     <div class="text-sm text-neutral-600">
-                                        <p class="font-bold">Bill To</p>
-                                        <p>{{$invoice->customer?->customer_group}}</p>
+                                        <p class="font-bold">Beneficiary Address</p>
                                         <p>{{$invoice->address}}</p>
-                                        <p>Sale Agent: {{$invoice->saleAgent?->first_name}} {{$invoice->saleAgent?->last_name}}</p>
+                                        
                                     </div>
                                 </td>
                             </tr>
@@ -308,7 +307,7 @@
                                     echo "<td class='border-b py-3 pl-3 text-center'>". $field_sum_output."</td>";
                                 }
                                 @endphp
-                                <td class="border-b py-3 pl-3 text-right" colspan= "{{ $custom_invoice_total_field - 1 }}">{{ $invoice["sub_total"] }}</td>
+                                <td class="border-b py-3 pl-3 text-right" colspan= "{{ $custom_invoice_total_field + 1 }}">{{ $invoice["sub_total"] }}</td>
                             </tr>
                             <tr>
                                 <td class="border-b py-3 pl-3 text-center">VAT</td>
@@ -346,14 +345,12 @@
                 </div>
 
 
+                @if (!empty($invoice->invoice_custom_form_id))
                 <div class="px-14 text-sm text-neutral-700 py-3">
-                    <p class="text-main font-bold">PAYMENT DETAILS</p>
-                    <p>Bank Information Details:</p>
-                    <p>Account Name: Genuity Systems Ltd</p>
-                    <p>Bank Name: Eastern Bank Ltd</p>
-                    <p>Account Number: 1071060004253</p>
-                    <p>Routing Number: 095262987</p>
+                    <p class="text-main font-bold">Bank Information:</p>
+                     {!! $customInvoiceData->bank_details !!}
                 </div>
+                @endif
 
                 
                 <!-- <div class="px-14 py-3 text-sm text-neutral-700 payment-area">

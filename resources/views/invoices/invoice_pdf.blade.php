@@ -192,12 +192,12 @@
                 </tr>
 
                 <tr>
-                    <td class="text-main font-bold">Bill To</td>
-                    <td>{{ $invoice->first_name }} {{ $invoice->last_name }}<br>{{ $invoice->address }}</td>
+                    <td class="text-main font-bold">Beneficiary Address</td>
+                    <td>{{ $invoice->address }}</td>
                 </tr>
                 <tr>
-                    <td class="text-main font-bold">Sale Agent</td>
-                    <td>{{ $invoice->saleAgent?->first_name }} {{ $invoice->saleAgent?->last_name }}</td>
+                    <td class="text-main font-bold">Supplier Address</td>
+                    <td>Genuity Systems Ltd,Genusys Point,Plot-8, Road 4, Block-A,Section-11, Mirpur, Dhaka-1216</td>
                 </tr>
             </table>
         </div>

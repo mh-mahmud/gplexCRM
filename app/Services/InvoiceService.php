@@ -209,10 +209,10 @@ class InvoiceService
         if (empty($data["custom_invoice_id"])) {
             // default invoice items
             foreach ($data['items']['item_name'] as $key => $itemName) {
-                if (!empty($itemName) || !empty($data['items']['description'][$key]) || !empty($data['items']['quantity'][$key]) || !empty($data['items']['rate'][$key])) {
+                if (!empty($itemName) || !empty($data['items']['descriptions'][$key]) || !empty($data['items']['quantity'][$key]) || !empty($data['items']['rate'][$key])) {
                     $items[] = [
                         'Item' => $itemName,
-                        'Description' => $data['items']['description'][$key] ?? '',
+                        'Description' => $data['items']['descriptions'][$key] ?? '',
                         'Qty' => $data['items']['quantity'][$key] ?? 0,
                         'Rate' => $data['items']['rate'][$key] ?? 0,
                         'Tax' => $data['items']['tax'][$key] ?? 0,
