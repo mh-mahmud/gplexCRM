@@ -147,7 +147,7 @@
 							<td>
 								<div
                                                     class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
-									<a href="{{ route('product-show', $product->id) }}"
+									<a title="Show Product Details" href="{{ route('product-show', $product->id) }}"
 									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 										<!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
 										<span class="svg-icon svg-icon-3">
@@ -169,7 +169,7 @@
 												</span>
 										<!--end::Svg Icon-->
 									</a>
-									<a href="{{ route('product-edit', $product->id) }}"
+									<a title="Edit" href="{{ route('product-edit', $product->id) }}"
 									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 										<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
 										<span class="svg-icon svg-icon-3">
@@ -188,7 +188,7 @@
 									<form action="{{ route('product-delete', $product->id) }}" method="POST" style="display: inline;">
 										@csrf
 										@method('DELETE')
-										<button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">
+										<button title="Delete" type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">
 											<!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
 											<span class="svg-icon svg-icon-3">
 												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

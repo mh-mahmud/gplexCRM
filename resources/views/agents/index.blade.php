@@ -259,7 +259,7 @@
                                             </td>
                                             <td>
                                                 <div class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
-                                                    <a href="{{ route('agents-show', $agent->agent_id) }}"
+                                                    <a title="Show Agent Details" href="{{ route('agents-show', $agent->agent_id) }}"
                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                         <span class="svg-icon svg-icon-3">
             												<svg xmlns="http://www.w3.org/2000/svg"
@@ -279,7 +279,7 @@
             													</svg>
 											             </span>
                                                     </a>
-                                                    <a href="{{ route('agents-edit', $agent->agent_id) }}"
+                                                    <a title="Edit" href="{{ route('agents-edit', $agent->agent_id) }}"
                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                         <span class="svg-icon svg-icon-3">
             												<svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -297,7 +297,7 @@
                                                           method="POST" style="display: inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit"
+                                                        <button title="Delete" type="submit"
                                                                 class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
                                                                 onclick="return confirmDelete()">
                                                             <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
