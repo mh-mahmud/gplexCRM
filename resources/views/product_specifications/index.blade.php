@@ -381,7 +381,7 @@ use Carbon\Carbon;
                                                     </svg>
                                                 </span>
                                             </a>
-                                            <a title="Show Word Order" href="{{ route('product-specification-show', $productSpecification->id) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                            <a title="Show Work Order" href="{{ route('product-specification-show', $productSpecification->id) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <span class="svg-icon svg-icon-3">
                                                     <!-- Eye Icon -->
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">

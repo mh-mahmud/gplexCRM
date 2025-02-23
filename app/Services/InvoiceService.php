@@ -118,7 +118,7 @@ class InvoiceService
             'adjustment' => $data['custom_adjustment'] ?? $data['adjustment'] ?? null,
             'currency' => $data['currency'],
             'payment_mode' => $data['payment_mode'],
-            'sale_agent_id' => $data['sale_agent_id'],
+            'sale_agent_id' => $data['sale_agent_id']?? $data['sale_agent_id'] ?? null,
             'created_by' =>Auth::user()->id,
             'invoice_status' => $data['invoice_status']?? null,
             'item_description' => $itemDescriptionJson,
@@ -199,7 +199,7 @@ class InvoiceService
         $invoice->terms_conditions = $data['terms_conditions'];
         $invoice->currency = $data['currency'];
         $invoice->payment_mode = $data['payment_mode'];
-        $invoice->sale_agent_id = $data['sale_agent_id'];
+        $invoice->sale_agent_id = $data['sale_agent_id']?? $data['sale_agent_id'] ?? null;
         $invoice->created_by = Auth::user()->id;
         $invoice->invoice_status = $data['invoice_status']?? null;
 
