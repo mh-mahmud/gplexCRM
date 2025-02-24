@@ -2224,7 +2224,7 @@
                                                                                                             <select
                                                                                                                 id="product-select-ps-edit-{{ $productSpecification->id }}"
                                                                                                                 class="product-select-ps-edit form-control form-control-sm form-control-solid"
-                                                                                                                name="product_ids[]"
+                                                                                                                name="product_id[]"
                                                                                                                 multiple="multiple"
                                                                                                                 data-allow-clear="true"
                                                                                                                 data-kt-select2="select2">
