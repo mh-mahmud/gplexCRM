@@ -3599,28 +3599,23 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">SMS Template</label>
-                                                    <select class=" form-control form-control-sm form-control-solid"
-                                                            name="template_id" id="template_id"
-                                                            aria-label="Default select example">
+                                                    <select class=" form-control form-control-sm form-control-solid" name="template_id" id="sms_template_id" aria-label="Default select example">
                                                         <option value=''>Select</option>
                                                         @foreach($sms_templates as $template)
-                                                            <option
-                                                                value="{{$template->id}}" {{ old('template_id') == $template->id ? 'selected' : '' }}>{{ $template->title }}</option>
+                                                            <option value="{{$template->id}}" {{ old('template_id') == $template->id ? 'selected' : '' }}>{{ $template->title }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Content<span
-                                                            class="text-danger">*</span></label>
+                                                    <label class="form-label fw-bolder text-dark" for="textarea">Content<span class="text-danger">*</span></label>
                                                     <textarea required
                                                               class="form-control form-control-sm  form-control-solid"
                                                               name="sms_text" id="sms_text"
                                                               rows="5">{{ old('sms_text') }}</textarea>
                                                     @if ($errors->has('sms_text'))
-                                                        <span
-                                                            class="text-danger">{{ $errors->first('sms_text') }}</span>
+                                                        <span class="text-danger">{{ $errors->first('sms_text') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -3629,9 +3624,7 @@
 
                                         <!--End Row-->
                                         <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                            <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Save Changes
-                                            </button>
+                                            <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
                                         </div>
 
                                     </form>
@@ -3882,7 +3875,7 @@
     <!--begin::Proposal drawer-->
     <div id="kt_activities_4" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities"
          data-kt-drawer-activate="true" data-kt-drawer-overlay="true"
-         data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end"
+         data-kt-drawer-width="{default:'300px', 'lg': '70%'}" data-kt-drawer-direction="end"
          data-kt-drawer-toggle="#kt_activities_toggle_4" data-kt-drawer-close="#kt_activities_close">
         <div class="card shadow-none rounded-0 w-100">
             <!--begin::Header-->
@@ -4828,7 +4821,7 @@
                 });
             });
 
-            // loading email template content
+            // Loading email template content
             const templates = @json($templates);
             document.getElementById('template_id').addEventListener('change', function () {
                 const selectedId = this.value;
@@ -4841,6 +4834,20 @@
                     // document.getElementById('email_subject').value = '';
                     $('.editor').summernote('code', '');
 
+                }
+            });
+
+            // Loading sms template content
+            const sms_templates = @json($sms_templates);
+            document.getElementById('sms_template_id').addEventListener('change', function() {
+
+                const sms_selectedId = this.value;
+
+                const selectedTemplate = sms_templates.find(template => template.id == sms_selectedId);
+                if (selectedTemplate) {
+                    document.getElementById('sms_text').innerText = selectedTemplate.description;
+                } else {
+                    document.getElementById('sms_text').innerText = '';
                 }
             });
 
@@ -5045,6 +5052,46 @@
             placeholder: "Select Products",
             allowClear: true,
         });
+</script>
+
+<script type="text/javascript">
+    /*var offer_price = 0;
+    var price = 0;
+    var discount = 0;*/
+    $("#offer_price").on("focusout", function() {
+        var offer_price = parseFloat($("#offer_price").val()) || 0;
+        var price = parseFloat($("#price").val()) || 0;
+        var discount = price - offer_price;
+        $("#total_amount").text(offer_price);
+        $("#sub_total").text(offer_price);
+        $("#discount").val(discount);
+        $("#discount_right").text(discount);
+    });
+
+    // $("#offer_price").on("focusout", function() {
+    //     var offer_price = parseFloat($("#offer_price").val()) || 0;
+    //     $("#total_amount").text(offer_price);
+    // });
+
+    $("#tax_amount").on("focusout", function() {
+        var tax = parseFloat($("#tax_amount").val()) || 0;
+        offer_price = parseFloat($("#offer_price").val()) || 0;
+
+        if(offer_price > 0 && tax >= 0 && tax <= 50) {
+            var tax_value = offer_price*tax/100;
+            var final = tax_value + offer_price;
+
+            tax_value = parseFloat(tax_value).toFixed(2);
+            $("#tax_field").text(tax_value);
+            // final = parseFloat(final).toFixed(2);
+            $("#total_amount_final").text(final);
+        }
+    });
+
+    $("#currency").on("change", function() {
+        var cur_val = $(this).val();
+        $(".cur-data").text(cur_val);
+    });
 </script>
 
 @endsection
