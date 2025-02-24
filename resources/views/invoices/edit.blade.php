@@ -79,10 +79,10 @@
                                             <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
 
                                             </label>
-                                            <select class="form-control form-control-sm form-control-solid" name="customer_id">
+                                            <select class="form-control form-control-sm form-control-solid"  id="customerSelect" name="customer_id">
                                                 <option value="" {{ old('customer_id', $invoice->customer_id) == '' ? 'selected' : '' }}>Select Customer</option>
                                                 @foreach($customers as $customer)
-                                                <option value="{{ $customer->id }}" {{ old('customer_id', $invoice->customer_id) == $customer->id ? 'selected' : '' }}>
+                                                <option value="{{ $customer->id }}"  data-address="{{ $customer->address }}"  {{ old('customer_id', $invoice->customer_id) == $customer->id ? 'selected' : '' }}>
                                                     {{ $customer->first_name }} {{ $customer->last_name }}
                                                 </option>
                                                 @endforeach
@@ -1259,6 +1259,25 @@
         customInvoiceSelect.dispatchEvent(new Event('change'));
     });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let customerSelect = document.getElementById("customerSelect");
+        let addressField = document.getElementById("address");
+
+        function updateAddressField() {
+            let selectedOption = customerSelect.options[customerSelect.selectedIndex];
+            let address = selectedOption.getAttribute("data-address") || "";
+            addressField.value = address;
+        }
+
+        // update the address field selected
+        customerSelect.addEventListener("change", updateAddressField);
+        //set the address field on page load customer selected
+        updateAddressField();
+    });
+</script>
+
 
 <!-- End Forms-->
 
