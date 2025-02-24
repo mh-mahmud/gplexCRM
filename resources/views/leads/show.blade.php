@@ -4005,25 +4005,27 @@
 
                                                     </div>
 
-                                                    {{--
+                                                    
                                                     <div class="col-md-12">
                                                         <div class="fv-row mb-5">
                                                             <label class="form-label fw-bolder text-dark">Currency<span class="text-danger">*</span></label>
                                                             <select class=" form-control form-control-sm form-control-solid" required id="currency" name="currency"
                                                                     aria-label="Default select example">
-                                                                <option value=''>Select</option>
+                                                                <option value="BDT">BDT</option>
+                                                                {{--
                                                                 @foreach($currencies as $currency)
                                                                 <option value="{{$currency->name}}" {{ old("currency") == $currency->name ? "selected" : "" }}>
                                                                     {{ $currency->name }}
                                                                 </option>
                                                                 @endforeach
+                                                                --}}
                                                             </select>
                                                             @if ($errors->has('currency'))
                                                                 <span class="text-danger">{{ $errors->first('currency') }}</span>
                                                             @endif
                                                         </div>
                                                     </div>
-                                                    --}}
+                                                    
 
                                                     <div class="col-md-12">
                                                         <div class="fv-row mb-3">
