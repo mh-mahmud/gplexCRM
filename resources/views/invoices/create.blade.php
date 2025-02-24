@@ -95,10 +95,10 @@
 
                                     <div class="fv-row mb-5">
                                         <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span></label>
-                                        <select class="form-control form-control-sm form-control-solid" name="customer_id" aria-label="Default select example">
+                                        <select class="form-control form-control-sm form-control-solid" id="customerSelect" name="customer_id" aria-label="Default select example">
                                             <option value="" {{ old('customer_id') == '' ? 'selected' : '' }}>Select Customer</option>
                                             @foreach($customers as $customer)
-                                            <option value="{{ $customer->id }}"
+                                            <option value="{{ $customer->id }}"  data-address="{{ $customer->address }}"
                                                 {{ old('customer_id') == $customer->id || (isset($leadid) && $customer->lead_id == $leadid) ? 'selected' : '' }}>
                                                 {{ $customer->first_name }} {{ $customer->last_name }}
                                             </option>
@@ -1243,10 +1243,31 @@
             });
         }
 
-        // Trigger the change event on page load
+        //trigger the change event on page load
         customInvoiceSelect.dispatchEvent(new Event('change'));
     });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let customerSelect = document.getElementById("customerSelect");
+        let addressField = document.getElementById("address");
+
+        customerSelect.addEventListener("change", function () {
+            let selectedOption = customerSelect.options[customerSelect.selectedIndex];
+            let address = selectedOption.getAttribute("data-address") || "";
+
+            addressField.value = address;
+        });
+
+        //address field on page load a customer is before selected
+        let preselectedOption = customerSelect.options[customerSelect.selectedIndex];
+        if (preselectedOption) {
+            addressField.value = preselectedOption.getAttribute("data-address") || "";
+        }
+    });
+</script>
+
 
 
 

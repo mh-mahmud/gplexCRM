@@ -65,13 +65,13 @@ class InvoiceController extends Controller
             
             $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
                 ->where('leads.id', $leadid)
-                ->select('customers.*', 'leads.first_name', 'leads.last_name')
+                ->select('customers.*', 'leads.first_name', 'leads.last_name','leads.address')
                 ->get();
                 //dd($customers);
         } else {
             
             $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
-                ->select('customers.*', 'leads.first_name', 'leads.last_name')
+                ->select('customers.*', 'leads.first_name', 'leads.last_name','leads.address')
                 ->get();
         }
         $countries = $this->countryService->countryList($request);
@@ -180,7 +180,7 @@ class InvoiceController extends Controller
         //dd($items);die();
         //$customers = Customer::all();
         $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
-        ->select('customers.*', 'leads.first_name', 'leads.last_name')
+        ->select('customers.*', 'leads.first_name', 'leads.last_name','leads.address')
         ->get();
         $countries = $this->countryService->countryList($request);
         $currencies = $this->currencyService->currencyList($request);
