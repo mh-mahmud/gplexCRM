@@ -236,6 +236,7 @@
                                 </div>
                             </div>
 
+                            {{--
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
@@ -259,6 +260,7 @@
                                     @endif
                                 </div>
                             </div>
+                            --}}
 
 
                             {{--
@@ -280,6 +282,26 @@
                                 </div>
                             </div>
                             --}}
+
+                           <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label fw-bolder text-dark" for="textarea">Email API</label>
+                                    <textarea class="form-control form-control-sm  form-control-solid" name="email_api" rows="3">{{ $data->email_api }}</textarea>
+                                    @if ($errors->has('email_api'))
+                                        <span class="text-danger">{{ $errors->first('email_api') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label fw-bolder text-dark" for="textarea">SMS API</label>
+                                    <textarea class="form-control form-control-sm  form-control-solid" name="sms_api" rows="3">{{ $data->sms_api }}</textarea>
+                                    @if ($errors->has('sms_api'))
+                                        <span class="text-danger">{{ $errors->first('sms_api') }}</span>
+                                    @endif
+                                </div>
+                            </div>
 
 
                             {{--
@@ -348,6 +370,7 @@
                                 </div>
                             </div>
 
+                            {{--
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label fw-bolder text-dark" for="textarea">Footer Message</label>
@@ -361,6 +384,7 @@
                                     @endif
                                 </div>
                             </div>
+                            --}}
 
                             <div class="col-md-6">
                                 <div class="form-group">
