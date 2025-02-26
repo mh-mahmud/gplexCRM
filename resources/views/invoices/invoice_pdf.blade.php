@@ -182,12 +182,12 @@
                     <td class="text-main font-bold">Date</td>
                     <td>{{ \Carbon\Carbon::parse($invoice->invoice_date)->format('F j, Y') }}</td>
                 </tr>
-                @if (!empty($invoice->due_date))
+                <!-- @if (!empty($invoice->due_date))
                 <tr>
                     <td class="text-main font-bold">Due Date</td>
                     <td>{{ \Carbon\Carbon::parse($invoice->due_date)->format('F j, Y') }}</td>
                 </tr>
-                @endif
+                @endif -->
                 <tr>
                     <td class="text-main font-bold">Invoice #</td>
                     <td>{{ $invoice->invoice_number }}</td>
