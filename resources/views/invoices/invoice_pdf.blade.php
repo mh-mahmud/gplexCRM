@@ -194,12 +194,12 @@
     <table style="border-collapse: collapse; border: none;">
         <tr>
             <td style="border: none; padding: 10px;">
-                <img src="{{ asset('uploads/invoice/genuity.png') }}"  alt="genuity" />
+                <img src="{{ asset('uploads/invoice/genuity.png') }}" alt="genuity"/>
                 <img width="100" src="https://picsum.photos/120/80" alt="">
 
             </td>
             <td style="border: none; padding: 10px;">
-                <img src="{{ asset('uploads/invoice/gplex.png') }}"  alt="gplex" />
+                <img src="{{ asset('uploads/invoice/gplex.png') }}" alt="gplex"/>
             </td>
         </tr>
     </table>
@@ -226,6 +226,7 @@
                     <td>{{ \Carbon\Carbon::parse($invoice->due_date)->format('F j, Y') }}</td>
                 </tr>
 
+
             @endif -->
             <tr>
                 <td class="text-main font-bold">Invoice #</td>
@@ -244,7 +245,8 @@
     </div>
 
     <div style="text-align: center">
-        <strong style="text-align: center; margin-left:auto; margin-right:auto; font-size: 22px; line-height: 1; text-decoration: underline;">
+        <strong
+            style="text-align: center; margin-left:auto; margin-right:auto; font-size: 22px; line-height: 1; text-decoration: underline;">
             Invoice</strong>
     </div>
 
@@ -433,7 +435,8 @@
                         <div>
                             <strong>Issued by:</strong></br></br>
                             _____________________
-                            <div style="display: flex; flex-direction: column; gap:0; font-weight: bold; font-size: 13px; line-height: 1">
+                            <div
+                                style="display: flex; flex-direction: column; gap:0; font-weight: bold; font-size: 13px; line-height: 1">
                                 {!! $customInvoiceData->issued_by !!}
                             </div>
 
@@ -446,8 +449,10 @@
 
             <div style="text-align: center; border-top:1px solid #000; margin-top: 250px; padding-top: 10px">
                 <small style=" text-align: center; font-size: 9px; padding-top: 5px; width: 100%; line-height: 1.1">
-                    Genusys Point, Plot - 8, Road - 4, Block - A, Section - 11, Mirpur , Dhaka - 1216, Bangladesh, Tel: +88 0961 188 8444, 02 - 903 0244/55, Email: info@genuitysystems.com
-                    Genusys Center, 209 State Highway 121 Bypass, Suite 31, Lewisville, TX - 75067, USA. Tel: +1 (972) 318-2900, (972) 534-2200. Email: info@genusys.us
+                    Genusys Point, Plot - 8, Road - 4, Block - A, Section - 11, Mirpur , Dhaka - 1216, Bangladesh, Tel:
+                    +88 0961 188 8444, 02 - 903 0244/55, Email: info@genuitysystems.com
+                    Genusys Center, 209 State Highway 121 Bypass, Suite 31, Lewisville, TX - 75067, USA. Tel: +1 (972)
+                    318-2900, (972) 534-2200. Email: info@genusys.us
                 </small>
             </div>
 
@@ -471,7 +476,8 @@
                         <div>
                             <strong>Issued by:</strong></br></br>
                             _____________________
-                            <div style="display: flex; flex-direction: column; gap:0; font-weight: bold; font-size: 13px; line-height: 1">
+                            <div
+                                style="display: flex; flex-direction: column; gap:0; font-weight: bold; font-size: 13px; line-height: 1">
                                 <p>Md Shamim Hossain</p>
                                 <p>Senior Executive,Marketing and Sales</p>
                             </div>
@@ -480,16 +486,15 @@
                 </tr>
 
 
-
-
-
-
-            <div style="position: absolute; left: 10px; bottom: 0;  right:0; width: 90%; text-align: center; font-size: 9px;line-height: 1.1">
-                <small style=" text-align: center; font-size: 9px">
-                    Genusys Point, Plot - 8, Road - 4, Block - A, Section - 11, Mirpur , Dhaka - 1216, Bangladesh, Tel: +88 0961 188 8444, 02 - 903 0244/55, Email: info@genuitysystems.com
-                    Genusys Center, 209 State Highway 121 Bypass, Suite 31, Lewisville, TX - 75067, USA. Tel: +1 (972) 318-2900, (972) 534-2200. Email: info@genusys.us
-                </small>
-            </div>
+                <div
+                    style="position: absolute; left: 10px; bottom: 0;  right:0; width: 90%; text-align: center; font-size: 9px;line-height: 1.1">
+                    <small style=" text-align: center; font-size: 9px">
+                        Genusys Point, Plot - 8, Road - 4, Block - A, Section - 11, Mirpur , Dhaka - 1216, Bangladesh,
+                        Tel: +88 0961 188 8444, 02 - 903 0244/55, Email: info@genuitysystems.com
+                        Genusys Center, 209 State Highway 121 Bypass, Suite 31, Lewisville, TX - 75067, USA. Tel: +1
+                        (972) 318-2900, (972) 534-2200. Email: info@genusys.us
+                    </small>
+                </div>
         </div>
     @endif
 </div>
