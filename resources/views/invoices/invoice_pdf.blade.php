@@ -182,10 +182,12 @@
                     <td class="text-main font-bold">Date</td>
                     <td>{{ \Carbon\Carbon::parse($invoice->invoice_date)->format('F j, Y') }}</td>
                 </tr>
+                @if (!empty($invoice->due_date))
                 <tr>
                     <td class="text-main font-bold">Due Date</td>
                     <td>{{ \Carbon\Carbon::parse($invoice->due_date)->format('F j, Y') }}</td>
                 </tr>
+                @endif
                 <tr>
                     <td class="text-main font-bold">Invoice #</td>
                     <td>{{ $invoice->invoice_number }}</td>
@@ -375,13 +377,13 @@
         @if (!empty($invoice->invoice_custom_form_id))
         <div style="position: relative; width: 100%; height: auto; margin: 40px 8px">
 
-            <!-- Left Side: Bank Information Details -->
+            
             <div style="position: absolute; left: 0; top: 0; width: 48%; text-align: left;">
                 <strong>Bank Information Details:</strong></br>
                 {!! $customInvoiceData->bank_details !!}
             </div>
         
-            <!-- Right Side: Issued by -->
+         
             <div style="position: absolute; right: 15px; top: 0; width: 48%; text-align: right;">
                 <strong>Issued by:</strong></br></br>
                 _____________________</br>
@@ -390,16 +392,27 @@
         
         </div>
         @else                     
-        <div style="margin-top: 100px">
-            <h3>Terms & Conditions</h3>
-            <p>{{ $invoice->terms_conditions }}</p>
-        </div>
-        
+        <div style="position: relative; width: 100%; height: auto; margin: 40px 8px">
 
-        <div style="margin-top: 100px">
-            <h3>Transactions</h3>
-            <p>No payments found for this invoice</p>
+     
+        <div style="position: absolute; left: 0; top: 0; width: 48%; text-align: left;">
+         <strong>Bank Information Details:</strong></br>
+            <p>Genuity System Ltd</p>
+            <p>Eastern Bank Ltd</p>
+            <p>AC no-1071060004253</p>
+            <p>Routing no-095262987</p>
         </div>
+
+       
+         <div style="position: absolute; right: 15px; top: 0; width: 48%; text-align: right;">
+            <strong>Issued by:</strong></br></br>
+            _____________________</br>
+            <strong><p>Md Shamim Hossain</p>
+              <p>Senior Executive,Marketing and Sales</p>
+             </strong>
+          </div>
+
+         </div>
         @endif
     </div>
 

@@ -64,12 +64,14 @@
                                                             <p class="whitespace-nowrap font-bold text-main text-right">{{ \Carbon\Carbon::parse($invoice->invoice_date)->format('F j, Y') }}</p>
                                                         </div>
                                                     </td>
+                                                    @if (!empty($invoice->due_date))
                                                     <td class="border-r pr-4">
                                                         <div>
                                                             <p class="whitespace-nowrap text-slate-400 text-right">Due Date</p>
                                                             <p class="whitespace-nowrap font-bold text-main text-right">{{ \Carbon\Carbon::parse($invoice->due_date)->format('F j, Y') }}</p>
                                                         </div>
                                                     </td>
+                                                    @endif
                                                     <td class="pl-4">
                                                         <div>
                                                             <p class="whitespace-nowrap text-slate-400 text-right">Invoice #</p>
