@@ -383,9 +383,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>VAT</td>
+                    <td>VAT {{ !empty($invoice['vat']) ? $invoice['vat'] . '%' : '' }}</td>
                     <td colspan="{{ $custom_invoice_total_field}}" class="text-right">
-                        {{ !empty($invoice['vat']) ? $invoice['vat'] . '%' : '' }}</td>
+                        <!-- {{ !empty($invoice['vat']) ? $invoice['vat'] . '%' : '' }} -->
+                    </td>
                     <td class="text-right">{{ $invoice['total_tax'] }}</td>
                 </tr>
                 <tr>
@@ -449,10 +450,7 @@
 
             <div style="text-align: center; border-top:1px solid #000; margin-top: 150px; padding-top: 10px">
                 <small style=" text-align: center; font-size: 9px; padding-top: 5px; width: 100%; line-height: 1.1">
-                    Genusys Point, Plot - 8, Road - 4, Block - A, Section - 11, Mirpur , Dhaka - 1216, Bangladesh, Tel:
-                    +88 0961 188 8444, 02 - 903 0244/55, Email: info@genuitysystems.com
-                    Genusys Center, 209 State Highway 121 Bypass, Suite 31, Lewisville, TX - 75067, USA. Tel: +1 (972)
-                    318-2900, (972) 534-2200. Email: info@genusys.us
+                Genusys Point,Plot-8,Road-4,Block-A,Section-11,Mirpur,Dhaka-1216,Bangladesh,Tel:+88 0961 188 8444,02-903 0244/55,Email:info@genuitysystems.com
                 </small>
             </div>
 
@@ -486,12 +484,9 @@
                 </tr>
             </table>
             <div style="text-align: center; border-top:1px solid #000; margin-top: 150px; padding-top: 10px">
-                <small style=" text-align: center; font-size: 9px">
-                    Genusys Point, Plot - 8, Road - 4, Block - A, Section - 11, Mirpur , Dhaka - 1216, Bangladesh, Tel:
-                    +88 0961 188 8444, 02 - 903 0244/55, Email: info@genuitysystems.com
-                    Genusys Center, 209 State Highway 121 Bypass, Suite 31, Lewisville, TX - 75067, USA. Tel: +1 (972)
-                    318-2900, (972) 534-2200. Email: info@genusys.us
-                </small>
+            <small style=" text-align: center; font-size: 9px; padding-top: 5px; width: 100%; line-height: 1.1">
+                Genusys Point,Plot-8,Road-4,Block-A,Section-11,Mirpur,Dhaka-1216,Bangladesh,Tel:+88 0961 188 8444,02-903 0244/55,Email:info@genuitysystems.com
+            </small>
             </div>
         </div>
     @endif
