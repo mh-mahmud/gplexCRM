@@ -1207,7 +1207,7 @@
         });
 
 
-        function populateCustomInvoiceFields(fields) {
+        function populateCustomInvoiceFields_backup_27022025(fields) {
             // headers in custom invoice table
             customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Amount</th><th>Action</th>';
 
@@ -1244,6 +1244,55 @@
                 addRemoveFunctionality(); // reapply remove functionality to new row
             });
         }
+
+    function populateCustomInvoiceFields(fields) {
+        //headers in custom invoice table
+        customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Amount</th><th>Action</th>';
+
+        customInvoiceBody.innerHTML = `
+        <tr>
+            ${fields.map(field => 
+                `<td>${
+                    field.field_name.toLowerCase() === 'description' 
+                    ? `<textarea class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}"></textarea>` 
+                    : `<input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" />`
+                }</td>`
+            ).join('')}
+            <td><input type="text" class="form-control custom-amount-input" name="items[amount][]" placeholder="Amount" oninput="sanitizeInput(this)" onblur="getTotalAmount(this.value)"/></td>
+            <td>
+                <button type="button" class="btn btn-sm btn-primary py-2 px-3" id="add-row">
+                    <i class="bi bi-plus-lg pe-0"></i>
+                </button>
+            </td>
+        </tr>
+        `;
+
+        //"add more" button and remove buttons
+        addRemoveFunctionality();
+
+        //event for the add more button
+        document.getElementById('add-row').addEventListener('click', function() {
+            // insert new row
+            customInvoiceBody.insertAdjacentHTML('beforeend', `
+            <tr>
+                ${fields.map(field => 
+                    `<td>${
+                        field.field_name.toLowerCase() === 'description' 
+                        ? `<textarea class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}"></textarea>` 
+                        : `<input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" />`
+                    }</td>`
+                ).join('')}
+                <td><input type="text" class="form-control custom-amount-input" name="items[amount][]" placeholder="Amount" oninput="sanitizeInput(this)"/></td>
+                <td><button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
+                    <i class="bi bi-trash pe-0"></i>
+                </button>
+            </tr>
+            `);
+
+            addRemoveFunctionality(); // reapplied remove functionality to new row
+        });
+    }
+
 
         // function populateCustomInvoiceFooters(fields) {
         //     // headers in custom invoice table

@@ -1146,7 +1146,7 @@
         });
 
 
-        function populateCustomInvoiceFields(fields, existingData = []) {
+        function populateCustomInvoiceFields_backup_27022025(fields, existingData = []) {
             // Headers in the custom invoice table
             customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Amount</th><th>Action</th>';
 
@@ -1251,6 +1251,112 @@
                 addRemoveFunctionality();
             });
         }
+
+function populateCustomInvoiceFields(fields, existingData = []) {
+    // headers in the custom invoice table
+    customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Amount</th><th>Action</th>';
+
+    // initialize the custom invoice table body
+    customInvoiceBody.innerHTML = '';
+
+    // if existing data is available, populate the first row
+    if (existingData.length > 0) {
+        existingData.forEach((data) => {
+            const initialRow = `
+                <tr>
+                    ${fields.map(field => `
+                        <td>
+                            ${
+                                field.field_name.toLowerCase() === 'description'
+                                ? `<textarea class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}">${data[field.field_value] || ''}</textarea>`
+                                : `<input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" value="${data[field.field_value] || ''}" />`
+                            }
+                        </td>`).join('')}
+                    <td>
+                        <input 
+                            type="text" 
+                            class="form-control custom-amount-input" 
+                            name="items[amount][]" 
+                            placeholder="Amount" 
+                            value="${data['amount'] || ''}" 
+                            oninput="sanitizeInput(this)" />
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
+                            <i class="bi bi-trash pe-0"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+            // add the initial row for each existing data entry
+            customInvoiceBody.insertAdjacentHTML('beforeend', initialRow);
+        });
+    }
+
+    // add an empty row with add more functionality
+    customInvoiceBody.insertAdjacentHTML('beforeend', `
+        <tr>
+            ${fields.map(field => `
+                <td>
+                    ${
+                        field.field_name.toLowerCase() === 'description'
+                        ? `<textarea class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}"></textarea>`
+                        : `<input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" />`
+                    }
+                </td>`).join('')}
+            <td>
+                <input 
+                    type="text" 
+                    class="form-control custom-amount-input" 
+                    name="items[amount][]" 
+                    placeholder="Amount" 
+                    oninput="sanitizeInput(this)" />
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm btn-primary py-2 px-3" id="add-row">
+                    <i class="bi bi-plus-lg pe-0"></i>
+                </button>
+            </td>
+        </tr>
+    `);
+
+    // Add functionality for the "Remove" buttons
+    addRemoveFunctionality();
+
+    // Add event listener for the "Add More" button
+    document.getElementById('add-row').addEventListener('click', function() {
+        // Insert a new, empty row
+        customInvoiceBody.insertAdjacentHTML('beforeend', `
+            <tr>
+                ${fields.map(field => `
+                    <td>
+                        ${
+                            field.field_name.toLowerCase() === 'description'
+                            ? `<textarea class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}"></textarea>`
+                            : `<input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" />`
+                        }
+                    </td>`).join('')}
+                <td>
+                    <input 
+                        type="text" 
+                        class="form-control custom-amount-input" 
+                        name="items[amount][]" 
+                        placeholder="Amount" 
+                        oninput="sanitizeInput(this)" />
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
+                        <i class="bi bi-trash pe-0"></i>
+                    </button>
+                </td>
+            </tr>
+        `);
+
+        // Reapply functionality for new rows
+        addRemoveFunctionality();
+    });
+}
+
         const invoiceDescription = `{{ $invoice->item_description }}`;
 
 
