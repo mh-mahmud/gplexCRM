@@ -79,7 +79,8 @@
                                             <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
 
                                             </label>
-                                            <select class="form-control form-control-sm form-control-solid"  id="customerSelect" name="customer_id">
+                                            <select class="form-control form-control-sm form-control-solid"  id="customerSelect" name="customer_id" data-allow-clear="true"
+                                            data-kt-select2="select2">
                                                 <option value="" {{ old('customer_id', $invoice->customer_id) == '' ? 'selected' : '' }}>Select Customer</option>
                                                 @foreach($customers as $customer)
                                                 <option value="{{ $customer->id }}"  data-address="{{ $customer->address }}"  {{ old('customer_id', $invoice->customer_id) == $customer->id ? 'selected' : '' }}>
@@ -326,6 +327,28 @@
                                             @if ($errors->has('discount_type'))
                                             <span class="text-danger">{{ $errors->first('discount_type') }}</span>
                                             @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="fv-row mb-5">
+                                            <!--begin::Label-->
+                                            <label class="form-label fw-bolder text-dark">
+                                                Reference Number
+
+                                               
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <div class="input-group">
+                                                
+                                                <input class="form-control form-control-sm"
+                                                    type="text" name="ref_no"
+                                                    value="{{ old('ref_no', $invoice->ref_no) }}" />
+                                                @if($errors->has('ref_no'))
+                                                <span class="text-danger">{{ $errors->first('ref_no') }}</span>
+                                                @endif
+                                            </div>
+                                            <!--end::Input-->
                                         </div>
                                     </div>
 
@@ -1267,16 +1290,21 @@
 
         function updateAddressField() {
             let selectedOption = customerSelect.options[customerSelect.selectedIndex];
-            let address = selectedOption.getAttribute("data-address") || "";
+            let address = selectedOption ? selectedOption.getAttribute("data-address") || "" : "";
             addressField.value = address;
         }
+        $('#customerSelect').select2({
+            placeholder: "Select Customer",
+            allowClear: true
+        }).on("change", function () {
+            updateAddressField();//update the address field selected
+        });
 
-        // update the address field selected
-        customerSelect.addEventListener("change", updateAddressField);
         //set the address field on page load customer selected
         updateAddressField();
     });
 </script>
+
 
 
 <!-- End Forms-->

@@ -99,6 +99,7 @@ class InvoiceService
         //create the invoice
         $invoice = Invoice::create([
             'invoice_number' =>  'INV-' . $data['invoice_number'],
+            'ref_no' => $data['ref_no'],
             'customer_id' => $data['customer_id'],
             'invoice_custom_form_id' => $data["custom_invoice_id"],
             'ps_id' => $data["ps_id"],
@@ -182,6 +183,7 @@ class InvoiceService
 
         //update details invoice general details
         $invoice->invoice_number = 'INV-' . $data['invoice_number'];
+        $invoice->ref_no = $data['ref_no'];
         $invoice->customer_id = $data['customer_id'];
         $invoice->invoice_custom_form_id = $data['custom_invoice_id'] ?? null;
         $invoice->ps_id = $data['ps_id'] ?? null;

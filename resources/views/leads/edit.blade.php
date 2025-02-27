@@ -187,6 +187,20 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-3">
+                                <div class="fv-row mb-3">
+                                    <!--begin::Label-->
+                                    <label class="form-label fw-bolder text-dark">Contact Person Name</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="contact_person_name" value="{{ old('contact_person_name', $lead->contact_person_name) }}" autocomplete="off" />
+                                    <!--end::Input-->
+                                    @if ($errors->has('contact_person_name'))
+                                    <span class="text-danger">{{ $errors->first('contact_person_name') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
 
                             <!-- Address -->
                             <div class="col-md-3">

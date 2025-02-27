@@ -472,3 +472,9 @@ CREATE TABLE `notifications` (
 ALTER TABLE `sms_log` ADD `lead_id` INT NULL DEFAULT NULL AFTER `user_id`, ADD `api_response` TEXT NULL DEFAULT NULL AFTER `lead_id`;
 ALTER TABLE `sms_log` ADD `work_order_id` INT NULL DEFAULT NULL AFTER `campaign_id`, ADD `invoice_id` INT NULL DEFAULT NULL AFTER `work_order_id`, ADD `meeting_id` INT NULL DEFAULT NULL AFTER `invoice_id`;
 ALTER TABLE `customers` ADD `customer_listing_date` DATE NULL DEFAULT NULL AFTER `customer_notes`;
+
+--27-02-2025 not add in live database
+ALTER TABLE `invoices` ADD COLUMN `ref_no` VARCHAR(255) NULL AFTER `invoice_number`;
+
+--27-02-2025 not add in live database
+ALTER TABLE `leads` ADD COLUMN `contact_person_name` VARCHAR(191) NULL AFTER `alternative_number`;

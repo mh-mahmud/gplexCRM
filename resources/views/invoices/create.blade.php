@@ -95,7 +95,8 @@
 
                                     <div class="fv-row mb-5">
                                         <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span></label>
-                                        <select class="form-control form-control-sm form-control-solid" id="customerSelect" name="customer_id" aria-label="Default select example">
+                                        <select  class="form-control form-control-sm form-control-solid" id="customerSelect" name="customer_id" data-allow-clear="true"
+                                        data-kt-select2="select2">
                                             <option value="" {{ old('customer_id') == '' ? 'selected' : '' }}>Select Customer</option>
                                             @foreach($customers as $customer)
                                             <option value="{{ $customer->id }}"  data-address="{{ $customer->address }}"
@@ -104,10 +105,12 @@
                                             </option>
                                             @endforeach
                                         </select>
+                                       
                                         @if ($errors->has('customer_id'))
                                         <span class="text-danger">{{ $errors->first('customer_id') }}</span>
                                         @endif
                                     </div>
+                                    
 
 
 
@@ -360,6 +363,28 @@
                                             @if ($errors->has('discount_type'))
                                             <span class="text-danger">{{ $errors->first('discount_type') }}</span>
                                             @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="fv-row mb-5">
+                                            <!--begin::Label-->
+                                            <label class="form-label fw-bolder text-dark">
+                                                Reference Number
+
+                                               
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <div class="input-group">
+                                                
+                                                <input class="form-control form-control-sm"
+                                                    type="text" name="ref_no"
+                                                    value="{{ old('ref_no') }}" />
+                                                @if($errors->has('ref_no'))
+                                                <span class="text-danger">{{ $errors->first('ref_no') }}</span>
+                                                @endif
+                                            </div>
+                                            <!--end::Input-->
                                         </div>
                                     </div>
 
@@ -1248,22 +1273,29 @@
     });
 </script>
 
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        let customerSelect = document.getElementById("customerSelect");
+        let customerSelect = $('#customerSelect');
+
+        customerSelect.select2({
+            placeholder: "Select Customer",
+            allowClear: true
+        });
+
         let addressField = document.getElementById("address");
 
-        customerSelect.addEventListener("change", function () {
-            let selectedOption = customerSelect.options[customerSelect.selectedIndex];
-            let address = selectedOption.getAttribute("data-address") || "";
-
+        //select2 Change
+        customerSelect.on("change", function () {
+            let selectedOption = this.options[this.selectedIndex];
+            let address = selectedOption ? selectedOption.getAttribute("data-address") || "" : "";
             addressField.value = address;
         });
 
         //address field on page load a customer is before selected
-        let preselectedOption = customerSelect.options[customerSelect.selectedIndex];
-        if (preselectedOption) {
-            addressField.value = preselectedOption.getAttribute("data-address") || "";
+        let preselectedOption = customerSelect.find("option:selected");
+        if (preselectedOption.length) {
+            addressField.value = preselectedOption.attr("data-address") || "";
         }
     });
 </script>

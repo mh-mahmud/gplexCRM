@@ -19,6 +19,7 @@ class Lead extends Model
        'email',
        'phone',
        'alternative_number',
+       'contact_person_name',
        'gender',
        'dob',
        'marital_status',

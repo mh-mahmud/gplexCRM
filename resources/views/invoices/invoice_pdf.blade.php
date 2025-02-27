@@ -228,10 +228,19 @@
 
 
             @endif -->
-            <tr>
+
+           @if (!empty($invoice->ref_no))
+                <tr>
+                    <td class="text-main font-bold">Ref</td>
+                    <td>{{ $invoice->ref_no }}</td>
+                </tr>
+
+
+            @endif
+            <!-- <tr>
                 <td class="text-main font-bold">Invoice #</td>
                 <td>{{ $invoice->invoice_number }}</td>
-            </tr>
+            </tr> -->
 
             <tr>
                 <td class="text-main font-bold " style="white-space: nowrap">Beneficiary Address</td>

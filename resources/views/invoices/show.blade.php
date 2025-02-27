@@ -72,6 +72,14 @@
                                                         </div>
                                                     </td>
                                                     @endif
+                                                    @if (!empty($invoice->ref_no))
+                                                    <td class="border-r pr-4">
+                                                        <div>
+                                                            <p class="whitespace-nowrap text-slate-400 text-right">Ref:</p>
+                                                            <p class="whitespace-nowrap font-bold text-main text-right">{{$invoice->ref_no}}</p>
+                                                        </div>
+                                                    </td>
+                                                    @endif
                                                     <td class="pl-4">
                                                         <div>
                                                             <p class="whitespace-nowrap text-slate-400 text-right">Invoice #</p>
