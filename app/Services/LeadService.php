@@ -32,7 +32,17 @@ class LeadService
          return Lead::with('leadsForm:form_id,form_name')->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
     }
 
-    public function getLeadsByFormId($form_id)
+    public function getTotalLeads()
+    {
+        return Lead::with('leadsForm:form_id,form_name')
+            ->leftJoin('customers', 'leads.id', '=', 'customers.lead_id')
+            ->whereNull('customers.lead_id')
+            ->select('leads.*') 
+            ->orderBy('leads.id', 'desc')
+            ->paginate(config('constants.ROW_PER_PAGE')); 
+    }
+
+   public function getLeadsByFormId($form_id)
     {
         if (Auth::user()->user_type !== 'admin') {
             return Lead::where('form_id', $form_id)->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));

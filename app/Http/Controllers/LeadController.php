@@ -67,6 +67,17 @@ class LeadController  extends Controller
 
         return view('leads.index', compact('leads', 'formName'));
     }
+
+    public function total_lead()
+    {
+    
+  
+    $leads = $this->leadService->getTotalLeads();
+    $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
+
+    return view('leads.index', compact('leads','formName'));
+    }
+
     public function create_backup()
     {
 

@@ -96,7 +96,7 @@
                                     <!--end::Info-->
 
                                     <!--begin::Subtitle-->
-                                    <a href="{{ route('lead-index') }}">
+                                    <a href="{{ route('total-lead') }}">
                                         <span class="text-gray-501 pt-1 fw-semibold fs-6">Total Leads</span>
                                     </a>
                                     <!--end::Subtitle-->

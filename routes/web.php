@@ -64,6 +64,7 @@ Route::group(['middleware' => ['auth']], function () {
 	// Lead routes
 	//Route::get('/lead', [LeadController::class, 'index'])->name('lead-index');
 	Route::get('/leads/{form_id?}', [LeadController::class, 'index'])->name('lead-index')->middleware(['check-permission']);
+	Route::get('/lead/total-lead', [LeadController::class, 'total_lead'])->name('total-lead')->middleware(['check-permission']);
 	Route::get('/lead/create', [LeadController::class, 'create'])->name('lead-create')->middleware(['check-permission']);
 	Route::get('/lead/leads-upload', [LeadController::class, 'leads_upload'])->name('leads-upload')->middleware(['check-permission']);
 	Route::get('/lead/sample-file', [LeadController::class, 'downloadSampleFile'])->name('sample-file');
@@ -85,6 +86,7 @@ Route::group(['middleware' => ['auth']], function () {
 	// search lead on url
 	Route::get('/leads/phone/{phone?}', [LeadController::class, 'search_phone'])->name('search-by-phone');
 	Route::put('/leads/{id}/update-lead-profile-image', [LeadController::class, 'updateLeadProfileImage'])->name('update-lead-profile-image');
+	
 
 	//Route::get('/leads/add', 'LeadController@add')->name('leads.add');
 	
