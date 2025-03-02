@@ -288,7 +288,9 @@ class InvoiceController extends Controller
         $customInvoiceData = InvoiceCustomForm::where('id', $invoice->invoice_custom_form_id)
                                             ->select('id', 'invoice_name','field_details','footer_details', 'bank_details', 'issued_by')
                                             ->first();
-        $pdf = PDF::loadView('invoices.invoice_pdf', compact('invoice', 'products', 'invoiceItems','newDueAmount', 'customInvoiceData'));
+        $logogenuity = getcwd().'/uploads/invoice/genuity.png';
+        $logogplex = getcwd().'/uploads/invoice/gplex.png';
+        $pdf = PDF::loadView('invoices.invoice_pdf', compact('invoice', 'products', 'invoiceItems','newDueAmount', 'customInvoiceData','logogenuity','logogplex'));
         return $pdf->download('invoice_' . $invoice->invoice_number . '.pdf');
     }
 

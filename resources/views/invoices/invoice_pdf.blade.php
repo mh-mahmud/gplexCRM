@@ -168,7 +168,7 @@
 </head>
 
 <body
-    style="font-family: Arial, sans-serif; line-height: 1; margin: 0 10px auto; max-width: 900px; padding: 5px; font-size: 12px;">
+    style="font-family: Arial, sans-serif; line-height: 1; margin: 0 20px auto; max-width: 800px; padding: 5px; font-size: 12px;">
 @php
     // Determine the payment status based on $newDueAmount
     if ($newDueAmount == 0) {
@@ -193,11 +193,15 @@
 <div class="inv-header-top">
     <table style="border-collapse: collapse; border: none;">
         <tr>
-            <td style="border: none; padding-bottom: 10px;">
-                <img src="{{ public_path('uploads/invoice/genuity.png') }}" width="200" alt="Logo">
+            <td style="border: none; padding: 10px;">
+               
+            <img src="{{ $logogenuity }}" width="200" alt="Logo">
+              
+
             </td>
-            <td style="border: none; padding-bottom: 10px; text-align: right">
-                <img src="{{ public_path('uploads/invoice/gplex.png') }}" width="200" alt="Logo">
+            <td style="border: none; padding: 10px;">
+                
+                <img src="{{ $logogplex }}" width="200" alt="Logo">
             </td>
         </tr>
     </table>
