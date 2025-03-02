@@ -194,13 +194,9 @@
     <table style="border-collapse: collapse; border: none;">
         <tr>
             <td style="border: none; padding: 10px;">
-               
-            <img src="{{ $logogenuity }}" width="200" alt="Logo">
-              
-
+                <img src="{{ $logogenuity }}" width="200" alt="Logo">
             </td>
             <td style="border: none; padding: 10px;">
-                
                 <img src="{{ $logogplex }}" width="200" alt="Logo">
             </td>
         </tr>
@@ -229,14 +225,14 @@
                 </tr>
 
 
+
             @endif -->
 
-           @if (!empty($invoice->ref_no))
+            @if (!empty($invoice->ref_no))
                 <tr>
                     <td class="text-main font-bold">Ref</td>
                     <td>{{ $invoice->ref_no }}</td>
                 </tr>
-
 
             @endif
             <!-- <tr>
@@ -461,7 +457,8 @@
 
             <div style="text-align: center; border-top:1px solid #000; margin-top: 150px; padding-top: 10px">
                 <small style=" text-align: center; font-size: 9px; padding-top: 5px; width: 100%; line-height: 1.1">
-                Genusys Point,Plot-8,Road-4,Block-A,Section-11,Mirpur,Dhaka-1216,Bangladesh,Tel:+88 0961 188 8444,02-903 0244/55,Email:info@genuitysystems.com
+                    Genusys Point,Plot-8,Road-4,Block-A,Section-11,Mirpur,Dhaka-1216,Bangladesh,Tel:+88 0961 188
+                    8444,02-903 0244/55,Email:info@genuitysystems.com
                 </small>
             </div>
 
@@ -495,9 +492,10 @@
                 </tr>
             </table>
             <div style="text-align: center; border-top:1px solid #000; margin-top: 150px; padding-top: 10px">
-            <small style=" text-align: center; font-size: 9px; padding-top: 5px; width: 100%; line-height: 1.1">
-                Genusys Point,Plot-8,Road-4,Block-A,Section-11,Mirpur,Dhaka-1216,Bangladesh,Tel:+88 0961 188 8444,02-903 0244/55,Email:info@genuitysystems.com
-            </small>
+                <small style=" text-align: center; font-size: 9px; padding-top: 5px; width: 100%; line-height: 1.1">
+                    Genusys Point,Plot-8,Road-4,Block-A,Section-11,Mirpur,Dhaka-1216,Bangladesh,Tel:+88 0961 188
+                    8444,02-903 0244/55,Email:info@genuitysystems.com
+                </small>
             </div>
         </div>
     @endif
