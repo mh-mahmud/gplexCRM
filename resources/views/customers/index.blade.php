@@ -98,7 +98,7 @@
                                         <th class="min-w-100px">Last Name</th>
                                         <th class="min-w-120px">Email</th>
                                         <th class="min-w-120px">Phone</th>
-                                        <th class="min-w-100px">Customer Group</th>
+                                       
                                         <th class="min-w-100px">Date</th>
                                         <th class="min-w-200px">Notes</th>
                                         <th class="min-w-100px text-end text-end-new">Actions</th>
@@ -113,7 +113,7 @@
                                             <td class="text-dark fs-6 w-200px">{{ $customer->lead_data?->last_name ?? '' }}</td>
                                             <td class="text-dark fs-6">{{ $customer->lead_data?->email ?? '' }}</td>
                                             <td class="text-dark fs-6">{{ $customer->lead_data?->phone ?? '' }}</td>
-                                            <td class="text-dark fs-6">{{$customer->customer_group}}</td>
+                                            
                                             <td class="text-dark fs-6">{{ !empty($customer->customer_listing_date) ? date("d F, Y", strtotime($customer->customer_listing_date)) : "" }}</td>
                                             <td class="text-dark fs-6">{{$customer->customer_notes}}</td>
                                             <td>
