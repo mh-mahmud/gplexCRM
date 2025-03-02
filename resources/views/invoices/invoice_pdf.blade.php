@@ -193,10 +193,10 @@
 <div class="inv-header-top">
     <table style="border-collapse: collapse; border: none;">
         <tr>
-            <td style="border: none; padding: 10px;">
+            <td style="border: none; padding-bottom: 10px; ">
                 <img src="{{ $logogenuity }}" width="200" alt="Logo">
             </td>
-            <td style="border: none; padding: 10px;">
+            <td style="border: none; padding-bottom: 10px; text-align: right">
                 <img src="{{ $logogplex }}" width="200" alt="Logo">
             </td>
         </tr>
@@ -291,7 +291,7 @@
             @php
                 $custom_invoice_total_field = count($customInvoiceData->field_details);
             @endphp
-            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+            <table style="width: 100%; border-collapse: collapse; margin: 5px 0;">
                 <thead>
                 <tr>
                     <th style="padding: 5px; text-align: center; color: #000000"
@@ -301,7 +301,7 @@
                 </tr>
                 <tr style="border: 1px solid #424242; padding: 5px; text-align: left;
     color: #000000;">
-                    <th>SL No</th>
+                    <th align="left">SL No</th>
                     @foreach ($customInvoiceData->field_details as $field)
                         <th>
                             {{ $field['field_name'] }}
@@ -455,7 +455,7 @@
             </table>
 
 
-            <div style="text-align: center; border-top:1px solid #000; margin-top: 150px; padding-top: 10px">
+            <div style="text-align: center; border-top:1px solid #000; margin-top: 280px; padding-top: 10px">
                 <small style=" text-align: center; font-size: 9px; padding-top: 5px; width: 100%; line-height: 1.1">
                     Genusys Point,Plot-8,Road-4,Block-A,Section-11,Mirpur,Dhaka-1216,Bangladesh,Tel:+88 0961 188
                     8444,02-903 0244/55,Email:info@genuitysystems.com
@@ -491,7 +491,7 @@
                     </td>
                 </tr>
             </table>
-            <div style="text-align: center; border-top:1px solid #000; margin-top: 200px; padding-top: 10px">
+            <div style="text-align: center; border-top:1px solid #000; margin-top: 280px; padding-top: 10px">
                 <small style=" text-align: center; font-size: 9px; padding-top: 5px; width: 100%; line-height: 1.1">
                     Genusys Point,Plot-8,Road-4,Block-A,Section-11,Mirpur,Dhaka-1216,Bangladesh,Tel:+88 0961 188
                     8444,02-903 0244/55,Email:info@genuitysystems.com
