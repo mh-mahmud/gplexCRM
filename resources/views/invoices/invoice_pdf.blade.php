@@ -194,12 +194,14 @@
     <table style="border-collapse: collapse; border: none;">
         <tr>
             <td style="border: none; padding: 10px;">
-                <img src="{{ asset('uploads/invoice/genuity.png') }}" alt="genuity"/>
-                <img width="100" src="https://picsum.photos/120/80" alt="">
+               
+                <img src="{{ public_path('uploads/invoice/genuity.png') }}" width="200" alt="Logo">
+              
 
             </td>
             <td style="border: none; padding: 10px;">
-                <img src="{{ asset('uploads/invoice/gplex.png') }}" alt="gplex"/>
+                
+                <img src="{{ public_path('uploads/invoice/gplex.png') }}" width="200" alt="Logo">
             </td>
         </tr>
     </table>
