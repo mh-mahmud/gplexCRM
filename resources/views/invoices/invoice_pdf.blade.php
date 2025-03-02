@@ -455,7 +455,7 @@
             </table>
 
 
-            <div style="text-align: center; border-top:1px solid #000; margin-top: 280px; padding-top: 10px">
+            <div style="text-align: center; border-top:1px solid #000; margin-top: 150px; padding-top: 10px">
                 <small style=" text-align: center; font-size: 9px; padding-top: 5px; width: 100%; line-height: 1.1">
                     Genusys Point,Plot-8,Road-4,Block-A,Section-11,Mirpur,Dhaka-1216,Bangladesh,Tel:+88 0961 188
                     8444,02-903 0244/55,Email:info@genuitysystems.com
@@ -491,7 +491,7 @@
                     </td>
                 </tr>
             </table>
-            <div style="text-align: center; border-top:1px solid #000; margin-top: 280px; padding-top: 10px">
+            <div style="text-align: center; border-top:1px solid #000; margin-top: 150px; padding-top: 10px">
                 <small style=" text-align: center; font-size: 9px; padding-top: 5px; width: 100%; line-height: 1.1">
                     Genusys Point,Plot-8,Road-4,Block-A,Section-11,Mirpur,Dhaka-1216,Bangladesh,Tel:+88 0961 188
                     8444,02-903 0244/55,Email:info@genuitysystems.com
