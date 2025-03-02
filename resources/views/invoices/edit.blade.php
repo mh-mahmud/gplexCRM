@@ -1253,6 +1253,7 @@
         }
 
 function populateCustomInvoiceFields(fields, existingData = []) {
+    //console.log
     // headers in the custom invoice table
     customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Amount</th><th>Action</th>';
 
@@ -1260,7 +1261,8 @@ function populateCustomInvoiceFields(fields, existingData = []) {
     customInvoiceBody.innerHTML = '';
 
     // if existing data is available, populate the first row
-    if (existingData.length > 0) {
+    if (existingData.length >0) {
+        //alert('sdsdsds');
         existingData.forEach((data) => {
             const initialRow = `
                 <tr>
@@ -1268,7 +1270,7 @@ function populateCustomInvoiceFields(fields, existingData = []) {
                         <td>
                             ${
                                 field.field_name.toLowerCase() === 'description'
-                                ? `<textarea class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}">${data[field.field_value] || ''}</textarea>`
+                                ? `<textarea class="form-control form-select-sm min-w-250px" cols="30" rows="2" name="items[${field.field_value}][]" placeholder="${field.field_name}">${data[field.field_value] || ''}</textarea>`
                                 : `<input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" value="${data[field.field_value] || ''}" />`
                             }
                         </td>`).join('')}
@@ -1300,7 +1302,7 @@ function populateCustomInvoiceFields(fields, existingData = []) {
                 <td>
                     ${
                         field.field_name.toLowerCase() === 'description'
-                        ? `<textarea class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}"></textarea>`
+                        ? `<textarea class="form-control form-select-sm min-w-250px" cols="30" rows="2" name="items[${field.field_value}][]" placeholder="${field.field_name}"></textarea>`
                         : `<input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" />`
                     }
                 </td>`).join('')}

@@ -28,20 +28,26 @@ class InvoiceService
 
     public function getAllInvoices()
     {
-        if (Auth::user()->user_type !== 'admin') {
-            return Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
+        // if (Auth::user()->user_type !== 'admin') {
+        //     return Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
+        //     ->join('leads', 'customers.lead_id', '=', 'leads.id')
+        //     ->where('invoices.created_by', Auth::user()->id) 
+        //     ->select('invoices.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
+        //     ->orderBy('invoices.created_at', 'desc')
+        //     ->paginate(config('constants.ROW_PER_PAGE'));
+        // } else {
+        //     return Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
+        //     ->join('leads', 'customers.lead_id', '=', 'leads.id')
+        //     ->select('invoices.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
+        //     ->orderBy('invoices.created_at', 'desc')
+        //     ->paginate(config('constants.ROW_PER_PAGE'));
+        // }
+
+        return Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
             ->join('leads', 'customers.lead_id', '=', 'leads.id')
-            ->where('invoices.created_by', Auth::user()->id) 
             ->select('invoices.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
             ->orderBy('invoices.created_at', 'desc')
             ->paginate(config('constants.ROW_PER_PAGE'));
-        } else {
-            return Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
-            ->join('leads', 'customers.lead_id', '=', 'leads.id')
-            ->select('invoices.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
-            ->orderBy('invoices.created_at', 'desc')
-            ->paginate(config('constants.ROW_PER_PAGE'));
-        }
     }
 
 
