@@ -195,13 +195,13 @@
         <tr>
             <td style="border: none; padding: 10px;">
                
-                <img src="{{ public_path('uploads/invoice/genuity.png') }}" width="200" alt="Logo">
+            <img src="{{ $logogenuity }}" width="200" alt="Logo">
               
 
             </td>
             <td style="border: none; padding: 10px;">
                 
-                <img src="{{ public_path('uploads/invoice/gplex.png') }}" width="200" alt="Logo">
+                <img src="{{ $logogplex }}" width="200" alt="Logo">
             </td>
         </tr>
     </table>
