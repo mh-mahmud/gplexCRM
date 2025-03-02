@@ -1146,7 +1146,7 @@
         });
 
 
-        function populateCustomInvoiceFields_backup_27022025(fields, existingData = []) {
+        function populateCustomInvoiceFields(fields, existingData = []) {
             // Headers in the custom invoice table
             customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Amount</th><th>Action</th>';
 
@@ -1252,7 +1252,7 @@
             });
         }
 
-function populateCustomInvoiceFields(fields, existingData = []) {
+function populateCustomInvoiceFields_backup_27022025(fields, existingData = []) {
     //console.log
     // headers in the custom invoice table
     customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Amount</th><th>Action</th>';
