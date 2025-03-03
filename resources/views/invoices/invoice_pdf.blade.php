@@ -161,19 +161,40 @@
             position: fixed;
             bottom: -80px;
             width: 100%;
-            height: 60px;}
+            height: 60px;
+            text-align: center;
+            border-top: 1px solid #000;
+            padding-top: 10px;
+        }
 
+        .page-break {
+            page-break-after: always;
+        }
+
+        /* Add print-specific styles */
         @media print {
             body {
                 margin: 0;
                 padding: 10px;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
+
+            .footer {
+                position: fixed;
+                bottom: 0;
+            }
+
+            .page-break {
+            page-break-after: always;
+        }
         }
     </style>
 </head>
 
 <body
     style="font-family: Arial, sans-serif; line-height: 1; margin: 0 20px auto; max-width: 800px; padding: 5px; font-size: 12px;">
+
 @php
     // Determine the payment status based on $newDueAmount
     if ($newDueAmount == 0) {
@@ -188,6 +209,7 @@
     }
 @endphp
 
+@foreach(['Office Copy', 'Client Copy'] as $copyType)
 
 <div style="margin-left:8px" class="{{ $statusClass }}">
     <!-- <button>
@@ -196,7 +218,7 @@
 </div>
 
 <div class="inv-header-top">
-    <table style="border-collapse: collapse; border: none;">
+    <table style="border-collapse: collapse; border: none;" role="presentation" aria-label="Invoice Header">
         <tr>
             <td style="border: none; padding-bottom: 10px; ">
                 <img src="{{ $logogenuity }}" width="200" alt="Logo">
@@ -206,8 +228,16 @@
             </td>
         </tr>
     </table>
+</div>
 
-
+<div class="inv-form-name">
+    <table style="border-collapse: collapse; border: none;" role="presentation" aria-label="Invoice Header">
+        <tr>
+            <td style="border: none; text-align:right">
+                <strong style="border:1px solid #000000; padding:5px">{{$copyType}}</strong>
+            </td>
+        </tr>
+    </table>
 </div>
 
 <div class="inv-main">
@@ -344,7 +374,7 @@
                                 {{ $value }}
                             </td>
                         @endforeach
-                        <td>
+                        <td style="text-align: right">
                             {{ $item[count($item) - 1]['amount'] }}
                         </td>
                     </tr>
@@ -411,25 +441,16 @@
         </div>
     @endif
     @if (empty($invoice->invoice_custom_form_id))
-        <div class="text-right font-bold">Sub Total: TK{{ $invoice->sub_total }}</div>
-        @if (!empty($invoice->discount))
-            <div class="text-right font-bold">Discount: TK{{ $invoice->discount }}</div>
-        @endif
-        @if ($invoice->total_tax > 0)
-            <div class="text-right font-bold">Tax Total: TK{{ $invoice->total_tax }}</div>
-        @endif
-        @if (!empty($invoice->adjustment))
-            <div class="text-right font-bold">Adjustment: TK{{ $invoice->adjustment }}</div>
-        @endif
-        <div class="text-right font-bold">Total Amount: TK{{ $invoice->total_amount }}</div>
-        <div class="text-right font-bold">Total Due Amount: TK{{ $newDueAmount }}</div>
+        <div class="text-right font-bold">Sub Total: TK {{ $invoice->sub_total }}</div>
+        <div class="text-right font-bold">Total Amount: TK {{ $invoice->total_amount }}</div>
+        <div class="text-right font-bold">Total Due Amount: TK {{ $newDueAmount }}</div>
     @endif
     <div
         style="border: 2px solid #000000; display: flex; justify-content: space-between; padding: 10px 5px; border-collapse: collapse; margin: 40px 8px;">
         <strong>Total In word:</strong>
-        <strong>
+        {{-- <strong>
             {{ \App\Helpers\Helper::convertNumberToWords($invoice->total_amount) }}
-        </strong>
+        </strong> --}}
     </div>
     @if (!empty($invoice->invoice_custom_form_id))
         <div style="position: relative; width: 100%; height: auto; margin: 40px 5px">
@@ -506,6 +527,12 @@
     @endif
 </div>
 
+
+@if(!$loop->last)
+<div class="page-break"></div>
+@endif
+</div>
+@endforeach
 </body>
 
 </html>
