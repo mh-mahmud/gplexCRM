@@ -89,7 +89,7 @@ class Helper
         return config('constants.MAX_REPORT_DAYS') >= $startDate->diffInDays($endDate);
     }
 
-    public static function convertNumberToWords($number) {
+    public static function convertNumberToWords_backup_03032025($number) {
         if ($number == 0) {
             return 'zero taka';
         }
@@ -153,6 +153,76 @@ class Helper
         }
     
         return $words;
+    }
+
+
+
+
+     // convert number to words
+     public static function convertNumberToWords($number) {
+        if ($number == 0) {
+            return 'zero taka';
+        }
+
+        //define arrays for words
+        $ones = array(
+            "", "one", "two", "three", "four", "five",
+            "six", "seven", "eight", "nine", "ten",
+            "eleven", "twelve", "thirteen", "fourteen",
+            "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"
+        );
+        $tens = array(
+            "", "", "twenty", "thirty", "forty", "fifty",
+            "sixty", "seventy", "eighty", "ninety"
+        );
+        $thousands = array(
+            "", "thousand", "million", "billion", "trillion"
+        );
+
+        // split number into integer and decimal parts
+        $integerPart = intval($number);
+        $decimalPart = round($number - $integerPart, 2) * 100; // Extract 2 decimal places
+
+        $words = "";
+        $place = 0;
+
+        //convert the integer part
+        while ($integerPart > 0) {
+            $chunk = $integerPart % 1000; // get the last three digits
+            if ($chunk > 0) {
+                $words = self::convertThreeDigits($chunk, $ones, $tens) . " " . $thousands[$place] . " " . $words;
+            }
+            $integerPart = intval($integerPart / 1000); // remove the last three digits
+            $place++;
+        }
+
+        $words = trim($words) . " taka";
+
+        // add decimal part if exists
+        if ($decimalPart > 0) {
+            $words .= " and " . self::convertThreeDigits($decimalPart, $ones, $tens) . " paisa";
+        }
+
+        return $words;
+    }
+
+    // helper function to convert three digits
+    public static function convertThreeDigits($num, $ones, $tens) {
+        $result = "";
+
+        if ($num >= 100) {
+            $result .= $ones[intval($num / 100)] . " hundred ";
+            $num %= 100;
+        }
+        if ($num >= 20) {
+            $result .= $tens[intval($num / 10)] . " ";
+            $num %= 10;
+        }
+        if ($num > 0) {
+            $result .= $ones[$num] . " ";
+        }
+
+        return trim($result);
     }
 
     public static function settings() {

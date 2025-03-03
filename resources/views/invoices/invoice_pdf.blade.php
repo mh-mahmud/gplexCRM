@@ -448,9 +448,9 @@
     <div
         style="border: 2px solid #000000; display: flex; justify-content: space-between; padding: 10px 5px; border-collapse: collapse; margin: 40px 8px;">
         <strong>Total In word:</strong>
-        {{-- <strong>
+        <strong>
             {{ \App\Helpers\Helper::convertNumberToWords($invoice->total_amount) }}
-        </strong> --}}
+        </strong>
     </div>
     @if (!empty($invoice->invoice_custom_form_id))
         <div style="position: relative; width: 100%; height: auto; margin: 40px 5px">
