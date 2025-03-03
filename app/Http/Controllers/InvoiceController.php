@@ -290,6 +290,9 @@ class InvoiceController extends Controller
                                             ->first();
         $logogenuity = getcwd().'/uploads/invoice/genuity.png';
         $logogplex = getcwd().'/uploads/invoice/gplex.png';
+        //for live url
+		//$logogenuity = url('uploads/invoice/genuity.png');
+        //$logogplex = url('uploads/invoice/gplex.png');
         $pdf = PDF::loadView('invoices.invoice_pdf', compact('invoice', 'products', 'invoiceItems','newDueAmount', 'customInvoiceData','logogenuity','logogplex'));
         return $pdf->download('invoice_' . $invoice->invoice_number . '.pdf');
     }
