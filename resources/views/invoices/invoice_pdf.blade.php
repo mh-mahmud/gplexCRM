@@ -179,7 +179,7 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
-            
+
             .footer {
                 position: fixed;
                 bottom: 0;
@@ -194,7 +194,7 @@
 
 <body
     style="font-family: Arial, sans-serif; line-height: 1; margin: 0 20px auto; max-width: 800px; padding: 5px; font-size: 12px;">
-    
+
 @php
     // Determine the payment status based on $newDueAmount
     if ($newDueAmount == 0) {
@@ -209,7 +209,7 @@
     }
 @endphp
 
-@foreach(['Office Copy', 'Customer Copy'] as $copyType)
+@foreach(['Office Copy', 'Client Copy'] as $copyType)
 
 <div style="margin-left:8px" class="{{ $statusClass }}">
     <!-- <button>
