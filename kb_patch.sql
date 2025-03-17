@@ -478,3 +478,19 @@ ALTER TABLE `invoices` ADD COLUMN `ref_no` VARCHAR(255) NULL AFTER `invoice_numb
 
 --27-02-2025 not add in live database
 ALTER TABLE `leads` ADD COLUMN `contact_person_name` VARCHAR(191) NULL AFTER `alternative_number`;
+
+
+--17-03-2025 not add in live database
+CREATE TABLE `product_feature` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` bigint(20) unsigned NOT NULL,
+  `p_feature_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unit_price` decimal(8,2) DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id_idx` (`product_id`),
+  CONSTRAINT `product_feature_fk_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+

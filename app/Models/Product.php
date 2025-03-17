@@ -17,4 +17,11 @@ class Product extends Model
     	'description',
     	'product_code'
     ];
+
+
+	public function features()
+{
+    return $this->hasMany(ProductFeature::class, 'product_id', 'id');
+}
+
 }
