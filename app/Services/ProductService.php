@@ -5,6 +5,7 @@ use App\Models\Product;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\Helper;
+use App\Models\ProductFeature;
 use DB;
 
 class ProductService
@@ -48,7 +49,7 @@ class ProductService
         ]);
         $data = $request->all();
 
-        dd($data);
+        //dd($data);
 
         $fileNameToStore = '';
         if ($request->hasFile('img_path')) {
@@ -182,5 +183,27 @@ class ProductService
                 'error'              => $e->getMessage()
             ];
         }
+    }
+
+
+    public function createProductFeature($data)
+    {
+        return ProductFeature::create($data);
+    }
+
+    public function updateProductFeature($data, $id)
+    {
+        $productFeature = ProductFeature::findOrFail($id);
+        $productFeature->p_feature_name = $data['p_feature_name'];
+        $productFeature->unit_price = $data['unit_price'];
+        $productFeature->save();
+        return $productFeature;
+    }
+
+
+    public function deleteProductFeature($id)
+    {
+        $productFeature = ProductFeature::findOrFail($id);
+        $productFeature->delete();
     }
 }

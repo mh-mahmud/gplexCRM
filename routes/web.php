@@ -273,6 +273,10 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('product-show/{id?}', [ProductController::class, 'productShow'])->name('product-show')->middleware(['check-permission']);
 	Route::get('product-edit/{id?}', [ProductController::class, 'productEdit'])->name('product-edit')->middleware(['check-permission']);
 	Route::put('product-update-pro/{id}', [ProductController::class, 'productUpdate'])->name('product-update-pro');
+	Route::post('add-product-feature', [ProductController::class, 'productFeatureStore'])->name('add-product-feature');
+	Route::delete('/product-feature/{id?}', [ProductController::class, 'destroy'])->name('product-feature-destroy');
+	Route::put('/product-feature-update/{id}', [ProductController::class, 'productFeatureUpdate'])->name('product-feature-update');
+
 	// Product routes end
 
     // Product Specification routes start

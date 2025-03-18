@@ -316,9 +316,20 @@ body.swal2-height-auto {
     break-inside: avoid;
 }
 
+
+.g-p-feature-details-area {
+    columns: 2;
+    break-inside: avoid;
+}
+
 @media all and (min-width: 1601px) {
     .g-lead-details-area {
         columns: 4;
+        break-inside: avoid;
+    }
+
+    .g-p-feature-details-area {
+        columns: 2;
         break-inside: avoid;
     }
 }
@@ -326,6 +337,11 @@ body.swal2-height-auto {
 @media all and (1024px <= width <= 1600px) {
     .g-lead-details-area {
         columns: 3;
+        break-inside: avoid;
+    }
+
+    .g-p-feature-details-area {
+        columns: 2;
         break-inside: avoid;
     }
 }
