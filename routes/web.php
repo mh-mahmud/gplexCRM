@@ -276,6 +276,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('add-product-feature', [ProductController::class, 'productFeatureStore'])->name('add-product-feature');
 	Route::delete('/product-feature/{id?}', [ProductController::class, 'destroy'])->name('product-feature-destroy')->middleware(['check-permission']);
 	Route::put('/product-feature-update/{id}', [ProductController::class, 'productFeatureUpdate'])->name('product-feature-update');
+	Route::post('product-features-show', [ProductController::class, 'product_features_show'])->name('product.features.show');
+	
 
 	// Product routes end
 
