@@ -119,6 +119,21 @@ class ProductController extends Controller {
         return redirect()->route('product-show', $request->product_id)->with('success', 'Product Feature updated successfully.');
     }
 
+    public function product_features_show(Request $request)
+    {
+        $values = $request->product_feature_values; // Retrieve values from AJAX request
+
+        if (!$values) {
+            return response()->json(['status' => 'error', 'message' => 'No values received!'], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Features retrieved successfully!',
+            'data' => $values
+        ]);
+    }
+
 
     public function destroy($id)
     {

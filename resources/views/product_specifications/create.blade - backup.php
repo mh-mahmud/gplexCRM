@@ -595,10 +595,6 @@
 <!--end::Content-->
 
 <script>
-
-
-
-
     document.addEventListener('DOMContentLoaded', function() {
         $('#product-select').select2({
             placeholder: "Select Products",
@@ -609,20 +605,14 @@
             var val = $(this).val();
         });
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
         $("#product-values").on("click", function(e) {
             e.preventDefault();
             var values = $('#product-select').val();
+            alert(values);
 
             $.ajax({
-                url: '{{ route("product.features.show") }}',
+                url: '{{ route("product-features-show") }}',
                 type: 'POST',
-                dataType: 'json',
                 data: {
                     _token: $('meta[name="csrf-token"]').attr('content'), // CSRF token
                     product_feature_values: values,
