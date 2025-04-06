@@ -494,3 +494,8 @@ CREATE TABLE `product_feature` (
   CONSTRAINT `product_feature_fk_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+--06-04-2025 not add in live database
+ALTER TABLE `gplex_crm`.`invoices` ADD COLUMN `approval_status` CHAR(16) NOT NULL DEFAULT 'pending' AFTER `invoice_status`;
+
+

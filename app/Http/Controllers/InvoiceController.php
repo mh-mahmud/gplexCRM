@@ -354,4 +354,23 @@ class InvoiceController extends Controller
         return redirect()->route('invoice-index')->with('success', 'Payment recorded successfully!');
     }
 
+
+    public function approve($id)
+{
+    $invoice = Invoice::findOrFail($id);
+    $customerId = $invoice->customer_id;
+    $lead_id = Customer::where('id', $customerId)->value('lead_id');
+    if ($invoice->approval_status !== 'approved') {
+        $invoice->approval_status = 'approved';
+        $invoice->save();
+
+        return back()->with('success', 'Invoice approved successfully.');
+        Helper::storeLog("Invoice approved successfully", "Invoice", "Invoice approved",$lead_id);
+        return redirect()->route('invoice-index')->with('success', 'Invoice approved successfully!');
+    }
+
+    return redirect()->route('invoice-index')->with('error', 'Invoice is already approved.');
+}
+
+
 }

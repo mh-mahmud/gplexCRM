@@ -162,6 +162,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('/invoice/search', [InvoiceController::class, 'search'])->name('invoice-search');
 	Route::get('/invoice/{invoiceId}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoice-download');
 	Route::post('/invoice/{invoice}/payment', [InvoiceController::class, 'storePayment'])->name('invoice-payment');
+    Route::post('/invoice/{id}/approve', [InvoiceController::class, 'approve'])->name('invoice-approve')->middleware(['check-permission']);
+
 
 	// invoice custom form route
 	Route::get('/invoice-custom', [InvoiceCustomFormController::class, 'index'])->name('invoice-custom-index')->middleware(['check-permission']);

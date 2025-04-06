@@ -231,6 +231,7 @@ use Carbon\Carbon;
                                     <th class="min-w-120px">Status</th>
                                     <th class="min-w-140px text-center">Payment</th>
                                     <th class="min-w-140px text-center">Due</th>
+                                    <th class="min-w-140px text-center">Approval Status</th>
                                     <th class="min-w-100px text-end text-end-new">Actions</th>
                                 </tr>
                             </thead>
@@ -258,10 +259,10 @@ use Carbon\Carbon;
                                     </td>
 
                                     @php
-                                    
+
                                     $paymentDetails = collect($invoice->payment_details);
                                     $totalPayments = $paymentDetails->sum('payment');
-                                    
+
                                     $lastPayment = $paymentDetails->last();
                                     $paymentAmount = $lastPayment['payment'] ?? '0.00';
                                     $dueAmount = $lastPayment['due'] ?? $invoice->total_amount;
@@ -273,13 +274,13 @@ use Carbon\Carbon;
                                     $status = 'Unpaid';
                                     $statusClass = 'badge-light-danger';
                                     } elseif ($totalPayments > 0 && $totalPayments < $invoice->total_amount) {
-                                    $status = 'Partial Paid';
-                                    $statusClass = 'badge-light-warning';
-                                    }
+                                        $status = 'Partial Paid';
+                                        $statusClass = 'badge-light-warning';
+                                        }
 
-                                    @endphp
+                                        @endphp
 
-                                   
+
 
                                         <td>
                                             <span class="badge {{ $statusClass }}">{{ $status }}</span>
@@ -291,8 +292,30 @@ use Carbon\Carbon;
                                         <td class="text-dark fs-6 w-200px text-center">{{ $totalPayments}}</td>
                                         <td class="text-dark fs-6 w-200px text-center">{{ $dueAmount }}</td>
                                         <td>
+                                            <span class="badge {{ $invoice->approval_status == 'approved' ? 'bg-success' : 'bg-warning' }}">
+                                                {{ ucfirst($invoice->approval_status) }}
+                                            </span>
+                                        </td>
+
+                                        <td>
                                             <div
                                                 class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
+                                                <!-- Approval Button -->
+                                                <form action="{{ route('invoice-approve', $invoice->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Do you want to approve this Invoice?')">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-1" title="Approve Invoice" {{ $invoice->approval_status === 'approved' ? 'disabled' : '' }}>
+                                                        <span class="svg-icon svg-icon-3">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                <path opacity="0.3"
+                                                                    d="M12 22C17.5229 22 22 17.5229 22 12C22 6.47715 17.5229 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5229 6.47715 22 12 22Z"
+                                                                    fill="black" />
+                                                                <path
+                                                                    d="M10.0004 14.0002L7.50037 11.5002L6.08594 12.9146L10.0004 16.829L18.0004 8.82898L16.586 7.41455L10.0004 14.0002Z"
+                                                                    fill="black" />
+                                                            </svg>
+                                                        </span>
+                                                    </button>
+                                                </form>
                                                 <a href="{{ route('invoice-show', $invoice->id) }}" target="_blank"
                                                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                     <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->

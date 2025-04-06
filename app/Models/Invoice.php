@@ -42,6 +42,7 @@ class Invoice extends Model
         'sale_agent_id',
         'created_by',
         'invoice_status',
+        'approval_status',
         'custom_footer_details'
     ];
 
