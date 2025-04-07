@@ -18,6 +18,7 @@ use App\Services\ProductSpecificationService;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
@@ -35,8 +36,13 @@ class InvoiceController extends Controller
     public function index()
     {
         //$invoices = Invoice::all();
+        $userRole = DB::table('users')
+        ->join('roles', 'users.role_id', '=', 'roles.id')
+        ->where('users.id', Auth::id())
+        ->select('roles.slug')
+        ->value('slug');
         $invoices = $this->invoiceService->getAllInvoices();
-        return view('invoices.index', compact('invoices'));
+        return view('invoices.index', compact('invoices','userRole'));
     }
 
     public function create_backup(Request $request)
@@ -363,8 +369,6 @@ class InvoiceController extends Controller
     if ($invoice->approval_status !== 'approved') {
         $invoice->approval_status = 'approved';
         $invoice->save();
-
-        return back()->with('success', 'Invoice approved successfully.');
         Helper::storeLog("Invoice approved successfully", "Invoice", "Invoice approved",$lead_id);
         return redirect()->route('invoice-index')->with('success', 'Invoice approved successfully!');
     }

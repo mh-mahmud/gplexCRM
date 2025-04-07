@@ -231,7 +231,9 @@ use Carbon\Carbon;
                                     <th class="min-w-120px">Status</th>
                                     <th class="min-w-140px text-center">Payment</th>
                                     <th class="min-w-140px text-center">Due</th>
+                                    @if($userRole == 'business_development' || $userRole == 'super_admin')
                                     <th class="min-w-140px text-center">Approval Status</th>
+                                    @endif
                                     <th class="min-w-100px text-end text-end-new">Actions</th>
                                 </tr>
                             </thead>
@@ -291,16 +293,19 @@ use Carbon\Carbon;
 
                                         <td class="text-dark fs-6 w-200px text-center">{{ $totalPayments}}</td>
                                         <td class="text-dark fs-6 w-200px text-center">{{ $dueAmount }}</td>
+                                        @if($userRole == 'business_development' || $userRole == 'super_admin')
                                         <td>
                                             <span class="badge {{ $invoice->approval_status == 'approved' ? 'bg-success' : 'bg-warning' }}">
                                                 {{ ucfirst($invoice->approval_status) }}
                                             </span>
                                         </td>
+                                        @endif
 
                                         <td>
                                             <div
                                                 class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
                                                 <!-- Approval Button -->
+                                                @if($userRole == 'business_development' || $userRole == 'super_admin')
                                                 <form action="{{ route('invoice-approve', $invoice->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Do you want to approve this Invoice?')">
                                                     @csrf
                                                     <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-1" title="Approve Invoice" {{ $invoice->approval_status === 'approved' ? 'disabled' : '' }}>
@@ -316,6 +321,7 @@ use Carbon\Carbon;
                                                         </span>
                                                     </button>
                                                 </form>
+                                                @endif
                                                 <a href="{{ route('invoice-show', $invoice->id) }}" target="_blank"
                                                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                     <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
