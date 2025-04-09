@@ -179,7 +179,7 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-5">
-                                                    <label class="form-label fw-bolder text-dark">First Name</label>
+                                                    <label class="form-label fw-bolder text-dark">Full Name</label>
                                                     <input class="form-control form-control-sm form-control-solid" type="text" name="first_name" />
                                                 </div>
                                             </div>

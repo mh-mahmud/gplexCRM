@@ -29,7 +29,12 @@ class CustomerService
         $data->last_name = $request->last_name;
         $data->phone = $request->phone;
         $data->email = $request->email;
-        $data->product_id = $request->product_id;
+        //$data->product_id = $request->product_id;
+        if ($request->has('product_id') && is_array($request->input('product_id'))) {
+            $data->product_id = implode(',', $request->input('product_id'));
+        } else {
+            $data->product_id = $request->product_id;
+        }
         $data->created_by = Auth::user()->id;
         $data->customer_group = $request->customer_group;
         $data->customer_notes = $request->customer_notes;

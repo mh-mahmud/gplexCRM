@@ -11,6 +11,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Notification;
 use App\Helpers\Helper;
+use App\Models\Invoice;
+use App\Models\Customer;
 
 class NotificationController extends Controller
 {
@@ -150,6 +152,29 @@ class NotificationController extends Controller
             $notification->save();
         }
         return response()->json(['success' => true]);
+    }
+
+
+    public function approvalPanel()
+    {
+        $invoices = $this->notificationService->getAllPendingInvoices();
+        return view('notification.approval_panel', compact('invoices'));
+    }
+
+
+    public function approveInvoice($id)
+    {
+        $invoice = Invoice::findOrFail($id);
+        $customerId = $invoice->customer_id;
+        $lead_id = Customer::where('id', $customerId)->value('lead_id');
+        if ($invoice->approval_status !== 'approved') {
+            $invoice->approval_status = 'approved';
+            $invoice->save();
+            Helper::storeLog("Invoice approved successfully", "Invoice", "Invoice approved", $lead_id);
+            return redirect()->route('approval-panel')->with('success', 'Invoice approved successfully!');
+        }
+
+        return redirect()->route('approval-panel')->with('error', 'Invoice is already approved.');
     }
 
   

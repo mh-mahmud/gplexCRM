@@ -162,7 +162,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('/invoice/search', [InvoiceController::class, 'search'])->name('invoice-search');
 	Route::get('/invoice/{invoiceId}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoice-download');
 	Route::post('/invoice/{invoice}/payment', [InvoiceController::class, 'storePayment'])->name('invoice-payment');
-    Route::post('/invoice/{id}/approve', [InvoiceController::class, 'approve'])->name('invoice-approve')->middleware(['check-permission']);
+    
+	
 
 
 	// invoice custom form route
@@ -364,6 +365,9 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::delete('/notification/{id?}', [NotificationController::class, 'destroy'])->name('notification-destroy');
 	Route::post('/notification/search', [NotificationController::class, 'search'])->name('notification-search');
 	Route::post('/notification/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('notification-markAsRead');
+	Route::get('/approval-panel', [NotificationController::class, 'approvalPanel'])->name('approval-panel')->middleware(['check-permission']);
+    Route::post('/notification/{id?}/invoice-approve', [NotificationController::class, 'approveInvoice'])->name('invoice-approve');
+
 
 
 

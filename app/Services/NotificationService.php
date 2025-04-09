@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Notification;
+use App\Models\Invoice;
 
 class NotificationService
 {
@@ -75,6 +76,18 @@ class NotificationService
         ->orderBy('notifications.created_at', 'desc')
         ->paginate(config('constants.ROW_PER_PAGE'));
 }
+
+
+public function getAllPendingInvoices()
+{
+    return Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
+    ->join('leads', 'customers.lead_id', '=', 'leads.id')
+    ->where('invoices.approval_status', '!=', 'approved')
+    ->select('invoices.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
+    ->orderBy('invoices.created_at', 'desc')
+    ->paginate(config('constants.ROW_PER_PAGE'));
+}
+
 
 
 }

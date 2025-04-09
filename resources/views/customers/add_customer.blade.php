@@ -109,7 +109,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Product</label>
                                                     <select class=" form-control form-control-sm form-control-solid" id="product_id" name="product_id" aria-label="Default select example">
@@ -123,6 +123,26 @@
                                                         <span class="text-danger">{{ $errors->first('product_id') }}</span>
                                                     @endif
                                                 </div>
+                                            </div> -->
+
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bolder text-dark">Product</label>
+                                                <select id="product-select" class="form-control form-control-sm form-control-solid"
+                                                    name="product_id[]"
+                                                    multiple="multiple"
+                                                    data-allow-clear="true"
+                                                    data-kt-select2="select2">
+                                                    @foreach ($products as $product)
+                                                    <option value="{{ $product->id }}"
+                                                        {{ is_array(old('product_id')) && in_array($product->id, old('product_id')) ? 'selected' : '' }}>
+                                                        {{ $product->name }}
+                                                    </option>
+                                                    @endforeach
+                                                </select>
+                                                
+                                                @if ($errors->has('product_id'))
+                                                <div class="text-danger">{{ $errors->first('product_id') }}</div>
+                                                @endif
                                             </div>
 
                                             <div class="col-md-6">
@@ -181,6 +201,16 @@
 
             <!-- </div> -->
             <!--end::Content-->
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+        $('#product-select').select2({
+            placeholder: "Select Products",
+            allowClear: true,
+        });
+    });
+</script>
 
 
 @endsection

@@ -495,7 +495,9 @@ CREATE TABLE `product_feature` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
---06-04-2025 not add in live database
+----06-04-2025 not add in live database
 ALTER TABLE `gplex_crm`.`invoices` ADD COLUMN `approval_status` CHAR(16) NOT NULL DEFAULT 'pending' AFTER `invoice_status`;
+----08-04-2025 not add in live database
+ALTER TABLE `gplex_crm`.`customers` CHANGE `product_id` `product_id` TEXT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
 
 
