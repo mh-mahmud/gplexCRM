@@ -231,9 +231,7 @@ use Carbon\Carbon;
                                     <th class="min-w-120px">Status</th>
                                     <th class="min-w-140px text-center">Payment</th>
                                     <th class="min-w-140px text-center">Due</th>
-                                  
                                     <th class="min-w-140px text-center">Approval Status</th>
-                                  
                                     <th class="min-w-100px text-end text-end-new">Actions</th>
                                 </tr>
                             </thead>

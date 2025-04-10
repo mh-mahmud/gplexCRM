@@ -231,9 +231,7 @@ use Carbon\Carbon;
                                     <th class="min-w-120px">Status</th>
                                     <th class="min-w-140px text-center">Payment</th>
                                     <th class="min-w-140px text-center">Due</th>
-                                    @if($userRole == 'business_development' || $userRole == 'super_admin')
                                     <th class="min-w-140px text-center">Approval Status</th>
-                                    @endif
                                     <th class="min-w-100px text-end text-end-new">Actions</th>
                                 </tr>
                             </thead>
@@ -293,13 +291,13 @@ use Carbon\Carbon;
 
                                         <td class="text-dark fs-6 w-200px text-center">{{ $totalPayments}}</td>
                                         <td class="text-dark fs-6 w-200px text-center">{{ $dueAmount }}</td>
-                                        @if($userRole == 'business_development' || $userRole == 'super_admin')
+                                       
                                         <td>
                                             <span class="badge {{ $invoice->approval_status == 'approved' ? 'bg-success' : 'bg-warning' }}">
                                                 {{ ucfirst($invoice->approval_status) }}
                                             </span>
                                         </td>
-                                        @endif
+                                      
 
                                         <td>
                                             <div
