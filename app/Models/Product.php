@@ -20,8 +20,8 @@ class Product extends Model
 
 
 	public function features()
-{
-    return $this->hasMany(ProductFeature::class, 'product_id', 'id');
-}
+    {
+        return $this->hasMany(ProductFeature::class, 'product_id', 'id');
+    }
 
 }

@@ -154,7 +154,7 @@
 
                     <!-- Start Form-->
 
-                    <form class="g-form w-100" action="{{ route('product-specification-store') }}" enctype="multipart/form-data" method="POST">
+                    <form class="g-form w-100" action="{{ route('product-specification-init-store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-4">
@@ -163,7 +163,6 @@
 
                                     </label>
                                     <select class="form-control form-control-sm form-control-solid" name="customer_id" aria-label="Default select example">
-                                        <option value="" {{ old('customer_id') == '' ? 'selected' : '' }}>Select Customer</option>
                                         @foreach($customers as $customer)
                                         <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
                                             {{ $customer->first_name }} {{ $customer->last_name }}
@@ -177,43 +176,6 @@
                                 </div>
                             </div>
 
-                            <!-- <div class="col-md-4">
-                                <label class="form-label fw-bolder text-dark">Product</label>
-                                <select class="form-control form-control-sm form-control-solid" name="product_id">
-                                    <option value="" {{ old('product_id') == '' ? 'selected' : '' }}>Select Product</option>
-                                    @foreach ($products as $product)
-                                    <option value="{{ $product->id }}" {{ old('product_id') == $product->id ? 'selected' : '' }}>
-                                        {{ $product->name }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                                @if ($errors->has('product_id'))
-                                <div class="text-danger">{{ $errors->first('product_id') }}</div>
-                                @endif
-                            </div> -->
-
-
-                            <div class="col-md-6">
-                                <label class="form-label fw-bolder text-dark">Product</label>
-                                <select id="product-select" class="form-control form-control-sm form-control-solid"
-                                    name="product_id[]"
-                                    multiple="multiple"
-                                    data-allow-clear="true"
-                                    data-kt-select2="select2">
-                                    @foreach ($products as $product)
-                                    <option value="{{ $product->id }}"
-                                        {{ is_array(old('product_id')) && in_array($product->id, old('product_id')) ? 'selected' : '' }}>
-                                        {{ $product->name }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                                
-                                @if ($errors->has('product_id'))
-                                <div class="text-danger">{{ $errors->first('product_id') }}</div>
-                                @endif
-                            </div>
-
-                            <div class="col-md-2"><label class="form-label fw-bolder text-dark">[click to render product form]</label><button class="btn btn-sm btn-success" id="product-values">generate features</button></div>
 
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Work Order Number</label>
@@ -239,141 +201,6 @@
                                 @endif
                             </div>
 
-                            <!-- add feature list -->
-                            <div class="col-md-6">
-                                <fieldset style="border:1px solid #ddd;padding: 20px;margin:20px">
-                                    <legend style="font-size:13px;">Call Center:-</legend>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label class="form-label fw-bolder text-dark">Feature Name</label>
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label fw-bolder text-dark">Unit Price</label>
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label fw-bolder text-dark">Quantity</label>
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="row" style="margin-top:10px;">
-                                        <div class="col-md-4">
-                                            <!-- <label class="form-label fw-bolder text-dark">Feature Name</label> -->
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!-- <label class="form-label fw-bolder text-dark">Unit Price</label> -->
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!-- <label class="form-label fw-bolder text-dark">Quantity</label> -->
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
-
-                            <div class="col-md-6">
-                                <fieldset style="border:1px solid #ddd;padding: 20px;margin:20px">
-                                    <legend style="font-size:13px;">Wallboard:-</legend>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label class="form-label fw-bolder text-dark">Feature Name</label>
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label fw-bolder text-dark">Unit Price</label>
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label fw-bolder text-dark">Quantity</label>
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="row" style="margin-top:10px;">
-                                        <div class="col-md-4">
-                                            <!-- <label class="form-label fw-bolder text-dark">&nbsp</label> -->
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!-- <label class="form-label fw-bolder text-dark">&nbsp</label> -->
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!-- <label class="form-label fw-bolder text-dark">&nbsp</label> -->
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="row" style="margin-top:10px;">
-                                        <div class="col-md-4">
-                                            <!-- <label class="form-label fw-bolder text-dark">&nbsp</label> -->
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!-- <label class="form-label fw-bolder text-dark">&nbsp</label> -->
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!-- <label class="form-label fw-bolder text-dark">&nbsp</label> -->
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
-                            <!-- end feature list -->
-
-
-
-                            <!-- new fields -->
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Advance Amount</label>
                                 <input class="form-control form-control-sm form-control-solid" type="text" name="advance_amount" value="{{ old('advance_amount') }}" />
@@ -414,7 +241,6 @@
                                 @endif
                             </div>
 
-
                             <div class="col-md-4">
                                 <label class="form-label fw-bolder text-dark">Due Balance</label>
                                 <input class="form-control form-control-sm form-control-solid" type="number" name="due_balance" value="{{ old('due_balance') }}" />
@@ -422,7 +248,6 @@
                                 <div class="text-danger">{{ $errors->first('due_balance') }}</div>
                                 @endif
                             </div>
-                            <!-- end new fields -->
 
 
 
@@ -443,6 +268,123 @@
                                 <div class="text-danger">{{ $errors->first('purchase_order_file') }}</div>
                                 @endif
                             </div>
+
+                            <!-- add feature list -->
+                            @foreach($sub_data as $data)
+                            <div class="col-md-6">
+                                <fieldset style="border:1px solid #ddd;padding: 20px;margin:20px">
+                                    <legend style="font-size:13px;"><b>{{ $data->name }}</b></legend><hr>
+                                    <input type="hidden" name="product_id[]" value="{{ $data->id }}">
+
+
+                                    @php $i=1;  @endphp
+                                    @foreach($data->features as $value)
+                                    <div class="row" style="margin-top:10px;">
+                                        <div class="col-md-4">
+                                            @if($i==1)<label class="form-label">Feature Name</label>@endif
+                                            <input class="form-control form-control-sm form-control-solid" readonly type="text" name="work_order_number" value="{{ $value->p_feature_name }}" />
+                                            @if ($errors->has('work_order_number'))
+                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
+                                            @endif
+                                        </div>
+                                        <div class="col-md-4">
+                                            @if($i==1)<label class="form-label">Unit Price</label>@endif
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ $value->unit_price }}" />
+                                            @if ($errors->has('work_order_number'))
+                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
+                                            @endif
+                                        </div>
+                                        <div class="col-md-4">
+                                            @if($i==1)<label class="form-label">Quantity</label>@endif
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="quantity" value="{{ old('quantity') }}" placeholder="" />
+                                            @if ($errors->has('quantity'))
+                                            <div class="text-danger">{{ $errors->first('quantity') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    @php $i++;  @endphp
+                                    @endforeach
+
+
+                                </fieldset>
+                            </div>
+                            @endforeach
+
+                            {{--
+                            <div class="col-md-6">
+                                <fieldset style="border:1px solid #ddd;padding: 20px;margin:20px">
+                                    <legend style="font-size:13px;">Wallboard:-</legend>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="form-label fw-bolder text-dark">Feature Name</label>
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
+                                            @if ($errors->has('work_order_number'))
+                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
+                                            @endif
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label fw-bolder text-dark">Unit Price</label>
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
+                                            @if ($errors->has('work_order_number'))
+                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
+                                            @endif
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label fw-bolder text-dark">Quantity</label>
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
+                                            @if ($errors->has('work_order_number'))
+                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-top:10px;">
+                                        <div class="col-md-4">
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
+                                            @if ($errors->has('work_order_number'))
+                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
+                                            @endif
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
+                                            @if ($errors->has('work_order_number'))
+                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
+                                            @endif
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
+                                            @if ($errors->has('work_order_number'))
+                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-top:10px;">
+                                        <div class="col-md-4">
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
+                                            @if ($errors->has('work_order_number'))
+                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
+                                            @endif
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
+                                            @if ($errors->has('work_order_number'))
+                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
+                                            @endif
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ old('work_order_number') }}" placeholder="" />
+                                            @if ($errors->has('work_order_number'))
+                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            --}}
+                            <div class="row"></div>
+                            <!-- end feature list -->
+
 
 
                             <div class="col-md-4">
