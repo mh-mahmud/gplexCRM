@@ -287,6 +287,10 @@ Route::group(['middleware' => ['auth']], function () {
     // Product Specification routes start
 	Route::get('/product-specification', [ProductSpecificationController::class, 'index'])->name('product-specification-index')->middleware(['check-permission']);
     Route::get('/product-specification/create', [ProductSpecificationController::class, 'create'])->name('product-specification-create')->middleware(['check-permission']);
+
+    Route::get('/product-specification/init', [ProductSpecificationController::class, 'init'])->name('product-specification-init')->middleware(['check-permission']);
+    Route::post('/product-specification/init-store', [ProductSpecificationController::class, 'init_store'])->name('product-specification-init-store');
+
     Route::post('/product-specification', [ProductSpecificationController::class, 'store'])->name('product-specification-store');
     Route::get('/product-specification/{id}', [ProductSpecificationController::class, 'show'])->name('product-specification-show')->middleware(['check-permission']);
     Route::get('/product-specification/{id}/edit', [ProductSpecificationController::class, 'edit'])->name('product-specification-edit')->middleware(['check-permission']);

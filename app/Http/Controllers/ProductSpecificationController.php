@@ -7,6 +7,7 @@ use App\Models\ProductSpecification;
 use App\Services\ProductSpecificationService;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
+use App\Models\ProductFeature;
 use App\Models\Customer;
 use App\Helpers\Helper;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class ProductSpecificationController extends Controller
     }
 
     public function index()
-    { 
+    {
         $productSpecifications = $this->productSpecificationService->getAllProductSpecifications();
         $invoicesGroupedByPsId = Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
         ->join('leads', 'customers.lead_id', '=', 'leads.id')
@@ -36,6 +37,24 @@ class ProductSpecificationController extends Controller
         ->get()
         ->groupBy('ps_id');
         return view('product_specifications.index', compact('productSpecifications','invoicesGroupedByPsId'));
+    }
+
+    public function init() {
+        $products = Product::where('status', 1)->get();
+        $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
+        ->select('customers.*', 'leads.first_name', 'leads.last_name')
+        ->get();
+        return view('product_specifications.init', compact('products','customers'));
+    }
+
+    public function init_store(Request $request) {
+        $customer_id = $request->customer_id;
+        $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')->where('customers.id', $customer_id)->select('customers.*', 'leads.first_name', 'leads.last_name')->get();
+        $product_id = $request->product_id;
+        $sub_data = Product::with('features')->whereIn('id', $request->product_id)->get();
+        // dd($sub_data);
+
+        return view('product_specifications.create', compact('product_id','customer_id', 'sub_data', 'customers'));
     }
 
     public function create()

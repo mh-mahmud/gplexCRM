@@ -125,7 +125,7 @@ use Carbon\Carbon;
             </div>
             <!--end::Wrapper-->
             <!--begin::Button-->
-            <a href="{{ route('product-specification-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
+            <a href="{{ route('product-specification-init') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Create</a>
 
             <!--end::Button-->
         </div>
