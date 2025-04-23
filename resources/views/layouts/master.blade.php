@@ -2910,7 +2910,7 @@
 		var hostUrl = "assets/";
 	</script>
 	<!--begin::Javascript-->
-	<!--begin::Global Javascript Bundle(used by all pages)-->
+	<!--begin::Global Javascript Bundle(used by all pages) its define for sweetalert2 you can remove upper extra sweetalert2.js link too-->
 	<script src="{{url('/')}}/assets/plugins/global/plugins.bundle.js"></script>
 	<script src="{{url('/')}}/assets/js/scripts.bundle.js"></script>
 	<!--end::Global Javascript Bundle-->
