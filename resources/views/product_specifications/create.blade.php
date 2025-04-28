@@ -159,9 +159,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="fv-row mb-5">
-                                    <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
-
-                                    </label>
+                                    <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span></label>
                                     <select class="form-control form-control-sm form-control-solid" name="customer_id" aria-label="Default select example">
                                         @foreach($customers as $customer)
                                         <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
@@ -282,21 +280,21 @@
                                     <div class="row" style="margin-top:10px;">
                                         <div class="col-md-4">
                                             @if($i==1)<label class="form-label">Feature Name</label>@endif
-                                            <input class="form-control form-control-sm form-control-solid" readonly type="text" name="work_order_number" value="{{ $value->p_feature_name }}" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
+                                            <input class="form-control form-control-sm form-control-solid" readonly type="text" name="feature_name[]" value="{{ $value->p_feature_name }}" />
+                                            @if ($errors->has('feature_name'))
+                                            <div class="text-danger">{{ $errors->first('feature_name') }}</div>
                                             @endif
                                         </div>
                                         <div class="col-md-4">
                                             @if($i==1)<label class="form-label">Unit Price</label>@endif
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="work_order_number" value="{{ $value->unit_price }}" />
-                                            @if ($errors->has('work_order_number'))
-                                            <div class="text-danger">{{ $errors->first('work_order_number') }}</div>
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="unit_price[]" value="{{ $value->unit_price }}" />
+                                            @if ($errors->has('unit_price'))
+                                            <div class="text-danger">{{ $errors->first('unit_price') }}</div>
                                             @endif
                                         </div>
                                         <div class="col-md-4">
                                             @if($i==1)<label class="form-label">Quantity</label>@endif
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="quantity" value="{{ old('quantity') }}" placeholder="" />
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="quantity[]" value="{{ old('quantity') }}" placeholder="" />
                                             @if ($errors->has('quantity'))
                                             <div class="text-danger">{{ $errors->first('quantity') }}</div>
                                             @endif
