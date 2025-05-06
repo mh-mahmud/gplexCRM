@@ -289,7 +289,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/product-specification/create', [ProductSpecificationController::class, 'create'])->name('product-specification-create')->middleware(['check-permission']);
 
     Route::get('/product-specification/init', [ProductSpecificationController::class, 'init'])->name('product-specification-init')->middleware(['check-permission']);
-    Route::post('/product-specification/init-store', [ProductSpecificationController::class, 'init_store'])->name('product-specification-init-store');
+    Route::get('/product-specification/init-store', [ProductSpecificationController::class, 'init_store'])->name('product-specification-init-store');
 
     Route::post('/product-specification', [ProductSpecificationController::class, 'store'])->name('product-specification-store');
     Route::get('/product-specification/{id}', [ProductSpecificationController::class, 'show'])->name('product-specification-show')->middleware(['check-permission']);

@@ -154,7 +154,7 @@
 
                     <!-- Start Form-->
 
-                    <form class="g-form w-100" action="{{ route('product-specification-init-store') }}" enctype="multipart/form-data" method="POST">
+                    <form class="g-form w-100" action="{{ route('product-specification-store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-4">
@@ -294,7 +294,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             @if($i==1)<label class="form-label">Quantity</label>@endif
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="quantity[]" value="{{ old('quantity') }}" placeholder="" />
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="quantity[]" value="" placeholder="" />
                                             @if ($errors->has('quantity'))
                                             <div class="text-danger">{{ $errors->first('quantity') }}</div>
                                             @endif

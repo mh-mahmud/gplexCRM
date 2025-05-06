@@ -154,7 +154,7 @@
 
                     <!-- Start Form-->
 
-                    <form class="g-form w-100" action="{{ route('product-specification-init-store') }}" enctype="multipart/form-data" method="POST">
+                    <form class="g-form w-100" action="{{ route('product-specification-init-store') }}" enctype="multipart/form-data" method="GET">
                         @csrf
                         <div class="row">
                             <div class="col-md-4">

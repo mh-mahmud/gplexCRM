@@ -52,13 +52,12 @@ class ProductSpecificationController extends Controller
         $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')->where('customers.id', $customer_id)->select('customers.*', 'leads.first_name', 'leads.last_name')->get();
         $product_id = $request->product_id;
         $sub_data = Product::with('features')->whereIn('id', $request->product_id)->get();
-        // dd($sub_data);
-
+dd($sub_data);
         return view('product_specifications.create', compact('product_id','customer_id', 'sub_data', 'customers'));
     }
 
-    public function create()
-    {   
+    public function create(Request $request)
+    {
         //$products = Product::all();
         $products = Product::where('status', 1)->get();
         $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
@@ -90,10 +89,13 @@ class ProductSpecificationController extends Controller
             'remaining_month' => 'nullable|numeric',
         ]);
 
+
+
         if ($validator->fails()) {
+            // return redirect()->back()->withErrors($validator)->withInput();
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
+dd($request->all());
         $customer = Customer::find($request->customer_id);
         $lead_id  = $customer->lead_id;
 
