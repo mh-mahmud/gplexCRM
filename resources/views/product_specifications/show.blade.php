@@ -299,6 +299,64 @@ use Carbon\Carbon;
                         <span class="fw-bold w-lg-150px flex-shrink-0">Notes:</span>
                         <span>{{ $productSpecification->note }}</span>
                     </div>
+
+                    @if(!empty($data_set))
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p style="margin-top:20px;font-size:17px;"><b>Product Details:</b></p>
+                        </div>
+                    </div>
+                    @endif
+                    
+                    <div class="row">
+
+                        @foreach($data_set as $data)
+                        <div class="col-md-6">
+                            <fieldset style="border:1px solid #ddd;padding: 20px;margin:20px">
+                                <legend style="font-size:13px;"><b>{{ $data[0]->product->name }}</b></legend><hr>
+
+
+                                @php $i=1;  @endphp
+                                @foreach($data as $key => $value)
+                                <div class="row" style="margin-top:10px;">
+                                    <div class="col-md-4">
+                                        @if($i==1)<label class="form-label">Feature Name</label>@endif
+                                        <input class="form-control form-control-sm form-control-solid" readonly type="text" value="{{ $value->product_feature_name }}" />
+                                        @if ($errors->has('feature_name'))
+                                        <div class="text-danger">{{ $errors->first('feature_name') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-3">
+                                        @if($i==1)<label class="form-label">Unit Price</label>@endif
+                                        <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $value->unit_price }}" />
+                                        @if ($errors->has('unit_price'))
+                                        <div class="text-danger">{{ $errors->first('unit_price') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-2">
+                                        @if($i==1)<label class="form-label">Quantity</label>@endif
+                                        <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $value->quantity }}" placeholder="" />
+                                        @if ($errors->has('quantity'))
+                                        <div class="text-danger">{{ $errors->first('quantity') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-3">
+                                        @if($i==1)<label class="form-label">Total</label>@endif
+                                        <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $value->quantity * $value->unit_price }}" placeholder="" />
+                                        @if ($errors->has('quantity'))
+                                        <div class="text-danger">{{ $errors->first('quantity') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+                                @php $i++;  @endphp
+                                @endforeach
+
+
+                            </fieldset>
+                        </div>
+                        @endforeach
+                    </div>
+
                 </div>
 
 

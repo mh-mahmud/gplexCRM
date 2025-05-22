@@ -280,21 +280,21 @@
                                     <div class="row" style="margin-top:10px;">
                                         <div class="col-md-4">
                                             @if($i==1)<label class="form-label">Feature Name</label>@endif
-                                            <input class="form-control form-control-sm form-control-solid" readonly type="text" name="feature_name[]" value="{{ $value->p_feature_name }}" />
+                                            <input class="form-control form-control-sm form-control-solid" readonly type="text" name="feature_name[{{ $data->id }}][]" value="{{ $value->p_feature_name }}" />
                                             @if ($errors->has('feature_name'))
                                             <div class="text-danger">{{ $errors->first('feature_name') }}</div>
                                             @endif
                                         </div>
                                         <div class="col-md-4">
                                             @if($i==1)<label class="form-label">Unit Price</label>@endif
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="unit_price[]" value="{{ $value->unit_price }}" />
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="unit_price[{{ $data->id }}][]" value="{{ $value->unit_price }}" />
                                             @if ($errors->has('unit_price'))
                                             <div class="text-danger">{{ $errors->first('unit_price') }}</div>
                                             @endif
                                         </div>
                                         <div class="col-md-4">
                                             @if($i==1)<label class="form-label">Quantity</label>@endif
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="quantity[]" value="" placeholder="" />
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="quantity[{{ $data->id }}][]" value="" placeholder="" />
                                             @if ($errors->has('quantity'))
                                             <div class="text-danger">{{ $errors->first('quantity') }}</div>
                                             @endif

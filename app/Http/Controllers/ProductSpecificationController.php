@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ProductSpecification;
+use App\Models\ProductSpecificationDetail;
 use App\Services\ProductSpecificationService;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
@@ -52,7 +53,9 @@ class ProductSpecificationController extends Controller
         $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')->where('customers.id', $customer_id)->select('customers.*', 'leads.first_name', 'leads.last_name')->get();
         $product_id = $request->product_id;
         $sub_data = Product::with('features')->whereIn('id', $request->product_id)->get();
-dd($sub_data);
+
+        // dd($sub_data);
+
         return view('product_specifications.create', compact('product_id','customer_id', 'sub_data', 'customers'));
     }
 
@@ -95,11 +98,21 @@ dd($sub_data);
             // return redirect()->back()->withErrors($validator)->withInput();
             return redirect()->back()->withErrors($validator)->withInput();
         }
-dd($request->all());
+
+        $product_data = [];
+        $fn = $request->feature_name;
+        $up = $request->unit_price;
+        $qty = $request->quantity;
+        foreach($request->product_id as $key=>$val) {
+            $product_data[$val]['feature_name'] = $fn[$val];
+            $product_data[$val]['unit_price'] = $up[$val];
+            $product_data[$val]['quantity'] = $qty[$val];
+        }
+
         $customer = Customer::find($request->customer_id);
         $lead_id  = $customer->lead_id;
 
-        $this->productSpecificationService->createProductSpecification($request);
+        $this->productSpecificationService->createProductSpecification($request, $product_data);
         Helper::storeLog("Product Specification created successfully", "Product Specification", "Create Product Specification",$lead_id);
         if($request->form_ps_panel==1) {
             return redirect()->back()->with('success', 'Product Specification created successfully.');
@@ -110,7 +123,8 @@ dd($request->all());
     public function show($id)
     {
         $productSpecification = $this->productSpecificationService->getProductSpecificationById($id);
-        return view('product_specifications.show', compact('productSpecification'));
+        $data_set = $this->productSpecificationService->features_data($id);
+        return view('product_specifications.show', compact('productSpecification', 'data_set'));
     }
 
     public function edit($id)

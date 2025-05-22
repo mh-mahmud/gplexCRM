@@ -501,3 +501,5 @@ ALTER TABLE `gplex_crm`.`invoices` ADD COLUMN `approval_status` CHAR(16) NOT NUL
 ALTER TABLE `gplex_crm`.`customers` CHANGE `product_id` `product_id` TEXT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
 
 
+-- 21-05-2025
+ALTER TABLE `product_specification_details` ADD `product_feature_name` VARCHAR(50) NULL DEFAULT NULL AFTER `product_feature_id`;

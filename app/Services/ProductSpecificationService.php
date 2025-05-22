@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\ProductSpecification;
+use App\Models\ProductSpecificationDetail;
+use App\Models\ProductFeature;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 
@@ -70,7 +72,7 @@ class ProductSpecificationService
     }
 
 
-    public function createProductSpecification($data)
+    public function createProductSpecification($data, $product_data)
     {
         //dd($data);die();
         $specificationData = $data->except([
@@ -104,7 +106,42 @@ class ProductSpecificationService
             }
         }
 
-        return ProductSpecification::create($specificationData);
+        $res = ProductSpecification::create($specificationData);
+
+        foreach($product_data as $key=>$val) {
+            $product_id = $key;
+            for($i=0; $i<count($val['feature_name']); $i++) {
+                $spd = new ProductSpecificationDetail();
+                $spd->work_order_id = $res->id;
+                $spd->product_id = $product_id;
+                $spd->product_feature_id = $this->get_product_feature_id($val['feature_name'][$i]);
+                $spd->product_feature_name = $val['feature_name'][$i];
+                $spd->unit_price = $val['unit_price'][$i];
+                $spd->quantity = $val['quantity'][$i];
+                $spd->save();
+            }
+        }
+        return $res;
+
+    }
+
+    private function get_product_feature_id($name) {
+        $res = ProductFeature::where('p_feature_name', $name)->first();
+        if(!empty($res)) {
+            return $res->id;
+        }
+        return null;
+    }
+
+    public function features_data($id) {
+        $data = ProductSpecificationDetail::with('product')->where('work_order_id', $id)->get();
+        $data_set = [];
+        if(!empty($data)) {
+            for($i=0; $i<count($data); $i++) {
+                $data_set[$data[$i]->product_id][] = $data[$i];
+            }
+        }
+        return $data_set;
     }
 
 
