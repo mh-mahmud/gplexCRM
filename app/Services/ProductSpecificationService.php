@@ -145,7 +145,7 @@ class ProductSpecificationService
     }
 
 
-    public function updateProductSpecification($data, $id)
+    public function updateProductSpecification($data, $id,$product_data)
     {
         $productSpecification = ProductSpecification::findOrFail($id);
 
@@ -187,8 +187,28 @@ class ProductSpecificationService
             }
         }
 
-        return $productSpecification->update($specificationData);
+         $productSpecification->update($specificationData);
+         
+        // Delete old specification details
+        ProductSpecificationDetail::where('work_order_id', $id)->delete();
+
+        // Recreate specification details
+        foreach ($product_data as $product_id => $val) {
+            for ($i = 0; $i < count($val['feature_name']); $i++) {
+                ProductSpecificationDetail::create([
+                    'work_order_id' => $id,
+                    'product_id' => $product_id,
+                    'product_feature_id' => $this->get_product_feature_id($val['feature_name'][$i]),
+                    'product_feature_name' => $val['feature_name'][$i],
+                    'unit_price' => $val['unit_price'][$i],
+                    'quantity' => $val['quantity'][$i],
+                ]);
+            }
+        }
+
+        return $productSpecification;
     }
+    
 
 
 

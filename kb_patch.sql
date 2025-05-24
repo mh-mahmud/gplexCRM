@@ -501,5 +501,20 @@ ALTER TABLE `gplex_crm`.`invoices` ADD COLUMN `approval_status` CHAR(16) NOT NUL
 ALTER TABLE `gplex_crm`.`customers` CHANGE `product_id` `product_id` TEXT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
 
 
+----24-05-2025 not add in live database
+CREATE TABLE `product_specification_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `work_order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_feature_id` int(11) NOT NULL,
+  `product_feature_name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `unit_price` decimal(10,2) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+)
+
+
 -- 21-05-2025
 ALTER TABLE `product_specification_details` ADD `product_feature_name` VARCHAR(50) NULL DEFAULT NULL AFTER `product_feature_id`;

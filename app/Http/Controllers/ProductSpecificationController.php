@@ -135,11 +135,13 @@ class ProductSpecificationController extends Controller
         ->select('customers.*', 'leads.first_name', 'leads.last_name')
         ->get();
         $productSpecification = $this->productSpecificationService->getProductSpecificationById($id);
-        return view('product_specifications.edit', compact('productSpecification','products','customers'));
+        $productSpecificationDetails = ProductSpecificationDetail::where('work_order_id', $id)->get()->groupBy('product_id');
+        $product_ids = explode(',', $productSpecification->product_id);
+        $sub_data = Product::with('features')->whereIn('id', $product_ids)->get();
+        return view('product_specifications.edit', compact('productSpecification','products','customers','productSpecificationDetails','product_ids','sub_data',));
     }
 
-
-    public function search(Request $request)
+   public function search(Request $request)
     {
 
         $searchTerm = trim($request->input('search'));
@@ -183,8 +185,19 @@ class ProductSpecificationController extends Controller
         }
         $customer = Customer::find($request->customer_id);
         $lead_id = $customer->lead_id;
+        $product_data = [];
+        $fn = $request->feature_name;
+        $up = $request->unit_price;
+        $qty = $request->quantity;
 
-        $this->productSpecificationService->updateProductSpecification($request, $id);
+        foreach ($request->product_id as $key => $val) {
+            $product_data[$val]['feature_name'] = $fn[$val];
+            $product_data[$val]['unit_price'] = $up[$val];
+            $product_data[$val]['quantity'] = $qty[$val];
+        }
+
+
+        $this->productSpecificationService->updateProductSpecification($request, $id, $product_data);
         Helper::storeLog("Product Specification updated successfully", "Product Specification", "Edit Product Specification",$lead_id);
         if($request->form_ps_panel==1) {
             return redirect()->back()->with('success', 'Edit Product Specification');
