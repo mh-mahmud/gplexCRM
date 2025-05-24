@@ -328,21 +328,21 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="col-md-3">
                                         @if($i==1)<label class="form-label">Unit Price</label>@endif
-                                        <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $value->unit_price }}" />
+                                        <input class="form-control form-control-sm form-control-solid" readonly type="text" value="{{ $value->unit_price }}" />
                                         @if ($errors->has('unit_price'))
                                         <div class="text-danger">{{ $errors->first('unit_price') }}</div>
                                         @endif
                                     </div>
                                     <div class="col-md-2">
                                         @if($i==1)<label class="form-label">Quantity</label>@endif
-                                        <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $value->quantity }}" placeholder="" />
+                                        <input class="form-control form-control-sm form-control-solid" readonly type="text" value="{{ $value->quantity }}" placeholder="" />
                                         @if ($errors->has('quantity'))
                                         <div class="text-danger">{{ $errors->first('quantity') }}</div>
                                         @endif
                                     </div>
                                     <div class="col-md-3">
                                         @if($i==1)<label class="form-label">Total</label>@endif
-                                        <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $value->quantity * $value->unit_price }}" placeholder="" />
+                                        <input class="form-control form-control-sm form-control-solid" readonly type="text" value="{{ $value->quantity * $value->unit_price }}" placeholder="" />
                                         @if ($errors->has('quantity'))
                                         <div class="text-danger">{{ $errors->first('quantity') }}</div>
                                         @endif
