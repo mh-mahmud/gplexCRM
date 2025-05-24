@@ -189,10 +189,10 @@ class ProductSpecificationService
 
          $productSpecification->update($specificationData);
          
-        // Delete old specification details
+        // old specification details
         ProductSpecificationDetail::where('work_order_id', $id)->delete();
 
-        // Recreate specification details
+        // recreate specification details
         foreach ($product_data as $product_id => $val) {
             for ($i = 0; $i < count($val['feature_name']); $i++) {
                 ProductSpecificationDetail::create([
