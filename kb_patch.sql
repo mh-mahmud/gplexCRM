@@ -496,9 +496,9 @@ CREATE TABLE `product_feature` (
 
 
 ----06-04-2025 not add in live database
-ALTER TABLE `gplex_crm`.`invoices` ADD COLUMN `approval_status` CHAR(16) NOT NULL DEFAULT 'pending' AFTER `invoice_status`;
+ALTER TABLE `invoices` ADD COLUMN `approval_status` CHAR(16) NOT NULL DEFAULT 'pending' AFTER `invoice_status`;
 ----08-04-2025 not add in live database
-ALTER TABLE `gplex_crm`.`customers` CHANGE `product_id` `product_id` TEXT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
+ALTER TABLE `customers` CHANGE `product_id` `product_id` TEXT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
 
 
 ----24-05-2025 not add in live database
