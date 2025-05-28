@@ -225,7 +225,7 @@
                                     <div class="col-xl-6">
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark">Work Order Number</label>
-                                            <select class="form-control form-control-sm form-control-solid" name="ps_id" aria-label="Default select example">
+                                            <select class="form-control form-control-sm form-control-solid" name="ps_id" id="work-order-select" aria-label="Default select example">
                                                
                                                 <option value="" {{ old('ps_id') == '' ? 'selected' : '' }}>Select Work Order Number</option>
                                                 
@@ -418,8 +418,8 @@
                                         <div
                                             class="g-proposal-add-item d-flex flex-wrap justify-content-between align-items-center w-100 gap-3">
                                             <div>
-                                                <!--begin::Both add-ons-->
-                                                <div class="input-group input-group-sm min-w-300px w-100 w-md-500px">
+                                               
+                                                <!-- <div class="input-group input-group-sm min-w-300px w-100 w-md-500px">
                                                     <div class="flex-grow-1">
                                                         <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2"
                                                             name="product_id" id="product-select">
@@ -439,8 +439,8 @@
                                                         @endif
                                                     </div>
                                                     <span class="input-group-sm input-group-text"><i class="bi bi-plus fs-4"></i></span>
-                                                </div>
-                                                <!--end::Both add-ons-->
+                                                </div> -->
+                                               
                                             </div>
 
 
@@ -489,45 +489,9 @@
                                                     <th><i class="bi bi-gear-fill"></i></th>
                                                 </tr>
                                             </thead>
-
+                                        <tbody id="table-body-work-order"></tbody>
 
                                             <!-- <tbody id="table-body">
-                                            <tr>
-                                                <td>
-                                                    <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" cols="30" rows="2"
-                                                        id="item-name" placeholder="Item Name"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea class="form-control form-select-sm min-w-250px" name="items[description][]" cols="30" rows="2"
-                                                        id="item-description" placeholder="Description"></textarea>
-                                                </td>
-                                                <td>
-                                                    <input class="form-control form-control-sm" type="number" name="items[quantity][]" id="item-quantity"
-                                                        placeholder="Quantity">
-                                                </td>
-                                                <td>
-                                                    <input class="form-control form-control-sm" type="number" name="items[rate][]" id="item-rate"
-                                                        placeholder="Rate">
-                                                </td>
-                                                <td>
-                                                    <select class="form-select form-select-sm" data-control="select2" data-placeholder="No Tax" id="item-tax"
-                                                        name="items[tax][]">
-                                                        <option value="0.00">No Tax (0.00%)</option>
-                                                        <option value="5.00">5.00%</option>
-                                                        <option value="10.00">10.00%</option>
-                                                        <option value="15.00">15.00%</option>
-                                                    </select>
-                                                </td>
-                                                <td class="item-amount">0.00</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-sm btn-primary py-2 px-2 add-row">
-                                                        <i class="bi bi-check"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </tbody> -->
-
-                                            <tbody id="table-body">
                                                 <tr>
 
                                                     <td>
@@ -584,7 +548,7 @@
                                                         </button>
                                                     </td>
                                                 </tr>
-                                            </tbody>
+                                            </tbody> -->
 
 
                                         </table>
@@ -768,6 +732,119 @@
         </div>
     </div>
 </div>
+
+<script>
+    function recalculateTotals() {
+        let subtotal = 0;
+        let totalTax = 0;
+
+        const rows = document.querySelectorAll('#table-body-work-order tr');
+
+        rows.forEach(row => {
+            const qty = parseFloat(row.querySelector('input[name="items[quantity][]"]').value) || 0;
+            const rate = parseFloat(row.querySelector('input[name="items[rate][]"]').value) || 0;
+            const tax = parseFloat(row.querySelector('select[name="items[tax][]"]').value) || 0;
+
+            const amount = qty * rate;
+            const taxAmount = (amount * tax) / 100;
+
+            subtotal += amount;
+            totalTax += taxAmount;
+
+            row.querySelector('.item-amount').textContent = (amount + taxAmount).toFixed(2);
+        });
+
+        //document.getElementById('subtotal-amount').textContent = subtotal.toFixed(2);
+        //document.getElementById('total-tax-amount').textContent = totalTax.toFixed(2);
+
+        const discountInput = document.querySelector('input[name="discount"]').value;
+        const discountType = document.querySelector('select[name="discount_type"]').value;
+        let discountAmount = 0;
+
+        if (discountInput && !isNaN(discountInput)) {
+            if (discountType === 'percentage') {
+                discountAmount = (subtotal * parseFloat(discountInput)) / 100;
+            } else {
+                discountAmount = parseFloat(discountInput);
+            }
+        }
+
+        document.getElementById('discount-amount').textContent = `-${discountAmount.toFixed(2)}`;
+
+        const adjustment = parseFloat(document.querySelector('input[name="adjustment"]').value) || 0;
+        document.getElementById('adjustment-amount').textContent = adjustment.toFixed(2);
+
+        const total = subtotal - discountAmount + totalTax + adjustment;
+        //document.getElementById('total-amount').textContent = total.toFixed(2);
+          // Update visible totals
+        document.getElementById('subtotal-amount').textContent = subtotal.toFixed(2);
+        document.getElementById('total-tax-amount').textContent = totalTax.toFixed(2);
+        document.getElementById('discount-amount').textContent = `-${discountAmount.toFixed(2)}`;
+        document.getElementById('adjustment-amount').textContent = adjustment.toFixed(2);
+        document.getElementById('total-amount').textContent = total.toFixed(2);
+
+        // update hidden inputs for form submission
+        document.getElementById('subtotal-hidden').value = subtotal.toFixed(2);
+        document.getElementById('totaltax-hidden').value = totalTax.toFixed(2);
+        document.getElementById('totaldiscount-hidden').value = discountAmount.toFixed(2);
+        document.getElementById('total-hidden').value = total.toFixed(2);
+    }
+
+    document.addEventListener('input', function (e) {
+        if (
+            e.target.matches('input[name="items[quantity][]"]') ||
+            e.target.matches('input[name="items[rate][]"]') ||
+            e.target.matches('select[name="items[tax][]"]') ||
+            e.target.name === 'discount' ||
+            e.target.name === 'discount_type' ||
+            e.target.name === 'adjustment'
+        ) {
+            recalculateTotals();
+        }
+    });
+
+    document.getElementById('work-order-select').addEventListener('change', function () {
+        const workOrderId = this.value;
+        if (!workOrderId) return;
+        let baseUrl = "{{ url('/') }}"; // base url get
+
+        fetch(`${baseUrl}/product-specification/get-spec-details/${workOrderId}`)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('table-body-work-order');
+                tableBody.innerHTML = '';
+
+                data.forEach((item, index) => {
+                    tableBody.innerHTML += `
+                        <tr>
+                            <td><textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" rows="2" readonly>${item.product_feature_name}</textarea></td>
+                            <td><textarea class="form-control form-control-sm min-w-250px" name="items[descriptions][]" rows="2" placeholder="Description">${item.product_description ?? ''}</textarea></td>
+                            <td><input class="form-control form-control-sm" type="number" name="items[quantity][]" value="${item.quantity}"></td>
+                            <td><input class="form-control form-control-sm" type="number" name="items[rate][]" value="${item.unit_price}"></td>
+                            <td>
+                                <select class="form-select form-select-sm" name="items[tax][]">
+                                    <option value="0.00">No Tax (0.00%)</option>
+                                    <option value="5.00">5.00%</option>
+                                    <option value="10.00">10.00%</option>
+                                    <option value="15.00">15.00%</option>
+                                </select>
+                            </td>
+                            <td class="item-amount">0.00</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-danger remove-row"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>`;
+                });
+
+                recalculateTotals();
+            });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        recalculateTotals();
+    });
+</script>
+
 
 
 

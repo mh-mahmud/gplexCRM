@@ -298,6 +298,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/product-specification/{id}', [ProductSpecificationController::class, 'destroy'])->name('product-specification-destroy')->middleware(['check-permission']);
 	Route::post('/product-specification/search', [ProductSpecificationController::class, 'search'])->name('product-specification-search');
 	Route::put('/product-specification/update-specification-file/{id}', [ProductSpecificationController::class, 'updateSpecificationFile'])->name('update-specification-file');
+	Route::get('/product-specification/get-spec-details/{id}', [ProductSpecificationController::class, 'getSpecDetails']);
 
 
 

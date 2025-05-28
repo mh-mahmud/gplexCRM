@@ -251,6 +251,21 @@ class ProductSpecificationController extends Controller
     
         return response()->json(['success' => false, 'message' => 'No file found']);
     }
+
+     public function getSpecDetails($id)
+    {
+        $details = DB::table('product_specification_details as psd')
+            ->leftJoin('products as p', 'psd.product_id', '=', 'p.id')
+            ->where('psd.work_order_id', $id)
+            ->get([
+                'psd.product_feature_name',
+                'psd.quantity',
+                'psd.unit_price',
+                'p.description as product_description' 
+            ]);
+
+        return response()->json($details);
+    }
     
 
 

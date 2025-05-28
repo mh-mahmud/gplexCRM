@@ -73,7 +73,7 @@
                                 <div class="row">
 
 
-                                    <div class="col-md-12">
+                                    <!-- <div class="col-md-12">
                                         <div class="fv-row mb-5">
                                             <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
 
@@ -91,7 +91,29 @@
                                             @endif
 
                                         </div>
+                                    </div> -->
+
+                                    <div class="fv-row mb-5">
+                                        <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span></label>
+                                        <select  class="form-control form-control-sm form-control-solid" id="customerSelect" name="customer_id" data-allow-clear="true"
+                                        data-kt-select2="select2">
+                                            <option value="" {{ old('customer_id') == '' ? 'selected' : '' }}>Select Customer</option>
+                                            @foreach($customers as $customer)
+                                            <option value="{{ $customer->id }}"  data-address="{{ $customer->address }}"
+                                                {{ old('customer_id') == $customer->id || (isset($leadid) && $customer->lead_id == $leadid) ? 'selected' : '' }}>
+                                                {{ $customer->first_name }} {{ $customer->last_name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                       
+                                        @if ($errors->has('customer_id'))
+                                        <span class="text-danger">{{ $errors->first('customer_id') }}</span>
+                                        @endif
                                     </div>
+                                    
+
+
+
 
                                     <div class="col-md-12">
                                         <div class="fv-row mb-5">
@@ -168,6 +190,7 @@
                                                 <option
                                                     value="{{ $custom_invoices->id }}"
                                                     data-fields="{{ json_encode($custom_invoices->field_details) }}"
+                                                    data-footer="{{ json_encode($custom_invoices->footer_details) }}"
                                                     {{ old('custom_invoice_id') == $custom_invoices->id ? 'selected' : '' }}>
                                                     {{ $custom_invoices->invoice_name }}
                                                 </option>
@@ -175,6 +198,46 @@
                                             </select>
                                             @if ($errors->has('custom_invoice_id'))
                                             <span class="text-danger">{{ $errors->first('custom_invoice_id') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-xl-6">
+                                        <div class="fv-row mb-5">
+                                            <label class="form-label fw-bolder text-dark">Work Order Number
+
+                                            </label>
+                                            <select class="form-control form-control-sm form-control-solid" name="ps_id" aria-label="Default select example">
+                                                <option value="" {{ old('ps_id') == '' ? 'selected' : '' }}>Select Work Order Number</option>
+                                                @foreach($wordOrderNumbers as $wordOrderNumber)
+                                                <option value="{{ $wordOrderNumber->id }}" {{ old('ps_id') == $wordOrderNumber->id ? 'selected' : '' }}>
+                                                    {{ $wordOrderNumber->work_order_number }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('ps_id'))
+                                            <span class="text-danger">{{ $errors->first('ps_id') }}</span>
+                                            @endif
+
+                                        </div>
+                                    </div> -->
+
+                                    <div class="col-xl-6">
+                                        <div class="fv-row mb-5">
+                                            <label class="form-label fw-bolder text-dark">Work Order Number</label>
+                                            <select class="form-control form-control-sm form-control-solid" name="ps_id" id="work-order-select" aria-label="Default select example">
+                                               
+                                                <option value="" {{ old('ps_id') == '' ? 'selected' : '' }}>Select Work Order Number</option>
+                                                
+                                                @foreach($wordOrderNumbers as $wordOrderNumber)
+                                                <option value="{{ $wordOrderNumber->id }}"
+                                                    {{ old('ps_id') == $wordOrderNumber->id || (isset($leadid) && $wordOrderNumber->id == old('ps_id')) ? 'selected' : '' }}>
+                                                    {{ $wordOrderNumber->work_order_number }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('ps_id'))
+                                            <span class="text-danger">{{ $errors->first('ps_id') }}</span>
                                             @endif
                                         </div>
                                     </div>
@@ -242,6 +305,7 @@
                                                 @endforeach
                                             </select>
 
+
                                             @if ($errors->has('invoice_status'))
                                             <span class="text-danger">{{ $errors->first('invoice_status') }}</span>
                                             @endif
@@ -263,19 +327,18 @@
 
                                                 @foreach($agents as $agent)
                                                 @if($isAdmin)
-                                               <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : '' }}>
+                                                <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : '' }}>
                                                     {{ $agent->first_name }} {{ $agent->last_name }}
                                                 </option>
                                                 @elseif($agent->user_id == Auth::user()->id)
-                                               <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : 'selected' }}>
+                                                <option value="{{ $agent->agent_id }}" {{ old('sale_agent_id') == $agent->agent_id ? 'selected' : 'selected' }}>
                                                     {{ $agent->first_name }} {{ $agent->last_name }}
                                                 </option>
+                                                <input type="hidden" name="sale_agent_id" value="{{ $agent->agent_id }}">
                                                 @endif
                                                 @endforeach
                                             </select>
-                                            @if(!$isAdmin)
-                                            <input type="hidden" name="sale_agent_id" value="{{ $agent->agent_id }}">
-                                            @endif
+
 
                                             @if ($errors->has('sale_agent_id'))
                                             <span class="text-danger">{{ $errors->first('sale_agent_id') }}</span>
@@ -300,6 +363,28 @@
                                             @if ($errors->has('discount_type'))
                                             <span class="text-danger">{{ $errors->first('discount_type') }}</span>
                                             @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="fv-row mb-5">
+                                            <!--begin::Label-->
+                                            <label class="form-label fw-bolder text-dark">
+                                                Reference Number
+
+                                               
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <div class="input-group">
+                                                
+                                                <input class="form-control form-control-sm"
+                                                    type="text" name="ref_no"
+                                                    value="{{ old('ref_no') }}" />
+                                                @if($errors->has('ref_no'))
+                                                <span class="text-danger">{{ $errors->first('ref_no') }}</span>
+                                                @endif
+                                            </div>
+                                            <!--end::Input-->
                                         </div>
                                     </div>
 
@@ -337,7 +422,7 @@
                                                 <div class="input-group input-group-sm min-w-300px w-100 w-md-500px">
                                                     <div class="flex-grow-1">
                                                         <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2"
-                                                            name="product_id" data-placeholder="Add an item" id="product-select">
+                                                            name="product_id" id="product-select">
                                                             <option value="" {{ old('product_id') == '' ? 'selected' : '' }}>Nothing Selected</option>
                                                             @foreach($products as $product)
                                                             <option value="{{ $product->id }}"
@@ -359,7 +444,7 @@
                                             </div>
 
 
-                                            <div class="g-right-proposal-table-header d-flex align-items-center gap-3">
+                                            <!-- <div class="g-right-proposal-table-header d-flex align-items-center gap-3">
 
                                                 <div class="min-w-sm-100px">
                                                     <strong>Show quantity as: </strong>
@@ -384,7 +469,7 @@
                                                     </label>
                                                 </div>
 
-                                            </div>
+                                            </div> -->
 
                                         </div>
                                     </div>
@@ -441,6 +526,7 @@
                                                 </td>
                                             </tr>
                                         </tbody> -->
+                                        <tbody id="table-body-work-order"></tbody>
 
                                             <tbody id="table-body">
                                                 <tr>
@@ -454,7 +540,7 @@
 
 
                                                     <td>
-                                                        <textarea class="form-control form-control-sm min-w-250px" name="items[description][]" cols="30" rows="2" id="item-description" placeholder="Description">{{ old('items.description.0') }}</textarea>
+                                                        <textarea class="form-control form-control-sm min-w-250px" name="items[descriptions][]" cols="30" rows="2" id="item-description" placeholder="Description">{{ old('items.description.0') }}</textarea>
                                                         @error('items.description.0')
                                                         <div class="text-danger">{{ $message }}</div>
                                                         @enderror
@@ -560,18 +646,71 @@
                                    
                                 </table> -->
 
+                                <div id="custom-invoice" style="display: block;">
+                                    <table id="custom-invoice-table" class="table table-rounded table-sm table-striped border align-middle gs-2" style="display: none;">
+                                        <thead>
+                                            <tr id="custom-invoice-header" class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200"></tr>
+                                        </thead>
+                                        <tbody id="custom-invoice-body">
+                                            <tr>
+                                                <!-- Placeholder for dynamic input fields, populated by JS below -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
 
-                                <table id="custom-invoice-table" class="table table-rounded table-sm table-striped border align-middle gs-2" style="display: none;">
-                                    <thead>
-                                        <tr id="custom-invoice-header" class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200"></tr>
-                                    </thead>
-                                    <tbody id="custom-invoice-body">
-                                        <tr>
-                                            <!-- Placeholder for dynamic input fields, populated by JS below -->
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    <table id="custom-invoice-footer-table" class="table table-rounded table-sm table-striped border align-middle gs-2" style="display: none;">
+                                        <thead>
+                                            <tr id="custom-invoice-footer-header" class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200"></tr>
+                                        </thead>
+                                        <tbody id="custom-invoice-footer-body">
+                                            <tr>
+                                                <!-- Placeholder for dynamic footer fields, populated by JS below -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
 
+                                    <div class="row">
+                                        <div class="col-md-4 ms-auto ">
+                                            <!-- Proposal Calculations-->
+                                            <div class="table-responsive bg-light-warning rounded-2 p-3">
+                                                <table class="table table-sm table-row-bordered align-middle">
+                                                    <tr>
+                                                        <th class="text-end"><strong>Sub Total:</strong></th>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="custom-subtotal-amount">0.00</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><strong>VAT :</strong>
+                                                            <div class="input-group flex-nowrap">
+                                                                <div class="flex-grow-1">
+                                                                    <input class="form-control form-control-sm rounded-end-0 border-end" id="custom_vat" type="number" name="vat" placeholder="VAT">
+                                                                </div>
+                                                                %
+                                                            </div>
+                                                        </th>
+                                                    </tr>
+                                                    <!-- New Tax Row -->
+                                                    <tr>
+                                                        <th class="text-end"><strong>Total VAT:</strong></th>
+                                                        <td class="text-end"><strong>BDT</strong> <span id="custom-total-vat">0.00</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><strong>Adjustment :</strong>
+                                                            <input id="custom_adjustment" class="form-control form-control-sm" type="number" name="custom_adjustment" placeholder="Adjustment" />
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="text-end"><strong>Total</strong></th>
+                                                        <td class="text-end">
+                                                            <strong>BDT</strong> <span id="custom-total-amount">0.00</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <!--End Proposal Calculations-->
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="row">
                                     <div class="col-md-12">
@@ -603,8 +742,8 @@
 
                                 <!--begin::Actions-->
                                 <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                    <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard
-                                    </button>
+                                    <!-- <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard
+                                    </button> -->
                                     <button type="submit" class="btn btn-primary"
                                         id="kt_account_profile_details_submit">Save Changes
                                     </button>
@@ -630,6 +769,107 @@
         </div>
     </div>
 </div>
+
+<script>
+    function recalculateTotals() {
+        let subtotal = 0;
+        let totalTax = 0;
+
+        const rows = document.querySelectorAll('#table-body-work-order tr');
+
+        rows.forEach(row => {
+            const qty = parseFloat(row.querySelector('input[name="items[quantity][]"]').value) || 0;
+            const rate = parseFloat(row.querySelector('input[name="items[rate][]"]').value) || 0;
+            const tax = parseFloat(row.querySelector('select[name="items[tax][]"]').value) || 0;
+
+            const amount = qty * rate;
+            const taxAmount = (amount * tax) / 100;
+
+            subtotal += amount;
+            totalTax += taxAmount;
+
+            row.querySelector('.item-amount').textContent = (amount + taxAmount).toFixed(2);
+        });
+
+        document.getElementById('subtotal-amount').textContent = subtotal.toFixed(2);
+        document.getElementById('total-tax-amount').textContent = totalTax.toFixed(2);
+
+        const discountInput = document.querySelector('input[name="discount"]').value;
+        const discountType = document.querySelector('select[name="discount_type"]').value;
+        let discountAmount = 0;
+
+        if (discountInput && !isNaN(discountInput)) {
+            if (discountType === 'percentage') {
+                discountAmount = (subtotal * parseFloat(discountInput)) / 100;
+            } else {
+                discountAmount = parseFloat(discountInput);
+            }
+        }
+
+        document.getElementById('discount-amount').textContent = `-${discountAmount.toFixed(2)}`;
+
+        const adjustment = parseFloat(document.querySelector('input[name="adjustment"]').value) || 0;
+        document.getElementById('adjustment-amount').textContent = adjustment.toFixed(2);
+
+        const total = subtotal - discountAmount + totalTax + adjustment;
+        document.getElementById('total-amount').textContent = total.toFixed(2);
+    }
+
+    document.addEventListener('input', function (e) {
+        if (
+            e.target.matches('input[name="items[quantity][]"]') ||
+            e.target.matches('input[name="items[rate][]"]') ||
+            e.target.matches('select[name="items[tax][]"]') ||
+            e.target.name === 'discount' ||
+            e.target.name === 'discount_type' ||
+            e.target.name === 'adjustment'
+        ) {
+            recalculateTotals();
+        }
+    });
+
+    document.getElementById('work-order-select').addEventListener('change', function () {
+        const workOrderId = this.value;
+        if (!workOrderId) return;
+        let baseUrl = "{{ url('/') }}"; // base url get
+
+        fetch(`${baseUrl}/product-specification/get-spec-details/${workOrderId}`)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('table-body-work-order');
+                tableBody.innerHTML = '';
+
+                data.forEach((item, index) => {
+                    tableBody.innerHTML += `
+                        <tr>
+                            <td><textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" rows="2" readonly>${item.product_feature_name}</textarea></td>
+                            <td><textarea class="form-control form-control-sm min-w-250px" name="items[descriptions][]" rows="2" placeholder="Description"></textarea></td>
+                            <td><input class="form-control form-control-sm" type="number" name="items[quantity][]" value="${item.quantity}"></td>
+                            <td><input class="form-control form-control-sm" type="number" name="items[rate][]" value="${item.unit_price}"></td>
+                            <td>
+                                <select class="form-select form-select-sm" name="items[tax][]">
+                                    <option value="0.00">No Tax (0.00%)</option>
+                                    <option value="5.00">5.00%</option>
+                                    <option value="10.00">10.00%</option>
+                                    <option value="15.00">15.00%</option>
+                                </select>
+                            </td>
+                            <td class="item-amount">0.00</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-danger remove-row"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>`;
+                });
+
+                recalculateTotals();
+            });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        recalculateTotals();
+    });
+</script>
+
 
 
 
@@ -758,7 +998,7 @@
 
             //ensure necessary fields in the last row are filled before adding a new row
             var itemName = lastRow.find('textarea[name="items[item_name][]"]').val();
-            var description = lastRow.find('textarea[name="items[description][]"]').val();
+            var description = lastRow.find('textarea[name="items[descriptions][]"]').val();
             var quantity = lastRow.find('input[name="items[quantity][]"]').val();
             var rate = lastRow.find('input[name="items[rate][]"]').val();
 
@@ -769,7 +1009,7 @@
                            placeholder="Item Name" readonly></textarea>
                    </td>
                    <td>
-                       <textarea class="form-control form-select-sm min-w-250px" name="items[description][]" cols="30" rows="2"
+                       <textarea class="form-control form-select-sm min-w-250px" name="items[descriptions][]" cols="30" rows="2"
                            placeholder="Description"></textarea>
                    </td>
                    <td>
@@ -818,7 +1058,7 @@
             lastRow.find('textarea, input').removeClass('is-invalid'); // remove error highlight
             //get the values from the last row
             var itemName = lastRow.find('textarea[name="items[item_name][]"]').val();
-            var description = lastRow.find('textarea[name="items[description][]"]').val();
+            var description = lastRow.find('textarea[name="items[descriptions][]"]').val();
             var quantity = lastRow.find('input[name="items[quantity][]"]').val();
             var rate = lastRow.find('input[name="items[rate][]"]').val();
 
@@ -834,8 +1074,8 @@
 
 
             if (description === "") {
-                lastRow.find('textarea[name="items[description][]"]').addClass('is-invalid');
-                lastRow.find('textarea[name="items[description][]"]').after('<div class="error-message text-danger">Description is required</div>');
+                lastRow.find('textarea[name="items[descriptions][]"]').addClass('is-invalid');
+                lastRow.find('textarea[name="items[descriptions][]"]').after('<div class="error-message text-danger">Description is required</div>');
                 isValid = false;
             }
 
@@ -861,7 +1101,7 @@
                     placeholder="Item Name"></textarea>
             </td>
             <td>
-                <textarea class="form-control form-select-sm min-w-250px" name="items[description][]" cols="30" rows="2"
+                <textarea class="form-control form-select-sm min-w-250px" name="items[descriptions][]" cols="30" rows="2"
                     placeholder="Description"></textarea>
             </td>
             <td>
@@ -915,7 +1155,7 @@
             var lastRow = $('#table-body tr:last');
             //set values in the last row
             lastRow.find('textarea[name="items[item_name][]"]').val(productName);
-            lastRow.find('textarea[name="items[description][]"]').val(productDescription);
+            lastRow.find('textarea[name="items[descriptions][]"]').val(productDescription);
             lastRow.find('input[name="items[rate][]"]').val(productRate);
 
             //optionally calculate the amount ex(quantity * rate)
@@ -941,6 +1181,76 @@
 
 
 <script>
+    function getTotalAmount(value) {
+        let total = 0;
+
+        const amountInputs = document.querySelectorAll('.custom-amount-input');
+
+        amountInputs.forEach(input => {
+            let value = parseFloat(input.value.replace(/,/g, '')) || 0;
+            total += value;
+        });
+
+        const formattedTotal = total.toFixed(2);
+
+        document.getElementById('custom-subtotal-amount').innerHTML = formattedTotal;
+        document.getElementById('subtotal-hidden').value = formattedTotal;
+        document.getElementById('total-hidden').value = formattedTotal;
+        document.getElementById('custom-total-amount').innerHTML = formattedTotal;
+        let vatInput = document.querySelector('[id="custom_vat"]');
+        if (vatInput && vatInput.value) {
+            calculateVat(vatInput.value);
+        }
+        let adjustmentInput = document.querySelector('[id="custom_adjustment"]');
+        if (adjustmentInput && adjustmentInput.value) {
+            calculateCustomAdjustment(adjustmentInput.value);
+        }
+    }
+
+    function calculateVat(value) {
+        value = parseFloat(value);
+        if (isNaN(value)) {
+            value = 0;
+        }
+        let subTotalAmount = document.getElementById('subtotal-hidden').value;
+        let totalVat = (subTotalAmount * value) / 100;
+        document.getElementById('totaltax-hidden').value = totalVat;
+        let totalAmount = 0;
+        totalAmount = parseFloat(subTotalAmount) + parseFloat(totalVat) + parseFloat(totalAmount);
+        document.getElementById('custom-total-vat').innerHTML = totalVat.toFixed(2);
+        document.getElementById('total-hidden').value = totalAmount.toFixed(2);
+        document.getElementById('custom-total-amount').innerHTML = totalAmount.toFixed(2);
+    }
+
+    function calculateCustomAdjustment(value) {
+        // Validate the input value
+        value = value === '' || isNaN(parseFloat(value)) ? 0 : parseFloat(value);
+
+        // Fetch values and validate them
+        let subTotalAmount = getValidNumber(document.getElementById('subtotal-hidden')?.value);
+        let totalVat = getValidNumber(document.getElementById('totaltax-hidden')?.value);
+        console.log('totalVat', totalVat)
+        // Calculate the total amount
+        let totalAmount = subTotalAmount + totalVat + value;
+
+
+        // Safely update DOM elements if they exist
+        let totalHidden = document.getElementById('total-hidden');
+        let totalAmountDisplay = document.getElementById('custom-total-amount');
+        let adjustmentDisplay = document.getElementById('custom-adjustment-amount');
+
+        if (totalHidden)
+            totalHidden.value = totalAmount.toFixed(2);
+        if (totalAmountDisplay)
+            totalAmountDisplay.innerHTML = totalAmount.toFixed(2);
+        if (adjustmentDisplay)
+            adjustmentDisplay.innerHTML = totalAmount.toFixed(2);
+    }
+
+    function getValidNumber(value) {
+        return value === '' || isNaN(parseFloat(value)) ? 0 : parseFloat(value);
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         const customInvoiceSelect = document.getElementById('custom-invoice-select');
         const defaultInvoice = document.getElementById('default-invoice');
@@ -948,32 +1258,66 @@
         const customInvoiceHeader = document.getElementById('custom-invoice-header');
         const customInvoiceBody = document.getElementById('custom-invoice-body');
 
+        const footerTable = document.getElementById('custom-invoice-footer-table');
+        const customInvoiceFooterHeader = document.getElementById('custom-invoice-footer-header');
+        const customInvoiceFooterBody = document.getElementById('custom-invoice-footer-body');
+        const customInvoiceDiv = document.getElementById('custom-invoice');
+
+        const customVat = document.getElementById('custom_vat');
+        const customAdjustment = document.getElementById('custom_adjustment');
+
+
+        window.sanitizeInput = function(inputElement) {
+            inputElement.value = inputElement.value.replace(/,/g, '');
+            getTotalAmount(inputElement.value);
+        };
+
+        customVat.addEventListener('input', function() {
+            calculateVat(this.value);
+        });
+
+        customAdjustment.addEventListener('input', function() {
+            calculateCustomAdjustment(this.value);
+        });
+
         customInvoiceSelect.addEventListener('change', function() {
             const selectedOption = this.options[this.selectedIndex];
             const fieldDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.fields) : null;
-            
+            // const footerDetails = selectedOption.dataset.fields ? JSON.parse(selectedOption.dataset.footer) : null;
             if (fieldDetails && fieldDetails.length > 0) {
 
                 defaultInvoice.style.display = 'none';
                 proposalTable.style.display = 'table';
+                customInvoiceDiv.style.display = 'block';
 
                 populateCustomInvoiceFields(fieldDetails);
             } else {
-
+                customInvoiceDiv.style.display = 'none';
                 defaultInvoice.style.display = 'block';
                 proposalTable.style.display = 'none';
             }
+
+            // if (footerDetails && footerDetails.length > 0) {
+            //     footerTable.style.display = 'table';
+            //     populateCustomInvoiceFooters(footerDetails);
+
+            // }else {
+            //     footerTable.style.display = 'none';
+
+            // }
+
         });
 
 
         function populateCustomInvoiceFields(fields) {
             // headers in custom invoice table
-            customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Action</th>';
+            customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Amount</th><th>Action</th>';
 
 
             customInvoiceBody.innerHTML = `
             <tr>
                 ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
+                <td><input type="text" class="form-control custom-amount-input" name="items[amount][]" placeholder="Amount" oninput="sanitizeInput(this)"  onblur="getTotalAmount(this.value)"/></td>
                 <td>
                     
                     <button type="button" class="btn btn-sm btn-primary py-2 px-3" id="add-row">
@@ -992,6 +1336,7 @@
                 customInvoiceBody.insertAdjacentHTML('beforeend', `
                 <tr>
                     ${fields.map(field => `<td><input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" /></td>`).join('')}
+                    <td><input type="text" class="form-control custom-amount-input" name="items[amount][]" placeholder="Amount" oninput="sanitizeInput(this)"/></td>
                     <td><button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
                            <i class="bi bi-trash pe-0"></i>
                        </button>
@@ -1002,19 +1347,110 @@
             });
         }
 
+    function populateCustomInvoiceFields_backup_27022025(fields) {
+        //headers in custom invoice table
+        customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Amount</th><th>Action</th>';
+
+        customInvoiceBody.innerHTML = `
+        <tr>
+            ${fields.map(field => 
+                `<td>${
+                    field.field_name.toLowerCase() === 'description' 
+                    ? `<textarea class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}"></textarea>` 
+                    : `<input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" />`
+                }</td>`
+            ).join('')}
+            <td><input type="text" class="form-control custom-amount-input" name="items[amount][]" placeholder="Amount" oninput="sanitizeInput(this)" onblur="getTotalAmount(this.value)"/></td>
+            <td>
+                <button type="button" class="btn btn-sm btn-primary py-2 px-3" id="add-row">
+                    <i class="bi bi-plus-lg pe-0"></i>
+                </button>
+            </td>
+        </tr>
+        `;
+
+        //"add more" button and remove buttons
+        addRemoveFunctionality();
+
+        //event for the add more button
+        document.getElementById('add-row').addEventListener('click', function() {
+            // insert new row
+            customInvoiceBody.insertAdjacentHTML('beforeend', `
+            <tr>
+                ${fields.map(field => 
+                    `<td>${
+                        field.field_name.toLowerCase() === 'description' 
+                        ? `<textarea class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}"></textarea>` 
+                        : `<input type="text" class="form-control" name="items[${field.field_value}][]" placeholder="${field.field_name}" />`
+                    }</td>`
+                ).join('')}
+                <td><input type="text" class="form-control custom-amount-input" name="items[amount][]" placeholder="Amount" oninput="sanitizeInput(this)"/></td>
+                <td><button type="button" class="btn btn-sm btn-danger py-2 px-3 remove-row">
+                    <i class="bi bi-trash pe-0"></i>
+                </button>
+            </tr>
+            `);
+
+            addRemoveFunctionality(); // reapplied remove functionality to new row
+        });
+    }
+
+
+        // function populateCustomInvoiceFooters(fields) {
+        //     // headers in custom invoice table
+        //     customInvoiceFooterHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('');
+
+
+        //     customInvoiceFooterBody.innerHTML = `
+        //     <tr>
+        //         ${fields.map(field => `<td><input type="text" class="form-control" name="footer[${field.field_value}]" placeholder="${field.field_name}" /></td>`).join('')}
+        //     </tr>
+        // `;
+
+        // }
+
         //remove row button
         function addRemoveFunctionality() {
             document.querySelectorAll('.remove-row').forEach(button => {
                 button.addEventListener('click', function() {
                     this.closest('tr').remove();
+                    getTotalAmount();
                 });
             });
         }
 
-        // Trigger the change event on page load
+        //trigger the change event on page load
         customInvoiceSelect.dispatchEvent(new Event('change'));
     });
 </script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let customerSelect = $('#customerSelect');
+
+        customerSelect.select2({
+            placeholder: "Select Customer",
+            allowClear: true
+        });
+
+        let addressField = document.getElementById("address");
+
+        //select2 Change
+        customerSelect.on("change", function () {
+            let selectedOption = this.options[this.selectedIndex];
+            let address = selectedOption ? selectedOption.getAttribute("data-address") || "" : "";
+            addressField.value = address;
+        });
+
+        //address field on page load a customer is before selected
+        let preselectedOption = customerSelect.find("option:selected");
+        if (preselectedOption.length) {
+            addressField.value = preselectedOption.attr("data-address") || "";
+        }
+    });
+</script>
+
 
 
 

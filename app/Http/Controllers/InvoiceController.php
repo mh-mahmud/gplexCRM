@@ -130,7 +130,7 @@ class InvoiceController extends Controller
                 'invoice_date' => 'required|date',
                 'invoice_status' => 'required',
                 'due_date' => 'nullable|date|after_or_equal:invoice_date',
-                'product_id' => 'required|exists:products,id',
+                //'product_id' => 'required|exists:products,id',
                 //item validation
                 'items.item_name.*' => 'required|string',
                 'items.quantity.*' => 'required|integer|min:1',
@@ -142,7 +142,7 @@ class InvoiceController extends Controller
                 'items.rate.*.required' => 'Rate is required and must be a positive number',
                 'items.tax.*.numeric' => 'Tax must be a valid percentage',
                 'items.tax.*.max' => 'Tax cannot exceed 100%',
-                'product_id.required' => 'Item is required',
+                //'product_id.required' => 'Item is required',
                 //'invoice_number.unique' => 'This invoice number is already in use by another invoice',
             ]);
         }
