@@ -734,6 +734,40 @@
 </div>
 
 <script>
+$(document).ready(function () {
+    $('#customerSelect').on('change', function () {
+        var customerId = $(this).val();
+        var workOrderSelect = $('#work-order-select');
+
+        // clear existing options
+        workOrderSelect.empty();
+        workOrderSelect.append('<option value="">Select Work Order Number</option>');
+        let baseUrl = "{{ url('/') }}";
+
+        if (customerId) {
+            $.ajax({
+               url: baseUrl + '/invoice/get-work-orders/' + customerId,
+                type: 'GET',
+                success: function (data) {
+                    if (data.length > 0) {
+                        $.each(data, function (index, workOrder) {
+                            workOrderSelect.append('<option value="' + workOrder.id + '">' + workOrder.work_order_number + '</option>');
+                        });
+                    } else {
+                        workOrderSelect.append('<option value="">No work orders found</option>');
+                    }
+                },
+                error: function () {
+                    alert('Failed to load work orders.');
+                }
+            });
+        }
+    });
+});
+</script>
+
+
+<script>
     function recalculateTotals() {
         let subtotal = 0;
         let totalTax = 0;

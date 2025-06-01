@@ -162,6 +162,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('/invoice/search', [InvoiceController::class, 'search'])->name('invoice-search');
 	Route::get('/invoice/{invoiceId}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoice-download');
 	Route::post('/invoice/{invoice}/payment', [InvoiceController::class, 'storePayment'])->name('invoice-payment');
+    Route::get('/invoice/get-work-orders/{customer_id}', [InvoiceController::class, 'getWorkOrders']);
+
     
 	
 

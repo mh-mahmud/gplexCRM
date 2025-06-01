@@ -244,6 +244,7 @@ class LeadController  extends Controller
             ->join('leads', 'customers.lead_id', '=', 'leads.id')
             ->select('invoices.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
             ->where('lead_id', $id)
+            ->where('invoices.approval_status', 'approved')
             ->orderBy('invoices.created_at', 'desc')->get();
         $productSpecifications = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
         ->join('leads', 'customers.lead_id', '=', 'leads.id')

@@ -774,6 +774,39 @@
     </div>
 </div>
 
+<script>
+$(document).ready(function () {
+    $('#customerSelect').on('change', function () {
+        var customerId = $(this).val();
+        var workOrderSelect = $('#work-order-select');
+
+        // clear existing options
+        workOrderSelect.empty();
+        workOrderSelect.append('<option value="">Select Work Order Number</option>');
+        let baseUrl = "{{ url('/') }}"; // base url get
+
+        if (customerId) {
+            $.ajax({
+               url: baseUrl + '/invoice/get-work-orders/' + customerId,
+                type: 'GET',
+                success: function (data) {
+                    if (data.length > 0) {
+                        $.each(data, function (index, workOrder) {
+                            workOrderSelect.append('<option value="' + workOrder.id + '">' + workOrder.work_order_number + '</option>');
+                        });
+                    } else {
+                        workOrderSelect.append('<option value="">No work orders found</option>');
+                    }
+                },
+                error: function () {
+                    alert('Failed to load work orders.');
+                }
+            });
+        }
+    });
+});
+</script>
+
 
 <script>
     function recalculateTotals() {
@@ -818,14 +851,14 @@
 
         const total = subtotal - discountAmount + totalTax + adjustment;
         //document.getElementById('total-amount').textContent = total.toFixed(2);
-          // Update visible totals
+          // update visible totals
         document.getElementById('subtotal-amount').textContent = subtotal.toFixed(2);
         document.getElementById('total-tax-amount').textContent = totalTax.toFixed(2);
         document.getElementById('discount-amount').textContent = `-${discountAmount.toFixed(2)}`;
         document.getElementById('adjustment-amount').textContent = adjustment.toFixed(2);
         document.getElementById('total-amount').textContent = total.toFixed(2);
 
-        // Update hidden inputs for form submission
+        // update hidden inputs for form submission
         document.getElementById('subtotal-hidden').value = subtotal.toFixed(2);
         document.getElementById('totaltax-hidden').value = totalTax.toFixed(2);
         document.getElementById('totaldiscount-hidden').value = discountAmount.toFixed(2);

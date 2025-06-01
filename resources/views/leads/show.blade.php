@@ -212,9 +212,9 @@
                         <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
                             <div class="table-responsive">
                                 @php
-                                    $invoices = $invoicesGroupedByPsId[$productSpecification->id] ?? collect([]);
+                                    $invoices_ps = $invoicesGroupedByPsId[$productSpecification->id] ?? collect([]);
                                 @endphp
-                                @if($invoices->isNotEmpty())
+                                @if($invoices_ps->isNotEmpty())
                                     <table
                                         class="table table-sm table-condensed table-row-gray-100 align-middle gs-0 gy-3 table-row-bordered">
                                         <thead>
@@ -233,7 +233,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach ($invoices as $index => $invoice)
+                                        @foreach ($invoices_ps as $index => $invoice)
                                             @php
 
                                                 $paymentDetails = collect($invoice->payment_details);
@@ -275,7 +275,7 @@
                                         @endforeach
                                         <tr class="fw-bold bg-light">
                                             <td colspan="2" class="text-center">Total</td>
-                                            <td class="text-dark fs-6">{{ $invoices->sum('total_amount') }}</td>
+                                            <td class="text-dark fs-6">{{ $invoices_ps->sum('total_amount') }}</td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -283,10 +283,10 @@
                                             <td></td>
                                             <td></td>
                                             <td class="text-dark fs-6 text-center">
-                                                {{ $invoices->sum(function ($invoice) {return collect($invoice->payment_details)->sum('payment');}) }}
+                                                {{ $invoices_ps->sum(function ($invoice) {return collect($invoice->payment_details)->sum('payment');}) }}
                                             </td>
                                             <td class="text-dark fs-6 text-center">
-                                                {{ $invoices->sum(function ($invoice) {return collect($invoice->payment_details)->last()['due'] ?? $invoice->total_amount;}) }}
+                                                {{ $invoices_ps->sum(function ($invoice) {return collect($invoice->payment_details)->last()['due'] ?? $invoice->total_amount;}) }}
                                             </td>
                                         </tr>
                                         </tbody>

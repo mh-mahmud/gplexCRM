@@ -195,7 +195,11 @@ class InvoiceController extends Controller
         $currencies = $this->currencyService->currencyList($request);
         $discountTypes = Helper::getEnumValues('invoices', 'discount_type');
         $agents = Agent::select('agent_id', 'first_name', 'last_name','user_id')->get();
-        $wordOrderNumbers = ProductSpecification::select('id', 'work_order_number')->get();
+        //$wordOrderNumbers = ProductSpecification::select('id', 'work_order_number')->get();
+        $wordOrderNumbers = ProductSpecification::where('customer_id', $invoice->customer_id)
+        ->select('id', 'work_order_number')
+        ->get();
+
         //$products = Product::select('id', 'name', 'description', 'product_value')->get();
         $products = Product::select('id', 'name', 'description', 'product_value')->where('status', 1)->get();
         $custom_invoice = InvoiceCustomForm::select('id', 'invoice_name','field_details','footer_details')->get();
@@ -362,6 +366,18 @@ class InvoiceController extends Controller
         Helper::storeLog("Payment recorded successfully", "Invoice", "Payment recorded",$lead_id);
         return redirect()->route('invoice-index')->with('success', 'Payment recorded successfully!');
     }
+
+
+    public function getWorkOrders($customerId)
+    {
+        $workOrders = ProductSpecification::where('customer_id', $customerId)->get(['id', 'work_order_number']);
+
+        return response()->json($workOrders);
+    }
+
+
+
+
 
 
 }

@@ -266,6 +266,8 @@ class ProductSpecificationController extends Controller
 
         return response()->json($details);
     }
+
+
     
 
 
