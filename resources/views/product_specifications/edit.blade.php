@@ -165,7 +165,7 @@
                                             <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
 
                                             </label>
-                                            <select class="form-control form-control-sm form-control-solid" name="customer_id">
+                                            <select class="form-control form-control-sm form-control-solid" name="customer_id" disabled>
                                                 <option value="" {{ old('customer_id', $productSpecification->customer_id) == '' ? 'selected' : '' }}>Select Customer</option>
                                                 @foreach($customers as $customer)
                                                 <option value="{{ $customer->id }}" {{ old('customer_id', $productSpecification->customer_id) == $customer->id ? 'selected' : '' }}>
@@ -173,6 +173,7 @@
                                                 </option>
                                                 @endforeach
                                             </select>
+                                            <input type="hidden" name="customer_id" value="{{ old('customer_id', $productSpecification->customer_id) }}">
                                             @if ($errors->has('customer_id'))
                                             <span class="text-danger">{{ $errors->first('customer_id') }}</span>
                                             @endif
@@ -185,7 +186,7 @@
                                                 name="product_id[]"
                                                 multiple="multiple"
                                                 data-allow-clear="true"
-                                                data-kt-select2="select2">
+                                                data-kt-select2="select2" disabled>
                                             @foreach ($products as $product)
                                                 <option value="{{ $product->id }}"
                                                     {{ in_array($product->id, $productSpecification->product_ids) ? 'selected' : '' }}>
@@ -193,6 +194,9 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                           @foreach ($productSpecification->product_ids as $id)
+                                                <input type="hidden" name="product_id[]" value="{{ $id }}">
+                                            @endforeach
                                         @if ($errors->has('product_id'))
                                             <div class="text-danger">{{ $errors->first('product_id') }}</div>
                                         @endif

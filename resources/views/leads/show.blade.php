@@ -2043,9 +2043,10 @@
                                                             </span>
                                                             </a>
                                                             <!-- View Button -->
-                                                            <a href="#"
+                                                            <!-- <a href="#"
                                                                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                                                               id="show_productSpecification_{{ $productSpecification->id }}">
+                                                               id="show_productSpecification_{{ $productSpecification->id }}"> -->
+                                                     <a href="{{ route('product-specification-show', $productSpecification->id) }}" target="_blank" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                         <span class="svg-icon svg-icon-3">
                                                             <!-- Eye Icon -->
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24px"
@@ -2064,9 +2065,10 @@
                                                         </span>
                                                             </a>
                                                             <!-- Edit Button -->
-                                                            <a href="#"
+                                                            <!-- <a href="#"
                                                                class="update_productSpecification btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                                                               id="update_productSpecification_{{ $productSpecification->id }}">
+                                                               id="update_productSpecification_{{ $productSpecification->id }}"> -->
+                                                     <a href="{{ route('product-specification-edit', $productSpecification->id) }}" target="_blank" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                         <span class="svg-icon svg-icon-3">
                                                             <!-- Edit Icon -->
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
