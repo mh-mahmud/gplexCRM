@@ -775,9 +775,9 @@ $(document).ready(function () {
         const rows = document.querySelectorAll('#table-body-work-order tr');
 
         rows.forEach(row => {
-            const qty = parseFloat(row.querySelector('input[name="items[quantity][]"]').value) || 0;
-            const rate = parseFloat(row.querySelector('input[name="items[rate][]"]').value) || 0;
-            const tax = parseFloat(row.querySelector('select[name="items[tax][]"]').value) || 0;
+            const qty = parseFloat(row.querySelector('input[name="items[quantity][]"]')?.value) || 0;
+            const rate = parseFloat(row.querySelector('input[name="items[rate][]"]')?.value) || 0;
+            const tax = parseFloat(row.querySelector('select[name="items[tax][]"]')?.value) || 0;
 
             const amount = qty * rate;
             const taxAmount = (amount * tax) / 100;
@@ -785,62 +785,76 @@ $(document).ready(function () {
             subtotal += amount;
             totalTax += taxAmount;
 
-            row.querySelector('.item-amount').textContent = (amount + taxAmount).toFixed(2);
+            const amountCell = row.querySelector('.item-amount');
+            if (amountCell) {
+                amountCell.textContent = (amount + taxAmount).toFixed(2);
+            }
         });
 
-        //document.getElementById('subtotal-amount').textContent = subtotal.toFixed(2);
-        //document.getElementById('total-tax-amount').textContent = totalTax.toFixed(2);
-
-        const discountInput = document.querySelector('input[name="discount"]').value;
-        const discountType = document.querySelector('select[name="discount_type"]').value;
+        const discountInput = parseFloat(document.querySelector('input[name="discount"]')?.value) || 0;
+        const discountType = document.querySelector('select[name="discount_type"]')?.value;
         let discountAmount = 0;
 
-        if (discountInput && !isNaN(discountInput)) {
-            if (discountType === 'percentage') {
-                discountAmount = (subtotal * parseFloat(discountInput)) / 100;
-            } else {
-                discountAmount = parseFloat(discountInput);
-            }
+        if (discountType === 'percentage') {
+            discountAmount = (subtotal * discountInput) / 100;
+        } else {
+            discountAmount = discountInput;
         }
 
-        document.getElementById('discount-amount').textContent = `-${discountAmount.toFixed(2)}`;
-
-        const adjustment = parseFloat(document.querySelector('input[name="adjustment"]').value) || 0;
-        document.getElementById('adjustment-amount').textContent = adjustment.toFixed(2);
-
+        const adjustment = parseFloat(document.querySelector('input[name="adjustment"]')?.value) || 0;
         const total = subtotal - discountAmount + totalTax + adjustment;
-        //document.getElementById('total-amount').textContent = total.toFixed(2);
-          // Update visible totals
+
         document.getElementById('subtotal-amount').textContent = subtotal.toFixed(2);
-        document.getElementById('total-tax-amount').textContent = totalTax.toFixed(2);
         document.getElementById('discount-amount').textContent = `-${discountAmount.toFixed(2)}`;
+        document.getElementById('total-tax-amount').textContent = totalTax.toFixed(2);
         document.getElementById('adjustment-amount').textContent = adjustment.toFixed(2);
         document.getElementById('total-amount').textContent = total.toFixed(2);
 
-        // update hidden inputs for form submission
-        document.getElementById('subtotal-hidden').value = subtotal.toFixed(2);
-        document.getElementById('totaltax-hidden').value = totalTax.toFixed(2);
-        document.getElementById('totaldiscount-hidden').value = discountAmount.toFixed(2);
-        document.getElementById('total-hidden').value = total.toFixed(2);
+        // Optional hidden inputs update
+        const setHidden = (id, value) => {
+            const el = document.getElementById(id);
+            if (el) el.value = value;
+        };
+
+        setHidden('subtotal-hidden', subtotal.toFixed(2));
+        setHidden('totaltax-hidden', totalTax.toFixed(2));
+        setHidden('totaldiscount-hidden', discountAmount.toFixed(2));
+        setHidden('total-hidden', total.toFixed(2));
     }
 
+    // Recalculate on key inputs
     document.addEventListener('input', function (e) {
+        const name = e.target.name;
         if (
-            e.target.matches('input[name="items[quantity][]"]') ||
-            e.target.matches('input[name="items[rate][]"]') ||
-            e.target.matches('select[name="items[tax][]"]') ||
-            e.target.name === 'discount' ||
-            e.target.name === 'discount_type' ||
-            e.target.name === 'adjustment'
+            name === 'discount' ||
+            name === 'adjustment' ||
+            name === 'items[quantity][]' ||
+            name === 'items[rate][]'
         ) {
             recalculateTotals();
         }
     });
 
+    // Use event delegation for change events
+    document.addEventListener('change', function (e) {
+        const name = e.target.name;
+        if (
+            name === 'discount_type' ||
+            name === 'items[tax][]'
+        ) {
+            recalculateTotals();
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        recalculateTotals();
+    });
+
+    // Work Order selector dynamic load
     document.getElementById('work-order-select').addEventListener('change', function () {
         const workOrderId = this.value;
         if (!workOrderId) return;
-        let baseUrl = "{{ url('/') }}"; // base url get
+        let baseUrl = "{{ url('/') }}";
 
         fetch(`${baseUrl}/product-specification/get-spec-details/${workOrderId}`)
             .then(response => response.json())
@@ -873,18 +887,15 @@ $(document).ready(function () {
                 recalculateTotals();
             });
     });
-
-    document.addEventListener('DOMContentLoaded', () => {
-        recalculateTotals();
-    });
 </script>
 
 
 
 
 
+
 <script>
-    $(document).ready(function() {
+    $(document_backup).ready(function() {
 
         //function to calculate row amount including tax
         function calculateRowAmount_Backup(row) {

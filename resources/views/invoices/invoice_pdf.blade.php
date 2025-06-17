@@ -221,10 +221,12 @@
     <table style="border-collapse: collapse; border: none;" role="presentation" aria-label="Invoice Header">
         <tr>
             <td style="border: none; padding-bottom: 10px; ">
-            <img src="http://192.168.11.123/gplexCRM/uploads/invoice/genuity.png" width="200" alt="Logo">
+            <!-- <img src="http://192.168.11.123/gplexCRM/uploads/invoice/genuity.png" width="200" alt="Logo"> -->
+            <img src="{{ asset('uploads/invoice/genuity.png') }}" width="200" alt="Logo">
             </td>
             <td style="border: none; padding-bottom: 10px; text-align: right">
-            <img src="http://192.168.11.123/gplexCRM/uploads/invoice/gplex.png" width="200" alt="Logo">
+            <!-- <img src="http://192.168.11.123/gplexCRM/uploads/invoice/gplex.png" width="200" alt="Logo"> -->
+            <img src="{{ asset('uploads/invoice/gplex.png') }}" width="200" alt="Logo">
             </td>
         </tr>
     </table>
