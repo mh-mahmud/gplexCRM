@@ -276,7 +276,11 @@ use Carbon\Carbon;
                                     } elseif ($totalPayments > 0 && $totalPayments < $invoice->total_amount) {
                                         $status = 'Partial Paid';
                                         $statusClass = 'badge-light-warning';
-                                        }
+                                        }else {
+                                        //fallback if amount exceeds total or any unexpected case
+                                        $status = 'Check Payment';
+                                        $statusClass = 'badge-light-info';
+                                    }
 
                                         @endphp
 

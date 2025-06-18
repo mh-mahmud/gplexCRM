@@ -445,7 +445,7 @@
                                         <table class="table table-rounded table-sm table-striped border align-middle gs-2" id="proposal-table">
                                             <thead>
                                                 <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
-                                                    <th>Item</th>
+                                                    <th>Itemsssssssss</th>
                                                     <th>Description</th>
                                                     <th>Qty</th>
                                                     <th>Rate</th>
@@ -807,6 +807,7 @@ $(document).ready(function () {
 });
 </script>
 
+
 <script>
     function recalculateTotals() {
         let subtotal = 0;
@@ -844,14 +845,13 @@ $(document).ready(function () {
         const adjustment = parseFloat(document.querySelector('input[name="adjustment"]')?.value) || 0;
         const total = subtotal - discountAmount + totalTax + adjustment;
 
-        // Update displayed values
         document.getElementById('subtotal-amount').textContent = subtotal.toFixed(2);
         document.getElementById('discount-amount').textContent = `-${discountAmount.toFixed(2)}`;
         document.getElementById('total-tax-amount').textContent = totalTax.toFixed(2);
         document.getElementById('adjustment-amount').textContent = adjustment.toFixed(2);
         document.getElementById('total-amount').textContent = total.toFixed(2);
 
-        // Update hidden inputs for backend
+        // Optional hidden inputs update
         const setHidden = (id, value) => {
             const el = document.getElementById(id);
             if (el) el.value = value;
@@ -863,7 +863,7 @@ $(document).ready(function () {
         setHidden('total-hidden', total.toFixed(2));
     }
 
-    // Auto recalculate on input change
+    // Recalculate on key inputs
     document.addEventListener('input', function (e) {
         const name = e.target.name;
         if (
@@ -876,7 +876,7 @@ $(document).ready(function () {
         }
     });
 
-    // On dropdown change (tax, discount type)
+    // Use event delegation for change events
     document.addEventListener('change', function (e) {
         const name = e.target.name;
         if (
@@ -887,11 +887,14 @@ $(document).ready(function () {
         }
     });
 
-    // Work Order Change Load Rows
-    document.getElementById('work-order-select')?.addEventListener('change', function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        recalculateTotals();
+    });
+
+    // Work Order selector dynamic load
+    document.getElementById('work-order-select').addEventListener('change', function () {
         const workOrderId = this.value;
         if (!workOrderId) return;
-
         let baseUrl = "{{ url('/') }}";
 
         fetch(`${baseUrl}/product-specification/get-spec-details/${workOrderId}`)
@@ -900,52 +903,32 @@ $(document).ready(function () {
                 const tableBody = document.getElementById('table-body-work-order');
                 tableBody.innerHTML = '';
 
-                data.forEach(item => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>
-                            <textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" rows="2" readonly>${item.product_feature_name}</textarea>
-                        </td>
-                        <td>
-                            <textarea class="form-control form-control-sm min-w-250px" name="items[descriptions][]" rows="2" placeholder="Description">${item.product_description ?? ''}</textarea>
-                        </td>
-                        <td><input class="form-control form-control-sm" type="number" name="items[quantity][]" value="${item.quantity}"></td>
-                        <td><input class="form-control form-control-sm" type="number" name="items[rate][]" value="${item.unit_price}"></td>
-                        <td>
-                            <select class="form-select form-select-sm" name="items[tax][]">
-                                <option value="0.00">No Tax (0.00%)</option>
-                                <option value="5.00">5.00%</option>
-                                <option value="10.00">10.00%</option>
-                                <option value="15.00">15.00%</option>
-                            </select>
-                        </td>
-                        <td class="item-amount">0.00</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-danger remove-row"><i class="bi bi-trash"></i></button>
-                        </td>
-                    `;
-                    tableBody.appendChild(row);
+                data.forEach((item, index) => {
+                    tableBody.innerHTML += `
+                        <tr>
+                            <td><textarea class="form-control form-control-sm min-w-250px" name="items[item_name][]" rows="2" readonly>${item.product_feature_name}</textarea></td>
+                            <td><textarea class="form-control form-control-sm min-w-250px" name="items[descriptions][]" rows="2" placeholder="Description">${item.product_description ?? ''}</textarea></td>
+                            <td><input class="form-control form-control-sm" type="number" name="items[quantity][]" value="${item.quantity}"></td>
+                            <td><input class="form-control form-control-sm" type="number" name="items[rate][]" value="${item.unit_price}"></td>
+                            <td>
+                                <select class="form-select form-select-sm" name="items[tax][]">
+                                    <option value="0.00">No Tax (0.00%)</option>
+                                    <option value="5.00">5.00%</option>
+                                    <option value="10.00">10.00%</option>
+                                    <option value="15.00">15.00%</option>
+                                </select>
+                            </td>
+                            <td class="item-amount">0.00</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-danger remove-row"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>`;
                 });
 
                 recalculateTotals();
             });
     });
-
-    // Remove row event (delegation)
-    document.addEventListener('click', function (e) {
-        if (e.target.closest('.remove-row')) {
-            const row = e.target.closest('tr');
-            row?.remove();
-            recalculateTotals();
-        }
-    });
-
-    // Initial calculation on load (important for edit page)
-    document.addEventListener('DOMContentLoaded', function () {
-        recalculateTotals();
-    });
 </script>
-
 
 <script>
     $(document).ready(function() {

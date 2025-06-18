@@ -846,6 +846,18 @@ $(document).ready(function () {
         }
     });
 
+     // handle remove row button clicks using delegation
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('remove-row') || e.target.closest('.remove-row')) {
+            const button = e.target.closest('.remove-row');
+            const row = button.closest('tr');
+            if (row) {
+                row.remove();
+                recalculateTotals();
+            }
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
         recalculateTotals();
     });

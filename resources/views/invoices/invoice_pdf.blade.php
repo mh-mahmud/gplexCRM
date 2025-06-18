@@ -497,12 +497,12 @@
                 <tr>
                     <td style="border: none; padding: 10px;">
                         <div>
-                            <div style="display: flex;flex-direction: column;gap:0; font-size: 13px; line-height: 1">
-                                <strong>Bank Information Details:</strong>
-                                <strong>Genuity System Ltd</strong>
-                                <small>Eastern Bank Ltd</small>
-                                <small>AC no-1071060004253</small>
-                                <small>Routing no-095262987</small>
+                            <div style="font-size: 13px; line-height: 1.4;">
+                                <div><strong>Bank Information Details:</strong></div>
+                                <div><strong>Genuity System Ltd</strong></div>
+                                <div><small>Eastern Bank Ltd</small></div>
+                                <div><small>AC no-1071060004253</small></div>
+                                <div><small>Routing no-095262987</small></div>
                             </div>
                         </div>
                     </td>
