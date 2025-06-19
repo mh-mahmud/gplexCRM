@@ -810,7 +810,7 @@ $(document).ready(function () {
         document.getElementById('adjustment-amount').textContent = adjustment.toFixed(2);
         document.getElementById('total-amount').textContent = total.toFixed(2);
 
-        // Optional hidden inputs update
+        // optional hidden inputs update
         const setHidden = (id, value) => {
             const el = document.getElementById(id);
             if (el) el.value = value;
@@ -822,7 +822,7 @@ $(document).ready(function () {
         setHidden('total-hidden', total.toFixed(2));
     }
 
-    // Recalculate on key inputs
+    // recalculate on key inputs
     document.addEventListener('input', function (e) {
         const name = e.target.name;
         if (
@@ -835,7 +835,7 @@ $(document).ready(function () {
         }
     });
 
-    // Use event delegation for change events
+    // use event delegation for change events
     document.addEventListener('change', function (e) {
         const name = e.target.name;
         if (
@@ -862,7 +862,7 @@ $(document).ready(function () {
         recalculateTotals();
     });
 
-    // Work Order selector dynamic load
+    // work Order selector dynamic load
     document.getElementById('work-order-select').addEventListener('change', function () {
         const workOrderId = this.value;
         if (!workOrderId) return;

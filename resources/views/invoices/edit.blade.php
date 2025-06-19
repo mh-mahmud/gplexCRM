@@ -483,7 +483,7 @@
                                                             placeholder="Rate" value="{{ $item['Rate']}}">
                                                     </td>
                                                     <td>
-                                                        <select class="form-select form-select-sm" data-control="select2" data-placeholder="No Tax" id="item-tax"
+                                                        <select class="form-select form-select-sm" data-control="select22" data-placeholder="No Tax" id="item-tax"
                                                             name="items[tax][]">
                                                             <option value="" {{ $item['Tax'] == '' ? 'selected' : '' }}>No Tax (0.00%)</option>
                                                             <option value="5.00" {{ $item['Tax'] == '5.00' ? 'selected' : '' }}>5.00%</option>
