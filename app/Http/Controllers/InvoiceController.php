@@ -185,6 +185,9 @@ class InvoiceController extends Controller
         $invoice = Invoice::findOrFail($id);
         $invoiceCustomFormId = $invoice->invoice_custom_form_id;
         $invoiceItems = json_decode($invoice->item_description, true);
+        $existingPayments = $invoice->payment_details ?? [];
+        $totalPayments = array_sum(array_column($existingPayments, 'payment'));
+        $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
         //dd($invoiceItems);die();
         //dd($items);die();
         //$customers = Customer::all();
@@ -203,7 +206,7 @@ class InvoiceController extends Controller
         //$products = Product::select('id', 'name', 'description', 'product_value')->get();
         $products = Product::select('id', 'name', 'description', 'product_value')->where('status', 1)->get();
         $custom_invoice = InvoiceCustomForm::select('id', 'invoice_name','field_details','footer_details')->get();
-        return view('invoices.edit', compact('invoice', 'customers', 'countries', 'currencies', 'discountTypes', 'agents', 'products', 'invoiceItems','invoiceCustomFormId','custom_invoice','wordOrderNumbers'));
+        return view('invoices.edit', compact('invoice', 'customers', 'countries', 'currencies', 'discountTypes', 'agents', 'products', 'invoiceItems','invoiceCustomFormId','custom_invoice','wordOrderNumbers','newDueAmount'));
     }
 
 

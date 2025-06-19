@@ -451,13 +451,15 @@
                                                     <th>Rate</th>
                                                     <th>Tax</th>
                                                     <th>Amount</th>
+                                                    @if($newDueAmount == $invoice->total_amount)
                                                     <th><i class="bi bi-gear-fill"></i></th>
+                                                    @endif
                                                 </tr>
                                             </thead>
-                                            <tbody id="table-body-work-order"></tbody>
+                                            <!-- <tbody id="table-body-work-order"></tbody> -->
 
 
-                                            <tbody id="table-body">
+                                            <tbody id="table-body-work-order">
                                                 @foreach($invoiceItems as $item)
 
                                                 <tr>
@@ -490,11 +492,15 @@
                                                         </select>
                                                     </td>
                                                     <td class="item-amount">{{ $item['Amount'] }}</td>
+                                                    @if($newDueAmount == $invoice->total_amount)
                                                     <td>
+                                                        
                                                         <button type="button" class="btn btn-sm btn-danger py-2 px-2 remove-row">
                                                             <i class="bi bi-trash"></i>
                                                         </button>
+                                                   
                                                     </td>
+                                                    @endif
                                                 </tr>
                                                 @endforeach
                                                 <!-- <tr>
@@ -780,7 +786,7 @@ $(document).ready(function () {
         var customerId = $(this).val();
         var workOrderSelect = $('#work-order-select');
 
-        // clear existing options
+        // clear existing work order
         workOrderSelect.empty();
         workOrderSelect.append('<option value="">Select Work Order Number</option>');
         let baseUrl = "{{ url('/') }}"; // base url get
@@ -844,14 +850,23 @@ $(document).ready(function () {
         const adjustment = parseFloat(document.querySelector('input[name="adjustment"]')?.value) || 0;
         const total = subtotal - discountAmount + totalTax + adjustment;
 
-        // Update displayed values
-        document.getElementById('subtotal-amount').textContent = subtotal.toFixed(2);
-        document.getElementById('discount-amount').textContent = `-${discountAmount.toFixed(2)}`;
-        document.getElementById('total-tax-amount').textContent = totalTax.toFixed(2);
-        document.getElementById('adjustment-amount').textContent = adjustment.toFixed(2);
-        document.getElementById('total-amount').textContent = total.toFixed(2);
+        // update displayed values first block
+        const updateText = (id, value) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        };
 
-        // Update hidden inputs for backend
+        updateText('subtotal-amount', subtotal.toFixed(2));
+        updateText('discount-amount', `-${discountAmount.toFixed(2)}`);
+        updateText('total-tax-amount', totalTax.toFixed(2));
+        updateText('adjustment-amount', adjustment.toFixed(2));
+        updateText('total-amount', total.toFixed(2));
+
+        // update second block
+        updateText('subtotal-amount1', subtotal.toFixed(2));
+        updateText('custom_adjustment', adjustment.toFixed(2));
+
+        // update hidden inputs for backend (if present)
         const setHidden = (id, value) => {
             const el = document.getElementById(id);
             if (el) el.value = value;
@@ -863,7 +878,7 @@ $(document).ready(function () {
         setHidden('total-hidden', total.toFixed(2));
     }
 
-    // Auto recalculate on input change
+    //recalculate on input change
     document.addEventListener('input', function (e) {
         const name = e.target.name;
         if (
@@ -876,21 +891,19 @@ $(document).ready(function () {
         }
     });
 
-    // On dropdown change (tax, discount type)
+    // recalculate on dropdown change (tax, discount type)
     document.addEventListener('change', function (e) {
         const name = e.target.name;
-        if (
-            name === 'discount_type' ||
-            name === 'items[tax][]'
-        ) {
+        if (name === 'discount_type' || name === 'items[tax][]') {
             recalculateTotals();
         }
     });
 
-    // Work Order Change Load Rows
+    // work order change - load rows and recalculate
     document.getElementById('work-order-select')?.addEventListener('change', function () {
         const workOrderId = this.value;
         if (!workOrderId) return;
+        if (!confirm("This will replace current items. Proceed?")) return;
 
         let baseUrl = "{{ url('/') }}";
 
@@ -931,16 +944,15 @@ $(document).ready(function () {
             });
     });
 
-    // Remove row event (delegation)
+    // remove row button handler
     document.addEventListener('click', function (e) {
         if (e.target.closest('.remove-row')) {
-            const row = e.target.closest('tr');
-            row?.remove();
+            e.target.closest('tr')?.remove();
             recalculateTotals();
         }
     });
 
-    // Initial calculation on load (important for edit page)
+    // initial calculation
     document.addEventListener('DOMContentLoaded', function () {
         recalculateTotals();
     });
@@ -948,7 +960,7 @@ $(document).ready(function () {
 
 
 <script>
-    $(document).ready(function() {
+    $(document_backup).ready(function() {
 
         //function to calculate row amount including tax
         function calculateRowAmount_Backup(row) {
