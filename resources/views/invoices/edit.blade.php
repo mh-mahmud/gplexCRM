@@ -79,11 +79,11 @@
                                             <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span>
 
                                             </label>
-                                            <select class="form-control form-control-sm form-control-solid"  id="customerSelect" name="customer_id" data-allow-clear="true"
-                                            data-kt-select2="select2">
+                                            <select class="form-control form-control-sm form-control-solid" id="customerSelect" name="customer_id" data-allow-clear="true"
+                                                data-kt-select2="select2">
                                                 <option value="" {{ old('customer_id', $invoice->customer_id) == '' ? 'selected' : '' }}>Select Customer</option>
                                                 @foreach($customers as $customer)
-                                                <option value="{{ $customer->id }}"  data-address="{{ $customer->address }}"  {{ old('customer_id', $invoice->customer_id) == $customer->id ? 'selected' : '' }}>
+                                                <option value="{{ $customer->id }}" data-address="{{ $customer->address }}" {{ old('customer_id', $invoice->customer_id) == $customer->id ? 'selected' : '' }}>
                                                     {{ $customer->first_name }} {{ $customer->last_name }}
                                                 </option>
                                                 @endforeach
@@ -189,7 +189,7 @@
 
                                     <div class="col-xl-6">
                                         <div class="fv-row mb-5">
-                                        <label class="form-label fw-bolder text-dark">Work Order Number</label>
+                                            <label class="form-label fw-bolder text-dark">Work Order Number</label>
 
                                             </label>
                                             <select class="form-control form-control-sm form-control-solid" name="ps_id" id="work-order-select">
@@ -335,12 +335,12 @@
                                             <label class="form-label fw-bolder text-dark">
                                                 Reference Number
 
-                                               
+
                                             </label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <div class="input-group">
-                                                
+
                                                 <input class="form-control form-control-sm"
                                                     type="text" name="ref_no"
                                                     value="{{ old('ref_no', $invoice->ref_no) }}" />
@@ -494,11 +494,11 @@
                                                     <td class="item-amount">{{ $item['Amount'] }}</td>
                                                     @if($newDueAmount == $invoice->total_amount)
                                                     <td>
-                                                        
+
                                                         <button type="button" class="btn btn-sm btn-danger py-2 px-2 remove-row">
                                                             <i class="bi bi-trash"></i>
                                                         </button>
-                                                   
+
                                                     </td>
                                                     @endif
                                                 </tr>
@@ -614,11 +614,15 @@
                                                         <th><strong>Discount :</strong>
                                                             <div class="input-group flex-nowrap">
                                                                 <div class="flex-grow-1">
-                                                                    <input class="form-control form-control-sm rounded-end-0 border-end" type="number" name="discount" placeholder="Discount">
+                                                                    <input class="form-control form-control-sm rounded-end-0 border-end"
+                                                                        type="number"
+                                                                        name="discount"
+                                                                        placeholder="Discount"
+                                                                        value="{{ old('discount', $invoice->discount) }}">
                                                                 </div>
                                                                 <select class="form-select form-select-sm form-control-sm" name="discount_type">
-                                                                    <option value="fixed">Fixed Amount</option>
-                                                                    <option value="percentage">%</option>
+                                                                    <option value="fixed" {{ old('discount_type', $invoice->discount_type) == 'fixed' ? 'selected' : '' }}>Fixed Amount</option>
+                                                                    <option value="percentage" {{ old('discount_type', $invoice->discount_type) == 'percentage' ? 'selected' : '' }}>%</option>
                                                                 </select>
                                                             </div>
                                                         </th>
@@ -629,9 +633,14 @@
                                                         <th class="text-end"><strong>Total Tax:</strong></th>
                                                         <td class="text-end"><strong>BDT</strong> <span id="total-tax-amount">{{ old('total_tax', $invoice->total_tax) }}</span></td>
                                                     </tr>
+                                                    <!-- Adjustment Row -->
                                                     <tr>
                                                         <th><strong>Adjustment :</strong>
-                                                            <input class="form-control form-control-sm" type="number" name="adjustment" placeholder="Adjustment">
+                                                            <input class="form-control form-control-sm"
+                                                                type="number"
+                                                                name="adjustment"
+                                                                placeholder="Adjustment"
+                                                                value="{{ old('adjustment', $invoice->adjustment) }}">
                                                         </th>
                                                         <td class="text-end"><strong>BDT</strong> <span id="custom_adjustment">{{ old('adjustment', $invoice->adjustment) }}</span></td>
                                                     </tr>
@@ -781,36 +790,36 @@
 </div>
 
 <script>
-$(document).ready(function () {
-    $('#customerSelect').on('change', function () {
-        var customerId = $(this).val();
-        var workOrderSelect = $('#work-order-select');
+    $(document).ready(function() {
+        $('#customerSelect').on('change', function() {
+            var customerId = $(this).val();
+            var workOrderSelect = $('#work-order-select');
 
-        // clear existing work order
-        workOrderSelect.empty();
-        workOrderSelect.append('<option value="">Select Work Order Number</option>');
-        let baseUrl = "{{ url('/') }}"; // base url get
+            // clear existing work order
+            workOrderSelect.empty();
+            workOrderSelect.append('<option value="">Select Work Order Number</option>');
+            let baseUrl = "{{ url('/') }}"; // base url get
 
-        if (customerId) {
-            $.ajax({
-               url: baseUrl + '/invoice/get-work-orders/' + customerId,
-                type: 'GET',
-                success: function (data) {
-                    if (data.length > 0) {
-                        $.each(data, function (index, workOrder) {
-                            workOrderSelect.append('<option value="' + workOrder.id + '">' + workOrder.work_order_number + '</option>');
-                        });
-                    } else {
-                        workOrderSelect.append('<option value="">No work orders found</option>');
+            if (customerId) {
+                $.ajax({
+                    url: baseUrl + '/invoice/get-work-orders/' + customerId,
+                    type: 'GET',
+                    success: function(data) {
+                        if (data.length > 0) {
+                            $.each(data, function(index, workOrder) {
+                                workOrderSelect.append('<option value="' + workOrder.id + '">' + workOrder.work_order_number + '</option>');
+                            });
+                        } else {
+                            workOrderSelect.append('<option value="">No work orders found</option>');
+                        }
+                    },
+                    error: function() {
+                        alert('Failed to load work orders.');
                     }
-                },
-                error: function () {
-                    alert('Failed to load work orders.');
-                }
-            });
-        }
+                });
+            }
+        });
     });
-});
 </script>
 
 <script>
@@ -879,7 +888,7 @@ $(document).ready(function () {
     }
 
     //recalculate on input change
-    document.addEventListener('input', function (e) {
+    document.addEventListener('input', function(e) {
         const name = e.target.name;
         if (
             name === 'discount' ||
@@ -892,7 +901,7 @@ $(document).ready(function () {
     });
 
     // recalculate on dropdown change (tax, discount type)
-    document.addEventListener('change', function (e) {
+    document.addEventListener('change', function(e) {
         const name = e.target.name;
         if (name === 'discount_type' || name === 'items[tax][]') {
             recalculateTotals();
@@ -900,7 +909,7 @@ $(document).ready(function () {
     });
 
     // work order change - load rows and recalculate
-    document.getElementById('work-order-select')?.addEventListener('change', function () {
+    document.getElementById('work-order-select')?.addEventListener('change', function() {
         const workOrderId = this.value;
         if (!workOrderId) return;
         if (!confirm("This will replace current items. Proceed?")) return;
@@ -945,7 +954,7 @@ $(document).ready(function () {
     });
 
     // remove row button handler
-    document.addEventListener('click', function (e) {
+    document.addEventListener('click', function(e) {
         if (e.target.closest('.remove-row')) {
             e.target.closest('tr')?.remove();
             recalculateTotals();
@@ -953,8 +962,12 @@ $(document).ready(function () {
     });
 
     // initial calculation
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         recalculateTotals();
+      // Optional: trigger input event to recalculate if needed
+        document.querySelectorAll('input[name="discount"], input[name="adjustment"]').forEach(input => {
+            input.dispatchEvent(new Event('input'));
+        });
     });
 </script>
 
@@ -1067,7 +1080,7 @@ $(document).ready(function () {
             $('#subtotal-amount').text(subtotal.toFixed(2));
             $('#discount-amount').text('-' + discountValue.toFixed(2));
             $('#adjustment-amount').text(adjustmentValue.toFixed(2));
-            $('#total-tax-amount').text(totalTax.toFixed(2)); // update total tax
+            //$('#total-tax-amount').text(totalTax.toFixed(2)); // update total tax
             $('#total-amount').text(total.toFixed(2));
 
             //update hidden input values
@@ -1435,19 +1448,19 @@ $(document).ready(function () {
             });
         }
 
-function populateCustomInvoiceFields_backup_27022025(fields, existingData = []) {
-    //console.log
-    // headers in the custom invoice table
-    customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Amount</th><th>Action</th>';
+        function populateCustomInvoiceFields_backup_27022025(fields, existingData = []) {
+            //console.log
+            // headers in the custom invoice table
+            customInvoiceHeader.innerHTML = fields.map(field => `<th>${field.field_name}</th>`).join('') + '<th>Amount</th><th>Action</th>';
 
-    // initialize the custom invoice table body
-    customInvoiceBody.innerHTML = '';
+            // initialize the custom invoice table body
+            customInvoiceBody.innerHTML = '';
 
-    // if existing data is available, populate the first row
-    if (existingData.length >0) {
-        //alert('sdsdsds');
-        existingData.forEach((data) => {
-            const initialRow = `
+            // if existing data is available, populate the first row
+            if (existingData.length > 0) {
+                //alert('sdsdsds');
+                existingData.forEach((data) => {
+                    const initialRow = `
                 <tr>
                     ${fields.map(field => `
                         <td>
@@ -1473,13 +1486,13 @@ function populateCustomInvoiceFields_backup_27022025(fields, existingData = []) 
                     </td>
                 </tr>
             `;
-            // add the initial row for each existing data entry
-            customInvoiceBody.insertAdjacentHTML('beforeend', initialRow);
-        });
-    }
+                    // add the initial row for each existing data entry
+                    customInvoiceBody.insertAdjacentHTML('beforeend', initialRow);
+                });
+            }
 
-    // add an empty row with add more functionality
-    customInvoiceBody.insertAdjacentHTML('beforeend', `
+            // add an empty row with add more functionality
+            customInvoiceBody.insertAdjacentHTML('beforeend', `
         <tr>
             ${fields.map(field => `
                 <td>
@@ -1505,13 +1518,13 @@ function populateCustomInvoiceFields_backup_27022025(fields, existingData = []) 
         </tr>
     `);
 
-    // Add functionality for the "Remove" buttons
-    addRemoveFunctionality();
+            // Add functionality for the "Remove" buttons
+            addRemoveFunctionality();
 
-    // Add event listener for the "Add More" button
-    document.getElementById('add-row').addEventListener('click', function() {
-        // Insert a new, empty row
-        customInvoiceBody.insertAdjacentHTML('beforeend', `
+            // Add event listener for the "Add More" button
+            document.getElementById('add-row').addEventListener('click', function() {
+                // Insert a new, empty row
+                customInvoiceBody.insertAdjacentHTML('beforeend', `
             <tr>
                 ${fields.map(field => `
                     <td>
@@ -1537,10 +1550,10 @@ function populateCustomInvoiceFields_backup_27022025(fields, existingData = []) 
             </tr>
         `);
 
-        // Reapply functionality for new rows
-        addRemoveFunctionality();
-    });
-}
+                // Reapply functionality for new rows
+                addRemoveFunctionality();
+            });
+        }
 
         const invoiceDescription = `{{ $invoice->item_description }}`;
 
@@ -1575,7 +1588,7 @@ function populateCustomInvoiceFields_backup_27022025(fields, existingData = []) 
 </script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         let customerSelect = document.getElementById("customerSelect");
         let addressField = document.getElementById("address");
 
@@ -1587,8 +1600,8 @@ function populateCustomInvoiceFields_backup_27022025(fields, existingData = []) 
         $('#customerSelect').select2({
             placeholder: "Select Customer",
             allowClear: true
-        }).on("change", function () {
-            updateAddressField();//update the address field selected
+        }).on("change", function() {
+            updateAddressField(); //update the address field selected
         });
 
         //set the address field on page load customer selected
