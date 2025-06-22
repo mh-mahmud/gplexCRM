@@ -265,7 +265,9 @@ use Carbon\Carbon;
 
                                     $lastPayment = $paymentDetails->last();
                                     $paymentAmount = $lastPayment['payment'] ?? '0.00';
-                                    $dueAmount = $lastPayment['due'] ?? $invoice->total_amount;
+                                    //$dueAmount = $lastPayment['due'] ?? $invoice->total_amount;
+                                    $dueAmount = max(0, $invoice->total_amount - $totalPayments) ?? $invoice->total_amount;
+                                   
 
                                     if ($totalPayments == $invoice->total_amount) {
                                     $status = 'Paid';
