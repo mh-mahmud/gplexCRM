@@ -779,21 +779,43 @@ label[for="payment-method"] {
     justify-content: space-between;
 }
 
-label[for="payment-amount"] span {
+/* Layout */
+label[for="payment-amount"] span,
+label[for="cheque-number"] span,
+label[for="received-date"] span,
+label[for="transfer-date"] span,
+label[for="transfer-mode"] span,
+label[for="deposit-date"] span {
     display: flex;
     align-items: center;
 }
 
-label[for="payment-amount"] > span input {
+/* Left input field styling */
+label[for="payment-amount"] > span input,
+label[for="cheque-number"] > span input,
+label[for="received-date"] > span input,
+label[for="transfer-date"] > span input,
+label[for="deposit-date"] > span input {
     border: 1px solid #54B4D3;
     padding: 0.2rem 1rem;
     border-radius: 4px 0 0 4px;
 }
-label[for="payment-amount"] > span input:focus {
-   outline: none;
+
+/* Focus behavior */
+label[for="payment-amount"] > span input:focus,
+label[for="cheque-number"] > span input:focus,
+label[for="received-date"] > span input:focus,
+label[for="transfer-date"] > span input:focus,
+label[for="deposit-date"] > span input:focus {
+    outline: none;
 }
 
-label[for="payment-amount"] span input + span {
+/* Right span (unit) */
+label[for="payment-amount"] span input + span,
+label[for="cheque-number"] span input + span,
+label[for="received-date"] span input + span,
+label[for="transfer-date"] span input + span,
+label[for="deposit-date"] span input + span {
     border: 1px solid #54B4D3;
     padding: 0.2rem 1rem;
     border-radius: 0 4px 4px 0;

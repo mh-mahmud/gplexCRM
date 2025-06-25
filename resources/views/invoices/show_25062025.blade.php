@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice</title>
     <link href="{{url('/')}}/assets/css/invoice.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{url('/')}}/assets/css/flatpickr.min.css">
 </head>
 
 <body>
@@ -393,72 +392,26 @@
                 </div> -->
 
                 <!-- Payment Form -->
-                <form action="{{ route('invoice-payment', $invoice->id) }}" method="POST" id="payment-form">
-                @csrf
-                <div class="px-14 py-3 text-sm text-neutral-700">
-                    <label for="payment-amount" class="text-main font-bold">Amount
-                        <span>
-                            <input type="text" name="payment_amount" id="payment-amount" class="form-control" value="{{ old('payment_amount') }}" required>
-                            <span class="font-bold">TK</span>
-                        </span>
-                    </label>
-                    @if ($errors->has('payment_amount'))
-                        <span class="text-danger" style="color:#F1416C">{{ $errors->first('payment_amount') }}</span>
-                    @endif
-                </div>
+                <form action="{{ route('invoice-payment', $invoice->id) }}" method="POST">
+                    @csrf
+                    <div class="px-14 py-3 text-sm text-neutral-700">
+                        <div>
+                            <label for="payment-amount" class="text-main font-bold">Amount
+                                <span class="">
+                                    <input type="text" name="payment_amount" id="payment-amount" class="form-control" value="{{ old('payment_amount') }}" required>
+                                    <span class="font-bold">TK</span>
+                                </span>
+                                @if ($errors->has('payment_amount'))
+                                <span class="text-danger" style="color:#F1416C">{{ $errors->first('payment_amount') }}</span>
+                                @endif
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="px-14 py-3 text-sm text-neutral-700">
-                    <label for="payment_mode" class="text-main font-bold">Payment Mode:</label>
-                    <select class="form-control form-control-sm form-control-solid" name="payment_mode" id="payment-mode" aria-label="Default select example" required>
-                        <option value="">Select Mode</option>
-                        <option value="Cheque">Cheque</option>
-                        <option value="Bank Transfer">Bank Transfer</option>
-                    </select>
-                </div>
-
-                <div id="cheque-fields" class="px-14 py-3 text-sm text-neutral-700" style="display:none">
-                    <label for="cheque-number" class="text-main font-bold">Cheque Number:
-                        <span>
-                        <input type="text" name="cheque_number" id="cheque-number" class="form-control form-control-sm">
-                        </span>
-                    </label>
-                    <label for="received-date" class="text-main font-bold">Received Date:
-                        <span>
-                        <input type="text" name="received_date" id="received-date" class="form-control form-control-sm flatpickr">
-                    </span>
-                    </label>
-                </div>
-
-                <div id="bank-fields" class="px-14 py-3  text-sm text-neutral-700" style="display:none">
-                    <label class="text-main font-bold" for="transfer-date">Transfer Date:
-                        <span>
-                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr" placeholder="Transfer Date" id="transfer-date" name="transfer_date" value="{{ old('transfer_date') }}">
-                        </span>
-                    </label>
-                    <br>
-
-                    <label class="text-main font-bold" for="transfer-mode">Transfer Mode:</label>
-                    <span>
-                    <select name="transfer_mode" id="transfer-mode" class="form-control form-control-sm">
-                        <option value="">Select Transfer Mode</option>
-                        <option value="BEFTN">BEFTN</option>
-                        <option value="NPSB">NPSB</option>
-                    </select>
-                    </span>
-                </div>
-
-                <div class="px-14 py-3 text-sm text-neutral-700">
-                    <label class="text-main font-bold" for="deposit-date">Deposit Date:
-                        <span>
-                        <input type="text" name="deposit_date" class="form-control form-control-sm flatpickr" id="deposit-date">
-                        </span>
-                    </label>
-                </div>
-
-                <div class="px-14 text-sm text-neutral-700">
-                    <button type="submit" class="pay-now">Pay Now</button>
-                </div>
-            </form>
+                    <div class="px-14 text-sm text-neutral-700">
+                        <button type="submit" class="pay-now">Pay Now</button>
+                    </div>
+                </form>
                 @else
                 <!-- Message if no payment is due -->
                 <div class="px-14 py-3 text-sm text-neutral-700">
@@ -471,35 +424,6 @@
             </div>
         </div>
 
-<script>
-    document.getElementById('payment-mode').addEventListener('change', function () {
-        const chequeFields = document.getElementById('cheque-fields');
-        const bankFields = document.getElementById('bank-fields');
-
-        chequeFields.style.display = 'none';
-        bankFields.style.display = 'none';
-
-        if (this.value === 'Cheque') {
-            chequeFields.style.display = 'block';
-        } else if (this.value === 'Bank Transfer') {
-            bankFields.style.display = 'block';
-        }
-    });
-
-</script>
-
-<script src="{{url('/')}}/assets/js/flatpickr.js"></script>
-
-    <script>
-        flatpickr(".flatpickr", {
-            dateFormat: "Y-m-d",
-            allowInput: true
-        });
-    </script>
-
 </body>
-
-
-
 
 </html>
