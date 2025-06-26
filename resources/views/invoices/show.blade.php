@@ -376,6 +376,38 @@
                 </div>
                 @endif
 
+              <div class="px-14 py-10 text-sm text-neutral-700">
+                <table class="w-full border-collapse border-spacing-0">
+                    <thead>
+                        <tr>
+                            <td class="border-b-2 border-main pb-3 pl-3 text-center font-bold text-main">#</td>
+                            <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Payment Mode</td>
+                            <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Amount</td>
+                            <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Deposit Status</td>
+                            <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Deposit Date</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($existingPayments as $payment)
+                        <tr>
+                            <td class="border-b py-3 pl-3 text-center">{{ $loop->iteration }}</td>
+                            <td class="border-b py-3 pl-2 text-center">{{ $payment['payment_mode'] ?? '-' }}</td>
+                            <td class="border-b py-3 pl-2 text-center">{{ $payment['payment'] ?? '-' }}</td>
+                            <td class="border-b py-3 pl-2 text-center">{{ $payment['deposit_status'] ?? '-' }}</td>
+                            <td class="border-b py-3 pl-2 text-center">{{ $payment['deposit_date'] ?? '-' }}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="py-3 pl-3 text-center text-sm text-gray-500">No existing payments found.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+              </div>
+
+
+
+
                 
                 <!-- <div class="px-14 py-3 text-sm text-neutral-700 payment-area">
                     <div>
@@ -409,48 +441,87 @@
 
                 <div class="px-14 py-3 text-sm text-neutral-700">
                     <label for="payment_mode" class="text-main font-bold">Payment Mode:</label>
-                    <select class="form-control form-control-sm form-control-solid" name="payment_mode" id="payment-mode" aria-label="Default select example" required>
+                    <br>
+                    <select class="form-control form-control-sm form-control-solid" name="payment_mode" id="payment-mode" required>
                         <option value="">Select Mode</option>
-                        <option value="Cheque">Cheque</option>
-                        <option value="Bank Transfer">Bank Transfer</option>
+                        <option value="Cheque" {{ old('payment_mode') == 'Cheque' ? 'selected' : '' }}>Cheque</option>
+                        <option value="Bank Transfer" {{ old('payment_mode') == 'Bank Transfer' ? 'selected' : '' }}>Bank Transfer</option>
                     </select>
+
+                     @if ($errors->has('payment_mode'))
+                        <span class="text-danger" style="color:#F1416C">{{ $errors->first('payment_mode') }}</span>
+                    @endif
                 </div>
 
                 <div id="cheque-fields" class="px-14 py-3 text-sm text-neutral-700" style="display:none">
                     <label for="cheque-number" class="text-main font-bold">Cheque Number:
                         <span>
-                        <input type="text" name="cheque_number" id="cheque-number" class="form-control form-control-sm">
+                        <input type="text" name="cheque_number" id="cheque-number" class="form-control form-control-sm" value="{{ old('cheque_number') }}">
+
                         </span>
                     </label>
+                     @if ($errors->has('cheque_number'))
+                        <span class="text-danger" style="color:#F1416C">{{ $errors->first('cheque_number') }}</span>
+                    @endif
                     <label for="received-date" class="text-main font-bold">Received Date:
                         <span>
-                        <input type="text" name="received_date" id="received-date" class="form-control form-control-sm flatpickr">
+                        <input type="text" name="received_date" id="received-date" class="form-control form-control-sm flatpickr" value="{{ old('received_date') }}">
+
                     </span>
                     </label>
+                    @if ($errors->has('received_date'))
+                        <span class="text-danger" style="color:#F1416C">{{ $errors->first('received_date') }}</span>
+                    @endif
                 </div>
 
                 <div id="bank-fields" class="px-14 py-3  text-sm text-neutral-700" style="display:none">
                     <label class="text-main font-bold" for="transfer-date">Transfer Date:
                         <span>
-                        <input type="text" class="form-control form-control-sm form-control-solid flatpickr" placeholder="Transfer Date" id="transfer-date" name="transfer_date" value="{{ old('transfer_date') }}">
+                        <input type="text" name="transfer_date" id="transfer-date" class="form-control form-control-sm form-control-solid flatpickr" value="{{ old('transfer_date') }}">
+
                         </span>
                     </label>
-                    <br>
+                    @if ($errors->has('transfer_date'))
+                        <span class="text-danger" style="color:#F1416C">{{ $errors->first('transfer_date') }}</span>
+                    @endif<br>
+                    
 
                     <label class="text-main font-bold" for="transfer-mode">Transfer Mode:</label>
-                    <span>
+                    <br>
                     <select name="transfer_mode" id="transfer-mode" class="form-control form-control-sm">
                         <option value="">Select Transfer Mode</option>
-                        <option value="BEFTN">BEFTN</option>
-                        <option value="NPSB">NPSB</option>
+                        <option value="BEFTN" {{ old('transfer_mode') == 'BEFTN' ? 'selected' : '' }}>BEFTN</option>
+                        <option value="NPSB" {{ old('transfer_mode') == 'NPSB' ? 'selected' : '' }}>NPSB</option>
                     </select>
-                    </span>
+
+                    @if ($errors->has('transfer_mode'))
+                        <span class="text-danger" style="color:#F1416C">{{ $errors->first('transfer_mode') }}</span>
+                    @endif
+                    
+                </div>
+
+                <div class="px-14 py-3 text-sm text-neutral-700">
+                    <label class="text-main font-bold" for="deposit-date">Deposit Status:</label>
+                   <br>
+                    <select name="deposit_status" id="deposit-status" class="form-control form-control-sm">
+                        <option value="">Select Deposit Status</option>
+                        <option value="Pending" {{ old('deposit_status') == 'Pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="Success" {{ old('deposit_status') == 'Success' ? 'selected' : '' }}>Success</option>
+                        <option value="Failed" {{ old('deposit_status') == 'Failed' ? 'selected' : '' }}>Failed</option>
+                    </select>
+
+                    @if ($errors->has('deposit_status'))
+                        <span class="text-danger" style="color:#F1416C">{{ $errors->first('deposit_status') }}</span>
+                    @endif
+                   
+                    
                 </div>
 
                 <div class="px-14 py-3 text-sm text-neutral-700">
                     <label class="text-main font-bold" for="deposit-date">Deposit Date:
                         <span>
-                        <input type="text" name="deposit_date" class="form-control form-control-sm flatpickr" id="deposit-date">
+                         <input type="text" name="deposit_date" class="form-control form-control-sm flatpickr" id="deposit-date" value="{{ old('deposit_date') }}">
+
                         </span>
                     </label>
                 </div>
@@ -473,6 +544,7 @@
 
 <script>
     document.getElementById('payment-mode').addEventListener('change', function () {
+        const paymentMode = document.getElementById('payment-mode').value;
         const chequeFields = document.getElementById('cheque-fields');
         const bankFields = document.getElementById('bank-fields');
 
