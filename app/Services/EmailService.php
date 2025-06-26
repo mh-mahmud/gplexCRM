@@ -184,20 +184,17 @@ class EmailService
 
     public function sendEmailList($request)
     {
-        $sql = EmailLog::query()
-                    ->select('email_log.*', 'leads.first_name', 'leads.last_name', 'users.first_name as send_by_fname', 'users.last_name as send_by_lname')
-                    ->leftJoin('leads', 'email_log.lead_id', '=', 'leads.id')
-                    ->join('users', 'users.id', '=', 'email_log.user_id');
-        $data = $request->all();
-        if(!empty($data["search"])) {
-            $sql->where('email_to','like', '%' . $data["search"] . '%');
-
-        }
-        // if (Auth::user()->user_type === 'agent') {
-        //     $sql->where('email_log.user_id', Auth::id());
-
-        // }
-        return $sql->orderBy('id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
+        $logs = EmailLog::with(
+                    'lead:id,first_name,last_name',
+                    'user:id,first_name,last_name'
+                )
+                ->when(
+                    $request->filled('search'),
+                    fn ($q) => $q->where('email_to', 'like', '%'.$request->input('search').'%')
+                )
+                ->orderByDesc('id')
+                ->paginate(config('constants.ROW_PER_PAGE'));
+        return $logs;
     }
 
     public function  sendBulkEmailPro($request)
@@ -277,36 +274,39 @@ class EmailService
 
     public function getEmailSendById($id)
     {
-        return EmailLog::where('email_log.id', $id)
-                        ->select('email_log.*', 'leads.first_name', 'leads.last_name', 'users.first_name as send_by_fname', 'users.last_name as send_by_lname')
-                        ->leftJoin('leads', 'email_log.lead_id', '=', 'leads.id')
-                        ->join('users', 'users.id', '=', 'email_log.user_id')
+        return EmailLog::with(
+                            'lead:id,first_name,last_name',
+                            'user:id,first_name,last_name'
+                        )->where('email_log.id', $id) 
                         ->first();
     }
 
     public function sendPendingEmail($request) 
     {
-        $pending_emails = EmailQueue::where('send_status', config('constants.campaign_status')["Pending"])
+        $pending_emails = EmailQueue::with('user:id,first_name,last_name,email')
+                                    ->where('send_status', config('constants.campaign_status')["Pending"])
                                     ->orderBy('id', 'asc')
                                     ->limit(15)
                                     ->get();
 
         DB::transaction(function () use ($pending_emails) {
             foreach($pending_emails as $email) {
+                $senderName = $senderEmail = '';
                 try {
-                    Mail::to($email->email_to)->send(new SingleMail($email->email_subject, $email->email_content));
-
+                    if($email->user) {
+                        $senderName = $email->user->first_name.' '.$email->user->last_name;
+                        $senderEmail = $email->user->email;
+                    }
+                    Mail::to($email->email_to)
+                        ->send((new SingleMail($email->email_subject, $email->email_content))
+                        ->from($senderEmail, $senderName));
                     $this->logEmail($email, "Success");
-
                     Helper::storeLog("Email sent successfully to " . $email->email_to, "Email Module", "Send an Email", $email->lead_id, $email->user_id);
-
                     EmailQueue::where('id', $email->id)->delete();
 
                 } catch (\Exception $e) {
                     $this->logEmail($email, "Failed");
-
                     Helper::storeLog("Email failed to send to " . $email->email_to, "Email Module", "Send an Email", $email->lead_id, $email->user_id);
-
                     EmailQueue::where('id', $email->id)->delete();
 
                 }
@@ -317,7 +317,7 @@ class EmailService
     private function logEmail($email, $status)
     {
         $dataObj = new EmailLog();
-        $dataObj->email_from = "Genuity";
+        $dataObj->email_from = isset($email->user) ? $email->user->first_name.' '.$email->user->last_name : '';
         $dataObj->email_to = $email->email_to;
         $dataObj->email_subject = $email->email_subject;
         $dataObj->email_content = $email->email_content;
