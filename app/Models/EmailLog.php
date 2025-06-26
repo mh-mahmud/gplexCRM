@@ -10,4 +10,15 @@ class EmailLog extends Model
     use HasFactory;
     protected $guarded=[];
     protected $table = 'email_log';
+
+     public function lead()
+    {
+        return $this->belongsTo(Lead::class, 'lead_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
 }
