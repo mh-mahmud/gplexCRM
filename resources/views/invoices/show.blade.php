@@ -7,11 +7,37 @@
     <title>Invoice</title>
     <link href="{{url('/')}}/assets/css/invoice.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{url('/')}}/assets/css/flatpickr.min.css">
+    <link href="{{url('/')}}/assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
+     <script src="{{ url('/') }}/assets/js/sweetalert2.min.js"></script>
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error') }}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
     @php
-    
+
     if ($newDueAmount == 0) {
     $statusClass = 'g-paid';
     $statusText = 'Paid';
@@ -108,14 +134,14 @@
                                         <p>Genusys Point</p>
                                         <p>Plot-8, Road 4, Block-A</p>
                                         <p>Section-11, Mirpur, Dhaka-1216</p>
-                                      
+
                                     </div>
                                 </td>
                                 <td class="w-1/2 align-top text-right">
                                     <div class="text-sm text-neutral-600">
                                         <p class="font-bold">Beneficiary Address</p>
                                         <p>{{$invoice->address}}</p>
-                                        
+
                                     </div>
                                 </td>
                             </tr>
@@ -236,17 +262,17 @@
                 </div>
                 @else
                 @php
-                  $custom_invoice_total_field = count($customInvoiceData->field_details);
+                $custom_invoice_total_field = count($customInvoiceData->field_details);
                 @endphp
                 <div class="px-14 py-10 text-sm text-neutral-700">
                     <table class="w-full border-collapse border-spacing-0">
                         <thead>
                             <tr>
-                            <td class="border-b-2 border-main pb-3 pl-3 text-center font-bold text-main">SL No</td> <!-- Added Sl No Column -->
+                                <td class="border-b-2 border-main pb-3 pl-3 text-center font-bold text-main">SL No</td> <!-- Added Sl No Column -->
                                 @foreach($customInvoiceData->field_details as $field)
-                                    <td class="border-b-2 border-main pb-3 pl-3 text-center font-bold text-main">
-                                        {{ $field['field_name'] }}
-                                    </td>
+                                <td class="border-b-2 border-main pb-3 pl-3 text-center font-bold text-main">
+                                    {{ $field['field_name'] }}
+                                </td>
                                 @endforeach
                                 <td class="border-b-2 border-main pb-3 pl-3 text-center font-bold text-main">
                                     Amount
@@ -254,95 +280,94 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php 
+                            @php
                             $cal_total = [];
                             $slNo = 1;
                             @endphp
                             @foreach($invoiceItems as $item)
-                                <tr>
+                            <tr>
                                 <td class="border-b py-3 pl-3 text-center">{{ $slNo++ }}</td>
-                                    @foreach($customInvoiceData->field_details as $field)
-                                        <td class="border-b py-3 pl-3 text-center">
-                                            <?php
-                                                $fieldValue = $field['field_value'];
-                                                $value = '';
-                                                $totalValue = 0;
-                                                foreach ($item as $data) {
-                                                    if (isset($data[$fieldValue])) {
-                                                        $value = $data[$fieldValue];
-                                                        if(isset($field['is_sum']) && $field['is_sum'] == 1) {
-                                                            // $totalValue = $totalValue + $value;
-                                                            $cal_total[$fieldValue][] = $value;
-                                                        }
-                                                        break; 
-                                                    }
-                                                    
-                                                }
-                                            ?>
-                                            {{ $value }}
-                                        </td>
-                                    @endforeach
-                                    <td class="border-b py-3 pl-3 text-right">
-                                        {{ $item[count($item) -1]["amount"] }}
-                                    </td>
-                                </tr>
-                            @endforeach 
+                                @foreach($customInvoiceData->field_details as $field)
+                                <td class="border-b py-3 pl-3 text-center">
+                                    <?php
+                                    $fieldValue = $field['field_value'];
+                                    $value = '';
+                                    $totalValue = 0;
+                                    foreach ($item as $data) {
+                                        if (isset($data[$fieldValue])) {
+                                            $value = $data[$fieldValue];
+                                            if (isset($field['is_sum']) && $field['is_sum'] == 1) {
+                                                // $totalValue = $totalValue + $value;
+                                                $cal_total[$fieldValue][] = $value;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                    ?>
+                                    {{ $value }}
+                                </td>
+                                @endforeach
+                                <td class="border-b py-3 pl-3 text-right">
+                                    {{ $item[count($item) -1]["amount"] }}
+                                </td>
+                            </tr>
+                            @endforeach
                             <tr>
                                 <td class="border-b py-3 pl-3 text-center">Total Net Value</td>
                                 @php
 
                                 foreach($cal_total as $total) {
-                                    $sumSeconds = 0; 
-                                    $numericSum = 0;
-                                    foreach($total as $value) {
+                                $sumSeconds = 0;
+                                $numericSum = 0;
+                                foreach($total as $value) {
 
-                                        if (strpos($value, ':') !== false) {
-											$timeParts = explode(':', $value); // Split time into parts
-											if (count($timeParts) == 3) { // Ensure it's in the form of H:M:S
-												$hours = (int)$timeParts[0];
-												$minutes = (int)$timeParts[1];
-												$seconds = (int)$timeParts[2];
-												$sumSeconds += ($hours * 3600) + ($minutes * 60) + $seconds;
-											}
-										} elseif (is_numeric($value)) { // Only process numeric values
-											$numericSum += $value;
-										}
-                                    }
-                                    $sumTime = null;
-									//dd($sumSeconds);
-									if ($sumSeconds > 0) {
-										$hours = floor($sumSeconds / 3600); // Calculate total hours
-										$minutes = floor(($sumSeconds % 3600) / 60); // Calculate remaining minutes
-										$seconds = $sumSeconds % 60; // Calculate remaining seconds
-									
-										$sumTime = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds); // Format as H:i:s
-									}
+                                if (strpos($value, ':') !== false) {
+                                $timeParts = explode(':', $value); // Split time into parts
+                                if (count($timeParts) == 3) { // Ensure it's in the form of H:M:S
+                                $hours = (int)$timeParts[0];
+                                $minutes = (int)$timeParts[1];
+                                $seconds = (int)$timeParts[2];
+                                $sumSeconds += ($hours * 3600) + ($minutes * 60) + $seconds;
+                                }
+                                } elseif (is_numeric($value)) { // Only process numeric values
+                                $numericSum += $value;
+                                }
+                                }
+                                $sumTime = null;
+                                //dd($sumSeconds);
+                                if ($sumSeconds > 0) {
+                                $hours = floor($sumSeconds / 3600); // Calculate total hours
+                                $minutes = floor(($sumSeconds % 3600) / 60); // Calculate remaining minutes
+                                $seconds = $sumSeconds % 60; // Calculate remaining seconds
 
-                                    // Combine the results for output
-                                    $field_sum_output = '';
-									
-                                    if ($sumTime) {
-										$field_sum_output = $sumTime ;
-                                    } else if ($numericSum > 0) {
-                                        $field_sum_output = $numericSum;
-                                    }
-                                    echo "<td class='border-b py-3 pl-3 text-center'>". $field_sum_output."</td>";
+                                $sumTime = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds); // Format as H:i:s
+                                }
+
+                                // Combine the results for output
+                                $field_sum_output = '';
+
+                                if ($sumTime) {
+                                $field_sum_output = $sumTime ;
+                                } else if ($numericSum > 0) {
+                                $field_sum_output = $numericSum;
+                                }
+                                echo "<td class='border-b py-3 pl-3 text-center'>". $field_sum_output."</td>";
                                 }
                                 @endphp
-                                <td class="border-b py-3 pl-3 text-right" colspan= "{{ $custom_invoice_total_field + 1 }}">{{ $invoice["sub_total"] }}</td>
+                                <td class="border-b py-3 pl-3 text-right" colspan="{{ $custom_invoice_total_field + 1 }}">{{ $invoice["sub_total"] }}</td>
                             </tr>
                             <tr>
                                 <td class="border-b py-3 pl-3 text-center">VAT</td>
-                                <td class="border-b py-3 pl-3 text-right" colspan= "{{ $custom_invoice_total_field  }} ">{{ !empty($invoice["vat"]) ? $invoice["vat"] . '%' : '' }}</td>
+                                <td class="border-b py-3 pl-3 text-right" colspan="{{ $custom_invoice_total_field  }} ">{{ !empty($invoice["vat"]) ? $invoice["vat"] . '%' : '' }}</td>
                                 <td class="border-b py-3 pl-3 text-right">{{ $invoice["total_tax"] }}</td>
                             </tr>
                             <tr>
                                 <td class="border-b py-3 pl-3 text-center">Total Including VAT</td>
-                                <td colspan= "{{ $custom_invoice_total_field + 1}}" class="border-b py-3 pl-3 text-right">{{ $invoice["total_amount"] }}</td>
+                                <td colspan="{{ $custom_invoice_total_field + 1}}" class="border-b py-3 pl-3 text-right">{{ $invoice["total_amount"] }}</td>
                             </tr>
                         </tbody>
                     </table>
-                </div>    
+                </div>
                 @endif
 
                 <div class="px-14 text-sm text-neutral-700 border-b py-3">
@@ -361,9 +386,9 @@
                 <div class="px-14 text-sm text-neutral-700 border-b py-3">
                     <p class="text-main font-bold">Transactions</p>
                     @if (!empty($totalPayments) && $totalPayments > 0)
-                        <p>{{$totalPayments}}TK found for this invoice</p>
+                    <p>{{$totalPayments}}TK found for this invoice</p>
                     @else
-                        <p>No payments found for this invoice</p>
+                    <p>No payments found for this invoice</p>
                     @endif
 
                 </div>
@@ -372,43 +397,77 @@
                 @if (!empty($invoice->invoice_custom_form_id))
                 <div class="px-14 text-sm text-neutral-700 py-3">
                     <p class="text-main font-bold">Bank Information:</p>
-                     {!! $customInvoiceData->bank_details !!}
+                    {!! $customInvoiceData->bank_details !!}
                 </div>
                 @endif
 
-              <div class="px-14 py-10 text-sm text-neutral-700">
-                <table class="w-full border-collapse border-spacing-0">
-                    <thead>
-                        <tr>
-                            <td class="border-b-2 border-main pb-3 pl-3 text-center font-bold text-main">#</td>
-                            <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Payment Mode</td>
-                            <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Amount</td>
-                            <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Deposit Status</td>
-                            <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Deposit Date</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($existingPayments as $payment)
-                        <tr>
-                            <td class="border-b py-3 pl-3 text-center">{{ $loop->iteration }}</td>
-                            <td class="border-b py-3 pl-2 text-center">{{ $payment['payment_mode'] ?? '-' }}</td>
-                            <td class="border-b py-3 pl-2 text-center">{{ $payment['payment'] ?? '-' }}</td>
-                            <td class="border-b py-3 pl-2 text-center">{{ $payment['deposit_status'] ?? '-' }}</td>
-                            <td class="border-b py-3 pl-2 text-center">{{ $payment['deposit_date'] ?? '-' }}</td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="5" class="py-3 pl-3 text-center text-sm text-gray-500">No existing payments found.</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-              </div>
+                <div class="px-14 py-10 text-sm text-neutral-700">
+                    <table class="w-full border-collapse border-spacing-0">
+                        <thead>
+                            <tr>
+                                <td class="border-b-2 border-main pb-3 pl-3 text-center font-bold text-main">#</td>
+                                <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Payment Mode</td>
+                                <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Amount</td>
+                                <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Cheque Number</td>
+                                <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Received Date</td>
+                                <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Deposit Date</td>
+                                <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Deposit Status</td>
+                                <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Actions</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($existingPayments as $payment)
+                            <tr>
+                                <td class="border-b py-3 pl-3 text-center">{{ $loop->iteration }}</td>
+                                <td class="border-b py-3 pl-2 text-center">{{ $payment['payment_mode'] ?? '-' }}</td>
+                                <td class="border-b py-3 pl-2 text-center">{{ $payment['payment'] ?? '-' }}</td>
+                                <td class="border-b py-3 pl-2 text-center">{{ $payment['cheque_number'] ?? '-' }}</td>
+                                <td class="border-b py-3 pl-2 text-center">{{ $payment['received_date'] ?? '-' }}</td>
+                                <td class="border-b py-3 pl-2 text-center">{{ $payment['deposit_date'] ?? '-' }}</td>
+                                <td class="border-b py-3 pl-2 text-center">{{ $payment['deposit_status'] ?? '-' }}</td>
+                                <td class="border-b py-3 pl-2 text-center">
+                                     @if(($payment['deposit_status'] ?? '') === 'Pending')
+                                    <div
+                                        class="d-inline-flex justify-content-center gap-1 w-100 border-bottom-0">
+                                        <!-- Approval Button -->
+
+                                        <form action="{{ route('deposit-status-update', ['invoice' => $invoice->id, 'index' => $loop->index]) }}"
+                                            method="POST" style="display:inline;" 
+                                            onsubmit="return confirm('Do you want to Deposit this Amount?')">
+                                            @csrf
+                                            <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-1" title="Approve Invoice">
+                                                <span class="svg-icon svg-icon-2x">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <path opacity="0.3"
+                                                            d="M12 22C17.5229 22 22 17.5229 22 12C22 6.47715 17.5229 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5229 6.47715 22 12 22Z"
+                                                            fill="black" />
+                                                        <path
+                                                            d="M10.0004 14.0002L7.50037 11.5002L6.08594 12.9146L10.0004 16.829L18.0004 8.82898L16.586 7.41455L10.0004 14.0002Z"
+                                                            fill="black" />
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                        </form>
+
+                                    </div>
+                                      @else
+                                            -
+                                    @endif
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="5" class="py-3 pl-3 text-center text-sm text-gray-500">No existing payments found.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
 
 
 
 
-                
+
                 <!-- <div class="px-14 py-3 text-sm text-neutral-700 payment-area">
                     <div>
                         <p class="text-main font-bold">Online Payment</p>
@@ -426,110 +485,110 @@
 
                 <!-- Payment Form -->
                 <form action="{{ route('invoice-payment', $invoice->id) }}" method="POST" id="payment-form">
-                @csrf
-                <div class="px-14 py-3 text-sm text-neutral-700">
-                    <label for="payment-amount" class="text-main font-bold">Amount
-                        <span>
-                            <input type="text" name="payment_amount" id="payment-amount" class="form-control" value="{{ old('payment_amount') }}" required>
-                            <span class="font-bold">TK</span>
-                        </span>
-                    </label>
-                    @if ($errors->has('payment_amount'))
+                    @csrf
+                    <div class="px-14 py-3 text-sm text-neutral-700">
+                        <label for="payment-amount" class="text-main font-bold">Amount
+                            <span>
+                                <input type="text" name="payment_amount" id="payment-amount" class="form-control" value="{{ old('payment_amount') }}" required>
+                                <span class="font-bold">TK</span>
+                            </span>
+                        </label>
+                        @if ($errors->has('payment_amount'))
                         <span class="text-danger" style="color:#F1416C">{{ $errors->first('payment_amount') }}</span>
-                    @endif
-                </div>
+                        @endif
+                    </div>
 
-                <div class="px-14 py-3 text-sm text-neutral-700">
-                    <label for="payment_mode" class="text-main font-bold">Payment Mode:</label>
-                    <br>
-                    <select class="form-control form-control-sm form-control-solid" name="payment_mode" id="payment-mode" required>
-                        <option value="">Select Mode</option>
-                        <option value="Cheque" {{ old('payment_mode') == 'Cheque' ? 'selected' : '' }}>Cheque</option>
-                        <option value="Bank Transfer" {{ old('payment_mode') == 'Bank Transfer' ? 'selected' : '' }}>Bank Transfer</option>
-                    </select>
+                    <div class="px-14 py-3 text-sm text-neutral-700">
+                        <label for="payment_mode" class="text-main font-bold">Payment Mode:</label>
+                        <br>
+                        <select class="form-control form-control-sm form-control-solid" name="payment_mode" id="payment-mode" required>
+                            <option value="">Select Mode</option>
+                            <option value="Cheque" {{ old('payment_mode') == 'Cheque' ? 'selected' : '' }}>Cheque</option>
+                            <option value="Bank Transfer" {{ old('payment_mode') == 'Bank Transfer' ? 'selected' : '' }}>Bank Transfer</option>
+                        </select>
 
-                     @if ($errors->has('payment_mode'))
+                        @if ($errors->has('payment_mode'))
                         <span class="text-danger" style="color:#F1416C">{{ $errors->first('payment_mode') }}</span>
-                    @endif
-                </div>
+                        @endif
+                    </div>
 
-                <div id="cheque-fields" class="px-14 py-3 text-sm text-neutral-700" style="display:none">
-                    <label for="cheque-number" class="text-main font-bold">Cheque Number:
-                        <span>
-                        <input type="text" name="cheque_number" id="cheque-number" class="form-control form-control-sm" value="{{ old('cheque_number') }}">
+                    <div id="cheque-fields" class="px-14 py-3 text-sm text-neutral-700" style="display:none">
+                        <label for="cheque-number" class="text-main font-bold">Cheque Number:
+                            <span>
+                                <input type="text" name="cheque_number" id="cheque-number" class="form-control form-control-sm" value="{{ old('cheque_number') }}">
 
-                        </span>
-                    </label>
-                     @if ($errors->has('cheque_number'))
+                            </span>
+                        </label>
+                        @if ($errors->has('cheque_number'))
                         <span class="text-danger" style="color:#F1416C">{{ $errors->first('cheque_number') }}</span>
-                    @endif
-                    <label for="received-date" class="text-main font-bold">Received Date:
-                        <span>
-                        <input type="text" name="received_date" id="received-date" class="form-control form-control-sm flatpickr" value="{{ old('received_date') }}">
+                        @endif
+                        <label for="received-date" class="text-main font-bold">Received Date:
+                            <span>
+                                <input type="text" name="received_date" id="received-date" class="form-control form-control-sm flatpickr" value="{{ old('received_date') }}">
 
-                    </span>
-                    </label>
-                    @if ($errors->has('received_date'))
+                            </span>
+                        </label>
+                        @if ($errors->has('received_date'))
                         <span class="text-danger" style="color:#F1416C">{{ $errors->first('received_date') }}</span>
-                    @endif
-                </div>
+                        @endif
+                    </div>
 
-                <div id="bank-fields" class="px-14 py-3  text-sm text-neutral-700" style="display:none">
-                    <label class="text-main font-bold" for="transfer-date">Transfer Date:
-                        <span>
-                        <input type="text" name="transfer_date" id="transfer-date" class="form-control form-control-sm form-control-solid flatpickr" value="{{ old('transfer_date') }}">
+                    <div id="bank-fields" class="px-14 py-3  text-sm text-neutral-700" style="display:none">
+                        <label class="text-main font-bold" for="transfer-date">Transfer Date:
+                            <span>
+                                <input type="text" name="transfer_date" id="transfer-date" class="form-control form-control-sm form-control-solid flatpickr" value="{{ old('transfer_date') }}">
 
-                        </span>
-                    </label>
-                    @if ($errors->has('transfer_date'))
+                            </span>
+                        </label>
+                        @if ($errors->has('transfer_date'))
                         <span class="text-danger" style="color:#F1416C">{{ $errors->first('transfer_date') }}</span>
-                    @endif<br>
-                    
+                        @endif<br>
 
-                    <label class="text-main font-bold" for="transfer-mode">Transfer Mode:</label>
-                    <br>
-                    <select name="transfer_mode" id="transfer-mode" class="form-control form-control-sm">
-                        <option value="">Select Transfer Mode</option>
-                        <option value="BEFTN" {{ old('transfer_mode') == 'BEFTN' ? 'selected' : '' }}>BEFTN</option>
-                        <option value="NPSB" {{ old('transfer_mode') == 'NPSB' ? 'selected' : '' }}>NPSB</option>
-                    </select>
 
-                    @if ($errors->has('transfer_mode'))
+                        <label class="text-main font-bold" for="transfer-mode">Transfer Mode:</label>
+                        <br>
+                        <select name="transfer_mode" id="transfer-mode" class="form-control form-control-sm">
+                            <option value="">Select Transfer Mode</option>
+                            <option value="BEFTN" {{ old('transfer_mode') == 'BEFTN' ? 'selected' : '' }}>BEFTN</option>
+                            <option value="NPSB" {{ old('transfer_mode') == 'NPSB' ? 'selected' : '' }}>NPSB</option>
+                        </select>
+
+                        @if ($errors->has('transfer_mode'))
                         <span class="text-danger" style="color:#F1416C">{{ $errors->first('transfer_mode') }}</span>
-                    @endif
-                    
-                </div>
+                        @endif
 
-                <div class="px-14 py-3 text-sm text-neutral-700">
-                    <label class="text-main font-bold" for="deposit-date">Deposit Status:</label>
-                   <br>
-                    <select name="deposit_status" id="deposit-status" class="form-control form-control-sm">
-                        <option value="">Select Deposit Status</option>
-                        <option value="Pending" {{ old('deposit_status') == 'Pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="Success" {{ old('deposit_status') == 'Success' ? 'selected' : '' }}>Success</option>
-                        <option value="Failed" {{ old('deposit_status') == 'Failed' ? 'selected' : '' }}>Failed</option>
-                    </select>
+                    </div>
 
-                    @if ($errors->has('deposit_status'))
+                    <div class="px-14 py-3 text-sm text-neutral-700">
+                        <label class="text-main font-bold" for="deposit-date">Deposit Status:</label>
+                        <br>
+                        <select name="deposit_status" id="deposit-status" class="form-control form-control-sm">
+                            <option value="">Select Deposit Status</option>
+                            <option value="Pending" {{ old('deposit_status') == 'Pending' ? 'selected' : '' }}>Pending</option>
+                            <option value="Success" {{ old('deposit_status') == 'Success' ? 'selected' : '' }}>Success</option>
+                            <option value="Failed" {{ old('deposit_status') == 'Failed' ? 'selected' : '' }}>Failed</option>
+                        </select>
+
+                        @if ($errors->has('deposit_status'))
                         <span class="text-danger" style="color:#F1416C">{{ $errors->first('deposit_status') }}</span>
-                    @endif
-                   
-                    
-                </div>
+                        @endif
 
-                <div class="px-14 py-3 text-sm text-neutral-700">
-                    <label class="text-main font-bold" for="deposit-date">Deposit Date:
-                        <span>
-                         <input type="text" name="deposit_date" class="form-control form-control-sm flatpickr" id="deposit-date" value="{{ old('deposit_date') }}">
 
-                        </span>
-                    </label>
-                </div>
+                    </div>
 
-                <div class="px-14 text-sm text-neutral-700">
-                    <button type="submit" class="pay-now">Pay Now</button>
-                </div>
-            </form>
+                    <div class="px-14 py-3 text-sm text-neutral-700">
+                        <label class="text-main font-bold" for="deposit-date">Deposit Date:
+                            <span>
+                                <input type="text" name="deposit_date" class="form-control form-control-sm flatpickr" id="deposit-date" value="{{ old('deposit_date') }}">
+
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="px-14 text-sm text-neutral-700">
+                        <button type="submit" class="pay-now">Pay Now</button>
+                    </div>
+                </form>
                 @else
                 <!-- Message if no payment is due -->
                 <div class="px-14 py-3 text-sm text-neutral-700">
@@ -542,32 +601,31 @@
             </div>
         </div>
 
-<script>
-    document.getElementById('payment-mode').addEventListener('change', function () {
-        const paymentMode = document.getElementById('payment-mode').value;
-        const chequeFields = document.getElementById('cheque-fields');
-        const bankFields = document.getElementById('bank-fields');
+        <script>
+            document.getElementById('payment-mode').addEventListener('change', function() {
+                const paymentMode = document.getElementById('payment-mode').value;
+                const chequeFields = document.getElementById('cheque-fields');
+                const bankFields = document.getElementById('bank-fields');
 
-        chequeFields.style.display = 'none';
-        bankFields.style.display = 'none';
+                chequeFields.style.display = 'none';
+                bankFields.style.display = 'none';
 
-        if (this.value === 'Cheque') {
-            chequeFields.style.display = 'block';
-        } else if (this.value === 'Bank Transfer') {
-            bankFields.style.display = 'block';
-        }
-    });
+                if (this.value === 'Cheque') {
+                    chequeFields.style.display = 'block';
+                } else if (this.value === 'Bank Transfer') {
+                    bankFields.style.display = 'block';
+                }
+            });
+        </script>
 
-</script>
+        <script src="{{url('/')}}/assets/js/flatpickr.js"></script>
 
-<script src="{{url('/')}}/assets/js/flatpickr.js"></script>
-
-    <script>
-        flatpickr(".flatpickr", {
-            dateFormat: "Y-m-d",
-            allowInput: true
-        });
-    </script>
+        <script>
+            flatpickr(".flatpickr", {
+                dateFormat: "Y-m-d",
+                allowInput: true
+            });
+        </script>
 
 </body>
 

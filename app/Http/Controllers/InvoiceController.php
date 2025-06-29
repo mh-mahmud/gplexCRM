@@ -402,6 +402,30 @@ class InvoiceController extends Controller
     }
 
 
+    public function updateDepositStatus($invoiceId, $index)
+{
+    $invoice = Invoice::findOrFail($invoiceId);
+
+    // Decode payment_details JSON to array
+    $payments = $invoice->payment_details ?? [];
+
+    // Make sure the index exists
+    if (!isset($payments[$index])) {
+        return redirect()->back()->with('error', 'Invalid payment selected.');
+    }
+
+    // Update the deposit_status and deposit_date
+    $payments[$index]['deposit_status'] = 'Success';
+    $payments[$index]['deposit_date'] = Carbon::now()->format('Y-m-d');
+
+    // Save the updated array back to JSON field
+    $invoice->payment_details = $payments;
+    $invoice->save();
+
+    return redirect()->route('invoice-show', $invoice->id)->with('success', 'Deposit status updated successfully.');
+}
+
+
 
 
 

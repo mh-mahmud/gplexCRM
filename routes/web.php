@@ -163,6 +163,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/invoice/{invoiceId}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoice-download');
 	Route::post('/invoice/{invoice}/payment', [InvoiceController::class, 'storePayment'])->name('invoice-payment');
     Route::get('/invoice/get-work-orders/{customer_id}', [InvoiceController::class, 'getWorkOrders']);
+	Route::post('/invoices/{invoice}/payment/{index}/deposit', [InvoiceController::class, 'updateDepositStatus'])->name('deposit-status-update');
+
 
     
 	
