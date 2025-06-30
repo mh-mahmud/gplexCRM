@@ -8,10 +8,17 @@
     <link href="{{url('/')}}/assets/css/invoice.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{url('/')}}/assets/css/flatpickr.min.css">
     <link href="{{url('/')}}/assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{url('/')}}/assets/css/bootstrap.min.css" rel="stylesheet">
+    <script src="{{url('/')}}/assets/plugins/global/plugins.bundle.js"></script>
+    
+
 </head>
 
 <body>
      <script src="{{ url('/') }}/assets/js/sweetalert2.min.js"></script>
+     <!-- Bootstrap CSS -->
+
+
 
     @if (session('success'))
         <script>
@@ -69,8 +76,8 @@
         </div>
         <div class="inv-main">
 
-            <div class="py-4">
-                <div class="px-14 py-6">
+            <div class="py-1">
+                <div class="px-14 py-1">
                     <table class="w-full border-collapse border-spacing-0">
                         <tbody>
                             <tr>
@@ -123,7 +130,7 @@
                     </table>
                 </div>
 
-                <div class="bg-slate-100 px-14 py-6 text-sm">
+                <div class="bg-slate-100 px-14 py-1 text-sm">
                     <table class="w-full border-collapse border-spacing-0">
                         <tbody>
                             <tr>
@@ -149,7 +156,7 @@
                     </table>
                 </div>
                 @if(empty($invoice->invoice_custom_form_id))
-                <div class="px-14 py-10 text-sm text-neutral-700">
+                <div class="px-14 py-3 text-sm text-neutral-700">
                     <table class="w-full border-collapse border-spacing-0">
                         <thead>
                             <tr>
@@ -166,13 +173,13 @@
                         <tbody>
                             @foreach($invoiceItems as $item)
                             <tr>
-                                <td class="border-b py-3 pl-3 text-center">{{$loop->iteration }}.</td>
-                                <td class="border-b py-3 pl-2 text-center">{{$item['Item']}}</td>
-                                <td class="border-b py-3 pl-2 text-center">{{$item['Description']}}</td>
-                                <td class="border-b py-3 pl-2 text-center">{{$item['Qty']}}</td>
-                                <td class="border-b py-3 pl-2 text-center">{{$item['Rate']}}</td>
-                                <td class="border-b py-3 pl-2 text-center">{{$item['Tax']}}%</td>
-                                <td class="border-b py-3 pl-2 text-right">{{$item['Amount']}}</td>
+                                <td class="border-b py-2 pl-3 text-center">{{$loop->iteration }}.</td>
+                                <td class="border-b py-2 pl-2 text-center">{{$item['Item']}}</td>
+                                <td class="border-b py-2 pl-2 text-center">{{$item['Description']}}</td>
+                                <td class="border-b py-2 pl-2 text-center">{{$item['Qty']}}</td>
+                                <td class="border-b py-2 pl-2 text-center">{{$item['Rate']}}</td>
+                                <td class="border-b py-2 pl-2 text-center">{{$item['Tax']}}%</td>
+                                <td class="border-b py-2 pl-2 text-right">{{$item['Amount']}}</td>
                             </tr>
                             @endforeach
                             <tr>
@@ -351,18 +358,18 @@
                                 } else if ($numericSum > 0) {
                                 $field_sum_output = $numericSum;
                                 }
-                                echo "<td class='border-b py-3 pl-3 text-center'>". $field_sum_output."</td>";
+                                echo "<td class='border-b py-2 pl-3 text-center'>". $field_sum_output."</td>";
                                 }
                                 @endphp
-                                <td class="border-b py-3 pl-3 text-right" colspan="{{ $custom_invoice_total_field + 1 }}">{{ $invoice["sub_total"] }}</td>
+                                <td class="border-b py-2 pl-3 text-right" colspan="{{ $custom_invoice_total_field + 1 }}">{{ $invoice["sub_total"] }}</td>
                             </tr>
                             <tr>
-                                <td class="border-b py-3 pl-3 text-center">VAT</td>
-                                <td class="border-b py-3 pl-3 text-right" colspan="{{ $custom_invoice_total_field  }} ">{{ !empty($invoice["vat"]) ? $invoice["vat"] . '%' : '' }}</td>
-                                <td class="border-b py-3 pl-3 text-right">{{ $invoice["total_tax"] }}</td>
+                                <td class="border-b py-2 pl-3 text-center">VAT</td>
+                                <td class="border-b py-2 pl-3 text-right" colspan="{{ $custom_invoice_total_field  }} ">{{ !empty($invoice["vat"]) ? $invoice["vat"] . '%' : '' }}</td>
+                                <td class="border-b py-2 pl-3 text-right">{{ $invoice["total_tax"] }}</td>
                             </tr>
                             <tr>
-                                <td class="border-b py-3 pl-3 text-center">Total Including VAT</td>
+                                <td class="border-b py-2 pl-3 text-center">Total Including VAT</td>
                                 <td colspan="{{ $custom_invoice_total_field + 1}}" class="border-b py-3 pl-3 text-right">{{ $invoice["total_amount"] }}</td>
                             </tr>
                         </tbody>
@@ -370,12 +377,12 @@
                 </div>
                 @endif
 
-                <div class="px-14 text-sm text-neutral-700 border-b py-3">
+                <div class="px-14 text-sm text-neutral-700 border-b py-2">
                     <p class="text-main font-bold">Total In Word</p>
                     <p>{{ \App\Helpers\Helper::convertNumberToWords($invoice->total_amount) }}</p>
                 </div>
 
-                <div class="px-14 text-sm text-neutral-700 border-b py-3">
+                <div class="px-14 text-sm text-neutral-700 border-b py-2">
                     <p class="text-main font-bold">Terms And Condition</p>
                     <p>{{$invoice->terms_conditions}}</p>
 
@@ -383,7 +390,7 @@
                 @if($newDueAmount > 0)
 
 
-                <div class="px-14 text-sm text-neutral-700 border-b py-3">
+                <div class="px-14 text-sm text-neutral-700 border-b py-2">
                     <p class="text-main font-bold">Transactions</p>
                     @if (!empty($totalPayments) && $totalPayments > 0)
                     <p>{{$totalPayments}}TK found for this invoice</p>
@@ -395,19 +402,54 @@
 
 
                 @if (!empty($invoice->invoice_custom_form_id))
-                <div class="px-14 text-sm text-neutral-700 py-3">
+                <div class="px-14 text-sm text-neutral-700 py-2">
                     <p class="text-main font-bold">Bank Information:</p>
                     {!! $customInvoiceData->bank_details !!}
                 </div>
                 @endif
 
                 <div class="px-14 py-10 text-sm text-neutral-700">
+                    @foreach ($existingPayments as $index => $payment)
+                    @if(($payment['deposit_status'] ?? '') === 'Pending')
+                        <div class="modal fade" id="depositModal-{{ $index }}" tabindex="-1" aria-labelledby="depositModalLabel-{{ $index }}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content p-4">
+                                    <form action="{{ route('deposit-status-update', ['invoice' => $invoice->id, 'index' => $index]) }}" method="POST">
+                                        @csrf
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="depositModalLabel-{{ $index }}">Update Deposit Date</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="fv-row mb-3">
+                                                <label class="form-label fw-bold">Deposit Date</label>
+                                                <input type="text" name="deposit_date" class="form-control form-control-sm flatpickr" value="{{ old('deposit_date') }}">
+                                                @error('deposit_date')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+
                     <table class="w-full border-collapse border-spacing-0">
                         <thead>
                             <tr>
                                 <td class="border-b-2 border-main pb-3 pl-3 text-center font-bold text-main">#</td>
                                 <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Payment Mode</td>
                                 <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Amount</td>
+                                <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Transfer Date</td>
+                                <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Transfer Method</td>
                                 <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Cheque Number</td>
                                 <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Received Date</td>
                                 <td class="border-b-2 border-main pb-3 pl-2 text-center font-bold text-main">Deposit Date</td>
@@ -418,38 +460,29 @@
                         <tbody>
                             @forelse ($existingPayments as $payment)
                             <tr>
-                                <td class="border-b py-3 pl-3 text-center">{{ $loop->iteration }}</td>
-                                <td class="border-b py-3 pl-2 text-center">{{ $payment['payment_mode'] ?? '-' }}</td>
-                                <td class="border-b py-3 pl-2 text-center">{{ $payment['payment'] ?? '-' }}</td>
-                                <td class="border-b py-3 pl-2 text-center">{{ $payment['cheque_number'] ?? '-' }}</td>
-                                <td class="border-b py-3 pl-2 text-center">{{ $payment['received_date'] ?? '-' }}</td>
-                                <td class="border-b py-3 pl-2 text-center">{{ $payment['deposit_date'] ?? '-' }}</td>
-                                <td class="border-b py-3 pl-2 text-center">{{ $payment['deposit_status'] ?? '-' }}</td>
-                                <td class="border-b py-3 pl-2 text-center">
+                                <td class="border-b py-2 pl-3 text-center">{{ $loop->iteration }}</td>
+                                <td class="border-b py-2 pl-2 text-center">{{ $payment['payment_mode'] ?? '-' }}</td>
+                                <td class="border-b py-2 pl-2 text-center">{{ $payment['payment'] ?? '-' }}</td>
+                                <td class="border-b py-2 pl-2 text-center">{{ $payment['transfer_date'] ?? '-' }}</td>
+                                <td class="border-b py-2 pl-2 text-center">{{ $payment['transfer_mode'] ?? '-' }}</td>
+                                <td class="border-b py-2 pl-2 text-center">{{ $payment['cheque_number'] ?? '-' }}</td>
+                                <td class="border-b py-2 pl-2 text-center">{{ $payment['received_date'] ?? '-' }}</td>
+                                <td class="border-b py-2 pl-2 text-center">{{ $payment['deposit_date'] ?? '-' }}</td>
+                                <td class="border-b py-2 pl-2 text-center">{{ $payment['deposit_status'] ?? '-' }}</td>
+                                <td class="border-b py-2 pl-2 text-center">
                                      @if(($payment['deposit_status'] ?? '') === 'Pending')
-                                    <div
-                                        class="d-inline-flex justify-content-center gap-1 w-100 border-bottom-0">
-                                        <!-- Approval Button -->
-
-                                        <form action="{{ route('deposit-status-update', ['invoice' => $invoice->id, 'index' => $loop->index]) }}"
-                                            method="POST" style="display:inline;" 
-                                            onsubmit="return confirm('Do you want to Deposit this Amount?')">
-                                            @csrf
-                                            <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-1" title="Approve Invoice">
-                                                <span class="svg-icon svg-icon-2x">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                        <path opacity="0.3"
-                                                            d="M12 22C17.5229 22 22 17.5229 22 12C22 6.47715 17.5229 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5229 6.47715 22 12 22Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.0004 14.0002L7.50037 11.5002L6.08594 12.9146L10.0004 16.829L18.0004 8.82898L16.586 7.41455L10.0004 14.0002Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                            </button>
-                                        </form>
-
-                                    </div>
+                                    <button type="button"
+                                        class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-1"
+                                        title="Approve Invoice"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#depositModal-{{ $loop->index }}">
+                                        <span class="svg-icon svg-icon-2x">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path opacity="0.3" d="M12 22C17.5229 22 22 17.5229 22 12C22 6.47715 17.5229 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5229 6.47715 22 12 22Z" fill="black" />
+                                                <path d="M10.0004 14.0002L7.50037 11.5002L6.08594 12.9146L10.0004 16.829L18.0004 8.82898L16.586 7.41455L10.0004 14.0002Z" fill="black" />
+                                            </svg>
+                                        </span>
+                                    </button>
                                       @else
                                             -
                                     @endif
@@ -457,7 +490,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5" class="py-3 pl-3 text-center text-sm text-gray-500">No existing payments found.</td>
+                                <td colspan="5" class="py-2 pl-3 text-center text-sm text-gray-500">No existing payments found.</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -486,11 +519,11 @@
                 <!-- Payment Form -->
                 <form action="{{ route('invoice-payment', $invoice->id) }}" method="POST" id="payment-form">
                     @csrf
-                    <div class="px-14 py-3 text-sm text-neutral-700">
+                    <div class="px-14 py-1 text-sm text-neutral-700">
                         <label for="payment-amount" class="text-main font-bold">Amount
                             <span>
                                 <input type="text" name="payment_amount" id="payment-amount" class="form-control" value="{{ old('payment_amount') }}" required>
-                                <span class="font-bold">TK</span>
+                                <span class="font-bold" style="padding: 0.33rem 1rem;">TK</span>
                             </span>
                         </label>
                         @if ($errors->has('payment_amount'))
@@ -498,11 +531,11 @@
                         @endif
                     </div>
 
-                    <div class="px-14 py-3 text-sm text-neutral-700">
+                    <div class="px-14 py-1 text-sm text-neutral-700">
                         <label for="payment_mode" class="text-main font-bold">Payment Mode:</label>
-                        <br>
-                        <select class="form-control form-control-sm form-control-solid" name="payment_mode" id="payment-mode" required>
-                            <option value="">Select Mode</option>
+                   
+                        <select class="form-select form-select-sm w-auto" name="payment_mode" id="payment-mode" required>
+                            <option value="">Select Payment Mode</option>
                             <option value="Cheque" {{ old('payment_mode') == 'Cheque' ? 'selected' : '' }}>Cheque</option>
                             <option value="Bank Transfer" {{ old('payment_mode') == 'Bank Transfer' ? 'selected' : '' }}>Bank Transfer</option>
                         </select>
@@ -512,7 +545,7 @@
                         @endif
                     </div>
 
-                    <div id="cheque-fields" class="px-14 py-3 text-sm text-neutral-700" style="display:none">
+                    <div id="cheque-fields" class="px-14 py-1 text-sm text-neutral-700" style="display:none">
                         <label for="cheque-number" class="text-main font-bold">Cheque Number:
                             <span>
                                 <input type="text" name="cheque_number" id="cheque-number" class="form-control form-control-sm" value="{{ old('cheque_number') }}">
@@ -533,7 +566,7 @@
                         @endif
                     </div>
 
-                    <div id="bank-fields" class="px-14 py-3  text-sm text-neutral-700" style="display:none">
+                    <div id="bank-fields" class="px-14 py-1  text-sm text-neutral-700" style="display:none">
                         <label class="text-main font-bold" for="transfer-date">Transfer Date:
                             <span>
                                 <input type="text" name="transfer_date" id="transfer-date" class="form-control form-control-sm form-control-solid flatpickr" value="{{ old('transfer_date') }}">
@@ -542,12 +575,12 @@
                         </label>
                         @if ($errors->has('transfer_date'))
                         <span class="text-danger" style="color:#F1416C">{{ $errors->first('transfer_date') }}</span>
-                        @endif<br>
+                        @endif<br><br>
 
 
                         <label class="text-main font-bold" for="transfer-mode">Transfer Mode:</label>
-                        <br>
-                        <select name="transfer_mode" id="transfer-mode" class="form-control form-control-sm">
+                  
+                        <select name="transfer_mode" id="transfer-mode" class="form-select form-select-sm w-auto">
                             <option value="">Select Transfer Mode</option>
                             <option value="BEFTN" {{ old('transfer_mode') == 'BEFTN' ? 'selected' : '' }}>BEFTN</option>
                             <option value="NPSB" {{ old('transfer_mode') == 'NPSB' ? 'selected' : '' }}>NPSB</option>
@@ -559,10 +592,10 @@
 
                     </div>
 
-                    <div class="px-14 py-3 text-sm text-neutral-700">
+                    <div class="px-14 py-1 text-sm text-neutral-700">
                         <label class="text-main font-bold" for="deposit-date">Deposit Status:</label>
-                        <br>
-                        <select name="deposit_status" id="deposit-status" class="form-control form-control-sm">
+                    
+                        <select name="deposit_status" id="deposit-status" class="form-select form-select-sm w-auto">
                             <option value="">Select Deposit Status</option>
                             <option value="Pending" {{ old('deposit_status') == 'Pending' ? 'selected' : '' }}>Pending</option>
                             <option value="Success" {{ old('deposit_status') == 'Success' ? 'selected' : '' }}>Success</option>
@@ -576,7 +609,7 @@
 
                     </div>
 
-                    <div class="px-14 py-3 text-sm text-neutral-700">
+                    <div class="px-14 py-1 text-sm text-neutral-700">
                         <label class="text-main font-bold" for="deposit-date">Deposit Date:
                             <span>
                                 <input type="text" name="deposit_date" class="form-control form-control-sm flatpickr" id="deposit-date" value="{{ old('deposit_date') }}">
@@ -591,7 +624,7 @@
                 </form>
                 @else
                 <!-- Message if no payment is due -->
-                <div class="px-14 py-3 text-sm text-neutral-700">
+                <div class="px-14 py-1 text-sm text-neutral-700">
                     <p class="text-success">The invoice is fully paid. No further payments are needed.</p>
                 </div>
                 @endif

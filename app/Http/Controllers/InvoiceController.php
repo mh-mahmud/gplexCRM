@@ -172,9 +172,16 @@ class InvoiceController extends Controller
         //find total payment amount
         $totalPayments = 0;
         $existingPayments = $invoice->payment_details ?? [];
-        if (!empty($existingPayments)) {
-        $totalPayments = array_sum(array_column($existingPayments, 'payment'));
-        }
+        //if (!empty($existingPayments)) {
+        //$totalPayments = array_sum(array_column($existingPayments, 'payment'));
+        //}
+        // Filter payments "Success" in deposit_status
+        $successfulPayments = array_filter($existingPayments, function ($payment) {
+            return isset($payment['deposit_status']) && $payment['deposit_status'] === 'Success';
+        });
+
+        //Sum only successful payments
+        $totalPayments = array_sum(array_column($successfulPayments, 'payment'));
         //$totalPayments = array_sum(array_column($existingPayments, 'payment'));
         $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
         $products = Product::select('id', 'name', 'description', 'product_value')->get();
@@ -402,28 +409,28 @@ class InvoiceController extends Controller
     }
 
 
-    public function updateDepositStatus($invoiceId, $index)
-{
-    $invoice = Invoice::findOrFail($invoiceId);
+    public function updateDepositStatus(Request $request, $invoiceId, $index)
+    {
+        $request->validate([
+            'deposit_date' => 'required|date',
+        ]);
 
-    // Decode payment_details JSON to array
-    $payments = $invoice->payment_details ?? [];
+        $invoice = Invoice::findOrFail($invoiceId);
+        $payments = $invoice->payment_details ?? [];
 
-    // Make sure the index exists
-    if (!isset($payments[$index])) {
-        return redirect()->back()->with('error', 'Invalid payment selected.');
+        if (!isset($payments[$index])) {
+            return back()->with('error', 'Invalid payment selected.');
+        }
+
+        $payments[$index]['deposit_date'] = $request->deposit_date;
+        $payments[$index]['deposit_status'] =  'Success';
+
+        $invoice->payment_details = $payments;
+        $invoice->save();
+
+        return redirect()->route('invoice-show', $invoice->id)->with('success', 'Deposit date updated successfully.');
     }
 
-    // Update the deposit_status and deposit_date
-    $payments[$index]['deposit_status'] = 'Success';
-    $payments[$index]['deposit_date'] = Carbon::now()->format('Y-m-d');
-
-    // Save the updated array back to JSON field
-    $invoice->payment_details = $payments;
-    $invoice->save();
-
-    return redirect()->route('invoice-show', $invoice->id)->with('success', 'Deposit status updated successfully.');
-}
 
 
 
