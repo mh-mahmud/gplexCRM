@@ -407,7 +407,7 @@
                     {!! $customInvoiceData->bank_details !!}
                 </div>
                 @endif
-
+                @if (!empty($existingPayments) && count($existingPayments) > 0)
                 <div class="px-14 py-10 text-sm text-neutral-700">
                     @foreach ($existingPayments as $index => $payment)
                     @if(($payment['deposit_status'] ?? '') === 'Pending')
@@ -441,7 +441,7 @@
                         </div>
                     @endif
                 @endforeach
-
+                 
                     <table class="w-full border-collapse border-spacing-0">
                         <thead>
                             <tr>
@@ -484,7 +484,7 @@
                                         </span>
                                     </button>
                                       @else
-                                            -
+                                            <span class="badge bg-success">Deposit</span>
                                     @endif
                                 </td>
                             </tr>
@@ -495,26 +495,10 @@
                             @endforelse
                         </tbody>
                     </table>
+                    
                 </div>
-
-
-
-
-
-                <!-- <div class="px-14 py-3 text-sm text-neutral-700 payment-area">
-                    <div>
-                        <p class="text-main font-bold">Online Payment</p>
-                        <label for="payment-method">
-                            <input type="radio" id="payment-method" name="payment-method">
-                            Stripe Checkout
-                        </label>
-                    </div>
-
-                    <div>
-                        <p class="text-main font-bold">Offline Payment</p>
-                        <p>Bank</p>
-                    </div>
-                </div> -->
+                 @else
+                @endif
 
                 <!-- Payment Form -->
                 <form action="{{ route('invoice-payment', $invoice->id) }}" method="POST" id="payment-form">
