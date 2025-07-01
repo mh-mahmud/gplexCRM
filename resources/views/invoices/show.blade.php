@@ -10,38 +10,40 @@
     <link href="{{url('/')}}/assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css" />
     <link href="{{url('/')}}/assets/css/bootstrap.min.css" rel="stylesheet">
     <script src="{{url('/')}}/assets/plugins/global/plugins.bundle.js"></script>
-    
+
 
 </head>
 
 <body>
-     <script src="{{ url('/') }}/assets/js/sweetalert2.min.js"></script>
-     <!-- Bootstrap CSS -->
+    <script src="{{ url('/') }}/assets/js/sweetalert2.min.js"></script>
+    <!-- Bootstrap CSS -->
 
 
 
     @if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: '{{ session('success') }}',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        </script>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '{{ session('
+            success ') }}',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
     @endif
 
     @if (session('error'))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: '{{ session('error') }}',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        </script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '{{ session('
+            error ') }}',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
     @endif
     @php
 
@@ -411,37 +413,37 @@
                 <div class="px-14 py-10 text-sm text-neutral-700">
                     @foreach ($existingPayments as $index => $payment)
                     @if(($payment['deposit_status'] ?? '') === 'Pending')
-                        <div class="modal fade" id="depositModal-{{ $index }}" tabindex="-1" aria-labelledby="depositModalLabel-{{ $index }}" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content p-4">
-                                    <form action="{{ route('deposit-status-update', ['invoice' => $invoice->id, 'index' => $index]) }}" method="POST">
-                                        @csrf
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="depositModalLabel-{{ $index }}">Update Deposit Date</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
+                    <div class="modal fade" id="depositModal-{{ $index }}" tabindex="-1" aria-labelledby="depositModalLabel-{{ $index }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content p-4">
+                                <form action="{{ route('deposit-status-update', ['invoice' => $invoice->id, 'index' => $index]) }}" method="POST">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="depositModalLabel-{{ $index }}">Update Deposit Date</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
 
-                                        <div class="modal-body">
-                                            <div class="fv-row mb-3">
-                                                <label class="form-label fw-bold">Deposit Date</label>
-                                                <input type="text" name="deposit_date" class="form-control form-control-sm flatpickr" value="{{ old('deposit_date') }}">
-                                                @error('deposit_date')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
+                                    <div class="modal-body">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bold">Deposit Date</label>
+                                            <input type="text" name="deposit_date" class="form-control form-control-sm flatpickr" value="{{ old('deposit_date') }}">
+                                            @error('deposit_date')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
+                                    </div>
 
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-                                        </div>
-                                    </form>
-                                </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
+                    </div>
                     @endif
-                @endforeach
-                 
+                    @endforeach
+
                     <table class="w-full border-collapse border-spacing-0">
                         <thead>
                             <tr>
@@ -470,10 +472,10 @@
                                 <td class="border-b py-2 pl-2 text-center">{{ $payment['deposit_date'] ?? '-' }}</td>
                                 <td class="border-b py-2 pl-2 text-center">{{ $payment['deposit_status'] ?? '-' }}</td>
                                 <td class="border-b py-2 pl-2 text-center">
-                                     @if(($payment['deposit_status'] ?? '') === 'Pending')
+                                    @if(($payment['deposit_status'] ?? '') === 'Pending')
                                     <button type="button"
                                         class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-1"
-                                        title="Approve Invoice"
+                                        title="Deposit"
                                         data-bs-toggle="modal"
                                         data-bs-target="#depositModal-{{ $loop->index }}">
                                         <span class="svg-icon svg-icon-2x">
@@ -483,8 +485,8 @@
                                             </svg>
                                         </span>
                                     </button>
-                                      @else
-                                            <span class="badge bg-success">Deposit</span>
+                                    @else
+                                    <span class="badge bg-success">Deposit</span>
                                     @endif
                                 </td>
                             </tr>
@@ -495,9 +497,9 @@
                             @endforelse
                         </tbody>
                     </table>
-                    
+
                 </div>
-                 @else
+                @else
                 @endif
 
                 <!-- Payment Form -->
@@ -517,7 +519,7 @@
 
                     <div class="px-14 py-1 text-sm text-neutral-700">
                         <label for="payment_mode" class="text-main font-bold">Payment Mode:</label>
-                   
+
                         <select class="form-select form-select-sm w-auto" name="payment_mode" id="payment-mode" required>
                             <option value="">Select Payment Mode</option>
                             <option value="Cheque" {{ old('payment_mode') == 'Cheque' ? 'selected' : '' }}>Cheque</option>
@@ -563,7 +565,7 @@
 
 
                         <label class="text-main font-bold" for="transfer-mode">Transfer Mode:</label>
-                  
+
                         <select name="transfer_mode" id="transfer-mode" class="form-select form-select-sm w-auto">
                             <option value="">Select Transfer Mode</option>
                             <option value="BEFTN" {{ old('transfer_mode') == 'BEFTN' ? 'selected' : '' }}>BEFTN</option>
@@ -578,7 +580,7 @@
 
                     <div class="px-14 py-1 text-sm text-neutral-700">
                         <label class="text-main font-bold" for="deposit-date">Deposit Status:</label>
-                    
+
                         <select name="deposit_status" id="deposit-status" class="form-select form-select-sm w-auto">
                             <option value="">Select Deposit Status</option>
                             <option value="Pending" {{ old('deposit_status') == 'Pending' ? 'selected' : '' }}>Pending</option>
@@ -593,14 +595,17 @@
 
                     </div>
 
-                    <div class="px-14 py-1 text-sm text-neutral-700">
+                    <div id="deposit-date-wrapper" class="px-14 py-1 text-sm text-neutral-700">
                         <label class="text-main font-bold" for="deposit-date">Deposit Date:
                             <span>
                                 <input type="text" name="deposit_date" class="form-control form-control-sm flatpickr" id="deposit-date" value="{{ old('deposit_date') }}">
-
                             </span>
-                        </label>
+                        </label><br>
+                        @if ($errors->has('deposit_date'))
+                        <span class="text-danger" style="color:#F1416C">{{ $errors->first('deposit_date') }}</span>
+                        @endif
                     </div>
+
 
                     <div class="px-14 text-sm text-neutral-700">
                         <button type="submit" class="pay-now">Pay Now</button>
@@ -643,6 +648,25 @@
                 allowInput: true
             });
         </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const depositStatus = document.getElementById('deposit-status');
+            const depositDateDiv = document.getElementById('deposit-date-wrapper');
+
+            function toggleDepositDate() {
+                if (depositStatus.value === 'Success') {
+                    depositDateDiv.style.display = 'block';
+                } else {
+                    depositDateDiv.style.display = 'none';
+                }
+            }
+
+            depositStatus.addEventListener('change', toggleDepositDate);
+            toggleDepositDate(); // initial call
+        });
+    </script>
+
 
 </body>
 

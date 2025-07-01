@@ -373,8 +373,14 @@ class InvoiceController extends Controller
         'received_date'    => 'required_if:payment_mode,Cheque',
         'transfer_mode'    => 'required_if:payment_mode,Bank Transfer',
         'transfer_date'    => 'required_if:payment_mode,Bank Transfer',
-        'deposit_date'     => 'nullable|date',
         'deposit_status'   => 'required|in:Pending,Success,Failed',
+        'deposit_date' => [
+            'required_if:deposit_status,Success',
+            'nullable',
+            'date',
+        ],
+
+       
     ]);
 
     $paymentDetails = [
@@ -385,8 +391,8 @@ class InvoiceController extends Controller
         'received_date'  => $request->input('received_date'),
         'transfer_mode'  => $request->input('transfer_mode'),
         'transfer_date'  => $request->input('transfer_date'),
-        'deposit_date'   => $request->input('deposit_date'),
         'deposit_status' => $request->input('deposit_status'),
+        'deposit_date'   => $request->input('deposit_date'),
         'payment_date'   => Carbon::now()->toDateString(),
         'due'            => max(0, $newDueAmount - $request->input('payment_amount')),
     ];
