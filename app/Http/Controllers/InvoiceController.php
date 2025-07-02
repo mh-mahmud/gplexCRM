@@ -175,7 +175,7 @@ class InvoiceController extends Controller
         //if (!empty($existingPayments)) {
         //$totalPayments = array_sum(array_column($existingPayments, 'payment'));
         //}
-        // Filter payments "Success" in deposit_status
+        //filter payments "Success" in deposit_status
         $successfulPayments = array_filter($existingPayments, function ($payment) {
             return isset($payment['deposit_status']) && $payment['deposit_status'] === 'Success';
         });
@@ -310,7 +310,14 @@ class InvoiceController extends Controller
                             ->first();
         $invoiceItems = json_decode($invoice->item_description, true);
         $existingPayments = $invoice->payment_details ?? [];
-        $totalPayments = array_sum(array_column($existingPayments, 'payment'));
+        //filter payments "Success" in deposit_status
+        $successfulPayments = array_filter($existingPayments, function ($payment) {
+            return isset($payment['deposit_status']) && $payment['deposit_status'] === 'Success';
+        });
+
+        //Sum only successful payments
+        $totalPayments = array_sum(array_column($successfulPayments, 'payment'));
+        //$totalPayments = array_sum(array_column($existingPayments, 'payment'));
         $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
         $products = Product::select('id', 'name', 'description', 'product_value')->get();
         $customInvoiceData = InvoiceCustomForm::where('id', $invoice->invoice_custom_form_id)
@@ -321,7 +328,7 @@ class InvoiceController extends Controller
         //for live url
 		//$logogenuity = url('uploads/invoice/genuity.png');
         //$logogplex = url('uploads/invoice/gplex.png');
-        $pdf = PDF::loadView('invoices.invoice_pdf', compact('invoice', 'products', 'invoiceItems','newDueAmount', 'customInvoiceData','logogenuity','logogplex'));
+        $pdf = PDF::loadView('invoices.invoice_pdf', compact('invoice', 'products', 'invoiceItems','newDueAmount', 'customInvoiceData','logogenuity','logogplex','totalPayments'));
         return $pdf->download('invoice_' . $invoice->invoice_number . '.pdf');
     }
 
