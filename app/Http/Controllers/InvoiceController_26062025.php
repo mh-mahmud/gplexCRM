@@ -172,16 +172,9 @@ class InvoiceController extends Controller
         //find total payment amount
         $totalPayments = 0;
         $existingPayments = $invoice->payment_details ?? [];
-        //if (!empty($existingPayments)) {
-        //$totalPayments = array_sum(array_column($existingPayments, 'payment'));
-        //}
-        //filter payments "Success" in deposit_status
-        $successfulPayments = array_filter($existingPayments, function ($payment) {
-            return isset($payment['deposit_status']) && $payment['deposit_status'] === 'Success';
-        });
-
-        //Sum only successful payments
-        $totalPayments = array_sum(array_column($successfulPayments, 'payment'));
+        if (!empty($existingPayments)) {
+        $totalPayments = array_sum(array_column($existingPayments, 'payment'));
+        }
         //$totalPayments = array_sum(array_column($existingPayments, 'payment'));
         $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
         $products = Product::select('id', 'name', 'description', 'product_value')->get();
@@ -310,14 +303,7 @@ class InvoiceController extends Controller
                             ->first();
         $invoiceItems = json_decode($invoice->item_description, true);
         $existingPayments = $invoice->payment_details ?? [];
-        //filter payments "Success" in deposit_status
-        $successfulPayments = array_filter($existingPayments, function ($payment) {
-            return isset($payment['deposit_status']) && $payment['deposit_status'] === 'Success';
-        });
-
-        //Sum only successful payments
-        $totalPayments = array_sum(array_column($successfulPayments, 'payment'));
-        //$totalPayments = array_sum(array_column($existingPayments, 'payment'));
+        $totalPayments = array_sum(array_column($existingPayments, 'payment'));
         $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
         $products = Product::select('id', 'name', 'description', 'product_value')->get();
         $customInvoiceData = InvoiceCustomForm::where('id', $invoice->invoice_custom_form_id)
@@ -328,7 +314,7 @@ class InvoiceController extends Controller
         //for live url
 		//$logogenuity = url('uploads/invoice/genuity.png');
         //$logogplex = url('uploads/invoice/gplex.png');
-        $pdf = PDF::loadView('invoices.invoice_pdf', compact('invoice', 'products', 'invoiceItems','newDueAmount', 'customInvoiceData','logogenuity','logogplex','totalPayments'));
+        $pdf = PDF::loadView('invoices.invoice_pdf', compact('invoice', 'products', 'invoiceItems','newDueAmount', 'customInvoiceData','logogenuity','logogplex'));
         return $pdf->download('invoice_' . $invoice->invoice_number . '.pdf');
     }
 
@@ -355,63 +341,39 @@ class InvoiceController extends Controller
     }
 
     public function storePayment(Request $request, $invoiceId)
-{
-    $invoice = Invoice::findOrFail($invoiceId);
-    $customerId = $invoice->customer_id;
-    $lead_id = Customer::where('id', $customerId)->value('lead_id');
+    {
+        $invoice = Invoice::findOrFail($invoiceId);
+        $customerId = $invoice->customer_id;
+        $lead_id = Customer::where('id', $customerId)->value('lead_id');
+        $existingPayments = $invoice->payment_details ?? [];
+        $totalPayments = array_sum(array_column($existingPayments, 'payment'));
+        $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
 
-    $existingPayments = $invoice->payment_details ?? [];
-    $totalPayments = array_sum(array_column($existingPayments, 'payment'));
-    $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
+        $request->validate([
+            'payment_amount' => [
+                'required',
+                'numeric',
+                'min:0',
+                function ($attribute, $value, $fail) use ($newDueAmount) {
+                    if ($value > $newDueAmount) {
+                        $fail("The payment amount cannot exceed the due amount of $newDueAmount.");
+                    }
+                },
+            ],
+        ]);
+        //dd($request->all());
+        $payment_amount=$request->input('payment_amount');
+        $paymentDetails = [
+            'invoice_id' => $invoice->id,
+            'payment' => $request->input('payment_amount'),
+            'payment_date' => Carbon::now()->toDateString(),
+            'due' => max(0, $newDueAmount - $request->input('payment_amount'))
+        ];
 
-    $request->validate([
-        'payment_amount' => [
-            'required',
-            'numeric',
-            'min:0',
-            function ($attribute, $value, $fail) use ($newDueAmount) {
-                if ($value > $newDueAmount) {
-                    $fail("The payment amount cannot exceed the due amount of $newDueAmount.");
-                }
-            },
-        ],
-        'payment_mode'     => 'required|in:Cheque,Bank Transfer',
-        'cheque_number'    => 'required_if:payment_mode,Cheque',
-        'received_date'    => 'required_if:payment_mode,Cheque',
-        'transfer_mode'    => 'required_if:payment_mode,Bank Transfer',
-        'transfer_date'    => 'required_if:payment_mode,Bank Transfer',
-        'deposit_status'   => 'required|in:Pending,Success,Failed',
-        'deposit_date' => [
-            'required_if:deposit_status,Success',
-            'nullable',
-            'date',
-        ],
-
-       
-    ]);
-
-    $paymentDetails = [
-        'invoice_id'     => $invoice->id,
-        'payment'        => $request->input('payment_amount'),
-        'payment_mode'   => $request->input('payment_mode'),
-        'cheque_number'  => $request->input('cheque_number'),
-        'received_date'  => $request->input('received_date'),
-        'transfer_mode'  => $request->input('transfer_mode'),
-        'transfer_date'  => $request->input('transfer_date'),
-        'deposit_status' => $request->input('deposit_status'),
-        'deposit_date'   => $request->input('deposit_date'),
-        'payment_date'   => Carbon::now()->toDateString(),
-        'due'            => max(0, $newDueAmount - $request->input('payment_amount')),
-    ];
-
-    $paymentAmount = $request->input('payment_amount');
-    $this->invoiceService->addPaymentInvoice($invoice, $paymentDetails, $paymentAmount);
-
-    Helper::storeLog("Payment recorded successfully", "Invoice", "Payment recorded", $lead_id);
-
-    return redirect()->route('invoice-index')->with('success', 'Payment recorded successfully!');
-}
-
+        $this->invoiceService->addPaymentInvoice($invoice, $paymentDetails, $payment_amount);
+        Helper::storeLog("Payment recorded successfully", "Invoice", "Payment recorded",$lead_id);
+        return redirect()->route('invoice-index')->with('success', 'Payment recorded successfully!');
+    }
 
 
     public function getWorkOrders($customerId)
@@ -420,30 +382,6 @@ class InvoiceController extends Controller
 
         return response()->json($workOrders);
     }
-
-
-    public function updateDepositStatus(Request $request, $invoiceId, $index)
-    {
-        $request->validate([
-            'deposit_date' => 'required|date',
-        ]);
-
-        $invoice = Invoice::findOrFail($invoiceId);
-        $payments = $invoice->payment_details ?? [];
-
-        if (!isset($payments[$index])) {
-            return back()->with('error', 'Invalid payment selected.');
-        }
-
-        $payments[$index]['deposit_date'] = $request->deposit_date;
-        $payments[$index]['deposit_status'] =  'Success';
-
-        $invoice->payment_details = $payments;
-        $invoice->save();
-
-        return redirect()->route('invoice-show', $invoice->id)->with('success', 'Deposit date updated successfully.');
-    }
-
 
 
 

@@ -261,7 +261,14 @@ use Carbon\Carbon;
                                     @php
 
                                     $paymentDetails = collect($invoice->payment_details);
-                                    $totalPayments = $paymentDetails->sum('payment');
+                                    //$totalPayments = $paymentDetails->sum('payment');
+                                     // Filter payments where deposit_status is 'Success'
+                                    $successfulPayments = $paymentDetails->filter(function ($payment) {
+                                        return isset($payment['deposit_status']) && $payment['deposit_status'] === 'Success';
+                                    });
+
+                                    // Sum only the successful payments
+                                    $totalPayments = $successfulPayments->sum('payment');
 
                                     $lastPayment = $paymentDetails->last();
                                     $paymentAmount = $lastPayment['payment'] ?? '0.00';

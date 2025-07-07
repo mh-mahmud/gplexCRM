@@ -446,6 +446,7 @@
         <div class="text-right font-bold">Sub Total: TK {{ $invoice->sub_total }}</div>
         <div class="text-right font-bold">Total Amount: TK {{ $invoice->total_amount }}</div>
         <div class="text-right font-bold">Total Due Amount: TK {{ $newDueAmount }}</div>
+        <div class="text-right font-bold">Total Received Amount: TK {{ $totalPayments }}</div>
     @endif
     <div
         style="border: 2px solid #000000; display: flex; justify-content: space-between; padding: 10px 5px; border-collapse: collapse; margin: 40px 8px;">
@@ -512,8 +513,8 @@
                             _____________________
                             <div
                                 style="display: flex; flex-direction: column; gap:0; font-weight: bold; font-size: 13px; line-height: 1">
-                                <p>Md Shamim Hossain</p>
-                                <p>Senior Executive,Marketing and Sales</p>
+                                <p>Genuity Systems Limited</p>
+                               
                             </div>
                         </div>
                     </td>
