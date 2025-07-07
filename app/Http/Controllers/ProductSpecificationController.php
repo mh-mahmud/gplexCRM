@@ -40,13 +40,31 @@ class ProductSpecificationController extends Controller
         return view('product_specifications.index', compact('productSpecifications','invoicesGroupedByPsId'));
     }
 
-    public function init() {
+    public function init_backup() {
         $products = Product::where('status', 1)->get();
         $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
         ->select('customers.*', 'leads.first_name', 'leads.last_name')
         ->get();
         return view('product_specifications.init', compact('products','customers'));
     }
+    public function init($leadid = null)
+    {
+        $products = Product::where('status', 1)->get();
+
+        if ($leadid) {
+            $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
+                ->where('leads.id', $leadid)
+                ->select('customers.*', 'leads.first_name', 'leads.last_name', 'leads.address')
+                ->get();
+        } else {
+            $customers = Customer::join('leads', 'customers.lead_id', '=', 'leads.id')
+                ->select('customers.*', 'leads.first_name', 'leads.last_name', 'leads.address')
+                ->get();
+        }
+
+        return view('product_specifications.init', compact('products', 'customers', 'leadid'));
+    }
+
 
     public function init_store(Request $request) {
         $customer_id = $request->customer_id;
