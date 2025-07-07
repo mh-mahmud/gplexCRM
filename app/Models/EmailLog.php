@@ -11,6 +11,13 @@ class EmailLog extends Model
     protected $guarded=[];
     protected $table = 'email_log';
 
+    protected $casts = [
+        'email_to' => 'array',
+        'email_cc' => 'array',
+        'email_bcc' => 'array',
+    ];
+
+
      public function lead()
     {
         return $this->belongsTo(Lead::class, 'lead_id');

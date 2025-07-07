@@ -3455,16 +3455,56 @@
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">To<span
                                                             class="text-danger">*</span></label>
-                                                    <input required
+                                                    {{-- <input required
                                                            class="form-control form-control-sm form-control-solid"
                                                            type="text" id="to_email" name="to_email" autocomplete="off"
-                                                           value="{{ $lead->email }}"/>
+                                                           value="{{ $lead->email }}"/> --}}
+                                                    <select class="form-control form-control-sm form-control-solid js-email-select select2-email"
+                                                            name="to_email[]" id="to_email" multiple="multiple">
+                                                        @if(old('to_email'))
+                                                            @foreach(old('to_email') as $email)
+                                                                <option value="{{ $email }}" selected>{{ $email }}</option>
+                                                            @endforeach
+                                                        @elseif(isset($lead) && $lead->email)
+                                                            <option value="{{ $lead->email }}" selected>{{ $lead->email }}</option>
+                                                        @endif
+                                                    </select>
                                                     @if ($errors->has('to_email'))
                                                         <span
-                                                            class="text-danger">{{ $errors->first('to_email') }}</span>
+                                                            class="text-danger">{{ $errors->first('to_email') }}
+                                                        </span>
                                                     @endif
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                            <div class="fv-row mb-3">
+                                                <label class="form-label fw-bolder text-dark">CC</label>
+                                                {{-- <input class="form-control form-control-sm form-control-solid"
+                                                       type="text" id="email_cc" name="email_cc" autocomplete="off"
+                                                       value="{{ old('email_cc') }}"/> --}}
+                                                <select class="form-control form-control-sm form-control-solid js-email-select select2-email"
+                                                        name="email_cc[]" id="email_cc" multiple="multiple">
+                                                    @if(old('email_cc'))
+                                                        @foreach(old('email_cc') as $email)
+                                                            <option value="{{ $email }}" selected>{{ $email }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="fv-row mb-3">
+                                                <label class="form-label fw-bolder text-dark">BCC</label>
+                                                 <select class="form-control form-control-sm form-control-solid js-email-select select2-email"
+                                                        name="email_bcc[]" id="email_bcc" multiple="multiple">
+                                                    @if(old('email_bcc'))
+                                                        @foreach(old('email_bcc') as $email)
+                                                            <option value="{{ $email }}" selected>{{ $email }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Email Template</label>
@@ -5037,7 +5077,12 @@
                     }
                 });
             });
-
+            $('.select2-email').select2({
+                tags: true,
+                tokenSeparators: [',', ' '],
+                placeholder: "Enter email addresses",
+                width: '100%'
+            });
 
         });
     </script>

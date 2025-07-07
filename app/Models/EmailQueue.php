@@ -11,6 +11,13 @@ class EmailQueue extends Model
     protected $guarded=[];
     protected $table = 'email_queue';
 
+    protected $casts = [
+        'email_to' => 'array',
+        'email_cc' => 'array',
+        'email_bcc' => 'array',
+    ];
+
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

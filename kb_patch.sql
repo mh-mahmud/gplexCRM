@@ -518,3 +518,14 @@ CREATE TABLE `product_specification_details` (
 
 -- 21-05-2025
 ALTER TABLE `product_specification_details` ADD `product_feature_name` VARCHAR(50) NULL DEFAULT NULL AFTER `product_feature_id`;
+
+
+-- 29-06-2025
+ALTER TABLE `email_queue` ADD `email_cc` JSON NULL AFTER `email_to`;
+ALTER TABLE `email_queue` ADD `email_bcc` JSON NULL AFTER `email_cc`;
+
+ALTER TABLE `email_log` ADD `email_cc` JSON NULL AFTER `email_to`;
+ALTER TABLE `email_log` ADD `email_bcc` JSON NULL AFTER `email_cc`;
+
+ALTER TABLE `email_queue` CHANGE `email_to` `email_to` JSON NOT NULL;
+ALTER TABLE `email_log` CHANGE `email_to` `email_to` JSON NOT NULL;

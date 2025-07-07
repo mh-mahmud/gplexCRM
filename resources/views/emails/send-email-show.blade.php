@@ -55,7 +55,23 @@
 
                         <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
                             <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">Email</span>
-                            <span>{{ $email->email_to }}</span>
+                            @foreach ($email->email_to as $to)
+                               <span class="badge bg-primary text-white fw-semibold px-3 py-2">{{ $to }}</span>
+                            @endforeach
+                        </div>
+
+                         <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                            <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">CC</span>
+                            @foreach ($email->email_cc ?? [] as $to)
+                               <span class="badge bg-primary text-white fw-semibold px-3 py-2">{{ $to }}</span>
+                            @endforeach
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                            <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">BCC</span>
+                            @foreach ($email->email_bcc ?? [] as $to)
+                                <span class="badge bg-primary text-white fw-semibold px-3 py-2">{{ $to }}</span>
+                            @endforeach
                         </div>
 
                         <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">

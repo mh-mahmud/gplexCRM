@@ -149,16 +149,19 @@ class EmailService
         $request->validate([
             'email_subject' => 'required',
             'email_content' => 'required',
-            'to_email' => 'required|email'
+            'to_email'      => 'required|array',
+            'to_email.*'    => 'required|email'
         ]);
        
         $data = $request->all();
-        try {
+        // try {
             // Mail::to($to_email)->send(new SingleMail($subject, $body));
 
             $dataObj                        = new EmailQueue();
             $dataObj->email_from            = "Genuity";
             $dataObj->email_to              = $data['to_email'];
+            $dataObj->email_cc              = $data['email_cc'] ?? [];
+            $dataObj->email_bcc             = $data['email_bcc'] ?? [];
             $dataObj->email_subject         = $data['email_subject'];
             $dataObj->email_content         = $data['email_content'];
             $dataObj->lead_id               = $data['lead_id'];
@@ -167,13 +170,13 @@ class EmailService
             $dataObj->send_status           = config('constants.campaign_status')["Pending"];
             $dataObj->save();
             
-        } catch (Exception $e) {
-            return (object)[
-                'status'                 => 401,
-                'message'                => $e->getMessage()
-            ];
+        // } catch (Exception $e) {
+        //     return (object)[
+        //         'status'                 => 401,
+        //         'message'                => $e->getMessage()
+        //     ];
 
-        }
+        // }
 
         return (object)[
             'status'                 => 200,
@@ -297,11 +300,14 @@ class EmailService
                         $senderName = $email->user->first_name.' '.$email->user->last_name;
                         $senderEmail = $email->user->email;
                     }
-                    Mail::to($email->email_to)
+                   
+                    Mail::to($email->email_to ?? [])
+                        ->cc($email->email_cc ?? [])
+                        ->bcc($email->email_bcc ?? [])
                         ->send((new SingleMail($email->email_subject, $email->email_content))
                         ->from($senderEmail, $senderName));
                     $this->logEmail($email, "Success");
-                    Helper::storeLog("Email sent successfully to " . $email->email_to, "Email Module", "Send an Email", $email->lead_id, $email->user_id);
+                    Helper::storeLog("Email sent successfully to " . implode(', ', $email->email_to), "Email Module", "Send an Email", $email->lead_id, $email->user_id);
                     EmailQueue::where('id', $email->id)->delete();
 
                 } catch (\Exception $e) {
@@ -319,6 +325,8 @@ class EmailService
         $dataObj = new EmailLog();
         $dataObj->email_from = isset($email->user) ? $email->user->first_name.' '.$email->user->last_name : '';
         $dataObj->email_to = $email->email_to;
+         $dataObj->email_cc = $email->email_cc;
+        $dataObj->email_bcc  = $email->email_bcc;
         $dataObj->email_subject = $email->email_subject;
         $dataObj->email_content = $email->email_content;
         $dataObj->lead_id = $email->lead_id;

@@ -80,12 +80,49 @@
                                             <div class="fv-row mb-3">
                                                 <label class="form-label fw-bolder text-dark">To<span
                                                         class="text-danger">*</span></label>
-                                                <input class="form-control form-control-sm form-control-solid"
+                                                {{-- <input class="form-control form-control-sm form-control-solid"
                                                        type="text" id="to_email" name="to_email" autocomplete="off"
-                                                       value="{{ old('to_email') }}"/>
+                                                       value="{{ old('to_email') }}"/> --}}
+                                                <select class="form-control form-control-sm form-control-solid js-email-select select2-email"
+                                                        name="to_email[]" id="to_email" multiple="multiple">
+                                                    @if(old('to_email'))
+                                                        @foreach(old('to_email') as $email)
+                                                            <option value="{{ $email }}" selected>{{ $email }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
                                                 @if ($errors->has('to_email'))
                                                     <span class="text-danger">{{ $errors->first('to_email') }}</span>
                                                 @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="fv-row mb-3">
+                                                <label class="form-label fw-bolder text-dark">CC</label>
+                                                {{-- <input class="form-control form-control-sm form-control-solid"
+                                                       type="text" id="email_cc" name="email_cc" autocomplete="off"
+                                                       value="{{ old('email_cc') }}"/> --}}
+                                                <select class="form-control form-control-sm form-control-solid js-email-select select2-email"
+                                                        name="email_cc[]" id="email_cc" multiple="multiple">
+                                                    @if(old('email_cc'))
+                                                        @foreach(old('email_cc') as $email)
+                                                            <option value="{{ $email }}" selected>{{ $email }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="fv-row mb-3">
+                                                <label class="form-label fw-bolder text-dark">BCC</label>
+                                                 <select class="form-control form-control-sm form-control-solid js-email-select select2-email"
+                                                        name="email_bcc[]" id="email_bcc" multiple="multiple">
+                                                    @if(old('email_bcc'))
+                                                        @foreach(old('email_bcc') as $email)
+                                                            <option value="{{ $email }}" selected>{{ $email }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -202,6 +239,13 @@
             const templates = @json($templates);
             const leads     = @json($leads);
 
+            $('.select2-email').select2({
+                tags: true,
+                tokenSeparators: [',', ' '],
+                placeholder: "Enter email addresses",
+                width: '100%'
+            });
+
             document.getElementById('template_id').addEventListener('change', function () {
                 const selectedId = this.value;
                 const selectedTemplate = templates.find(template => template.id == selectedId);
@@ -216,6 +260,7 @@
                 }
             });
 
+           /* Old code for selecting lead's email
             document.getElementById('lead_id').addEventListener('change', function () {
                 const selectedLeadId = this.value;
                 const selectedLead = leads.find(lead => lead.id == selectedLeadId);
@@ -225,6 +270,27 @@
                 } else {
                     document.getElementById('to_email').value = '';
 
+                }
+            });
+            */
+
+            document.getElementById('lead_id').addEventListener('change', function () {
+                const selectedLeadId = this.value;
+                const selectedLead = leads.find(lead => lead.id == selectedLeadId);
+
+                const $emailSelect = $('#to_email');
+
+                // Clear existing selection
+                $emailSelect.val(null).trigger('change');
+
+                if (selectedLead && selectedLead.email) {
+                    // Create a new option and append it if not already present
+                    if ($emailSelect.find("option[value='" + selectedLead.email + "']").length === 0) {
+                        const newOption = new Option(selectedLead.email, selectedLead.email, true, true);
+                        $emailSelect.append(newOption).trigger('change');
+                    } else {
+                        $emailSelect.val([selectedLead.email]).trigger('change');
+                    }
                 }
             });
 

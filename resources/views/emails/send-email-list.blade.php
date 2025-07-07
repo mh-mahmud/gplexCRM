@@ -137,7 +137,7 @@
 						@foreach ($emails as $email)
 						<tr>
 							<td class="ps-5 text-dark fs-6">{{($emails->currentPage() - 1) * $emails->perPage() + $loop->iteration}}</td>
-							<td class="text-dark fs-6">{{ $email->email_to }}</td>
+							<td class="text-dark fs-6">{{ implode(', ', $email->email_to) }}</td>
 							<td class="text-dark fs-6">{{ optional($email->lead)->first_name }} {{ optional($email->lead)->last_name }}</td>
 							<td class="text-dark fs-6">{{ $email->email_subject }}</td>
 							<td class="text-dark fs-6"> {{ optional($email->user)->first_name }} {{ optional($email->user)->last_name }}</td>
