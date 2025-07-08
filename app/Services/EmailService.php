@@ -241,14 +241,18 @@ class EmailService
                 }
         
                 // Mail::to($row[0])->queue(new BulkEmail($data['email_subject'], $data['email_content']));
-                $rawEmails = $row[0];
-                $emails = preg_split('/[\s,]+/', $rawEmails, -1, PREG_SPLIT_NO_EMPTY);
+                $emails     = preg_split('/[\s,]+/', $row[0] ?? '', -1, PREG_SPLIT_NO_EMPTY);
+                $emailCC    = preg_split('/[\s,]+/', $row[1] ?? '', -1, PREG_SPLIT_NO_EMPTY);
+                $emailBCC   = preg_split('/[\s,]+/', $row[2] ?? '', -1, PREG_SPLIT_NO_EMPTY);
+
                 $lead = Lead::where('email', $row[0])
                               ->select('id')
                               ->first();
                 $emailLogs[] = [
                     'email_from'    => "Genuity",
                     'email_to'      => json_encode($emails),
+                    'email_cc'      => json_encode($emailCC ?: []),
+                    'email_bcc'     => json_encode($emailBCC ?: []),
                     'lead_id'       => $lead->id ?? null,
                     'email_subject' => $data['email_subject'],
                     'email_content' => $data['email_content'],
@@ -302,7 +306,7 @@ class EmailService
                         $senderEmail = $email->user->email;
                     }
                    
-                     Mail::to($email->email_to ?? [])
+                    Mail::to($email->email_to ?? [])
                         ->cc($email->email_cc ?? [])
                         ->bcc($email->email_bcc ?? [])
                         ->send(new SingleMail($email->email_subject, $email->email_content));				
