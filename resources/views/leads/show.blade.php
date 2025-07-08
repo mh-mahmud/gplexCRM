@@ -967,7 +967,7 @@
                                                 @foreach ($emails as $email)
                                                     <tr>
                                                         <td class="ps-5 text-dark fs-6">{{ $i }}</td>
-                                                        <td class="text-dark fs-6">{{ $email->email_to }}</td>
+                                                        <td class="text-dark fs-6">{{ implode(', ', $email->email_to) }}</td>
                                                         <td class="text-dark fs-6">{{ $lead->first_name }} {{ $lead->last_name }}</td>
                                                         <td class="text-dark fs-6">{{ $email->email_subject }}</td>
                                                         <td class="text-dark fs-6">{{ Carbon::parse($email->log_time)->format('d-m-Y h:i A') }}</td>
