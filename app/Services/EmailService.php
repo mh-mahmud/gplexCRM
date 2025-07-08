@@ -218,7 +218,7 @@ class EmailService
         $file = $request->file('file');
         $data = $request->all();
         $emailLogs = [];
-        try {
+        // try {
             // Check if the file is an Excel file
             if ($file->getClientOriginalExtension() == 'csv') {
                 // Process CSV file
@@ -241,13 +241,14 @@ class EmailService
                 }
         
                 // Mail::to($row[0])->queue(new BulkEmail($data['email_subject'], $data['email_content']));
-
+                $rawEmails = $row[0];
+                $emails = preg_split('/[\s,]+/', $rawEmails, -1, PREG_SPLIT_NO_EMPTY);
                 $lead = Lead::where('email', $row[0])
                               ->select('id')
                               ->first();
                 $emailLogs[] = [
                     'email_from'    => "Genuity",
-                    'email_to'      => $row[0],
+                    'email_to'      => json_encode($emails),
                     'lead_id'       => $lead->id ?? null,
                     'email_subject' => $data['email_subject'],
                     'email_content' => $data['email_content'],
@@ -264,12 +265,12 @@ class EmailService
                 ];
             });
 
-        } catch (\Exception $e) {
-            return (object)[
-                'status'                 => 401,
-                'message'                => $e->getMessage()
-            ];
-        }
+        // } catch (\Exception $e) {
+        //     return (object)[
+        //         'status'                 => 401,
+        //         'message'                => $e->getMessage()
+        //     ];
+        // }
         return (object)[
             'status'                 => 201,
         ];
@@ -301,11 +302,15 @@ class EmailService
                         $senderEmail = $email->user->email;
                     }
                    
-                    Mail::to($email->email_to ?? [])
+                     Mail::to($email->email_to ?? [])
                         ->cc($email->email_cc ?? [])
                         ->bcc($email->email_bcc ?? [])
-                        ->send((new SingleMail($email->email_subject, $email->email_content))
-                        ->from($senderEmail, $senderName));
+                        ->send(new SingleMail($email->email_subject, $email->email_content));				
+                    // Mail::to($email->email_to ?? [])
+                    //     ->cc($email->email_cc ?? [])
+                    //     ->bcc($email->email_bcc ?? [])
+                    //     ->send((new SingleMail($email->email_subject, $email->email_content))
+                    //     ->from($senderEmail, $senderName));
                     $this->logEmail($email, "Success");
                     Helper::storeLog("Email sent successfully to " . implode(', ', $email->email_to), "Email Module", "Send an Email", $email->lead_id, $email->user_id);
                     EmailQueue::where('id', $email->id)->delete();
