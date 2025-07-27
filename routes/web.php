@@ -24,6 +24,8 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\InvoiceCustomFormController;
 use App\Http\Controllers\ProductSpecificationController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\FormFeatureController;
+
 
 
 use App\Models\Promotion;
@@ -378,7 +380,11 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/approval-panel', [NotificationController::class, 'approvalPanel'])->name('approval-panel')->middleware(['check-permission']);
     Route::post('/notification/{id?}/invoice-approve', [NotificationController::class, 'approveInvoice'])->name('invoice-approve');
 
-
+// Form Features routes start
+	Route::get('feature-list', [FormFeatureController::class, 'formFeatureList'])->name('feature-list')->middleware(['check-permission']);
+	Route::get('feature-create', [FormFeatureController::class, 'formFeatureCreate'])->name('feature-create')->middleware(['check-permission']);
+	Route::post('feature-create-pro', [FormFeatureController::class, 'formFeatureStore'])->name('feature-create-pro');
+	Route::delete('feature-delete/{id?}', [FormFeatureController::class, 'formFeatureDelete'])->name('feature-delete')->middleware(['check-permission']);
 
 
 });
