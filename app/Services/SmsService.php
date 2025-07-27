@@ -161,7 +161,7 @@ class SmsService
         $dataObj                        = new SmsLog();
         $dataObj->sms_from              = config('constants.SMS_SEND_MOBILE_NO');
         $dataObj->lead_id               = $data['lead_id'];
-        $dataObj->api_response               = $api_response;
+        $dataObj->api_response          = $api_response;
         $dataObj->sms_to                = $data['sms_to'];
         $dataObj->sms_text              = $data['sms_text'];
         $dataObj->log_time              = Carbon::now();
@@ -190,10 +190,10 @@ class SmsService
 
     public function sendSMSList($request)
     {
-        $sql = SmsQueue::query()
-                    ->select('sms_queue.*', 'leads.first_name', 'leads.last_name', 'users.first_name as send_by_fname', 'users.last_name as send_by_lname')
-                    ->leftJoin('leads', 'sms_queue.lead_id', '=', 'leads.id')
-                    ->join('users', 'users.id', '=', 'sms_queue.user_id');
+        $sql = SmsLog::query()
+                    ->select('sms_log.*', 'leads.first_name', 'leads.last_name', 'users.first_name as send_by_fname', 'users.last_name as send_by_lname')
+                    ->leftJoin('leads', 'sms_log.lead_id', '=', 'leads.id')
+                    ->join('users', 'users.id', '=', 'sms_log.user_id');
         $data = $request->all();
         if(!empty($data["search"])) {
             $sql->where('sms_to','like', '%' . $data["search"] . '%');

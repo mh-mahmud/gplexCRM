@@ -520,7 +520,7 @@ CREATE TABLE `product_specification_details` (
 ALTER TABLE `product_specification_details` ADD `product_feature_name` VARCHAR(50) NULL DEFAULT NULL AFTER `product_feature_id`;
 
 
--- 29-06-2025
+-- 29-06-2025, Ishtiak add
 ALTER TABLE `email_queue` ADD `email_cc` JSON NULL AFTER `email_to`;
 ALTER TABLE `email_queue` ADD `email_bcc` JSON NULL AFTER `email_cc`;
 
@@ -529,3 +529,7 @@ ALTER TABLE `email_log` ADD `email_bcc` JSON NULL AFTER `email_cc`;
 
 ALTER TABLE `email_queue` CHANGE `email_to` `email_to` JSON NOT NULL;
 ALTER TABLE `email_log` CHANGE `email_to` `email_to` JSON NOT NULL;
+
+
+-- 27-06-2025, Ishtiak add
+CREATE TABLE `gplex_crm`.`form_features` (`id` INT NOT NULL AUTO_INCREMENT , `title` VARCHAR(255) NOT NULL , `description` TEXT NOT NULL , `route` VARCHAR(180) NOT NULL , `created_by` BIGINT NOT NULL , `created_at` TIMESTAMP NOT NULL , `updated_by` BIGINT NULL , `updated_at` TIMESTAMP NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

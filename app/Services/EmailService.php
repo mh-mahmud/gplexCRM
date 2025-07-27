@@ -306,22 +306,22 @@ class EmailService
                         $senderEmail = $email->user->email;
                     }
                    
-                    Mail::to($email->email_to ?? [])
-                        ->cc($email->email_cc ?? [])
-                        ->bcc($email->email_bcc ?? [])
-                        ->send(new SingleMail($email->email_subject, $email->email_content));				
                     // Mail::to($email->email_to ?? [])
                     //     ->cc($email->email_cc ?? [])
                     //     ->bcc($email->email_bcc ?? [])
-                    //     ->send((new SingleMail($email->email_subject, $email->email_content))
-                    //     ->from($senderEmail, $senderName));
+                    //     ->send(new SingleMail($email->email_subject, $email->email_content));				
+                    Mail::to($email->email_to ?? [])
+                        ->cc($email->email_cc ?? [])
+                        ->bcc($email->email_bcc ?? [])
+                        ->send((new SingleMail($email->email_subject, $email->email_content))
+                        ->from($senderEmail, $senderName));
                     $this->logEmail($email, "Success");
                     Helper::storeLog("Email sent successfully to " . implode(', ', $email->email_to), "Email Module", "Send an Email", $email->lead_id, $email->user_id);
                     EmailQueue::where('id', $email->id)->delete();
 
                 } catch (\Exception $e) {
                     $this->logEmail($email, "Failed");
-                    Helper::storeLog("Email failed to send to " . $email->email_to, "Email Module", "Send an Email", $email->lead_id, $email->user_id);
+                    Helper::storeLog("Email failed to send to " . implode(', ', $email->email_to), "Email Module", "Send an Email", $email->lead_id, $email->user_id);
                     EmailQueue::where('id', $email->id)->delete();
 
                 }
