@@ -26,7 +26,7 @@
                         <!--begin::Actions-->
                         <div class="d-flex align-items-center py-1">
 
-                            <a href="{{ route('product-list') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Product List</a>
+                            <a href="{{ route('feature-list') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Help List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
@@ -45,7 +45,7 @@
                                 <div class="card-header bg-light bd-cyan">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
-                                        <h3 class="fw-bolder m-0">Product Create</h3>
+                                        <h3 class="fw-bolder m-0">Help Create</h3>
                                     </div>
                                     <!--end::Card title-->
                                 </div>
@@ -55,21 +55,20 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('add-product-pro') }}"  method="POST" enctype="multipart/form-data">
+                                    <form class="g-form w-100" action="{{ route('feature-create-pro') }}"  method="POST" enctype="multipart/form-data">
                                          @csrf
                                         <div class="row">
-
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Name<span class="text-danger">*</span></label>
+                                                    <label class="form-label fw-bolder text-dark">Title<span class="text-danger">*</span></label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="name" autocomplete="off" value="{{ old('name') }}" />
+                                                           type="text" name="title" autocomplete="off" value="{{ old('title') }}" />
                                                     <!--end::Input-->
-                                                    @if ($errors->has('name'))
-                                                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                                                    @if ($errors->has('title'))
+                                                        <span class="text-danger">{{ $errors->first('title') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -77,75 +76,37 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Code<span class="text-danger">*</span></label>
+                                                    <label class="form-label fw-bolder text-dark">Route<span class="text-danger">*</span></label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="product_code" autocomplete="off" value="{{ old('product_code') }}" />
+                                                           type="text" name="route" autocomplete="off" value="{{ old('route') }}" />
                                                     <!--end::Input-->
-                                                    @if ($errors->has('product_code'))
-                                                        <span class="text-danger">{{ $errors->first('product_code') }}</span>
+                                                    @if ($errors->has('route'))
+                                                        <span class="text-danger">{{ $errors->first('route') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Type<span class="text-danger">*</span></label>
-                                                    <select class="form-control form-control-sm form-control-solid"
-                                                            id="assigned_to" name="product_type" aria-label="Default select example">
-                                                        <option value='' {{ old('product_type', '') === '' ? 'selected' : '' }}>Select</option>
-                                                        @foreach (config('constants.PRODUCT_TYPE') as $key => $type)
-                                                            <option value="{{ $key }}" {{ old('product_type') === (string)$key ? 'selected' : '' }}>
-                                                                {{ $type }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    @if ($errors->has('product_type'))
-                                                        <span class="text-danger">{{ $errors->first('product_type') }}</span>
-                                                    @endif
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label fw-bolder text-dark"
+                                                            for="textarea">Content<span
+                                                                class="text-danger">*</span></label>
+                                                        <textarea
+                                                            class="form-control form-control-sm  form-control-solid editor"
+                                                            id="description" name="description"
+                                                            rows="3">{{ old('description') }}</textarea>
+                                                        @if ($errors->has('description'))
+                                                            <span
+                                                                class="text-danger">{{ $errors->first('description') }}</span>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Cost</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="product_cost" autocomplete="off" value="{{ old('product_cost') }}" />
-                                                    @if ($errors->has('product_cost'))
-                                                        <span class="text-danger">{{ $errors->first('product_cost') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Value</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="product_value" autocomplete="off" value="{{ old('product_value') }}" />
-                                                    @if ($errors->has('product_value'))
-                                                        <span class="text-danger">{{ $errors->first('product_value') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Description</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{ old('description') }}</textarea>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Image</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="file" name="img_path" autocomplete="off" />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Status</label>
                                                     <select class=" form-control form-control-sm form-control-solid" name="status"
@@ -160,11 +121,10 @@
 
                                         </div>
 
-                                      <div class="card-footer d-flex gap-2 justify-content-end align-items-center p-2">
-                                            <input type="reset" value="Reset" class="btn btn-light me-2">
+                                        <div class="d-flex justify-content-end gap-2 mt-5">
+                                            <input type="reset" id="resetButton" value="Reset" class="btn btn-light">
                                             <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">
-                                                Save Changes
+                                                    id="kt_account_profile_details_submit">Send
                                             </button>
                                         </div>
 

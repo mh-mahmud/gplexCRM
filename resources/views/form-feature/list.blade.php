@@ -14,12 +14,12 @@
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                             <!--begin::Title-->
-                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Products
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Help Section
                                 <!--begin::Separator-->
                                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Product List</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Help List</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -27,7 +27,7 @@
                         <!--begin::Actions-->
                         <div class="d-flex align-items-center py-1">
 
-                            <a href="{{ route('add-product') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Add</a>
+                            <a href="{{ route('feature-create') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Add</a>
 
                             <!--end::Button-->
                         </div>
@@ -76,12 +76,12 @@
 			<!--begin::Header-->
 			<div class="d-flex justify-content-between align-items-start card-header border-0 p-1">
 				<h3 class="card-title align-items-start flex-column">
-					<span class="card-label fw-bolder fs-3 mb-1">Product List</span>
+					<span class="card-label fw-bolder fs-3 mb-1">Help Section List</span>
 					<!-- <span class="text-muted mt-1 fw-bold fs-7">Leads Form data here</span> -->
 				</h3>
 
 				<div class="d-flex flex-wrap gap-2">
-				<form action="{{ route('product-list') }}" method="GET" class="d-flex">
+				<form action="{{ route('feature-list') }}" method="GET" class="d-flex">
 					<!--begin::Input group-->
 					<div class="d-flex align-items-center position-relative">
 						<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
@@ -97,7 +97,7 @@
 							</svg>
 						</span>
 						<!--end::Svg Icon-->
-						<input type="text" name="search" class="form-control form-control-sm form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by Product Name">
+						<input type="text" name="search" class="form-control form-control-sm form-control-solid w-250px ps-15" value="{{ request('search') }}" placeholder="Search by Help Title">
 					</div>
 					<!--end::Input group-->
 					<button type="submit" class="btn btn-primary btn-sm ms-2">Search</button>
@@ -112,17 +112,15 @@
 			 <div class="card-body p-1">
 				<!--begin::Table container-->
 				<div class="table-responsive">
-				@if($products->isNotEmpty())
+				@if($formFeatures->isNotEmpty())
 					<!--begin::Table-->
 					<table class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
 						<!--begin::Table head-->
 						<thead>
 						<tr class="fw-bolder text-muted bg-light bd-cyan">
 						    <th class="ps-4 rounded-start min-w-40px">SL</th>
-							<th class="min-w-150px">Name</th>
-							<th class="min-w-140px">Code</th>
-							<th class="min-w-140px">Type</th>
-							<th class="min-w-140px">Price</th>
+							<th class="min-w-150px">Title</th>
+							<th class="min-w-140px">Route</th>
 							<th class="min-w-120px">Status</th>
 							<th class="min-w-100px text-end-new">Actions</th>
 						</tr>
@@ -130,24 +128,22 @@
 						<!--end::Table head-->
 						<!--begin::Table body-->
 						<tbody>
-						@foreach ($products as $product)
+						@foreach ($formFeatures as $feature)
 						<tr>
-							<td class="ps-5 text-dark fs-6">{{($products->currentPage() - 1) * $products->perPage() + $loop->iteration}}</td>
-							<td class="text-dark fs-6">{{ $product->name }}</td>
-							<td class="text-dark fs-6">{{ $product->product_code }}</td>
-							<td class="text-dark fs-6">{{ config('constants.PRODUCT_TYPE')[$product->product_type] }}</td>
-							<td class="text-dark fs-6">{{ $product->product_value }}</td>
+							<td class="ps-5 text-dark fs-6">{{($formFeatures->currentPage() - 1) * $formFeatures->perPage() + $loop->iteration}}</td>
+							<td class="text-dark fs-6">{{ $feature->title }}</td>
+							<td class="text-dark fs-6">{{ $feature->route }}</td>
 		                    <td>
-								@if ($product->status == 1)
+								@if ($feature->status == 1)
 									<span class="badge badge-light-success">Active</span>
-								@elseif ($product->status == 0)
+								@elseif ($feature->status == 0)
 									<span class="badge badge-light-danger">Inactive</span>
 								@endif
                             </td>
 							<td>
 								<div
                                                     class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
-									<a title="Show Product Details" href="{{ route('product-show', $product->id) }}"
+									<a title="Show Details" href="{{ route('feature-show', $feature->id) }}"
 									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 										<!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
 										<span class="svg-icon svg-icon-3">
@@ -169,7 +165,7 @@
 												</span>
 										<!--end::Svg Icon-->
 									</a>
-									<a title="Edit" href="{{ route('product-edit', $product->id) }}"
+									<a title="Edit" href="{{ route('feature-edit', $feature->id) }}"
 									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 										<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
 										<span class="svg-icon svg-icon-3">
@@ -185,7 +181,7 @@
 												</span>
 										<!--end::Svg Icon-->
 									</a>
-									<form action="{{ route('product-delete', $product->id) }}" method="POST" style="display: inline;">
+									<form action="{{ route('feature-delete', $feature->id) }}" method="POST" style="display: inline;">
 										@csrf
 										@method('DELETE')
 										<button title="Delete" type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="return confirmDelete()">
@@ -232,7 +228,7 @@
 			<li class="page-item next"><a class="page-link" href="#">Next</span></a></li>
 		</ul> -->
 
-    	@include('components.pagination', ['paginator' => $products])
+    	@include('components.pagination', ['paginator' => $formFeatures])
 
 
 		<!--End Table Pagination-->
@@ -243,7 +239,7 @@
 
 <script>
     function confirmDelete() {
-        if (confirm("Are you sure you want to delete Product?")) {
+        if (confirm("Are you sure you want to delete?")) {
             document.getElementById('deleteForm').submit();
         }
         return false;

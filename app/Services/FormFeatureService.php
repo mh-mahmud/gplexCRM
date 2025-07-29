@@ -14,7 +14,7 @@ class FormFeatureService
         $sql = FormFeature::query();
         $data = $request->all();
         if(!empty($data["search"])) {
-            $sql->where('name','like', '%' . $data["search"] . '%');
+            $sql->where('title','like', '%' . $data["search"] . '%');
 
         }
         if (isset($data['paginate']) && $data['paginate'] == false) {
@@ -125,5 +125,15 @@ class FormFeatureService
                 'error'              => $e->getMessage()
             ];
         }
+    }
+
+    public function getDescription($route)
+    {
+        $description = FormFeature::where('route', $route)
+                        ->value('description');
+
+        return response()->json([
+            'description' => $description ?? 'No help available for this page.'
+        ]);
     }
 }

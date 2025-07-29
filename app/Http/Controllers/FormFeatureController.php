@@ -31,7 +31,7 @@ class FormFeatureController extends Controller {
     { 
         $result = $this->formFeatureService->formFeatureStore($request);
         if($result->status == 201){
-            return redirect()->route('product-list')->with('success', 'Form Feature added successfully.');
+            return redirect()->route('feature-list')->with('success', 'Form Feature added successfully.');
 
         }else{
             session()->flash('error', 'Can not Add!');
@@ -74,4 +74,10 @@ class FormFeatureController extends Controller {
             session()->flash('error', 'Can not Delete !');
         }
     }
+
+    public function getDescription($route)
+    {
+        return $this->formFeatureService->getDescription($route);
+    }
+
 }

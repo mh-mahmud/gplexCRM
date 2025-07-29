@@ -381,10 +381,19 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/notification/{id?}/invoice-approve', [NotificationController::class, 'approveInvoice'])->name('invoice-approve');
 
 // Form Features routes start
-	Route::get('feature-list', [FormFeatureController::class, 'formFeatureList'])->name('feature-list')->middleware(['check-permission']);
-	Route::get('feature-create', [FormFeatureController::class, 'formFeatureCreate'])->name('feature-create')->middleware(['check-permission']);
+	// Route::get('feature-list', [FormFeatureController::class, 'formFeatureList'])->name('feature-list')->middleware(['check-permission']);
+	// Route::get('feature-create', [FormFeatureController::class, 'formFeatureCreate'])->name('feature-create')->middleware(['check-permission']);
+	// Route::post('feature-create-pro', [FormFeatureController::class, 'formFeatureStore'])->name('feature-create-pro');
+	// Route::delete('feature-delete/{id?}', [FormFeatureController::class, 'formFeatureDelete'])->name('feature-delete')->middleware(['check-permission']);
+
+	Route::get('feature-list', [FormFeatureController::class, 'formFeatureList'])->name('feature-list');
+	Route::get('feature-create', [FormFeatureController::class, 'formFeatureCreate'])->name('feature-create');
 	Route::post('feature-create-pro', [FormFeatureController::class, 'formFeatureStore'])->name('feature-create-pro');
-	Route::delete('feature-delete/{id?}', [FormFeatureController::class, 'formFeatureDelete'])->name('feature-delete')->middleware(['check-permission']);
+	Route::delete('feature-delete/{id?}', [FormFeatureController::class, 'formFeatureDelete'])->name('feature-delete');
+	Route::get('feature-show/{id?}', [FormFeatureController::class, 'formFeatureShow'])->name('feature-show');
+	Route::get('feature-edit/{id?}', [FormFeatureController::class, 'formFeatureEdit'])->name('feature-edit');
+	Route::put('feature-update-pro/{id}', [FormFeatureController::class, 'formFeatureUpdate'])->name('feature-update-pro');
+	Route::get('get-help-content/{route}', [FormFeatureController::class, 'getDescription'])->name('get-help-content');
 
 
 });
