@@ -696,7 +696,7 @@ body.swal2-height-auto {
 }
 
 .tooltip-inner {
-    max-width: 45vw; 
+    max-width: 350px; 
     width: 100%; 
     white-space: normal;
     text-align: left 
