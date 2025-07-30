@@ -3005,32 +3005,34 @@
 		});
 	</script>
 	<script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const BASE_URL = @json(url('/'));
-            const tooltipElements = document.querySelectorAll('.help-tooltip');
-            tooltipElements.forEach(el => {
-                const tooltip = new bootstrap.Tooltip(el, {
-                    title: 'Loading...',    
-                    trigger: 'hover',
-                    html: true       
-                });
-                 el.addEventListener('mouseenter', function () {
-                     const routeName = el.dataset.route;
+		document.addEventListener('DOMContentLoaded', function () {
+			const BASE_URL = @json(url('/'));
 
-                      if (!el.dataset.loaded) {
-                        fetch(`${BASE_URL}/get-help-content/${routeName}`)
-                        .then(res => res.json())   
-                        .then(data => {
-                            const content = data.description;
-                            el.setAttribute('data-bs-original-title', content);
-                            tooltip.setContent({ '.tooltip-inner': content });
-                            el.dataset.loaded = 'true';
-                        });
-                    }
-            });
-        });
-    });
-    </script>
+			document.querySelectorAll('.help-tooltip').forEach(el => {
+				const routeName = el.dataset.route;
+
+				fetch(`${BASE_URL}/get-help-content/${routeName}`)
+					.then(res => res.json())
+					.then(data => {
+						const content = data.description;
+						el.setAttribute('data-bs-original-title', content);
+
+						new bootstrap.Tooltip(el, {
+							trigger: 'hover',
+							html: true
+						});
+					})
+					.catch(() => {
+						el.setAttribute('data-bs-original-title', 'Error loading help.');
+						new bootstrap.Tooltip(el, {
+							trigger: 'hover',
+							html: true
+						});
+					});
+			});
+		});
+	</script>
+
 	@yield('endScript')
 	<!--end::Page Custom Javascript-->
 	<!--end::Javascript-->
