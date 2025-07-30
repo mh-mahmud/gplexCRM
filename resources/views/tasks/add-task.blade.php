@@ -66,12 +66,13 @@
                     <div class="row">
                         <div class="col-xxl-12">
                             <div class="card card-xxl-stretch mt-4">
-                                <div class="card-header">
+                                <div class="card-header align-items-center bg-light bd-cyan">
                                     <!--begin::Card title-->
-                                    <div class="card-title m-0">
+                                     <div class="card-title d-flex justify-content-between m-0">
                                         <h3 class="fw-bolder m-0">Add Task</h3>
                                     </div>
                                     <!--end::Card title-->
+                                    @include('help-section.help')
                                 </div>
 
                                 <!-- Card Body-->
